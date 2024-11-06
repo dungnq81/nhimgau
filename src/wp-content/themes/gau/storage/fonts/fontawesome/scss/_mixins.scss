@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "functions" as *;
+@use "variables" as *;
+
 // mixins
 // --------------------------
 
@@ -62,7 +66,7 @@
   @extend .fa-solid;
 
   &::before {
-    content: unquote("\"#{ $fa-var }\"");
+    content: string.unquote("\"#{ $fa-var }\"");
   }
 }
 @mixin fa-icon-regular($fa-var) {
@@ -70,7 +74,7 @@
   @extend .fa-regular;
 
   &::before {
-    content: unquote("\"#{ $fa-var }\"");
+    content: string.unquote("\"#{ $fa-var }\"");
   }
 }
 @mixin fa-icon-light($fa-var) {
@@ -78,7 +82,7 @@
   @extend .fa-light;
 
   &::before {
-    content: unquote("\"#{ $fa-var }\"");
+    content: string.unquote("\"#{ $fa-var }\"");
   }
 }
 @mixin fa-icon-thin($fa-var) {
@@ -86,7 +90,7 @@
   @extend .fa-thin;
 
   &::before {
-    content: unquote("\"#{ $fa-var }\"");
+    content: string.unquote("\"#{ $fa-var }\"");
   }
 }
 @mixin fa-icon-duotone($fa-var) {
@@ -94,10 +98,10 @@
   @extend .fa-duotone;
 
   &::before {
-    content: unquote("\"#{ $fa-var }\"");
+    content: string.unquote("\"#{ $fa-var }\"");
   }
   &::after {
-    content: unquote("\"#{ $fa-var }#{ $fa-var }\"");
+    content: string.unquote("\"#{ $fa-var }#{ $fa-var }\"");
   }
 }
 @mixin fa-icon-sharp-solid($fa-var) {
@@ -105,7 +109,7 @@
   @extend .fa-sharp-solid;
 
   &::before {
-    content: unquote("\"#{ $fa-var }\"");
+    content: string.unquote("\"#{ $fa-var }\"");
   }
 }
 @mixin fa-icon-sharp-regular($fa-var) {
@@ -113,7 +117,7 @@
   @extend .fa-sharp-regular;
 
   &::before {
-    content: unquote("\"#{ $fa-var }\"");
+    content: string.unquote("\"#{ $fa-var }\"");
   }
 }
 @mixin fa-icon-sharp-light($fa-var) {
@@ -121,7 +125,7 @@
   @extend .fa-sharp-light;
 
   &::before {
-    content: unquote("\"#{ $fa-var }\"");
+    content: string.unquote("\"#{ $fa-var }\"");
   }
 }
 @mixin fa-icon-sharp-thin($fa-var) {
@@ -129,7 +133,7 @@
   @extend .fa-sharp-thin;
 
   &::before {
-    content: unquote("\"#{ $fa-var }\"");
+    content: string.unquote("\"#{ $fa-var }\"");
   }
 }
 @mixin fa-icon-sharp-duotone-solid($fa-var) {
@@ -137,7 +141,7 @@
   @extend .fa-sharp-duotone-solid;
 
   &::before {
-    content: unquote("\"#{ $fa-var }\"");
+    content: string.unquote("\"#{ $fa-var }\"");
   }
 }
 @mixin fa-icon-brands($fa-var) {
@@ -145,6 +149,6 @@
   @extend .fa-brands;
 
   &::before {
-    content: unquote("\"#{ $fa-var }\"");
+    content: string.unquote("\"#{ $fa-var }\"");
   }
 }

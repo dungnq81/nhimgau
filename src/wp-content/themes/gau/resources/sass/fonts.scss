@@ -1,4 +1,5 @@
 @use "sass:string";
+@use "awesome_font";
 
 @mixin font-face(
     $font-family,
@@ -7,7 +8,7 @@
     $file_name,
     $base: '../fonts'
 ) {
-    $base: unquote($base);
+    $base: string.unquote($base);
     $version: string.unique_id();
     @font-face {
         font-family: quote($font-family);
@@ -19,5 +20,3 @@
         url("#{$base}/OTF/#{$file_name}.otf?v=#{$version}") format("opentype");
     }
 }
-
-@use "awesome_font";

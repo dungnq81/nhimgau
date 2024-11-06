@@ -2,6 +2,8 @@
 @use "sass:math";
 @use "sass:color";
 @use "sass:string";
+@use "sass:meta";
+@use "sass:map";
 
 // check a list has tokens or not.
 @function is_empty($list) {
@@ -103,7 +105,7 @@
 
 /** https://github.com/pentzzsolt/sass-is-int/blob/master/_is-int.scss */
 @function is-int($value) {
-    @if type-of($value) != number {
+    @if meta.type-of($value) != number {
         //@warn '`#{$value}` is not a valid number!';
         @return null;
     }
@@ -118,8 +120,8 @@
 
 /** get breakpoint */
 @function get-breakpoint($breakpoint, $mq-breakpoints) {
-    @if map-has-key($mq-breakpoints, $breakpoint) {
-        @return map-get($mq-breakpoints, $breakpoint);
+    @if map.has-key($mq-breakpoints, $breakpoint) {
+        @return map.get($mq-breakpoints, $breakpoint);
     } @else {
         //@warn 'given `#{$breakpoint}` is not available in `#{$mq-breakpoints}`';
         //@return false;
@@ -262,7 +264,7 @@ $_luminance-list: .0008 .001 .0011 .0013 .0015 .0017 .002 .0022 .0025 .0027 .003
         @return $value1;
     }
 
-    @if type-of($value1) == number and type-of($value2) == number and comparable($value1, $value2) {
+    @if meta.type-of($value1) == number and meta.type-of($value2) == number and comparable($value1, $value2) {
         @return $value1 + $value2;
     }
 
@@ -284,11 +286,11 @@ $_luminance-list: .0008 .001 .0011 .0013 .0015 .0017 .002 .0022 .0025 .0027 .003
         @return $value1;
     }
 
-    @if type-of($value1) == number and type-of($value2) == number and comparable($value1, $value2) {
+    @if meta.type-of($value1) == number and meta.type-of($value2) == number and comparable($value1, $value2) {
         @return $value1 - $value2;
     }
 
-    @if type-of($value2) != number {
+    @if meta.type-of($value2) != number {
         $value2: unquote("(") + $value2 + unquote(")");
     }
 
@@ -364,7 +366,7 @@ $unit-warnings: true !default;
 /// @returns {Number} A number in rems, calculated based on the given value and the base pixel value. rem values are passed through as is.
 @function -zf-to-rem($value, $base: null) {
     // Check if the value is a number
-    @if type-of($value) != 'number' {
+    @if meta.type-of($value) != 'number' {
         @if $unit-warnings {
             @warn inspect($value) + ' was passed to rem-calc(), which is not a number.';
         }

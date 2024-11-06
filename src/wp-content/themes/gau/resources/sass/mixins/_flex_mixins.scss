@@ -132,7 +132,7 @@
     min-height: 0;
     min-width: 0;
 
-    @if type-of($w) != bool {
+    @if meta.type-of($w) != bool {
         width: func.fs($w);
     }
 }
