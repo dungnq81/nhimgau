@@ -1,0 +1,23 @@
+@use "sass:string";
+
+@mixin font-face(
+    $font-family,
+    $font-style: normal,
+    $font-weight: 400,
+    $file_name,
+    $base: '../fonts'
+) {
+    $base: unquote($base);
+    $version: string.unique_id();
+    @font-face {
+        font-family: quote($font-family);
+        font-style: $font-style;
+        font-weight: $font-weight;
+        font-display: swap;
+        src: url("#{$base}/WOFF2/#{$file_name}.woff2?v=#{$version}") format("woff2"),
+        url("#{$base}/TTF/#{$file_name}.ttf?v=#{$version}") format("truetype"),
+        url("#{$base}/OTF/#{$file_name}.otf?v=#{$version}") format("opentype");
+    }
+}
+
+@use "awesome_font";

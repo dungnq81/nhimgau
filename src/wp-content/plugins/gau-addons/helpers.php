@@ -332,7 +332,7 @@ if ( ! function_exists( 'get_custom_post_option_content' ) ) {
 			return '';
 		}
 
-		$post = get_custom_post_option( $post_type );
+		$post = \get_custom_post_option( $post_type );
 		if ( isset( $post->post_content ) ) {
 			$post_content = wp_unslash( $post->post_content );
 			if ( $encode ) {
@@ -420,7 +420,7 @@ if ( ! function_exists( 'update_custom_post_option' ) ) {
 		];
 
 		// Update post if it already exists, otherwise create a new one.
-		$post = get_custom_post_option( $post_type );
+		$post = \get_custom_post_option( $post_type );
 		if ( $post ) {
 			$post_data['ID'] = $post->ID;
 			$r               = wp_update_post( wp_slash( $post_data ), true );
@@ -489,7 +489,7 @@ if ( ! function_exists( 'filter_setting_options' ) ) {
 	 * @return array|mixed
 	 */
 	function filter_setting_options( $name, mixed $default = [] ): mixed {
-		$filters = apply_filters( 'haku_theme_setting_options', [] );
+		$filters = apply_filters( 'addon_theme_setting_options', [] );
 
 		if ( isset( $filters[ $name ] ) ) {
 			return $filters[ $name ] ?: $default;
@@ -618,17 +618,17 @@ if ( ! function_exists( 'clear_all_cache' ) ) {
 		}
 
 		// wp-rocket cache
-		if ( \defined( 'WP_ROCKET_PATH' ) && \function_exists( 'rocket_clean_domain' ) ) {
-			\rocket_clean_domain();
+		if ( defined( 'WP_ROCKET_PATH' ) && function_exists( 'rocket_clean_domain' ) ) {
+			rocket_clean_domain();
 		}
 
 		// Clear minified CSS and JavaScript files.
 		if ( function_exists( 'rocket_clean_minify' ) ) {
-			\rocket_clean_minify();
+			rocket_clean_minify();
 		}
 
 		// Jetpack
-		if ( check_plugin_active( 'jetpack/jetpack.php' ) ) {
+		if ( \check_plugin_active( 'jetpack/jetpack.php' ) ) {
 			global $wpdb;
 
 			$wpdb->query( "DELETE FROM {$wpdb->options} WHERE `option_name` LIKE '_transient_jetpack_%'" );
@@ -655,7 +655,7 @@ if ( ! function_exists( 'check_plugin_active' ) ) {
 	 * @return bool
 	 */
 	function check_plugin_active( $plugin_slug ): bool {
-		return check_plugin_installed( $plugin_slug ) && \is_plugin_active( $plugin_slug );
+		return \check_plugin_installed( $plugin_slug ) && is_plugin_active( $plugin_slug );
 	}
 }
 
@@ -689,12 +689,12 @@ if ( ! function_exists( 'check_smtp_plugin_active' ) ) {
 	 * @return bool
 	 */
 	function check_smtp_plugin_active(): bool {
-		$smtp_plugins_support = filter_setting_options( 'smtp_plugins_support', [] );
+		$smtp_plugins_support = \filter_setting_options( 'smtp_plugins_support', [] );
 
 		$check = true;
 		if ( ! empty( $smtp_plugins_support ) ) {
 			foreach ( $smtp_plugins_support as $plugin_slug ) {
-				if ( check_plugin_active( $plugin_slug ) ) {
+				if ( \check_plugin_active( $plugin_slug ) ) {
 					$check = false;
 					break;
 				}

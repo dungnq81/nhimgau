@@ -41,10 +41,6 @@ class ComposerStaticInitbad06eea79b9e83fa6bd3014a8024525
             'MatthiasMullie\\PathConverter\\' => 29,
             'MatthiasMullie\\Minify\\' => 22,
         ),
-        'L' => 
-        array (
-            'Libs\\' => 5,
-        ),
         'D' => 
         array (
             'Detection\\' => 10,
@@ -99,10 +95,6 @@ class ComposerStaticInitbad06eea79b9e83fa6bd3014a8024525
         'MatthiasMullie\\Minify\\' => 
         array (
             0 => __DIR__ . '/..' . '/matthiasmullie/minify/src',
-        ),
-        'Libs\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/inc/src/Libs',
         ),
         'Detection\\' => 
         array (

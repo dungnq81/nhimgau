@@ -20,7 +20,6 @@ use Plugins\WooCommerce;
  * @author Gaudev
  */
 final class Theme {
-
 	use Singleton;
 
 	// --------------------------------------------------
@@ -180,7 +179,6 @@ final class Theme {
 	 * @return void
 	 */
 	public function plugins_setup(): void {
-
 		Helper::isWoocommerceActive() && WooCommerce\WooCommerce::get_instance();
 		Helper::isAcfActive() && ACF\ACF::get_instance();
 		Helper::isCf7Active() && CF7::get_instance();
@@ -214,7 +212,6 @@ final class Theme {
 
 		// Removes the styling added to the header for recent comments
 		global $wp_widget_factory;
-
 		remove_action( 'wp_head', [ $wp_widget_factory->widgets['WP_Widget_Recent_Comments'], 'recent_comments_style' ] );
 	}
 
@@ -286,7 +283,7 @@ final class Theme {
 			return $allcaps;
 		}
 
-		// If user is not allowed, remove the capability to install plugins
+		// If a user is not allowed, remove the capability to install plugins
 		if ( isset( $allcaps['activate_plugins'] ) ) {
 			unset( $allcaps['install_plugins'], $allcaps['delete_plugins'] );
 		}

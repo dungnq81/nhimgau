@@ -10,7 +10,6 @@
         "psr-4": {
             "Admin\\": "inc/src/Admin",
             "Cores\\": "inc/src/Cores",
-            "Libs\\": "inc/src/Libs",
             "Plugins\\": "inc/src/Plugins",
             "Themes\\": "inc/src/Themes",
             "Widgets\\": "inc/src/Widgets"

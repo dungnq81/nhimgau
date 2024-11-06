@@ -44,8 +44,8 @@ const jsFiles = [
     'admin',
 
     // plugin
-    // 'plugins/back-to-top',
-    // 'plugins/social-share',
+    'plugins/back-to-top',
+    'plugins/social-share',
     'plugins/skip-link-focus',
     'plugins/load-scripts',
     // 'plugins/swiper',

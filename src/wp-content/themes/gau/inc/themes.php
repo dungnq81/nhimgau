@@ -384,21 +384,21 @@ function __query_vars( $vars ): array {
 // custom filter
 // --------------------------------------------------
 
-add_filter( 'haku_menu_options_page', '__menu_options_page', 99 );
+add_filter( 'addon_menu_options_page', '__menu_options_page', 99 );
 
 function __menu_options_page(): array {
 	return [
 		'aspect_ratio'      => __( 'Aspect Ratio', TEXT_DOMAIN ),
-		//'smtp'              => __( 'SMTP', TEXT_DOMAIN ),
+		'smtp'              => __( 'SMTP', TEXT_DOMAIN ),
 		//'contact_info'   => __( 'Contact Info', TEXT_DOMAIN ),
-		//'contact_button' => __( 'Contact Button', TEXT_DOMAIN ),
+		'contact_button' => __( 'Contact Button', TEXT_DOMAIN ),
 		'editor'            => __( 'Editor', TEXT_DOMAIN ),
 		'optimizer'         => __( 'Optimizer', TEXT_DOMAIN ),
 		'security'          => __( 'Security', TEXT_DOMAIN ),
 		'login_security'    => __( 'Login Security', TEXT_DOMAIN ),
 		'social'            => __( 'Social', TEXT_DOMAIN ),
 		'base_slug'         => __( 'Remove Base Slug', TEXT_DOMAIN ),
-		'custom_email_from' => __( 'Custom Email From', TEXT_DOMAIN ),
+		//'custom_email_from' => __( 'Custom Email From', TEXT_DOMAIN ),
 		'custom_email'      => __( 'Custom Email To', TEXT_DOMAIN ),
 		'custom_sorting'    => __( 'Custom Sorting', TEXT_DOMAIN ),
 		'recaptcha'      => __( 'reCAPTCHA', TEXT_DOMAIN ),
@@ -410,7 +410,7 @@ function __menu_options_page(): array {
 
 // --------------------------------------------------
 
-add_filter( 'haku_theme_setting_options', '__theme_setting_options', 99 );
+add_filter( 'addon_theme_setting_options', '__theme_setting_options', 99 );
 
 function __theme_setting_options( array $arr ): array {
 	$arr_new = [
@@ -425,11 +425,6 @@ function __theme_setting_options( array $arr ): array {
 
 			// defer.
 			'contact-form-7'       => 'defer',
-			'swv'                  => 'defer',
-			'hoverintent-js'       => 'defer',
-			'wc-single-product'    => 'defer',
-			'sourcebuster-js'      => 'defer',
-			'wc-order-attribution' => 'defer',
 
 			// delay.
 			'comment-reply'        => 'delay',
@@ -449,7 +444,6 @@ function __theme_setting_options( array $arr ): array {
 			'post',
 
 			//...
-			'job',
 		],
 
 		// Aspect Ratio default.
@@ -468,9 +462,6 @@ function __theme_setting_options( array $arr ): array {
 			'post_tag',
 
 			//...
-			'department',
-			'job-category',
-			'year-of-experience',
 		],
 
 		// Add ID to admin post-page.
@@ -486,14 +477,10 @@ function __theme_setting_options( array $arr ): array {
 			'post_tag',
 
 			//...
-			'department',
-			'job-category',
 		],
 
 		// Exclude thumb post_type columns.
-		'post_type_exclude_thumb_columns'   => [
-			'employment-type'
-		],
+		'post_type_exclude_thumb_columns'   => [],
 
 		// ACF attributes in menu locations.
 		'acf_menu_items_locations'          => [
@@ -510,8 +497,6 @@ function __theme_setting_options( array $arr ): array {
 		'post_type_terms'                   => [
 
 			//...
-			'team' => 'department',
-			'job'  => 'job-category',
 		],
 
 		// smtp_plugins_support.
@@ -531,11 +516,7 @@ function __theme_setting_options( array $arr ): array {
 		],
 
 		// Custom Email list (to).
-		'custom_emails'                     => [
-			'job_contact'     => __( 'Job Contacts', TEXT_DOMAIN ),
-			'job_alert'       => __( 'Job Alerts', TEXT_DOMAIN ),
-			'job_application' => __( 'Job Applications', TEXT_DOMAIN ),
-		],
+		'custom_emails'                     => [],
 
 		// lazy_load_exclude.
 		'lazy_load_exclude_css_class'       => [
@@ -608,7 +589,6 @@ function __theme_setting_options( array $arr ): array {
 //			],
 			'linkedin' => [
 				'name'  => 'Linkedin',
-				//'icon'  => Helper::home( '/' ) . 'images/linkedin.svg',
 				'icon'  => '<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_73_5845)"><mask id="mask0_73_5845" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="32" height="32"><path d="M32 0H0V32H32V0Z" fill="white"></path></mask><g mask="url(#mask0_73_5845)"><g opacity="0.5"><path d="M30.6 0H1.4C0.6 0 0 0.6 0 1.4V30.8C0 31.4 0.6 32 1.4 32H30.8C31.6 32 32.2 31.4 32.2 30.6V1.4C32 0.6 31.4 0 30.6 0ZM9.4 27.2H4.8V12H9.6V27.2H9.4ZM7.2 10C5.6 10 4.4 8.6 4.4 7.2C4.4 5.6 5.6 4.4 7.2 4.4C8.8 4.4 10 5.6 10 7.2C9.8 8.6 8.6 10 7.2 10ZM27.2 27.2H22.4V19.8C22.4 18 22.4 15.8 20 15.8C17.6 15.8 17.2 17.8 17.2 19.8V27.4H12.4V12H17V14C17.6 12.8 19.2 11.6 21.4 11.6C26.2 11.6 27 14.8 27 18.8V27.2H27.2Z" fill="url(#paint0_linear_73_5845)"></path></g></g></g><defs><linearGradient id="paint0_linear_73_5845" x1="0" y1="16" x2="32.2" y2="16" gradientUnits="userSpaceOnUse"><stop stop-color="#DD1940"></stop><stop offset="1" stop-color="#92035F"></stop></linearGradient><clipPath id="clip0_73_5845"><rect width="32" height="32" fill="white"></rect></clipPath></defs></svg>',
 				'color' => '#0a66c2',
 				'url'   => '',
