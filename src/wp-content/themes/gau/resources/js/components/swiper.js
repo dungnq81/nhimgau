@@ -292,7 +292,7 @@ const spgSwipers = () => {
             swiper_images = initializeSwiper( w_images, '.images-' + classes.rand, images_options );
         }
 
-        /** variation image */
+        /** Variation image */
         let firstImage = w_images?.querySelector( '.swiper-images-first img' );
         firstImage.removeAttribute( 'srcset' );
 
@@ -313,9 +313,9 @@ const spgSwipers = () => {
         }
 
         /** WC event */
-        const variations_form = document?.querySelector( 'form.variations_form' );
+        const variations_form = $( 'form.variations_form' );
         if ( variations_form ) {
-            variations_form.addEventListener( 'found_variation', ( event, variation ) => {
+            variations_form.on( 'found_variation', function ( event, variation ) {
                 if ( variation.image.src ) {
                     firstImage.setAttribute( 'src', variation.image.src );
                     imagePopupSrc.setAttribute( 'data-src', variation.image.full_src );
@@ -327,7 +327,7 @@ const spgSwipers = () => {
                 }
             } );
 
-            variations_form.addEventListener( 'reset_image', () => {
+            variations_form.on( 'reset_image', function () {
                 firstImage.setAttribute( 'src', firstImageSrc );
                 imagePopupSrc.setAttribute( 'data-src', dataLargeImage );
                 if ( swiper_thumbs ) {

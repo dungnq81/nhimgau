@@ -108,14 +108,14 @@ final class Addons {
 		if ( $allowed_pages === $hook ) {
 
 			if ( ! wp_style_is( 'select2-style' ) ) {
-				wp_enqueue_style( 'select2-style', ADDONS_URL . 'assets/css/plugins/select2.min.css', [], $version );
+				wp_enqueue_style( 'select2-style', ADDONS_URL . 'assets/css/components/select2.min.css', [], $version );
 			}
 
 			if ( ! wp_script_is( 'select2', 'registered' ) ) {
-				wp_register_script( 'select2', ADDONS_URL . 'assets/js/plugins/select2.full.min.js', [ 'jquery-core' ], $version, true );
+				wp_register_script( 'select2', ADDONS_URL . 'assets/js/components/select2.full.min.js', [ 'jquery-core' ], $version, true );
 			}
 
-			wp_enqueue_script( 'select2-addons', ADDONS_URL . 'assets/js/plugins/select2.js', [ 'select2' ], $version, true );
+			wp_enqueue_script( 'select2-addons', ADDONS_URL . 'assets/js/components/select2.js', [ 'select2' ], $version, true );
 			wp_script_add_data( 'select2-addons', 'defer', true );
 
 			$codemirror_settings = [

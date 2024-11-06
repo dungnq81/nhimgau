@@ -1,5 +1,5 @@
-=== Haku Addons ===
-Contributors: HD & Dsquare
+=== Gau Addons ===
+Contributors: Gaudev
 Requires at least: 3.0
 Requires PHP: 8.2
 Tested up to: 6.5.2
@@ -9,11 +9,11 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-Addons plugin for Haku Theme
+Addons plugin for Gau Theme
 
 == Installation ==
 
-1. Upload `haku-addons` directory to the `/wp-content/plugins/` directory
+1. Upload `gau-addons` directory to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Changelog ==
