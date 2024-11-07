@@ -1,6 +1,7 @@
 @use "../variables" as vars;
 @use "../mixins" as mixin;
-@use "swiper/css/bundle" as *;
+
+@use "swiper/css/bundle";
 
 //
 // Custom CSS
