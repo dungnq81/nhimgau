@@ -1,0 +1,66 @@
+@use "sass:map";
+@use "../variables" as vars;
+@use "../mixins" as mixin;
+
+:root {
+    --black: #{map.get(vars.$colors, "black")};
+    --white: #{map.get(vars.$colors, "white")};
+    --gray: #{map.get(vars.$colors, "gray")};
+    --gray-dark: #{map.get(vars.$colors, "gray-dark")};
+    --blue: #{map.get(vars.$colors, "blue")};
+    --indigo: #{map.get(vars.$colors, "indigo")};
+    --purple: #{map.get(vars.$colors, "purple")};
+    --pink: #{map.get(vars.$colors, "pink")};
+    --red: #{map.get(vars.$colors, "red")};
+    --orange: #{map.get(vars.$colors, "orange")};
+    --yellow: #{map.get(vars.$colors, "yellow")};
+    --green: #{map.get(vars.$colors, "green")};
+    --teal: #{map.get(vars.$colors, "teal")};
+    --cyan: #{map.get(vars.$colors, "cyan")};
+
+    --primary: #{map.get(vars.$theme-colors, "primary")};
+    --secondary: #{map.get(vars.$theme-colors, "secondary")};
+    --success: #{map.get(vars.$theme-colors, "success")};
+    --info: #{map.get(vars.$theme-colors, "info")};
+    --warning: #{map.get(vars.$theme-colors, "warning")};
+    --alert: #{map.get(vars.$theme-colors, "alert")};
+    --light: #{map.get(vars.$theme-colors, "light")};
+    --dark: #{map.get(vars.$theme-colors, "dark")};
+
+    --body-color: #{vars.$body-color};
+    --body-bg: #{vars.$body-bg};
+
+    --link-color: #{vars.$link-color};
+    --link-hover-color: #{vars.$link-hover-color};
+
+    --gutter: #{map.get(vars.$spacers, "gutter")};
+    --gutter-xs: #{map.get(vars.$spacers, "gutter-xs")};
+    --gap: #{map.get(vars.$spacers, "gap")};
+    --gap-xs: #{map.get(vars.$spacers, "gap-xs")};
+
+    --line-height-header: #{vars.$line-height-header};
+    --line-height-paragraph: #{vars.$line-height-paragraph};
+
+    --Primary-01: #{vars.$Primary-01};
+    --Primary-02: #{vars.$Primary-02};
+    --Primary-03: #{vars.$Primary-03};
+    --Primary-04: #{vars.$Primary-04};
+}
+
+@include mixin.mq-min(lg) {
+    ::-webkit-scrollbar-track {
+        background-color: vars.$gray-200;
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: vars.$gray-500;
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar {
+        @include mixin.box(vars.$scrollbar-w, vars.$scrollbar-h);
+    }
+}
+
+
