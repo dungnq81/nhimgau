@@ -55,7 +55,7 @@ final class Custom_Login {
 				esc_html__( 'You don’t have access to this page. Please contact the administrator of this website for further assistance.', ADDONS_TEXT_DOMAIN ),
 				esc_html__( 'Restricted access', ADDONS_TEXT_DOMAIN ),
 				[
-					'haku_error'      => true,
+					'addon_error'      => true,
 					'response'      => 403,
 					'blocked_login' => true,
 				]
@@ -75,7 +75,7 @@ final class Custom_Login {
 						esc_html__( 'You don’t have access to this page. Please contact the administrator of this website for further assistance.', ADDONS_TEXT_DOMAIN ),
 						esc_html__( 'Restricted access', ADDONS_TEXT_DOMAIN ),
 						[
-							'haku_error'      => true,
+							'addon_error'      => true,
 							'response'      => 403,
 							'blocked_login' => true,
 						]

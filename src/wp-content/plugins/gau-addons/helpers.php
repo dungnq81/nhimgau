@@ -400,8 +400,8 @@ if ( ! function_exists( 'update_custom_post_option' ) ) {
 	 *
 	 * @return array|int|WP_Error|WP_Post|null
 	 */
-	function update_custom_post_option( string $mixed = '', string $post_type = 'haku_css', string $code_type = 'css', bool $encode = false, string $preprocessed = '' ): WP_Error|array|int|WP_Post|null {
-		$post_type = $post_type ?: 'haku_css';
+	function update_custom_post_option( string $mixed = '', string $post_type = 'addon_css', string $code_type = 'css', bool $encode = false, string $preprocessed = '' ): WP_Error|array|int|WP_Post|null {
+		$post_type = $post_type ?: 'addon_css';
 		$code_type = $code_type ?: 'text/css';
 
 		if ( in_array( $code_type, [ 'css', 'text/css' ] ) ) {
@@ -489,7 +489,7 @@ if ( ! function_exists( 'filter_setting_options' ) ) {
 	 * @return array|mixed
 	 */
 	function filter_setting_options( $name, mixed $default = [] ): mixed {
-		$filters = apply_filters( 'addon_theme_setting_options', [] );
+		$filters = apply_filters( 'addon_theme_setting_options_filter', [] );
 
 		if ( isset( $filters[ $name ] ) ) {
 			return $filters[ $name ] ?: $default;
@@ -569,33 +569,37 @@ if ( ! function_exists( 'ip_address' ) ) {
 	 */
 	function ip_address(): string {
 		if ( class_exists( 'Whip' ) ) {
-			$clientAddress = ( new Whip( Whip::ALL_METHODS ) )->getValidIpAddress();
 
+			// Use a Whip library to get the valid IP address
+			$clientAddress = ( new Whip( Whip::ALL_METHODS ) )->getValidIpAddress();
 			if ( false !== $clientAddress ) {
 				return preg_replace( '/^::1$/', '127.0.0.1', $clientAddress );
 			}
 		} else {
 
-			// Get real visitor IP behind CloudFlare network
+			// Check for CloudFlare's connecting IP
 			if ( isset( $_SERVER["HTTP_CF_CONNECTING_IP"] ) ) {
-				$_SERVER['REMOTE_ADDR']    = $_SERVER["HTTP_CF_CONNECTING_IP"];
-				$_SERVER['HTTP_CLIENT_IP'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+				return $_SERVER["HTTP_CF_CONNECTING_IP"];
 			}
 
-			$client  = $_SERVER['HTTP_CLIENT_IP'] ?? '';
-			$forward = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? '';
-			$remote  = $_SERVER['REMOTE_ADDR'] ?? '';
-
-			if ( filter_var( $client, FILTER_VALIDATE_IP ) ) {
-				return $client;
+			// Check for forwarded IP (proxy) and get the first valid IP
+			if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+				foreach ( explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] ) as $ip ) {
+					$ip = trim( $ip );
+					if ( filter_var( $ip, FILTER_VALIDATE_IP ) ) {
+						return $ip;
+					}
+				}
 			}
 
-			if ( filter_var( $forward, FILTER_VALIDATE_IP ) ) {
-				return $forward;
+			// Check for client IP
+			if ( isset( $_SERVER['HTTP_CLIENT_IP'] ) && filter_var( $_SERVER['HTTP_CLIENT_IP'], FILTER_VALIDATE_IP ) ) {
+				return $_SERVER['HTTP_CLIENT_IP'];
 			}
 
-			if ( filter_var( $remote, FILTER_VALIDATE_IP ) ) {
-				return $remote;
+			// Fallback to remote address
+			if ( isset( $_SERVER['REMOTE_ADDR'] ) && filter_var( $_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP ) ) {
+				return $_SERVER['REMOTE_ADDR'];
 			}
 		}
 

@@ -17,7 +17,7 @@ mix.sass( `${ resources }/sass/admin_addons.scss`, `${ assets }/css` );
 mix.js( `${ resources }/js/custom_sorting.js`, `${ assets }/js` )
     .js( `${ resources }/js/lazyload.js`, `${ assets }/js` )
     .js( `${ resources }/js/recaptcha.js`, `${ assets }/js` )
-    .js( `${ resources }/js/select2.js`, `${ assets }/js/plugins` )
+    .js( `${ resources }/js/select2.js`, `${ assets }/js/components` )
     .js( `${ resources }/js/admin_addons.js`, `${ assets }/js` );
 
 // Copy directories

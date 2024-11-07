@@ -54,7 +54,7 @@ final class Admin {
 
 		wp_enqueue_style( "admin-style", ASSETS_URL . "css/admin.css", [], $version );
 
-		wp_register_script( 'pace-js', ASSETS_URL . 'js/plugins/pace.min.js', [], $version, true );
+		wp_register_script( 'pace-js', ASSETS_URL . 'js/components/pace.min.js', [], $version, true );
 		$pace_js_inline = 'paceOptions = {startOnPageLoad:!1}';
 		wp_add_inline_script( 'pace-js', $pace_js_inline, 'before' );
 

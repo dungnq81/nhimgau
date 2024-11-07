@@ -2,13 +2,13 @@
 
 \defined( 'ABSPATH' ) || die;
 
-$menu_options_page = apply_filters( 'addon_menu_options_page', [] );
+$menu_options_page = apply_filters( 'addon_menu_options_page_filter', [] );
 
 ?>
 <div id="_nav" class="tabs-nav">
 	<div class="logo-title">
 		<h3>
-			<?php _e( 'Gau Settings', ADDONS_TEXT_DOMAIN ); ?>
+			<?php _e( 'Addons Settings', ADDONS_TEXT_DOMAIN ); ?>
 			<span>Version: <?php echo ADDONS_VERSION; ?></span>
 		</h3>
 	</div>

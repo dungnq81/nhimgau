@@ -16,7 +16,7 @@ $illegal_users             = $login_security_options['illegal_users'] ?? '';
 
 echo '<h2>' . __( 'Login Security Settings', ADDONS_TEXT_DOMAIN ) . '</h2>';
 
-$login_security_default = filter_setting_options( 'login_security', false );
+$login_security_default = \filter_setting_options( 'login_security', false );
 if ( $login_security_default['enable_custom_login_options'] ) :
 
 ?>

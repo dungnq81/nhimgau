@@ -234,14 +234,14 @@ final class Optimizer {
 		<script>document.documentElement.classList.remove('no-js');if (-1 !== navigator.userAgent.toLowerCase().indexOf('msie') || -1 !== navigator.userAgent.toLowerCase().indexOf('trident/')) {document.documentElement.classList.add('is-IE');}</script>
 		<?php
 
-		if ( is_file( $skip_link = THEME_PATH . 'assets/js/plugins/skip-link-focus.js' ) ) {
+		if ( is_file( $skip_link = THEME_PATH . 'assets/js/components/skip-link-focus.js' ) ) {
 			echo '<script>';
 			include $skip_link;
 			echo '</script>';
 		}
 
 		$str_parsed = Helper::filterSettingOptions( 'defer_script', [] );
-		if ( Helper::hasDelayScriptTag( $str_parsed ) && is_file( $load_scripts = THEME_PATH . 'assets/js/plugins/load-scripts.js' ) ) {
+		if ( Helper::hasDelayScriptTag( $str_parsed ) && is_file( $load_scripts = THEME_PATH . 'assets/js/components/load-scripts.js' ) ) {
 			echo '<script>';
 			include $load_scripts;
 			echo '</script>';

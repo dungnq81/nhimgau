@@ -212,7 +212,10 @@ final class Theme {
 
 		// Removes the styling added to the header for recent comments
 		global $wp_widget_factory;
-		remove_action( 'wp_head', [ $wp_widget_factory->widgets['WP_Widget_Recent_Comments'], 'recent_comments_style' ] );
+		remove_action( 'wp_head', [
+			$wp_widget_factory->widgets['WP_Widget_Recent_Comments'],
+			'recent_comments_style'
+		] );
 	}
 
 	// --------------------------------------------------
@@ -230,12 +233,15 @@ final class Theme {
 
 		/** Stylesheet */
 		wp_enqueue_style( "app-style", ASSETS_URL . "css/app.css", [], $version );
+		wp_enqueue_style( "fonts-style", ASSETS_URL . "css/fonts.css", [], $version );
 
 		/** Scripts */
 		wp_add_inline_script( 'jquery-core', 'Object.assign(window, { $: jQuery, jQuery });', 'after' );
-
 		wp_enqueue_script( "app", ASSETS_URL . "js/app.js", [ "jquery-core" ], $version, true );
 		wp_script_add_data( "app", "defer", true );
+
+		wp_enqueue_script( "back-to-top", ASSETS_URL . "js/components/back-to-top.js", [], false, true );
+		wp_enqueue_script( "social-share", ASSETS_URL . "js/components/social-share.js", [], '0.0.3', true );
 
 		/** Inline Js */
 		$recaptcha_options     = Helper::getOption( 'recaptcha__options' );

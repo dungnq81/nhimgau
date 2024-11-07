@@ -45,18 +45,18 @@ function __register_sidebars_action(): void {
 	// Homepage
 	//----------------------------------------------------------
 
-//	$home_sidebar = register_sidebar(
-//		[
-//			'container'     => false,
-//			'id'            => 'home-sidebar',
-//			'name'          => __( 'Homepage', TEXT_DOMAIN ),
-//			'description'   => __( 'Widgets added here will appear in homepage.', TEXT_DOMAIN ),
-//			'before_widget' => '<div class="%2$s">',
-//			'after_widget'  => '</div>',
-//			'before_title'  => '<span>',
-//			'after_title'   => '</span>',
-//		]
-//	);
+	$home_sidebar = register_sidebar(
+		[
+			'container'     => false,
+			'id'            => 'home-sidebar',
+			'name'          => __( 'Homepage', TEXT_DOMAIN ),
+			'description'   => __( 'Widgets added here will appear in homepage.', TEXT_DOMAIN ),
+			'before_widget' => '<div class="%2$s">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<span>',
+			'after_title'   => '</span>',
+		]
+	);
 
 	//----------------------------------------------------------
 	// Header
@@ -168,18 +168,18 @@ function __register_sidebars_action(): void {
 	//----------------------------------------------------------
 
 	// Footer Credit
-//	$footer_credit_sidebar = register_sidebar(
-//		[
-//			'container'     => false,
-//			'id'            => 'footer-credit-sidebar',
-//			'name'          => __( 'Footer Credit', TEXT_DOMAIN ),
-//			'description'   => __( 'Widgets added here will appear in footer.', TEXT_DOMAIN ),
-//			'before_widget' => '<div class="%2$s">',
-//			'after_widget'  => '</div>',
-//			'before_title'  => '<span>',
-//			'after_title'   => '</span>',
-//		]
-//	);
+	$footer_credit_sidebar = register_sidebar(
+		[
+			'container'     => false,
+			'id'            => 'footer-credit-sidebar',
+			'name'          => __( 'Footer Credit', TEXT_DOMAIN ),
+			'description'   => __( 'Widgets added here will appear in footer.', TEXT_DOMAIN ),
+			'before_widget' => '<div class="%2$s">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<span>',
+			'after_title'   => '</span>',
+		]
+	);
 }
 
 // --------------------------------------------------
@@ -384,8 +384,11 @@ function __query_vars( $vars ): array {
 // custom filter
 // --------------------------------------------------
 
-add_filter( 'addon_menu_options_page', '__menu_options_page', 99 );
+add_filter( 'addon_menu_options_page_filter', '__menu_options_page', 99 );
 
+/**
+ * @return array
+ */
 function __menu_options_page(): array {
 	return [
 		'aspect_ratio'      => __( 'Aspect Ratio', TEXT_DOMAIN ),
@@ -410,14 +413,19 @@ function __menu_options_page(): array {
 
 // --------------------------------------------------
 
-add_filter( 'addon_theme_setting_options', '__theme_setting_options', 99 );
+add_filter( 'addon_theme_setting_options_filter', '__theme_setting_options', 99 );
 
+/**
+ * @param array $arr
+ *
+ * @return array
+ */
 function __theme_setting_options( array $arr ): array {
 	$arr_new = [
 
 		// hide admin menu
 		'admin_hide_menu'                   => [
-			'edit.php',
+			//'edit.php',
 		],
 
 		// defer, delay script - default 5s.

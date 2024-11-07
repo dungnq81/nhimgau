@@ -65,7 +65,7 @@ final class Login_Attempts {
 				esc_html__( 'Access to login page is currently restricted because of too many incorrect login attempts.', ADDONS_TEXT_DOMAIN ),
 				esc_html__( 'Restricted access', ADDONS_TEXT_DOMAIN ),
 				[
-					'haku_error'      => true,
+					'addon_error'      => true,
 					'response'      => 403,
 					'blocked_login' => true,
 				]

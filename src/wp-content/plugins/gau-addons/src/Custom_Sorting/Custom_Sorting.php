@@ -226,7 +226,7 @@ final class Custom_Sorting {
 			);
 		}
 
-		do_action( 'haku_update_menu_order_post_type' );
+		do_action( 'addon_update_menu_order_post_type' );
 		die();
 	}
 
@@ -262,7 +262,7 @@ final class Custom_Sorting {
 
 		foreach ( $id_arr as $position => $id ) {
 			$id = (int) $id;
-			$wpdb->update(
+			$_updated = $wpdb->update(
 				$wpdb->terms,
 				[ 'term_order' => $menu_order_arr[ $position ] ],
 				[ 'term_id' => $id ],
@@ -271,7 +271,7 @@ final class Custom_Sorting {
 			);
 		}
 
-		do_action( 'haku_update_menu_order_taxonomy' );
+		do_action( 'addon_update_menu_order_taxonomy' );
 		die();
 	}
 

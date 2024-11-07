@@ -32,6 +32,8 @@ final class Option_Page {
 		add_filter( 'menu_order', [ $this, 'options_reorder_submenu' ] );
 		add_filter( 'custom_menu_order', '__return_true' );
 
+		add_action( 'admin_init', [ $this, 'add_addon_capability_to_roles' ] );
+
 		// ajax for settings
 		add_action( 'wp_ajax_submit_settings', [ $this, 'ajax_submit_settings' ] );
 	}
@@ -42,12 +44,10 @@ final class Option_Page {
 	 * @return void
 	 */
 	public function admin_menu(): void {
-        global $menu;
-
 		$menu_setting = add_menu_page(
-			__( 'Gau Settings', ADDONS_TEXT_DOMAIN ),
-			__( 'Gau', ADDONS_TEXT_DOMAIN ),
-			'manage_options',
+			__( 'Addons Settings', ADDONS_TEXT_DOMAIN ),
+			__( 'Addons', ADDONS_TEXT_DOMAIN ),
+			'addon_manage_options',
 			'addon-settings',
 			[ $this, '_addon_menu_callback' ],
 			'dashicons-admin-settings',
@@ -58,7 +58,7 @@ final class Option_Page {
 			'addon-settings',
 			__( 'Advanced', ADDONS_TEXT_DOMAIN ),
 			__( 'Advanced', ADDONS_TEXT_DOMAIN ),
-			'manage_options',
+			'addon_manage_options',
 			'customize.php'
 		);
 
@@ -66,7 +66,7 @@ final class Option_Page {
 			'addon-settings',
 			__( 'Server Info', ADDONS_TEXT_DOMAIN ),
 			__( 'Server Info', ADDONS_TEXT_DOMAIN ),
-			'manage_options',
+			'addon_manage_options',
 			'server-info',
 			[ $this, '_addon_server_info_callback', ]
 		);
@@ -91,6 +91,18 @@ final class Option_Page {
 
 		return $menu_order;
 	}
+
+	/** ----------------------------------------------- */
+
+	/**
+	 * @return void
+	 */
+    public function add_addon_capability_to_roles(): void {
+	    foreach ( [ 'administrator', 'editor' ] as $role_name ) {
+		    $role = get_role( $role_name );
+		    $role?->add_cap( 'addon_manage_options' );
+	    }
+    }
 
 	/** ----------------------------------------------- */
 
@@ -423,7 +435,7 @@ final class Option_Page {
 
         /** Custom CSS */
 		$html_custom_css = $data['html_custom_css'] ?? '';
-		$_css = \update_custom_post_option( $html_custom_css, 'gau_css', 'text/css' );
+		$_css = \update_custom_post_option( $html_custom_css, 'addon_css', 'text/css' );
 
 		/** ---------------------------------------- */
 
@@ -442,8 +454,8 @@ final class Option_Page {
 		?>
         <div class="wrap" id="_container">
             <form id="_settings_form" method="post" enctype="multipart/form-data">
-
 				<?php
+
 				$nonce_field = wp_nonce_field( '_wpnonce_settings_form_' . get_current_user_id() ); ?>
 
                 <div id="main" class="filter-tabs clearfix">

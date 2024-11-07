@@ -109,7 +109,7 @@ final class Customizer {
 			[
 				'priority'       => 140,
 				'theme_supports' => '',
-				'title'          => __( 'Haku', TEXT_DOMAIN ),
+				'title'          => __( 'Addons', TEXT_DOMAIN ),
 				'description'    => __( 'Controls the add-on menu', TEXT_DOMAIN ),
 			]
 		);

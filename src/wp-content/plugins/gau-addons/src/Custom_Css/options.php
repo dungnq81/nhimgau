@@ -2,7 +2,7 @@
 
 \defined( 'ABSPATH' ) || die;
 
-$css = get_custom_post_option_content( 'haku_css', false );
+$css = \get_custom_post_option_content( 'addon_css', false );
 
 ?>
 <h2><?php _e( 'CSS Settings', ADDONS_TEXT_DOMAIN ); ?></h2>

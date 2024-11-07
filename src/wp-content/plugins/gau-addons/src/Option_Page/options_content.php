@@ -2,7 +2,7 @@
 
 \defined( 'ABSPATH' ) || die;
 
-$menu_options_page = apply_filters( 'addon_menu_options_page', [] );
+$menu_options_page = apply_filters( 'addon_menu_options_page_filter', [] );
 
 ?>
 <div id="_content" class="tabs-content">
@@ -27,7 +27,7 @@ $menu_options_page = apply_filters( 'addon_menu_options_page', [] );
 		<?php
 
 		$option_file = ADDONS_SRC_PATH . \capitalized_slug( $slug ) . DIRECTORY_SEPARATOR . 'options.php';
-		$option_file = apply_filters( 'haku_content_option_file', $option_file );
+		$option_file = apply_filters( 'addon_content_option_file', $option_file );
 
         file_exists ( $option_file ) && include $option_file;
 

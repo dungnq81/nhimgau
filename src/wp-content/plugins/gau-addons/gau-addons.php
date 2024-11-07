@@ -53,7 +53,7 @@ function addons_requirement_notice(): void {
 		printf(
 			'<div class="%1$s"><p>%2$s <a target="_blank" href="%3$s"><strong>%4$s</strong></a></p></div>',
 			'notice notice-error',
-			wp_kses( __( '<strong>Gau Addons</strong> plugin requires', ADDONS_TEXT_DOMAIN ), [ 'strong' => [] ] ),
+			wp_kses( __( '<strong>Addons</strong> plugin requires', ADDONS_TEXT_DOMAIN ), [ 'strong' => [] ] ),
 			'https://www.advancedcustomfields.com/',
 			esc_html__( 'Advanced Custom Fields PRO', ADDONS_TEXT_DOMAIN )
 		);

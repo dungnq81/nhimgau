@@ -26,7 +26,7 @@ final class SMTP {
 	 * @return bool
 	 */
 	private function _check_smtp_menu(): bool {
-		$menu_options_page = apply_filters( 'haku_menu_options_page', [] );
+		$menu_options_page = apply_filters( 'addon_menu_options_page_filter', [] );
 
 		return isset( $menu_options_page['smtp'] );
 	}
