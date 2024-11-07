@@ -78,11 +78,11 @@ final class Headers extends Abstract_Htaccess {
 	// --------------------------------------------------
 
 	/**
-	 * Set the necessary security headers for the rest api.
+	 * @param $result
 	 *
-	 * @param WP_HTTP_Response $result Result to send to the client. Usually a WP_REST_Response.
+	 * @return mixed
 	 */
-	public function set_rest_security_headers( WP_HTTP_Response $result ) {
+	public function set_rest_security_headers( $result ): mixed {
 		// Return result if no headers to add.
 		if ( empty( $this->security_headers ) ) {
 			return $result;

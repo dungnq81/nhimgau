@@ -1,22 +1,22 @@
-# Sử dụng hình ảnh Ubuntu 22.04
+# Use Ubuntu 22.04 image
 FROM ubuntu:22.04
 
-# Đặt môi trường không yêu cầu tương tác
+# Set environment to non-interactive mode
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Ho_Chi_Minh
 ENV APACHE_LOG_DIR=/var/log/apache2
 
-# Cập nhật hệ thống và cài đặt các gói cơ bản
+# Update system and install basic packages
 RUN apt update && apt install -y \
     software-properties-common \
     tzdata \
     && apt clean
 
-# Thêm kho lưu trữ PPA của Ondrej để cài đặt PHP
+# Add Ondrej's PPA repository to install PHP
 RUN add-apt-repository ppa:ondrej/php \
     && apt update
 
-# Cài đặt Apache2, PHP 8.2 và các mô-đun cần thiết
+# Install Apache2, PHP 8.2, and necessary modules
 RUN apt install -y \
     apache2 \
     #curl \
@@ -35,14 +35,14 @@ RUN apt install -y \
     -o Dpkg::Options::="--force-confold" \
     && apt clean
 
-# Kích hoạt các mô-đun cần thiết của Apache
+# Enable required Apache modules
 RUN a2enmod rewrite proxy proxy_http
 
-# Nếu bạn đã tạo file cấu hình virtual host, kích hoạt nó (nếu cần)
+# If you have created a virtual host configuration file, enable it (if needed)
 # RUN a2ensite 000-default.conf
 
-# Mở cổng 80
+# Expose port 80
 EXPOSE 80
 
-# Khởi động Apache khi container bắt đầu
+# Start Apache when the container starts
 CMD ["apachectl", "-D", "FOREGROUND"]

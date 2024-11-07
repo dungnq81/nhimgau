@@ -1,22 +1,21 @@
 {
-	"name": "mu-plugins/gau-mu",
-	"description": "Gau mu-plugins",
-	"authors": [
-		{
-			"name": "Gaudev"
-		}
-	],
-	"autoload": {
-		"psr-4": {},
-		"exclude-from-classmap": [],
-		"files": []
-	},
-	"require": {
-		"php": ">=7.4",
-		"roots/wp-password-bcrypt": "^1.2.0"
-	}
-	,
-	"require-dev": {
-		"roave/security-advisories": "dev-latest"
-	}
+    "name": "mu-plugins/gau-mu",
+    "description": "Gau mu-plugins",
+    "authors": [
+        {
+            "name": "Gaudev"
+        }
+    ],
+    "autoload": {
+        "psr-4": {},
+        "exclude-from-classmap": [],
+        "files": []
+    },
+    "require": {
+        "php": ">=7.4",
+        "roots/wp-password-bcrypt": "^1.2.0"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
+    }
 }

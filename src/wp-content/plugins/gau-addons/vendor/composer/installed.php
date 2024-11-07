@@ -3,7 +3,7 @@
         'name' => 'plugins/gau-addons',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '78c69b27da5d45bb239a29564e6f0f8e65b5c6a1',
+        'reference' => 'cf5891db2f50e711092ea009f6783eb5bcf86a4b',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -49,7 +49,7 @@
         'plugins/gau-addons' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '78c69b27da5d45bb239a29564e6f0f8e65b5c6a1',
+            'reference' => 'cf5891db2f50e711092ea009f6783eb5bcf86a4b',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -76,7 +76,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => 'e3b44e38648ef5386687032582759f9c616c8d19',
+            'reference' => '54f5b5d225a5c90b86985bb4c563e9b284364687',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(
@@ -94,9 +94,9 @@
             'dev_requirement' => true,
         ),
         'symfony/var-dumper' => array(
-            'pretty_version' => 'v7.1.6',
-            'version' => '7.1.6.0',
-            'reference' => 'cb5bd55a6b8c2c1c7fb68b0aeae0e257948a720c',
+            'pretty_version' => 'v7.1.7',
+            'version' => '7.1.7.0',
+            'reference' => 'f6ea51f669760cacd7464bf7eaa0be87b8072db1',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/var-dumper',
             'aliases' => array(),
