@@ -38,17 +38,17 @@
 }
 
 @mixin media-grid-template( $m: 1, $t: false, $d: false, $columns: true ) {
-    @if func.is-int( $m ) and $m > 0 {
+    @if math.is-unitless( $m ) and $m > 0 {
         @include grid-template($m, $columns);
     }
 
-    @if func.is-int( $t ) and $t > 0 {
+    @if math.is-unitless( $t ) and $t > 0 {
         @include mixin.mq-min(md) {
             @include grid-template($t, $columns);
         }
     }
 
-    @if func.is-int( $d ) and $d > 0 {
+    @if math.is-unitless( $d ) and $d > 0 {
         @include mixin.mq-min(lg) {
             @include grid-template($d, $columns);
         }

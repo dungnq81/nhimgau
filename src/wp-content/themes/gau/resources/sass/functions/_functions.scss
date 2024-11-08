@@ -103,15 +103,6 @@
     @return url("#{$url}?v=#{$version}");
 }
 
-/** https://github.com/pentzzsolt/sass-is-int/blob/master/_is-int.scss */
-@function is-int($value) {
-    @if meta.type-of($value) != number {
-        //@warn '`#{$value}` is not a valid number!';
-        @return null;
-    }
-    @return round($value) == $value;
-}
-
 /** https://webdesign.tutsplus.com/tutorials/an-introduction-to-error-handling-in-sass--cms-19996 */
 @function throw($log: '') {
     @warn $log;

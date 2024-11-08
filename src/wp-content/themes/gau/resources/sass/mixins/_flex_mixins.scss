@@ -11,7 +11,8 @@
     @if meta.type-of($gap) == bool or $gap < 0 {
         $gap: 0;
     }
-    @if func.is-int($total) and func.is-int($n) and $n > 0 {
+
+    @if math.is-unitless($total) and math.is-unitless($n) and $n > 0 {
         @if $total == $n {
             width: math.percentage(1);
         } @else if $total > $n {
@@ -30,15 +31,15 @@
     $gap_m: false,
     $gap: false
 ) {
-    @if func.is-int($m) and $m > 0 {
+    @if math.is-unitless($m) and $m > 0 {
         @include flex-self($m, 1, $gap_m);
     }
-    @if func.is-int($t) and $t > 0 {
+    @if math.is-unitless($t) and $t > 0 {
         @include mixin.mq-min(md) {
             @include flex-self($t, 1, $gap);
         }
     }
-    @if func.is-int($d) and $d > 0 {
+    @if math.is-unitless($d) and $d > 0 {
         @include mixin.mq-min(lg) {
             @include flex-self($d, 1, $gap);
         }
@@ -58,15 +59,15 @@
 ) {
     flex: 0 0 auto;
 
-    @if func.is-int($m) and $m > 0 {
+    @if math.is-unitless($m) and $m > 0 {
         @include flex-basis($m, $gap_m);
     }
-    @if func.is-int($t) and $t > 0 {
+    @if math.is-unitless($t) and $t > 0 {
         @include mixin.mq-min(md) {
             @include flex-basis($t, $gap);
         }
     }
-    @if func.is-int($d) and $d > 0 {
+    @if math.is-unitless($d) and $d > 0 {
         @include mixin.mq-min(lg) {
             @include flex-basis($d, $gap);
         }

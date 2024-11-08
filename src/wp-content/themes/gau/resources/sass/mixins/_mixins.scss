@@ -6,7 +6,6 @@
 
 @use "../functions" as func;
 @use "../variables" as vars;
-@use "../linear_gradient" as *;
 
 @mixin color-scheme($name) {
     @media (prefers-color-scheme: #{$name}) {
@@ -305,7 +304,7 @@
 }
 
 @mixin linear-gradient( $angle: 90deg, $c: vars.$primary, $hue: 12deg ) {
-    background: linear-gradient($angle, $c 0%, color.adjust($c, $hue) 100%);
+    background: linear-gradient($angle, $c 0%, color.adjust($c, $hue: $hue) 100%);
 }
 
 @mixin gradient-text( $angle: 135deg, $c: vars.$primary, $hue: 12deg ) {
@@ -329,13 +328,13 @@
 
     &:not(.full) {
 
-        @if func.is-int($padding_m) or math.unit($padding_m) == '%' {
+        @if math.is-unitless($padding_m) or math.unit($padding_m) == '%' {
             padding-left: func.fs($padding_m);
             padding-right: func.fs($padding_m);
         }
 
         // tablet breakpoint
-        @if func.is-int($padding) or math.unit($padding) == '%' {
+        @if math.is-unitless($padding) or math.unit($padding) == '%' {
             @include mq-min(md) {
                 padding-left: func.fs($padding);
                 padding-right: func.fs($padding);
@@ -367,12 +366,12 @@
 }
 
 @mixin mx-gutter( $m: vars.$gutter-xs, $t: vars.$gutter ) {
-    @if func.is-int($m) or math.unit($m) == '%' {
+    @if math.is-unitless($m) or math.unit($m) == '%' {
         margin-left: -#{func.fs($m)};
         margin-right: -#{func.fs($m)};
     }
 
-    @if func.is-int($t) or math.unit($t) == '%' {
+    @if math.is-unitless($t) or math.unit($t) == '%' {
         @include mq-min(md) {
             @if 0 == $t {
                 margin-left: 0;
@@ -386,12 +385,12 @@
 }
 
 @mixin my-gutter( $m: vars.$gutter-xs, $t: vars.$gutter ) {
-    @if func.is-int($m) or math.unit($m) == '%' {
+    @if math.is-unitless($m) or math.unit($m) == '%' {
         margin-top: -#{func.fs($m)};
         margin-bottom: -#{func.fs($m)};
     }
 
-    @if func.is-int($t) or math.unit($t) == '%' {
+    @if math.is-unitless($t) or math.unit($t) == '%' {
         @include mq-min(md) {
             @if 0 == $t {
                 margin-top: 0;
@@ -405,12 +404,12 @@
 }
 
 @mixin px-gutter( $m: vars.$gutter-xs, $t: vars.$gutter ) {
-    @if func.is-int($m) or math.unit($m) == '%' {
+    @if math.is-unitless($m) or math.unit($m) == '%' {
         padding-left: func.fs($m);
         padding-right: func.fs($m);
     }
 
-    @if func.is-int($t) or math.unit($t) == '%' {
+    @if math.is-unitless($t) or math.unit($t) == '%' {
         @include mq-min(md) {
             padding-left: func.fs($t);
             padding-right: func.fs($t);
@@ -419,12 +418,12 @@
 }
 
 @mixin py-gutter( $m: vars.$gutter-xs, $t: vars.$gutter ) {
-    @if func.is-int($m) or math.unit($m) == '%' {
+    @if math.is-unitless($m) or math.unit($m) == '%' {
         padding-top: func.fs($m);
         padding-bottom: func.fs($m);
     }
 
-    @if func.is-int($t) or math.unit($t) == '%' {
+    @if math.is-unitless($t) or math.unit($t) == '%' {
         @include mq-min(md) {
             padding-top: func.fs($t);
             padding-bottom: func.fs($t);
@@ -526,10 +525,10 @@
 }
 
 @mixin list-reset( $margin: false, $padding: false ) {
-    @if func.is-int($margin) {
+    @if math.is-unitless($margin) {
         margin: func.fs($margin);
     }
-    @if func.is-int($padding) {
+    @if math.is-unitless($padding) {
         padding: func.fs($padding);
     }
     list-style: none;
