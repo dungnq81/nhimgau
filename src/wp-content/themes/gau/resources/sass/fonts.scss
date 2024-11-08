@@ -11,7 +11,7 @@
     $base: string.unquote($base);
     $version: string.unique_id();
     @font-face {
-        font-family: quote($font-family);
+        font-family: string.quote($font-family);
         font-style: $font-style;
         font-weight: $font-weight;
         font-display: swap;
