@@ -16,10 +16,11 @@
         @if $total == $n {
             width: math.percentage(1);
         } @else if $total > $n {
-            width: func.subtract(
-                            math.percentage(func.divide($n, $total)),
-                            func.fs(($total - $n) * func.divide($gap, $total))
-            );
+
+            $itemWidth: math.percentage( func.divide( $n, $total ) );
+            $gapAdjustment: func.fs( ( $total - $n ) * func.divide( $gap, $total ) );
+
+            width: func.subtract( $itemWidth, $gapAdjustment );
         }
     }
 }
