@@ -149,7 +149,7 @@ $block-grid-max: vars.$grid-columns-max;
 $header-font-family: $body-font-family;
 $header-font-weight: $global-weight-normal;
 $header-font-style: normal;
-$font-family-monospace: Consolas, 'Liberation Mono', Courier, monospace;
+$font-family-monospace: vars.$monospace-font;
 $header-color: inherit;
 $header-lineheight: vars.$line-height-header;
 $header-margin-bottom: vars.$header-margin-bottom;

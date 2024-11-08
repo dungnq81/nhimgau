@@ -47,6 +47,9 @@
     --Primary-04: #{vars.$Primary-04};
 }
 
+//
+// resets.
+
 @include mixin.mq-min(lg) {
     ::-webkit-scrollbar-track {
         background-color: vars.$gray-200;
@@ -63,4 +66,192 @@
     }
 }
 
+*, *::before, *::after {
+    box-sizing: border-box;
+}
 
+body {
+    color: vars.$body-color;
+    background: vars.$body-bg;
+    font-size: vars.$body-size;
+    font-family: vars.$body-font;
+    line-height: vars.$line-height-global;
+}
+
+:is(input, select, textarea, button, main) {
+    &:focus {
+        outline: none;
+    }
+}
+
+:is(a, button, [role="button"], input, select, textarea) {
+    transition: 0.3s;
+}
+
+:is(a, area, button, [role="button"], input, label, select, summary, textarea) {
+    touch-action: manipulation;
+}
+
+:is([type="submit"], [type="reset"], [type="button"]) {
+    cursor: pointer;
+}
+
+*:disabled {
+    cursor: not-allowed;
+    opacity: .9;
+}
+
+* > p {
+    margin-top: 0;
+    line-height: vars.$line-height-paragraph;
+
+    &:not(:last-child) {
+        margin-bottom: vars.$paragraph-margin-bottom;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+code, kbd, pre, samp {
+    font-family: vars.$monospace-font;
+    font-size: 1rem;
+}
+
+sup {
+    line-height: 1;
+    top: -4px;
+    color: vars.$alert;
+    font-size: 14px;
+    padding-left: 2px;
+}
+
+.cite-block::before, cite::before {
+    content: "";
+}
+
+:is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6) {
+    font-family: vars.$header-font;
+    line-height: vars.$line-height-header;
+    margin-bottom: vars.$header-margin-bottom;
+    font-weight: 700;
+
+    a {
+        display: inline-block;
+    }
+
+    p {
+        color: currentColor;
+        line-height: inherit;
+        margin-bottom: 0;
+    }
+}
+
+a {
+    display: inline-block;
+
+    :where(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6) {
+        color: currentColor;
+    }
+}
+
+img {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100%;
+    height: auto;
+    -ms-interpolation-mode: bicubic;
+
+    &:not([src]) {
+        visibility: hidden;
+    }
+
+    &:where(.aligncenter, .align-center) {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+figure {
+    max-width: 100% !important;
+
+    &:where(.wp-caption, .caption) {
+        display: block;
+
+        img {
+            display: inline-block;
+        }
+
+        &:where(.wp-caption-text, .caption-text) {
+            padding-top: 10px;
+            color: vars.$gray-700;
+        }
+
+        &:where(.aligncenter, .align-center) {
+            margin-bottom: vars.$global-margin;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+    }
+}
+
+:is(.screen-reader-text, .submenu-toggle-text, .hidden-text, .sr-only) {
+    @include mixin.hidden-text();
+}
+
+:is(.clearfix, .clear) {
+    @include mixin.clearfix();
+}
+
+[data-fa]::before {
+    content: attr(data-fa);
+    font-family: vars.$awesome-font;
+}
+
+[data-fa-after]::after {
+    content: attr(data-fa-after);
+    font-family: vars.$awesome-font;
+}
+
+//
+// settings.
+
+.flex {
+    display: flex;
+}
+
+.\!flex {
+    display: flex !important;
+}
+
+.flex-x {
+    @include mixin.flex-x(false);
+
+    & > :where(.auto, .shrink) {
+        width: auto;
+    }
+
+    @include mixin.mq-min(md) {
+        & > :where(.t-auto, .t-shrink) {
+            width: auto;
+        }
+    }
+
+    @include mixin.mq-min(lg) {
+        & > :where(.d-auto, .d-shrink) {
+            width: auto;
+        }
+    }
+}
+
+.flex-y {
+    @include flex-y(false);
+
+    & > .cell {
+        height: auto;
+        max-height: none;
+    }
+}
