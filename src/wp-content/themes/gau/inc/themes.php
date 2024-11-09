@@ -15,9 +15,6 @@ use Cores\Helper;
 
 add_action( 'after_setup_theme', '__after_setup_theme_action', 11 );
 
-/**
- * @link http://codex.wordpress.org/Function_Reference/register_nav_menus#Examples
- */
 function __after_setup_theme_action(): void {
 	register_nav_menus(
 		[
@@ -36,9 +33,6 @@ function __after_setup_theme_action(): void {
 
 add_action( 'widgets_init', '__register_sidebars_action', 11 );
 
-/**
- * @link https://codex.wordpress.org/Function_Reference/register_sidebar
- */
 function __register_sidebars_action(): void {
 
 	//----------------------------------------------------------
@@ -386,9 +380,6 @@ function __query_vars( $vars ): array {
 
 add_filter( 'addon_menu_options_page_filter', '__menu_options_page', 99 );
 
-/**
- * @return array
- */
 function __menu_options_page(): array {
 	return [
 		'aspect_ratio'      => __( 'Aspect Ratio', TEXT_DOMAIN ),
