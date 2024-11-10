@@ -22,6 +22,7 @@
      * @see __external_fonts - 11
 	 */
     wp_head();
+
     ?>
 </head>
 <body <?php body_class(); ?> <?php echo \Cores\Helper::microdata( 'body' ); ?>>
@@ -38,6 +39,7 @@
      * @see __skip_to_content_link - 2
      */
     do_action( 'before_header_action' );
+
     ?>
     <header id="header" class="site-header" <?php echo \Cores\Helper::microdata( 'header' ); ?>>
         <?php
@@ -48,6 +50,7 @@
          * @see __construct_header - 10
          */
         do_action( 'header_action' );
+
         ?>
     </header><!-- #header -->
     <?php
@@ -56,6 +59,7 @@
      * After Header
      */
     do_action( 'after_header_action' );
+
     ?>
     <div class="main site-content" id="site-content">
         <?php

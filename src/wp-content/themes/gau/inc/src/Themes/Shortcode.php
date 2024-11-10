@@ -171,8 +171,18 @@ final class Shortcode {
 		$orderby          = [ 'date' => 'DESC' ];
 		$strtotime_str    = $atts['limit_time'] ? Helper::toString( $atts['limit_time'] ) : false;
 
-		$r = Helper::queryByTerms( $term_ids, $atts['post_type'], $atts['taxonomy'], $include_children, $posts_per_page, $orderby, [], $strtotime_str );
-		if ( ! $r ) {
+		$r = Helper::queryByTerms(
+                $term_ids,
+                $atts['post_type'],
+                $atts['taxonomy'],
+                $include_children,
+                $posts_per_page,
+                $orderby,
+                [],
+                $strtotime_str
+        );
+
+        if ( ! $r ) {
 			return null;
 		}
 

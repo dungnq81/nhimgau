@@ -22,7 +22,7 @@ const INC_PATH   = THEME_PATH . 'inc' . DIRECTORY_SEPARATOR;
 const ASSETS_URL = THEME_URL . 'assets/';
 
 if ( ! file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-	error_log( 'Autoloader not found: ' . __DIR__ . '/vendor/autoload.php' );
+	\Cores\Helper::errorLog( 'Autoloader not found: ' . __DIR__ . '/vendor/autoload.php' );
 	wp_die( __( 'Error locating autoloader. Please run <code>composer install</code>.', TEXT_DOMAIN ) );
 }
 

@@ -70,10 +70,8 @@ final class Theme {
 	/**
 	 * Sets up theme defaults and register support for various WordPress features.
 	 *
-	 * Note that this function is hooked into the after_setup_theme hook, which
-	 * runs before the init hook.
-	 * The init hook is too late for some features, such
-	 * as indicating support for post-thumbnails.
+	 * Note that this function is hooked into the after_setup_theme hook, which runs before the init hook.
+	 * The init hook is too late for some features, such as indicating support for post-thumbnails.
 	 */
 	public function after_setup_theme(): void {
 
@@ -119,7 +117,7 @@ final class Theme {
 		add_theme_support(
 			'custom-logo',
 			apply_filters(
-				'custom_logo_args',
+				'custom_logo_args_filter',
 				[
 					'height'               => $logo_height,
 					'width'                => $logo_width,
@@ -135,8 +133,6 @@ final class Theme {
 	// --------------------------------------------------
 
 	/**
-	 * Init function
-	 *
 	 * @return void
 	 */
 	public function setup(): void {

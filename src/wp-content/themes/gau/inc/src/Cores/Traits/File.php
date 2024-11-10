@@ -225,7 +225,7 @@ trait File {
 	 */
 	public static function createDirectory( $directory ): bool {
 		if ( ! is_writable( dirname( $directory ) ) ) {
-			error_log( sprintf( 'Cannot write to the parent directory: %s.', dirname( $directory ) ) );
+			self::errorLog( sprintf( 'Cannot write to the parent directory: %s.', dirname( $directory ) ) );
 
 			return false;
 		}
@@ -235,7 +235,7 @@ trait File {
 
 		// Bail if you cannot create temp dir.
 		if ( ! $is_directory_created ) {
-			error_log( sprintf( 'Cannot create directory: %s.', $directory ) );
+			self::errorLog( sprintf( 'Cannot create directory: %s.', $directory ) );
 		}
 
 		return $is_directory_created;

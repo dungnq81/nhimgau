@@ -109,28 +109,53 @@ trait Wp {
 	 *
 	 * @return void
 	 */
-	public static function FQNLoad( ?string $path, bool $require_path = false, bool $init_class = false, string $FQN = '\\', bool $is_widget = false ): void {
-		if ( ! empty( $path ) && is_dir( $path ) ) {
-			$files = glob( $path . '/*.php', GLOB_NOSORT );
+	public static function FQNLoad(
+		?string $path,
+		bool $require_path = false,
+		bool $init_class = false,
+		string $FQN = '\\',
+		bool $is_widget = false
+	): void {
+		// Early exit if $path is invalid or not a directory
+		if ( empty( $path ) || ! is_dir( $path ) ) {
+			return;
+		}
 
-			if ( is_array( $files ) ) {
-				foreach ( $files as $file_path ) {
-					$filename    = basename( $file_path, '.php' );
-					$filenameFQN = $FQN . $filename;
+		$files = glob( $path . '/*.php', GLOB_NOSORT );
 
-					if ( is_readable( $file_path ) ) {
-						if ( $require_path ) {
-							require_once $file_path;
-						}
+		// Check if glob() returned false due to an error
+		if ( $files === false ) {
+			self::errorLog( "Failed to read files in directory: $path" );
 
-						if ( $init_class ) {
-							if ( ! $is_widget ) {
-								class_exists( $filenameFQN ) && ( new $filenameFQN() );
-							} else {
-								class_exists( $filenameFQN ) && register_widget( new $filenameFQN() );
-							}
-						}
+			return;
+		}
+
+		foreach ( $files as $file_path ) {
+			$filename    = basename( $file_path, '.php' );
+			$filenameFQN = $FQN . $filename;
+
+			// Skip if $file_path is not readable
+			if ( ! is_readable( $file_path ) ) {
+				continue;
+			}
+
+			// Require the file if $require_path is set to true
+			if ( $require_path ) {
+				require_once $file_path;
+			}
+
+			// Initialize the class or register as widget if $init_class is true
+			if ( $init_class && class_exists( $filenameFQN ) ) {
+				try {
+					if ( $is_widget ) {
+						register_widget( new $filenameFQN() );
+					} else {
+						new $filenameFQN();
 					}
+				} catch ( \Exception $e ) {
+
+					// Log any error that occurs during class initialization
+					self::errorLog( "Error initializing class $filenameFQN: " . $e->getMessage() );
 				}
 			}
 		}

@@ -17,9 +17,10 @@ if ( ! function_exists( '__wp_head' ) ) {
 	add_action( 'wp_head', '__wp_head', 1 );
 
 	function __wp_head(): void {
+
 		//$meta_viewport = '<meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=1.0" />';
 		$meta_viewport = '<meta name="viewport" content="width=device-width, initial-scale=1.0" />';
-		echo apply_filters( 'meta_viewport_filter', $meta_viewport );  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo apply_filters( 'meta_viewport_filter', $meta_viewport );
 
 		// Add a ping-back url auto-discovery header for singularly identifiable articles.
 		if ( is_singular() && pings_open() ) {
@@ -35,7 +36,9 @@ if ( ! function_exists( '__module_preload' ) ) {
 
 	function __module_preload(): void {
 		ob_start();
+
 		//...
+
 		$content = ob_get_clean();
 		echo apply_filters( 'module_preload_filter', $content );
 	}
@@ -48,7 +51,9 @@ if ( ! function_exists( '__external_fonts' ) ) {
 
 	function __external_fonts(): void {
 		ob_start();
+
 		//...
+
 		$content = ob_get_clean();
 		echo apply_filters( 'external_fonts_filter', $content );
 	}
@@ -90,7 +95,7 @@ if ( ! function_exists( '__construct_header' ) ) {
 		 * @see _masthead_top_header - 12
 		 * @see _masthead_header - 13
 		 * @see _masthead_bottom_header - 14
-		 * @see _masthead_custom_header - 98
+		 * @see _masthead_custom - 98
 		 * @see _masthead_container_close - 99
 		 */
 		do_action( 'masthead' );
@@ -104,7 +109,7 @@ if ( ! function_exists( '_masthead_home_seo_header' ) ) {
 
 	function _masthead_home_seo_header(): void {
 		$home_heading = Helper::getThemeMod( 'home_heading_setting' );
-		$home_heading = ! empty( $home_heading ) ? $home_heading : get_bloginfo( 'name' );
+		$home_heading = ! empty( $home_heading ) ? esc_html( $home_heading ) : get_bloginfo( 'name' );
 
 		echo apply_filters( 'home_seo_header_filter', '<h1 class="sr-only">' . $home_heading . '</h1>' );
 	}
@@ -116,7 +121,7 @@ if ( ! function_exists( '_masthead_container_open' ) ) {
 	add_action( 'masthead', '_masthead_container_open', 11 );
 
 	function _masthead_container_open(): void {
-		echo __return_empty_string();
+		echo apply_filters( 'masthead_container_open_filter', '' );
 	}
 }
 
@@ -126,7 +131,7 @@ if ( ! function_exists( '_masthead_container_close' ) ) {
 	add_action( 'masthead', '_masthead_container_close', 99 );
 
 	function _masthead_container_close(): void {
-		echo __return_empty_string();
+		echo apply_filters( 'masthead_container_close_filter', '' );
 	}
 }
 
@@ -219,10 +224,10 @@ if ( ! function_exists( '_masthead_bottom_header' ) ) {
 
 // -----------------------------------------------
 
-if ( ! function_exists( '_masthead_custom_header' ) ) {
-	add_action( 'masthead', '_masthead_custom_header', 98 );
+if ( ! function_exists( '_masthead_custom' ) ) {
+	add_action( 'masthead', '_masthead_custom', 98 );
 
-	function _masthead_custom_header(): void {
+	function _masthead_custom(): void {
 		echo __return_empty_string();
 	}
 }

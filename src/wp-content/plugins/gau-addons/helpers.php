@@ -675,7 +675,7 @@ if ( ! function_exists( 'check_plugin_installed' ) ) {
 	 */
 	function check_plugin_installed( $plugin_slug ): bool {
 
-		// Check if needed functions exist - if not, require them
+		// Check if the necessary functions exist - if not, require them
 		if ( ! function_exists( 'get_plugins' ) || ! function_exists( 'is_plugin_active' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}

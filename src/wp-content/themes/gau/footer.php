@@ -29,8 +29,7 @@ do_action( 'after_site_content_action' );
         /**
          * Footer
          *
-         * @see __construct_footer_widgets - 5
-         * @see __construct_footer_credit - 10
+         * @see __construct_footer - 10
          */
         do_action( 'footer_action' );
 

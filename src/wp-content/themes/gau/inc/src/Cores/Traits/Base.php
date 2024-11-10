@@ -9,6 +9,22 @@ use Detection\MobileDetect;
 
 trait Base {
 
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string $message
+	 * @param int $message_type
+	 * @param string|null $destination
+	 * @param string|null $additional_headers
+	 *
+	 * @return bool|void
+	 */
+	public static function errorLog( string $message, int $message_type = 0, ?string $destination = null, ?string $additional_headers = null ) {
+		if ( WP_DEBUG ) {
+			return error_log( $message, $message_type, $destination, $additional_headers );
+		}
+	}
+
 	// --------------------------------------------------
 
 	/**
@@ -23,7 +39,7 @@ trait Base {
 			return false;
 		}
 
-		$parsed_url = parse_url($url);
+		$parsed_url = parse_url( $url );
 
 		// Validate scheme
 		$valid_schemes = [ 'http', 'https' ];
