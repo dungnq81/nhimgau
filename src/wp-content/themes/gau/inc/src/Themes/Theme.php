@@ -395,7 +395,7 @@ final class Theme {
 		$default_logo    = '';
 		$default_logo_bg = '';
 
-		// script/style
+		// script / style
 		$logo          = ! empty( $logo = Helper::getThemeMod( 'login_page_logo_setting' ) ) ? $logo : $default_logo;
 		$logo_bg       = ! empty( $logo_bg = Helper::getThemeMod( 'login_page_bgimage_setting' ) ) ? $logo_bg : $default_logo_bg;
 		$logo_bg_color = Helper::getThemeMod( 'login_page_bgcolor_setting' );

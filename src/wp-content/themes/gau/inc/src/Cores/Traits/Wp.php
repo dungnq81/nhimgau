@@ -116,6 +116,7 @@ trait Wp {
 		string $FQN = '\\',
 		bool $is_widget = false
 	): void {
+
 		// Early exit if $path is invalid or not a directory
 		if ( empty( $path ) || ! is_dir( $path ) ) {
 			return;
@@ -1515,131 +1516,112 @@ trait Wp {
 	public static function breadCrumbs(): void {
 		global $post, $wp_query;
 
-		$before = '<li class="current">';
-		$after  = '</li>';
-
-		if ( ! is_front_page() ) {
-
-			echo '<ul id="breadcrumbs" class="breadcrumbs" aria-label="Breadcrumbs">';
-			echo '<li><a class="home" href="' . self::home() . '">' . __( 'Trang chủ', TEXT_DOMAIN ) . '</a></li>';
-
-			//...
-			if ( self::isWoocommerceActive() && \is_shop() ) {
-				$shop_page_title = get_the_title( self::getOption( 'woocommerce_shop_page_id' ) );
-				echo $before . $shop_page_title . $after;
-			} elseif ( $wp_query->is_posts_page ) {
-				$posts_page_title = get_the_title( self::getOption( 'page_for_posts', true ) );
-				echo $before . $posts_page_title . $after;
-			} elseif ( $wp_query->is_post_type_archive ) {
-				$posts_page_title = post_type_archive_title( '', false );
-				echo $before . $posts_page_title . $after;
-			} /** page, attachment */
-			elseif ( is_page() || is_attachment() ) {
-
-				// parent page
-				if ( $post->post_parent ) {
-					$parent_id   = $post->post_parent;
-					$breadcrumbs = [];
-
-					while ( $parent_id ) {
-						$page          = get_post( $parent_id );
-						$breadcrumbs[] = '<li><a href="' . get_permalink( $page->ID ) . '">' . get_the_title( $page->ID ) . '</a></li>';
-						$parent_id     = $page->post_parent;
-					}
-
-					$breadcrumbs = array_reverse( $breadcrumbs );
-					foreach ( $breadcrumbs as $crumb ) {
-						echo $crumb;
-					}
-				}
-
-				echo $before . get_the_title() . $after;
-			} /** single */
-			elseif ( is_single() && ! is_attachment() ) {
-
-				$post_type  = get_post_type_object( get_post_type() );
-				$taxonomies = get_object_taxonomies( $post_type?->name, 'names' );
-
-				if ( empty( $taxonomies ) ) {
-					$slug = $post_type?->rewrite;
-					if ( ! is_bool( $slug ) ) {
-						echo '<li><a href="' . self::home() . $slug['slug'] . '/">' . $post_type?->labels?->singular_name . '</a></span>';
-					}
-				} else {
-
-					// has taxonomy
-					// get primary term
-					$term = self::primaryTerm( $post );
-					if ( $term ) {
-						$cat_code = get_term_parents_list( $term->term_id, $term->taxonomy, [ 'separator' => '' ] );
-						$cat_code = str_replace( '<a', '<li><a', $cat_code );
-						echo str_replace( '</a>', '</a></li>', $cat_code );
-					}
-				}
-				echo $before . get_the_title() . $after;
-			} /** search page */
-			elseif ( is_search() ) {
-				echo $before;
-				printf( __( 'Search Results for: %s', TEXT_DOMAIN ), get_search_query() );
-				echo $after;
-			} /** tag */
-			elseif ( is_tag() ) {
-				echo $before;
-				printf( __( 'Tag Archives: %s', TEXT_DOMAIN ), single_tag_title( '', false ) );
-				echo $after;
-			} /** author */
-			elseif ( is_author() ) {
-				global $author;
-
-				$userdata = get_userdata( $author );
-				echo $before;
-				echo $userdata->display_name;
-				echo $after;
-			} /** day, month, year */
-			elseif ( is_day() ) {
-				echo '<li><a href="' . get_year_link( get_the_time( 'Y' ) ) . '">' . get_the_time( 'Y' ) . '</a></li>';
-				echo '<li><a href="' . get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ) . '">' . get_the_time( 'F' ) . '</a></li>';
-				echo $before . get_the_time( 'd' ) . $after;
-			} elseif ( is_month() ) {
-				echo '<li><a href="' . get_year_link( get_the_time( 'Y' ) ) . '">' . get_the_time( 'Y' ) . '</a></li>';
-				echo $before . get_the_time( 'F' ) . $after;
-			} elseif ( is_year() ) {
-				echo $before . get_the_time( 'Y' ) . $after;
-			} /** category, tax */
-			elseif ( is_category() || is_tax() ) {
-
-				$cat_obj = $wp_query->get_queried_object();
-				$thisCat = get_term( $cat_obj->term_id );
-
-				if ( isset( $thisCat->parent ) && 0 !== $thisCat->parent ) {
-					$parentCat = get_term( $thisCat->parent );
-					if ( $cat_code = get_term_parents_list( $parentCat->term_id, $parentCat->taxonomy, [ 'separator' => '' ] ) ) {
-						$cat_code = str_replace( '<a', '<li><a', $cat_code );
-						echo str_replace( '</a>', '</a></li>', $cat_code );
-					}
-				}
-
-				echo $before . single_cat_title( '', false ) . $after;
-			} /** 404 */
-			elseif ( is_404() ) {
-				echo $before;
-				echo __( 'Not Found', TEXT_DOMAIN );
-				echo $after;
-			}
-
-			//...
-			if ( get_query_var( 'paged' ) ) {
-				echo '<li class="paged">';
-				echo ' (';
-				echo __( 'page', TEXT_DOMAIN ) . ' ' . get_query_var( 'paged' );
-				echo ')';
-				echo $after;
-			}
-
-			echo '</ul>';
+		// If it's the front page, no need to display breadcrumbs
+		if ( is_front_page() ) {
+			return;
 		}
 
-		// reset
+		$before      = '<li class="current">';
+		$after       = '</li>';
+		$breadcrumbs = [];
+
+		// Home
+		$breadcrumbs[] = '<li><a class="home" href="' . self::home() . '">' . __( 'Home', TEXT_DOMAIN ) . '</a></li>';
+
+		// WooCommerce Shop Page
+		if ( self::isWoocommerceActive() && \is_shop() ) {
+			$breadcrumbs[] = $before . get_the_title( self::getOption( 'woocommerce_shop_page_id' ) ) . $after;
+		} // Posts Page
+		elseif ( $wp_query?->is_posts_page ) {
+			$breadcrumbs[] = $before . get_the_title( self::getOption( 'page_for_posts', true ) ) . $after;
+		} // Post type Archive
+		elseif ( $wp_query?->is_post_type_archive ) {
+			$breadcrumbs[] = $before . post_type_archive_title( '', false ) . $after;
+		} // Page or Attachment
+		elseif ( is_page() || is_attachment() ) {
+
+			// Breadcrumb for child pages (Parent page)
+			if ( $post?->post_parent ) {
+				$parent_id          = $post->post_parent;
+				$parent_breadcrumbs = [];
+
+				while ( $parent_id ) {
+					$page                 = get_post( $parent_id );
+					$parent_breadcrumbs[] = '<li><a href="' . get_permalink( $page->ID ) . '">' . get_the_title( $page->ID ) . '</a></li>';
+					$parent_id            = $page->post_parent;
+				}
+
+				$parent_breadcrumbs = array_reverse( $parent_breadcrumbs );
+				$breadcrumbs        = array_merge( $breadcrumbs, $parent_breadcrumbs );
+			}
+			$breadcrumbs[] = $before . get_the_title() . $after;
+		} // Single
+		elseif ( is_single() && ! is_attachment() ) {
+			$post_type  = get_post_type_object( get_post_type() );
+			$taxonomies = get_object_taxonomies( $post_type?->name, 'names' );
+
+			if ( empty( $taxonomies ) ) {
+				$slug = $post_type?->rewrite;
+				if ( ! is_bool( $slug ) ) {
+					$breadcrumbs[] = '<li><a href="' . self::home() . $slug['slug'] . '/">' . $post_type?->labels?->singular_name . '</a></li>';
+				}
+			} else {
+
+				// taxonomy (primary term)
+				$term = self::primaryTerm( $post );
+				if ( $term ) {
+					$cat_code      = get_term_parents_list( $term->term_id, $term->taxonomy, [ 'separator' => '' ] );
+					$cat_code      = str_replace( '<a', '<li><a', $cat_code );
+					$breadcrumbs[] = str_replace( '</a>', '</a></li>', $cat_code );
+				}
+			}
+
+			$breadcrumbs[] = $before . get_the_title() . $after;
+		} // Search page
+		elseif ( is_search() ) {
+			$breadcrumbs[] = $before . sprintf( __( 'Search Results for: %s', TEXT_DOMAIN ), get_search_query() ) . $after;
+		} // Tag Archive
+		elseif ( is_tag() ) {
+			$breadcrumbs[] = $before . sprintf( __( 'Tag Archives: %s', TEXT_DOMAIN ), single_tag_title( '', false ) ) . $after;
+		} // Author
+		elseif ( is_author() ) {
+			global $author;
+			$userdata      = get_userdata( $author );
+			$breadcrumbs[] = $before . $userdata?->display_name . $after;
+		} // Day, Month, Year Archives
+		elseif ( is_day() || is_month() || is_year() ) {
+			if ( is_day() ) {
+				$breadcrumbs[] = '<li><a href="' . get_year_link( get_the_time( 'Y' ) ) . '">' . get_the_time( 'Y' ) . '</a></li>';
+				$breadcrumbs[] = '<li><a href="' . get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ) . '">' . get_the_time( 'F' ) . '</a></li>';
+				$breadcrumbs[] = $before . get_the_time( 'd' ) . $after;
+			} elseif ( is_month() ) {
+				$breadcrumbs[] = '<li><a href="' . get_year_link( get_the_time( 'Y' ) ) . '">' . get_the_time( 'Y' ) . '</a></li>';
+				$breadcrumbs[] = $before . get_the_time( 'F' ) . $after;
+			} elseif ( is_year() ) {
+				$breadcrumbs[] = $before . get_the_time( 'Y' ) . $after;
+			}
+		} // Category, Taxonomy
+		elseif ( is_category() || is_tax() ) {
+			$cat_obj       = get_queried_object();
+			$cat_code      = get_term_parents_list( $cat_obj?->term_id, $cat_obj?->taxonomy, [ 'separator' => '' ] );
+			$cat_code      = str_replace( '<a', '<li><a', $cat_code );
+			$breadcrumbs[] = str_replace( '</a>', '</a></li>', $cat_code ) . $before . single_cat_title( '', false ) . $after;
+		} // 404 Page
+		elseif ( is_404() ) {
+			$breadcrumbs[] = $before . __( 'Not Found', TEXT_DOMAIN ) . $after;
+		}
+
+		// If there is pagination
+		if ( get_query_var( 'paged' ) ) {
+			$breadcrumbs[] = $before . ' (' . __( 'page', TEXT_DOMAIN ) . ' ' . get_query_var( 'paged' ) . ')' . $after;
+		}
+
+		// Display Breadcrumbs.
+		echo '<ul id="breadcrumbs" class="breadcrumbs" aria-label="Breadcrumbs">';
+		echo implode( '', $breadcrumbs );
+		echo '</ul>';
+
+		// Reset query
 		wp_reset_query();
 	}
 

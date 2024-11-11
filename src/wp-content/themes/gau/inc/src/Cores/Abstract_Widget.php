@@ -32,10 +32,7 @@ abstract class Abstract_Widget extends WP_Widget {
 	 */
 	public function __construct() {
 		$className              = ( new ReflectionClass( $this ) )->getShortName();
-		$this->widget_classname = str_replace( [
-			'_widget',
-			'-widget',
-		], '', Helper::dashCase( strtolower( $className ) ) );
+		$this->widget_classname = str_replace( [ '_widget', '-widget', ], '', Helper::dashCase( strtolower( $className ) ) );
 		$this->widget_id        = $this->prefix . $this->widget_classname;
 
 		parent::__construct( $this->widget_id, $this->widget_name, $this->widget_options(), $this->control_options() );
@@ -103,27 +100,27 @@ abstract class Abstract_Widget extends WP_Widget {
 	// --------------------------------------------------
 
 	/**
-	 * Cache the widget
+	 * @param array $args
+	 * @param string $content
+	 * @param int $expiration
 	 *
-	 * @param array $args Arguments
-	 * @param string $content Content
-	 *
-	 * @return string the content that was cached
+	 * @return string
 	 */
-	public function cache_widget( array $args, string $content ): string {
+	public function cache_widget( array $args, string $content, int $expiration = 3600 ): string {
 
 		// Don't set any cache if widget_id doesn't exist
 		if ( empty( $args['widget_id'] ) ) {
 			return $content;
 		}
 
-		$cache = wp_cache_get( $this->get_widget_id_for_cache( $this->widget_id ), 'widget' );
+		$cache_key = $this->get_widget_id_for_cache( $this->widget_id );
+		$cache     = wp_cache_get( $cache_key, 'widget' );
 		if ( ! is_array( $cache ) ) {
 			$cache = [];
 		}
 
 		$cache[ $this->get_widget_id_for_cache( $args['widget_id'] ) ] = $content;
-		wp_cache_set( $this->get_widget_id_for_cache( $this->widget_id ), $cache, 'widget' );
+		wp_cache_set( $cache_key, $cache, 'widget', $expiration );
 
 		return $content;
 	}
@@ -284,133 +281,23 @@ abstract class Abstract_Widget extends WP_Widget {
 
 			switch ( $setting['type'] ) {
 				case 'text':
-					?>
-                    <p>
-                        <label for="<?php
-						echo Helper::escAttr( $this->get_field_id( $key ) ); ?>"><?php
-							echo wp_kses_post( $setting['label'] ); ?></label><?php
-						// phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
-						?>
-                        <input class="widefat <?php
-						echo Helper::escAttr( $class ); ?>"
-                               id="<?php
-						       echo Helper::escAttr( $this->get_field_id( $key ) ); ?>"
-                               name="<?php
-						       echo Helper::escAttr( $this->get_field_name( $key ) ); ?>" type="text"
-                               value="<?php
-						       echo Helper::escAttr( $value ); ?>">
-						<?php
-						if ( isset( $setting['desc'] ) ) : ?>
-                            <small class="help-text"><?php
-								echo $setting['desc']; ?></small>
-						<?php
-						endif; ?>
-                    </p>
-					<?php
+					$this->render_text_input( $key, $setting, $value, $class );
 					break;
 
 				case 'number':
-					?>
-                    <p class="<?php
-					echo Helper::escAttr( $class ); ?>">
-                        <label for="<?php
-						echo Helper::escAttr( $this->get_field_id( $key ) ); ?>"><?php
-							echo $setting['label']; /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?></label>
-                        <input class="widefat"
-                               id="<?php
-						       echo Helper::escAttr( $this->get_field_id( $key ) ); ?>"
-                               name="<?php
-						       echo Helper::escAttr( $this->get_field_name( $key ) ); ?>" type="number"
-                               min="<?php
-						       echo Helper::escAttr( $setting['min'] ); ?>"
-                               max="<?php
-						       echo Helper::escAttr( $setting['max'] ); ?>"
-                               value="<?php
-						       echo Helper::escAttr( $value ); ?>"/>
-						<?php
-						if ( isset( $setting['desc'] ) ) : ?>
-                            <small class="help-text"><?php
-								echo $setting['desc']; ?></small>
-						<?php
-						endif; ?>
-                    </p>
-					<?php
+					$this->render_number_input( $key, $setting, $value, $class );
 					break;
 
 				case 'select':
-					?>
-                    <p>
-                        <label for="<?php
-						echo Helper::escAttr( $this->get_field_id( $key ) ); ?>"><?php
-							echo $setting['label']; /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?></label>
-                        <select class="widefat <?php
-						echo Helper::escAttr( $class ); ?>"
-                                id="<?php
-						        echo Helper::escAttr( $this->get_field_id( $key ) ); ?>"
-                                name="<?php
-						        echo Helper::escAttr( $this->get_field_name( $key ) ); ?>">
-							<?php
-							foreach ( $setting['options'] as $option_key => $option_value ) : ?>
-                                <option value="<?php
-								echo Helper::escAttr( $option_key ); ?>" <?php
-								selected( $option_key, $value ); ?>><?php
-									echo esc_html( $option_value ); ?></option>
-							<?php
-							endforeach; ?>
-                        </select>
-						<?php
-						if ( isset( $setting['desc'] ) ) : ?>
-                            <small class="help-text"><?php
-								echo $setting['desc']; ?></small>
-						<?php
-						endif; ?>
-                    </p>
-					<?php
+					$this->render_select( $key, $setting, $value, $class );
 					break;
 
 				case 'textarea':
-					$rows = ! empty( $setting['rows'] ) ? (int) $setting['rows'] : 3;
-					?>
-                    <p>
-                        <label for="<?php
-						echo Helper::escAttr( $this->get_field_id( $key ) ); ?>"><?php
-							echo $setting['label']; /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?></label>
-                        <textarea class="widefat <?php
-						echo Helper::escAttr( $class ); ?>"
-                                  id="<?php
-						          echo Helper::escAttr( $this->get_field_id( $key ) ); ?>"
-                                  name="<?php
-						          echo Helper::escAttr( $this->get_field_name( $key ) ); ?>" cols="20"
-                                  rows="<?= $rows ?>"><?php
-							echo esc_textarea( $value ); ?></textarea>
-						<?php
-						if ( isset( $setting['desc'] ) ) : ?>
-                            <small class="help-text"><?php
-								echo $setting['desc']; ?></small>
-						<?php
-						endif; ?>
-                    </p>
-					<?php
+					$this->render_textarea( $key, $setting, $value, $class );
 					break;
 
 				case 'checkbox':
-					?>
-                    <p>
-                        <label>
-                            <input class="checkbox <?php
-							echo Helper::escAttr( $class ); ?>"
-                                   id="<?php
-							       echo Helper::escAttr( $this->get_field_id( $key ) ); ?>"
-                                   name="<?php
-							       echo Helper::escAttr( $this->get_field_name( $key ) ); ?>"
-                                   type="checkbox"
-                                   value="1" <?php
-							echo checked( $value, 1 ); ?>>
-                            <span class="message"><?php
-								echo $setting['label']; /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?></span>
-                        </label>
-                    </p>
-					<?php
+					$this->render_checkbox( $key, $setting, $value, $class );
 					break;
 
 				// Default: run an action.
@@ -419,5 +306,128 @@ abstract class Abstract_Widget extends WP_Widget {
 					break;
 			}
 		}
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * Render Text Input Field
+	 *
+	 * @param string $key
+	 * @param array $setting
+	 * @param mixed $value
+	 * @param string $class
+	 */
+	protected function render_text_input( string $key, array $setting, mixed $value, string $class ): void {
+		echo '<p>';
+		echo '<label for="' . Helper::escAttr( $this->get_field_id( $key ) ) . '">' . wp_kses_post( $setting['label'] ) . '</label>';
+		echo '<input class="widefat ' . Helper::escAttr( $class ) . '"';
+		echo ' id="' . Helper::escAttr( $this->get_field_id( $key ) ) . '"';
+		echo ' name="' . Helper::escAttr( $this->get_field_name( $key ) ) . '" type="text"';
+		echo ' value="' . Helper::escAttr( $value ) . '">';
+		if ( isset( $setting['desc'] ) ) {
+			echo '<small class="help-text">' . $setting['desc'] . '</small>';
+		}
+		echo '</p>';
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * Render Number Input Field
+	 *
+	 * @param string $key
+	 * @param array $setting
+	 * @param mixed $value
+	 * @param string $class
+	 */
+	protected function render_number_input( string $key, array $setting, mixed $value, string $class ): void {
+		echo '<p class="' . Helper::escAttr( $class ) . '">';
+		echo '<label for="' . Helper::escAttr( $this->get_field_id( $key ) ) . '">' . wp_kses_post( $setting['label'] ) . '</label>';
+		echo '<input class="widefat"';
+		echo ' id="' . Helper::escAttr( $this->get_field_id( $key ) ) . '"';
+		echo ' name="' . Helper::escAttr( $this->get_field_name( $key ) ) . '" type="number"';
+		echo ' min="' . Helper::escAttr( $setting['min'] ) . '"';
+		echo ' max="' . Helper::escAttr( $setting['max'] ) . '"';
+		echo ' value="' . Helper::escAttr( $value ) . '"/>';
+		if ( isset( $setting['desc'] ) ) {
+			echo '<small class="help-text">' . $setting['desc'] . '</small>';
+		}
+		echo '</p>';
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * Render Select Dropdown
+	 *
+	 * @param string $key
+	 * @param array $setting
+	 * @param mixed $value
+	 * @param string $class
+	 */
+	protected function render_select( string $key, array $setting, mixed $value, string $class ): void {
+		echo '<p>';
+		echo '<label for="' . Helper::escAttr( $this->get_field_id( $key ) ) . '">' . wp_kses_post( $setting['label'] ) . '</label>';
+		echo '<select class="widefat ' . Helper::escAttr( $class ) . '"';
+		echo ' id="' . Helper::escAttr( $this->get_field_id( $key ) ) . '"';
+		echo ' name="' . Helper::escAttr( $this->get_field_name( $key ) ) . '">';
+		foreach ( $setting['options'] as $option_key => $option_value ) {
+			echo '<option value="' . Helper::escAttr( $option_key ) . '" ' . selected( $option_key, $value ) . '>';
+			echo esc_html( $option_value );
+			echo '</option>';
+		}
+		echo '</select>';
+		if ( isset( $setting['desc'] ) ) {
+			echo '<small class="help-text">' . $setting['desc'] . '</small>';
+		}
+		echo '</p>';
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * Render Textarea Field
+	 *
+	 * @param string $key
+	 * @param array $setting
+	 * @param mixed $value
+	 * @param string $class
+	 */
+	protected function render_textarea( string $key, array $setting, mixed $value, string $class ): void {
+		$rows = ! empty( $setting['rows'] ) ? (int) $setting['rows'] : 3;
+		echo '<p>';
+		echo '<label for="' . Helper::escAttr( $this->get_field_id( $key ) ) . '">' . wp_kses_post( $setting['label'] ) . '</label>';
+		echo '<textarea class="widefat ' . Helper::escAttr( $class ) . '"';
+		echo ' id="' . Helper::escAttr( $this->get_field_id( $key ) ) . '"';
+		echo ' name="' . Helper::escAttr( $this->get_field_name( $key ) ) . '" cols="20"';
+		echo ' rows="' . esc_attr( $rows ) . '">' . esc_textarea( $value ) . '</textarea>';
+		if ( isset( $setting['desc'] ) ) {
+			echo '<small class="help-text">' . $setting['desc'] . '</small>';
+		}
+		echo '</p>';
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * Render Checkbox Input
+	 *
+	 * @param string $key
+	 * @param array $setting
+	 * @param mixed $value
+	 * @param string $class
+	 */
+	protected function render_checkbox( string $key, array $setting, mixed $value, string $class ): void {
+		echo '<p>';
+		echo '<label>';
+		echo '<input class="checkbox ' . Helper::escAttr( $class ) . '"';
+		echo ' id="' . Helper::escAttr( $this->get_field_id( $key ) ) . '"';
+		echo ' name="' . Helper::escAttr( $this->get_field_name( $key ) ) . '"';
+		echo ' type="checkbox"';
+		echo ' value="1" ' . checked( $value, 1 ) . '>';
+		echo '<span class="message">' . wp_kses_post( $setting['label'] ) . '</span>';
+		echo '</label>';
+		echo '</p>';
 	}
 }

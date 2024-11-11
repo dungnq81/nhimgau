@@ -12,7 +12,7 @@ use JsonException;
 /**
  * Advanced Custom Fields
  *
- * @author  Gaudev
+ * @author Gaudev
  */
 final class ACF {
 	use Singleton;

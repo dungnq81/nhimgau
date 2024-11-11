@@ -66,9 +66,16 @@ final class Helper {
 	 * @return bool
 	 */
 	public static function Lighthouse(): bool {
+
+		// Check if 'HTTP_USER_AGENT' is set in the server variables
+		if ( ! isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
+			return false;
+		}
+
 		$header = $_SERVER['HTTP_USER_AGENT'];
 
-		return mb_strpos( $header, "Lighthouse", 0, "UTF-8" ) !== false;
+		// Use stripos for case-insensitive search of "Lighthouse"
+		return stripos( $header, "Lighthouse" ) !== false;
 	}
 
 	// --------------------------------------------------
@@ -77,32 +84,48 @@ final class Helper {
 	 * @return void
 	 */
 	public static function clearAllCache(): void {
+		global $wpdb;
+
 		// LiteSpeed cache
 		if ( class_exists( \LiteSpeed\Purge::class ) ) {
 			\LiteSpeed\Purge::purge_all();
+			self::errorLog( 'LiteSpeed cache cleared.' );
 		}
 
-		// wp-rocket cache
+		// WP Rocket cache
 		if ( \defined( 'WP_ROCKET_PATH' ) && \function_exists( 'rocket_clean_domain' ) ) {
 			\rocket_clean_domain();
+			self::errorLog( 'WP Rocket cache cleared.' );
 		}
 
-		// Clear minified CSS and JavaScript files.
+		// Clear minified CSS and JavaScript files (WP Rocket)
 		if ( function_exists( 'rocket_clean_minify' ) ) {
 			\rocket_clean_minify();
+			self::errorLog( 'WP Rocket minified files cleared.' );
 		}
 
-		// Jetpack
+		// Jetpack transient cache
 		if ( self::checkPluginActive( 'jetpack/jetpack.php' ) ) {
-			global $wpdb;
+			$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_jetpack_%'" );
+			$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_jetpack_%'" );
+			self::errorLog( 'Jetpack transient cache cleared.' );
 
-			$wpdb->query( "DELETE FROM {$wpdb->options} WHERE `option_name` LIKE '_transient_jetpack_%'" );
-			$wpdb->query( "DELETE FROM {$wpdb->options} WHERE `option_name` LIKE '_transient_timeout_jetpack_%'" );
-
-			// Clear Photon cache locally
+			// Clear Jetpack Photon cache locally
 			if ( class_exists( \Jetpack_Photon::class ) ) {
 				\Jetpack_Photon::instance()->purge_cache();
+				self::errorLog( 'Jetpack Photon cache cleared.' );
 			}
+		}
+
+		// Clear all WordPress transients
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_%'" );
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_%'" );
+		self::errorLog( 'All WordPress transients cleared.' );
+
+		// Clear object cache (e.g., Redis or Memcached)
+		if ( function_exists( 'wp_cache_flush' ) ) {
+			wp_cache_flush();
+			self::errorLog( 'Object cache cleared.' );
 		}
 	}
 
@@ -386,29 +409,43 @@ final class Helper {
 	public static function youtubeIframe( $url, int $autoplay = 0, bool $lazyload = true, bool $control = true ): ?string {
 		$autoplay = (int) $autoplay;
 		parse_str( wp_parse_url( $url, PHP_URL_QUERY ), $vars );
-		$home = trailingslashit( network_home_url() );
+		$home = esc_url( trailingslashit( network_home_url() ) );
 
+		// Check if the URL contains 'v' parameter to get the video ID
 		if ( isset( $vars['v'] ) ) {
-			$idurl     = $vars['v'];
-			$_size     = ' width="800px" height="450px"';
-			$_autoplay = 'autoplay=' . $autoplay;
-			$_auto     = ' allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"';
+			$videoId         = esc_attr( $vars['v'] );
+			$iframeSize      = ' width="800" height="450"';
+			$allowAttributes = 'accelerometer; encrypted-media; gyroscope; picture-in-picture';
+
+			// Construct iframe src
+			$src = "https://www.youtube.com/embed/{$videoId}?wmode=transparent&origin={$home}";
+
+			// Add autoplay if enabled
 			if ( $autoplay ) {
-				$_auto = ' allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"';
-			}
-			$_src     = 'https://www.youtube.com/embed/' . $idurl . '?wmode=transparent&origin=' . $home . '&' . $_autoplay;
-			$_control = '';
-			if ( ! $control ) {
-				$_control = '&modestbranding=1&controls=0&rel=0&version=3&loop=1&enablejsapi=1&iv_load_policy=3&playlist=' . $idurl . '&playerapiid=ytb_iframe_' . $idurl;
-			}
-			$_src  .= $_control . '&html5=1';
-			$_src  = ' src="' . $_src . '"';
-			$_lazy = '';
-			if ( $lazyload ) {
-				$_lazy = ' loading="lazy"';
+				$allowAttributes .= '; autoplay';
+				$src             .= "&autoplay=1";
 			}
 
-			return '<iframe id="ytb_iframe_' . $idurl . '" title="YouTube Video Player"' . $_lazy . $_auto . $_size . $_src . ' style="border:0"></iframe>';
+			// Configure controls based on $control parameter
+			if ( ! $control ) {
+				$src .= '&modestbranding=1&controls=0&rel=0&version=3&loop=1&enablejsapi=1&iv_load_policy=3&playlist=' . $videoId;
+			}
+
+			// Ensure HTML5 video is used
+			$src .= '&html5=1';
+
+			// Add lazy loading if enabled
+			$lazyLoadAttribute = $lazyload ? ' loading="lazy"' : '';
+
+			// Return iframe HTML
+			return sprintf(
+				'<iframe id="ytb_iframe_%1$s" title="YouTube Video Player"%2$s allow="%3$s"%4$s src="%5$s" style="border:0"></iframe>',
+				$videoId,
+				$iframeSize,
+				$allowAttributes,
+				$lazyLoadAttribute,
+				esc_url( $src )
+			);
 		}
 
 		return null;
@@ -417,92 +454,41 @@ final class Helper {
 	// --------------------------------------------------
 
 	/**
-	 * Encoded Mailto Link
-	 *
-	 * Create a spam-protected mailto link written in Javascript
-	 *
-	 * @param string $email the email address
-	 * @param string $title the link title
+	 * @param string $email
+	 * @param string $title
 	 * @param array|string $attributes
 	 *
 	 * @return string|null
 	 */
 	public static function safeMailTo( string $email, string $title = '', array|string $attributes = '' ): ?string {
-		if ( ! $email || ! is_email( $email ) ) {
+		if ( ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
 			return null;
 		}
 
-		if ( trim( $title ) === '' ) {
-			$title = $email;
+		$title        = $title ?: $email;
+		$encodedEmail = '';
+
+		// Convert email characters to HTML entities to obfuscate
+		for ( $i = 0, $len = strlen( $email ); $i < $len; $i ++ ) {
+			$encodedEmail .= '&#' . ord( $email[ $i ] ) . ';';
 		}
 
-		$x = str_split( '<a href="mailto:', 1 );
-
-		for ( $i = 0, $l = strlen( $email ); $i < $l; $i ++ ) {
-			$x[] = '|' . ord( $email[ $i ] );
+		$encodedTitle = '';
+		for ( $i = 0, $len = strlen( $title ); $i < $len; $i ++ ) {
+			$encodedTitle .= '&#' . ord( $title[ $i ] ) . ';';
 		}
 
-		$x[] = '"';
-
-		if ( $attributes !== '' ) {
-			if ( is_array( $attributes ) ) {
-				foreach ( $attributes as $key => $val ) {
-					$x[] = ' ' . $key . '="';
-					for ( $i = 0, $l = strlen( $val ); $i < $l; $i ++ ) {
-						$x[] = '|' . ord( $val[ $i ] );
-					}
-					$x[] = '"';
-				}
-			} else {
-				for ( $i = 0, $l = mb_strlen( $attributes ); $i < $l; $i ++ ) {
-					$x[] = mb_substr( $attributes, $i, 1 );
-				}
+		// Handle attributes
+		$attrString = '';
+		if ( is_array( $attributes ) ) {
+			foreach ( $attributes as $key => $val ) {
+				$attrString .= ' ' . htmlspecialchars( $key, ENT_QUOTES | ENT_HTML5 ) . '="' . htmlspecialchars( $val, ENT_QUOTES | ENT_HTML5 ) . '"';
 			}
+		} elseif ( is_string( $attributes ) ) {
+			$attrString = ' ' . $attributes;
 		}
 
-		$x[] = '>';
-
-		$temp = [];
-		for ( $i = 0, $l = strlen( $title ); $i < $l; $i ++ ) {
-			$ordinal = ord( $title[ $i ] );
-
-			if ( $ordinal < 128 ) {
-				$x[] = '|' . $ordinal;
-			} else {
-				if ( empty( $temp ) ) {
-					$count = ( $ordinal < 224 ) ? 2 : 3;
-				}
-
-				$temp[] = $ordinal;
-				if ( count( $temp ) === $count ) // @phpstan-ignore-line
-				{
-					$number = ( $count === 3 ) ? ( ( $temp[0] % 16 ) * 4096 ) + ( ( $temp[1] % 64 ) * 64 ) + ( $temp[2] % 64 ) : ( ( $temp[0] % 32 ) * 64 ) + ( $temp[1] % 64 );
-					$x[]    = '|' . $number;
-					$count  = 1;
-					$temp   = [];
-				}
-			}
-		}
-
-		$x[] = '<';
-		$x[] = '/';
-		$x[] = 'a';
-		$x[] = '>';
-
-		$x = array_reverse( $x );
-
-		// improve obfuscation by eliminating newlines & whitespace
-		$output = '<script>'
-		          . 'let l=[];';
-
-		foreach ( $x as $i => $value ) {
-			$output .= 'l[' . $i . "] = '" . $value . "';";
-		}
-
-		return $output . ( 'for (var i = l.length-1; i >= 0; i=i-1) {'
-		                   . "if (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");"
-		                   . 'else document.write(unescape(l[i]));'
-		                   . '}'
-		                   . '</script>' );
+		// Return obfuscated email using HTML entities only
+		return '<a href="mailto:' . $encodedEmail . '"' . $attrString . '>' . $encodedTitle . '</a>';
 	}
 }

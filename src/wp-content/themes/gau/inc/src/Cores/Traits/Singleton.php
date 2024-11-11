@@ -9,19 +9,21 @@ namespace Cores\Traits;
  * This allows you to have only one instance of the necessary object
  * You can get the instance with $class = My_Class::get_instance();
  *
- * /!\ The get_instance method has to be implemented!
+ * /!\ The get_instance method has to be implemented in the child class!
  */
 trait Singleton {
 
 	/**
 	 * @var self
 	 */
-	protected static $instance;
+	protected static ?self $instance;
 
 	/**
+	 * Get the instance of the class
+	 *
 	 * @return self
 	 */
-	final public static function get_instance(): static {
+	final public static function get_instance(): self {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new static;
 		}
@@ -30,28 +32,29 @@ trait Singleton {
 	}
 
 	/**
-	 * Constructor protected from the outside
+	 * Constructor is protected to prevent instantiation from outside
 	 */
 	private function __construct() {
 		$this->init();
 	}
 
 	/**
-	 * Add init function by default
-	 * Implement this method in your child class
-	 * If you want to have actions send at construct
+	 * Optional init function for additional setup
+	 * Child classes may override this function to perform custom actions
 	 */
-	protected function init(): void {}
+	protected function init(): void {
+		// Custom initialization logic (can be overridden by child classes)
+	}
 
 	/**
-	 * prevent the instance from being cloned
+	 * Prevent the instance from being cloned
 	 *
 	 * @return void
 	 */
 	final public function __clone() {}
 
 	/**
-	 * prevent from being unserialized
+	 * Prevent from being unserialized
 	 *
 	 * @return void
 	 */

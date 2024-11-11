@@ -15,7 +15,7 @@ trait Db {
 	 *
 	 * @return false|int
 	 */
-	public static function insertCustomRow( $table_name, $data, bool $sanitize = false ): false|int {
+	public static function insertOneRow( $table_name, $data, bool $sanitize = false ): false|int {
 		global $wpdb;
 
 		if ( empty( $table_name ) || empty( $data ) || ! is_array( $data ) ) {
@@ -54,7 +54,7 @@ trait Db {
 	 *
 	 * @return bool
 	 */
-	public static function updateCustomRow( $table_name, $id, $data, bool $sanitize = false ): bool {
+	public static function updateOneRow( $table_name, $id, $data, bool $sanitize = false ): bool {
 		global $wpdb;
 
 		if ( empty( $table_name ) || empty( $id ) || empty( $data ) || ! is_array( $data ) ) {
@@ -62,7 +62,7 @@ trait Db {
 		}
 
 		// Check if the ID exists in the table
-		if ( ! self::checkCustomRow( $table_name, $id, $sanitize ) ) {
+		if ( ! self::checkOneRow( $table_name, $id, $sanitize ) ) {
 			return false;
 		}
 
@@ -97,7 +97,7 @@ trait Db {
 	 *
 	 * @return bool
 	 */
-	public static function deleteCustomRow( $table_name, $id, bool $sanitize = false ): bool {
+	public static function deleteOneRow( $table_name, $id, bool $sanitize = false ): bool {
 		global $wpdb;
 
 		if ( empty( $table_name ) || empty( $id ) ) {
@@ -105,7 +105,7 @@ trait Db {
 		}
 
 		// Check if the ID exists in the table
-		if ( ! self::checkCustomRow( $table_name, $id, $sanitize ) ) {
+		if ( ! self::checkOneRow( $table_name, $id, $sanitize ) ) {
 			return false;
 		}
 
@@ -125,7 +125,7 @@ trait Db {
 	 *
 	 * @return array|false
 	 */
-	public static function getCustomRowsBy( $table_name, $column, $key, bool $sanitize = false ): false|array {
+	public static function getRowsBy( $table_name, $column, $key, bool $sanitize = false ): false|array {
 		global $wpdb;
 
 		if ( ! $column ) {
@@ -151,7 +151,7 @@ trait Db {
 	 *
 	 * @return array|null
 	 */
-	public static function getCustomRowBy( $table_name, $column, $key, bool $sanitize = false ): ?array {
+	public static function getOneRowBy( $table_name, $column, $key, bool $sanitize = false ): ?array {
 		global $wpdb;
 
 		if ( ! $column ) {
@@ -174,7 +174,7 @@ trait Db {
 	 *
 	 * @return bool
 	 */
-	public static function checkCustomRow( $table_name, $id, bool $sanitize = false ): bool {
+	public static function checkOneRow( $table_name, $id, bool $sanitize = false ): bool {
 		global $wpdb;
 
 		// Check if $id exists and convert it to integer
@@ -200,7 +200,7 @@ trait Db {
 	 *
 	 * @return array|false|null
 	 */
-	public static function getCustomRow( $table_name, $id, bool $sanitize = false ): false|array|null {
+	public static function getOneRow( $table_name, $id, bool $sanitize = false ): false|array|null {
 		global $wpdb;
 
 		if ( empty( $table_name ) || empty( $id ) ) {
@@ -222,7 +222,7 @@ trait Db {
 	 *
 	 * @return array|false|null
 	 */
-	public static function getCustomRows( $table_name, int $offset = 0, int $limit = - 1, bool $sanitize = false ): false|array|null {
+	public static function getRows( $table_name, int $offset = 0, int $limit = - 1, bool $sanitize = false ): false|array|null {
 		global $wpdb;
 
 		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
@@ -247,7 +247,7 @@ trait Db {
 	 *
 	 * @return int
 	 */
-	public static function countCustomRowsBy( $table_name, $column = null, $value = null, bool $sanitize = false ): int {
+	public static function countRowsBy( $table_name, $column = null, $value = null, bool $sanitize = false ): int {
 		global $wpdb;
 
 		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
