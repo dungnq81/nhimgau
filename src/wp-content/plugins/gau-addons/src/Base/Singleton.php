@@ -6,25 +6,25 @@ namespace Addons\Base;
 
 /**
  * Singleton base class for having singleton implementation
- * This allows you to have only one instance of the needed object
+ * This allows you to have only one instance of the necessary object
  * You can get the instance with $class = My_Class::get_instance();
  *
- * /!\ The get_instance method have to be implemented !
+ * /!\ The get_instance method has to be implemented!
  */
 trait Singleton {
 
 	/**
 	 * @var self
 	 */
-	protected static ?self $instance;
+	protected static $instance;
 
 	/**
 	 * Get the instance of the class
 	 *
 	 * @return self
 	 */
-	final public static function get_instance(): self {
-		if ( is_null( self::$instance ) ) {
+	final public static function get_instance(): static {
+		if ( null === static::$instance ) {
 			self::$instance = new static;
 		}
 

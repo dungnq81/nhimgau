@@ -6,6 +6,10 @@ namespace Addons\Activator;
 
 final class Activator {
 
+	private function init(): void {
+		// Custom initialization logic
+	}
+
 	/**
 	 * The code that runs during plugin activation.
 	 *

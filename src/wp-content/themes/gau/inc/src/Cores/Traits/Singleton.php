@@ -16,15 +16,15 @@ trait Singleton {
 	/**
 	 * @var self
 	 */
-	protected static ?self $instance;
+	protected static $instance;
 
 	/**
 	 * Get the instance of the class
 	 *
 	 * @return self
 	 */
-	final public static function get_instance(): self {
-		if ( is_null( self::$instance ) ) {
+	final public static function get_instance(): static {
+		if ( null === static::$instance ) {
 			self::$instance = new static;
 		}
 
