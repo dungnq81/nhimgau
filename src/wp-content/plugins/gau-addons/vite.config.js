@@ -1,10 +1,7 @@
 import * as path from 'path';
 import fs from 'fs';
-import autoprefixer from 'autoprefixer';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
-import viteImagemin from '@vheemstra/vite-plugin-imagemin';
-import imageminMozjpeg from 'imagemin-mozjpeg';
-import imageminPngquant from 'imagemin-pngquant';
+import { sharedConfig } from '../../../vite.config.shared';
 
 const directory = path.basename( path.resolve( __dirname ) );
 const dir = `./wp-content/plugins/${ directory }`;
@@ -38,65 +35,15 @@ const jsFiles = [
 ];
 
 export default {
-    base: './',
-    resolve: {
-        alias: {
-            '@': path.resolve( __dirname ),
-            '~': path.resolve( __dirname ),
-        },
-    },
+    ...sharedConfig,
     plugins: [
-        viteImagemin( {
-            plugins: {
-                jpg: imageminMozjpeg( {
-                    quality: 85,
-                } ),
-                png: imageminPngquant( {
-                    strip: true,
-                    quality: [ 0.7, 0.9 ],
-                } ),
-            },
-        } ),
+        ...sharedConfig.plugins,
         viteStaticCopy( {
             targets: directoriesToCopy,
         } ),
     ],
-    css: {
-        preprocessorOptions: {
-            sass: {
-                quietDeps: true,
-            },
-        },
-        postcss: {
-            plugins: [
-                autoprefixer( {
-                    remove: false,
-                    flexbox: 'no-2009',
-                } ),
-            ],
-        },
-    },
-    optimizeDeps: {
-        include: [ 'jQuery' ],
-    },
-    define: {
-        $: 'jQuery',
-        jQuery: 'jQuery',
-    },
     build: {
-        target: 'modules',
-        manifest: true,
-        minify: 'terser',
-        cssCodeSplit: true,
-        terserOptions: {
-            compress: {
-                drop_console: true,
-                toplevel: true,
-            },
-            format: {
-                comments: false,
-            },
-        },
+        ...sharedConfig.build,
         outDir: `${ dir }/assets`,
         rollupOptions: {
             input: [

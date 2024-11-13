@@ -3,10 +3,10 @@
     "file": "js/vendor.js",
     "name": "vendor"
   },
-  "wp-content/plugins/gau-addons/resources/js/admin_addons.js": {
+  "wp-content/plugins/gau-addons/resources/js/admin_addons2.js": {
     "file": "js/admin_addons2.js",
-    "name": "admin_addons",
-    "src": "wp-content/plugins/gau-addons/resources/js/admin_addons.js",
+    "name": "admin_addons2",
+    "src": "wp-content/plugins/gau-addons/resources/js/admin_addons2.js",
     "isEntry": true,
     "imports": [
       "_vendor.js"
