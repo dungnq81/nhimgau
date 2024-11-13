@@ -61,7 +61,7 @@ export default {
                 },
                 manualChunks( id ) {
                     if ( id.includes( 'node_modules' ) || id.includes( '3rd' ) ) {
-                        return `vendor`;
+                        return '_vendor';
                     }
                 },
             },

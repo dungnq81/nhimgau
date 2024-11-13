@@ -1,7 +1,7 @@
 {
-  "_vendor.js": {
-    "file": "js/vendor.js",
-    "name": "vendor"
+  "__vendor.js": {
+    "file": "js/_vendor.js",
+    "name": "_vendor"
   },
   "wp-content/plugins/gau-addons/resources/js/admin_addons2.js": {
     "file": "js/admin_addons2.js",
@@ -9,7 +9,7 @@
     "src": "wp-content/plugins/gau-addons/resources/js/admin_addons2.js",
     "isEntry": true,
     "imports": [
-      "_vendor.js"
+      "__vendor.js"
     ]
   },
   "wp-content/plugins/gau-addons/resources/js/custom_sorting.js": {
@@ -24,7 +24,7 @@
     "src": "wp-content/plugins/gau-addons/resources/js/lazyload.js",
     "isEntry": true,
     "imports": [
-      "_vendor.js"
+      "__vendor.js"
     ]
   },
   "wp-content/plugins/gau-addons/resources/js/recaptcha.js": {

@@ -1,7 +1,7 @@
 {
-  "_vendor.js": {
-    "file": "js/vendor.js",
-    "name": "vendor"
+  "__vendor.js": {
+    "file": "js/_vendor.js",
+    "name": "_vendor"
   },
   "wp-content/themes/gau/resources/img/zalo.png": {
     "file": "img/zalo.png",
@@ -13,7 +13,7 @@
     "src": "wp-content/themes/gau/resources/js/admin.js",
     "isEntry": true,
     "imports": [
-      "_vendor.js"
+      "__vendor.js"
     ]
   },
   "wp-content/themes/gau/resources/js/app.js": {
@@ -22,7 +22,7 @@
     "src": "wp-content/themes/gau/resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "_vendor.js"
+      "__vendor.js"
     ]
   },
   "wp-content/themes/gau/resources/js/components/back-to-top.js": {
@@ -61,7 +61,7 @@
     "src": "wp-content/themes/gau/resources/js/components/swiper.js",
     "isEntry": true,
     "imports": [
-      "_vendor.js"
+      "__vendor.js"
     ]
   },
   "wp-content/themes/gau/resources/js/components/woocommerce.js": {

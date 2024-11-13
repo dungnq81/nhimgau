@@ -39,7 +39,7 @@ if ( ! function_exists( '__module_preload' ) ) {
 
 		?>
 		<link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/modulepreload-polyfill.js'; ?>">
-		<link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/vendor.js'; ?>">
+		<link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/_vendor.js'; ?>">
 		<?php
 
 		$content = ob_get_clean();
