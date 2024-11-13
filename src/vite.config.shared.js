@@ -57,7 +57,7 @@ export const sharedConfig = {
     build: {
         target: 'modules',
         manifest: true,
-        minify: 'terser',
+        minify: process.env.NODE_ENV === 'development' ? false : 'terser',
         cssCodeSplit: true,
         terserOptions: {
             compress: {
@@ -68,8 +68,8 @@ export const sharedConfig = {
                 comments: false,
             },
         },
-        watch: {
+        watch: process.env.NODE_ENV === 'development' ? {
             exclude: 'node_modules/**',
-        },
+        } : false,
     }
 }

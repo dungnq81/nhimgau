@@ -4,8 +4,8 @@
     "version": "1.0.1",
     "type": "module",
     "scripts": {
-        "watch:theme": "vite build --watch --config wp-content/themes/gau/vite.config.js",
-        "watch:plugin": "vite build --watch --config wp-content/plugins/gau-addons/vite.config.js",
+        "watch:theme": "cross-env NODE_ENV=development vite build --watch --config wp-content/themes/gau/vite.config.js",
+        "watch:plugin": "cross-env NODE_ENV=development vite build --watch --config wp-content/plugins/gau-addons/vite.config.js",
         "watch": "concurrently \"yarn watch:theme\" \"yarn watch:plugin\"",
         "build:theme": "vite build --config wp-content/themes/gau/vite.config.js",
         "build:plugin": "vite build --config wp-content/plugins/gau-addons/vite.config.js",
@@ -22,6 +22,7 @@
         "@wordpress/browserslist-config": "^6.11.0",
         "autoprefixer": "^10.4.20",
         "concurrently": "^9.1.0",
+        "cross-env": "^7.0.3",
         "imagemin-mozjpeg": "^10.0.0",
         "imagemin-pngquant": "^10.0.0",
         "imagemin-webp": "^8.0.0",
