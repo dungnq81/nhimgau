@@ -5,15 +5,11 @@ import { viteStaticCopy } from 'vite-plugin-static-copy';
 import viteImagemin from '@vheemstra/vite-plugin-imagemin';
 import imageminMozjpeg from 'imagemin-mozjpeg';
 import imageminPngquant from 'imagemin-pngquant';
-import imageminWebp from 'imagemin-webp';
 
-// (theme)
 const directory = path.basename( path.resolve( __dirname ) );
-const dir = `./wp-content/themes/${ directory }`;
-
+const dir = `./wp-content/plugins/${ directory }`;
 const resources = `${ dir }/resources`;
 const assets = `${ dir }/assets`;
-const storage = `${ dir }/storage`;
 const node_modules = './node_modules';
 
 if ( !fs.existsSync( assets ) ) {
@@ -22,43 +18,23 @@ if ( !fs.existsSync( assets ) ) {
 
 // COPY
 const directoriesToCopy = [
-    { src: `${ storage }/fonts/fontawesome/webfonts`, dest: '' },
     { src: `${ resources }/img`, dest: '' },
-    { src: `${ node_modules }/pace-js/pace.min.js`, dest: 'js' },
+    { src: `${ node_modules }/select2/dist/js/select2.full.min.js`, dest: 'js' },
+    { src: `${ node_modules }/select2/dist/css/select2.min.css`, dest: 'css' },
 ];
 
 // SASS
 const sassFiles = [
-    // admin files
-    'editor-style',
-    'admin',
-
-    // components files
-    'components/swiper',
-    'components/woocommerce',
-
-    // site
-    'fonts',
-    'app',
+    'admin_addons'
 ];
 
 // JS
 const jsFiles = [
-    // admin files
-    'login',
-    'admin',
-
-    // components files
-    'components/modulepreload-polyfill',
-    'components/back-to-top',
-    'components/load-scripts',
-    'components/skip-link-focus',
-    'components/social-share',
-    'components/swiper',
-    'components/woocommerce',
-
-    // site files
-    'app',
+    'custom_sorting',
+    'lazyload',
+    'recaptcha',
+    'select2',
+    'admin_addons2',
 ];
 
 export default {
@@ -79,12 +55,6 @@ export default {
                     strip: true,
                     quality: [ 0.7, 0.9 ],
                 } ),
-            },
-            makeWebp: {
-                plugins: {
-                    jpg: imageminWebp(),
-                    png: imageminWebp(),
-                },
             },
         } ),
         viteStaticCopy( {

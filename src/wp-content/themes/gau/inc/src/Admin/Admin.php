@@ -28,6 +28,47 @@ final class Admin {
 
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 		add_action( 'admin_init', [ $this, 'admin_init' ], 11 );
+
+		// Remove the default admin 'vi' translation ...
+		add_action( 'admin_init', [ $this, 'remove_translates' ] );
+		add_filter( 'auto_update_translation', [ $this, 'disable_translate_autoupdate' ], 10, 2 );
+		add_filter( 'pre_set_site_transient_update_plugins', [ $this, 'disable_translate_update_noti' ] );
+		add_filter( 'pre_set_site_transient_update_themes', [ $this, 'disable_translate_update_noti' ] );
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param $transient
+	 *
+	 * @return mixed
+	 */
+	public function disable_translate_update_noti( $transient ): mixed {
+		if ( isset( $transient->translations ) ) {
+			foreach ( $transient->translations as $key => $translation ) {
+				if ( $translation['language'] === 'vi' ) {
+					unset( $transient->translations[ $key ] );
+				}
+			}
+		}
+
+		return $transient;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param $update
+	 * @param $translation_update
+	 *
+	 * @return mixed
+	 */
+	public function disable_translate_autoupdate( $update, $translation_update ): mixed {
+		if ( isset( $translation_update['language'] ) && $translation_update['language'] === 'vi' ) {
+			return false;
+		}
+
+		return $update;
 	}
 
 	// --------------------------------------------------
@@ -89,6 +130,47 @@ final class Admin {
 			foreach ( explode( "\n", $hide_menu ) as $menu_slug ) {
 				if ( $menu_slug ) {
 					$_item = remove_menu_page( $menu_slug );
+				}
+			}
+		}
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @return void
+	 */
+	public function remove_translates(): void {
+		$languages_path = WP_CONTENT_DIR . DIRECTORY_SEPARATOR . 'languages' . DIRECTORY_SEPARATOR;
+		$exclude        = [
+			$languages_path . 'vi.po',
+			$languages_path . 'vi.mo',
+			$languages_path . 'vi.l10n.php',
+
+			$languages_path . 'admin-vi.po',
+			$languages_path . 'admin-vi.mo',
+			$languages_path . 'admin-vi.l10n.php',
+
+			$languages_path . 'admin-network-vi.po',
+			$languages_path . 'admin-network-vi.mo',
+			$languages_path . 'admin-network-vi.l10n.php',
+
+			$languages_path . 'continents-cities-vi.po',
+			$languages_path . 'continents-cities-vi.mo',
+			$languages_path . 'continents-cities-vi.l10n.php',
+		];
+
+		$directory = new \RecursiveDirectoryIterator( $languages_path );
+		foreach ( new \RecursiveIteratorIterator( $directory ) as $file ) {
+			if ( ! in_array( $file->getPathname(), $exclude, true ) ) {
+				if ( preg_match( '/-vi\.mo$/', $file->getFilename() ) ) {
+					@unlink( $file->getPathname() );
+				}
+				if ( preg_match( '/-vi\.po$/', $file->getFilename() ) ) {
+					@unlink( $file->getPathname() );
+				}
+				if ( preg_match( '/-vi\.l10n\.php$/', $file->getFilename() ) ) {
+					@unlink( $file->getPathname() );
 				}
 			}
 		}

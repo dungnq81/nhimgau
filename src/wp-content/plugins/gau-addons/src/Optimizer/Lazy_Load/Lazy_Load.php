@@ -91,12 +91,7 @@ final class Lazy_Load {
 	 * @return void
 	 */
 	public function load_scripts(): void {
-		wp_enqueue_script(
-			'lazy-js',
-			ADDONS_URL . 'assets/js/lazyload.js',
-			[],
-			ADDONS_VERSION,
-			true
-		);
+		wp_enqueue_script( 'lazy-js', ADDONS_URL . 'assets/js/lazyload.js', [], ADDONS_VERSION, true );
+		wp_script_add_data( 'lazy-js', 'module', true );
 	}
 }

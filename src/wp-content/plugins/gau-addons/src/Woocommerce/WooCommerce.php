@@ -33,9 +33,9 @@ final class WooCommerce {
 	 * @return void
 	 */
 	public function remove_woocommerce_jsonld(): void {
-		remove_action( 'wp_footer', [ WC()->structured_data, 'output_structured_data' ], 10 );
+		remove_action( 'wp_footer', [ \WC()->structured_data, 'output_structured_data' ], 10 );
 		remove_action( 'woocommerce_email_order_details', [
-			WC()->structured_data,
+			\WC()->structured_data,
 			'output_email_structured_data',
 		], 30 );
 	}
