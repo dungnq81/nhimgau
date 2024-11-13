@@ -12,7 +12,6 @@ use Cores\Traits\Singleton;
  * @author   Gaudev
  */
 final class CF7 {
-
 	use Singleton;
 
 	// --------------------------------------------------

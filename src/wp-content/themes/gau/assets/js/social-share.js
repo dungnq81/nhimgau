@@ -1,0 +1,1 @@
+let e=require("ensemble-social-share/dist/js/ensemble-social-share.min");const s={displays:["facebook","ex","whatsapp","messenger","telegram","linkedin","send-email","copy-link","web-share"]},a=document.querySelector(".social-share");a&&new e.SocialShare(a,s);

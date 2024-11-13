@@ -101,23 +101,23 @@ final class Optimizer {
 	/**
 	 * @return void
 	 */
-    public function wp_head(): void {
+	public function wp_head(): void {
 
-        // manifest.json
-        //echo '<link rel="manifest" href="' . Helper::home( 'manifest.json' ) . '">';
+		// manifest.json
+		//echo '<link rel="manifest" href="' . Helper::home( 'manifest.json' ) . '">';
 
-        // Theme color
-	    $theme_color = Helper::getThemeMod( 'theme_color_setting' );
-	    if ( $theme_color ) {
-		    echo '<meta name="theme-color" content="' . $theme_color . '" />';
-	    }
+		// Theme color
+		$theme_color = Helper::getThemeMod( 'theme_color_setting' );
+		if ( $theme_color ) {
+			echo '<meta name="theme-color" content="' . $theme_color . '" />';
+		}
 
-	    // Fb
-	    $fb_appid = Helper::getThemeMod( 'social_fb_setting' );
-	    if ( $fb_appid ) {
-		    echo '<meta property="fb:app_id" content="' . $fb_appid . '" />';
-	    }
-    }
+		// Fb
+		$fb_appid = Helper::getThemeMod( 'social_fb_setting' );
+		if ( $fb_appid ) {
+			echo '<meta property="fb:app_id" content="' . $fb_appid . '" />';
+		}
+	}
 
 	// ------------------------------------------------------
 
@@ -229,17 +229,20 @@ final class Optimizer {
 	 * @return void
 	 */
 	public function print_footer_scripts(): void { ?>
-		<script>document.documentElement.classList.remove('no-js');if (-1 !== navigator.userAgent.toLowerCase().indexOf('msie') || -1 !== navigator.userAgent.toLowerCase().indexOf('trident/')) {document.documentElement.classList.add('is-IE');}</script>
+        <script>document.documentElement.classList.remove( 'no-js' );
+            if ( -1 !== navigator.userAgent.toLowerCase().indexOf( 'msie' ) || -1 !== navigator.userAgent.toLowerCase().indexOf( 'trident/' ) ) {
+                document.documentElement.classList.add( 'is-IE' );
+            }</script>
 		<?php
 
-		if ( is_file( $skip_link = THEME_PATH . 'assets/js/components/skip-link-focus.js' ) ) {
+		if ( is_file( $skip_link = THEME_PATH . 'assets/js/skip-link-focus.js' ) ) {
 			echo '<script>';
 			include $skip_link;
 			echo '</script>';
 		}
 
 		$str_parsed = Helper::filterSettingOptions( 'defer_script', [] );
-		if ( Helper::hasDelayScriptTag( $str_parsed ) && is_file( $load_scripts = THEME_PATH . 'assets/js/components/load-scripts.js' ) ) {
+		if ( Helper::hasDelayScriptTag( $str_parsed ) && is_file( $load_scripts = THEME_PATH . 'assets/js/load-scripts.js' ) ) {
 			echo '<script>';
 			include $load_scripts;
 			echo '</script>';
@@ -309,5 +312,6 @@ final class Optimizer {
 	/**
 	 * @return void
 	 */
-	public function deferred_scripts(): void {}
+	public function deferred_scripts(): void {
+	}
 }

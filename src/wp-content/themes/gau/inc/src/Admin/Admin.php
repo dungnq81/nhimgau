@@ -52,13 +52,14 @@ final class Admin {
 			$version = date( 'YmdHis', current_time( 'U', 0 ) );
 		}
 
-		wp_enqueue_style( "admin-style", ASSETS_URL . "css/admin.css", [], $version );
+		wp_enqueue_style( 'admin-style', ASSETS_URL . 'css/admin.css', [], $version );
 
-		wp_register_script( 'pace-js', ASSETS_URL . 'js/components/pace.min.js', [], $version, true );
+		wp_register_script( 'pace-js', ASSETS_URL . 'js/pace.min.js', [], $version, true );
 		$pace_js_inline = 'paceOptions = {startOnPageLoad:!1}';
 		wp_add_inline_script( 'pace-js', $pace_js_inline, 'before' );
 
-		wp_enqueue_script( 'admin', ASSETS_URL . 'js/admin.js', [ 'jquery-core', 'pace-js' ], $version, true );
+		wp_enqueue_script( 'admin', ASSETS_URL . 'js/admin2.js', [ 'jquery-core', 'pace-js' ], $version, true );
+		wp_script_add_data( 'admin', 'module', true );
 		wp_script_add_data( 'admin', 'defer', true );
 	}
 

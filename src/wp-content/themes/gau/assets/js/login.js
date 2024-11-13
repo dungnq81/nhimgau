@@ -1,1 +1,1 @@
-jQuery((function(e){var i=e("#login");i.find("#backtoblog").remove(),i.find("#nav").remove(),i.find(".privacy-policy-page-link").remove()}));
+jQuery((function(n){const o=n("#login");o.find("#backtoblog").remove(),o.find("#nav").remove(),o.find(".privacy-policy-page-link").remove()}));

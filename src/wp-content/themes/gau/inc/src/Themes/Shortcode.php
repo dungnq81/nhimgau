@@ -13,7 +13,6 @@ use Cores\Traits\Singleton;
  * @author Gaudev
  */
 final class Shortcode {
-
 	use Singleton;
 
 	// --------------------------------------------------

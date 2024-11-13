@@ -37,7 +37,10 @@ if ( ! function_exists( '__module_preload' ) ) {
 	function __module_preload(): void {
 		ob_start();
 
-		//...
+		?>
+		<link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/modulepreload-polyfill.js'; ?>">
+		<link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/vendor.js'; ?>">
+		<?php
 
 		$content = ob_get_clean();
 		echo apply_filters( 'module_preload_filter', $content );

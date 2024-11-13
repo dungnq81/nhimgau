@@ -17,7 +17,6 @@ use WP_Customize_Manager;
 \defined( 'ABSPATH' ) || die;
 
 final class Customizer {
-
 	use Singleton;
 
 	// --------------------------------------------------
