@@ -47,6 +47,7 @@ export const sharedConfig = {
                 } ),
             ],
         },
+        devSourcemap: process.env.NODE_ENV === 'development',
     },
     optimizeDeps: {
         include: [ 'jQuery' ],
@@ -56,6 +57,7 @@ export const sharedConfig = {
         jQuery: 'jQuery',
     },
     build: {
+        sourcemap: process.env.NODE_ENV === 'development',
         target: 'modules',
         manifest: true,
         minify: process.env.NODE_ENV === 'development' ? false : 'terser',
@@ -69,8 +71,6 @@ export const sharedConfig = {
                 comments: false,
             },
         },
-        watch: process.env.NODE_ENV === 'development' ? {
-            exclude: 'node_modules/**',
-        } : false,
+        watch: process.env.NODE_ENV === 'development' ? { exclude: 'node_modules/**' } : false,
     }
 }

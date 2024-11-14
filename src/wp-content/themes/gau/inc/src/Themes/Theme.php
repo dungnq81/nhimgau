@@ -232,16 +232,18 @@ final class Theme {
 		wp_enqueue_style( 'fonts-style', ASSETS_URL . 'css/fonts.css', [], $version );
 
 		/** Scripts */
-		wp_add_inline_script( 'jquery-core', 'Object.assign(window, { $: jQuery, jQuery });', 'after' );
+		wp_enqueue_script( "modulepreload", ASSETS_URL . "js/modulepreload-polyfill.js", [], $version, true );
 		wp_enqueue_script( 'app', ASSETS_URL . 'js/app2.js', [ 'jquery-core' ], $version, true );
 		wp_enqueue_script( 'back-to-top', ASSETS_URL . 'js/back-to-top.js', [], false, true );
 		wp_enqueue_script( 'social-share', ASSETS_URL . 'js/social-share.js', [], '0.0.3', true );
 
+		wp_script_add_data( "modulepreload", "module", true );
 		wp_script_add_data( 'back-to-top', 'module', true );
 		wp_script_add_data( 'social-share', 'module', true );
 		wp_script_add_data( 'app', 'module', true );
-
 		wp_script_add_data( 'app', 'defer', true );
+
+		wp_add_inline_script( 'jquery-core', 'Object.assign(window, { $: jQuery, jQuery });', 'after' );
 
 		/** Inline Js */
 		$recaptcha_options     = Helper::getOption( 'recaptcha__options' );

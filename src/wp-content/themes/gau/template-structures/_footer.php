@@ -76,8 +76,61 @@ if ( ! function_exists( '_footer_container_close' ) ) {
 if ( ! function_exists( '_footer_widgets' ) ) {
 	add_action( 'construct_footer', '_footer_widgets', 10 );
 
+	/**
+	 * Build our footer widgets
+	 *
+	 * @return void
+	 */
 	function _footer_widgets(): void {
+		$rows    = (int) Helper::getThemeMod( 'footer_row_setting' );
+		$regions = (int) Helper::getThemeMod( 'footer_col_setting' );
 
+		// If no footer widgets exist, we don't need to continue
+		if ( 1 > $rows || 1 > $regions ) {
+			return;
+		}
+
+		?>
+		<div id="footer-widgets" class="footer-widgets">
+			<?php
+			$footer_container = Helper::getThemeMod( 'footer_container_setting' );
+			for ( $row = 1; $row <= $rows; $row ++ ) :
+
+				// Defines the number of active columns in this footer row.
+				for ( $region = $regions; 0 < $region; $region -- ) {
+					if ( is_active_sidebar( 'footer-' . esc_attr( $region + $regions * ( $row - 1 ) ) . '-sidebar' ) ) {
+						$columns = $region;
+						break;
+					}
+				}
+
+				if ( isset( $columns ) ) :
+					echo '<div class="rows row-' . $row . '">';
+
+					\_toggle_container_open( $footer_container );
+
+					echo '<div class="flex-x">';
+
+					for ( $column = 1; $column <= $columns; $column ++ ) :
+						$footer_n = $column + $regions * ( $row - 1 );
+						if ( is_active_sidebar( 'footer-' . esc_attr( $footer_n ) . '-sidebar' ) ) :
+
+							echo sprintf( '<div class="cell cell-%1$s">', esc_attr( $column ) );
+							dynamic_sidebar( 'footer-' . esc_attr( $footer_n ) . '-sidebar' );
+							echo "</div>";
+
+						endif;
+					endfor;
+
+					echo '</div>';
+					echo \_toggle_container_close( $footer_container );
+					echo '</div>';
+
+				endif;
+			endfor;
+			?>
+		</div><!-- #footer-widgets-->
+		<?php
 	}
 }
 
@@ -87,7 +140,34 @@ if ( ! function_exists( '_footer_credit' ) ) {
 	add_action( 'construct_footer', '_footer_credit', 11 );
 
 	function _footer_credit(): void {
+		$footer_container = Helper::getThemeMod( 'footer_container_setting' );
 
+		?>
+        <div id="footer-credit" class="footer-credit">
+			<?php
+			echo '';
+			echo \_toggle_container_open( $footer_container );
+
+			// footer-copyright
+			$copyright = sprintf(
+				'<p class="copyright">&copy; %1$s %2$s. %3$s</p>',
+				date( 'Y' ),
+				get_bloginfo( 'name' ),
+				apply_filters( 'copyright_text_filter', __( 'All rights reserved.', TEXT_DOMAIN ) )
+			);
+			echo apply_filters( 'copyright_filter', $copyright );
+
+			// footer-credit sidebar
+			if ( is_active_sidebar( 'footer-credit-sidebar' ) ) :
+				echo '<div class="credit-sidebar">';
+				dynamic_sidebar( 'footer-credit-sidebar' );
+				echo '</div>';
+			endif;
+
+			echo \_toggle_container_close( $footer_container );
+			?>
+        </div><!-- #footer-credit -->
+		<?php
 	}
 }
 
@@ -97,7 +177,7 @@ if ( ! function_exists( '_footer_custom' ) ) {
 	add_action( 'construct_footer', '_footer_custom', 98 );
 
 	function _footer_custom(): void {
-		echo __return_empty_string();
+		//...
 	}
 }
 

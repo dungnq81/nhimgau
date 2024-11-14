@@ -37,7 +37,6 @@ if ( ! function_exists( '__module_preload' ) ) {
 		ob_start();
 
 		?>
-		<link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/modulepreload-polyfill.js'; ?>">
 		<link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/_vendor.js'; ?>">
 		<?php
 
@@ -206,7 +205,9 @@ if ( ! function_exists( '_masthead_bottom_header' ) ) {
 
 		if ( $bottom_header_cols > 0 ) :
 
-			echo '<div id="bottom-header" class="bottom-header">';
+        ?>
+        <div id="bottom-header" class="bottom-header">
+            <?php
 			echo \_toggle_container_open( $bottom_header_container );
 
 			for ( $i = 1; $i <= $bottom_header_cols; $i ++ ) :
@@ -218,8 +219,10 @@ if ( ! function_exists( '_masthead_bottom_header' ) ) {
 			endfor;
 
 			echo \_toggle_container_close( $bottom_header_container );
-			echo '</div>';
 
+            ?>
+        </div><!-- #bottom-header -->
+        <?php
 		endif;
 	}
 }
@@ -230,7 +233,7 @@ if ( ! function_exists( '_masthead_custom' ) ) {
 	add_action( 'masthead', '_masthead_custom', 98 );
 
 	function _masthead_custom(): void {
-		echo __return_empty_string();
+		//...
 	}
 }
 
