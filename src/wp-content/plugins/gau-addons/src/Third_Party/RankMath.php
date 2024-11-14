@@ -50,10 +50,10 @@ final class RankMath {
 		 * Filter to add plugins to the Rank Math SEO TOC list.
 		 */
 
-		/* Fixed TOC */
-		if ( check_plugin_active( 'fixed-toc/fixed-toc.php' ) ) {
+		/* Tocer */
+		if ( check_plugin_active( 'tocer/tocer.php' ) ) {
 			add_filter( 'rank_math/researches/toc_plugins', static function ( $toc_plugins ) {
-				$toc_plugins['fixed-toc/fixed-toc.php'] = 'Fixed TOC';
+				$toc_plugins['tocer/tocer.php'] = 'Tocer';
 
 				return $toc_plugins;
 			} );

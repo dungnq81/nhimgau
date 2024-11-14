@@ -22,7 +22,6 @@ if ( ! function_exists( '__wp_head' ) ) {
 		$meta_viewport = '<meta name="viewport" content="width=device-width, initial-scale=1.0" />';
 		echo apply_filters( 'meta_viewport_filter', $meta_viewport );
 
-		// Add a ping-back url auto-discovery header for singularly identifiable articles.
 		if ( is_singular() && pings_open() ) {
 			printf( '<link rel="pingback" href="%s" />', esc_url( get_bloginfo( 'pingback_url' ) ) );
 		}

@@ -34,7 +34,8 @@ export const sharedConfig = {
     ],
     css: {
         preprocessorOptions: {
-            sass: {
+            scss: {
+                api: 'modern-compiler',
                 quietDeps: true,
             },
         },
