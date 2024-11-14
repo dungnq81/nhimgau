@@ -146,8 +146,9 @@ if ( ! function_exists( '_masthead_top_header' ) ) {
 		$top_header_container = Helper::getThemeMod( 'top_header_container_setting' );
 
 		if ( $top_header_cols > 0 ) :
-
-			echo '<div id="top-header" class="top-header">';
+        ?>
+        <div id="top-header" class="top-header">
+            <?php
 			echo \_toggle_container_open( $top_header_container );
 
 			for ( $i = 1; $i <= $top_header_cols; $i ++ ) :
@@ -159,8 +160,9 @@ if ( ! function_exists( '_masthead_top_header' ) ) {
 			endfor;
 
 			echo \_toggle_container_close( $top_header_container );
-			echo '</div>';
-
+			?>
+        </div><!-- #top-header -->
+        <?php
 		endif;
 	}
 }
@@ -176,7 +178,9 @@ if ( ! function_exists( '_masthead_header' ) ) {
 
 		if ( $header_cols > 0 ) :
 
-			echo '<div id="inside-header" class="inside-header">';
+        ?>
+        <div id="inside-header" class="inside-header">
+            <?php
 			echo \_toggle_container_open( $header_container );
 
 			for ( $i = 1; $i <= $header_cols; $i ++ ) :
@@ -188,8 +192,9 @@ if ( ! function_exists( '_masthead_header' ) ) {
 			endfor;
 
 			echo \_toggle_container_close( $header_container );
-			echo '</div>';
-
+			?>
+        </div><!-- #inside-header -->
+        <?php
 		endif;
 	}
 }
@@ -219,7 +224,6 @@ if ( ! function_exists( '_masthead_bottom_header' ) ) {
 			endfor;
 
 			echo \_toggle_container_close( $bottom_header_container );
-
             ?>
         </div><!-- #bottom-header -->
         <?php

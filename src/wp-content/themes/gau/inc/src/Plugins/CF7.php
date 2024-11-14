@@ -9,7 +9,7 @@ use Cores\Traits\Singleton;
 /**
  * Contact Form 7
  *
- * @author   Gaudev
+ * @author Gaudev
  */
 final class CF7 {
 	use Singleton;

@@ -5,6 +5,8 @@
  * @author Gaudev
  */
 
+use Cores\Helper;
+
 \defined( 'ABSPATH' ) || die;
 
 // -----------------------------------------------
@@ -16,7 +18,6 @@ if ( ! function_exists( '__wp_footer' ) ) {
 
 	function __wp_footer(): void {
 		if ( apply_filters( 'back_to_top_filter', true ) ) {
-
 			echo apply_filters(
 				'back_to_top_output_filter',
 				sprintf(
@@ -89,7 +90,6 @@ if ( ! function_exists( '_footer_widgets' ) ) {
 		if ( 1 > $rows || 1 > $regions ) {
 			return;
 		}
-
 		?>
 		<div id="footer-widgets" class="footer-widgets">
 			<?php
@@ -106,9 +106,7 @@ if ( ! function_exists( '_footer_widgets' ) ) {
 
 				if ( isset( $columns ) ) :
 					echo '<div class="rows row-' . $row . '">';
-
-					\_toggle_container_open( $footer_container );
-
+					echo \_toggle_container_open( $footer_container );
 					echo '<div class="flex-x">';
 
 					for ( $column = 1; $column <= $columns; $column ++ ) :
@@ -145,7 +143,6 @@ if ( ! function_exists( '_footer_credit' ) ) {
 		?>
         <div id="footer-credit" class="footer-credit">
 			<?php
-			echo '';
 			echo \_toggle_container_open( $footer_container );
 
 			// footer-copyright

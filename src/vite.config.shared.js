@@ -57,7 +57,7 @@ export const sharedConfig = {
         jQuery: 'jQuery',
     },
     build: {
-        sourcemap: process.env.NODE_ENV === 'development',
+        //sourcemap: process.env.NODE_ENV === 'development',
         target: 'modules',
         manifest: true,
         minify: process.env.NODE_ENV === 'development' ? false : 'terser',
