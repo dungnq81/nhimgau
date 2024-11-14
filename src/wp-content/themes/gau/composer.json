@@ -25,7 +25,7 @@
         "vectorface/whip": "^v0.5.0"
     },
     "require-dev": {
-        "symfony/var-dumper": "^v7.1.5",
+        "symfony/var-dumper": "^v7.1.8",
         "roave/security-advisories": "dev-latest"
     }
 }

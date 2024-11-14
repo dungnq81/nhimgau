@@ -92,16 +92,16 @@ final class Helper {
 			self::errorLog( 'LiteSpeed cache cleared.' );
 		}
 
-		// WP Rocket cache
+		// WP-Rocket cache
 		if ( \defined( 'WP_ROCKET_PATH' ) && \function_exists( 'rocket_clean_domain' ) ) {
 			\rocket_clean_domain();
-			self::errorLog( 'WP Rocket cache cleared.' );
+			self::errorLog( 'WP-Rocket cache cleared.' );
 		}
 
-		// Clear minified CSS and JavaScript files (WP Rocket)
+		// Clear minified CSS and JavaScript files (WP-Rocket)
 		if ( function_exists( 'rocket_clean_minify' ) ) {
 			\rocket_clean_minify();
-			self::errorLog( 'WP Rocket minified files cleared.' );
+			self::errorLog( 'WP-Rocket minified files cleared.' );
 		}
 
 		// Jetpack transient cache

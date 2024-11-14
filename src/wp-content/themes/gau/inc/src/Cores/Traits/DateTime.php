@@ -13,7 +13,7 @@ trait DateTime {
 	/**
 	 * Humanizes the time difference between two timestamps.
 	 *
-	 * @param int|\WP_Post|null $post Optional. The post ID to get the time from. Default is null.
+	 * @param int|\WP_Post|null $post Optional. The post-ID to get the time from. Default is null.
 	 * @param false|int|string $from Optional. The starting timestamp. Default is null.
 	 * @param false|int|string $to Optional. The ending timestamp. Default is current time.
 	 *
