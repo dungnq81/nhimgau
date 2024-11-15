@@ -85,7 +85,7 @@ trait Wp {
 	public static function CSRFToken( mixed $action = - 1, string $name = '_csrf_token', bool $referer = false, bool $display = false ) {
 		$name        = esc_attr( $name );
 		$token       = wp_create_nonce( $action );
-		$nonce_field = '<input type="hidden" id="' . self::random( 9 ) . '" name="' . $name . '" value="' . esc_attr( $token ) . '" />';
+		$nonce_field = '<input type="hidden" id="' . self::random( 10 ) . '" name="' . $name . '" value="' . esc_attr( $token ) . '" />';
 
 		if ( $referer ) {
 			$nonce_field .= wp_referer_field( false );
@@ -1473,18 +1473,21 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param false|mixed $post_id
-	 * @param boolean $format_value
-	 * @param boolean $escape_html
+	 * @param mixed $post_id
+	 * @param bool $force_object
+	 * @param bool $format_value
+	 * @param bool $escape_html
 	 *
-	 * @return array|false
+	 * @return false|array
+	 * @throws \JsonException
 	 */
-	public static function getFields( mixed $post_id = false, bool $format_value = true, bool $escape_html = false ): false|array {
+	public static function getFields( mixed $post_id = false, bool $force_object = false, bool $format_value = true, bool $escape_html = false ): false|array {
 		if ( ! self::isAcfActive() ) {
 			return [];
 		}
 
-		return \function_exists( 'get_fields' ) ? \get_fields( $post_id, $format_value, $escape_html ) : [];
+		$fields = \function_exists( 'get_fields' ) ? \get_fields( $post_id, $format_value, $escape_html ) : [];
+		return ( true === $force_object ) ? self::toObject( $fields ) : $fields;
 	}
 
 	// -------------------------------------------------------------

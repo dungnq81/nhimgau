@@ -256,11 +256,18 @@ final class Theme {
 			'themeUrl'              => esc_js( THEME_URL ),
 			'_csrf_token'           => wp_create_nonce( 'wp_csrf_token' ),
 			'_wpnonce'              => wp_create_nonce( 'wp_rest' ),
-			'recaptcha_v2_site_key' => $recaptcha_v2_site_key ? esc_js( $recaptcha_v2_site_key ) : '',
-			'recaptcha_v3_site_key' => $recaptcha_v3_site_key ? esc_js( $recaptcha_v3_site_key ) : '',
 			'locale'                => esc_js( get_locale() ),
 			'lang'                  => esc_js( Helper::getLang() ),
 		];
+
+		if ( $recaptcha_v2_site_key ) {
+			$l10n['recaptcha_v2_site_key'] = esc_js( $recaptcha_v2_site_key );
+		}
+
+		if ( $recaptcha_v3_site_key ) {
+			$l10n['recaptcha_v3_site_key'] = esc_js( $recaptcha_v3_site_key );
+		}
+
 		wp_localize_script( 'jquery-core', Helper::snakeCase( TEXT_DOMAIN ), $l10n );
 
 		/** Comments */
