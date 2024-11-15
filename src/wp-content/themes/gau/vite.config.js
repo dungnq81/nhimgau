@@ -19,17 +19,18 @@ if ( !fs.existsSync( assets ) ) {
 // COPY
 const directoriesToCopy = [
     { src: `${ storage }/fonts/fontawesome/webfonts`, dest: '' },
+    { src: `${ storage }/fonts/SVN-Poppins`, dest: 'fonts' },
     { src: `${ resources }/img`, dest: '' },
     { src: `${ node_modules }/pace-js/pace.min.js`, dest: 'js' },
 ];
 
 // SASS
 const sassFiles = [
-    // admin files
+    // admin
     'editor-style',
     'admin',
 
-    // components files
+    // components
     'components/swiper',
     'components/woocommerce',
 
@@ -40,11 +41,11 @@ const sassFiles = [
 
 // JS
 const jsFiles = [
-    // admin files
+    // admin
     'login',
     'admin',
 
-    // components files
+    // components
     'components/modulepreload-polyfill',
     'components/back-to-top',
     'components/load-scripts',
@@ -53,7 +54,7 @@ const jsFiles = [
     'components/swiper',
     'components/woocommerce',
 
-    // site files
+    // site
     'app',
 ];
 
