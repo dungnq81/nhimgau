@@ -11,6 +11,24 @@ trait DateTime {
 	// -------------------------------------------------------------
 
 	/**
+	 * @param $time_string
+	 *
+	 * @return bool
+	 */
+	public function isFutureTime( $time_string ): bool {
+		$time_converted = self::convertDatetimeFormat( $time_string, 'U' );
+		if ( false === $time_converted ) {
+			return false;
+		}
+
+		$current = current_time( 'U', 0 );
+
+		return $time_converted >= $current;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
 	 * Humanizes the time difference between two timestamps.
 	 *
 	 * @param int|\WP_Post|null $post Optional. The post-ID to get the time from. Default is null.
