@@ -3,7 +3,7 @@
         'name' => 'plugins/gau-addons',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'd2d512915192f36149a5fea7e9eafd1de517ee12',
+        'reference' => '51cbd2589c6c3d527a425e0ad93e013f4ae7afb2',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -49,7 +49,7 @@
         'plugins/gau-addons' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'd2d512915192f36149a5fea7e9eafd1de517ee12',
+            'reference' => '51cbd2589c6c3d527a425e0ad93e013f4ae7afb2',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

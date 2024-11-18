@@ -28,6 +28,8 @@ const customOptions = {
     ]
 };
 
+// Custom
+
 // Initialize
 function init() {
     new BackToTop();

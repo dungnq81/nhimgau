@@ -41,10 +41,6 @@ Touch.init( $ );
 Triggers.init( $, Foundation );
 MediaQuery._init();
 
-// Require non-modular scripts
-//require('motion-ui');
-//require('what-input');
-
 // Import and initialize Foundation plugins
 import { Dropdown } from 'foundation-sites/js/foundation.dropdown';
 import { DropdownMenu } from 'foundation-sites/js/foundation.dropdownMenu';

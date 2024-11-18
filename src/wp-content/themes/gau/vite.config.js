@@ -3,7 +3,7 @@ import fs from 'fs';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { sharedConfig } from '../../../vite.config.shared';
 
-// (theme)
+// THEME
 const directory = path.basename( path.resolve( __dirname ) );
 const dir = `./wp-content/themes/${ directory }`;
 
@@ -26,26 +26,26 @@ const directoriesToCopy = [
 
 // SASS
 const sassFiles = [
-    // admin
+    // (admin)
     'editor-style',
     'admin',
 
-    // components
+    // (components)
     'components/swiper',
     'components/woocommerce',
 
-    // site
+    // (site)
     'fonts',
     'app',
 ];
 
 // JS
 const jsFiles = [
-    // admin
+    // (admin)
     'login',
     'admin2',
 
-    // components
+    // (components)
     'components/modulepreload-polyfill',
     'components/back-to-top',
     'components/lazy-loader',
@@ -54,7 +54,7 @@ const jsFiles = [
     'components/swiper2',
     'components/woocommerce2',
 
-    // site
+    // (site)
     'app2',
 ];
 

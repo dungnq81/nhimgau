@@ -1216,22 +1216,30 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param             $post
+	 * @param $post
 	 * @param string $taxonomy
 	 *
-	 * @return array|false|mixed|WP_Error|WP_Term
+	 * @return mixed
 	 */
 	public static function primaryTerm( $post, string $taxonomy = '' ): mixed {
-		//$post = get_post( $post );
-		//$ID   = $post->ID ?? null;
+		// Ensure $post is a valid post object
+		$post = get_post( $post );
+		if ( ! $post ) {
+			return false;
+		}
 
+		$post_id = $post->ID;
+
+		// Determine the taxonomy if not explicitly provided
 		if ( ! $taxonomy ) {
 			$post_type = get_post_type( $post );
 
+			// Default taxonomy for 'post' is 'category'
 			if ( 'post' === $post_type ) {
 				$taxonomy = 'category';
 			}
 
+			// Use custom filter to retrieve taxonomy mapping for the post-type
 			foreach ( self::filterSettingOptions( 'post_type_terms', [] ) as $post_type_terms ) {
 				foreach ( $post_type_terms as $_post_type => $_taxonomy ) {
 					if ( $_post_type === $post_type ) {
@@ -1242,13 +1250,17 @@ trait Wp {
 			}
 		}
 
-		// get list terms
+		// Get all terms associated with the post for the specified taxonomy
 		$post_terms = get_the_terms( $post, $taxonomy );
-		$term_ids   = wp_list_pluck( $post_terms, 'term_id' );
+		if ( ! is_array( $post_terms ) || empty( $post_terms ) ) {
+			return false;
+		}
 
-		// Rank Math SEO
-		// https://vi.wordpress.org/plugins/seo-by-rank-math/
-		$primary_term_id = get_post_meta( get_the_ID(), 'rank_math_primary_' . $taxonomy, true );
+		// Extract term IDs for further processing
+		$term_ids = wp_list_pluck( $post_terms, 'term_id' );
+
+		// Support for Rank Math SEO plugin
+		$primary_term_id = get_post_meta( $post_id, 'rank_math_primary_' . $taxonomy, true );
 		if ( $primary_term_id && in_array( $primary_term_id, $term_ids, false ) ) {
 			$term = get_term( $primary_term_id, $taxonomy );
 			if ( $term ) {
@@ -1256,27 +1268,30 @@ trait Wp {
 			}
 		}
 
-		// Yoast SEO
-		// https://vi.wordpress.org/plugins/wordpress-seo/
+		// Support for Yoast SEO plugin
 		if ( class_exists( '\WPSEO_Primary_Term' ) ) {
-
-			// Show the post's 'Primary' category if this Yoast feature is available, and one is set
-			$wpseo_primary_term = new \WPSEO_Primary_Term( $taxonomy, $post );
-			$wpseo_primary_term = $wpseo_primary_term->get_primary_term();
-			$term               = get_term( $wpseo_primary_term, $taxonomy );
-			if ( $term && in_array( $term->term_id, $term_ids, false ) ) {
-				return $term;
+			$primary_term_id = ( new \WPSEO_Primary_Term( $taxonomy, $post ) )?->get_primary_term();
+			if ( $primary_term_id && in_array( $primary_term_id, $term_ids, false ) ) {
+				$term = get_term( $primary_term_id, $taxonomy );
+				if ( $term ) {
+					return $term;
+				}
 			}
 		}
 
-		//...
-
-		// Default, first category
-		if ( is_array( $post_terms ) ) {
-			return $post_terms[0];
+		// Support for All in One SEO plugin
+		if ( function_exists( 'aioseo' ) ) {
+			$aioseo_primary_term_id = get_post_meta( $post_id, '_aioseo_primary_' . $taxonomy, true );
+			if ( $aioseo_primary_term_id && in_array( $aioseo_primary_term_id, $term_ids, false ) ) {
+				$term = get_term( $aioseo_primary_term_id, $taxonomy );
+				if ( $term ) {
+					return $term;
+				}
+			}
 		}
 
-		return false;
+		// Default: return the first term if no primary term is found
+		return $post_terms[0] ?? false;
 	}
 
 	// -------------------------------------------------------------
@@ -1406,7 +1421,6 @@ trait Wp {
 	 */
 	public static function iconPostImage( $post = null, string $size = 'thumbnail', string|array $attr = '' ): string {
 		$post = get_post( $post );
-
 		if ( ! $post ) {
 			return '';
 		}
@@ -2084,6 +2098,10 @@ trait Wp {
 			$data = sprintf( 'itemtype="https://schema.org/%s" itemscope', esc_html( $type ) );
 		}
 
+		if ( 'product' === $context ) {
+			$data = 'itemtype="https://schema.org/Product" itemscope';
+		}
+
 		if ( 'post-author' === $context ) {
 			$data = 'itemprop="author" itemtype="https://schema.org/Person" itemscope';
 		}
@@ -2110,6 +2128,58 @@ trait Wp {
 
 		if ( 'url' === $context ) {
 			$data = 'itemprop="url"';
+		}
+
+		if ( 'author-name' === $context ) {
+			$data = 'itemprop="name"';
+		}
+
+		if ( 'breadcrumb' === $context ) {
+			$data = 'itemtype="https://schema.org/BreadcrumbList" itemscope';
+		}
+
+		if ( 'logo' === $context ) {
+			$data = 'itemprop="logo" itemtype="https://schema.org/ImageObject" itemscope';
+		}
+
+		if ( 'review' === $context ) {
+			$data = 'itemtype="https://schema.org/Review" itemscope';
+		}
+
+		if ( 'image' === $context ) {
+			$data = 'itemprop="image" itemtype="https://schema.org/ImageObject" itemscope';
+		}
+
+		if ( 'video' === $context ) {
+			$data = 'itemprop="video" itemtype="https://schema.org/VideoObject" itemscope';
+		}
+
+		if ( 'publisher' === $context ) {
+			$data = 'itemtype="https://schema.org/Organization" itemscope';
+		}
+
+		if ( 'date-published' === $context ) {
+			$data = 'itemprop="datePublished"';
+		}
+
+		if ( 'date-modified' === $context ) {
+			$data = 'itemprop="dateModified"';
+		}
+
+		if ( 'rating' === $context ) {
+			$data = 'itemtype="https://schema.org/Rating" itemscope';
+		}
+
+		if ( 'faq' === $context ) {
+			$data = 'itemtype="https://schema.org/FAQPage" itemscope';
+		}
+
+		if ( 'question' === $context ) {
+			$data = 'itemtype="https://schema.org/Question" itemscope';
+		}
+
+		if ( 'answer' === $context ) {
+			$data = 'itemtype="https://schema.org/Answer" itemscope';
 		}
 
 		return apply_filters( "{$context}_microdata_filter", $data );
