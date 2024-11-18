@@ -18,7 +18,6 @@ use Addons\Security\Xmlrpc;
 \defined( 'ABSPATH' ) || die;
 
 final class Option_Page {
-
 	use Singleton;
 
 	/** ----------------------------------------------- */

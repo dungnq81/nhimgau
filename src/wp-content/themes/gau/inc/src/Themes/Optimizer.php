@@ -19,7 +19,6 @@ final class Optimizer {
 	// ------------------------------------------------------
 
 	private function init(): void {
-
 		$this->_cleanup();
 		$this->_optimizer();
 	}
@@ -32,7 +31,6 @@ final class Optimizer {
 	 * @return void
 	 */
 	private function _cleanup(): void {
-
 		// wp_head
 		remove_action( 'wp_head', 'rsd_link' );
 		remove_action( 'wp_head', 'wlwmanifest_link' );
@@ -102,7 +100,6 @@ final class Optimizer {
 	 * @return void
 	 */
 	public function wp_head(): void {
-
 		// manifest.json
 		//echo '<link rel="manifest" href="' . Helper::home( 'manifest.json' ) . '">';
 
@@ -235,16 +232,9 @@ final class Optimizer {
             }</script>
 		<?php
 
-		if ( is_file( $skip_link = THEME_PATH . 'assets/js/skip-link-focus.js' ) ) {
+		if ( is_file( THEME_PATH . 'assets/js/skip-link-focus.js' ) ) {
 			echo '<script>';
-			include $skip_link;
-			echo '</script>';
-		}
-
-		$str_parsed = Helper::filterSettingOptions( 'defer_script', [] );
-		if ( Helper::hasDelayScriptTag( $str_parsed ) && is_file( $load_scripts = THEME_PATH . 'assets/js/load-scripts.js' ) ) {
-			echo '<script>';
-			include $load_scripts;
+			include THEME_PATH . 'assets/js/skip-link-focus.js';
 			echo '</script>';
 		}
 	}
@@ -259,25 +249,35 @@ final class Optimizer {
 	 * @return string
 	 */
 	public function script_loader_tag( string $tag, string $handle, string $src ): string {
+		$attributes = wp_scripts()->registered[ $handle ]->extra ?? [];
 
-		// Load module
-		if ( wp_scripts()->get_data( $handle, 'module' ) ) {
+		// Add `type="module"` and `crossorigin` attributes if the script is marked as a module
+		if ( ! empty( $attributes['module'] ) ) {
 			$tag = preg_replace( '#(?=></script>)#', ' type="module" crossorigin', $tag, 1 );
 		}
 
-		// Adds `async`, `defer` and attribute support for scripts registered or enqueued by the theme.
+		// Handle `async` and `defer` attributes
 		foreach ( [ 'async', 'defer' ] as $attr ) {
-			if ( ! wp_scripts()->get_data( $handle, $attr ) ) {
-				continue;
-			}
-
-			// Prevent adding attribute when already added in #12009.
-			if ( ! preg_match( "#\s$attr(=|>|\s)#", $tag ) ) {
+			if ( ! empty( $attributes[ $attr ] ) && ! preg_match( "#\s$attr(=|>|\s)#", $tag ) ) {
 				$tag = preg_replace( '#(?=></script>)#', " $attr", $tag, 1 );
 			}
+		}
 
-			// Only allow async or defer, not both.
-			break;
+		// Process combined attributes (e.g., `module defer`) from `extra`
+		if ( ! empty( $attributes['extra'] ) ) {
+
+			// Convert space-separated string to array if necessary
+			$extra_attrs = is_array( $attributes['extra'] )
+				? $attributes['extra']
+				: explode( ' ', $attributes['extra'] );
+
+			foreach ( $extra_attrs as $attr ) {
+
+				// Add attribute if it doesn't already exist in the script tag
+				if ( ! preg_match( "#\s$attr(=|>|\s)#", $tag ) ) {
+					$tag = preg_replace( '#(?=></script>)#', " $attr", $tag, 1 );
+				}
+			}
 		}
 
 		// Fontawesome kit
@@ -313,5 +313,6 @@ final class Optimizer {
 	 * @return void
 	 */
 	public function deferred_scripts(): void {
+		//...
 	}
 }

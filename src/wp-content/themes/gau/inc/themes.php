@@ -428,8 +428,6 @@ function __theme_setting_options( array $arr ): array {
 			// delay.
 			'comment-reply'        => 'delay',
 			'wp-embed'             => 'delay',
-			'back-to-top'          => 'delay',
-			'social-share'         => 'delay',
 		],
 
 		// defer style.

@@ -21,7 +21,7 @@ if ( ! function_exists( '__wp_footer' ) ) {
 			echo apply_filters(
 				'back_to_top_output_filter',
 				sprintf(
-					'<a title="%1$s" aria-label="%1$s" rel="nofollow" href="#" class="back-to-top toTop" data-scroll-speed="%2$s" data-start-scroll="%3$s">%4$s</a>',
+					'<a title="%1$s" aria-label="%1$s" rel="nofollow" href="#" class="back-to-top toTop" data-scroll-speed="%2$s" data-scroll-start="%3$s">%4$s</a>',
 					esc_attr__( 'Scroll back to top', TEXT_DOMAIN ),
 					absint( apply_filters( 'back_to_top_scroll_speed_filter', 400 ) ),
 					absint( apply_filters( 'back_to_top_scroll_start_filter', 300 ) ),

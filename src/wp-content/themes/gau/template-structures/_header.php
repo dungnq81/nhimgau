@@ -35,9 +35,11 @@ if ( ! function_exists( '__module_preload' ) ) {
 
 	function __module_preload(): void {
 		ob_start();
-
 		?>
 		<link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/_vendor.js'; ?>">
+		<link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/back-to-top.js'; ?>">
+		<link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/lazy-loader.js'; ?>">
+		<link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/social-share.js'; ?>">
 		<?php
 
 		$content = ob_get_clean();
@@ -177,7 +179,6 @@ if ( ! function_exists( '_masthead_header' ) ) {
 		$header_container = Helper::getThemeMod( 'header_container_setting' );
 
 		if ( $header_cols > 0 ) :
-
         ?>
         <div id="inside-header" class="inside-header">
             <?php
@@ -209,7 +210,6 @@ if ( ! function_exists( '_masthead_bottom_header' ) ) {
 		$bottom_header_container = Helper::getThemeMod( 'bottom_header_container_setting' );
 
 		if ( $bottom_header_cols > 0 ) :
-
         ?>
         <div id="bottom-header" class="bottom-header">
             <?php

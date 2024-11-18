@@ -43,19 +43,19 @@ const sassFiles = [
 const jsFiles = [
     // admin
     'login',
-    'admin',
+    'admin2',
 
     // components
     'components/modulepreload-polyfill',
     'components/back-to-top',
-    'components/load-scripts',
+    'components/lazy-loader',
     'components/skip-link-focus',
     'components/social-share',
-    'components/swiper',
-    'components/woocommerce',
+    'components/swiper2',
+    'components/woocommerce2',
 
     // site
-    'app',
+    'app2',
 ];
 
 export default {

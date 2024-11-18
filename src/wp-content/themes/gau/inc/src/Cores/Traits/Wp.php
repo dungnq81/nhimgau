@@ -117,14 +117,17 @@ trait Wp {
 		bool $is_widget = false
 	): void {
 
-		// Early exit if $path is invalid or not a directory
+		// Validate $path
 		if ( empty( $path ) || ! is_dir( $path ) ) {
+			self::errorLog( "Invalid or inaccessible path: $path" );
+
 			return;
 		}
 
+		// Retrieve PHP files in the directory
 		$files = glob( $path . '/*.php', GLOB_NOSORT );
 
-		// Check if glob() returned false due to an error
+		// Check if glob() failed
 		if ( $files === false ) {
 			self::errorLog( "Failed to read files in directory: $path" );
 
@@ -133,16 +136,23 @@ trait Wp {
 
 		foreach ( $files as $file_path ) {
 			$filename    = basename( $file_path, '.php' );
-			$filenameFQN = $FQN . $filename;
+			$filenameFQN = rtrim( $FQN, '\\' ) . '\\' . $filename;
 
-			// Skip if $file_path is not readable
+			// Skip unreadable files
 			if ( ! is_readable( $file_path ) ) {
+				self::errorLog( "Unreadable file skipped: $file_path" );
+
 				continue;
 			}
 
-			// Require the file if $require_path is set to true
+			// Include the file if $require_path is true
 			if ( $require_path ) {
-				require_once $file_path;
+				try {
+					require_once $file_path;
+				} catch ( \Exception $e ) {
+					self::errorLog( "Error including file $file_path: " . $e->getMessage() );
+					continue;
+				}
 			}
 
 			// Initialize the class or register as widget if $init_class is true
@@ -604,31 +614,28 @@ trait Wp {
 	 * @return mixed The option value, or the default if the option does not exist.
 	 */
 	public static function getOption( string $option, mixed $default = false, bool $static_cache = false ): mixed {
-		static $_is_option_loaded = [];
+		static $cache = [];
 
-		// Check if the option is provided
-		if ( $option ) {
-
-			// Retrieve the option value based on whether it's a multisite
-			$_value = is_multisite() ? get_site_option( $option, $default ) : get_option( $option, $default );
-
-			// Handle static caching
-			if ( $static_cache ) {
-
-				// Cache the value if it hasn't been cached yet
-				if ( ! isset( $_is_option_loaded[ strtolower( $option ) ] ) ) {
-					$_is_option_loaded[ strtolower( $option ) ] = $_value;
-				}
-			} else {
-
-				// Always update the cache with the latest value
-				$_is_option_loaded[ strtolower( $option ) ] = $_value;
-			}
-
-			return $_is_option_loaded[ strtolower( $option ) ];
+		// Validate the option key
+		$option = strtolower( trim( $option ) );
+		if ( empty( $option ) ) {
+			return $default;
 		}
 
-		return $default;
+		// Return cached value if static caching is enabled and the value is already cached
+		if ( $static_cache && isset( $cache[ $option ] ) ) {
+			return $cache[ $option ];
+		}
+
+		// Retrieve the option value
+		$value = is_multisite() ? get_site_option( $option, $default ) : get_option( $option, $default );
+
+		// Cache the value if static caching is enabled
+		if ( $static_cache ) {
+			$cache[ $option ] = $value;
+		}
+
+		return $value;
 	}
 
 	// -------------------------------------------------------------
@@ -1391,6 +1398,30 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
+	 * @param $post
+	 * @param string $size
+	 * @param string|array $attr
+	 *
+	 * @return string
+	 */
+	public static function iconPostImage( $post = null, string $size = 'thumbnail', string|array $attr = '' ): string {
+		$post = get_post( $post );
+
+		if ( ! $post ) {
+			return '';
+		}
+
+		$post_thumbnail_id = get_post_thumbnail_id( $post );
+		if ( $post_thumbnail_id ) {
+			return self::iconImage( $post_thumbnail_id, $size, $attr );
+		}
+
+		return '';
+	}
+
+	// -------------------------------------------------------------
+
+	/**
 	 *
 	 * @param        $attachment_id
 	 * @param string $size
@@ -1487,6 +1518,7 @@ trait Wp {
 		}
 
 		$fields = \function_exists( 'get_fields' ) ? \get_fields( $post_id, $format_value, $escape_html ) : [];
+
 		return ( true === $force_object ) ? self::toObject( $fields ) : $fields;
 	}
 

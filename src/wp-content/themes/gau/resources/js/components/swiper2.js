@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import { random, isEmpty, toString } from 'lodash';
+import { isEmpty, toString } from 'ramda';
 import Swiper from 'swiper/bundle';
 
 // Initialize Swiper instances
@@ -48,6 +48,9 @@ const getDefaultOptions = () => ( {
     slideClass: 'swiper-slide',
     slideActiveClass: 'swiper-slide-active',
 } );
+
+// Utility to generate random integers
+const random = ( min, max ) => Math.floor( Math.random() * ( max - min + 1 ) ) + min;
 
 //
 // swipers single
