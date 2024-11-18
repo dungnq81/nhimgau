@@ -382,23 +382,23 @@ add_filter( 'addon_menu_options_page_filter', '__menu_options_page', 99 );
 
 function __menu_options_page(): array {
 	return [
-		'aspect_ratio'      => __( 'Aspect Ratio', TEXT_DOMAIN ),
-		'smtp'              => __( 'SMTP', TEXT_DOMAIN ),
+		'aspect_ratio'   => __( 'Aspect Ratio', TEXT_DOMAIN ),
+		'smtp'           => __( 'SMTP', TEXT_DOMAIN ),
 		//'contact_info'   => __( 'Contact Info', TEXT_DOMAIN ),
 		'contact_button' => __( 'Contact Button', TEXT_DOMAIN ),
-		'editor'            => __( 'Editor', TEXT_DOMAIN ),
-		'optimizer'         => __( 'Optimizer', TEXT_DOMAIN ),
-		'security'          => __( 'Security', TEXT_DOMAIN ),
-		'login_security'    => __( 'Login Security', TEXT_DOMAIN ),
-		'social'            => __( 'Social', TEXT_DOMAIN ),
-		'base_slug'         => __( 'Remove Base Slug', TEXT_DOMAIN ),
+		'editor'         => __( 'Editor', TEXT_DOMAIN ),
+		'optimizer'      => __( 'Optimizer', TEXT_DOMAIN ),
+		'security'       => __( 'Security', TEXT_DOMAIN ),
+		'login_security' => __( 'Login Security', TEXT_DOMAIN ),
+		'social'         => __( 'Social', TEXT_DOMAIN ),
+		'base_slug'      => __( 'Remove Base Slug', TEXT_DOMAIN ),
 		//'custom_email_from' => __( 'Custom Email From', TEXT_DOMAIN ),
-		'custom_email'      => __( 'Custom Email To', TEXT_DOMAIN ),
-		'custom_sorting'    => __( 'Custom Sorting', TEXT_DOMAIN ),
+		'custom_email'   => __( 'Custom Email To', TEXT_DOMAIN ),
+		'custom_sorting' => __( 'Custom Sorting', TEXT_DOMAIN ),
 		'recaptcha'      => __( 'reCAPTCHA', TEXT_DOMAIN ),
-		'woocommerce'       => __( 'WooCommerce', TEXT_DOMAIN ),
-		'custom_script'     => __( 'Custom Script', TEXT_DOMAIN ),
-		'custom_css'        => __( 'Custom CSS', TEXT_DOMAIN ),
+		'woocommerce'    => __( 'WooCommerce', TEXT_DOMAIN ),
+		'custom_script'  => __( 'Custom Script', TEXT_DOMAIN ),
+		'custom_css'     => __( 'Custom CSS', TEXT_DOMAIN ),
 	];
 }
 
@@ -423,11 +423,11 @@ function __theme_setting_options( array $arr ): array {
 		'defer_script'                      => [
 
 			// defer.
-			'contact-form-7'       => 'defer',
+			'contact-form-7' => 'defer',
 
 			// delay.
-			'comment-reply'        => 'delay',
-			'wp-embed'             => 'delay',
+			'comment-reply'  => 'delay',
+			'wp-embed'       => 'delay',
 		],
 
 		// defer style.

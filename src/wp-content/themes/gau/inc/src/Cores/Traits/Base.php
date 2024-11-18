@@ -33,7 +33,6 @@ trait Base {
 	 * @return bool
 	 */
 	public static function isUrl( string $url ): bool {
-
 		// Basic URL validation using filter_var
 		if ( ! filter_var( $url, FILTER_VALIDATE_URL ) ) {
 			return false;

@@ -48,9 +48,9 @@ if ( ! function_exists( '_toggle_container_open' ) ) {
 	 * @param string $css2
 	 * @param bool $echo
 	 *
-	 * @return string|void
+	 * @return string|null
 	 */
-	function _toggle_container_open( bool $check, string $css1 = 'container', string $css2 = '', bool $echo = false ) {
+	function _toggle_container_open( bool $check, string $css1 = 'container', string $css2 = '', bool $echo = false ): ?string {
 		$values = '';
 
 		if ( $check && ! empty( $css1 ) ) {
@@ -61,9 +61,10 @@ if ( ! function_exists( '_toggle_container_open' ) ) {
 
 		if ( true === $echo ) {
 			echo $values;
-		} else {
-			return $values;
+			return null;
 		}
+
+		return $values;
 	}
 }
 
@@ -74,9 +75,9 @@ if ( ! function_exists( '_toggle_container_close' ) ) {
 	 * @param bool $check
 	 * @param bool $echo
 	 *
-	 * @return string|void
+	 * @return string|null
 	 */
-	function _toggle_container_close( bool $check, bool $echo = false ) {
+	function _toggle_container_close( bool $check, bool $echo = false ): ?string {
 		$values = '';
 		if ( $check ) {
 			$values = '</div>';
@@ -84,9 +85,10 @@ if ( ! function_exists( '_toggle_container_close' ) ) {
 
 		if ( true === $echo ) {
 			echo $values;
-		} else {
-			return $values;
+			return null;
 		}
+
+		return $values;
 	}
 }
 

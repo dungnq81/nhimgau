@@ -100,8 +100,7 @@ final class Admin {
 		wp_add_inline_script( 'pace-js', $pace_js_inline, 'before' );
 
 		wp_enqueue_script( 'admin', ASSETS_URL . 'js/admin2.js', [ 'jquery-core', 'pace-js' ], $version, true );
-		wp_script_add_data( 'admin', 'module', true );
-		wp_script_add_data( 'admin', 'defer', true );
+		wp_script_add_data( 'admin', 'extra', [ 'module', 'defer' ] );
 	}
 
 	// --------------------------------------------------

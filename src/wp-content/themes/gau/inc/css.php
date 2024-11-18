@@ -11,7 +11,7 @@
 // Custom css
 // --------------------------------------------------
 
-add_action( 'wp_enqueue_scripts', '__custom_css', 100 );
+add_action( 'wp_enqueue_scripts', '__custom_css', 99 );
 
 /**
  * @return void
