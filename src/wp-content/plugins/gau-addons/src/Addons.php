@@ -101,8 +101,7 @@ final class Addons {
 
 		wp_enqueue_style( 'admin-addons-style', ADDONS_URL . 'assets/css/admin_addons.css', [], $version );
 		wp_enqueue_script( 'admin-addons', ADDONS_URL . 'assets/js/admin_addons2.js', [ 'jquery-core' ], $version, true );
-		wp_script_add_data( 'admin-addons', 'module', true );
-		wp_script_add_data( 'admin-addons', 'defer', true );
+		wp_script_add_data( 'admin-addons', 'extra', [ 'module', 'defer' ] );
 
 		// options_enqueue_assets
 		$allowed_pages = 'toplevel_page_addon-settings';
@@ -117,8 +116,7 @@ final class Addons {
 			}
 
 			wp_enqueue_script( 'select2-addons', ADDONS_URL . 'assets/js/select2.js', [ 'select2' ], $version, true );
-			wp_script_add_data( 'select2-addons', 'module', true );
-			wp_script_add_data( 'select2-addons', 'defer', true );
+			wp_script_add_data( 'select2-addons', 'extra', [ 'module', 'defer' ] );
 
 			$codemirror_settings = [
 				'codemirror_css'  => wp_enqueue_code_editor( [ 'type' => 'text/css' ] ),

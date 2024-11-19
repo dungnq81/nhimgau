@@ -23,13 +23,13 @@ final class Admin {
 		add_editor_style( ASSETS_URL . "css/editor-style.css" );
 		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueue_block_editor_assets' ] );
 
-		// admin.js, admin.css v.v...
+		// admin.js, admin.css v.v
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ], 99999 );
 
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 		add_action( 'admin_init', [ $this, 'admin_init' ], 11 );
 
-		// Remove the default admin 'vi' translation ...
+		// Remove the default admin 'vi' translation
 		add_action( 'admin_init', [ $this, 'remove_translates' ] );
 		add_filter( 'auto_update_translation', [ $this, 'disable_translate_autoupdate' ], 10, 2 );
 		add_filter( 'pre_set_site_transient_update_plugins', [ $this, 'disable_translate_update_noti' ] );

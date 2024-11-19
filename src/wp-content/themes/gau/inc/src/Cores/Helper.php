@@ -311,7 +311,7 @@ final class Helper {
 	 */
 	public static function appendToAttribute( string $str, string $attr, string $content_extra, bool $unique = false ): string {
 
-		// Check if attribute has single or double quotes.
+		// Check if the attribute has single or double quotes.
 		// @codingStandardsIgnoreLine
 		if ( $start = stripos( $str, $attr . '="' ) ) {
 			$quote = '"';
@@ -411,7 +411,7 @@ final class Helper {
 		parse_str( wp_parse_url( $url, PHP_URL_QUERY ), $vars );
 		$home = esc_url( trailingslashit( network_home_url() ) );
 
-		// Check if the URL contains 'v' parameter to get the video ID
+		// Check if the URL contains the 'v' parameter to get the video ID
 		if ( isset( $vars['v'] ) ) {
 			$videoId         = esc_attr( $vars['v'] );
 			$iframeSize      = ' width="800" height="450"';
@@ -426,7 +426,7 @@ final class Helper {
 				$src             .= "&autoplay=1";
 			}
 
-			// Configure controls based on $control parameter
+			// Configure controls based on the $ control parameter
 			if ( ! $control ) {
 				$src .= '&modestbranding=1&controls=0&rel=0&version=3&loop=1&enablejsapi=1&iv_load_policy=3&playlist=' . $videoId;
 			}

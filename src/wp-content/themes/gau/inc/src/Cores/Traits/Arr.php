@@ -9,8 +9,6 @@ trait Arr {
 	// --------------------------------------------------
 
 	/**
-	 * https://wordpress.stackexchange.com/questions/252865/tax-query-terms-ids-using-variable
-	 *
 	 * @param $string
 	 * @param string $separator
 	 *

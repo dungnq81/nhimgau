@@ -237,7 +237,7 @@ if ( ! function_exists( '_masthead_custom' ) ) {
 	add_action( 'masthead', '_masthead_custom', 98 );
 
 	function _masthead_custom(): void {
-		//...
+		//
 	}
 }
 

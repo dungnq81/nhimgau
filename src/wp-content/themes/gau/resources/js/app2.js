@@ -1,4 +1,4 @@
-// Comment out this line if not using the ZF framework.
+// Comment on this line if not using the ZF framework.
 import './components/_zf';
 
 //import { nanoid } from 'nanoid';

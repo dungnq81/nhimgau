@@ -13,7 +13,6 @@ use Cores\Traits\Singleton;
  * Modified by Gaudev
  */
 final class CSS {
-
 	use Singleton;
 
 	/**

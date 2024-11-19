@@ -174,7 +174,7 @@ if ( ! function_exists( '_footer_custom' ) ) {
 	add_action( 'construct_footer', '_footer_custom', 98 );
 
 	function _footer_custom(): void {
-		//...
+		//
 	}
 }
 
