@@ -20,25 +20,10 @@
 ///    );
 /// }
 @mixin grid-layout(
-    $columns: (
-        m: 1fr,
-        t: null,
-        d: null
-    ),
-    $rows: (
-        m: auto,
-        t: null,
-        d: null
-    ),
-    $gap: (
-        m: 0,
-        t: null,
-        d: null
-    ),
-    $align: (
-        items: stretch,
-        justify: stretch
-    )
+    $columns: (m: 1fr, t: null, d: null),
+    $rows: (m: auto, t: null, d: null),
+    $gap: (m: 0, t: null, d: null),
+    $align: (items: stretch, justify: stretch)
 ) {
     display: grid;
     @include grid-template($columns, 'columns');
