@@ -1,74 +1,200 @@
-@use "sass:list";
-@use "sass:math";
-
-@use "../functions" as func;
+@use "sass:map";
 @use "mixins" as mixin;
 
-@mixin grid-x( $grid: true  ) {
-    @if true == $grid {
-        & {
-            display: grid;
-        }
-    }
-
-    & {
-        grid-auto-flow: row;
-    }
-}
-
-@mixin grid-y( $grid: true  ) {
-    @if true == $grid {
-        & {
-            display: grid;
-        }
-    }
-
-    & {
-        grid-auto-flow: column;
-    }
-}
-
-@mixin grid-layout( $m: 1, $t: false, $d: false, $gap_m: false, $gap: false, $columns: true ) {
-    @include mixin.media-gap($gap_m, $gap, false);
-    @include media-grid-template($m, $t, $d, $columns);
-}
-
-@mixin grid-self( $row-start: 1, $column-start: 1, $row-end: 2, $column-end: 2 ) {
-    grid-area: list.slash($row-start, $column-start, $row-end, $column-end);
-}
-
-@mixin media-grid-template( $m: 1, $t: false, $d: false, $columns: true ) {
-    @if math.is-unitless( $m ) and $m > 0 {
-        @include grid-template($m, $columns);
-    }
-
-    @if math.is-unitless( $t ) and $t > 0 {
-        @include mixin.mq-min(md) {
-            @include grid-template($t, $columns);
-        }
-    }
-
-    @if math.is-unitless( $d ) and $d > 0 {
-        @include mixin.mq-min(lg) {
-            @include grid-template($d, $columns);
-        }
-    }
-}
-
-@mixin grid-template( $n: 1, $columns: true ) {
-    @if true == $columns {
-        & {
-            grid-template-columns: repeat( $n, 1fr );
-        }
-    } @else {
-        & {
-            grid-template-rows: repeat( $n, 1fr );
-        }
-    }
-}
-
-@mixin grid-center() {
+/// .my-grid {
+///    @include grid-layout(
+///        $columns: (
+///            m: repeat(2, 1fr),
+///            t: repeat(4, 1fr),
+///            d: repeat(6, 1fr)
+///        ),
+///        $gap: (
+///            m: 16px,
+///            t: 24px,
+///            d: 32px
+///        ),
+///        $align: (
+///            items: center,
+///            justify: center
+///        )
+///    );
+/// }
+@mixin grid-layout(
+    $columns: (
+        m: 1fr,
+        t: null,
+        d: null
+    ),
+    $rows: (
+        m: auto,
+        t: null,
+        d: null
+    ),
+    $gap: (
+        m: 0,
+        t: null,
+        d: null
+    ),
+    $align: (
+        items: stretch,
+        justify: stretch
+    )
+) {
     display: grid;
-    align-items: center;
-    justify-content: center;
+    @include grid-template($columns, 'columns');
+    @include grid-template($rows, 'rows');
+    @include grid-gap($gap);
+    @include grid-align($align);
+}
+
+@mixin grid-template($templates, $type: 'columns') {
+    $m: map.get($templates, m);
+    $t: map.get($templates, t);
+    $d: map.get($templates, d);
+
+    @if $m != null {
+        @if $type == 'columns' {
+            grid-template-columns: $m;
+        } @else if $type == 'rows' {
+            grid-template-rows: $m;
+        }
+    }
+
+    @if $t != null {
+        @include mixin.mq-min(md) {
+            @if $type == 'columns' {
+                grid-template-columns: $t;
+            } @else if $type == 'rows' {
+                grid-template-rows: $t;
+            }
+        }
+    }
+
+    @if $d != null {
+        @include mixin.mq-min(lg) {
+            @if $type == 'columns' {
+                grid-template-columns: $d;
+            } @else if $type == 'rows' {
+                grid-template-rows: $d;
+            }
+        }
+    }
+}
+
+@mixin grid-gap($gaps) {
+    $m: map.get($gaps, m);
+    $t: map.get($gaps, t);
+    $d: map.get($gaps, d);
+
+    @if $m != null {
+        @include mixin.gap($m);
+    }
+
+    @if $t != null {
+        @include mixin.mq-min(md) {
+            @include mixin.gap($t);
+        }
+    }
+
+    @if $d != null {
+        @include mixin.mq-min(lg) {
+            @include mixin.gap($d);
+        }
+    }
+}
+
+@mixin grid-align($alignments) {
+    $items: map.get($alignments, items);
+    $justify: map.get($alignments, justify);
+
+    @if $items != null {
+        align-items: $items;
+    }
+    @if $justify != null {
+        justify-items: $justify;
+    }
+}
+
+/// .item {
+///    @include grid-item(
+///        $position: (row: 2, column: 3),
+///        $span: (row: 2, column: 1)
+///    );
+/// }
+@mixin grid-item($position: null, $span: null) {
+    @if $position != null {
+        @each $axis, $value in $position {
+            @if $axis == 'row' {
+                grid-row: $value;
+            } @else if $axis == 'column' {
+                grid-column: $value;
+            }
+        }
+    }
+
+    @if $span != null {
+        @each $axis, $value in $span {
+            @if $axis == 'row' {
+                grid-row-end: span $value;
+            } @else if $axis == 'column' {
+                grid-column-end: span $value;
+            }
+        }
+    }
+}
+
+@mixin grid-auto-fit($min-size: 100px, $gap: 0) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax($min-size, 1fr));
+    @include grid-gap((m: $gap));
+}
+
+/// .container {
+///    @include grid-alignments((
+///        items: center,
+///        justify-items: center,
+///        content: start,
+///        justify-content: end
+///    ));
+/// }
+@mixin grid-alignments($alignments: null) {
+    @if $alignments != null {
+        @each $property, $value in $alignments {
+            @if $property == 'items' {
+                align-items: $value;
+            } @else if $property == 'justify-items' {
+                justify-items: $value;
+            } @else if $property == 'content' {
+                align-content: $value;
+            } @else if $property == 'justify-content' {
+                justify-content: $value;
+            }
+        }
+    }
+}
+
+/// @include grid-template-areas(
+///    "header header"
+///    "sidebar content"
+///    "footer footer"
+/// );
+@mixin grid-template-areas($areas...) {
+    grid-template-areas: $areas;
+}
+
+/// .item {
+///    @include grid-item-utils($full: true, $center: true);
+/// }
+@mixin grid-item-utils($full: false, $center: false, $stretch: false) {
+    @if $full == true {
+        grid-column: 1 / -1;
+    }
+    @if $center == true {
+        justify-self: center;
+        align-self: center;
+    }
+    @if $stretch == true {
+        justify-self: stretch;
+        align-self: stretch;
+    }
 }

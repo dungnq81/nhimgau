@@ -26,21 +26,12 @@
     }
 }
 
-@mixin mq_breakpoint( $breakpoint, $type: min ) {
-    $breakpoint-value: func.fs($breakpoint);
-    @if $type == max {
-        $breakpoint-value: #{$breakpoint-value - func.fs(0.02)};
-    }
-
-    @media only screen and (#{$type}-width: $breakpoint-value) {
-        @content;
-    }
-}
-
 @mixin mq( $breakpoint, $type: min ) {
     $breakpoint-value: func.get-breakpoint($breakpoint, vars.$mq-breakpoints);
     @if $breakpoint-value {
         @if $type == max {
+
+            // Adjust for inclusive max
             $breakpoint-value: #{$breakpoint-value - func.fs(0.02)};
         }
         @media only screen and (#{$type}-width: $breakpoint-value) {
@@ -51,37 +42,15 @@
     }
 }
 
-@mixin mq-min($breakpoint: sm) {
+@mixin mq-min($breakpoint: md) {
     @include mq($breakpoint, min) {
         @content;
     }
 }
 
-@mixin mq-max($breakpoint: sm) {
+@mixin mq-max($breakpoint: md) {
     @include mq($breakpoint, max) {
         @content;
-    }
-}
-
-@mixin media-css($css_property: font-size, $m: vars.$body-size, $t: false, $d: false) {
-    @if meta.type-of($m) != bool {
-        & {
-            #{$css_property}: func.fs($m);
-        }
-    }
-    @if meta.type-of($t) != bool {
-        @include mq-min(md) {
-            & {
-                #{$css_property}: func.fs($t);
-            }
-        }
-    }
-    @if meta.type-of($d) != bool {
-        @include mq-min(lg) {
-            & {
-                #{$css_property}: func.fs($d);
-            }
-        }
     }
 }
 
@@ -111,6 +80,28 @@
 
     @if meta.type-of($border_radius) != bool {
         border-radius: func.fs($border_radius);
+    }
+}
+
+@mixin media-css($css_property: font-size, $m: vars.$body-size, $t: false, $d: false) {
+    @if meta.type-of($m) != bool {
+        & {
+            #{$css_property}: func.fs($m);
+        }
+    }
+    @if meta.type-of($t) != bool {
+        @include mq-min(md) {
+            & {
+                #{$css_property}: func.fs($t);
+            }
+        }
+    }
+    @if meta.type-of($d) != bool {
+        @include mq-min(lg) {
+            & {
+                #{$css_property}: func.fs($d);
+            }
+        }
     }
 }
 
@@ -551,8 +542,8 @@
 
 @mixin centering-self( $width: 300, $height: $width ) {
     position: absolute;
-    top: func.subtract( 50%, func.fs( func.divide( $height, 2 ) ) );
-    left: func.subtract( 50%, func.fs( func.divide( $width, 2 ) ) );
+    top: func.subtract(50%, func.fs(func.divide($height, 2)));
+    left: func.subtract(50%, func.fs(func.divide($width, 2)));
     @include box($width, $height);
 }
 

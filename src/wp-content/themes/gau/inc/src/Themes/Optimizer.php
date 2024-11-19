@@ -273,7 +273,7 @@ final class Optimizer {
 
 			foreach ( $extra_attrs as $attr ) {
 
-				// Add attribute if it doesn't already exist in the script tag
+				// Add an attribute if it doesn't already exist in the script tag
 				if ( ! preg_match( "#\s$attr(=|>|\s)#", $tag ) ) {
 					$tag = preg_replace( '#(?=></script>)#', " $attr", $tag, 1 );
 				}
