@@ -1611,7 +1611,7 @@ trait Wp {
 		} // Posts Page
 		elseif ( $wp_query?->is_posts_page ) {
 			$breadcrumbs[] = $before . get_the_title( self::getOption( 'page_for_posts', true ) ) . $after;
-		} // Post type Archive
+		} // Post-type Archive
 		elseif ( $wp_query?->is_post_type_archive ) {
 			$breadcrumbs[] = $before . post_type_archive_title( '', false ) . $after;
 		} // Page or Attachment
