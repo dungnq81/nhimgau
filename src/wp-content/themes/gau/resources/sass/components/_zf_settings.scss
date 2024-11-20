@@ -787,9 +787,9 @@ $slider-radius: $global-radius;
 // ----------
 
 $switch-background: $medium-gray;
-$switch-background-focus: scale-color($switch-background, $lightness: -10%);
+$switch-background-focus: color.scale($switch-background, $lightness: -10%);
 $switch-background-active: $primary-color;
-$switch-background-active-focus: scale-color($switch-background-active, $lightness: -15%);
+$switch-background-active-focus: color.scale($switch-background-active, $lightness: -15%);
 $switch-height: 2rem;
 $switch-height-tiny: 1.5rem;
 $switch-height-small: 1.75rem;
