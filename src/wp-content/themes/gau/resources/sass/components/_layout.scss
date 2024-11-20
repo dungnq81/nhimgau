@@ -447,7 +447,7 @@ figure {
 
     :is(.grid, .\!grid) {
         &.sm-up-#{$i} {
-            @include mixin.grid-template($i, true);
+            @include mixin.grid-template-item($i, true);
         }
     }
 }
@@ -471,7 +471,7 @@ figure {
 
         :is(.grid, .\!grid) {
             &.md-up-#{$i} {
-                @include mixin.grid-template($i, true);
+                @include mixin.grid-template-item($i, true);
             }
         }
     }
@@ -496,7 +496,7 @@ figure {
 
         :is(.grid, .\!grid) {
             &.lg-up-#{$i} {
-                @include mixin.grid-template($i, true);
+                @include mixin.grid-template-item($i, true);
             }
         }
     }

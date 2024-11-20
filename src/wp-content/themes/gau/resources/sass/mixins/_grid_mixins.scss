@@ -1,6 +1,20 @@
 @use "sass:map";
 @use "mixins" as mixin;
 
+@mixin grid-x( $grid: true  ) {
+    @if true == $grid {
+        display: grid;
+    }
+    grid-auto-flow: row;
+}
+
+@mixin grid-y( $grid: true  ) {
+    @if true == $grid {
+        display: grid;
+    }
+    grid-auto-flow: column;
+}
+
 /// .my-grid {
 ///    @include grid-layout(
 ///        $columns: (
@@ -125,6 +139,14 @@
                 grid-column-end: span $value;
             }
         }
+    }
+}
+
+@mixin grid-template-item( $n: 1, $columns: true ) {
+    @if true == $columns {
+        grid-template-columns: repeat( $n, 1fr );
+    } @else {
+        grid-template-rows: repeat( $n, 1fr );
     }
 }
 

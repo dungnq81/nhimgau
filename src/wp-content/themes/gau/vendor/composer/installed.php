@@ -3,7 +3,7 @@
         'name' => 'wordpress/gau',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '3769a576af6ac298e3de2266986882e9865f4893',
+        'reference' => 'b7fc2ab522e796b40109dd3c50cfcc292ee9fead',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -58,7 +58,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => 'd521fa951b3fc37146a2fe9aef1b06c0af78fd3f',
+            'reference' => 'b33a18b5d222c63472a4b41f6fa3e15e591c9595',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(
@@ -96,7 +96,7 @@
         'wordpress/gau' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '3769a576af6ac298e3de2266986882e9865f4893',
+            'reference' => 'b7fc2ab522e796b40109dd3c50cfcc292ee9fead',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
