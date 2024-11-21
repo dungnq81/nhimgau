@@ -15,8 +15,8 @@ define( 'THEME_VERSION', $theme_version );
 define( 'THEME_URI', $theme_uri );
 define( 'AUTHOR', $theme_author );
 
-define( 'THEME_PATH', untrailingslashit( get_template_directory() ) . DIRECTORY_SEPARATOR );
-define( 'THEME_URL', untrailingslashit( esc_url( get_template_directory_uri() ) ) . '/' );
+define( 'THEME_PATH', untrailingslashit( get_template_directory() ) . DIRECTORY_SEPARATOR ); // **/wp-content/themes/**/
+define( 'THEME_URL', untrailingslashit( esc_url( get_template_directory_uri() ) ) . '/' ); // https://**/wp-content/themes/**/
 
 const INC_PATH   = THEME_PATH . 'inc' . DIRECTORY_SEPARATOR;
 const ASSETS_URL = THEME_URL . 'assets/';

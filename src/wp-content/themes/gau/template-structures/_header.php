@@ -35,6 +35,7 @@ if ( ! function_exists( '__module_preload' ) ) {
 
 	function __module_preload(): void {
 		ob_start();
+
 		?>
 		<link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/_vendor.js'; ?>">
 		<link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/back-to-top.js'; ?>">
@@ -49,8 +50,26 @@ if ( ! function_exists( '__module_preload' ) ) {
 
 // -----------------------------------------------
 
+if ( ! function_exists( '__critical_css' ) ) {
+	add_action( 'wp_head', '__critical_css', 11 );
+
+    function __critical_css(): void {
+	    if ( is_front_page() || is_home() ) {
+		    $critical_css_file = THEME_PATH . 'assets/css/critical/index_critical.min.css';
+		    if ( is_file( $critical_css_file ) ) {
+			    $critical_css = file_get_contents( $critical_css_file );
+			    if ( $critical_css ) {
+				    echo '<style>' . $critical_css . '</style>';
+			    }
+		    }
+	    }
+    }
+}
+
+// -----------------------------------------------
+
 if ( ! function_exists( '__external_fonts' ) ) {
-	add_action( 'wp_head', '__external_fonts', 11 );
+	add_action( 'wp_head', '__external_fonts', 12 );
 
 	function __external_fonts(): void {
 		ob_start();

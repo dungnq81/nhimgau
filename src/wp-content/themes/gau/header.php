@@ -19,7 +19,8 @@
      *
 	 * @see __wp_head - 1
      * @see __module_preload - 10
-     * @see __external_fonts - 11
+     * @see __critical_css - 11
+     * @see __external_fonts - 12
 	 */
     wp_head();
 

@@ -1,6 +1,6 @@
 import * as path from 'path';
-import PluginCritical from 'rollup-plugin-critical';
 import pluginPurgeCss from '@mojojoejo/vite-plugin-purgecss';
+import PluginCritical from 'rollup-plugin-critical';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { sharedConfig } from '../../../vite.config.shared';
 
@@ -83,7 +83,7 @@ export default {
             },
             keyframes: true,
             fontFace: true,
-            defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
+            defaultExtractor: content => content.match( /[\w-/:]+(?<!:)/g ) || [],
         } ) : '',
 
         isProduction ? PluginCritical( {
