@@ -91,8 +91,8 @@ final class WooCommerce {
 	 * @return void
 	 */
 	public function enqueue_scripts(): void {
-		wp_enqueue_style( '_wc-style', ASSETS_URL . "css/plugins/woocommerce.css", [ "app-style" ], THEME_VERSION );
-		wp_enqueue_script( "_wc", ASSETS_URL . "js/plugins/woocommerce.js", [ "app" ], THEME_VERSION, true );
+		wp_enqueue_style( '_wc-style', ASSETS_URL . "css/woocommerce.css", [ "app-style" ], THEME_VERSION );
+		wp_enqueue_script( "_wc", ASSETS_URL . "js/woocommerce2.js", [ "app" ], THEME_VERSION, true );
 		wp_script_add_data( "_wc", "defer", true );
 	}
 
