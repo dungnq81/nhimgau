@@ -1,7 +1,7 @@
-@use "../variables" as vars;
-@use "../mixins" as mixin;
+@use "variables" as vars;
+@use "mixins" as mixin;
 
-@use "swiper/css/bundle";
+@use "swiper/scss";
 
 //
 // Custom CSS
@@ -70,8 +70,4 @@
             }
         }
     }
-}
-
-.demo {
-    background-image: url("../../img/zalo.png");
 }

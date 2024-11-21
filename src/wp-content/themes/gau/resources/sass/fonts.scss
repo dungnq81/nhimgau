@@ -2,7 +2,7 @@
 @use "variables" as vars;
 @use "mixins" as mixin;
 
-@use "awesome_font";
+@use "components/awesome_font";
 
 /** Poppins fonts */
 $poppins_base: string.unquote("#{vars.$font-path}/SVN-Poppins");

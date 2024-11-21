@@ -26,21 +26,21 @@ const directoriesToCopy = [
 
 // SASS
 const sassFiles = [
+
     // (admin)
     'editor-style',
     'admin',
 
-    // (components)
-    'components/swiper',
-    'components/woocommerce',
-
     // (site)
     'fonts',
+    'swiper',
+    'woocommerce',
     'app',
 ];
 
 // JS
 const jsFiles = [
+
     // (admin)
     'login',
     'admin2',
@@ -51,10 +51,10 @@ const jsFiles = [
     'components/lazy-loader',
     'components/skip-link-focus',
     'components/social-share',
-    'components/swiper2',
-    'components/woocommerce2',
 
     // (site)
+    'swiper2',
+    'woocommerce2',
     'app2',
 ];
 
