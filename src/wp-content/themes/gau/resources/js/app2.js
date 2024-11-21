@@ -1,5 +1,5 @@
 // Comment on this line if not using the ZF framework.
-import './components/_zf';
+import Foundation from './3rd/_zf';
 
 //import { nanoid } from 'nanoid';
 //import device from 'current-device';
@@ -7,12 +7,12 @@ import './components/_zf';
 
 //Object.assign( window, { Cookies } );
 
-import BackToTop from './components/back-to-top.js';
-import lazyLoader from './components/lazy-loader.js';
+import BackToTop from './components/back-to-top';
+import lazyLoader from './components/lazy-loader';
 
 lazyLoader( 4000, "script[data-type='lazy']" );
 
-import { initializeSocialShare } from './components/social-share.js';
+import { initializeSocialShare } from './components/social-share';
 
 const customOptions = {
     displays: [

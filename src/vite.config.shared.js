@@ -4,6 +4,7 @@ import viteImagemin from '@vheemstra/vite-plugin-imagemin';
 import imageminMozjpeg from 'imagemin-mozjpeg';
 import imageminPngquant from 'imagemin-pngquant';
 import imageminWebp from 'imagemin-webp';
+import imageminSVGO from 'imagemin-svgo';
 
 export const sharedConfig = {
     base: './',
@@ -23,6 +24,7 @@ export const sharedConfig = {
                     strip: true,
                     quality: [ 0.7, 0.9 ],
                 } ),
+                svg: imageminSVGO(),
             },
             makeWebp: {
                 plugins: {
