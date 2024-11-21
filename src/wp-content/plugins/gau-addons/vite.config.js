@@ -1,5 +1,4 @@
 import * as path from 'path';
-import fs from 'fs';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { sharedConfig } from '../../../vite.config.shared';
 
@@ -8,10 +7,6 @@ const dir = `./wp-content/plugins/${ directory }`;
 const resources = `${ dir }/resources`;
 const assets = `${ dir }/assets`;
 const node_modules = './node_modules';
-
-if ( !fs.existsSync( assets ) ) {
-    fs.mkdirSync( assets, { recursive: true } );
-}
 
 // COPY
 const directoriesToCopy = [
@@ -34,6 +29,8 @@ const jsFiles = [
     'admin_addons2',
 ];
 
+//const isProduction = process.env.NODE_ENV !== 'development';
+
 export default {
     ...sharedConfig,
     plugins: [
@@ -44,7 +41,7 @@ export default {
     ],
     build: {
         ...sharedConfig.build,
-        outDir: `${ dir }/assets`,
+        outDir: `${ assets }`,
         rollupOptions: {
             input: [
                 ...sassFiles.map( ( file ) => path.resolve( `${ resources }/sass/${ file }.scss` ) ),

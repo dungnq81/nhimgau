@@ -6,6 +6,8 @@ import imageminPngquant from 'imagemin-pngquant';
 import imageminWebp from 'imagemin-webp';
 import imageminSVGO from 'imagemin-svgo';
 
+const isProduction = process.env.NODE_ENV !== 'development';
+
 export const sharedConfig = {
     base: './',
     resolve: {
@@ -49,7 +51,7 @@ export const sharedConfig = {
                 } ),
             ],
         },
-        devSourcemap: process.env.NODE_ENV === 'development',
+        devSourcemap: !isProduction,
     },
     optimizeDeps: {
         include: [ 'jQuery' ],
@@ -59,12 +61,13 @@ export const sharedConfig = {
         jQuery: 'jQuery',
     },
     build: {
+        sourcemap: !isProduction,
         target: 'modules',
         manifest: true,
-        minify: process.env.NODE_ENV === 'development' ? false : 'terser',
-        //sourcemap: process.env.NODE_ENV === 'development',
-        watch: process.env.NODE_ENV === 'development' ? { exclude: 'node_modules/**' } : false,
+        minify: !isProduction ? false : 'terser',
+        watch: !isProduction ? { exclude: 'node_modules/**' } : false,
         cssCodeSplit: true,
+        emptyOutDir: true,
         terserOptions: {
             compress: {
                 drop_console: true,

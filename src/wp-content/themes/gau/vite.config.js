@@ -1,5 +1,6 @@
 import * as path from 'path';
-import fs from 'fs';
+import PluginCritical from 'rollup-plugin-critical';
+import pluginPurgeCss from '@mojojoejo/vite-plugin-purgecss';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { sharedConfig } from '../../../vite.config.shared';
 
@@ -11,10 +12,6 @@ const resources = `${ dir }/resources`;
 const assets = `${ dir }/assets`;
 const storage = `${ dir }/storage`;
 const node_modules = './node_modules';
-
-if ( !fs.existsSync( assets ) ) {
-    fs.mkdirSync( assets, { recursive: true } );
-}
 
 // COPY
 const directoriesToCopy = [
@@ -58,6 +55,8 @@ const jsFiles = [
     'app2',
 ];
 
+const isProduction = process.env.NODE_ENV !== 'development';
+
 export default {
     ...sharedConfig,
     plugins: [
@@ -65,10 +64,43 @@ export default {
         viteStaticCopy( {
             targets: directoriesToCopy,
         } ),
+
+        isProduction ? pluginPurgeCss( {
+            content: [
+                `${ dir }/**/*.php`,
+                `${ resources }/js/**/*.js`,
+            ],
+            css: [ `${ assets }/css/**/*.css` ],
+            variables: true,
+            safelist: {
+                standard: [],
+                deep: [ /^grid-/, /^flex-/ ],
+            },
+            keyframes: true,
+            fontFace: true,
+            defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
+        } ) : '',
+
+        isProduction ? PluginCritical( {
+            criticalUrl: 'http://localhost:8080',
+            criticalBase: path.resolve( `${ assets }/css/critical` ),
+            criticalPages: [
+                { uri: '', template: 'index' }
+            ],
+            criticalConfig: {
+                inline: false,
+                strict: true,
+                width: 1920,
+                height: 1080,
+                penthouse: {
+                    blockJSRequests: true,
+                },
+            },
+        } ) : '',
     ],
     build: {
         ...sharedConfig.build,
-        outDir: `${ dir }/assets`,
+        outDir: `${ assets }`,
         rollupOptions: {
             input: [
                 ...sassFiles.map( ( file ) => path.resolve( `${ resources }/sass/${ file }.scss` ) ),
