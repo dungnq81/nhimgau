@@ -70,7 +70,12 @@ export default {
                 `${ dir }/**/*.php`,
                 `${ resources }/js/**/*.js`,
             ],
-            css: [ `${ assets }/css/**/*.css` ],
+            css: [
+                `${ assets }/css/app.css`,
+                `${ assets }/css/fonts.css`,
+                `${ assets }/css/swiper.css`,
+                `${ assets }/css/woocommerce.css`,
+            ],
             variables: true,
             safelist: {
                 standard: [],
