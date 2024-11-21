@@ -37,10 +37,10 @@ if ( ! function_exists( '__module_preload' ) ) {
 		ob_start();
 
 		?>
-		<link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/_vendor.js'; ?>">
-		<link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/back-to-top.js'; ?>">
-		<link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/lazy-loader.js'; ?>">
-		<link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/social-share.js'; ?>">
+        <link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/_vendor.js'; ?>">
+        <link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/back-to-top.js'; ?>">
+        <link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/lazy-loader.js'; ?>">
+        <link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/social-share.js'; ?>">
 		<?php
 
 		$content = ob_get_clean();
@@ -53,17 +53,24 @@ if ( ! function_exists( '__module_preload' ) ) {
 if ( ! function_exists( '__critical_css' ) ) {
 	add_action( 'wp_head', '__critical_css', 11 );
 
-    function __critical_css(): void {
-	    if ( is_front_page() || is_home() ) {
-		    $critical_css_file = THEME_PATH . 'assets/css/critical/index_critical.min.css';
-		    if ( is_file( $critical_css_file ) ) {
-			    $critical_css = file_get_contents( $critical_css_file );
-			    if ( $critical_css ) {
-				    echo '<style>' . $critical_css . '</style>';
-			    }
-		    }
-	    }
-    }
+	function __critical_css(): void {
+		if ( is_front_page() || is_home() ) {
+
+			$critical_css = get_transient( 'index_critical_css' );
+			if ( false === $critical_css ) {
+				$critical_css_file = THEME_PATH . 'assets/css/critical/index_critical.min.css';
+
+				if ( is_file( $critical_css_file ) ) {
+					$critical_css = file_get_contents( $critical_css_file );
+					set_transient( 'index_critical_css', $critical_css, 2 * HOUR_IN_SECONDS );
+				}
+			}
+
+			if ( $critical_css ) {
+				echo '<style>' . $critical_css . '</style>';
+			}
+		}
+	}
 }
 
 // -----------------------------------------------
@@ -167,23 +174,23 @@ if ( ! function_exists( '_masthead_top_header' ) ) {
 		$top_header_container = Helper::getThemeMod( 'top_header_container_setting' );
 
 		if ( $top_header_cols > 0 ) :
-        ?>
-        <div id="top-header" class="top-header">
-            <?php
-			echo \_toggle_container_open( $top_header_container );
-
-			for ( $i = 1; $i <= $top_header_cols; $i ++ ) :
-				if ( is_active_sidebar( 'top-header-' . $i . '-sidebar' ) ) :
-					echo '<div class="cell cell-' . $i . '">';
-					dynamic_sidebar( 'top-header-' . $i . '-sidebar' );
-					echo '</div>';
-				endif;
-			endfor;
-
-			echo \_toggle_container_close( $top_header_container );
 			?>
-        </div><!-- #top-header -->
-        <?php
+            <div id="top-header" class="top-header">
+				<?php
+				echo \_toggle_container_open( $top_header_container );
+
+				for ( $i = 1; $i <= $top_header_cols; $i ++ ) :
+					if ( is_active_sidebar( 'top-header-' . $i . '-sidebar' ) ) :
+						echo '<div class="cell cell-' . $i . '">';
+						dynamic_sidebar( 'top-header-' . $i . '-sidebar' );
+						echo '</div>';
+					endif;
+				endfor;
+
+				echo \_toggle_container_close( $top_header_container );
+				?>
+            </div><!-- #top-header -->
+		<?php
 		endif;
 	}
 }
@@ -198,23 +205,23 @@ if ( ! function_exists( '_masthead_header' ) ) {
 		$header_container = Helper::getThemeMod( 'header_container_setting' );
 
 		if ( $header_cols > 0 ) :
-        ?>
-        <div id="inside-header" class="inside-header">
-            <?php
-			echo \_toggle_container_open( $header_container );
-
-			for ( $i = 1; $i <= $header_cols; $i ++ ) :
-				if ( is_active_sidebar( 'header-' . $i . '-sidebar' ) ) :
-					echo '<div class="cell cell-' . $i . '">';
-					dynamic_sidebar( 'header-' . $i . '-sidebar' );
-					echo '</div>';
-				endif;
-			endfor;
-
-			echo \_toggle_container_close( $header_container );
 			?>
-        </div><!-- #inside-header -->
-        <?php
+            <div id="inside-header" class="inside-header">
+				<?php
+				echo \_toggle_container_open( $header_container );
+
+				for ( $i = 1; $i <= $header_cols; $i ++ ) :
+					if ( is_active_sidebar( 'header-' . $i . '-sidebar' ) ) :
+						echo '<div class="cell cell-' . $i . '">';
+						dynamic_sidebar( 'header-' . $i . '-sidebar' );
+						echo '</div>';
+					endif;
+				endfor;
+
+				echo \_toggle_container_close( $header_container );
+				?>
+            </div><!-- #inside-header -->
+		<?php
 		endif;
 	}
 }
@@ -229,23 +236,23 @@ if ( ! function_exists( '_masthead_bottom_header' ) ) {
 		$bottom_header_container = Helper::getThemeMod( 'bottom_header_container_setting' );
 
 		if ( $bottom_header_cols > 0 ) :
-        ?>
-        <div id="bottom-header" class="bottom-header">
-            <?php
-			echo \_toggle_container_open( $bottom_header_container );
+			?>
+            <div id="bottom-header" class="bottom-header">
+				<?php
+				echo \_toggle_container_open( $bottom_header_container );
 
-			for ( $i = 1; $i <= $bottom_header_cols; $i ++ ) :
-				if ( is_active_sidebar( 'bottom-header-' . $i . '-sidebar' ) ) :
-					echo '<div class="cell cell-' . $i . '">';
-					dynamic_sidebar( 'bottom-header-' . $i . '-sidebar' );
-					echo '</div>';
-				endif;
-			endfor;
+				for ( $i = 1; $i <= $bottom_header_cols; $i ++ ) :
+					if ( is_active_sidebar( 'bottom-header-' . $i . '-sidebar' ) ) :
+						echo '<div class="cell cell-' . $i . '">';
+						dynamic_sidebar( 'bottom-header-' . $i . '-sidebar' );
+						echo '</div>';
+					endif;
+				endfor;
 
-			echo \_toggle_container_close( $bottom_header_container );
-            ?>
-        </div><!-- #bottom-header -->
-        <?php
+				echo \_toggle_container_close( $bottom_header_container );
+				?>
+            </div><!-- #bottom-header -->
+		<?php
 		endif;
 	}
 }
