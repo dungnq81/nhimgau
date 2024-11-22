@@ -80,7 +80,7 @@ export const sharedConfig = {
             },
             format: {
                 comments: false,
-            },
+            }
         }
     }
 }
