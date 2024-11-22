@@ -109,55 +109,65 @@
     @include media-css(font-size, $m, $t, $d);
 }
 
-@mixin media-padding($m: 20, $t: false, $d: false) {
-    @include media-css(padding, $m, $t, $d);
+// left, right, top, bottom
+@mixin media-padding($direction: null, $m: 20, $t: false, $d: false) {
+    @if $direction == null {
+        @include media-css(padding, $m, $t, $d);
+    } @else {
+        @include media-css(padding-#{$direction}, $m, $t, $d);
+    }
 }
 
 @mixin media-pt($m: 20, $t: false, $d: false) {
-    @include media-css(padding-top, $m, $t, $d);
+    @include media-padding(top, $m, $t, $d);
 }
 
 @mixin media-pb($m: 20, $t: false, $d: false) {
-    @include media-css(padding-bottom, $m, $t, $d);
+    @include media-padding(bottom, $m, $t, $d);
 }
 
 @mixin media-pl($m: 20, $t: false, $d: false) {
-    @include media-css(padding-left, $m, $t, $d);
+    @include media-padding(left, $m, $t, $d);
 }
 
 @mixin media-pr($m: 20, $t: false, $d: false) {
-    @include media-css(padding-right, $m, $t, $d);
+    @include media-padding(right, $m, $t, $d);
 }
 
-@mixin media-margin($m: 20, $t: false, $d: false) {
-    @include media-css(margin, $m, $t, $d);
+// left, right, top, bottom
+@mixin media-margin($direction: null, $m: 20, $t: false, $d: false) {
+    @if $direction == null {
+        @include media-css(margin, $m, $t, $d);
+    } @else {
+        @include media-css(margin-#{$direction}, $m, $t, $d);
+    }
 }
 
 @mixin media-mt($m: 20, $t: false, $d: false) {
-    @include media-css(margin-top, $m, $t, $d);
+    @include media-margin(top, $m, $t, $d);
 }
 
 @mixin media-mb($m: 20, $t: false, $d: false) {
-    @include media-css(margin-bottom, $m, $t, $d);
+    @include media-margin(bottom, $m, $t, $d);
 }
 
 @mixin media-ml($m: 20, $t: false, $d: false) {
-    @include media-css(margin-left, $m, $t, $d);
+    @include media-margin(left, $m, $t, $d);
 }
 
 @mixin media-mr($m: 20, $t: false, $d: false) {
-    @include media-css(margin-right, $m, $t, $d);
+    @include media-margin(right, $m, $t, $d);
 }
 
 @mixin gap($row: 20, $col: $row) {
     @if $row == $col and meta.type-of($row) != bool {
         & {
-            grid-gap: func.fs($row);
+            //grid-gap: func.fs($row);
             gap: func.fs($row);
         }
     } @else if $row != $col and meta.type-of($row) != bool and meta.type-of($col) != bool {
         & {
-            grid-gap: func.fs($row) func.fs($col);
+            //grid-gap: func.fs($row) func.fs($col);
             gap: func.fs($row) func.fs($col);
         }
     }
