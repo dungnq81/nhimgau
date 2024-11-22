@@ -13,9 +13,10 @@
     },
     "browserslist": [
         "extends @wordpress/browserslist-config",
-        "ios >= 9",
-        "Firefox ESR",
-        "not dead"
+        ">0.5%",
+        "not dead",
+        "not IE 11",
+        "last 2 versions"
     ],
     "devDependencies": {
         "@mojojoejo/vite-plugin-purgecss": "^1.1.0",

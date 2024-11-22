@@ -1,11 +1,10 @@
 // Comment on this line if not using the ZF framework.
 import Foundation from './3rd/_zf';
 
-//import { nanoid } from 'nanoid';
-//import device from 'current-device';
-//import Cookies from 'js-cookie';
+import { nanoid } from 'nanoid';
+import Cookies from 'js-cookie';
 
-//Object.assign( window, { Cookies } );
+Object.assign( window, { Cookies } );
 
 import BackToTop from './components/back-to-top';
 import lazyLoader from './components/lazy-loader';
@@ -24,7 +23,7 @@ const customOptions = {
         'linkedin',
         'send-email',
         'copy-link',
-        'web-share'
+        'web-share',
     ]
 };
 

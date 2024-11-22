@@ -87,7 +87,7 @@ export default {
         } ) : '',
 
         isProduction ? PluginCritical( {
-            criticalUrl: 'http://localhost:8080',
+            criticalUrl: process.env.CRITICAL_URL || 'http://localhost:8080',
             criticalBase: path.resolve( `${ assets }/css/critical` ),
             criticalPages: [
                 { uri: '', template: 'index' }

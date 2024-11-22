@@ -16,7 +16,6 @@ use WP_Term;
 \defined( 'ABSPATH' ) || die;
 
 trait Wp {
-
 	use Cast;
 	use DateTime;
 	use File;

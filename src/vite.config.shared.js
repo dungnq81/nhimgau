@@ -26,7 +26,12 @@ export const sharedConfig = {
                     strip: true,
                     quality: [ 0.7, 0.9 ],
                 } ),
-                svg: imageminSVGO(),
+                svg: imageminSVGO( {
+                    plugins: [
+                        { removeViewBox: false },
+                        { cleanupIDs: false }
+                    ],
+                } ),
             },
             makeWebp: {
                 plugins: {
@@ -64,8 +69,8 @@ export const sharedConfig = {
         sourcemap: !isProduction,
         target: 'modules',
         manifest: true,
-        minify: !isProduction ? false : 'terser',
-        watch: !isProduction ? { exclude: 'node_modules/**' } : false,
+        minify: isProduction ? 'terser' : false,
+        watch: isProduction ? false : { exclude: 'node_modules/**' },
         cssCodeSplit: true,
         emptyOutDir: true,
         terserOptions: {
