@@ -19,9 +19,7 @@ function __after_setup_theme_action(): void {
 	register_nav_menus(
 		[
 			'main-nav'   => __( 'Primary Menu', TEXT_DOMAIN ),
-			//'second-nav' => __( 'Secondary Menu', TEXT_DOMAIN ),
 			'mobile-nav' => __( 'Handheld Menu', TEXT_DOMAIN ),
-			//'social-nav' => __( 'Social menu', TEXT_DOMAIN ),
 			//'policy-nav' => __( 'Term menu', TEXT_DOMAIN ),
 		]
 	);

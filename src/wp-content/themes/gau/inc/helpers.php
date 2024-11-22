@@ -11,6 +11,32 @@
 // Custom functions
 // --------------------------------------------------
 
+if ( ! function_exists( '_sanitize_css' ) ) {
+	/**
+	 * @param string $string
+	 *
+	 * @return string
+	 */
+	function _sanitize_css( string $string ): string {
+		return \Cores\Helper::extractCss( $string );
+	}
+}
+
+// --------------------------------------------------
+
+if ( ! function_exists( '_sanitize_js' ) ) {
+	/**
+	 * @param string $string
+	 *
+	 * @return string
+	 */
+	function _sanitize_js( string $string ): string {
+		return \Cores\Helper::extractJs( $string );
+	}
+}
+
+// --------------------------------------------------
+
 if ( ! function_exists( '_remove_cookie' ) ) {
 	/**
 	 * @param string $name
@@ -61,6 +87,7 @@ if ( ! function_exists( '_toggle_container_open' ) ) {
 
 		if ( true === $echo ) {
 			echo $values;
+
 			return null;
 		}
 
@@ -85,6 +112,7 @@ if ( ! function_exists( '_toggle_container_close' ) ) {
 
 		if ( true === $echo ) {
 			echo $values;
+
 			return null;
 		}
 
@@ -112,6 +140,7 @@ if ( ! function_exists( '_in_array_checked' ) ) {
 		// Echo or return the result
 		if ( $display ) {
 			echo $result;
+
 			return null;
 		}
 
@@ -139,6 +168,7 @@ if ( ! function_exists( '_in_array_toggle_class' ) ) {
 			// Invalid HTML class; return or echo an empty string
 			if ( $display ) {
 				echo '';
+
 				return null;
 			}
 
@@ -148,6 +178,7 @@ if ( ! function_exists( '_in_array_toggle_class' ) ) {
 		$class = in_array( $key, $arr, false ) ? ' ' . $html_class : '';
 		if ( $display ) {
 			echo $class;
+
 			return null;
 		}
 

@@ -17,6 +17,49 @@ final class Helper {
 	// -------------------------------------------------------------
 
 	/**
+	 * @param $content
+	 * @param array $keywords
+	 * @param string $prefixTag
+	 * @param string $suffixTag
+	 *
+	 * @return mixed|string
+	 */
+	public static function highlightKeywords( $content, array $keywords = [], string $prefixTag = '<mark class="highlight">', string $suffixTag = '</mark>' ): mixed {
+		if ( empty( $keywords ) ) {
+			return $content;
+		}
+
+		$dom = new \DOMDocument();
+		libxml_use_internal_errors( true );
+		@$dom->loadHTML( mb_convert_encoding( '<div>' . $content . '</div>', 'HTML-ENTITIES', 'UTF-8' ), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+		libxml_clear_errors();
+
+		$xpath = new \DOMXPath( $dom );
+
+		foreach ( $xpath->query( '//text()' ) as $node ) {
+			$originalText = $node->nodeValue;
+			foreach ( $keywords as $keyword ) {
+				if ( stripos( $originalText, $keyword ) !== false ) {
+					$highlighted = str_ireplace( $keyword, $prefixTag . $keyword . $suffixTag, $originalText );
+					$newFragment = $dom->createDocumentFragment();
+					$newFragment->appendXML( $highlighted );
+					$node->parentNode->replaceChild( $newFragment, $node );
+					break;
+				}
+			}
+		}
+
+		$result = '';
+		foreach ( $dom->documentElement->childNodes as $child ) {
+			$result .= $dom->saveHTML( $child );
+		}
+
+		return html_entity_decode( $result, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
 	 * @param $route
 	 * @param bool $default
 	 *

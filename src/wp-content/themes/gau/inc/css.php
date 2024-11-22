@@ -26,11 +26,11 @@ function __custom_css(): void {
 //		wp_add_inline_style( 'app-style', $css_output );
 //	}
 
-	ob_start();
+	//ob_start();
 
 	//...
 
-	$inline_css = ob_get_clean();
-	$inline_css = \Cores\Helper::CSSMinify( $inline_css, true );
-	wp_add_inline_style( 'app-style', $inline_css );
+	//$inline_css = ob_get_clean();
+	//$inline_css = \Cores\Helper::CSSMinify( $inline_css, true );
+	//wp_add_inline_style( 'app-style', $inline_css );
 }

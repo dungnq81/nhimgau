@@ -98,7 +98,7 @@ final class PLL {
 	public function translate_product_attribute_label( $label, $name, $product ): string {
 
 		// Get the translated string from Polylang
-		return pll__( $label );
+		return \pll__( $label );
 	}
 
 	// --------------------------------------------------
