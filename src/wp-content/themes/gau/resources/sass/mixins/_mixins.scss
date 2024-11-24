@@ -27,7 +27,7 @@
 }
 
 @mixin mq( $breakpoint, $type: min ) {
-    $breakpoint-value: func.get-breakpoint($breakpoint, vars.$mq-breakpoints);
+    $breakpoint-value: func.get-breakpoint($breakpoint, vars.$mq-breakpoints, 768px); // Fallback
     @if $breakpoint-value {
         @if $type == max {
 
@@ -38,7 +38,7 @@
             @content;
         }
     } @else {
-        @warn 'Invalid breakpoint: `#{$breakpoint}`.';
+        @warn 'Invalid breakpoint: `#{$breakpoint}`. Using fallback.';
     }
 }
 
@@ -85,22 +85,16 @@
 
 @mixin media-css($css_property: font-size, $m: vars.$body-size, $t: false, $d: false) {
     @if meta.type-of($m) != bool {
-        & {
-            #{$css_property}: func.fs($m);
-        }
+        #{$css_property}: func.fs($m);
     }
     @if meta.type-of($t) != bool {
         @include mq-min(md) {
-            & {
-                #{$css_property}: func.fs($t);
-            }
+            #{$css_property}: func.fs($t);
         }
     }
     @if meta.type-of($d) != bool {
         @include mq-min(lg) {
-            & {
-                #{$css_property}: func.fs($d);
-            }
+            #{$css_property}: func.fs($d);
         }
     }
 }
@@ -161,15 +155,11 @@
 
 @mixin gap($row: 20, $col: $row) {
     @if $row == $col and meta.type-of($row) != bool {
-        & {
-            //grid-gap: func.fs($row);
-            gap: func.fs($row);
-        }
+        //grid-gap: func.fs($row);
+        gap: func.fs($row);
     } @else if $row != $col and meta.type-of($row) != bool and meta.type-of($col) != bool {
-        & {
-            //grid-gap: func.fs($row) func.fs($col);
-            gap: func.fs($row) func.fs($col);
-        }
+        //grid-gap: func.fs($row) func.fs($col);
+        gap: func.fs($row) func.fs($col);
     }
 }
 
@@ -274,6 +264,7 @@
     }
 
     @supports not (aspect-ratio: 1) {
+        @warn "Your browser does not support aspect-ratio.";
         height: 0;
         padding-bottom: math.percentage(func.divide($ratio-height, $ratio-width));
     }
@@ -299,6 +290,7 @@
         }
 
         @supports not (aspect-ratio: 1) {
+            @warn "Your browser does not support aspect-ratio.";
             height: 0;
             padding-bottom: func.fs($padding);
         }

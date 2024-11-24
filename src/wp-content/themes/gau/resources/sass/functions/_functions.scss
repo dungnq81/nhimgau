@@ -105,13 +105,14 @@
 }
 
 /** get breakpoint */
-@function get-breakpoint($breakpoint, $mq-breakpoints) {
+@function get-breakpoint($breakpoint, $mq-breakpoints, $fallback: null) {
     @if map.has-key($mq-breakpoints, $breakpoint) {
         @return map.get($mq-breakpoints, $breakpoint);
+    } @else if $fallback != null {
+        @warn "Fallback used: `#{$fallback}` for `#{$breakpoint}` not found in `#{$mq-breakpoints}`";
+        @return $fallback;
     } @else {
-        //@warn 'given `#{$breakpoint}` is not available in `#{$mq-breakpoints}`';
-        //@return false;
-        @return throw($log: 'given `#{$breakpoint}` is not available in `#{$mq-breakpoints}`');
+        @error "Given `#{$breakpoint}` is not available in `#{$mq-breakpoints}` and no fallback provided.";
     }
 }
 
