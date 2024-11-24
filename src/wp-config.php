@@ -82,9 +82,9 @@ if ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ) {
 	@ini_set( 'session.cookie_secure', '1' );
 }
 
-//if ( ! defined( 'FS_METHOD' ) ) {
-//	define( 'FS_METHOD', 'direct' );
-//}
+if ( ! defined( 'FS_METHOD' ) ) {
+	define( 'FS_METHOD', 'direct' );
+}
 
 /** PHP Memory */
 const WP_MEMORY_LIMIT     = '512M';
