@@ -12,7 +12,6 @@ use Addons\Base\Singleton;
  * @author Gaudev
  */
 final class RankMath {
-
 	use Singleton;
 
 	// --------------------------------------------------
@@ -28,23 +27,6 @@ final class RankMath {
 		 * @param boolean $unsigned Enable cache or not, defaults to true
 		 */
 		add_filter( 'rank_math/sitemap/enable_caching', '__return_false' );
-
-		// remove author schema
-		add_filter( 'rank_math/json_ld', static function ( $entities, $jsonld ) {
-			if ( isset( $entities['ProfilePage'] ) ) {
-				$id = $entities['ProfilePage']['@id'];
-				foreach ( $entities as $key => $entity ) {
-					if ( isset( $entity['author']['@id'] ) && $id === $entity['author']['@id'] ) {
-						unset( $entities[ $key ]['author'] );
-					}
-				}
-
-				unset( $entities['ProfilePage'] );
-			}
-
-			return $entities;
-
-		}, 999, 2 );
 
 		/**
 		 * Filter to add plugins to the Rank Math SEO TOC list.
