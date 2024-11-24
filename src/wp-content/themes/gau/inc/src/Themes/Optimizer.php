@@ -272,9 +272,11 @@ final class Optimizer {
 				: explode( ' ', $attributes['extra'] );
 
 			foreach ( $extra_attrs as $attr ) {
-
-				// Add an attribute if it doesn't already exist in the script tag
-				if ( ! preg_match( "#\s$attr(=|>|\s)#", $tag ) ) {
+				if ( $attr === 'module' ) {
+					if ( ! preg_match( '#\stype=(["\'])module\1#', $tag ) ) {
+						$tag = preg_replace( '#(?=></script>)#', ' type="module"', $tag, 1 );
+					}
+				} elseif ( ! preg_match( "#\s$attr(=|>|\s)#", $tag ) ) {
 					$tag = preg_replace( '#(?=></script>)#', " $attr", $tag, 1 );
 				}
 			}

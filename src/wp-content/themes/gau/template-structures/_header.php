@@ -58,7 +58,7 @@ if ( ! function_exists( '__critical_css' ) ) {
 
 			$critical_css = get_transient( 'index_critical_css' );
 			if ( false === $critical_css ) {
-				$critical_css_file = THEME_PATH . 'assets/css/critical/index_critical.min.css';
+				$critical_css_file = THEME_PATH . 'assets/css/index_critical.min.css';
 
 				if ( is_file( $critical_css_file ) ) {
 					$critical_css = file_get_contents( $critical_css_file );

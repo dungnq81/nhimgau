@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the WordPress - 6.7.x - Development - Administration package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-09-23 10:07:11+0000\n"
+"PO-Revision-Date: 2024-11-13 08:27:05+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -36,6 +36,170 @@ msgstr "1"
 msgctxt "default GMT offset or timezone string"
 msgid "0"
 msgstr "0"
+
+#: wp-admin/plugins.php:613
+msgid "If a dependent plugin is missing some dependencies, its activation button will be disabled until the required dependencies are activated."
+msgstr "Nếu một plugin phụ thuộc bị thiếu một số phụ thuộc, nút kích hoạt của plugin đó sẽ bị vô hiệu hóa cho đến khi các phụ thuộc bắt buộc được kích hoạt."
+
+#: wp-admin/plugins.php:612
+msgid "If a required plugin is deleted, a notice will be displayed on the Plugin administration screen informing the user that there is some missing dependencies to install and/or activate. Additionally, each plugin whose dependencies are not met will have an error notice on their plugin row."
+msgstr "Nếu một plugin bắt buộc bị xóa, một thông báo sẽ được hiển thị trên màn hình quản trị Plugin thông báo cho người dùng rằng có một số phụ thuộc bị thiếu để cài đặt và/hoặc kích hoạt. Ngoài ra, mỗi plugin có các phụ thuộc không được đáp ứng sẽ có thông báo lỗi trên hàng plugin của chúng."
+
+#: wp-admin/plugins.php:611
+msgid "Plugin Dependencies aims to make the process of installing and activating add-ons (dependents) and the plugins they rely on (dependencies) consistent and easy."
+msgstr "Plugin Dependencies có mục đích làm cho quá trình cài đặt và kích hoạt các tiện ích bổ sung (phụ thuộc) và các plugin mà chúng dựa vào (phụ thuộc) trở nên nhất quán và dễ dàng."
+
+#: wp-admin/plugins.php:609
+msgid "Dependencies"
+msgstr "Phụ thuộc"
+
+#: wp-admin/options-discussion.php:155
+msgid "Comments to display at the top of each page"
+msgstr "Bình luận hiển thị ở đầu mỗi trang"
+
+#: wp-admin/options-discussion.php:148
+msgid "Comments page to display by default"
+msgstr "Trang bình luận sẽ hiển thị theo mặc định"
+
+#: wp-admin/options-discussion.php:144
+msgid "Top level comments per page"
+msgstr "Bình luận cấp cao nhất trên mỗi trang"
+
+#: wp-admin/options-discussion.php:141
+msgid "Break comments into pages"
+msgstr "Chia bình luận thành các trang"
+
+#. translators: Hidden accessibility text.
+#: wp-admin/options-discussion.php:133 wp-admin/options-discussion.php:137
+msgid "Comment Pagination"
+msgstr "Phân trang bình luận"
+
+#: wp-admin/options-discussion.php:125
+msgid "Number of levels for threaded (nested) comments"
+msgstr "Số lượng cấp độ cho các bình luận có luồng (lồng nhau)"
+
+#: wp-admin/options-discussion.php:101
+msgid "Enable threaded (nested) comments"
+msgstr "Cho phép bình luận theo luồng (lồng nhau)"
+
+#: wp-admin/options-discussion.php:92
+msgid "Close comments when post is how many days old"
+msgstr "Đóng bình luận khi bài viết đã được đăng bao nhiêu ngày"
+
+#: wp-admin/options-discussion.php:89
+msgid "Automatically close comments on old posts"
+msgstr "Tự động đóng bình luận trên các bài viết cũ"
+
+#: wp-admin/nav-menus.php:601
+msgid "Menu order updated"
+msgstr "Đã cập nhật thứ tự thực đơn"
+
+#: wp-admin/nav-menus.php:600
+msgid "Menu parent updated"
+msgstr "Menu cha đã cập nhật"
+
+#: wp-admin/includes/revision.php:383
+msgid "Change revision by using the left and right arrow keys"
+msgstr "Thay đổi bản sửa đổi bằng cách sử dụng phím mũi tên trái và phải"
+
+#: wp-admin/includes/revision.php:382
+msgid "Select a revision"
+msgstr "Chọn một bản sửa đổi"
+
+#: wp-admin/includes/class-wp-upgrader.php:207
+msgid "A directory could not be read."
+msgstr "Không thể đọc được thư mục."
+
+#: wp-admin/includes/class-wp-debug-data.php:1583
+msgid "Database Extension"
+msgstr "Mở rộng cơ sở dữ liệu"
+
+#: wp-admin/includes/class-wp-debug-data.php:1439
+#: wp-admin/includes/class-wp-debug-data.php:1448
+msgid "Empty value"
+msgstr "Giá trị rỗng"
+
+#: wp-admin/includes/class-wp-debug-data.php:611
+msgid "Max simultaneous file uploads"
+msgstr "Tải lên tệp đồng thời tối đa"
+
+#: wp-admin/includes/class-walker-nav-menu-edit.php:261
+msgid "Menu Order"
+msgstr "Thực đơn Đặt hàng"
+
+#: wp-admin/includes/class-walker-nav-menu-edit.php:254
+msgid "Menu Parent"
+msgstr "Thực đơn Cha"
+
+#: wp-admin/edit-form-advanced.php:549
+msgid "Skip to Editor"
+msgstr "Bỏ qua để biên tập"
+
+#. translators: %s: WordPress version number.
+#: wp-admin/about.php:248
+msgid "WordPress %s Field Guide"
+msgstr "Hướng dẫn thực tế về WordPress %s"
+
+#. translators: %s: WordPress version number.
+#: wp-admin/about.php:221
+msgid "WordPress %s Release Notes"
+msgstr "Ghi chú phát hành WordPress %s"
+
+#: wp-admin/about.php:153
+msgid "65+ accessibility fixes and enhancements focus on foundational aspects of the WordPress experience, from improving user interface components and keyboard navigation in the Editor, to an accessible heading on WordPress login screens and clearer labeling throughout."
+msgstr "Hơn 65 bản sửa lỗi và cải tiến về khả năng truy cập tập trung vào các khía cạnh cơ bản của trải nghiệm WordPress, từ việc cải thiện các thành phần giao diện người dùng và điều hướng bàn phím trong Trình chỉnh sửa, đến tiêu đề dễ truy cập trên màn hình đăng nhập WordPress và nhãn rõ ràng hơn."
+
+#: wp-admin/about.php:144
+msgid "WordPress 6.7 delivers important performance updates, including faster pattern loading, optimized previews in the data views component, improved PHP 8+ support and removal of deprecated code, auto sizes for lazy-loaded images, and more efficient tag processing in the HTML API."
+msgstr "WordPress 6.7 cung cấp các bản cập nhật hiệu suất quan trọng, bao gồm tải mẫu nhanh hơn, tối ưu hóa bản xem trước trong thành phần chế độ xem dữ liệu, cải thiện hỗ trợ PHP 8+ và loại bỏ mã lỗi thời, tự động điều chỉnh kích thước cho hình ảnh tải chậm và xử lý thẻ hiệu quả hơn trong API HTML."
+
+#: wp-admin/about.php:128
+msgid "Create, edit, remove, and apply font size presets with the next addition to the Styles interface. Override theme defaults or create your own custom font size, complete with fluid typography for responsive font scaling. Get into the details!"
+msgstr "Tạo, chỉnh sửa, xóa và áp dụng cài đặt trước kích thước phông chữ với phần bổ sung tiếp theo vào giao diện Styles. Ghi đè mặc định của chủ đề hoặc tạo kích thước phông chữ tùy chỉnh của riêng bạn, hoàn chỉnh với kiểu chữ linh hoạt để thay đổi kích thước phông chữ phản hồi. Đi vào chi tiết!"
+
+#: wp-admin/about.php:127
+msgid "New style section, new possibilities"
+msgstr "Phần phong cách mới, khả năng mới"
+
+#: wp-admin/about.php:125
+msgid "Embrace your inner font nerd"
+msgstr "Đừng ngại thể hiện niềm đam mê font chữ của mình"
+
+#: wp-admin/about.php:108
+msgid "This feature introduces a new UI for connecting blocks to custom fields, putting control of dynamic content directly in the editor. Link blocks with fields in just a few clicks, enhancing flexibility and efficiency when building. Your clients will love you—as if they didn&#8217;t already."
+msgstr "Tính năng này giới thiệu một giao diện người dùng mới để kết nối các khối với các trường tùy chỉnh, đưa quyền kiểm soát nội dung động trực tiếp vào trình chỉnh sửa. Liên kết các khối với các trường chỉ bằng vài cú nhấp chuột, tăng cường tính linh hoạt và hiệu quả khi xây dựng. Khách hàng của bạn sẽ yêu thích bạn—như thể họ chưa từng yêu thích bạn."
+
+#: wp-admin/about.php:107
+msgid "A streamlined way to create dynamic content"
+msgstr "Một cách hợp lý để tạo nội dung động"
+
+#: wp-admin/about.php:105
+msgid "Connect blocks and custom fields with no hassle (or code)"
+msgstr "Kết nối các khối và trường tùy chỉnh mà không gặp rắc rối (hoặc mã)"
+
+#: wp-admin/about.php:98
+msgid "Edit and arrange entire sections of your content like never before. A broader view of your site lets you add, edit, shuffle, or remove patterns to your liking. Embrace your inner architect."
+msgstr "Chỉnh sửa và sắp xếp toàn bộ các phần nội dung của bạn theo cách chưa từng có. Góc nhìn rộng hơn về trang web của bạn cho phép bạn thêm, chỉnh sửa, xáo trộn hoặc xóa các mẫu theo ý thích. Hãy nắm bắt kiến ​​trúc sư bên trong bạn."
+
+#: wp-admin/about.php:97
+msgid "Explore your content from a new perspective"
+msgstr "Khám phá nội dung của bạn từ một góc nhìn mới"
+
+#: wp-admin/about.php:95
+msgid "Get the big picture with Zoom Out"
+msgstr "Nắm bắt toàn cảnh với tính năng Thu nhỏ"
+
+#: wp-admin/about.php:78
+msgid "Twenty Twenty-Five offers a flexible, design-focused theme that lets you build stunning sites with ease. Tailor your aesthetic with an array of style options, block patterns, and color palettes. Pared down to the essentials, this is a theme that can truly grow with you."
+msgstr "Twenty Twenty-Five cung cấp một chủ đề linh hoạt, tập trung vào thiết kế cho phép bạn dễ dàng xây dựng các trang web tuyệt đẹp. Điều chỉnh thẩm mỹ của bạn với một loạt các tùy chọn kiểu dáng, mẫu khối và bảng màu. Được tinh giản đến mức cần thiết, đây là một chủ đề thực sự có thể phát triển cùng bạn."
+
+#: wp-admin/about.php:77
+msgid "Endless possibility without complexity"
+msgstr "Khả năng vô tận mà không phức tạp"
+
+#: wp-admin/about.php:68
+msgid "WordPress 6.7 debuts the modern Twenty Twenty-Five theme, offering ultimate design flexibility for any blog at any scale. Control your site typography like never before with new font management features. The new Zoom Out feature lets you design your site with a macro view, stepping back from the details to bring the big picture to life."
+msgstr "WordPress 6.7 ra mắt giao diện Twenty Twenty-Five hiện đại, mang đến sự linh hoạt tối ưu trong thiết kế cho mọi blog, bất kể quy mô. Bạn có thể kiểm soát kiểu chữ trang web dễ dàng hơn bao giờ hết với các tính năng quản lý phông chữ mới. Tính năng Thu nhỏ mới cho phép bạn thiết kế website với góc nhìn tổng quan, lùi ra khỏi chi tiết để nắm bắt bức tranh toàn cảnh."
 
 #: wp-admin/includes/class-wp-debug-data.php:1893
 msgid "The directory does not exist."
@@ -195,6 +359,15 @@ msgstr "Nếu bạn là tác giả plugin, bạn có thể tìm hiểu thêm v�
 #: wp-admin/about.php:174
 msgid "See everything new"
 msgstr "Xem mọi thứ mới"
+
+#: wp-admin/about.php:174
+msgid "https://wordpress.org/download/releases/6-7/"
+msgstr "https://wordpress.org/download/releases/6-7/"
+
+#. translators: %s: Version number.
+#: wp-admin/about.php:166
+msgid "For a comprehensive overview of all the new features and enhancements in WordPress %s, please visit the feature-showcase website."
+msgstr "Để có cái nhìn tổng quan về tất cả các tính năng và cải tiến mới trong WordPress %s, vui lòng truy cập trang web feature-showcase."
 
 #: wp-admin/about.php:160
 msgid "And much more"
@@ -410,6 +583,16 @@ msgstr[0] "Mẫu %s đã được cập nhật."
 #: wp-admin/edit.php:293
 msgid "When using Bulk Edit, you can change the metadata (categories, author, etc.) for all selected posts at once. To remove a post from the grouping, just click the %s<span class=\"screen-reader-text\">remove</span> button next to its name in the Bulk Edit area that appears."
 msgstr "Khi sử dụng chỉnh sửa hàng loạt, bạn có thể thay đổi siêu dữ liệu (danh mục, tác giả, v.v.) cho tất cả các bài viết được chọn cùng một lúc. Để loại bỏ một bài viết khỏi nhóm, chỉ cần nhấp vào nút %s<span class=\"screen-reader-text\">remove</span> bên cạnh tên của nó trong khu vực chỉnh sửa hàng loạt xuất hiện."
+
+#. translators: %s: WordPress version number.
+#: wp-admin/about.php:231
+msgid "Read the WordPress %s Release Notes for information on installation, enhancements, fixed issues, release contributors, learning resources, and the list of file changes."
+msgstr "Đọc Ghi chú phát hành WordPress %s để biết thông tin về cài đặt, cải tiến, sự cố đã khắc phục, người đóng góp bản phát hành, tài nguyên học tập và danh sách các thay đổi tệp."
+
+#. translators: %s: WordPress version number.
+#: wp-admin/about.php:258
+msgid "Explore the WordPress %s Field Guide. Learn about the changes in this release with detailed developer notes to help you build with WordPress."
+msgstr "Khám phá WordPress %s Field Guide. Tìm hiểu về những thay đổi trong bản phát hành này với các ghi chú chi tiết dành cho nhà phát triển để giúp bạn xây dựng bằng WordPress."
 
 #: wp-admin/includes/user.php:721 wp-admin/includes/user.php:744
 msgid "Invalid URL format."
@@ -1375,6 +1558,11 @@ msgstr "Quan trọng! Phiên bản WordPress của bạn (%1$s) sẽ sớm ngừ
 msgid "Important! Your version of WordPress (%1$s) is no longer supported, you will not receive any security updates for your website. To keep your site secure, please <a href=\"%2$s\">update to the latest version of WordPress</a>."
 msgstr "Quan trọng! Phiên bản WordPress của bạn (%1$s) không còn được hỗ trợ nữa, bạn sẽ không nhận được bất kỳ bản cập nhật bảo mật nào cho trang web của mình. Để bảo vệ trang web của bạn, vui lòng <a href=\"%2$s\">cập nhật lên phiên bản mới nhất của WordPress</a>."
 
+#. translators: %s: WordPress version number.
+#: wp-admin/about.php:26
+msgid "https://make.wordpress.org/core/wordpress-%s-field-guide/"
+msgstr "https://make.wordpress.org/core/wordpress-%s-field-guide/"
+
 #. translators: %s: Version number.
 #: wp-admin/about.php:190
 msgid "Learn more about WordPress %s"
@@ -1629,6 +1817,11 @@ msgstr "Sửa tệp tin Plugin"
 #: wp-admin/menu.php:255 wp-admin/menu.php:256 wp-admin/network/menu.php:82
 msgid "Theme File Editor"
 msgstr "Sửa tệp tin giao diện"
+
+#. translators: %s: Documentation URL.
+#: wp-admin/user-edit.php:862
+msgid "If this is a development website, you can <a href=\"%s\">set the environment type accordingly</a> to enable application passwords."
+msgstr "Nếu đây là trang web phát triển, bạn có thể <a href=\"%s\">thiết lập loại môi trường phù hợp</a> để bật mật khẩu ứng dụng."
 
 #: wp-admin/user-edit.php:857
 msgid "The application password feature requires HTTPS, which is not enabled on this site."
@@ -3069,7 +3262,7 @@ msgid "<strong>Error:</strong> Passwords do not match. Please enter the same pas
 msgstr "<strong>Lỗi:</strong> Mật khẩu không khớp. Vui lòng nhập cùng một mật khẩu vào cả hai ô mật khẩu."
 
 #: wp-admin/includes/meta-boxes.php:383 wp-admin/includes/meta-boxes.php:384
-#: wp-admin/js/post.js:775
+#: wp-admin/js/post.js:777
 msgctxt "post action/button label"
 msgid "Schedule"
 msgstr "Dự kiến"
@@ -3422,6 +3615,11 @@ msgstr "Website của bạn sử dụng phiên bản PHP (%s) cũ, vui lòng c�
 #: wp-admin/includes/class-wp-site-health.php:767
 msgid "Your site is running on an older version of PHP (%s)"
 msgstr "Trang web của bạn đang chạy phiên bản PHP cũ (%s)"
+
+#. translators: %s: The recommended PHP version.
+#: wp-admin/includes/class-wp-site-health.php:732
+msgid "Your site is running a recommended version of PHP (%s)"
+msgstr "Trang web của bạn đang chạy phiên bản PHP được đề xuất (%s)"
 
 #: wp-admin/includes/class-wp-media-list-table.php:259
 msgid "No media files found in Trash."
@@ -7706,6 +7904,11 @@ msgstr "(Hiện tại: %s)"
 msgid "<strong>Version %s</strong> addressed one security issue."
 msgstr "<strong>Phiên bản %s</strong> đã giải quyết vấn đề bảo mật."
 
+#. translators: The localized Gravatar URL.
+#: wp-admin/includes/upgrade.php:282 wp-admin/user-edit.php:632
+msgid "https://gravatar.com/"
+msgstr "https://gravatar.com/"
+
 #: wp-admin/user-edit.php:622
 msgid "Profile Picture"
 msgstr "Ảnh đại diện"
@@ -8377,6 +8580,14 @@ msgstr[0] "%s bài viết bởi tác giả này"
 msgid "Live Preview &#8220;%s&#8221;"
 msgstr "Xem trước trực tiếp &#8220;%s&#8221;"
 
+#: wp-admin/options-discussion.php:150
+msgid "last page"
+msgstr "trang cuối cùng"
+
+#: wp-admin/options-discussion.php:151
+msgid "first page"
+msgstr "trang đầu tiên"
+
 #. translators: %s: Post link.
 #: wp-admin/edit-form-comment.php:197
 msgid "In response to: %s"
@@ -8660,7 +8871,7 @@ msgstr "Trả lời cho"
 
 #. translators: 1: Month, 2: Day, 3: Year, 4: Hour, 5: Minute.
 #: wp-admin/includes/template.php:869 wp-admin/js/comment.js:89
-#: wp-admin/js/post.js:792
+#: wp-admin/js/post.js:794
 msgid "%1$s %2$s, %3$s at %4$s:%5$s"
 msgstr "%1$s %2$s, %3$s vào lúc %4$s:%5$s"
 
@@ -9126,6 +9337,11 @@ msgstr "<strong>Giao diện và Thành phần mở rộng</strong> &mdash; Để
 #: wp-admin/update-core.php:990
 msgid "On this screen, you can update to the latest version of WordPress, as well as update your themes, plugins, and translations from the WordPress.org repositories."
 msgstr "Tại màn hình này, bạn có thể nâng cấp WordPress lên phiên bản mới nhất, cũng như cập nhật các giao diện và plugin từ Thư viện của WordPress.org."
+
+#. translators: %s: https://wordpress.org/themes
+#: wp-admin/themes.php:156
+msgid "If you would like to see more themes to choose from, click on the &#8220;Add New Theme&#8221; button and you will be able to browse or search for additional themes from the <a href=\"%s\">WordPress Theme Directory</a>. Themes in the WordPress Theme Directory are designed and developed by third parties, and are compatible with the license WordPress uses. Oh, and they are free!"
+msgstr "Nếu bạn muốn xem thêm nhiều chủ đề để lựa chọn, hãy nhấp vào nút &#8220;Thêm chủ đề mới&#8221; và bạn sẽ có thể duyệt hoặc tìm kiếm các chủ đề bổ sung từ <a href=\"%s\">Thư mục chủ đề WordPress</a>. Các chủ đề trong Thư mục chủ đề WordPress được thiết kế và phát triển bởi bên thứ ba và tương thích với giấy phép mà WordPress sử dụng. À, và chúng miễn phí!"
 
 #. translators: 1: Number of megabytes, 2: Percentage.
 #: wp-admin/includes/dashboard.php:1682
@@ -10130,6 +10346,10 @@ msgstr "%s đang chỉnh sửa"
 msgid "You can upload and insert media (images, audio, documents, etc.) by clicking the Add Media button. You can select from the images and files already uploaded to the Media Library, or upload new media to add to your page or post. To create an image gallery, select the images to add and click the &#8220;Create a new gallery&#8221; button."
 msgstr "Bạn có thể tải lên và chèn media (ảnh, âm thanh, tài liệu, v.v.) bằng cách bấm vào nút thêm Media. Bạn có thể chọn từ những ảnh và tập tin đã được tải lên thư viện media, hoặc tải lên nội dung mới để thêm vào trang tĩnh hoặc bài viết của bạn. Để tạo một thư viện ảnh, chọn những ảnh bạn muốn và bấm vào nút &#8220;Tạo một thư viện ảnh mới&#8221;."
 
+#: wp-admin/about.php:75
+msgid "Introducing Twenty Twenty-Five"
+msgstr "Giới thiệu Twenty Twenty-Five"
+
 #: wp-admin/includes/image-edit.php:83
 msgid "Image rotation is not supported by your web host."
 msgstr "Thao tác xoay ảnh không được máy chủ của bạn hỗ trợ."
@@ -10545,16 +10765,16 @@ msgstr "https://wordpress.org/about/"
 msgid "Select All"
 msgstr "Chọn toàn bộ"
 
-#: wp-admin/includes/meta-boxes.php:186 wp-admin/js/post.js:886
+#: wp-admin/includes/meta-boxes.php:186 wp-admin/js/post.js:888
 msgid "Public, Sticky"
 msgstr "Công khai, ghim"
 
 #: wp-admin/includes/meta-boxes.php:109 wp-admin/includes/meta-boxes.php:154
-#: wp-admin/js/post.js:806 wp-admin/js/post.js:808
+#: wp-admin/js/post.js:808 wp-admin/js/post.js:810
 msgid "Privately Published"
 msgstr "Được xuất bản ở chế độ riêng tư"
 
-#: wp-admin/includes/meta-boxes.php:59 wp-admin/js/post.js:840
+#: wp-admin/includes/meta-boxes.php:59 wp-admin/js/post.js:842
 msgid "Save as Pending"
 msgstr "Lưu vào Chờ duyệt"
 
@@ -11741,6 +11961,11 @@ msgstr "Tên"
 #: wp-admin/theme-install.php:109
 msgid "You can find additional themes for your site by using the Theme Browser/Installer on this screen, which will display themes from the <a href=\"%s\">WordPress Theme Directory</a>. These themes are designed and developed by third parties, are available free of charge, and are compatible with the license WordPress uses."
 msgstr "Bạn có thể thêm vào các giao diện cho trang của bạn nhờ trình xem/tải giao diện trên trang này, nó sẽ hiển thị các giao diện từ <a href=\"%s\" target=\"_blank\">Thư mục Chủ đề của WordPress.org</a>. Các giao diện trên đều được thiết kế bởi các bên thứ ba, được phép tải miễn phí, và phù hợp với giấy phép mà WordPress sử dụng."
+
+#. translators: %s: WordPress Plugin Directory URL.
+#: wp-admin/plugins.php:569
+msgid "If you would like to see more plugins to choose from, click on the &#8220;Add New Plugin&#8221; button and you will be able to browse or search for additional plugins from the <a href=\"%s\">WordPress Plugin Directory</a>. Plugins in the WordPress Plugin Directory are designed and developed by third parties, and are compatible with the license WordPress uses. Oh, and they are free!"
+msgstr "Nếu bạn muốn xem thêm nhiều plugin để lựa chọn, hãy nhấp vào nút &#8220;Thêm plugin mới&#8221; và bạn sẽ có thể duyệt hoặc tìm kiếm các plugin bổ sung từ <a href=\"%s\">WordPress Plugin Directory</a>. Các plugin trong WordPress Plugin Directory được thiết kế và phát triển bởi bên thứ ba và tương thích với giấy phép mà WordPress sử dụng. À, và chúng miễn phí!"
 
 #. translators: %s: MAX_FILE_SIZE
 #: wp-admin/includes/file.php:898

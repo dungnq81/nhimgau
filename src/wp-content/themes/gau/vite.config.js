@@ -1,5 +1,4 @@
 import * as path from 'path';
-import pluginPurgeCss from '@mojojoejo/vite-plugin-purgecss';
 import PluginCritical from 'rollup-plugin-critical';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { sharedConfig } from '../../../vite.config.shared';
@@ -64,31 +63,9 @@ export default {
         viteStaticCopy( {
             targets: directoriesToCopy,
         } ),
-
-        isProduction ? pluginPurgeCss( {
-            content: [
-                `${ dir }/**/*.php`,
-                `${ resources }/js/**/*.js`,
-            ],
-            css: [
-                `${ assets }/css/app.css`,
-                `${ assets }/css/fonts.css`,
-                `${ assets }/css/swiper.css`,
-                `${ assets }/css/woocommerce.css`,
-            ],
-            variables: true,
-            safelist: {
-                standard: [],
-                deep: [ /^grid-/, /^flex-/ ],
-            },
-            keyframes: true,
-            fontFace: true,
-            defaultExtractor: content => content.match( /[\w-/:]+(?<!:)/g ) || [],
-        } ) : '',
-
         isProduction ? PluginCritical( {
             criticalUrl: process.env.CRITICAL_URL || 'http://localhost:8080',
-            criticalBase: path.resolve( `${ assets }/css/critical` ),
+            criticalBase: `./wp-content/themes/${ directory }/assets/css`,
             criticalPages: [
                 { uri: '', template: 'index' }
             ],

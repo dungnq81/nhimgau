@@ -24,7 +24,7 @@ const DB_NAME     = 'nhimgau';
 const DB_USER     = 'dbuser';
 const DB_PASSWORD = 'dbuser';
 
-const DB_HOST = 'mysql8';
+const DB_HOST    = 'mysql8';
 const DB_CHARSET = 'utf8mb4';
 const DB_COLLATE = 'utf8mb4_unicode_520_ci';
 
@@ -78,17 +78,13 @@ const WP_DEBUG_DISPLAY = false;
 
 /* Add any custom values between this line and the "stop editing" line. */
 
-if ( ! empty( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && 'https' === $_SERVER['HTTP_X_FORWARDED_PROTO'] ) {
-	$_SERVER['HTTPS'] = 'on';
-}
-
 if ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ) {
 	@ini_set( 'session.cookie_secure', '1' );
 }
 
-if ( ! defined( 'FS_METHOD' ) ) {
-	define( 'FS_METHOD', 'direct' );
-}
+//if ( ! defined( 'FS_METHOD' ) ) {
+//	define( 'FS_METHOD', 'direct' );
+//}
 
 /** PHP Memory */
 const WP_MEMORY_LIMIT     = '512M';
