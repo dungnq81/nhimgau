@@ -1,4 +1,4 @@
-.haku-settings_page_server-info {
+.addons_page_server-info {
     #wpcontent {
         padding-left: 0;
     }
@@ -39,10 +39,23 @@
 }
 
 /** */
-body.toplevel_page_haku-settings {
-    #wpbody-content {
+.toplevel_page_addon-settings {
+	#wpbody-content {
         .notice {
             margin-left: 2px;
+        }
+    }
+	
+    .notice {
+        position: absolute !important;
+        visibility: hidden;
+        transition: 0.3s;
+    }
+
+    #_content {
+        .notice {
+            position: relative !important;
+            visibility: visible;
         }
     }
 }
@@ -506,21 +519,5 @@ input[type=number].tiny-text {
         font-weight: 500 !important;
         font-size: 14px !important;
         max-height: 43px;
-    }
-}
-
-/** */
-.toplevel_page_haku-settings {
-    .notice {
-        position: absolute !important;
-        visibility: hidden;
-        transition: 0.3s;
-    }
-
-    #_content {
-        .notice {
-            position: relative !important;
-            visibility: visible;
-        }
     }
 }

@@ -34,6 +34,7 @@ define( 'ADDONS_TEXT_DOMAIN', $plugin_data['TextDomain'] );
 define( 'ADDONS_AUTHOR', $plugin_data['Author'] );
 
 const ADDONS_SRC_PATH = ADDONS_PATH . 'src' . DIRECTORY_SEPARATOR;
+const ADDONS_SRC_URL  = ADDONS_URL . 'src/';
 
 if ( ! file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	error_log( 'Autoloader not found: ' . __DIR__ . '/vendor/autoload.php' );

@@ -7,13 +7,11 @@ use Addons\Base\Singleton;
 \defined( 'ABSPATH' ) || die;
 
 final class Editor {
-
 	use Singleton;
 
 	// ------------------------------------------------------
 
 	private function init(): void {
-
 		( new TinyMCE() );
 
 		add_action( 'admin_init', [ $this, 'editor_admin_init' ], 11 );
@@ -48,6 +46,13 @@ final class Editor {
 
 			// Fix for Safari 18 negative horizontal margin on floats. - Classic Editor plugin
 			add_action( 'admin_print_styles', [ $this, 'safari_18_temp_fix' ] );
+
+			// Fix for the Categories post-box for WP 6.7.1.
+			global $wp_version;
+
+			if ( '6.7.1' === $wp_version && is_admin() ) {
+				add_action( 'wp_default_scripts', [ $this, 'replace_post_js' ], 11 );
+			}
 
 			// Also used in Gutenberg.
 			// Consider disabling other Block Editor functionality.
@@ -107,6 +112,44 @@ final class Editor {
                 }
             </style>
 			<?php
+		}
+	}
+
+	// ------------------------------------------------------
+
+	/**
+	 * Temporary fix for the Categories post-box on the classic Edit Post screen.
+	 * See: https://core.trac.wordpress.org/ticket/62504.
+	 */
+	public function replace_post_js( $scripts ): void {
+		$script = $scripts->query( 'post', 'registered' );
+		if ( $script ) {
+			if ( '62504-20241121' === $script->ver ) {
+				// The script src was replaced by another plugin.
+				return;
+			}
+
+			$script->src = ADDONS_SRC_URL . 'Editor/js/post.min.js';
+			$script->ver = '62504-20241121';
+		} else {
+			$scripts->add(
+				'post',
+				ADDONS_SRC_URL . 'Editor/js/post.min.js',
+				[
+					'suggest',
+					'wp-lists',
+					'postbox',
+					'tags-box',
+					'underscore',
+					'word-count',
+					'wp-a11y',
+					'wp-sanitize',
+					'clipboard'
+				],
+				'62504-20241121',
+				1
+			);
+			$scripts->set_translations( 'post' );
 		}
 	}
 

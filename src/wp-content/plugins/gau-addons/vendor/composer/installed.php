@@ -3,7 +3,7 @@
         'name' => 'plugins/gau-addons',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '3769a576af6ac298e3de2266986882e9865f4893',
+        'reference' => '058e741c5fb01c7200348b30e0de635bd37d4572',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -49,7 +49,7 @@
         'plugins/gau-addons' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '3769a576af6ac298e3de2266986882e9865f4893',
+            'reference' => '058e741c5fb01c7200348b30e0de635bd37d4572',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -76,7 +76,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => 'd521fa951b3fc37146a2fe9aef1b06c0af78fd3f',
+            'reference' => 'b33a18b5d222c63472a4b41f6fa3e15e591c9595',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(

@@ -57,7 +57,7 @@ export default {
                     return `img/[name].[ext]`;
                 },
                 manualChunks( id ) {
-                    if ( id.includes( 'node_modules' ) || id.includes( '3rd' ) ) {
+                    if ( id.includes( 'node_modules' ) ) {
                         return '_vendor';
                     }
                 },
