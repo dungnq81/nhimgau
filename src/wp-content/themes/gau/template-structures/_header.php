@@ -17,7 +17,6 @@ if ( ! function_exists( '__wp_head' ) ) {
 	add_action( 'wp_head', '__wp_head', 1 );
 
 	function __wp_head(): void {
-
 		//$meta_viewport = '<meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=1.0" />';
 		$meta_viewport = '<meta name="viewport" content="width=device-width, initial-scale=1.0" />';
 		echo apply_filters( 'meta_viewport_filter', $meta_viewport );
@@ -35,7 +34,6 @@ if ( ! function_exists( '__module_preload' ) ) {
 
 	function __module_preload(): void {
 		ob_start();
-
 		?>
         <link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/_vendor.js'; ?>">
         <link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/back-to-top.js'; ?>">

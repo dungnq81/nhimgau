@@ -6,7 +6,7 @@ import imageminPngquant from 'imagemin-pngquant';
 import imageminWebp from 'imagemin-webp';
 import imageminSVGO from 'imagemin-svgo';
 
-const isProduction = process.env.NODE_ENV !== 'development';
+const isProduction = process.env.NODE_ENV === 'production';
 
 export const sharedConfig = {
     base: './',
@@ -20,7 +20,7 @@ export const sharedConfig = {
         viteImagemin( {
             plugins: {
                 jpg: imageminMozjpeg( {
-                    quality: 85,
+                    quality: 80,
                 } ),
                 png: imageminPngquant( {
                     strip: true,

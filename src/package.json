@@ -7,8 +7,8 @@
         "watch:theme": "cross-env NODE_ENV=development vite build --watch --config wp-content/themes/gau/vite.config.js",
         "watch:plugin": "cross-env NODE_ENV=development vite build --watch --config wp-content/plugins/gau-addons/vite.config.js",
         "watch": "concurrently \"yarn watch:theme\" \"yarn watch:plugin\"",
-        "build:theme": "vite build --config wp-content/themes/gau/vite.config.js",
-        "build:plugin": "vite build --config wp-content/plugins/gau-addons/vite.config.js",
+        "build:theme": "cross-env CRITICAL_URL=http://localhost:8080 vite build --config wp-content/themes/gau/vite.config.js",
+        "build:plugin": "cross-env CRITICAL_URL=http://localhost:8080 vite build --config wp-content/plugins/gau-addons/vite.config.js",
         "build": "concurrently \"yarn build:theme\" \"yarn build:plugin\""
     },
     "browserslist": [

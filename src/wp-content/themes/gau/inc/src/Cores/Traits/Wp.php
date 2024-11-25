@@ -1030,7 +1030,7 @@ trait Wp {
 		 * @param string $html Custom logo HTML output.
 		 * @param int $blog_id ID of the blog to get the custom logo for.
 		 */
-		return apply_filters( 'custom_site_logo', $html, $blog_id );
+		return apply_filters( 'custom_site_logo_filter', $html, $blog_id );
 	}
 
 	// -------------------------------------------------------------
@@ -1233,7 +1233,7 @@ trait Wp {
 		if ( ! $taxonomy ) {
 			$post_type = get_post_type( $post );
 
-			// Default taxonomy for 'post' is 'category'
+			// The default taxonomy for 'post' is 'category'
 			if ( 'post' === $post_type ) {
 				$taxonomy = 'category';
 			}
