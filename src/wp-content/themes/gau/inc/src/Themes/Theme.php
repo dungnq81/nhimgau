@@ -297,7 +297,7 @@ final class Theme {
 			return $allcaps;
 		}
 
-		// If a user is not allowed, remove the capability to install plugins
+		// If a user is not allowed, remove the ability to install plugins
 		if ( isset( $allcaps['activate_plugins'] ) ) {
 			unset( $allcaps['install_plugins'], $allcaps['delete_plugins'] );
 		}
@@ -402,8 +402,8 @@ final class Theme {
 		wp_enqueue_script( 'login', THEME_URL . 'assets/js/login.js', [ 'jquery' ], THEME_VERSION, true );
 		wp_script_add_data( 'login', 'module', true );
 
-		//$default_logo    = THEME_URL . "storage/img/logo.png";
-		//$default_logo_bg = THEME_URL . "storage/img/login-bg.jpg";
+		// $default_logo    = THEME_URL . "storage/img/logo.png";
+		// $default_logo_bg = THEME_URL . "storage/img/login-bg.jpg";
 
 		$default_logo    = '';
 		$default_logo_bg = '';
