@@ -99,7 +99,6 @@ final class Admin {
 	 * @return void
 	 */
 	public function admin_init(): void {
-
 		// https://wordpress.stackexchange.com/questions/77532/how-to-add-the-category-id-to-admin-page
 		foreach ( Helper::filterSettingOptions( 'term_row_actions', [] ) as $term ) {
 			add_filter( "{$term}_row_actions", [ $this, '_term_row_actions' ], 11, 2 );

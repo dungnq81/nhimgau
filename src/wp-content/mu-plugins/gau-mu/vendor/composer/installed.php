@@ -3,7 +3,7 @@
         'name' => 'mu-plugins/gau-mu',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '058e741c5fb01c7200348b30e0de635bd37d4572',
+        'reference' => '129960a5d8437d20ada355b2a1c6af9adccf55c9',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'mu-plugins/gau-mu' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '058e741c5fb01c7200348b30e0de635bd37d4572',
+            'reference' => '129960a5d8437d20ada355b2a1c6af9adccf55c9',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

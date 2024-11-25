@@ -30,8 +30,6 @@
     $breakpoint-value: func.get-breakpoint($breakpoint, vars.$mq-breakpoints, 768px); // Fallback
     @if $breakpoint-value {
         @if $type == max {
-
-            // Adjust for inclusive max
             $breakpoint-value: #{$breakpoint-value - func.fs(0.02)};
         }
         @media only screen and (#{$type}-width: $breakpoint-value) {
@@ -156,12 +154,12 @@
 @mixin gap($row: 20, $col: $row) {
     @if $row == $col and meta.type-of($row) != bool {
         & {
-            //grid-gap: func.fs($row);
+            grid-gap: func.fs($row);
             gap: func.fs($row);
         }
     } @else if $row != $col and meta.type-of($row) != bool and meta.type-of($col) != bool {
         & {
-            //grid-gap: func.fs($row) func.fs($col);
+            grid-gap: func.fs($row) func.fs($col);
             gap: func.fs($row) func.fs($col);
         }
     }

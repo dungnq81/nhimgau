@@ -88,12 +88,6 @@ $body-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Ubuntu", Arial, sans
     @include mixin.animation-loading(30px, #2271b1, #f3f3f3, 3px, rgb(0 0 0 / 20%));
 }
 
-@keyframes spin {
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
 /** @todo flexbox & grid */
 .flex-x {
     @include mixin.flex-x(false);

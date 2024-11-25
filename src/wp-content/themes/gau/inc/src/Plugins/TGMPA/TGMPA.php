@@ -37,71 +37,63 @@ final class TGMPA {
 			//
 			// From the WordPress repository
 			//
-//		[
-//			'name'     => 'Contact Form 7',
-//			'slug'     => 'contact-form-7',
-//			'required' => false, // required / recommended
-//		],
-//		[
-//			'name'     => 'Elementor',
-//			'slug'     => 'elementor',
-//			'required' => false,
-//		],
-//		[
-//			'name'     => 'WooCommerce',
-//			'slug'     => 'woocommerce',
-//			'required' => false,
-//		],
-//		[
-//			'name'     => 'Variation Swatches for WooCommerce',
-//			'slug'     => 'woo-variation-swatches',
-//			'required' => false,
-//		],
+	//		[
+	//			'name'     => 'Contact Form 7',
+	//			'slug'     => 'contact-form-7',
+	//			'required' => false, // required / recommended
+	//		],
+	//		[
+	//			'name'     => 'Elementor',
+	//			'slug'     => 'elementor',
+	//			'required' => false,
+	//		],
+	//		[
+	//			'name'     => 'WooCommerce',
+	//			'slug'     => 'woocommerce',
+	//			'required' => false,
+	//		],
+	//		[
+	//			'name'     => 'Variation Swatches for WooCommerce',
+	//			'slug'     => 'woo-variation-swatches',
+	//			'required' => false,
+	//		],
 			[
 				'name'     => 'Akismet Anti-Spam',
 				'slug'     => 'akismet',
 				'required' => false,
 			],
-//		[
-//			'name'     => 'Rank Math SEO',
-//			'slug'     => 'seo-by-rank-math',
-//			'required' => false,
-//		],
-//		[
-//			'name'     => 'Comments – wpDiscuz',
-//			'slug'     => 'wpdiscuz',
-//			'required' => false,
-//		],
-//		[
-//			'name'     => 'Converter for Media',
-//			'slug'     => 'webp-converter-for-media',
-//			'required' => false,
-//		],
-//		[
-//			'name'     => 'Easy Table of Contents',
-//			'slug'     => 'easy-table-of-contents',
-//			'required' => false,
-//		],
+			[
+				'name'     => 'Rank Math SEO',
+				'slug'     => 'seo-by-rank-math',
+				'required' => false,
+			],
+	//		[
+	//			'name'     => 'Comments – wpDiscuz',
+	//			'slug'     => 'wpdiscuz',
+	//			'required' => false,
+	//		],
+	//		[
+	//			'name'     => 'Converter for Media',
+	//			'slug'     => 'webp-converter-for-media',
+	//			'required' => false,
+	//		],
+	//		[
+	//			'name'     => 'Easy Table of Contents',
+	//			'slug'     => 'easy-table-of-contents',
+	//			'required' => false,
+	//		],
 
 			//
 			// Include a plugin bundled with a theme.
 			//
-//		[
-//			'name'             => 'Advanced Custom Fields PRO',
-//			'slug'             => 'advanced-custom-fields-pro',
-//			'source'           => dirname(__DIR__, 2) . '/storage/bundled/advanced-custom-fields-pro.zip',
-//			'required'         => true,
-//			'force_activation' => false,
-//			'external_url'     => 'https://www.advancedcustomfields.com/'
-//		],
-//		[
-//			'name'             => 'Fixed TOC',
-//			'slug'             => 'fixed-toc',
-//			'source'           => dirname(__DIR__, 2) . '/storage/bundled/fixed-toc.zip',
-//			'required'         => false,
-//			'force_activation' => false,
-//			'external_url'     => 'https://codecanyon.net/item/fixed-toc-wordpress-plugin/7264676'
-//		],
+			[
+				'name'             => 'Advanced Custom Fields PRO',
+				'slug'             => 'advanced-custom-fields-pro',
+				'source'           => THEME_PATH . 'storage/bundled/advanced-custom-fields-pro.zip',
+				'required'         => true,
+				'force_activation' => false,
+				'external_url'     => 'https://www.advancedcustomfields.com/'
+			],
 		];
 
 		/*
