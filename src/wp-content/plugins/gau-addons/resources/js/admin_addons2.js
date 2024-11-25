@@ -4,62 +4,48 @@ import Cookies from 'js-cookie';
 Object.assign(window, { Cookies });
 
 jQuery(function ($) {
-    /**
-     * @param el
-     * @return {*|jQuery}
-     */
-    function rand_element_init(el) {
-        const $el = $(el);
-        const _rand = nanoid(9);
-        $el.addClass(_rand);
 
-        let _id = $el.attr('id');
-        if (!_id) {
+    // random id
+    function rand_element_init( el ) {
+        const $el = $( el );
+        const _rand = nanoid( 9 );
+        $el.addClass( _rand );
+
+        let _id = $el.attr( 'id' );
+        if ( !_id ) {
             _id = _rand;
-            $el.attr('id', _id);
+            $el.attr( 'id', _id );
         }
 
         return _id;
     }
 
-    if (typeof codemirror_settings !== 'undefined') {
-        const codemirror_css = [...document.querySelectorAll('.codemirror_css')];
-        _.each(codemirror_css, function (el, index) {
-            // Initialize the random element
-            rand_element_init(el);
+    // codemirror
+    if ( typeof codemirror_settings !== 'undefined' ) {
+        const codemirror_css = [ ...document.querySelectorAll( '.codemirror_css' ) ];
+        const codemirror_html = [ ...document.querySelectorAll( '.codemirror_html' ) ];
 
-            // Clone the settings if they exist, otherwise create an empty object
-            let editorSettings = codemirror_settings.codemirror_css ? _.clone(codemirror_settings.codemirror_css) : {};
+        function initializeCodeMirror( elements, settings, type ) {
+            elements.forEach( function ( el ) {
+                if ( !el.CodeMirror ) {
+                    console.log( `Initializing CodeMirror for ${ type } on element:`, el );
+                    rand_element_init( el );
+                    let editorSettings = settings ? { ...settings } : {};
+                    editorSettings.codemirror = {
+                        ...editorSettings.codemirror,
+                        indentUnit: 3,
+                        tabSize: 3,
+                        autoRefresh: true,
+                    };
+                    el.CodeMirror = wp.codeEditor.initialize( el, editorSettings );
+                } else {
+                    console.log( `CodeMirror already initialized for ${ type } on element:`, el );
+                }
+            } );
+        }
 
-            // Extend the settings with additional CodeMirror options
-            editorSettings.codemirror = _.extend({}, editorSettings.codemirror, {
-                indentUnit: 3,
-                tabSize: 3,
-                autoRefresh: true,
-            });
-
-            // Initialize the CodeMirror editor
-            wp.codeEditor.initialize(el, editorSettings);
-        });
-
-        const codemirror_html = [...document.querySelectorAll('.codemirror_html')];
-        _.each(codemirror_html, function (el, index) {
-            // Initialize the random element
-            rand_element_init(el);
-
-            // Clone the settings if they exist, otherwise create an empty object
-            let editorSettings = codemirror_settings.codemirror_html ? _.clone(codemirror_settings.codemirror_html) : {};
-
-            // Extend the settings with additional CodeMirror options
-            editorSettings.codemirror = _.extend({}, editorSettings.codemirror, {
-                indentUnit: 3,
-                tabSize: 3,
-                autoRefresh: true,
-            });
-
-            // Initialize the CodeMirror editor
-            wp.codeEditor.initialize(el, editorSettings);
-        });
+        initializeCodeMirror( codemirror_css, codemirror_settings.codemirror_css, 'CSS' );
+        initializeCodeMirror( codemirror_html, codemirror_settings.codemirror_html, 'HTML' );
     }
 
     $.fn.fadeOutAndRemove = function (speed) {
@@ -178,4 +164,96 @@ jQuery(function ($) {
             .filter('.current')
             .trigger('click');
     });
+
+    // select2 multiple
+    const select2_multiple = $( '.select2-multiple' );
+    $.each( select2_multiple, function ( i, el ) {
+        $( el ).select2( {
+            multiple: true,
+            allowClear: true,
+            width: 'resolve',
+            dropdownAutoWidth: true,
+            placeholder: $( el ).attr( 'placeholder' ),
+        } );
+    } );
+
+    // select2 tags
+    const select2_tags = $( '.select2-tags' );
+    $.each( select2_tags, function ( i, el ) {
+        $( el ).select2( {
+            multiple: true,
+            tags: true,
+            allowClear: true,
+            width: 'resolve',
+            dropdownAutoWidth: true,
+            placeholder: $( el ).attr( 'placeholder' ),
+        } );
+    } );
+
+    // select2 IPs
+    const select2_ips = $( '.select2-ips' );
+    $.each( select2_ips, function ( i, el ) {
+        $( el ).select2( {
+            multiple: true,
+            tags: true,
+            allowClear: true,
+            width: 'resolve',
+            dropdownAutoWidth: true,
+            placeholder: $( el ).attr( 'placeholder' ),
+            createTag: function ( params ) {
+                let term = $.trim( params.term );
+
+                // Validate the term as an IP address or range
+                if ( isValidIPRange( term ) ) {
+                    return {
+                        id: term, text: term,
+                    };
+                } else {
+                    return null;
+                }
+            },
+        } );
+    } );
 });
+
+/**
+ * validate IP range (IPv4)
+ *
+ * @param range
+ * @returns {boolean}
+ */
+function isValidIPRange( range ) {
+    const ipPattern = /^(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})$/;
+    const rangePattern = /^(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})-(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])$/;
+    const cidrPattern = /^(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\/(\d|[1-2]\d|3[0-2])$/;
+
+    if ( ipPattern.test( range ) ) {
+        return true;
+    }
+
+    if ( rangePattern.test( range ) ) {
+        const [ startIP, endRange ] = range.split( '-' );
+        const endIP = startIP.split( '.' ).slice( 0, 3 ).join( '.' ) + '.' + endRange;
+        return compareIPs( startIP, endIP ) < 0;
+    }
+
+    return cidrPattern.test( range );
+}
+
+/**
+ * compare two IP addresses
+ *
+ * @param ip1
+ * @param ip2
+ * @returns {number}
+ */
+function compareIPs( ip1, ip2 ) {
+    const ip1Parts = ip1.split( '.' ).map( Number );
+    const ip2Parts = ip2.split( '.' ).map( Number );
+
+    for ( let i = 0; i < 4; i++ ) {
+        if ( ip1Parts[i] < ip2Parts[i] ) return -1;
+        if ( ip1Parts[i] > ip2Parts[i] ) return 1;
+    }
+    return 0;
+}

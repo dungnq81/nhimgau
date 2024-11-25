@@ -7,10 +7,7 @@
     "file": "js/admin2.js",
     "name": "admin2",
     "src": "wp-content/themes/gau/resources/js/admin2.js",
-    "isEntry": true,
-    "imports": [
-      "__vendor.js"
-    ]
+    "isEntry": true
   },
   "wp-content/themes/gau/resources/js/app2.js": {
     "file": "js/app2.js",
