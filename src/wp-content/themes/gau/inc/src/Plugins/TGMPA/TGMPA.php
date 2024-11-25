@@ -1,40 +1,42 @@
 <?php
-/**
- * This file represents an example of the code that themes would use to register
- * the required plugins.
- *
- * It is expected that theme authors would copy and paste this code into their
- * functions.php file, and amend to suit.
- *
- * @see http://tgmpluginactivation.com/configuration/ for detailed documentation.
- *
- * @package    TGM-Plugin-Activation
- * @subpackage Example
- * @version    2.6.1 for parent theme HD for publication on WordPress.org
- * @author     Thomas Griffin, Gary Jones, Juliette Reinders Folmer
- * @copyright  Copyright (c) 2011, Thomas Griffin
- * @license    http://opensource.org/licenses/gpl-2.0.php GPL v2 or later
- * @link       https://github.com/TGMPA/TGM-Plugin-Activation
- */
+
+namespace Plugins\TGMPA;
+
+use Cores\Traits\Singleton;
+
+\defined( 'ABSPATH' ) || die;
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'TGM_Plugin_Activation.php';
 
-add_action( 'tgmpa_register', 'register_required_plugins' );
-
 /**
- * @return void
+ * TGM-Plugin-Activation Configuration
+ *
+ * @author Gaudev
  */
-function register_required_plugins(): void {
+final class TGMPA {
+	use Singleton;
 
-	/*
-	 * Array of plugin arrays. Required keys are name and slug.
-	 * If the source is NOT from the .org repo, then source is also required.
+	// -------------------------------------------------------------
+
+	private function init(): void {
+		add_action( 'tgmpa_register', [ $this, 'register_required_plugins' ] );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @return void
 	 */
-	$plugins = [
+	public function register_required_plugins(): void {
+		/*
+		 * Array of plugin arrays. Required keys are name and slug.
+		 * If the source is NOT from the .org repo, then source is also required.
+		 */
+		$plugins = [
 
-		//
-		// From the WordPress repository
-		//
+			//
+			// From the WordPress repository
+			//
 //		[
 //			'name'     => 'Contact Form 7',
 //			'slug'     => 'contact-form-7',
@@ -55,11 +57,11 @@ function register_required_plugins(): void {
 //			'slug'     => 'woo-variation-swatches',
 //			'required' => false,
 //		],
-		[
-			'name'     => 'Akismet Anti-Spam',
-			'slug'     => 'akismet',
-			'required' => false,
-		],
+			[
+				'name'     => 'Akismet Anti-Spam',
+				'slug'     => 'akismet',
+				'required' => false,
+			],
 //		[
 //			'name'     => 'Rank Math SEO',
 //			'slug'     => 'seo-by-rank-math',
@@ -81,9 +83,9 @@ function register_required_plugins(): void {
 //			'required' => false,
 //		],
 
-		//
-		// Include a plugin bundled with a theme.
-		//
+			//
+			// Include a plugin bundled with a theme.
+			//
 //		[
 //			'name'             => 'Advanced Custom Fields PRO',
 //			'slug'             => 'advanced-custom-fields-pro',
@@ -100,23 +102,24 @@ function register_required_plugins(): void {
 //			'force_activation' => false,
 //			'external_url'     => 'https://codecanyon.net/item/fixed-toc-wordpress-plugin/7264676'
 //		],
-	];
+		];
 
-	/*
-	 * Array of configuration settings. Amend each line as needed.
-	 */
-	$config = [
-		'id'           => 'haku',
-		'default_path' => '',
-		'menu'         => 'haku-install-plugins',
-		'parent_slug'  => 'themes.php',
-		'capability'   => 'edit_theme_options',
-		'has_notices'  => true,
-		'dismissable'  => false,
-		'dismiss_msg'  => '',
-		'is_automatic' => false,
-		'message'      => '',
-	];
+		/*
+		 * Array of configuration settings. Amend each line as needed.
+		 */
+		$config = [
+			'id'           => 'haku',
+			'default_path' => '',
+			'menu'         => 'haku-install-plugins',
+			'parent_slug'  => 'themes.php',
+			'capability'   => 'edit_theme_options',
+			'has_notices'  => true,
+			'dismissable'  => false,
+			'dismiss_msg'  => '',
+			'is_automatic' => false,
+			'message'      => '',
+		];
 
-	tgmpa( $plugins, $config );
+		tgmpa( $plugins, $config );
+	}
 }

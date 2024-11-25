@@ -14,9 +14,7 @@
             "Themes\\": "inc/src/Themes",
             "Widgets\\": "inc/src/Widgets"
         },
-        "files": [
-            "inc/tgmpa/tgmpa-config.php"
-        ]
+        "files": []
     },
     "require": {
         "php": ">=8.2",

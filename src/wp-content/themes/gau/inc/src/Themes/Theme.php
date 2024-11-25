@@ -10,6 +10,8 @@ use Admin\Admin;
 
 use Plugins\ACF;
 use Plugins\CF7;
+use Plugins\PLL;
+use Plugins\TGMPA\TGMPA;
 use Plugins\WooCommerce;
 
 \defined( 'ABSPATH' ) || die;
@@ -55,9 +57,8 @@ final class Theme {
 	 * @return void
 	 */
 	public function i18n(): void {
-
 		/**
-		 * Make theme available for translation.
+		 * Make the theme available for translation.
 		 * Translations can be filed at WordPress.org.
 		 */
 		load_theme_textdomain( TEXT_DOMAIN, trailingslashit( WP_LANG_DIR ) . 'themes/' );
@@ -74,7 +75,6 @@ final class Theme {
 	 * The init hook is too late for some features, such as indicating support for post-thumbnails.
 	 */
 	public function after_setup_theme(): void {
-
 		/** Add theme support for various features. */
 		add_theme_support( 'automatic-feed-links' );
 		add_theme_support( 'post-thumbnails' );
@@ -107,7 +107,7 @@ final class Theme {
 		update_option( 'image_default_size', 'large' );
 
 		/**
-		 * Add support for core custom logo.
+		 * Add support for the core custom logo.
 		 *
 		 * @link https://codex.wordpress.org/Theme_Logo
 		 */
@@ -175,9 +175,13 @@ final class Theme {
 	 * @return void
 	 */
 	public function plugins_setup(): void {
+		// TGMPA configuration
+		$tgmpa = TGMPA::get_instance();
+
 		Helper::isWoocommerceActive() && WooCommerce\WooCommerce::get_instance();
 		Helper::isAcfActive() && ACF\ACF::get_instance();
 		Helper::isCf7Active() && CF7::get_instance();
+		Helper::isPolylangActive() && PLL::get_instance();
 	}
 
 	// --------------------------------------------------

@@ -9,7 +9,6 @@ class ComposerStaticInitbad06eea79b9e83fa6bd3014a8024525
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
-        '0c57f2bbdd7cfc8fedf8e4af350f2918' => __DIR__ . '/../..' . '/inc/tgmpa/tgmpa-config.php',
     );
 
     public static $prefixLengthsPsr4 = array (

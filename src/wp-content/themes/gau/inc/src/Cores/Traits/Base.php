@@ -213,16 +213,8 @@ trait Base {
 	 * @return bool
 	 */
 	public static function isPolylangActive(): bool {
-		return self::checkPluginActive( 'polylang/polylang.php' );
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @return bool
-	 */
-	public static function isPolylangProActive(): bool {
-		return self::checkPluginActive( 'polylang-pro/polylang.php' );
+		return self::checkPluginActive( 'polylang/polylang.php' ) ||
+		       self::checkPluginActive( 'polylang-pro/polylang.php' );
 	}
 
 	// -------------------------------------------------------------
