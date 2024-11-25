@@ -1,3 +1,1 @@
-jQuery(function($) {
-});
-//# sourceMappingURL=recaptcha.js.map
+jQuery((function(n){}));

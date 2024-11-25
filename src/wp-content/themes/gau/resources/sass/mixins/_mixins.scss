@@ -155,11 +155,15 @@
 
 @mixin gap($row: 20, $col: $row) {
     @if $row == $col and meta.type-of($row) != bool {
-        //grid-gap: func.fs($row);
-        gap: func.fs($row);
+        & {
+            //grid-gap: func.fs($row);
+            gap: func.fs($row);
+        }
     } @else if $row != $col and meta.type-of($row) != bool and meta.type-of($col) != bool {
-        //grid-gap: func.fs($row) func.fs($col);
-        gap: func.fs($row) func.fs($col);
+        & {
+            //grid-gap: func.fs($row) func.fs($col);
+            gap: func.fs($row) func.fs($col);
+        }
     }
 }
 
@@ -264,7 +268,6 @@
     }
 
     @supports not (aspect-ratio: 1) {
-        @warn "Your browser does not support aspect-ratio.";
         height: 0;
         padding-bottom: math.percentage(func.divide($ratio-height, $ratio-width));
     }
@@ -290,7 +293,6 @@
         }
 
         @supports not (aspect-ratio: 1) {
-            @warn "Your browser does not support aspect-ratio.";
             height: 0;
             padding-bottom: func.fs($padding);
         }
