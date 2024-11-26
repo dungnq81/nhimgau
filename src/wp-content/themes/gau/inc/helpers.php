@@ -11,6 +11,25 @@
 // Custom functions
 // --------------------------------------------------
 
+if ( ! function_exists( '_is_valid_phone' ) ) {
+	/**
+	 * @param $phone
+	 *
+	 * @return bool
+	 */
+	function _is_valid_phone( $phone ): bool {
+		if ( ! is_string( $phone ) || trim( $phone ) === '' ) {
+			return false;
+		}
+
+		$pattern = '/^\(?\+?(0|84?)\)?[\s.-]?(3[2-9]|5[689]|7[06-9]|8[0-689]|9[0-4|6-9])(\d{7}|\d[\s.-]?\d{3}[\s.-]?\d{3})$/';
+
+		return preg_match( $pattern, $phone ) === 1;
+	}
+}
+
+// --------------------------------------------------
+
 if ( ! function_exists( '_sanitize_css' ) ) {
 	/**
 	 * @param string $string

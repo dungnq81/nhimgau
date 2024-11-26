@@ -16,7 +16,6 @@ trait File {
 	 * @return bool
 	 */
 	public static function isXml( string $content ): bool {
-
 		// Check for empty content
 		if ( trim( $content ) === '' ) {
 			return false;
@@ -66,8 +65,8 @@ trait File {
 	public static function wpFileSystem(): mixed {
 		global $wp_filesystem;
 
-		// Initialize the WP filesystem, no more using 'file-put-contents' function.
-		// Front-end only. In the back-end; its already included
+		// Initialize the WP filesystem, no more using the 'file-put-contents' function.
+		// Front-end only. In the back-end, it's already included
 		if ( empty( $wp_filesystem ) ) {
 			require_once ABSPATH . '/wp-admin/includes/file.php';
 			WP_Filesystem();
@@ -99,7 +98,7 @@ trait File {
 	// --------------------------------------------------
 
 	/**
-	 * Reads entire file into a string
+	 * Reads an entire file into a string
 	 *
 	 * @param string $file Name of the file to read.
 	 *
@@ -142,7 +141,7 @@ trait File {
 	// --------------------------------------------------
 
 	/**
-	 * Lock file and write something in it.
+	 * Lock a file and write something in it.
 	 *
 	 * @param string $content Content to add.
 	 *

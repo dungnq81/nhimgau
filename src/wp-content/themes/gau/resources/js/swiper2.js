@@ -316,7 +316,7 @@ const spgSwipers = () => {
         }
 
         /** WC event */
-        const variations_form = $( 'form.variations_form' );
+        const variations_form = jQuery( 'form.variations_form' );
         if ( variations_form ) {
             variations_form.on( 'found_variation', function ( event, variation ) {
                 if ( variation.image.src ) {
