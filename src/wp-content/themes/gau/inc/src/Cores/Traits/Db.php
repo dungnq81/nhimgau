@@ -122,10 +122,14 @@ trait Db {
 	 * @param $column
 	 * @param $key
 	 * @param bool $sanitize
+	 * @param int $offset
+	 * @param int $limit
+	 * @param string $order_by
+	 * @param string $order
 	 *
 	 * @return array|false
 	 */
-	public static function getRowsBy( $table_name, $column, $key, bool $sanitize = false ): false|array {
+	public static function getRowsBy( $table_name, $column, $key, bool $sanitize = false, int $offset = 0, int $limit = - 1, string $order_by = '', string $order = 'ASC' ): false|array {
 		global $wpdb;
 
 		if ( ! $column ) {
@@ -136,7 +140,22 @@ trait Db {
 		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
 		$column     = $sanitize ? sanitize_text_field( $column ) : $column;
 
-		$results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $table_name WHERE $column = %s", $key ), ARRAY_A );
+		// Base query
+		$query = $wpdb->prepare( "SELECT * FROM $table_name WHERE $column = %s", $key );
+
+		// ORDER BY
+		if ( ! empty( $order_by ) ) {
+			$order = strtoupper( $order );
+			$order = in_array( $order, [ 'ASC', 'DESC' ], true ) ? $order : 'ASC';
+			$query .= " ORDER BY " . esc_sql( $order_by ) . " $order";
+		}
+
+		// LIMIT
+		if ( $limit > 0 && $offset >= 0 ) {
+			$query .= $wpdb->prepare( " LIMIT %d, %d", $offset, $limit );
+		}
+
+		$results = $wpdb->get_results( $query, ARRAY_A );
 
 		return $results ?: false;
 	}
@@ -219,14 +238,22 @@ trait Db {
 	 * @param int $offset
 	 * @param int $limit
 	 * @param bool $sanitize
+	 * @param string $order_by
+	 * @param string $order
 	 *
 	 * @return array|false|null
 	 */
-	public static function getRows( $table_name, int $offset = 0, int $limit = - 1, bool $sanitize = false ): false|array|null {
+	public static function getRows( $table_name, int $offset = 0, int $limit = - 1, bool $sanitize = false, string $order_by = '', string $order = 'ASC' ): false|array|null {
 		global $wpdb;
 
 		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
 		$query      = "SELECT * FROM $table_name";
+
+		if ( ! empty( $order_by ) ) {
+			$order = strtoupper( $order );
+			$order = in_array( $order, [ 'ASC', 'DESC' ], true ) ? $order : 'ASC';
+			$query .= " ORDER BY " . esc_sql( $order_by ) . " $order";
+		}
 
 		if ( $limit > 0 && $offset >= 0 ) {
 			$query .= $wpdb->prepare( " LIMIT %d, %d", $offset, $limit );
