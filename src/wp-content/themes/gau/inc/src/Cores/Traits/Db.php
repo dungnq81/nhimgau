@@ -15,7 +15,7 @@ trait Db {
 	 *
 	 * @return \WP_Error|int
 	 */
-	public static function bulkInsertRows( $table_name, $data, bool $sanitize = false ): \WP_Error|int {
+	public static function bulkInsertRows( $table_name, $data, bool $sanitize = true ): \WP_Error|int {
 		global $wpdb;
 
 		// Check if there is any data to insert
@@ -89,7 +89,7 @@ trait Db {
 	 *
 	 * @return int|\WP_Error
 	 */
-	public static function insertOneRow( $table_name, $data, bool $sanitize = false ): \WP_Error|int {
+	public static function insertOneRow( $table_name, $data, bool $sanitize = true ): \WP_Error|int {
 		global $wpdb;
 
 		// Validate input parameters
@@ -137,7 +137,7 @@ trait Db {
 	 *
 	 * @return int|\WP_Error
 	 */
-	public static function updateOneRow( $table_name, $id, $data, bool $sanitize = false ): \WP_Error|int {
+	public static function updateOneRow( $table_name, $id, $data, bool $sanitize = true ): \WP_Error|int {
 		global $wpdb;
 
 		// Validate input parameters
@@ -191,7 +191,7 @@ trait Db {
 	 *
 	 * @return int|\WP_Error
 	 */
-	public static function deleteOneRow( $table_name, $id, bool $sanitize = false ): \WP_Error|int {
+	public static function deleteOneRow( $table_name, $id, bool $sanitize = true ): \WP_Error|int {
 		global $wpdb;
 
 		// Validate input parameters
@@ -233,7 +233,7 @@ trait Db {
 		$table_name,
 		$column,
 		$key,
-		bool $sanitize = false,
+		bool $sanitize = true,
 		int $offset = 0,
 		int $limit = - 1,
 		string $order_by = '',
@@ -282,7 +282,7 @@ trait Db {
 	 *
 	 * @return array|\WP_Error|null
 	 */
-	public static function getOneRowBy( $table_name, $column, $key, bool $sanitize = false ): \WP_Error|array|null {
+	public static function getOneRowBy( $table_name, $column, $key, bool $sanitize = true ): \WP_Error|array|null {
 		global $wpdb;
 
 		// Validate input and return WP_Error if invalid
@@ -306,35 +306,9 @@ trait Db {
 	 * @param $id
 	 * @param bool $sanitize
 	 *
-	 * @return bool
-	 */
-	public static function checkOneRow( $table_name, $id, bool $sanitize = false ): bool {
-		global $wpdb;
-
-		// Validate input
-		if ( empty( $table_name ) || empty( $id ) ) {
-			return false;
-		}
-
-		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
-		$query = $wpdb->prepare( "SELECT COUNT(*) FROM `$table_name` WHERE `id` = %d", (int) $id );
-
-		$exists  = $wpdb->get_var( $query );
-
-		// Return true if row exists, false otherwise
-		return (bool) $exists;
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @param $table_name
-	 * @param $id
-	 * @param bool $sanitize
-	 *
 	 * @return array|\WP_Error|null
 	 */
-	public static function getOneRow( $table_name, $id, bool $sanitize = false ): \WP_Error|array|null {
+	public static function getOneRow( $table_name, $id, bool $sanitize = true ): \WP_Error|array|null {
 		global $wpdb;
 
 		if ( empty( $table_name ) || empty( $id ) ) {
@@ -363,7 +337,7 @@ trait Db {
 		$table_name,
 		int $offset = 0,
 		int $limit = - 1,
-		bool $sanitize = false,
+		bool $sanitize = true,
 		string $order_by = '',
 		string $order = 'ASC'
 	): \WP_Error|array|null {
@@ -400,13 +374,38 @@ trait Db {
 
 	/**
 	 * @param $table_name
+	 * @param $id
+	 * @param bool $sanitize
+	 *
+	 * @return bool
+	 */
+	public static function checkOneRow( $table_name, $id, bool $sanitize = true ): bool {
+		global $wpdb;
+
+		if ( empty( $table_name ) || empty( $id ) ) {
+			return false;
+		}
+
+		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
+		$query = $wpdb->prepare( "SELECT COUNT(*) FROM `$table_name` WHERE `id` = %d", (int) $id );
+
+		$exists  = $wpdb->get_var( $query );
+
+		// Return true if row exists, false otherwise
+		return (bool) $exists;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param $table_name
 	 * @param null $column
 	 * @param null $value
 	 * @param bool $sanitize
 	 *
 	 * @return int
 	 */
-	public static function countRowsBy( $table_name, $column = null, $value = null, bool $sanitize = false ): int {
+	public static function countRowsBy( $table_name, $column = null, $value = null, bool $sanitize = true ): int {
 		global $wpdb;
 
 		if ( empty( $table_name ) ) {

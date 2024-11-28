@@ -621,7 +621,7 @@ trait Wp {
 			return $default;
 		}
 
-		// Return cached value if static caching is enabled and the value is already cached
+		// Return a cached value if static caching is enabled and the value is already cached
 		if ( $static_cache && isset( $cache[ $option ] ) ) {
 			return $cache[ $option ];
 		}
@@ -725,7 +725,7 @@ trait Wp {
 	 * Query posts by term.
 	 *
 	 * @param mixed $term The term to query.
-	 * @param string $post_type The post-type to query. Default is 'post'.
+	 * @param string $post_type The post-type to query. The default is 'post'.
 	 * @param bool $include_children Whether to include children of the term. Default is false.
 	 * @param int $posts_per_page Number of posts to return. Default is 12.
 	 * @param array $orderby Array of orderby parameters. Default is [ 'date' => 'DESC' ].
@@ -827,7 +827,7 @@ trait Wp {
 	 * Query posts by multiple terms.
 	 *
 	 * @param array $term_ids The term IDs to query.
-	 * @param string $post_type The post-type to query. Default is 'post'.
+	 * @param string $post_type The post-type to query. The default is 'post'.
 	 * @param string $taxonomy The taxonomy to query. Default is 'category'.
 	 * @param bool $include_children Whether to include children of the terms. Default is false.
 	 * @param int $posts_per_page Number of posts to return. Default is 12.
@@ -931,7 +931,7 @@ trait Wp {
 	 * @param int $blog_id
 	 *
 	 * @return string
-	 * Modified from native \get_custom_logo() function
+	 * Modified from the native \get_custom_logo () function
 	 */
 	public static function customSiteLogo( int $blog_id = 0 ): string {
 		$html          = '';
