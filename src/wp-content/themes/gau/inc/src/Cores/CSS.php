@@ -5,7 +5,7 @@ namespace Cores;
 use Cores\Traits\Singleton;
 
 /**
- * Creates minified css via PHP.
+ * Creates minified CSS via PHP.
  *
  * @author  Carlos Rios
  *
@@ -16,7 +16,7 @@ final class CSS {
 	use Singleton;
 
 	/**
-	 * The css selector that you're currently adding rules to
+	 * The CSS selector that you're currently adding rules to
 	 *
 	 * @access protected
 	 * @var string
@@ -24,7 +24,7 @@ final class CSS {
 	private $_selector = ''; // phpcs:ignore PSR2.Classes.PropertyDeclaration.Underscore
 
 	/**
-	 * Stores the final css output with all of its rules for the current selector.
+	 * Stores the final CSS output with all of its rules for the current selector.
 	 *
 	 * @access protected
 	 * @var string
@@ -40,7 +40,7 @@ final class CSS {
 	private $_css = ''; // phpcs:ignore PSR2.Classes.PropertyDeclaration.Underscore
 
 	/**
-	 * The string that holds all the css to output
+	 * The string that holds all the CSS to output
 	 *
 	 * @access protected
 	 * @var string
@@ -55,7 +55,7 @@ final class CSS {
 	private $_media_query = null; // phpcs:ignore PSR2.Classes.PropertyDeclaration.Underscore
 
 	/**
-	 * The string that holds all the css to output inside the media query
+	 * The string that holds all the CSS to output inside the media query
 	 *
 	 * @access protected
 	 * @var string

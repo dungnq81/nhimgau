@@ -141,7 +141,7 @@ final class Helper {
 			self::errorLog( 'WP-Rocket cache cleared.' );
 		}
 
-		// Clear minified CSS and JavaScript files (WP-Rocket)
+		// Clearly minified CSS and JavaScript files (WP-Rocket)
 		if ( function_exists( 'rocket_clean_minify' ) ) {
 			\rocket_clean_minify();
 			self::errorLog( 'WP-Rocket minified files cleared.' );
