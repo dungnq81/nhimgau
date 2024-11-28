@@ -26,19 +26,14 @@ export const sharedConfig = {
                     strip: true,
                     quality: [ 0.7, 0.9 ],
                 } ),
-                svg: imageminSVGO( {
-                    plugins: [
-                        { removeViewBox: false },
-                        { cleanupIDs: false }
-                    ],
-                } ),
+                svg: imageminSVGO(),
             },
-            makeWebp: {
-                plugins: {
-                    jpg: imageminWebp(),
-                    png: imageminWebp(),
-                },
-            },
+            // makeWebp: {
+            //     plugins: {
+            //         jpg: imageminWebp(),
+            //         png: imageminWebp(),
+            //     },
+            // },
         } ),
     ],
     css: {

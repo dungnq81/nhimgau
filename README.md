@@ -45,7 +45,6 @@ A modular approach to managing theme functionality.
   - **Plugins**: Integration with popular plugins like ACF, WooCommerce, and Polylang.
   - **Themes**: Theme-specific logic, customizer settings, and shortcodes.
   - **Widgets**: Custom widgets like recent posts, repeaters, and search.
-- **tgmpa**: Handles plugin activation via TGM Plugin Activation.
 
 ### `resources`
 Frontend assets used to enhance the theme.
