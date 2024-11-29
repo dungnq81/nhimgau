@@ -330,6 +330,20 @@ function __nav_menu_link_attributes_filter( $atts, $menu_item, $args, $depth ): 
 }
 
 // --------------------------------------------------
+// Filter nav_menu_item_title
+// --------------------------------------------------
+
+add_filter( 'nav_menu_item_title', '__nav_menu_item_title_filter', 999, 4 );
+
+function __nav_menu_item_title_filter( $title, $item, $args, $depth ) {
+//	if ($args->theme_location === 'main-nav') {
+//		$title = '<span>' . $title . '</span>';
+//	}
+
+	return $title;
+}
+
+// --------------------------------------------------
 // Filter wp_insert_post_data
 // --------------------------------------------------
 

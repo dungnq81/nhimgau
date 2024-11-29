@@ -97,6 +97,7 @@ final class ACF {
 	 * @param $params
 	 *
 	 * @return mixed
+	 * @throws JsonException
 	 */
 	public function add_widget_classes( $params ): mixed {
 		global $wp_registered_widgets;
@@ -178,7 +179,7 @@ final class ACF {
 		// Default callback.
 		if ( null === $widget_opt ) {
 
-			// Check if WP Page Widget is in use.
+			// Check if the WP Page Widget is in use.
 			global $post;
 
 			$id = ( isset( $post->ID ) ? get_the_ID() : null );
@@ -251,7 +252,7 @@ final class ACF {
 	 */
 	public function wp_nav_menu_objects( $items, $args ): mixed {
 		foreach ( $items as &$item ) {
-			$title = '<span>' . $item?->title . '</span>';
+			$title = $item?->title;
 			$ACF   = Helper::getFields( $item );
 
 			if ( $ACF ) {

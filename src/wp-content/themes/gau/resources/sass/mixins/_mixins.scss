@@ -52,7 +52,7 @@
     }
 }
 
-@mixin box($width: 300, $height: $width, $border_radius: false) {
+@mixin box($width: 250, $height: $width, $border_radius: false) {
     width: func.fs($width);
     height: func.fs($height);
 
@@ -271,12 +271,7 @@
     }
 }
 
-@mixin responsive-ratio(
-    $ratio-width: 3,
-    $ratio-height: 2,
-    $width_percent: 100%,
-    $pseudo: false,
-) {
+@mixin responsive-ratio( $ratio-width: 3, $ratio-height: 2, $width_percent: 100%, $pseudo: false ) {
     $padding: func.divide($width_percent * $ratio-height, $ratio-width);
     @if $pseudo {
         &::before {
@@ -425,11 +420,7 @@
     }
 }
 
-@mixin line-clamp(
-    $n: 2,
-    $value_fallback: ( false, false, false ),
-    $attr_fallback: max-height
-) {
+@mixin line-clamp( $n: 2, $value_fallback: ( false, false, false ), $attr_fallback: max-height ) {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: initial;
