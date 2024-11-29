@@ -57,13 +57,23 @@ trait Db {
 			}
 
 			// Ensure that all the columns match the valid columns
-			$row_values = [];
+			$row_values   = [];
+			$placeholders = [];
 			foreach ( $columns_in_insert as $column ) {
-				$row_values[] = $valid_data[ $column ] ?? '';
+				if ( array_key_exists( $column, $valid_data ) && $valid_data[ $column ] === null ) {
+					$placeholders[] = 'NULL';
+				} else {
+					$placeholders[] = '%s';
+					$row_values[]   = $valid_data[ $column ] ?? '';
+				}
 			}
 
-			$placeholders = '(' . implode( ', ', array_fill( 0, count( $columns_in_insert ), '%s' ) ) . ')';
-			$values[]     = $wpdb->prepare( $placeholders, ...$row_values );
+			// Build the prepared SQL row
+			$prepared_values = $row_values
+				? $wpdb->prepare( '(' . implode( ', ', $placeholders ) . ')', ...$row_values )
+				: '(' . implode( ', ', $placeholders ) . ')';
+
+			$values[] = $prepared_values;
 		}
 
 		// If there are no valid rows to insert, return WP_Error
@@ -71,6 +81,7 @@ trait Db {
 			return new \WP_Error( 'no_valid_data', 'No valid rows to insert.' );
 		}
 
+		// Build and execute the SQL query
 		$sql = "INSERT INTO $table_name (" . implode( ', ', $columns_in_insert ) . ") VALUES " . implode( ', ', $values );
 
 		if ( $wpdb->query( $sql ) ) {
