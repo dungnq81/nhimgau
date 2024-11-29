@@ -18,7 +18,7 @@ final class Custom_Login {
 	// --------------------------------------------------
 
 	/**
-	 * Check blocked & restrict login
+	 * Check blocked and restrict login
 	 *
 	 * @return true|void
 	 */

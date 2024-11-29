@@ -465,7 +465,7 @@ function __theme_setting_options( array $arr ): array {
 			'21-9',
 		],
 
-		// Add ID to admin category page.
+		// Add ID to the admin category page.
 		'term_row_actions'                  => [
 			'category',
 			'post_tag',
@@ -473,7 +473,7 @@ function __theme_setting_options( array $arr ): array {
 			//...
 		],
 
-		// Add ID to admin post-page.
+		// Add ID to the admin post-page.
 		'post_row_actions'                  => [
 			'user',
 			'post',

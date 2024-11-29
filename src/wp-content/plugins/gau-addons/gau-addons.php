@@ -1,11 +1,11 @@
 <?php
 /*!
  * Plugin Name: Gau Addons
- * Plugin URI: https://gaudev.xyz
+ * Plugin URI: https://gaudev.net
  * Version: 0.24.11
  * Requires PHP: 8.2
  * Author: Gaudev
- * Author URI: https://gaudev.xyz
+ * Author URI: https://gaudev.net
  * Text Domain: gau-addons
  * Description: Addons plugin for Gau Theme
  * License: GPLv2 or later
