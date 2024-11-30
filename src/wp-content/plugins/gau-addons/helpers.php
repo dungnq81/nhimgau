@@ -597,7 +597,7 @@ if ( ! function_exists( 'ip_address' ) ) {
 				return $_SERVER['HTTP_CLIENT_IP'];
 			}
 
-			// Fallback to remote address
+			// Fallback to a remote address
 			if ( isset( $_SERVER['REMOTE_ADDR'] ) && filter_var( $_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP ) ) {
 				return $_SERVER['REMOTE_ADDR'];
 			}

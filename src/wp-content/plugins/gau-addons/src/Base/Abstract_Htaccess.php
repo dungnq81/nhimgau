@@ -15,9 +15,9 @@ abstract class Abstract_Htaccess {
 	/**
 	 * WordPress filesystem.
 	 *
-	 * @var ?object
+	 * @var ?\WP_Filesystem_Base
 	 */
-	protected mixed $wp_filesystem = null;
+	protected ?\WP_Filesystem_Base $wp_filesystem = null;
 
 	/**
 	 * Path to htaccess file.
@@ -26,33 +26,47 @@ abstract class Abstract_Htaccess {
 	 */
 	public ?string $path = null;
 
+	/**
+	 * Rules for enabling and disabling htaccess.
+	 *
+	 * @var array<string, string> Array of regex patterns.
+	 */
+	protected array $rules = [];
+
+	/**
+	 * Template file name.
+	 *
+	 * @var ?string
+	 */
+	protected ?string $template = null;
+
 	// --------------------------------------------------
 
 	/**
 	 * The constructor.
 	 */
 	public function __construct() {
-		if ( is_null( $this->wp_filesystem ) ) {
-			$this->wp_filesystem = $this->_wp_filesystem();
-		}
+		$this->wp_filesystem = $this->_wp_filesystem();
 	}
 
 	// --------------------------------------------------
 
 	/**
-	 * @return mixed
+	 * Initialize WordPress filesystem.
+	 *
+	 * @return ?\WP_Filesystem_Base
 	 */
-	private function _wp_filesystem(): mixed {
+	private function _wp_filesystem(): ?\WP_Filesystem_Base {
 		global $wp_filesystem;
 
-		// Initialize the WP filesystem, no more using 'file-put-contents' function.
-		// Front-end only. In the back-end; its already included
+		// Initialize the WP filesystem, no more using the 'file-put-contents' function.
+		// Front-end only in the back-end, it's already included
 		if ( empty( $wp_filesystem ) ) {
-			require_once ABSPATH . '/wp-admin/includes/file.php';
+			require_once ABSPATH . 'wp-admin/includes/file.php';
 			WP_Filesystem();
 		}
 
-		return $wp_filesystem;
+		return $wp_filesystem ?: null;
 	}
 
 	// --------------------------------------------------
@@ -60,7 +74,7 @@ abstract class Abstract_Htaccess {
 	/**
 	 * Get the filepath to the htaccess.
 	 *
-	 * @return string Path to the htaccess.
+	 * @return string
 	 */
 	public function get_filepath(): string {
 		return $this->wp_filesystem->abspath() . '.htaccess';
@@ -73,17 +87,19 @@ abstract class Abstract_Htaccess {
 	 *
 	 * @return $this
 	 */
-	public function set_filepath() {
-		$filepath = $this->get_filepath();
+	public function set_filepath(): self {
+		if ( null === $this->path ) {
+			$filepath = $this->get_filepath();
 
-		// Create the htaccess if it doesn't exist.
-		if ( ! $this->wp_filesystem->exists( $filepath ) ) {
-			$this->wp_filesystem->touch( $filepath );
-		}
+			// Create the htaccess if it doesn't exist.
+			if ( ! $this->wp_filesystem->exists( $filepath ) ) {
+				$this->wp_filesystem->touch( $filepath );
+			}
 
-		// If it is writable.
-		if ( $this->wp_filesystem->is_writable( $filepath ) ) {
-			$this->path = $filepath;
+			// Ensure the file is writable.
+			if ( $this->wp_filesystem->is_writable( $filepath ) ) {
+				$this->path = $filepath;
+			}
 		}
 
 		return $this;
@@ -97,18 +113,14 @@ abstract class Abstract_Htaccess {
 	 * @return bool
 	 */
 	public function disable(): bool {
-
-		// If htaccess exists and rule is already enabled.
 		if ( $this->path && $this->is_enabled() ) {
+			$content = $this->wp_filesystem->get_contents( $this->path );
 
-			// Remove the rule.
-			$new_content = preg_replace(
-				$this->rules['disabled'],
-				'',
-				$this->wp_filesystem->get_contents( $this->path )
-			);
+			if ( $content ) {
+				$new_content = preg_replace( $this->rules['disabled'], '', $content );
 
-			return $this->lock_and_write( $new_content );
+				return $this->lock_and_write( $new_content );
+			}
 		}
 
 		return false;
@@ -117,30 +129,25 @@ abstract class Abstract_Htaccess {
 	// --------------------------------------------------
 
 	/**
-	 *  Add rule to htaccess and enable it.
+	 * Add rule to htaccess and enable it.
 	 *
 	 * @return bool
 	 */
 	public function enable(): bool {
-
-		// If htaccess exists and the rule is already disabled.
 		if ( $this->path && ! $this->is_enabled() ) {
+			$content = $this->wp_filesystem->get_contents( $this->path );
 
-			// Disable all other rules first.
-			$content = preg_replace(
-				$this->rules['disable_all'],
-				'',
-				$this->wp_filesystem->get_contents( $this->path )
-			);
+			if ( $content ) {
+				$content  = preg_replace( $this->rules['disable_all'], '', $content );
+				$new_rule = $this->wp_filesystem->get_contents( ADDONS_PATH . 'tpl/' . $this->template );
 
-			// Get the new rule.
-			$new_rule = $this->wp_filesystem->get_contents( ADDONS_PATH . 'tpl/' . $this->template );
+				if ( $new_rule ) {
+					$content .= PHP_EOL . $new_rule;
+					$content = $this->do_replacement( $content );
 
-			// Add the rule and write the new htaccess.
-			$content .= PHP_EOL . $new_rule;
-			$content = $this->do_replacement( $content );
-
-			return $this->lock_and_write( $content );
+					return $this->lock_and_write( $content );
+				}
+			}
 		}
 
 		return false;
@@ -149,11 +156,11 @@ abstract class Abstract_Htaccess {
 	// --------------------------------------------------
 
 	/**
-	 * Lock file and write something in it.
+	 * Lock a file and write something in it.
 	 *
-	 * @param string $content Content to add.
+	 * @param string $content Content to write.
 	 *
-	 * @return bool True on success, false otherwise.
+	 * @return bool
 	 */
 	protected function lock_and_write( string $content ): bool {
 		return $this->_do_lock_write( $this->path, $content );
@@ -162,24 +169,27 @@ abstract class Abstract_Htaccess {
 	// --------------------------------------------------
 
 	/**
-	 * Lock file and write something in it.
+	 * Lock a file and write content into it.
 	 *
-	 * @param string $content Content to add.
+	 * @param string $path Filepath.
+	 * @param string $content Content to write.
 	 *
-	 * @return bool    True on success, false otherwise.
+	 * @return bool
 	 */
-	private function _do_lock_write( $path, string $content = '' ): bool {
+	private function _do_lock_write( string $path, string $content = '' ): bool {
 		$fp = fopen( $path, 'wb+' );
 
-		if ( flock( $fp, LOCK_EX ) ) {
-			fwrite( $fp, $content );
-			flock( $fp, LOCK_UN );
+		if ( $fp ) {
+			if ( flock( $fp, LOCK_EX ) ) {
+				fwrite( $fp, $content );
+				flock( $fp, LOCK_UN );
+				fclose( $fp );
+
+				return true;
+			}
+
 			fclose( $fp );
-
-			return true;
 		}
-
-		fclose( $fp );
 
 		return false;
 	}
@@ -187,23 +197,19 @@ abstract class Abstract_Htaccess {
 	// --------------------------------------------------
 
 	/**
-	 * Check if rule is enabled.
+	 * Check if the rule is enabled.
 	 *
-	 * @return boolean True if the rule is enabled, false otherwise.
+	 * @return bool
 	 */
 	public function is_enabled(): bool {
-
-		// Get the content of htaccess.
 		$content = $this->wp_filesystem->get_contents( $this->path );
-
-		// Return the result.
-		return preg_match( $this->rules['enabled'], $content );
+		return $content && (bool) preg_match( $this->rules['enabled'], $content );
 	}
 
 	// --------------------------------------------------
 
 	/**
-	 * Do a replacement.
+	 * Perform replacements in htaccess content.
 	 *
 	 * @param string $content The htaccess content.
 	 *
@@ -216,12 +222,12 @@ abstract class Abstract_Htaccess {
 	// --------------------------------------------------
 
 	/**
-	 * Toggle specific rule.
+	 * Toggle specific rules in htaccess.
 	 *
-	 * @param boolean|int $rule Whether to enable or disable the rules.
+	 * @param bool|int $rule Whether to enable or disable the rules.
 	 */
 	public function toggle_rules( bool|int $rule = 1 ): void {
 		$this->set_filepath();
-		( 1 === (int) $rule ) ? $this->enable() : $this->disable();
+		$rule ? $this->enable() : $this->disable();
 	}
 }

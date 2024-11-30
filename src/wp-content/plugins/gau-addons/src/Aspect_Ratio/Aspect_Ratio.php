@@ -28,12 +28,12 @@ final class Aspect_Ratio {
 		$classes = [];
 		$styles  = '';
 
-		$aspect_ratio_post_type_term = filter_setting_options( 'aspect_ratio_post_type_term', [] );
+		$aspect_ratio_post_type_term = \filter_setting_options( 'aspect_ratio_post_type_term', [] );
 		foreach ( $aspect_ratio_post_type_term as $ar_post_type ) {
 
 			$ratio_obj   = $this->_get_aspect_ratio( $ar_post_type );
-			$ratio_class = $ratio_obj->class ?? '';
-			$ratio_style = $ratio_obj->style ?? '';
+			$ratio_class = $ratio_obj->class ?: '';
+			$ratio_style = $ratio_obj->style ?: '';
 
 			if ( $ratio_style && ! in_array( $ratio_class, $classes, false ) ) {
 				$classes[] = $ratio_class;
@@ -55,7 +55,7 @@ final class Aspect_Ratio {
 	 *
 	 * @return object
 	 */
-	public function _get_aspect_ratio( string $post_type = 'post', string $option = '', string $default = 'ar[3-2]' ): object {
+	private function _get_aspect_ratio( string $post_type = 'post', string $option = '', string $default = 'ar[3-2]' ): object {
 		$ratio = $this->_aspect_ratio_option( $post_type, $option );
 
 		$ratio_x = $ratio[0] ?? '';
@@ -66,7 +66,7 @@ final class Aspect_Ratio {
 			$ratio_class = $default;
 		} else {
 			$ratio_class         = 'ar[' . $ratio_x . '-' . $ratio_y . ']';
-			$ar_aspect_ratio_default = filter_setting_options( 'aspect_ratio_default', [] );
+			$ar_aspect_ratio_default = \filter_setting_options( 'aspect_ratio_default', [] );
 
 			if ( is_array( $ar_aspect_ratio_default ) && ! in_array( $ratio_x . '-' . $ratio_y, $ar_aspect_ratio_default, false ) ) {
 				$css = CSS::get_instance();

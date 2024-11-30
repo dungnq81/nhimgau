@@ -7,13 +7,14 @@ use Addons\Base\Singleton;
 \defined( 'ABSPATH' ) || die;
 
 final class Base_Slug {
-
 	use Singleton;
 
 	// ------------------------------------------------------
 
 	private mixed $base_slug_post_type;
 	private mixed $base_slug_taxonomy;
+
+	// ------------------------------------------------------
 
 	private function init(): void {
 		$custom_base_slug_options = get_option( 'base_slug__options', [] );
@@ -35,13 +36,13 @@ final class Base_Slug {
 	/**
 	 * @param $rules
 	 *
-	 * @return mixed
+	 * @return array
 	 */
-	public function add_rewrite_rules( $rules ): mixed {
+	public function add_rewrite_rules( $rules ): array {
 		global $wp_rewrite;
 		wp_cache_flush();
 
-		$this->_wpml_remove_term_filters();
+		$this->_lang_remove_term_filters();
 
 		$category_rules    = [];
 		$tag_rules         = [];
@@ -68,7 +69,7 @@ final class Base_Slug {
 				//----------------------------------
 				if ( 'category' === $custom_tax->name ) {
 
-					// Redirect support from old category base
+					// Redirect support from the old category base
 					$old_category_base = trim( str_replace( '%category%', '(.+)', $wp_rewrite->get_category_permastruct() ), '/' );
 
 					$categories = get_categories( [ 'hide_empty' => false ] );
@@ -171,7 +172,7 @@ final class Base_Slug {
 			     'product_tag' !== $custom_tax->name &&
 			     in_array( $custom_tax->name, $this->base_slug_taxonomy, false )
 			) {
-				// Redirect support from old category base
+				// Redirect support from the old category base
 				$old_taxonomy_base = trim( str_replace( '%' . $custom_tax->name . '%', '(.+)', $wp_rewrite->get_extra_permastruct( $custom_tax->name ) ), '/' );
 
 				$taxonomies = $this->_get_categories( $custom_tax->name );
@@ -189,12 +190,12 @@ final class Base_Slug {
 			}
 		}
 
-		$this->_wpml_restore_term_filters();
+		$this->_lang_restore_term_filters();
 
 		$rules       = empty( $rules ) ? [] : $rules;
-		$added_rules = $category_rules + $tag_rules + $product_rules + $product_cat_rules + $product_tag_rules + $taxonomy_rules;
+		$added_rules = array_merge( $category_rules + $tag_rules + $product_rules + $product_cat_rules + $product_tag_rules + $taxonomy_rules );
 
-		return $added_rules + $rules;
+		return array_merge( $added_rules, $rules );
 	}
 
 	// ------------------------------------------------------
@@ -247,7 +248,9 @@ final class Base_Slug {
 	/**
 	 * @return void
 	 */
-	private function _wpml_remove_term_filters(): void {
+	private function _lang_remove_term_filters(): void {
+
+		// WPML
 		if ( isset( $GLOBALS['sitepress'] ) ) {
 			$sitepress = $GLOBALS['sitepress'];
 
@@ -256,6 +259,8 @@ final class Base_Slug {
 			remove_filter( 'terms_clauses', [ $sitepress, 'terms_clauses' ] );
 			remove_filter( 'get_terms_args', [ $sitepress, 'get_terms_args_filter' ] );
 		}
+
+		// Polylang
 	}
 
 	// ------------------------------------------------------
@@ -263,7 +268,9 @@ final class Base_Slug {
 	/**
 	 * @return void
 	 */
-	private function _wpml_restore_term_filters(): void {
+	private function _lang_restore_term_filters(): void {
+
+		// WPML
 		if ( isset( $GLOBALS['sitepress'] ) ) {
 			$sitepress = $GLOBALS['sitepress'];
 
@@ -272,6 +279,8 @@ final class Base_Slug {
 			add_filter( 'terms_clauses', [ $sitepress, 'terms_clauses' ], 10, 3 );
 			add_filter( 'get_terms_args', [ $sitepress, 'get_terms_args_filter' ], 10, 2 );
 		}
+
+		// Polylang
 	}
 
 	// ------------------------------------------------------

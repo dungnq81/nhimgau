@@ -327,7 +327,7 @@ trait Db {
 		}
 
 		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
-		$query = $wpdb->prepare( "SELECT * FROM `$table_name` WHERE `id` = %d", (int) $id );
+		$query      = $wpdb->prepare( "SELECT * FROM `$table_name` WHERE `id` = %d", (int) $id );
 
 		return $wpdb->get_row( $query, ARRAY_A );
 	}
@@ -398,9 +398,9 @@ trait Db {
 		}
 
 		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
-		$query = $wpdb->prepare( "SELECT COUNT(*) FROM `$table_name` WHERE `id` = %d", (int) $id );
+		$query      = $wpdb->prepare( "SELECT COUNT(*) FROM `$table_name` WHERE `id` = %d", (int) $id );
 
-		$exists  = $wpdb->get_var( $query );
+		$exists = $wpdb->get_var( $query );
 
 		// Return true if row exists, false otherwise
 		return (bool) $exists;

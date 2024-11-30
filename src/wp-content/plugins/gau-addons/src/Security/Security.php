@@ -12,7 +12,6 @@ use Addons\Base\Singleton;
  * @author HD
  */
 final class Security {
-
 	use Singleton;
 
 	// ------------------------------------------------------
