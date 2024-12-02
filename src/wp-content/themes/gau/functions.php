@@ -7,7 +7,7 @@
 
 $theme_version = ( wp_get_theme()->get( 'Version' ) ) ?: false;
 $theme_author  = ( wp_get_theme()->get( 'Author' ) ) ?: 'Gaudev';
-$theme_uri     = ( wp_get_theme()->get( 'ThemeURI' ) ) ?: 'https://gaudev.xyz';
+$theme_uri     = ( wp_get_theme()->get( 'ThemeURI' ) ) ?: 'https://gaudev.net';
 $text_domain   = ( wp_get_theme()->get( 'TextDomain' ) ) ?: 'gau';
 
 define( 'TEXT_DOMAIN', $text_domain );
