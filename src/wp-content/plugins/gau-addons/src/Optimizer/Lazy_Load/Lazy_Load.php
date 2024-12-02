@@ -51,7 +51,7 @@ final class Lazy_Load {
 		}
 
 		// Bail if the current browser runs on a mobile device and the lazy-load on mobile is deactivated.
-		if ( ! $lazy_load_mobile && is_mobile() ) {
+		if ( ! $lazy_load_mobile && \is_mobile() ) {
 			return;
 		}
 

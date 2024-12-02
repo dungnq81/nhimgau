@@ -97,7 +97,7 @@ final class Font {
 		global $wp_filesystem;
 
 		// Initialize the WP filesystem, no more using 'file-put-contents' function.
-		// Front-end only. In the back-end; its already included
+		// Front-end only. In the back-end, it's already included
 		if ( empty( $wp_filesystem ) ) {
 			require_once ABSPATH . '/wp-admin/includes/file.php';
 			WP_Filesystem();
@@ -224,7 +224,7 @@ final class Font {
 			// Assign parsed fonts to the part array.
 			$parts[ $font['type'] ]['fonts'][] = $parsed_font['family'];
 
-			// Add subset to a collection.
+			// Add a subset to a collection.
 			if ( isset( $parsed_font['subset'] ) ) {
 				$parts[ $font['type'] ]['subset'][] = $parsed_font['subset'];
 			}
@@ -338,7 +338,7 @@ final class Font {
 		$css           = '';
 		foreach ( $urls as $url ) {
 
-			// Get the fonts css.
+			// Get the font CSS.
 			$css             .= $this->get_external_file_content( $url, 'css', 'fonts' );
 			$combined_tags[] = '<link rel="stylesheet" href="' . $url . '" />';
 
@@ -401,7 +401,7 @@ final class Font {
 	 */
 	public function get_external_file_content( $url, $type, string $add_dir = '' ): false|string {
 
-		// Generate unique hashtag using the url.
+		// Generate a unique hashtag using the url.
 		$hash = md5( $url );
 
 		// Build the dir.
@@ -424,7 +424,7 @@ final class Font {
 
 		// THE FILE DOESN'T EXIST.
 
-		// Create the additional dir if it doesn't exist.
+		// Create an additional dir if it doesn't exist.
 		if ( ! $this->wp_filesystem->exists( $dir ) ) {
 			$this->wp_filesystem->mkdir( $dir );
 		}

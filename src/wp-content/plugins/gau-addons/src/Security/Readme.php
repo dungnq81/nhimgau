@@ -17,7 +17,8 @@ final class Readme {
 	 * @return bool true if the file exists, false otherwise.
 	 */
 	public function readme_exist(): bool {
-		// Check if the readme.html file exists in the root of the application.
+
+		// Check if the readme.html file exists at the root of the application.
 		return file_exists( ABSPATH . 'readme.html' );
 	}
 

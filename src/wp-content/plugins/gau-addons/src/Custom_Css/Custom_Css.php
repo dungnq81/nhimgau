@@ -26,7 +26,7 @@ final class Custom_Css {
 	public function header_inline_custom_css(): void {
 		$css = \get_custom_post_option_content( 'addon_css', false );
 		if ( $css ) {
-			$css = css_minify( $css, true );
+			$css = \css_minify( $css, true );
 			wp_add_inline_style( 'app-style', $css );
 		}
 	}

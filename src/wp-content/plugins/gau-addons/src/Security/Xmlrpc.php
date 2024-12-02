@@ -18,11 +18,9 @@ final class Xmlrpc extends Abstract_Htaccess {
 	];
 
 	/**
-	 * The path to the htaccess template.
-	 *
-	 * @var string
+	 * @var string|null
 	 */
-	public string $template = 'xml-rpc.tpl';
+	public ?string $template = 'xml-rpc.tpl';
 
 	/**
 	 * Regular expressions to check if the rules are enabled.

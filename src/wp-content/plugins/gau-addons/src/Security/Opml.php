@@ -9,11 +9,9 @@ use Addons\Base\Abstract_Htaccess;
 final class Opml extends Abstract_Htaccess {
 
 	/**
-	 * The path to the htaccess template.
-	 *
-	 * @var string
+	 * @var string|null
 	 */
-	public string $template = 'wp-links-opml.tpl';
+	public ?string $template = 'wp-links-opml.tpl';
 
 	/**
 	 * Regular expressions to check if the rules are enabled.

@@ -6,6 +6,8 @@ namespace Addons\Security;
 
 final class Comment {
 
+	// --------------------------------------------------
+
 	/**
 	 * @return void
 	 */
@@ -18,6 +20,8 @@ final class Comment {
 		}
 	}
 
+	// --------------------------------------------------
+
 	/**
 	 * @return void
 	 */
@@ -29,6 +33,8 @@ final class Comment {
 		}
 	}
 
+	// --------------------------------------------------
+
 	/**
 	 * @return void
 	 */
@@ -36,12 +42,16 @@ final class Comment {
 		$removed_menu = remove_menu_page( 'edit-comments.php' );
 	}
 
+	// --------------------------------------------------
+
 	/**
 	 * @return void
 	 */
 	public function disable_comments_dashboard(): void {
 		remove_meta_box( 'dashboard_recent_comments', 'dashboard', 'normal' );
 	}
+
+	// --------------------------------------------------
 
 	/**
 	 * @param $wp_admin_bar

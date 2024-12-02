@@ -3,7 +3,7 @@
         'name' => 'mu-plugins/gau-mu',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '129960a5d8437d20ada355b2a1c6af9adccf55c9',
+        'reference' => '80e136cd8ce176f1d23b960ea42a75917f239840',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'mu-plugins/gau-mu' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '129960a5d8437d20ada355b2a1c6af9adccf55c9',
+            'reference' => '80e136cd8ce176f1d23b960ea42a75917f239840',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -22,7 +22,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => 'b33a18b5d222c63472a4b41f6fa3e15e591c9595',
+            'reference' => 'fff26f7a91a7458bf6eea5afdd71b4aba1f1d3ea',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(

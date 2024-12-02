@@ -47,9 +47,10 @@ final class Optimizer {
 	 */
 	private function _optimizer(): void {
 
-		// Filters the rel values that are added to links with `target` attribute.
+		// Filters the rel values that are added to links with the `target` attribute.
 		add_filter( 'wp_targeted_link_rel', static function ( $rel, $link_target ) {
 			$rel .= ' nofollow';
+
 			return $rel;
 		}, 999, 2 );
 
@@ -135,8 +136,8 @@ final class Optimizer {
 		}
 
 		// Do not run optimization if amp is active, the page is an xml or feed.
-		if ( is_amp_enabled( $html ) ||
-		     is_xml( $html ) ||
+		if ( \is_amp_enabled( $html ) ||
+		     \is_xml( $html ) ||
 		     is_feed()
 		) {
 			return $html;
@@ -177,7 +178,7 @@ final class Optimizer {
 		// Check if there are any urls inserted by the user.
 		$urls = $this->optimizer_options['dns_prefetch'] ?? false;
 
-		// Return, if no url's are set by the user.
+		// Return if no url's are set by the user.
 		if ( empty( $urls ) ) {
 			return $html;
 		}
@@ -187,7 +188,7 @@ final class Optimizer {
 
 			// Replace the protocol with //.
 			$url_without_protocol = preg_replace( '~(?:(?:https?:)?(?:\/\/)(?:www\.|(?!www)))?((?:.*?)\.(?:.*))~', '//$1', $url );
-			$new_html .= '<link rel="dns-prefetch" href="' . $url_without_protocol . '" />';
+			$new_html             .= '<link rel="dns-prefetch" href="' . $url_without_protocol . '" />';
 		}
 
 		return str_replace( '</head>', $new_html . '</head>', $html );

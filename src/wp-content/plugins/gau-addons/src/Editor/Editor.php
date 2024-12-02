@@ -24,7 +24,7 @@ final class Editor {
 	 * @return void
 	 */
 	public function editor_admin_init(): void {
-		$block_editor_options = \get_option( 'editor__options' );
+		$block_editor_options = get_option( 'editor__options' );
 
 		$use_widgets_block_editor_off           = $block_editor_options['use_widgets_block_editor_off'] ?? '';
 		$gutenberg_use_widgets_block_editor_off = $block_editor_options['gutenberg_use_widgets_block_editor_off'] ?? '';

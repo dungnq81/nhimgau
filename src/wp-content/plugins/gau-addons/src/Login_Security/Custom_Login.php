@@ -23,7 +23,7 @@ final class Custom_Login {
 	 * @return true|void
 	 */
 	public function restrict_login_to_ips() {
-		$_login_security          = filter_setting_options( 'login_security', false );
+		$_login_security          = \filter_setting_options( 'login_security', false );
 		$_custom_security_options = get_option( 'login_security__options' );
 
 		$custom_restrict_ips = $_custom_security_options['login_ips_access'] ?? [];
@@ -42,7 +42,7 @@ final class Custom_Login {
 		// Check if the current IP is in the allowed list, block all other IPs not in the list.
 		if ( ! empty( $allowed_ips ) ) {
 			foreach ( $allowed_ips as $allowed_ip ) {
-				if ( $this->_ipInRange( ip_address(), $allowed_ip ) ) {
+				if ( $this->_ipInRange( \ip_address(), $allowed_ip ) ) {
 					return true;
 				}
 			}
@@ -50,7 +50,7 @@ final class Custom_Login {
 			// Update the total blocked logins counter.
 			update_option( '_security_total_blocked_logins', get_option( '_security_total_blocked_logins', 0 ) + 1 );
 
-			error_log( 'Restricted login page: access currently not permitted - ' . ip_address() );
+			error_log( 'Restricted login page: access currently not permitted - ' . \ip_address() );
 			wp_die(
 				esc_html__( 'You don’t have access to this page. Please contact the administrator of this website for further assistance.', ADDONS_TEXT_DOMAIN ),
 				esc_html__( 'Restricted access', ADDONS_TEXT_DOMAIN ),
@@ -65,12 +65,12 @@ final class Custom_Login {
 		// Block all IPs in the list.
 		if ( ! empty( $blocked_ips ) ) {
 			foreach ( $blocked_ips as $blocked_ip ) {
-				if ( $this->_ipInRange( ip_address(), $blocked_ip ) ) {
+				if ( $this->_ipInRange( \ip_address(), $blocked_ip ) ) {
 
 					// Update the total blocked logins counter.
 					update_option( '_security_total_blocked_logins', get_option( '_security_total_blocked_logins', 0 ) + 1 );
 
-					error_log( 'Restricted login page: access currently not permitted - ' . ip_address() );
+					error_log( 'Restricted login page: access currently not permitted - ' . \ip_address() );
 					wp_die(
 						esc_html__( 'You don’t have access to this page. Please contact the administrator of this website for further assistance.', ADDONS_TEXT_DOMAIN ),
 						esc_html__( 'Restricted access', ADDONS_TEXT_DOMAIN ),

@@ -9,6 +9,25 @@ defined( 'ABSPATH' ) || die;
 
 /** ----------------------------------------------- */
 
+if ( ! function_exists( 'is_valid_phone' ) ) {
+	/**
+	 * @param $phone
+	 *
+	 * @return bool
+	 */
+	function is_valid_phone( $phone ): bool {
+		if ( ! is_string( $phone ) || trim( $phone ) === '' ) {
+			return false;
+		}
+
+		$pattern = '/^\(?\+?(0|84?)\)?[\s.-]?(3[2-9]|5[689]|7[06-9]|8[0-689]|9[0-4|6-9])(\d{7}|\d[\s.-]?\d{3}[\s.-]?\d{3})$/';
+
+		return preg_match( $pattern, $phone ) === 1;
+	}
+}
+
+/** ----------------------------------------------- */
+
 if ( ! function_exists( 'is_xml' ) ) {
 	/**
 	 * @param $content
@@ -70,7 +89,7 @@ if ( ! function_exists( 'get_current_url' ) ) {
 	 */
 	function get_current_url(): string {
 
-		// Return empty string if it is not an HTTP request.
+		// Return an empty string if it is not an HTTP request.
 		if ( ! isset( $_SERVER['HTTP_HOST'] ) ) {
 			return '';
 		}
@@ -105,7 +124,7 @@ if ( ! function_exists( 'extract_js' ) ) {
 	 */
 	function extract_js( string $content = '' ): string {
 
-		// Define pattern for matching <script> tags
+		// Define a pattern for matching <script> tags
 		$script_pattern = '/<script\b[^>]*>(.*?)<\/script>/is';
 
 		// Find and extract JavaScript code within <script> tags
@@ -223,25 +242,27 @@ if ( ! function_exists( 'message_error' ) ) {
 
 if ( ! function_exists( 'in_array_checked' ) ) {
 	/**
+	 * Conditionally adds an HTML attribute based on array membership.
+	 *
 	 * @param array $checked_arr
 	 * @param $current
 	 * @param bool $display
 	 * @param string $type
 	 *
-	 * @return string|void
+	 * @return string|null
 	 */
-	function in_array_checked( array $checked_arr, $current, bool $display = true, string $type = 'checked' ) {
-		if ( in_array( $current, $checked_arr, false ) ) {
-			$result = " $type='$type'";
-		} else {
-			$result = '';
-		}
+	function in_array_checked( array $checked_arr, $current, bool $display = true, string $type = 'checked' ): ?string {
+		$type   = preg_match( '/^[a-zA-Z0-9\-]+$/', $type ) ? $type : 'checked';
+		$result = in_array( $current, $checked_arr, false ) ? " $type='$type'" : '';
 
+		// Echo or return the result
 		if ( $display ) {
 			echo $result;
-		} else {
-			return $result;
+
+			return null;
 		}
+
+		return $result;
 	}
 }
 
@@ -419,7 +440,7 @@ if ( ! function_exists( 'update_custom_post_option' ) ) {
 			'post_content_filtered' => $preprocessed,
 		];
 
-		// Update post if it already exists, otherwise create a new one.
+		// Update 'post' if it already exists, otherwise create a new one.
 		$post = \get_custom_post_option( $post_type );
 		if ( $post ) {
 			$post_data['ID'] = $post->ID;
@@ -603,7 +624,7 @@ if ( ! function_exists( 'ip_address' ) ) {
 			}
 		}
 
-		// Fallback local ip.
+		// Fallback to localhost IP
 		return '127.0.0.1';
 	}
 }
@@ -615,36 +636,42 @@ if ( ! function_exists( 'clear_all_cache' ) ) {
 	 * @return void
 	 */
 	function clear_all_cache(): void {
+		global $wpdb;
 
 		// LiteSpeed cache
 		if ( class_exists( \LiteSpeed\Purge::class ) ) {
 			\LiteSpeed\Purge::purge_all();
 		}
 
-		// wp-rocket cache
+		// WP-Rocket cache
 		if ( defined( 'WP_ROCKET_PATH' ) && function_exists( 'rocket_clean_domain' ) ) {
 			rocket_clean_domain();
 		}
 
-		// Clear minified CSS and JavaScript files.
+		// Clearly minified CSS and JavaScript files (WP-Rocket)
 		if ( function_exists( 'rocket_clean_minify' ) ) {
 			rocket_clean_minify();
 		}
 
-		// Jetpack
-		if ( \check_plugin_active( 'jetpack/jetpack.php' ) ) {
-			global $wpdb;
+		// Jetpack transient cache
+		if ( self::checkPluginActive( 'jetpack/jetpack.php' ) ) {
+			$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_jetpack_%'" );
+			$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_jetpack_%'" );
 
-			$wpdb->query( "DELETE FROM {$wpdb->options} WHERE `option_name` LIKE '_transient_jetpack_%'" );
-			$wpdb->query( "DELETE FROM {$wpdb->options} WHERE `option_name` LIKE '_transient_timeout_jetpack_%'" );
-
-			// Clear Photon cache locally
+			// Clear Jetpack Photon cache locally
 			if ( class_exists( \Jetpack_Photon::class ) ) {
 				\Jetpack_Photon::instance()->purge_cache();
 			}
 		}
 
-		//...
+		// Clear all WordPress transients
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_%'" );
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_%'" );
+
+		// Clear object cache (e.g., Redis or Memcached)
+		if ( function_exists( 'wp_cache_flush' ) ) {
+			wp_cache_flush();
+		}
 	}
 }
 
@@ -659,7 +686,8 @@ if ( ! function_exists( 'check_plugin_active' ) ) {
 	 * @return bool
 	 */
 	function check_plugin_active( $plugin_slug ): bool {
-		return \check_plugin_installed( $plugin_slug ) && is_plugin_active( $plugin_slug );
+		return \check_plugin_installed( $plugin_slug ) &&
+		       is_plugin_active( $plugin_slug );
 	}
 }
 

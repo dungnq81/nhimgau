@@ -7,7 +7,6 @@ use Addons\Base\Singleton;
 \defined( 'ABSPATH' ) || die;
 
 final class Login_Security {
-
 	use Singleton;
 
 	// --------------------------------------------------

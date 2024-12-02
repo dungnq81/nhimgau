@@ -28,7 +28,7 @@ final class Heartbeat {
 	 * @return void
 	 */
 	public function add_hooks(): void {
-		if ( @strpos( $_SERVER['REQUEST_URI'], '/wp-admin/admin-ajax.php' ) ) { // phpcs:ignore
+		if ( @strpos( $_SERVER['REQUEST_URI'], '/wp-admin/admin-ajax.php' ) ) {
 			return;
 		}
 

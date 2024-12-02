@@ -2,7 +2,7 @@
 /*!
  * Plugin Name: Gau Addons
  * Plugin URI: https://gaudev.net
- * Version: 0.24.11
+ * Version: 0.24.12
  * Requires PHP: 8.2
  * Author: Gaudev
  * Author URI: https://gaudev.net

@@ -25,6 +25,17 @@ abstract class Abstract_Lazy_Load {
 	/** ---------------------------------------- */
 
 	/**
+	 * Add class-name to the html element.
+	 *
+	 * @param $element
+	 *
+	 * @return string|array
+	 */
+	abstract public function add_lazyload_class( $element ): string|array;
+
+	/** ---------------------------------------- */
+
+	/**
 	 * @param $content
 	 *
 	 * @return bool
@@ -35,7 +46,7 @@ abstract class Abstract_Lazy_Load {
 		       is_feed() ||
 		       is_admin() ||
 		       wp_doing_ajax() ||
-		       is_amp_enabled( $content );
+		       \is_amp_enabled( $content );
 	}
 
 	/** ---------------------------------------- */
@@ -46,10 +57,10 @@ abstract class Abstract_Lazy_Load {
 	public function is_lazy_url_excluded(): bool {
 
 		// Get the urls where a lazy load is excluded.
-		$excluded_urls = filter_setting_options( 'lazy_load_exclude_urls', [] );
+		$excluded_urls = \filter_setting_options( 'lazy_load_exclude_urls', [] );
 
 		// Bail if no excluding are found, or we do not have a match.
-		return ! ( empty( $excluded_urls ) && ! in_array( get_current_url(), $excluded_urls, false ) );
+		return ! ( empty( $excluded_urls ) && ! in_array( \get_current_url(), $excluded_urls, false ) );
 	}
 
 	/** ---------------------------------------- */
@@ -77,7 +88,7 @@ abstract class Abstract_Lazy_Load {
 		$exclude_lazyload = $optimizer_options['exclude_lazyload'] ?? [];
 		$excluded_all = array_unique(
 			array_merge(
-				filter_setting_options( 'lazy_load_exclude', [] ),
+				\filter_setting_options( 'lazy_load_exclude', [] ),
 				$exclude_lazyload
 			)
 		);
@@ -136,15 +147,4 @@ abstract class Abstract_Lazy_Load {
 
 		return str_replace( $search, $replace, $content );
 	}
-
-	/** ---------------------------------------- */
-
-	/**
-	 * Add class-name to the html element.
-	 *
-	 * @param $element
-	 *
-	 * @return mixed
-	 */
-	abstract public function add_lazyload_class( $element ): mixed;
 }

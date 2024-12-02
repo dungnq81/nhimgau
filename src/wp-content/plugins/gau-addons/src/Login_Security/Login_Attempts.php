@@ -22,6 +22,7 @@ final class Login_Attempts {
 		5  => '5',
 		10 => '10',
 		15 => '15',
+		20 => '20',
 	];
 
 	// --------------------------------------------------
@@ -44,7 +45,7 @@ final class Login_Attempts {
 	public function maybe_block_login_access(): void {
 
 		// Get the user ip.
-		$user_ip = ip_address();
+		$user_ip = \ip_address();
 
 		// Get login attempts data.
 		$login_attempts = get_option( '_security_unsuccessful_login', [] );
@@ -60,7 +61,7 @@ final class Login_Attempts {
 			// Update the total blocked logins counter.
 			update_option( '_security_total_blocked_logins', get_option( '_security_total_blocked_logins', 0 ) + 1 );
 
-			error_log( 'Too many incorrect login attempts. - ' . ip_address() );
+			error_log( 'Too many incorrect login attempts. - ' . \ip_address() );
 			wp_die(
 				esc_html__( 'Access to login page is currently restricted because of too many incorrect login attempts.', ADDONS_TEXT_DOMAIN ),
 				esc_html__( 'Restricted access', ADDONS_TEXT_DOMAIN ),
@@ -85,7 +86,7 @@ final class Login_Attempts {
 	// --------------------------------------------------
 
 	/**
-	 * Add a login attempt for specific ip address.
+	 * Add a login attempt for a specific ip address.
 	 *
 	 * @param string $error The login error.
 	 */
@@ -107,7 +108,7 @@ final class Login_Attempts {
 		}
 
 		// Get the current user ip.
-		$user_ip = ip_address();
+		$user_ip = \ip_address();
 
 		// Get the login attempts data.
 		$login_attempts = get_option( '_security_unsuccessful_login', [] );
@@ -170,7 +171,7 @@ final class Login_Attempts {
 	 * @return void
 	 */
 	public function reset_login_attempts(): void {
-		$user_ip        = ip_address();
+		$user_ip        = \ip_address();
 		$login_attempts = get_option( '_security_unsuccessful_login', [] );
 
 		// Bail if the IP doesn't exist in the unsuccessful logins.

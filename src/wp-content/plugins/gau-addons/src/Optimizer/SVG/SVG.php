@@ -27,7 +27,7 @@ final class SVG {
 
 	private function init(): void {
 		$optimizer_options = get_option( 'optimizer__options' );
-		$this->svg_option = $optimizer_options[ 'svgs' ] ?? 'disable';
+		$this->svg_option  = $optimizer_options['svgs'] ?? 'disable';
 
 		if ( 'disable' !== $this->svg_option ) {
 			$this->_init_svg();

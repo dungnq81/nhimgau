@@ -9,11 +9,9 @@ use Addons\Base\Abstract_Htaccess;
 final class Dir extends Abstract_Htaccess {
 
 	/**
-	 * The path to the htaccess template.
-	 *
-	 * @var string
+	 * @var string|null
 	 */
-	public string $template = 'directory-hardening.tpl';
+	public ?string $template = 'directory-hardening.tpl';
 
 	/**
 	 * Array with files to the allowlisted.

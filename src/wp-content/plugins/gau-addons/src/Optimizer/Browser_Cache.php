@@ -9,9 +9,9 @@ use Addons\Base\Abstract_Htaccess;
 final class Browser_Cache extends Abstract_Htaccess {
 
 	/**
-	 * @var string
+	 * @var string|null
 	 */
-	public string $template = 'browser-caching.tpl';
+	public ?string $template = 'browser-caching.tpl';
 
 	/**
 	 * @var array|string[]

@@ -3,7 +3,7 @@
 Plugin Name: gau-mu
 Plugin URI: https://gaudev.xyz
 Description: mu-plugin for Gau Theme
-Version: 0.24.11
+Version: 0.24.12
 Requires PHP: 8.2
 Author: Gaudev
 Author URI: https://gaudev.xyz

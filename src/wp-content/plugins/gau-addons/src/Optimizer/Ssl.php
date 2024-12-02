@@ -11,9 +11,9 @@ final class Ssl extends Abstract_Htaccess {
 	/**
 	 * The path to the htaccess template.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
-	public string $template = 'ssl.tpl';
+	public ?string $template = 'ssl.tpl';
 
 	/**
 	 * Regular expressions to check if the rules are enabled.
@@ -31,7 +31,7 @@ final class Ssl extends Abstract_Htaccess {
 	/**
 	 * Check if the current domain has a valid ssl certificate.
 	 *
-	 * @return bool True is the domain has certificate, false otherwise.
+	 * @return bool True is the domain has a certificate, false otherwise.
 	 */
 	public function has_certificate(): bool {
 		$site_url = get_option( 'siteurl' );

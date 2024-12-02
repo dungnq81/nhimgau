@@ -28,6 +28,32 @@ final class Admin {
 
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 		add_action( 'admin_init', [ $this, 'admin_init' ], 11 );
+
+		add_action( 'admin_footer', [ $this, 'add_custom_admin_script' ] );
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @return void
+	 */
+	public function add_custom_admin_script(): void { ?>
+        <script>
+            jQuery( function ( $ ) {
+                $( 'a' ).each( function () {
+                    let link = $( this ).attr( 'href' );
+                    if ( link && link.indexOf( 'action=trash' ) !== -1 ) {
+                        $( this ).on( 'click', function ( e ) {
+                            let confirmAction = confirm( "Are you sure you want to move this post to the trash?" );
+                            if ( !confirmAction ) {
+                                e.preventDefault();
+                            }
+                        } );
+                    }
+                } );
+            } );
+        </script>
+		<?php
 	}
 
 	// --------------------------------------------------

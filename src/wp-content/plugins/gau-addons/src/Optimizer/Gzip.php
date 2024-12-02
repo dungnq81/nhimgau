@@ -9,9 +9,9 @@ use Addons\Base\Abstract_Htaccess;
 final class Gzip extends Abstract_Htaccess {
 
 	/**
-	 * @var string
+	 * @var string|null
 	 */
-	public string $template = 'gzip.tpl';
+	public ?string $template = 'gzip.tpl';
 
 	/**
 	 * @var array|string[]

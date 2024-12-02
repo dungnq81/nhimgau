@@ -30,9 +30,9 @@ final class Custom_Script {
 	 * @return void
 	 */
 	public function header_scripts__hook(): void {
-		$html_header = extract_js( get_custom_post_option_content( 'html_header', true ) );
-		if ( $html_header && ! lighthouse() ) {
-			echo js_minify( $html_header, true );
+		$html_header = \extract_js( \get_custom_post_option_content( 'html_header', true ) );
+		if ( $html_header && ! \lighthouse() ) {
+			echo \js_minify( $html_header, true );
 		}
 	}
 
@@ -44,9 +44,9 @@ final class Custom_Script {
 	 * @return void
 	 */
 	public function body_scripts_top__hook(): void {
-		$html_body_top = extract_js( get_custom_post_option_content( 'html_body_top', true ) );
-		if ( $html_body_top && ! lighthouse() ) {
-			echo js_minify( $html_body_top, true );
+		$html_body_top = \extract_js( \get_custom_post_option_content( 'html_body_top', true ) );
+		if ( $html_body_top && ! \lighthouse() ) {
+			echo \js_minify( $html_body_top, true );
 		}
 	}
 
@@ -58,9 +58,9 @@ final class Custom_Script {
 	 * @return void
 	 */
 	public function footer_scripts__hook(): void {
-		$html_footer = extract_js( get_custom_post_option_content( 'html_footer', true ) );
-		if ( $html_footer && ! lighthouse() ) {
-			echo js_minify( $html_footer, true );
+		$html_footer = \extract_js( \get_custom_post_option_content( 'html_footer', true ) );
+		if ( $html_footer && ! \lighthouse() ) {
+			echo \js_minify( $html_footer, true );
 		}
 	}
 
@@ -72,9 +72,9 @@ final class Custom_Script {
 	 * @return void
 	 */
 	public function body_scripts_bottom__hook(): void {
-		$html_body_bottom = extract_js( get_custom_post_option_content( 'html_body_bottom', true ) );
-		if ( $html_body_bottom && ! lighthouse() ) {
-			echo js_minify( $html_body_bottom, true );
+		$html_body_bottom = \extract_js( \get_custom_post_option_content( 'html_body_bottom', true ) );
+		if ( $html_body_bottom && ! \lighthouse() ) {
+			echo \js_minify( $html_body_bottom, true );
 		}
 	}
 }

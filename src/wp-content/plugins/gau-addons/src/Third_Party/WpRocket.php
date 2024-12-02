@@ -12,7 +12,6 @@ use Addons\Base\Singleton;
  * WpRocket Plugins
  */
 final class WpRocket {
-
 	use Singleton;
 
 	// --------------------------------------------------
@@ -22,7 +21,7 @@ final class WpRocket {
 		/** Server does not support using .htaccess */
 		if ( ! htaccess() ) {
 
-			// Remove rewrite rules block of WP Rocket from .htaccess.
+			// Remove the rewrite rules block of WP Rocket from .htaccess.
 			add_filter( 'rocket_htaccess_charset', '__return_false' );
 			add_filter( 'rocket_htaccess_etag', '__return_false' );
 			add_filter( 'rocket_htaccess_web_fonts_access', '__return_false' );

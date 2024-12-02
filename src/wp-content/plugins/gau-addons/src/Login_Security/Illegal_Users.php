@@ -50,8 +50,8 @@ final class Illegal_Users {
 	public function change_common_username( array $new_username ): false|int {
 		global $wpdb;
 
-		return $wpdb->update( // phpcs:ignore
-			$wpdb->users, // phpcs:ignore
+		return $wpdb->update(
+			$wpdb->users,
 			[ 'user_login' => $new_username['user_login'] ],
 			[ 'ID' => $new_username['ID'] ]
 		);
@@ -92,6 +92,7 @@ final class Illegal_Users {
 
 		// Check for illegal usernames.
 		foreach ( $admins as $key => $admin ) {
+
 			// Remove the user if its username is not in the illegal list.
 			if ( ! in_array( strtolower( $admin->user_login ), $this->get_illegal_usernames(), false ) ) {
 				unset( $admins[ $key ] );
@@ -115,7 +116,7 @@ final class Illegal_Users {
 	 * @return array $result Array containing the result for each username update.
 	 */
 	public function update_common_usernames( array $usernames ): array {
-		// Bail if 'usernames' array is empty.
+		// Bail if the 'usernames' array is empty.
 		if ( empty( $usernames ) ) {
 			return [];
 		}

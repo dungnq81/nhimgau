@@ -29,8 +29,6 @@ const jsFiles = [
     'admin_addons2',
 ];
 
-//const isProduction = process.env.NODE_ENV !== 'development';
-
 export default {
     ...sharedConfig,
     plugins: [

@@ -10,11 +10,9 @@ use WP_HTTP_Response;
 final class Headers extends Abstract_Htaccess {
 
 	/**
-	 * The path to the htaccess template.
-	 *
-	 * @var string
+	 * @var string|null
 	 */
-	public string $template = 'xss-headers.tpl';
+	public ?string $template = 'xss-headers.tpl';
 
 	/**
 	 * Regular expressions to check if the rules are enabled.
@@ -83,7 +81,7 @@ final class Headers extends Abstract_Htaccess {
 	 * @return mixed
 	 */
 	public function set_rest_security_headers( $result ): mixed {
-		// Return result if no headers to add.
+		// Return a result if no headers to add.
 		if ( empty( $this->security_headers ) ) {
 			return $result;
 		}

@@ -254,7 +254,7 @@ final class Custom_Sorting {
 
 		foreach ( $id_arr as $position => $id ) {
 			$id = (int) $id;
-			$_updated = $wpdb->update(
+			$wpdb->update(
 				$wpdb->terms,
 				[ 'term_order' => $menu_order_arr[ $position ] ],
 				[ 'term_id' => $id ],

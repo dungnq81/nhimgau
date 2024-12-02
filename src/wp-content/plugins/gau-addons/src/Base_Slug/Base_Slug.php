@@ -251,15 +251,6 @@ final class Base_Slug {
 	private function _lang_remove_term_filters(): void {
 
 		// WPML
-		if ( isset( $GLOBALS['sitepress'] ) ) {
-			$sitepress = $GLOBALS['sitepress'];
-
-			remove_filter( 'category_link', [ $sitepress, 'category_link_adjust_id' ], 1 );
-			remove_filter( 'get_term', [ $sitepress, 'get_term_adjust_id' ], 1 );
-			remove_filter( 'terms_clauses', [ $sitepress, 'terms_clauses' ] );
-			remove_filter( 'get_terms_args', [ $sitepress, 'get_terms_args_filter' ] );
-		}
-
 		// Polylang
 	}
 
@@ -271,15 +262,6 @@ final class Base_Slug {
 	private function _lang_restore_term_filters(): void {
 
 		// WPML
-		if ( isset( $GLOBALS['sitepress'] ) ) {
-			$sitepress = $GLOBALS['sitepress'];
-
-			add_filter( 'category_link', [ $sitepress, 'category_link_adjust_id' ], 1, 1 );
-			add_filter( 'get_term', [ $sitepress, 'get_term_adjust_id' ], 1, 1 );
-			add_filter( 'terms_clauses', [ $sitepress, 'terms_clauses' ], 10, 3 );
-			add_filter( 'get_terms_args', [ $sitepress, 'get_terms_args_filter' ], 10, 2 );
-		}
-
 		// Polylang
 	}
 
