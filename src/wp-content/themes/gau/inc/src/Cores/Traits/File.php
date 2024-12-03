@@ -113,7 +113,7 @@ trait File {
 			return null;
 		}
 
-		// Read file
+		// Read `file`
 		return $wp_filesystem->get_contents( $file );
 	}
 

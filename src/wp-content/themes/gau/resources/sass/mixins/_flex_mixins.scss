@@ -47,6 +47,36 @@
     }
 }
 
+@mixin media-flex(
+    $m: 1 1 auto,
+    $t: false,
+    $d: false,
+    $gap-m: false,
+    $gap: false
+) {
+    flex: $m;
+
+    @if $gap-m {
+        @include mixin.gap($gap-m);
+    }
+
+    @if $t {
+        @include mixin.mq-min(md) {
+            flex: $t;
+
+            @if $gap {
+                @include mixin.gap($gap);
+            }
+        }
+    }
+
+    @if $d {
+        @include mixin.mq-min(lg) {
+            flex: $d;
+        }
+    }
+}
+
 @mixin flex-basis( $n: 1, $gap: false ) {
     @include flex-self(vars.$grid-columns, $n, $gap);
 }
@@ -112,27 +142,9 @@
     }
 }
 
-@mixin flex-shrink {
-    flex: 0 0 auto;
+@mixin cell( $grow: 0, $shrink: 0, $basis: auto, $w: false ) {
+    flex: $grow $shrink $basis;
     max-width: 100%;
-    min-height: 0;
-    min-width: 0;
-}
-
-@mixin flex-auto {
-    flex: 1 1 0;
-    width: auto;
-}
-
-@mixin flex-stretch {
-    flex: 0 0 auto;
-    width: 100%;
-}
-
-@mixin cell( $w: false ) {
-    flex: 0 0 auto;
-    max-width: 100%;
-    min-height: 0;
     min-width: 0;
 
     @if meta.type-of($w) != bool {
@@ -140,7 +152,19 @@
     }
 }
 
-@mixin flex-x($flex: true, $reverse: false) {
+@mixin flex-shrink {
+    @include cell(0, 0, auto);
+}
+
+@mixin flex-auto {
+    @include cell(1, 1, 0, auto);
+}
+
+@mixin flex-stretch {
+    @include cell(0, 0, auto, 100%);
+}
+
+@mixin flex-x( $flex: true, $reverse: false ) {
     @if true == $flex {
         & {
             display: flex;
@@ -158,7 +182,7 @@
     }
 }
 
-@mixin flex-y($flex: true, $reverse: false) {
+@mixin flex-y( $flex: true, $reverse: false ) {
     @if true == $flex {
         display: flex;
     }
@@ -202,23 +226,32 @@
     }
 }
 
-@mixin flex-align-center( $direction_column: false ) {
+@mixin flex-align(
+    $align: flex-start,
+    $justify: false,
+    $direction_column: false,
+    $wrap: true
+) {
     display: flex;
-    align-items: center;
+    align-items: $align;
 
-    @if $direction_column == true {
+    @if meta.type-of($justify) != bool {
+        justify-content: $justify;
+    }
+
+    @if $direction_column {
         flex-direction: column;
+    }
+
+    @if $wrap == true {
+        flex-wrap: wrap;
     }
 }
 
-@mixin flex-center() {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+@mixin flex-align-center( $direction_column: false ) {
+    @include flex-align(center, false, $direction_column);
 }
 
-@mixin inline-flex-center() {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+@mixin flex-center() {
+    @include flex-align(center, center);
 }

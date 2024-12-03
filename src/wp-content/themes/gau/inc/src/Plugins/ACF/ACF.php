@@ -20,7 +20,6 @@ final class ACF {
 	// -------------------------------------------------------------
 
 	private function init(): void {
-
 		// Hide the ACF Admin UI
 		if ( ! WP_DEBUG ) {
 			add_filter( 'acf/settings/show_admin', '__return_false' );
@@ -32,7 +31,7 @@ final class ACF {
 
 		add_filter( 'teeny_mce_buttons', [ $this, 'teeny_mce_buttons' ], 10, 2 );
 
-		// Auto required fields
+		// Auto-required fields
 		$fields_dir = __DIR__ . DIRECTORY_SEPARATOR . 'fields';
 
 		Helper::createDirectory( $fields_dir );

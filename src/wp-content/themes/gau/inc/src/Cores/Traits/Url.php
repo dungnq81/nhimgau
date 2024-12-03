@@ -370,7 +370,7 @@ trait Url {
 				continue;
 			}
 			if ( $part === '..' ) {
-				// Pop from stack if part is '..' and stack is not empty
+				// Pop from the stack if part is '.' and the stack is not empty
 				if ( ! empty( $stack ) ) {
 					array_pop( $stack );
 				}

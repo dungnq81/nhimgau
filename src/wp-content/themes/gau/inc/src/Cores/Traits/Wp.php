@@ -108,14 +108,7 @@ trait Wp {
 	 *
 	 * @return void
 	 */
-	public static function FQNLoad(
-		?string $path,
-		bool $require_path = false,
-		bool $init_class = false,
-		string $FQN = '\\',
-		bool $is_widget = false
-	): void {
-
+	public static function FQNLoad( ?string $path, bool $require_path = false, bool $init_class = false, string $FQN = '\\', bool $is_widget = false ): void {
 		// Validate $path
 		if ( empty( $path ) || ! is_dir( $path ) ) {
 			self::errorLog( "Invalid or inaccessible path: $path" );
@@ -686,7 +679,7 @@ trait Wp {
 			$term    = get_term( $term_id, $taxonomy );
 		} else {
 
-			// If term_id is not numeric, attempt to retrieve term by slug or name
+			// If term_id is not numeric, attempt to retrieve the term by slug or name
 			$term = get_term_by( 'slug', $term_id, $taxonomy ) ?: get_term_by( 'name', $term_id, $taxonomy );
 		}
 
@@ -1483,7 +1476,7 @@ trait Wp {
 			// Add loading optimization attributes if not available.
 			$attr = array_merge( $attr, $loading_optimization_attr );
 
-			// Omit the `decoding` attribute if the value is invalid according to the spec.
+			// Omit the `decoding` attribute if the value is invalid, according to the spec.
 			if ( empty( $attr['decoding'] ) || ! in_array( $attr['decoding'], [ 'async', 'sync', 'auto' ], false ) ) {
 				unset( $attr['decoding'] );
 			}
@@ -1923,7 +1916,7 @@ trait Wp {
 			'post_content_filtered' => $preprocessed,
 		];
 
-		// Update post if it already exists, otherwise create a new one.
+		// Update `post` if it already exists, otherwise create a new one.
 		$post = self::getCustomPostOption( $post_type );
 		if ( $post ) {
 			$post_data['ID'] = $post->ID;

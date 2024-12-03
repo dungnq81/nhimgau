@@ -14,7 +14,7 @@ RewriteRule . /index.php [L]
 </IfModule>
 # END WordPress
 
-# Theme
+# BEGIN Theme
 SetEnv HTACCESS on
 Options -Indexes
 
@@ -32,4 +32,4 @@ Options -Indexes
     #Header always set Permissions-Policy "accelerometer=(), autoplay=(), camera=(), fullscreen=*, geolocation=(self), gyroscope=(), microphone=(), payment=*"
 
 </IfModule>
-# Theme END
+# END Theme

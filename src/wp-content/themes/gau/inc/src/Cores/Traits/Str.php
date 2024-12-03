@@ -56,7 +56,7 @@ trait Str {
 	 *
 	 * @return string The HTML content wrapped in <p> tags, with empty <p> tags removed.
 	 */
-	public static function nl2P(string $html): string {
+	public static function nl2P( string $html ): string {
 		$html = trim( $html );
 		if ( empty( $html ) ) {
 			return '';
@@ -426,6 +426,7 @@ trait Str {
 		}
 		foreach ( $needles as $query ) {
 			if ( mb_strrpos( $haystack, $query, $offset ) !== false ) {
+
 				// stop on the first true result.
 				return true;
 			}
@@ -630,13 +631,13 @@ trait Str {
 	 */
 	public static function excerpt( string $text, int $limit = 55, bool $splitWords = true, string $showMore = '...' ): string {
 		$text        = strip_tags( $text );
-		$text        = static::normalize( $text );
+		$text        = self::normalize( $text );
 		$splitLength = $limit;
 
 		if ( $splitWords ) {
 			$splitLength = extension_loaded( 'intl' )
-				? static::excerptIntlSplit( $text, $limit )
-				: static::excerptSplit( $text, $limit );
+				? self::excerptIntlSplit( $text, $limit )
+				: self::excerptSplit( $text, $limit );
 		}
 
 		$hiddenText = mb_substr( $text, $splitLength );

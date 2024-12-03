@@ -195,7 +195,7 @@ trait DateTime {
 			$date_string = "@" . $date_string;
 		}
 
-		// Create DateTime object in the site's timezone
+		// Create a DateTime object in the site's timezone
 		$datetime = date_create( $date_string, wp_timezone() );
 
 		if ( false === $datetime ) {

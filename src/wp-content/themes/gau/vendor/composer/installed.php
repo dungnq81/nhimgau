@@ -3,7 +3,7 @@
         'name' => 'wordpress/gau',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '80e136cd8ce176f1d23b960ea42a75917f239840',
+        'reference' => 'c5d855a986fa81cbfcbbdf973ad462fe2645851e',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -96,7 +96,7 @@
         'wordpress/gau' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '80e136cd8ce176f1d23b960ea42a75917f239840',
+            'reference' => 'c5d855a986fa81cbfcbbdf973ad462fe2645851e',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

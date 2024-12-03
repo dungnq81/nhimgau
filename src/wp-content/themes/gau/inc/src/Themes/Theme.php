@@ -33,20 +33,20 @@ final class Theme {
 		// Login
 		$this->_admin_login();
 
-		add_action( 'after_setup_theme', [ $this, 'i18n' ], 1 );
-		add_action( 'after_setup_theme', [ $this, 'after_setup_theme' ], 9 );
-		add_action( 'after_setup_theme', [ $this, 'setup' ], 10 );
-		add_action( 'after_setup_theme', [ $this, 'plugins_setup' ], 11 );
+		add_action( 'after_setup_theme', [ $this, 'i18n' ], 10 );
+		add_action( 'after_setup_theme', [ $this, 'after_setup_theme' ], 11 );
+		add_action( 'after_setup_theme', [ $this, 'setup' ], 12);
+		add_action( 'after_setup_theme', [ $this, 'plugins_setup' ], 13 );
 
 		/** Enqueue Scripts */
-		add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ], 12 );
+		add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ], 14 );
 
 		/** Restrict admin install plugin */
-		add_filter( 'user_has_cap', [ $this, 'restrict_admin_plugin_install' ], 10, 3 );
+		add_filter( 'user_has_cap', [ $this, 'restrict_admin_plugin_install' ], 15, 3 );
 
 		/** Widgets WordPress */
-		add_action( 'widgets_init', [ $this, 'unregister_widgets' ], 12 );
-		add_action( 'widgets_init', [ $this, 'register_widgets' ], 12 );
+		add_action( 'widgets_init', [ $this, 'unregister_widgets' ], 16 );
+		add_action( 'widgets_init', [ $this, 'register_widgets' ], 17 );
 	}
 
 	// --------------------------------------------------
