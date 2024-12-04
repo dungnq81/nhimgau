@@ -171,17 +171,17 @@ final class Shortcode {
 		$strtotime_str    = $atts['limit_time'] ? Helper::toString( $atts['limit_time'] ) : false;
 
 		$r = Helper::queryByTerms(
-                $term_ids,
-                $atts['post_type'],
-                $atts['taxonomy'],
-                $include_children,
-                $posts_per_page,
-                $orderby,
-                [],
-                $strtotime_str
-        );
+			$term_ids,
+			$atts['post_type'],
+			$atts['taxonomy'],
+			$include_children,
+			$posts_per_page,
+			$orderby,
+			[],
+			$strtotime_str
+		);
 
-        if ( ! $r ) {
+		if ( ! $r ) {
 			return null;
 		}
 
@@ -405,13 +405,15 @@ final class Shortcode {
 		ob_start();
 
 		?>
-        <form action="<?= Helper::home() ?>" class="frm-search" method="get" accept-charset="UTF-8" data-abide novalidate>
+        <form action="<?= Helper::home() ?>" class="frm-search" method="get" accept-charset="UTF-8" data-abide
+              novalidate>
             <label for="<?= $id ?>" class="screen-reader-text"><?= $title_for ?></label>
-            <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" autocomplete="off" name="s" value="<?= get_search_query() ?>" placeholder="<?= $placeholder_title; ?>">
+            <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" autocomplete="off" name="s"
+                   value="<?= get_search_query() ?>" placeholder="<?= $placeholder_title; ?>">
             <button type="submit" data-fa=""><span><?= $title ?></span></button>
 			<?php
 			if ( Helper::isWoocommerceActive() ) : ?>
-            <input type="hidden" name="post_type" value="product">
+                <input type="hidden" name="post_type" value="product">
 			<?php
 			endif; ?>
         </form>
@@ -448,18 +450,21 @@ final class Shortcode {
 		ob_start();
 
 		?>
-        <a class="trigger-s" title="<?= Helper::escAttr( $title ) ?>" href="javascript:;" data-toggle="dropdown-<?= $id ?>" data-fa=""><span><?= $title ?></span></a>
+        <a class="trigger-s" title="<?= Helper::escAttr( $title ) ?>" href="javascript:;"
+           data-toggle="dropdown-<?= $id ?>" data-fa=""><span><?= $title ?></span></a>
         <div role="search" class="dropdown-pane" id="dropdown-<?= $id ?>" data-dropdown data-auto-focus="true">
-            <form action="<?= Helper::home() ?>" class="frm-search" method="get" accept-charset="UTF-8" data-abide novalidate>
+            <form action="<?= Helper::home() ?>" class="frm-search" method="get" accept-charset="UTF-8" data-abide
+                  novalidate>
                 <div class="frm-container">
                     <label for="<?= $id ?>" class="screen-reader-text"><?= $title_for ?></label>
-                    <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" name="s" value="<?= get_search_query() ?>" placeholder="<?= $placeholder_title ?>">
+                    <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" name="s"
+                           value="<?= get_search_query() ?>" placeholder="<?= $placeholder_title ?>">
                     <button class="btn-s" type="submit" data-fa=""><span><?= $title ?></span></button>
                     <button class="trigger-s-close" type="button" data-fa=""><span><?= $close_title ?></span></button>
                 </div>
 				<?php
 				if ( Helper::isWoocommerceActive() ) : ?>
-                <input type="hidden" name="post_type" value="product">
+                    <input type="hidden" name="post_type" value="product">
 				<?php
 				endif; ?>
             </form>

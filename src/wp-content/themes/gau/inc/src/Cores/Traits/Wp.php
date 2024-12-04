@@ -22,6 +22,7 @@ trait Wp {
 	use Str;
 	use Url;
 	use Db;
+	use Encryption;
 
 	// -------------------------------------------------------------
 
