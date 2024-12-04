@@ -27,8 +27,8 @@
     @return 0;
 }
 
-@mixin flex-self( $total: vars.$grid-columns, $n: 1, $gap: 0 ) {
-    $width: calculate-flex-width( $total, $n, $gap );
+@mixin flex-self( $total: 12, $n: 1, $gap: 0 ) {
+    $width: calculate-flex-width($total, $n, $gap);
     @if $width != 0 {
         width: $width;
     }
@@ -52,6 +52,34 @@
     @if math.is-unitless($d) and $d > 0 {
         @include mixin.mq-min(lg) {
             @include flex-self($d, 1, $gap);
+        }
+    }
+}
+
+@mixin flex-basis( $n: 1, $gap: false ) {
+    @include flex-self(vars.$grid-columns, $n, $gap);
+}
+
+@mixin media-flex-basis(
+    $m: 1,
+    $t: false,
+    $d: false,
+    $gap_m: false,
+    $gap: false
+) {
+    flex: 0 0 auto;
+
+    @if math.is-unitless($m) and $m > 0 {
+        @include flex-basis($m, $gap_m);
+    }
+    @if math.is-unitless($t) and $t > 0 {
+        @include mixin.mq-min(md) {
+            @include flex-basis($t, $gap);
+        }
+    }
+    @if math.is-unitless($d) and $d > 0 {
+        @include mixin.mq-min(lg) {
+            @include flex-basis($d, $gap);
         }
     }
 }
@@ -82,34 +110,6 @@
     @if $d {
         @include mixin.mq-min(lg) {
             flex: $d;
-        }
-    }
-}
-
-@mixin flex-basis( $n: 1, $gap: false ) {
-    @include flex-self(vars.$grid-columns, $n, $gap);
-}
-
-@mixin media-flex-basis(
-    $m: 1,
-    $t: false,
-    $d: false,
-    $gap_m: false,
-    $gap: false
-) {
-    flex: 0 0 auto;
-
-    @if math.is-unitless($m) and $m > 0 {
-        @include flex-basis($m, $gap_m);
-    }
-    @if math.is-unitless($t) and $t > 0 {
-        @include mixin.mq-min(md) {
-            @include flex-basis($t, $gap);
-        }
-    }
-    @if math.is-unitless($d) and $d > 0 {
-        @include mixin.mq-min(lg) {
-            @include flex-basis($d, $gap);
         }
     }
 }
