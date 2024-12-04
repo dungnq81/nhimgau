@@ -7,21 +7,30 @@
 @use "../variables" as vars;
 @use "mixins" as mixin;
 
-@mixin flex-self( $total: 1, $n: 1, $gap: false ) {
-    @if meta.type-of($gap) == bool or $gap < 0 {
-        $gap: 0;
+@function calculate-flex-width( $columns: 12, $span: 1, $gap: 0 ) {
+    @if math.is-unitless($columns) and math.is-unitless($span) and $columns > 0 and $span > 0 {
+        @if $columns == $span {
+            @return math.percentage(1);
+        } @else if $columns > $span {
+            @if meta.type-of($gap) == bool or $gap < 0 {
+                $gap: 0;
+            }
+
+            $width: math.percentage(func.divide($span, $columns));
+            $gap_adjust: func.fs(( $columns - $span ) * func.divide($gap, $columns ));
+
+            @return func.subtract($width, $gap_adjust);
+        }
     }
 
-    @if math.is-unitless($total) and math.is-unitless($n) and $n > 0 {
-        @if $total == $n {
-            width: math.percentage(1);
-        } @else if $total > $n {
+    @warn "Invalid inputs for calculate-flex-width: columns={$columns}, span={$span}";
+    @return 0;
+}
 
-            $itemWidth: math.percentage(func.divide($n, $total));
-            $gapAdjustment: func.fs(( $total - $n ) * func.divide( $gap, $total ));
-
-            width: func.subtract($itemWidth, $gapAdjustment);
-        }
+@mixin flex-self( $total: vars.$grid-columns, $n: 1, $gap: 0 ) {
+    $width: calculate-flex-width( $total, $n, $gap );
+    @if $width != 0 {
+        width: $width;
     }
 }
 

@@ -305,7 +305,7 @@
     @include linear-gradient($angle, $c, $hue);
 }
 
-// alias of 'layout-container'
+// alias of `layout-container`
 @mixin container( $padding_m: vars.$gutter-xs, $padding: vars.$gutter, $\2xl: false ) {
     @include layout-container($padding_m, $padding, $\2xl)
 }

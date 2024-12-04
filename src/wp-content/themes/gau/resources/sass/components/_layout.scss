@@ -1122,7 +1122,7 @@ nav.nav-pagination {
             border-radius: 2px;
             line-height: normal;
             overflow: hidden;
-            @include mixin.inline-flex-center();
+            @include mixin.flex-center();
 
             a, .current {
                 height: 100%;
