@@ -5,8 +5,6 @@ namespace Plugins\ACF;
 use Cores\Helper;
 use Cores\Traits\Singleton;
 
-use JsonException;
-
 \defined( 'ABSPATH' ) || die;
 
 /**
@@ -73,9 +71,7 @@ final class ACF {
 	/**
 	 * @return void
 	 */
-	public function acf_admin_head(): void {
-		//...
-	}
+	public function acf_admin_head(): void {}
 
 	// -------------------------------------------------------------
 
@@ -96,7 +92,7 @@ final class ACF {
 	 * @param $params
 	 *
 	 * @return mixed
-	 * @throws JsonException
+	 * @throws \JsonException
 	 */
 	public function add_widget_classes( $params ): mixed {
 		global $wp_registered_widgets;
@@ -247,7 +243,7 @@ final class ACF {
 	 * @param $args
 	 *
 	 * @return mixed
-	 * @throws JsonException
+	 * @throws \JsonException
 	 */
 	public function wp_nav_menu_objects( $items, $args ): mixed {
 		foreach ( $items as &$item ) {

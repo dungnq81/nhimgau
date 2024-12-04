@@ -4,7 +4,6 @@ namespace Widgets;
 
 use Cores\Abstract_Widget;
 use Cores\Helper;
-use WP_Query;
 
 \defined( 'ABSPATH' ) || die;
 
@@ -111,7 +110,7 @@ class Recent_Posts_Widget extends Abstract_Widget {
 
         Helper::setPostsPerPage( $number );
 
-		$r = new WP_Query(
+		$r = new \WP_Query(
             /**
              * Filters the arguments for the Recent Posts widget.
              *

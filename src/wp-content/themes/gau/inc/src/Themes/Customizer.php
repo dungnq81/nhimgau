@@ -4,10 +4,6 @@ namespace Themes;
 
 use Cores\Traits\Singleton;
 
-use WP_Customize_Color_Control;
-use WP_Customize_Image_Control;
-use WP_Customize_Manager;
-
 /**
  * Customizer Class
  *
@@ -33,11 +29,11 @@ final class Customizer {
 	// --------------------------------------------------
 
 	/**
-	 * @param WP_Customize_Manager $wp_customize
+	 * @param \WP_Customize_Manager $wp_customize
 	 *
 	 * @return void
 	 */
-	private function _logo_and_title( WP_Customize_Manager $wp_customize ): void {
+	private function _logo_and_title( \WP_Customize_Manager $wp_customize ): void {
 
 		// Logo mobile
 		$wp_customize->add_setting( 'alt_logo', [
@@ -45,7 +41,7 @@ final class Customizer {
 			'sanitize_callback' => 'sanitize_image',
 		] );
 		$wp_customize->add_control(
-			new WP_Customize_Image_Control(
+			new \WP_Customize_Image_Control(
 				$wp_customize,
 				'alt_logo',
 				[
@@ -95,9 +91,9 @@ final class Customizer {
 	/**
 	 * Register customizer options.
 	 *
-	 * @param WP_Customize_Manager $wp_customize Theme Customizer object.
+	 * @param \WP_Customize_Manager $wp_customize Theme Customizer object.
 	 */
-	public function customize_register( WP_Customize_Manager $wp_customize ): void {
+	public function customize_register( \WP_Customize_Manager $wp_customize ): void {
 		$this->_logo_and_title( $wp_customize );
 
 		// -------------------------------------------------------------
@@ -131,7 +127,7 @@ final class Customizer {
 			'capability'        => 'edit_theme_options',
 		] );
 		$wp_customize->add_control(
-			new WP_Customize_Color_Control( $wp_customize,
+			new \WP_Customize_Color_Control( $wp_customize,
 				'login_page_bgcolor_control',
 				[
 					'label'    => __( 'Background color', TEXT_DOMAIN ),
@@ -147,7 +143,7 @@ final class Customizer {
 			'sanitize_callback' => 'sanitize_image',
 		] );
 		$wp_customize->add_control(
-			new WP_Customize_Image_Control(
+			new \WP_Customize_Image_Control(
 				$wp_customize,
 				'login_page_bgimage_control',
 				[
@@ -164,7 +160,7 @@ final class Customizer {
 			'sanitize_callback' => 'sanitize_image',
 		] );
 		$wp_customize->add_control(
-			new WP_Customize_Image_Control(
+			new \WP_Customize_Image_Control(
 				$wp_customize,
 				'login_page_logo_control',
 				[
@@ -295,7 +291,7 @@ final class Customizer {
 			'sanitize_callback' => 'sanitize_customize_image_control_id',
 		] );
 		$wp_customize->add_control(
-			new WP_Customize_Image_Control(
+			new \WP_Customize_Image_Control(
 				$wp_customize,
 				'breadcrumb_bg_control',
 				[
@@ -313,7 +309,7 @@ final class Customizer {
 			'sanitize_callback' => 'sanitize_hex_color'
 		] );
 		$wp_customize->add_control(
-			new WP_Customize_Color_Control( $wp_customize,
+			new \WP_Customize_Color_Control( $wp_customize,
 				'breadcrumb_bgcolor_control',
 				[
 					'label'    => __( 'Background color', TEXT_DOMAIN ),
@@ -330,7 +326,7 @@ final class Customizer {
 			'sanitize_callback' => 'sanitize_hex_color'
 		] );
 		$wp_customize->add_control(
-			new WP_Customize_Color_Control( $wp_customize,
+			new \WP_Customize_Color_Control( $wp_customize,
 				'breadcrumb_color_control',
 				[
 					'label'    => __( 'Text color', TEXT_DOMAIN ),
@@ -470,7 +466,7 @@ final class Customizer {
 			'sanitize_callback' => 'sanitize_hex_color'
 		] );
 		$wp_customize->add_control(
-			new WP_Customize_Color_Control( $wp_customize,
+			new \WP_Customize_Color_Control( $wp_customize,
 				'header_bgcolor_control',
 				[
 					'label'    => __( 'Background color', TEXT_DOMAIN ),
@@ -487,7 +483,7 @@ final class Customizer {
 			'sanitize_callback' => 'sanitize_image',
 		] );
 		$wp_customize->add_control(
-			new WP_Customize_Image_Control(
+			new \WP_Customize_Image_Control(
 				$wp_customize,
 				'header_bg_control',
 				[
@@ -614,7 +610,7 @@ final class Customizer {
 			'sanitize_callback' => 'sanitize_hex_color'
 		] );
 		$wp_customize->add_control(
-			new WP_Customize_Color_Control( $wp_customize,
+			new \WP_Customize_Color_Control( $wp_customize,
 				'footer_bgcolor_control',
 				[
 					'label'    => __( 'Background color', TEXT_DOMAIN ),
@@ -631,7 +627,7 @@ final class Customizer {
 			'sanitize_callback' => 'sanitize_hex_color'
 		] );
 		$wp_customize->add_control(
-			new WP_Customize_Color_Control( $wp_customize,
+			new \WP_Customize_Color_Control( $wp_customize,
 				'footer_color_control',
 				[
 					'label'    => __( 'Text color', TEXT_DOMAIN ),
@@ -648,7 +644,7 @@ final class Customizer {
 			'sanitize_callback' => 'sanitize_image',
 		] );
 		$wp_customize->add_control(
-			new WP_Customize_Image_Control(
+			new \WP_Customize_Image_Control(
 				$wp_customize,
 				'footer_bg_control',
 				[
@@ -726,7 +722,7 @@ final class Customizer {
 			'sanitize_callback' => 'sanitize_hex_color',
 		] );
 		$wp_customize->add_control(
-			new WP_Customize_Color_Control( $wp_customize,
+			new \WP_Customize_Color_Control( $wp_customize,
 				'theme_color_control',
 				[
 					'label'    => __( 'Theme Color', TEXT_DOMAIN ),

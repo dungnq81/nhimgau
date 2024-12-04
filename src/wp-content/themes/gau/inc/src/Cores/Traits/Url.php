@@ -163,7 +163,7 @@ trait Url {
 		}
 
 		$hostname = gethostname();
-		$ipv4 = gethostbyname( $hostname );
+		$ipv4     = gethostbyname( $hostname );
 
 		// Validate and return the IPv4 address
 		if ( filter_var( $ipv4, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) ) {

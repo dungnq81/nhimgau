@@ -2,9 +2,7 @@
 
 namespace Cores;
 
-use Cores\Traits\Encryption;
 use Cores\Traits\Wp;
-use Random\RandomException;
 
 \defined( 'ABSPATH' ) || die;
 

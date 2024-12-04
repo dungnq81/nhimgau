@@ -2,8 +2,6 @@
 
 namespace Cores\Traits;
 
-use IntlBreakIterator;
-
 \defined( 'ABSPATH' ) || die;
 
 trait Str {
@@ -630,7 +628,7 @@ trait Str {
 		$words->setText( $text );
 		$count = 0;
 		foreach ( $words as $offset ) {
-			if ( IntlBreakIterator::WORD_NONE === $words->getRuleStatus() ) {
+			if ( \IntlBreakIterator::WORD_NONE === $words->getRuleStatus() ) {
 				continue;
 			}
 			++ $count;

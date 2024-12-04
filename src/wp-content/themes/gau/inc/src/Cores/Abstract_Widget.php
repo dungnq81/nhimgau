@@ -2,12 +2,9 @@
 
 namespace Cores;
 
-use ReflectionClass;
-use WP_Widget;
-
 \defined( 'ABSPATH' ) || die;
 
-abstract class Abstract_Widget extends WP_Widget {
+abstract class Abstract_Widget extends \WP_Widget {
 
 	protected string $prefix = 'w-';
 	protected string $widget_id;
@@ -31,7 +28,7 @@ abstract class Abstract_Widget extends WP_Widget {
 	 * Constructor.
 	 */
 	public function __construct() {
-		$className              = ( new ReflectionClass( $this ) )->getShortName();
+		$className              = ( new \ReflectionClass( $this ) )->getShortName();
 		$this->widget_classname = str_replace( [ '_widget', '-widget', ], '', Helper::dashCase( strtolower( $className ) ) );
 		$this->widget_id        = $this->prefix . $this->widget_classname;
 
@@ -146,7 +143,7 @@ abstract class Abstract_Widget extends WP_Widget {
 		}
 
 		if ( isset( $cache[ $this->get_widget_id_for_cache( $args['widget_id'] ) ] ) ) {
-			echo $cache[ $this->get_widget_id_for_cache( $args['widget_id'] ) ]; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
+			echo $cache[ $this->get_widget_id_for_cache( $args['widget_id'] ) ];
 
 			return true;
 		}
@@ -189,9 +186,7 @@ abstract class Abstract_Widget extends WP_Widget {
 	/**
 	 * @return void
 	 */
-	public function styles_and_scripts(): void {
-		//...
-	}
+	public function styles_and_scripts(): void {}
 
 	// --------------------------------------------------
 

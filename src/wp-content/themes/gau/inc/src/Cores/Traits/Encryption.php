@@ -2,9 +2,6 @@
 
 namespace Cores\Traits;
 
-use Exception;
-use Random\RandomException;
-
 \defined( 'ABSPATH' ) || die;
 
 trait Encryption {
@@ -15,10 +12,7 @@ trait Encryption {
 	// -------------------------------------------------------------
 
 	/**
-	 * Load keys from the encryption_key.php file
-	 *
 	 * @return void
-	 * @throws Exception
 	 */
 	private static function loadKeys(): void {
 		if ( is_null( self::$method ) || is_null( self::$secretKey ) ) {
@@ -44,8 +38,7 @@ trait Encryption {
 	 * @param string $data
 	 *
 	 * @return string
-	 * @throws RandomException
-	 * @throws Exception
+	 * @throws \Random\RandomException
 	 */
 	public static function encode( string $data ): string {
 		self::loadKeys();
@@ -65,7 +58,6 @@ trait Encryption {
 	 * @param string $encryptedData
 	 *
 	 * @return string|null
-	 * @throws Exception
 	 */
 	public static function decode( string $encryptedData ): ?string {
 		self::loadKeys();

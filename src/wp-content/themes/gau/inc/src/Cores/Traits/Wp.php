@@ -8,11 +8,6 @@ use Cores\Vertical_Nav_Walker;
 
 use MatthiasMullie\Minify;
 
-use WP_Error;
-use WP_Post;
-use WP_Query;
-use WP_Term;
-
 \defined( 'ABSPATH' ) || die;
 
 trait Wp {
@@ -670,9 +665,9 @@ trait Wp {
 	 * @param mixed $term_id The term ID (integer) or slug/name (string) of the term to retrieve.
 	 * @param string $taxonomy The taxonomy to search for the term. Default is 'category'.
 	 *
-	 * @return WP_Term|WP_Error|false|null The term object, a WP_Error on failure, false if term doesn't exist, or null if term ID is invalid.
+	 * @return \WP_Term|\WP_Error|false|null The term object, a WP_Error on failure, false if `term` doesn't exist, or null if term ID is invalid.
 	 */
-	public static function getTerm( mixed $term_id, string $taxonomy = 'category' ): WP_Term|WP_Error|false|null {
+	public static function getTerm( mixed $term_id, string $taxonomy = 'category' ): \WP_Term|\WP_Error|false|null {
 
 		// Check if the term ID is numeric and retrieve term by ID
 		if ( is_numeric( $term_id ) ) {
@@ -726,7 +721,7 @@ trait Wp {
 	 * @param array $meta_query Array of meta query parameters.
 	 * @param bool|string $strtotime_recent Timestamp string for recent posts. Default is false.
 	 *
-	 * @return WP_Query|bool False on failure or if no posts found, WP_Query object on success.
+	 * @return \WP_Query|bool False on failure or if no posts found, WP_Query object on success.
 	 * @throws \JsonException
 	 */
 	public static function queryByTerm(
@@ -737,7 +732,7 @@ trait Wp {
 		array $orderby = [ 'date' => 'DESC' ],
 		array $meta_query = [],
 		bool|string $strtotime_recent = false
-	): WP_Query|bool {
+	): \WP_Query|bool {
 
 		if ( ! $term ) {
 			return false;
@@ -810,7 +805,7 @@ trait Wp {
 		}
 
 		self::setPostsPerPage( $posts_per_page );
-		$_query = new WP_Query( $_args );
+		$_query = new \WP_Query( $_args );
 
 		return $_query->have_posts() ? $_query : false;
 	}
@@ -829,7 +824,7 @@ trait Wp {
 	 * @param array $meta_query Array of meta query parameters.
 	 * @param bool|string $strtotime_str Timestamp string for recent posts. Default is false.
 	 *
-	 * @return WP_Query|false False on failure or if no posts found, WP_Query object on success.
+	 * @return \WP_Query|false False on failure or if no posts found, WP_Query object on success.
 	 */
 	public static function queryByTerms(
 		array $term_ids,
@@ -840,7 +835,7 @@ trait Wp {
 		array $orderby = [ 'date' => 'DESC' ],
 		array $meta_query = [],
 		bool|string $strtotime_str = false,
-	): WP_Query|false {
+	): \WP_Query|false {
 
 		$posts_per_page = max( $posts_per_page, - 1 );
 		$_args          = [
@@ -914,7 +909,7 @@ trait Wp {
 		self::setPostsPerPage( $posts_per_page );
 
 		// Query posts
-		$query_result = new WP_Query( $_args );
+		$query_result = new \WP_Query( $_args );
 
 		return $query_result->have_posts() ? $query_result : false;
 	}
@@ -1822,9 +1817,9 @@ trait Wp {
 	/**
 	 * @param string $post_type - max 20 characters
 	 *
-	 * @return array|WP_Post|null
+	 * @return array|\WP_Post|null
 	 */
-	public static function getCustomPostOption( string $post_type = 'gau_css' ): array|WP_Post|null {
+	public static function getCustomPostOption( string $post_type = 'gau_css' ): array|\WP_Post|null {
 		if ( empty( $post_type ) ) {
 			return null;
 		}
@@ -1849,7 +1844,7 @@ trait Wp {
 
 		// `-1` indicates no post exists; no query necessary.
 		if ( ! $post && - 1 !== $post_id ) {
-			$post = ( new WP_Query( $custom_query_vars ) )->post;
+			$post = ( new \WP_Query( $custom_query_vars ) )->post;
 
 			set_theme_mod( $post_type . '_option_id', $post->ID ?? - 1 );
 		}
@@ -1892,9 +1887,16 @@ trait Wp {
 	 * @param bool $encode
 	 * @param string $preprocessed
 	 *
-	 * @return array|int|WP_Error|WP_Post|null
+	 * @return array|int|\WP_Error|\WP_Post|null
 	 */
-	public static function updateCustomPostOption( string $mixed = '', string $post_type = 'gau_css', string $code_type = 'css', bool $encode = false, string $preprocessed = '' ): WP_Error|array|int|WP_Post|null {
+	public static function updateCustomPostOption(
+		string $mixed = '',
+		string $post_type = 'gau_css',
+		string $code_type = 'css',
+		bool $encode = false,
+		string $preprocessed = ''
+	): \WP_Error|array|int|\WP_Post|null {
+
 		$post_type = $post_type ?: 'gau_css';
 		$code_type = $code_type ?: 'text/css';
 
@@ -1953,9 +1955,15 @@ trait Wp {
 	 * @param bool $encode
 	 * @param string $preprocessed - Pre-processed CSS, stored in `post_content_filtered`. Normally empty string.
 	 *
-	 * @return array|int|WP_Error|WP_Post|null
+	 * @return array|int|\WP_Error|\WP_Post|null
 	 */
-	public static function updateCustomCssPost( string $css, string $post_type = 'gau_css', bool $encode = false, string $preprocessed = '' ): WP_Error|array|int|WP_Post|null {
+	public static function updateCustomCssPost(
+		string $css,
+		string $post_type = 'gau_css',
+		bool $encode = false,
+		string $preprocessed = ''
+	): \WP_Error|array|int|\WP_Post|null {
+
 		return self::updateCustomPostOption( $css, $post_type, 'text/css', $encode, $preprocessed );
 	}
 

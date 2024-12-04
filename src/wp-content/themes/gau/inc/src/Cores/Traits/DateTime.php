@@ -2,8 +2,6 @@
 
 namespace Cores\Traits;
 
-use DateTimeZone;
-
 \defined( 'ABSPATH' ) || die;
 
 trait DateTime {
@@ -37,7 +35,12 @@ trait DateTime {
 	 *
 	 * @return string The human-readable time difference.
 	 */
-	public static function humanizeTime( int|\WP_Post|null $post = null, false|int|string $from = false, false|int|string $to = false ): string {
+	public static function humanizeTime(
+		int|\WP_Post|null $post = null,
+		false|int|string $from = false,
+		false|int|string $to = false
+	): string {
+
 		$_ago = __( 'ago', TEXT_DOMAIN );
 
 		if ( empty( $to ) ) {
@@ -116,14 +119,14 @@ trait DateTime {
 			$date_string = '@' . $date_string;
 		}
 
-		// Create DateTime object in the site's timezone
+		// Create `DateTime object` in the site's timezone
 		$datetime = date_create( $date_string, wp_timezone() );
 
 		if ( false === $datetime ) {
 			return false;
 		}
 
-		// Return timestamp if a format is 'timestamp' or 'U'
+		// Return `timestamp` if a format is `timestamp` or `U`
 		if ( 'timestamp' === $format || 'U' === $format ) {
 			return $datetime->getTimestamp();
 		}
@@ -133,8 +136,8 @@ trait DateTime {
 			$format = 'Y-m-d H:i:s';
 		}
 
-		// Convert to UTC and return in specified format
-		return $datetime->setTimezone( new DateTimeZone( 'UTC' ) )->format( $format );
+		// Convert to UTC and return in `specified format`
+		return $datetime->setTimezone( new \DateTimeZone( 'UTC' ) )->format( $format );
 	}
 
 	// -------------------------------------------------------------
@@ -155,7 +158,7 @@ trait DateTime {
 		}
 
 		// Create DateTime object in UTC timezone
-		$datetime = date_create( $date_string, new DateTimeZone( 'UTC' ) );
+		$datetime = date_create( $date_string, new \DateTimeZone( 'UTC' ) );
 
 		if ( false === $datetime ) {
 			return false;
