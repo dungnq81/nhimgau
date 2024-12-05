@@ -654,7 +654,7 @@ if ( ! function_exists( 'clear_all_cache' ) ) {
 		}
 
 		// Jetpack transient cache
-		if ( self::checkPluginActive( 'jetpack/jetpack.php' ) ) {
+		if ( \check_plugin_active( 'jetpack/jetpack.php' ) ) {
 			$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_jetpack_%'" );
 			$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_jetpack_%'" );
 

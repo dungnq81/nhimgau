@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin;
+namespace Themes;
 
 use Cores\Helper;
 use Cores\Traits\Singleton;

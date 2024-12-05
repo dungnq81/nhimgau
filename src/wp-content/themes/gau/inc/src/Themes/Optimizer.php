@@ -253,7 +253,7 @@ final class Optimizer {
 
 		// Add `type="module"` and `crossorigin` attributes if the script is marked as a module
 		if ( ! empty( $attributes['module'] ) ) {
-			$tag = preg_replace( '#(?=></script>)#', ' type="module" crossorigin', $tag, 1 );
+			$tag = preg_replace( '#(?=></script>)#', ' type="module"', $tag, 1 );
 		}
 
 		// Handle `async` and `defer` attributes

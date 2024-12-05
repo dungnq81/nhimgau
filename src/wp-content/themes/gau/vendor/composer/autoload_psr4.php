@@ -18,5 +18,4 @@ return array(
     'MatthiasMullie\\Minify\\' => array($vendorDir . '/matthiasmullie/minify/src'),
     'Detection\\' => array($vendorDir . '/mobiledetect/mobiledetectlib/src'),
     'Cores\\' => array($baseDir . '/inc/src/Cores'),
-    'Admin\\' => array($baseDir . '/inc/src/Admin'),
 );

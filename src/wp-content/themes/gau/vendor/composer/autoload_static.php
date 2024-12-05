@@ -48,10 +48,6 @@ class ComposerStaticInitbad06eea79b9e83fa6bd3014a8024525
         array (
             'Cores\\' => 6,
         ),
-        'A' => 
-        array (
-            'Admin\\' => 6,
-        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -102,10 +98,6 @@ class ComposerStaticInitbad06eea79b9e83fa6bd3014a8024525
         'Cores\\' => 
         array (
             0 => __DIR__ . '/../..' . '/inc/src/Cores',
-        ),
-        'Admin\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/inc/src/Admin',
         ),
     );
 

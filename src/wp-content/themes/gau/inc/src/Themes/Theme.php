@@ -6,8 +6,6 @@ use Cores\CSS;
 use Cores\Helper;
 use Cores\Traits\Singleton;
 
-use Admin\Admin;
-
 use Plugins\ACF;
 use Plugins\CF7;
 use Plugins\PLL;

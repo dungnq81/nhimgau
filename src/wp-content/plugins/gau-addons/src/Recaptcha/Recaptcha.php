@@ -26,52 +26,48 @@ final class Recaptcha {
 	public array $forms = [];
 
 	private function init(): void {
-		$default_forms = [
-
-			// default
-//			'login_form' => [ 'form_name' => __( 'Login Form', ADDONS_TEXT_DOMAIN ) ],
-//			'registration_form'         => [ 'form_name' => __( 'Registration Form', ADDONS_TEXT_DOMAIN ) ],
-//			'reset_pwd_form'            => [ 'form_name' => __( 'Reset Password Form', ADDONS_TEXT_DOMAIN ) ],
-//			'password_form'             => [ 'form_name' => __( 'Protected Post Password Form', ADDONS_TEXT_DOMAIN ) ],
-//			'comments_form'             => [ 'form_name' => __( 'Comments Form', ADDONS_TEXT_DOMAIN ) ],
-//
-//			// woocommerce
-//			'woocommerce_login'         => [ 'form_name' => __( 'WooCommerce Login Form', ADDONS_TEXT_DOMAIN ) ],
-//			'woocommerce_register'      => [ 'form_name' => __( 'WooCommerce Registration Form', ADDONS_TEXT_DOMAIN ) ],
-//			'woocommerce_lost_password' => [ 'form_name' => __( 'WooCommerce Reset Password Form', ADDONS_TEXT_DOMAIN ) ],
-//			'woocommerce_checkout'      => [ 'form_name' => __( 'WooCommerce Checkout Form', ADDONS_TEXT_DOMAIN ) ],
-//
-//			// other
-//			'cf7'                       => [ 'form_name' => __( 'Contact Form 7', ADDONS_TEXT_DOMAIN ) ],
-//			'wpforms'                   => [ 'form_name' => __( 'WPForms', ADDONS_TEXT_DOMAIN ) ],
-//			'jetpack_contact_form'      => [ 'form_name' => __( 'Jetpack Contact Form', ADDONS_TEXT_DOMAIN ) ],
-//			'mailchimp'                 => [ 'form_name' => __( 'MailChimp for Wordpress', ADDONS_TEXT_DOMAIN ) ],
-//			'elementor_contact_form'    => [ 'form_name' => __( 'Elementor Contact Form', ADDONS_TEXT_DOMAIN ) ],
-		];
+		$default_forms = [];
 
 		$custom_forms = apply_filters( 'recaptcha_custom_forms', [] );
-
 		$this->forms  = apply_filters( 'recaptcha_forms', array_merge( $default_forms, $custom_forms ) );
+
+		add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ], 99 );
 	}
 
 	// ------------------------------------------------------
 
 	/**
-	 * @param $render
+	 * @param string $version
+	 * @param string|null $render
 	 *
-	 * @return string
+	 * @return string|null
 	 */
-	public function get_api_url( $render ): string {
+	public function get_api_url( string $version = 'v2', ?string $render = null ): ?string {
 		$use_globally = GOOGLE_CAPTCHA_GLOBAL ? 'recaptcha.net' : 'google.com';
 
-		if ( ! empty( $render ) ) {
+		// For v2 (Invisible or Checkbox), skip the render parameter
+		if ( $version === 'v2' ) {
+			return 'https://www.' . $use_globally . '/recaptcha/api.js?render=explicit';
+		}
+
+		// For v3, include render parameter with the site key
+		if ( $version === 'v3' && $render ) {
 			return sprintf( 'https://www.' . $use_globally . '/recaptcha/api.js?render=%s', $render );
 		}
 
-		return 'https://www.' . $use_globally . '/recaptcha/api.js';
+		return null;
 	}
 
 	// ------------------------------------------------------
 
+	/**
+	 * @return void
+	 */
+	public function wp_enqueue_scripts(): void {
+		$api_url = $this->get_api_url( 'v2', null );
 
+		// Enqueue the script
+		wp_enqueue_script( 'recaptcha', $api_url, [], null, true );
+		wp_script_add_data( 'recaptcha', 'extra', [ 'async', 'defer' ] );
+	}
 }
