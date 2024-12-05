@@ -95,11 +95,11 @@ final class Shortcode {
 		if ( $social_options ) {
 			foreach ( $social_options as $key => $social_option ) {
 				$data = [
-					'url'  => $social_option['url'],
-					'name' => $key,
-					//'color' => $social_follows_links[$key]['color'] ?? '',
-					//'background' => $social_follows_links[$key]['background'] ?? '',
-					'icon' => $social_follows_links[ $key ]['icon'],
+					'url'        => $social_option['url'] ?? '',
+					'name'       => $key,
+					'color'      => $social_follows_links[ $key ]['color'] ?? '',
+					'background' => $social_follows_links[ $key ]['background'] ?? '',
+					'icon'       => $social_follows_links[ $key ]['icon'] ?? '',
 				];
 
 				$thumb = '';
@@ -111,7 +111,7 @@ final class Shortcode {
 					$thumb = '<i class="' . $data['icon'] . '"></i>';
 				endif;
 
-				if ( ! empty( $social_option['url'] ) ) :
+				if ( ! empty( $data['url'] ) ) :
 					?>
                     <li>
                         <a href="<?= $data['url'] ?>" title="<?= Helper::escAttr( $data['name'] ) ?>" target="_blank">

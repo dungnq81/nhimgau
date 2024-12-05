@@ -47,11 +47,11 @@ final class Editor {
 			// Fix for Safari 18 negative horizontal margin on floats. - Classic Editor plugin
 			add_action( 'admin_print_styles', [ $this, 'safari_18_temp_fix' ] );
 
-			// Fix for the Categories post-box for WP 6.7.1.
+			// Fix for the Categories `postbox` on the classic Edit Post screen for WP 6.7.1.
 			global $wp_version;
 
 			if ( '6.7.1' === $wp_version && is_admin() ) {
-				add_action( 'wp_default_scripts', [ $this, 'replace_post_js' ], 11 );
+				add_filter( 'script_loader_src', [ $this, 'replace_post_js' ], 11, 2 );
 			}
 
 			// Also used in Gutenberg.
@@ -118,39 +118,17 @@ final class Editor {
 	// ------------------------------------------------------
 
 	/**
-	 * Temporary fix for the Categories post-box on the classic Edit Post screen.
-	 * See: https://core.trac.wordpress.org/ticket/62504.
+	 * Fix for the Categories postbox on the classic Edit Post screen for WP 6.7.1.
+	 * See: https://core.trac.wordpress.org/ticket/62504 and
+	 * https://github.com/WordPress/classic-editor/issues/222.
 	 */
-	public function replace_post_js( $scripts ): void {
-		$script = $scripts->query( 'post', 'registered' );
-		if ( $script ) {
-			if ( '62504-20241121' === $script->ver ) {
-				// The script src was replaced by another plugin.
-				return;
-			}
-
-			$script->src = ADDONS_SRC_URL . 'Editor/js/post.min.js';
-			$script->ver = '62504-20241121';
-		} else {
-			$scripts->add(
-				'post',
-				ADDONS_SRC_URL . 'Editor/js/post.min.js',
-				[
-					'suggest',
-					'wp-lists',
-					'postbox',
-					'tags-box',
-					'underscore',
-					'word-count',
-					'wp-a11y',
-					'wp-sanitize',
-					'clipboard'
-				],
-				'62504-20241121',
-				1
-			);
-			$scripts->set_translations( 'post' );
+	public static function replace_post_js( $src, $handle ) {
+		if ( 'post' === $handle && is_string( $src ) && ! str_contains( $src, 'ver=62504-20241121' ) ) {
+			$src    = ADDONS_SRC_URL . 'Editor/js/post.min.js';
+			$src    = add_query_arg( 'ver', '62504-20241121', $src );
 		}
+
+		return $src;
 	}
 
 	// ------------------------------------------------------

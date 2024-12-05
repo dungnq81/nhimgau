@@ -28,11 +28,11 @@ trait Base {
 	// --------------------------------------------------
 
 	/**
-	 * @param string $url
+	 * @param string|null $url
 	 *
 	 * @return bool
 	 */
-	public static function isUrl( string $url ): bool {
+	public static function isUrl( ?string $url ): bool {
 		// Basic URL validation using filter_var
 		if ( ! filter_var( $url, FILTER_VALIDATE_URL ) ) {
 			return false;
