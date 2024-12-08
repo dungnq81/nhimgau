@@ -226,10 +226,7 @@ final class Optimizer {
 	 * @return void
 	 */
 	public function print_footer_scripts(): void { ?>
-        <script>document.documentElement.classList.remove( 'no-js' );
-            if ( -1 !== navigator.userAgent.toLowerCase().indexOf( 'msie' ) || -1 !== navigator.userAgent.toLowerCase().indexOf( 'trident/' ) ) {
-                document.documentElement.classList.add( 'is-IE' );
-            }</script>
+        <script>document.documentElement.classList.remove( 'no-js' );</script>
 		<?php
 
 		if ( is_file( THEME_PATH . 'assets/js/skip-link-focus.js' ) ) {

@@ -168,21 +168,12 @@ trait Str {
 	// --------------------------------------------------
 
 	/**
-	 * Extract valid <script> tags from the given HTML content.
+	 * @param string $content
 	 *
-	 * This method checks for potentially malicious code and returns only
-	 * the valid <script> tags.
-	 *
-	 * @param string $content The HTML content to extract <script> tags from.
-	 *
-	 * @return string Concatenated valid <script> tags or an empty string if none found.
+	 * @return string
 	 */
 	public static function extractJs( string $content ): string {
-
-		// Define pattern for matching <script> tags
 		$script_pattern = '/<script\b[^>]*>(.*?)<\/script>/is';
-
-		// Find and extract JavaScript code within <script> tags
 		preg_match_all( $script_pattern, $content, $matches );
 
 		// Initialize an array to hold the non-empty <script> tags or those with src attribute
@@ -190,8 +181,8 @@ trait Str {
 
 		// Define patterns for detecting potentially malicious code or encoding
 		$malicious_patterns = [
-			'/eval\(/i',           // Use of eval()
-			'/document\.write\(/i',// Use of document.write()
+			'/eval\(/i',            // Use of eval()
+			'/document\.write\(/i', // Use of document.write()
 			'/<script.*?src=[\'"]?data:/i', // Inline scripts with data URIs
 			'/base64,/i',           // Base64 encoding
 		];
@@ -215,8 +206,12 @@ trait Str {
 			}
 		}
 
-		// Return the concatenated valid <script> tags
-		return implode( "\n", $valid_scripts );
+		// Replace original <script> tags in the content with the valid ones
+		return preg_replace_callback( $script_pattern, static function ( $match ) use ( $valid_scripts ) {
+			static $i = 0;
+
+			return isset( $valid_scripts[ $i ] ) ? $valid_scripts[ $i ++ ] : '';
+		}, $content );
 	}
 
 	// --------------------------------------------------
@@ -525,25 +520,25 @@ trait Str {
 	// --------------------------------------------------
 
 	/**
-	 * @param string $string
+	 * @param string|null $string
 	 *
-	 * @return string
+	 * @return string|null
 	 */
-	public static function escAttr( string $string ): string {
+	public static function escAttr( ?string $string ): ?string {
 		return esc_attr( self::stripAllTags( $string ) );
 	}
 
 	// --------------------------------------------------
 
 	/**
-	 * @param $string
+	 * @param string|null $string
 	 * @param bool $remove_js
 	 * @param bool $flatten
-	 * @param $allowed_tags
+	 * @param null $allowed_tags
 	 *
 	 * @return string
 	 */
-	public static function stripAllTags( $string, bool $remove_js = true, bool $flatten = true, $allowed_tags = null ): string {
+	public static function stripAllTags( ?string $string, bool $remove_js = true, bool $flatten = true, $allowed_tags = null ): string {
 		if ( ! is_scalar( $string ) ) {
 			return '';
 		}
@@ -564,13 +559,13 @@ trait Str {
 	// --------------------------------------------------
 
 	/**
-	 * @param $string
+	 * @param string|null $string
 	 * @param bool $strip_tags
 	 * @param string $replace
 	 *
 	 * @return string
 	 */
-	public static function stripSpace( $string, bool $strip_tags = true, string $replace = '' ): string {
+	public static function stripSpace( ?string $string, bool $strip_tags = true, string $replace = '' ): string {
 		if ( empty( $string ) ) {
 			return '';
 		}

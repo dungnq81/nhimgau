@@ -123,11 +123,7 @@ if ( ! function_exists( 'extract_js' ) ) {
 	 * @return string
 	 */
 	function extract_js( string $content = '' ): string {
-
-		// Define a pattern for matching <script> tags
 		$script_pattern = '/<script\b[^>]*>(.*?)<\/script>/is';
-
-		// Find and extract JavaScript code within <script> tags
 		preg_match_all( $script_pattern, $content, $matches );
 
 		// Initialize an array to hold the non-empty <script> tags or those with src attribute
@@ -135,8 +131,8 @@ if ( ! function_exists( 'extract_js' ) ) {
 
 		// Define patterns for detecting potentially malicious code or encoding
 		$malicious_patterns = [
-			'/eval\(/i',           // Use of eval()
-			'/document\.write\(/i',// Use of document.write()
+			'/eval\(/i',            // Use of eval()
+			'/document\.write\(/i', // Use of document.write()
 			'/<script.*?src=[\'"]?data:/i', // Inline scripts with data URIs
 			'/base64,/i',           // Base64 encoding
 		];
@@ -160,8 +156,12 @@ if ( ! function_exists( 'extract_js' ) ) {
 			}
 		}
 
-		// Return the concatenated valid <script> tags
-		return implode( "\n", $valid_scripts );
+		// Replace original <script> tags in the content with the valid ones
+		return preg_replace_callback( $script_pattern, static function ( $match ) use ( $valid_scripts ) {
+			static $i = 0;
+
+			return isset( $valid_scripts[ $i ] ) ? $valid_scripts[ $i ++ ] : '';
+		}, $content );
 	}
 }
 

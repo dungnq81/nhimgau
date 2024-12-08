@@ -9,12 +9,12 @@ trait Arr {
 	// --------------------------------------------------
 
 	/**
-	 * @param $string
+	 * @param string|null $string
 	 * @param string $separator
 	 *
 	 * @return array
 	 */
-	public static function separatedToArray( $string, string $separator = ',' ): array {
+	public static function separatedToArray( ?string $string, string $separator = ',' ): array {
 		if ( empty( $string ) ) {
 			return [];
 		}
@@ -94,26 +94,26 @@ trait Arr {
 	// --------------------------------------------------
 
 	/**
-	 * @param string $key
+	 * @param string|null $key
 	 * @param array $array
 	 * @param array $insert_array
 	 *
 	 * @return array
 	 */
-	public static function insertAfter( string $key, array $array, array $insert_array ): array {
+	public static function insertAfter( ?string $key, array $array, array $insert_array ): array {
 		return self::insert( $array, $insert_array, $key, 'after' );
 	}
 
 	// --------------------------------------------------
 
 	/**
-	 * @param $key
+	 * @param string|null $key
 	 * @param array $array
 	 * @param array $insert_array
 	 *
 	 * @return array
 	 */
-	public static function insertBefore( $key, array $array, array $insert_array ): array {
+	public static function insertBefore( ?string $key, array $array, array $insert_array ): array {
 		return self::insert( $array, $insert_array, $key, 'before' );
 	}
 
@@ -122,12 +122,12 @@ trait Arr {
 	/**
 	 * @param array $array
 	 * @param array $insert_array
-	 * @param string $key
+	 * @param string|null $key
 	 * @param string $position
 	 *
 	 * @return array
 	 */
-	public static function insert( array $array, array $insert_array, string $key, string $position = 'before' ): array {
+	public static function insert( array $array, array $insert_array, ?string $key, string $position = 'before' ): array {
 		$keyPosition = array_search( $key, array_keys( $array ), true );
 		if ( $keyPosition === false ) {
 			return array_merge( $array, $insert_array );
