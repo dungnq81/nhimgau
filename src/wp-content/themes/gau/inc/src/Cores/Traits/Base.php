@@ -4,10 +4,24 @@ namespace Cores\Traits;
 
 use Detection\Exception\MobileDetectException;
 use Detection\MobileDetect;
+use JetBrains\PhpStorm\NoReturn;
 
 \defined( 'ABSPATH' ) || die;
 
 trait Base {
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string|\WP_Error $message
+	 * @param string|int $title
+	 * @param string|array|int $args
+	 *
+	 * @return void
+	 */
+	public static function wpDie( string|\WP_Error $message = '', string|int $title = '', string|array|int $args = [] ): void {
+		wp_die( $message, $title, $args );
+	}
 
 	// -------------------------------------------------------------
 

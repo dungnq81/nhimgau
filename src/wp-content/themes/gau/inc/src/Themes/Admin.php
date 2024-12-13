@@ -39,7 +39,7 @@ final class Admin {
 	 */
 	public function add_custom_admin_script(): void { ?>
         <script>
-            jQuery( function ( $ ) {
+            jQuery( document ).ready( function ( $ ) {
                 $( 'a' ).each( function () {
                     let link = $( this ).attr( 'href' );
                     if ( link && link.indexOf( 'action=trash' ) !== -1 ) {
@@ -94,24 +94,32 @@ final class Admin {
 	 * @return void
 	 */
 	public function admin_menu(): void {
+		//global $menu, $submenu;
+		//dump($menu);
+		//dump($submenu);
+
 		// remove...
 		remove_meta_box( 'dashboard_site_health', 'dashboard', 'normal' );
 		remove_meta_box( 'dashboard_incoming_links', 'dashboard', 'normal' );
 		remove_meta_box( 'dashboard_primary', 'dashboard', 'normal' );
 		remove_meta_box( 'dashboard_secondary', 'dashboard', 'side' );
 
-		$hide_menu_theme = Helper::filterSettingOptions( 'admin_hide_menu', [] );
-		if ( $hide_menu_theme ) {
-			foreach ( $hide_menu_theme as $menu_slug ) {
+		$admin_hide_menu             = Helper::filterSettingOptions( 'admin_hide_menu', [] );
+		$admin_hide_menu_ignore_user = Helper::filterSettingOptions( 'admin_hide_menu_ignore_user', [] );
+
+		$user_id = get_current_user_id();
+
+		if ( $admin_hide_menu && ! in_array( $user_id, $admin_hide_menu_ignore_user, false ) ) {
+			foreach ( $admin_hide_menu as $menu_slug ) {
 				if ( $menu_slug ) {
 					$_item = remove_menu_page( $menu_slug );
 				}
 			}
 		}
 
-		$hide_menu = Helper::getThemeMod( 'remove_menu_setting' );
-		if ( $hide_menu ) {
-			foreach ( explode( "\n", $hide_menu ) as $menu_slug ) {
+		$remove_menu_setting = Helper::getThemeMod( 'remove_menu_setting' );
+		if ( $remove_menu_setting ) {
+			foreach ( explode( "\n", $remove_menu_setting ) as $menu_slug ) {
 				if ( $menu_slug ) {
 					$_item = remove_menu_page( $menu_slug );
 				}

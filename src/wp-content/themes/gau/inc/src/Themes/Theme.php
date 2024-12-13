@@ -33,14 +33,18 @@ final class Theme {
 
 		add_action( 'after_setup_theme', [ $this, 'i18n' ], 10 );
 		add_action( 'after_setup_theme', [ $this, 'after_setup_theme' ], 11 );
-		add_action( 'after_setup_theme', [ $this, 'setup' ], 12);
+		add_action( 'after_setup_theme', [ $this, 'setup' ], 12 );
 		add_action( 'after_setup_theme', [ $this, 'plugins_setup' ], 13 );
 
 		/** Enqueue Scripts */
 		add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ], 14 );
 
 		/** Restrict admin install plugin */
-		add_filter( 'user_has_cap', [ $this, 'restrict_admin_plugin_install' ], 15, 3 );
+		add_filter( 'user_has_cap', [ $this, 'restrict_admin_plugin_install' ], 10, 3 );
+
+		/** Prevent the deletion of admin accounts */
+		add_filter( 'user_has_cap', [ $this, 'prevent_deletion_admin_accounts' ], 10, 3 );
+		add_action( 'delete_user', [ $this, 'prevent_deletion_user' ], 10 );
 
 		/** Widgets WordPress */
 		add_action( 'widgets_init', [ $this, 'unregister_widgets' ], 16 );
@@ -305,6 +309,46 @@ final class Theme {
 		}
 
 		return $allcaps;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param $allcaps
+	 * @param $cap
+	 * @param $args
+	 *
+	 * @return mixed
+	 */
+	public function prevent_deletion_admin_accounts( $allcaps, $cap, $args ): mixed {
+		$disallowed_users_ids_delete_account = Helper::filterSettingOptions( 'disallowed_users_ids_delete_account', [] );
+		if ( isset( $cap[0] ) && $cap[0] === 'delete_users' ) {
+			$user_id_to_delete = $args[2] ?? 0;
+
+			if ( $user_id_to_delete && in_array( $user_id_to_delete, $disallowed_users_ids_delete_account, true ) ) {
+				unset( $allcaps['delete_users'] );
+			}
+		}
+
+		return $allcaps;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param $user_id
+	 *
+	 * @return void
+	 */
+	public function prevent_deletion_user( $user_id ): void {
+		$disallowed_users_ids_delete_account = Helper::filterSettingOptions( 'disallowed_users_ids_delete_account', [] );
+		if ( in_array( $user_id, $disallowed_users_ids_delete_account, false ) ) {
+			Helper::wpDie(
+				__( 'You cannot delete this admin account.', TEXT_DOMAIN ),
+				__( 'Error', TEXT_DOMAIN ),
+				[ 'response' => 403 ]
+			);
+		}
 	}
 
 	// --------------------------------------------------

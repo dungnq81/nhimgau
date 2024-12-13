@@ -13,7 +13,7 @@ use Cores\Helper;
 // Constant
 // --------------------------------------------------
 
-//.
+//...
 
 // --------------------------------------------------
 // Menu location
@@ -433,12 +433,14 @@ function __theme_setting_options( array $arr ): array {
 	$arr_new = [
 
 		// hide admin menu
-		'admin_hide_menu'                   => [
+		'admin_hide_menu' => [
 			//'edit.php',
 		],
 
+		'admin_hide_menu_ignore_user'         => [ 1 ],
+
 		// defer, delay script - default 5s.
-		'defer_script'                      => [
+		'defer_script'                        => [
 
 			// defer.
 			'contact-form-7' => 'defer',
@@ -449,20 +451,20 @@ function __theme_setting_options( array $arr ): array {
 		],
 
 		// defer style.
-		'defer_style'                       => [
+		'defer_style'                         => [
 			'dashicons',
 			'contact-form-7',
 		],
 
 		// Aspect Ratio - custom post-type and term.
-		'aspect_ratio_post_type_term'       => [
+		'aspect_ratio_post_type_term'         => [
 			'post',
 
 			//...
 		],
 
 		// Aspect Ratio default.
-		'aspect_ratio_default'              => [
+		'aspect_ratio_default'                => [
 			'1-1',
 			'2-1',
 			'3-2',
@@ -472,7 +474,7 @@ function __theme_setting_options( array $arr ): array {
 		],
 
 		// Add ID to the admin category page.
-		'term_row_actions'                  => [
+		'term_row_actions'                    => [
 			'category',
 			'post_tag',
 
@@ -480,14 +482,14 @@ function __theme_setting_options( array $arr ): array {
 		],
 
 		// Add ID to the admin post-page.
-		'post_row_actions'                  => [
+		'post_row_actions'                    => [
 			'user',
 			'post',
 			'page',
 		],
 
 		// Terms thumbnail (term_thumb).
-		'term_thumb_columns'                => [
+		'term_thumb_columns'                  => [
 			'category',
 			'post_tag',
 
@@ -495,27 +497,27 @@ function __theme_setting_options( array $arr ): array {
 		],
 
 		// Exclude thumb post_type columns.
-		'post_type_exclude_thumb_columns'   => [],
+		'post_type_exclude_thumb_columns'     => [],
 
 		// ACF attributes in menu locations.
-		'acf_menu_items_locations'          => [
+		'acf_menu_items_locations'            => [
 			'main-nav',
 		],
 
 		// ACF attributes 'mega menu' locations.
-		'acf_mega_menu_locations'           => [],
+		'acf_mega_menu_locations'             => [],
 
 		// Custom post_per_page.
-		'posts_num_per_page'                => [],
+		'posts_num_per_page'                  => [],
 
 		// Custom post-type & taxonomy.
-		'post_type_terms'                   => [
+		'post_type_terms'                     => [
 
 			//...
 		],
 
 		// smtp_plugins_support.
-		'smtp_plugins_support'              => [
+		'smtp_plugins_support'                => [
 			'wp_mail_smtp'     => 'wp-mail-smtp/wp_mail_smtp.php',
 			'wp_mail_smtp_pro' => 'wp-mail-smtp-pro/wp_mail_smtp.php',
 			'smtp_mailer'      => 'smtp-mailer/main.php',
@@ -523,114 +525,117 @@ function __theme_setting_options( array $arr ): array {
 			'fluent-smtp'      => 'fluent-smtp/fluent-smtp.php',
 		],
 
-		//
-		'language_plugins_support'          => [
+		// language_plugins_support
+		'language_plugins_support'            => [
 			'polylang'     => 'polylang/polylang.php',
 			'polylang_pro' => 'polylang-pro/polylang.php',
 			'wpglobus'     => 'wpglobus/wpglobus.php',
 		],
 
 		// Custom Email list (to).
-		'custom_emails'                     => [],
+		'custom_emails'                       => [],
 
 		// lazy_load_exclude.
-		'lazy_load_exclude_css_class'       => [
+		'lazy_load_exclude_css_class'         => [
 			'no-lazy',
 			'skip-lazy',
 		],
 
 		// The urls where a lazy load is excluded.
-		'lazy_load_exclude_urls'            => [
+		'lazy_load_exclude_urls'              => [
 			'no-lazy',
 			'skip-lazy',
 		],
 
 		// List of admin IDs allowed to install plugins.
-		'allowed_users_ids_install_plugins' => [ 1 ],
+		'allowed_users_ids_install_plugins'   => [ 1 ],
+
+		// List of user IDs that are not allowed to be deleted.
+		'disallowed_users_ids_delete_account' => [ 1 ],
 
 		// Login security
-		'login_security'                    => [
-
-			// Custom admin-login URI.
-			'custom_login_uri'            => '',
-
-			// Allows customization of the Login URL in the admin options.
-			'enable_custom_login_options' => false,
-
-			// Allowlist IPs Login Access
-			'allowlist_ips_login_access'  => [],
-
-			// Blocked IPs Access
-			'blocked_ips_login_access'    => [],
+		'login_security'                      => [
+			'custom_login_uri'            => '', // Custom admin-login URI.
+			'enable_custom_login_options' => false, // Allows customization of the Login URL in the admin options.
+			'allowlist_ips_login_access'  => [], // Allowlist IPs Login Access
+			'blocked_ips_login_access'    => [], // Blocked IPs Access
 		],
 
 		// Links social.
-		'social_follows_links'              => [
-//			'facebook'  => [
-//				'name'  => 'Facebook',
-//				'icon'  => 'fa-brands fa-facebook',
-//				'color' => '#0866FF',
-//				'url'   => '',
-//			],
-//			'instagram' => [
-//				'name'  => 'Instagram',
-//				'icon'  => 'fa-brands fa-instagram',
-//				'color' => 'rgb(224, 241, 255)',
-//				'url'   => '',
-//			],
-//			'youtube'   => [
-//				'name'  => 'Youtube',
-//				'icon'  => 'fa-brands fa-youtube',
-//				'color' => 'rgb(255, 0, 0)',
-//				'url'   => '',
-//			],
-//			'twitter'   => [
-//				'name'  => 'X (Twitter)',
-//				'icon'  => 'fa-brands fa-x-twitter',
-//				'color' => 'rgb(239, 243, 244)',
-//				'url'   => '',
-//			],
-//			'tiktok'    => [
-//				'name'  => 'Tiktok',
-//				'icon'  => 'fa-brands fa-tiktok',
-//				'color' => 'rgba(255, 255, 255, 0.9)',
-//				'url'   => '',
-//			],
-//			'telegram'  => [
-//				'name'  => 'Telegram',
-//				'icon'  => 'fa-brands fa-telegram',
-//				'color' => '#2BA0E5',
-//				'url'   => '',
-//			],
-			'linkedin' => [
+		'social_follows_links'                => [
+			'facebook'  => [
+				'name'  => 'Facebook',
+				'icon'  => 'fa-brands fa-facebook',
+				'color' => '#0866FF',
+				'url'   => '',
+			],
+			'instagram' => [
+				'name'  => 'Instagram',
+				'icon'  => 'fa-brands fa-instagram',
+				'color' => 'rgb(224, 241, 255)',
+				'url'   => '',
+			],
+			'youtube'   => [
+				'name'  => 'Youtube',
+				'icon'  => 'fa-brands fa-youtube',
+				'color' => 'rgb(255, 0, 0)',
+				'url'   => '',
+			],
+			'twitter'   => [
+				'name'  => 'X (Twitter)',
+				'icon'  => 'fa-brands fa-x-twitter',
+				'color' => 'rgb(239, 243, 244)',
+				'url'   => '',
+			],
+			'tiktok'    => [
+				'name'  => 'Tiktok',
+				'icon'  => 'fa-brands fa-tiktok',
+				'color' => 'rgba(255, 255, 255, 0.9)',
+				'url'   => '',
+			],
+			'telegram'  => [
+				'name'  => 'Telegram',
+				'icon'  => 'fa-brands fa-telegram',
+				'color' => '#2BA0E5',
+				'url'   => '',
+			],
+			'linkedin'  => [
 				'name'  => 'Linkedin',
-				'icon'  => '<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_73_5845)"><mask id="mask0_73_5845" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="32" height="32"><path d="M32 0H0V32H32V0Z" fill="white"></path></mask><g mask="url(#mask0_73_5845)"><g opacity="0.5"><path d="M30.6 0H1.4C0.6 0 0 0.6 0 1.4V30.8C0 31.4 0.6 32 1.4 32H30.8C31.6 32 32.2 31.4 32.2 30.6V1.4C32 0.6 31.4 0 30.6 0ZM9.4 27.2H4.8V12H9.6V27.2H9.4ZM7.2 10C5.6 10 4.4 8.6 4.4 7.2C4.4 5.6 5.6 4.4 7.2 4.4C8.8 4.4 10 5.6 10 7.2C9.8 8.6 8.6 10 7.2 10ZM27.2 27.2H22.4V19.8C22.4 18 22.4 15.8 20 15.8C17.6 15.8 17.2 17.8 17.2 19.8V27.4H12.4V12H17V14C17.6 12.8 19.2 11.6 21.4 11.6C26.2 11.6 27 14.8 27 18.8V27.2H27.2Z" fill="url(#paint0_linear_73_5845)"></path></g></g></g><defs><linearGradient id="paint0_linear_73_5845" x1="0" y1="16" x2="32.2" y2="16" gradientUnits="userSpaceOnUse"><stop stop-color="#DD1940"></stop><stop offset="1" stop-color="#92035F"></stop></linearGradient><clipPath id="clip0_73_5845"><rect width="32" height="32" fill="white"></rect></clipPath></defs></svg>',
+				'icon'  => '<i class="fa-brands fa-linkedin"></i>',
 				'color' => '#0a66c2',
 				'url'   => '',
 			],
-//			'zalo'      => [
-//				'name'  => 'Zalo',
-//				'icon'  => THEME_URL . 'storage/img/zlogo.png',
-//				'color' => '#0068FF',
-//				'url'   => 'https://chat.zalo.me/?phone=xxx',
-//			],
+			'zalo'      => [
+				'name'  => 'Zalo',
+				'icon'  => THEME_URL . 'storage/img/zlogo.png',
+				'color' => '#0068FF',
+				'url'   => 'https://chat.zalo.me/?phone=xxx',
+			],
 //			'skype'     => [
 //				'name'  => 'Skype',
 //				'icon'  => 'fa-brands fa-skype',
 //				'color' => '#0092E0',
 //				'url'   => '',
 //			],
-			'hotline'  => [
+			'hotline'   => [
 				'name'  => 'Hotline',
 				'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M497.39 361.8l-112-48a24 24 0 0 0-28 6.9l-49.6 60.6A370.66 370.66 0 0 1 130.6 204.11l60.6-49.6a23.94 23.94 0 0 0 6.9-28l-48-112A24.16 24.16 0 0 0 122.6.61l-104 24A24 24 0 0 0 0 48c0 256.5 207.9 464 464 464a24 24 0 0 0 23.4-18.6l24-104a24.29 24.29 0 0 0-14.01-27.6z" fill="currentColor"></path></svg>',
 				'color' => '',
 				'url'   => '',
 			],
-			'email'    => [
+			'email'     => [
 				'name'  => 'Email',
 				'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7c22.4 17.4 52.1 39.5 154.1 113.6c21.1 15.4 56.7 47.8 92.2 47.6c35.7.3 72-32.8 92.3-47.6c102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4c132.7-96.3 142.8-104.7 173.4-128.7c5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7c16.8 12.2 50.2 41.8 73.4 41.4z" fill="currentColor"></path></svg>',
 				'color' => '',
 				'url'   => '',
+			],
+		],
+
+		// Other setting ( file upload, v.v... )
+		'other_settings'                      => [
+			'upload_size_limit' => [
+				'name'  => 'Maximum upload file size',
+				'value' => 2, // MB
 			],
 		],
 

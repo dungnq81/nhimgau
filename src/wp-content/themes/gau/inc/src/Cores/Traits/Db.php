@@ -25,7 +25,7 @@ trait Db {
 
 		// Get a list of valid columns from the table structure
 		$table_name    = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
-		$valid_columns = $wpdb->get_col( "DESCRIBE $table_name", 0 );
+		$valid_columns = $wpdb->get_col( "DESCRIBE {$table_name}", 0 );
 
 		// If no columns are returned, the table doesn't exist or has no columns
 		if ( empty( $valid_columns ) ) {
@@ -82,7 +82,7 @@ trait Db {
 		}
 
 		// Build and execute the SQL query
-		$sql = "INSERT INTO $table_name (" . implode( ', ', $columns_in_insert ) . ") VALUES " . implode( ', ', $values );
+		$sql = "INSERT INTO `{$table_name}` (" . implode( ', ', $columns_in_insert ) . ") VALUES " . implode( ', ', $values );
 
 		if ( $wpdb->query( $sql ) ) {
 			return count( $values );
@@ -94,13 +94,13 @@ trait Db {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $table_name
-	 * @param $data
+	 * @param string|null $table_name
+	 * @param array|null $data
 	 * @param bool $sanitize
 	 *
 	 * @return int|\WP_Error
 	 */
-	public static function insertOneRow( $table_name, $data, bool $sanitize = true ): \WP_Error|int {
+	public static function insertOneRow( ?string $table_name, ?array $data, bool $sanitize = true ): \WP_Error|int {
 		global $wpdb;
 
 		// Validate input parameters
@@ -110,7 +110,7 @@ trait Db {
 
 		// Get columns of the table
 		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
-		$columns    = $wpdb->get_col( "DESCRIBE $table_name", 0 );
+		$columns    = $wpdb->get_col( "DESCRIBE {$table_name}", 0 );
 
 		// If no columns found, table does not exist or is invalid
 		if ( empty( $columns ) ) {
@@ -141,18 +141,18 @@ trait Db {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $table_name
-	 * @param $id
-	 * @param $data
+	 * @param string|null $table_name
+	 * @param int|null $id
+	 * @param array|null $data
 	 * @param bool $sanitize
 	 *
 	 * @return int|\WP_Error
 	 */
-	public static function updateOneRow( $table_name, $id, $data, bool $sanitize = true ): \WP_Error|int {
+	public static function updateOneRow( ?string $table_name, ?int $id, ?array $data, bool $sanitize = true ): \WP_Error|int {
 		global $wpdb;
 
 		// Validate input parameters
-		if ( empty( $table_name ) || empty( $id ) || empty( $data ) || ! is_array( $data ) ) {
+		if ( empty( $table_name ) || $id === null || empty( $data ) || ! is_array( $data ) ) {
 			return new \WP_Error( 'invalid_data', 'Table name, ID, or data is invalid.' );
 		}
 
@@ -196,17 +196,17 @@ trait Db {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $table_name
-	 * @param $id
+	 * @param string|null $table_name
+	 * @param int|null $id
 	 * @param bool $sanitize
 	 *
 	 * @return int|\WP_Error
 	 */
-	public static function deleteOneRow( $table_name, $id, bool $sanitize = true ): \WP_Error|int {
+	public static function deleteOneRow( ?string $table_name, ?int $id, bool $sanitize = true ): \WP_Error|int {
 		global $wpdb;
 
 		// Validate input parameters
-		if ( empty( $table_name ) || empty( $id ) ) {
+		if ( empty( $table_name ) || $id === null ) {
 			return new \WP_Error( 'invalid_data', 'Table name or ID is invalid.' );
 		}
 
@@ -229,26 +229,26 @@ trait Db {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $table_name
-	 * @param $column
-	 * @param $key
+	 * @param string|null $table_name
+	 * @param string|null $column
+	 * @param string|int|null $key
 	 * @param bool $sanitize
 	 * @param int $offset
 	 * @param int $limit
-	 * @param string $order_by
-	 * @param string $order
+	 * @param string|null $order_by
+	 * @param string|null $order
 	 *
 	 * @return array|null|\WP_Error
 	 */
 	public static function getRowsBy(
-		$table_name,
-		$column,
-		$key,
+		?string $table_name,
+		?string $column,
+		string|int|null $key,
 		bool $sanitize = true,
 		int $offset = 0,
 		int $limit = - 1,
-		string $order_by = '',
-		string $order = 'ASC'
+		?string $order_by = '',
+		?string $order = 'ASC'
 	): \WP_Error|array|null {
 		global $wpdb;
 
@@ -262,7 +262,7 @@ trait Db {
 		$column     = $sanitize ? sanitize_text_field( $column ) : $column;
 
 		// Build a base query
-		$query = $wpdb->prepare( "SELECT * FROM `$table_name` WHERE `$column` = %s", $key );
+		$query = $wpdb->prepare( "SELECT * FROM `{$table_name}` WHERE `{$column}` = %s", $key );
 
 		// Add ORDER BY clause if provided
 		if ( ! empty( $order_by ) ) {
@@ -286,14 +286,14 @@ trait Db {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $table_name
-	 * @param $column
-	 * @param $key
+	 * @param string|null $table_name
+	 * @param string|null $column
+	 * @param string|int|null $key
 	 * @param bool $sanitize
 	 *
 	 * @return array|\WP_Error|null
 	 */
-	public static function getOneRowBy( $table_name, $column, $key, bool $sanitize = true ): \WP_Error|array|null {
+	public static function getOneRowBy( ?string $table_name, ?string $column, string|int|null $key, bool $sanitize = true ): \WP_Error|array|null {
 		global $wpdb;
 
 		// Validate input and return WP_Error if invalid
@@ -305,7 +305,7 @@ trait Db {
 		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
 		$column     = $sanitize ? sanitize_text_field( $column ) : $column;
 
-		$query = $wpdb->prepare( "SELECT * FROM `$table_name` WHERE `$column` = %s ORDER BY `id` DESC", $key );
+		$query = $wpdb->prepare( "SELECT * FROM `{$table_name}` WHERE `{$column}` = %s ORDER BY `id` DESC", $key );
 
 		return $wpdb->get_row( $query, ARRAY_A );
 	}
@@ -313,21 +313,21 @@ trait Db {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $table_name
-	 * @param $id
+	 * @param string|null $table_name
+	 * @param int|null $id
 	 * @param bool $sanitize
 	 *
 	 * @return array|\WP_Error|null
 	 */
-	public static function getOneRow( $table_name, $id, bool $sanitize = true ): \WP_Error|array|null {
+	public static function getOneRow( ?string $table_name, ?int $id, bool $sanitize = true ): \WP_Error|array|null {
 		global $wpdb;
 
-		if ( empty( $table_name ) || empty( $id ) ) {
+		if ( empty( $table_name ) || $id === null ) {
 			return new \WP_Error( 'invalid_input', 'Table name or ID is invalid.' );
 		}
 
 		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
-		$query      = $wpdb->prepare( "SELECT * FROM `$table_name` WHERE `id` = %d", (int) $id );
+		$query      = $wpdb->prepare( "SELECT * FROM `{$table_name}` WHERE `id` = %d", (int) $id );
 
 		return $wpdb->get_row( $query, ARRAY_A );
 	}
@@ -335,22 +335,22 @@ trait Db {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $table_name
+	 * @param string|null $table_name
 	 * @param int $offset
 	 * @param int $limit
 	 * @param bool $sanitize
-	 * @param string $order_by
-	 * @param string $order
+	 * @param string|null $order_by
+	 * @param string|null $order
 	 *
 	 * @return array|null|\WP_Error
 	 */
 	public static function getRows(
-		$table_name,
+		?string $table_name,
 		int $offset = 0,
 		int $limit = - 1,
 		bool $sanitize = true,
-		string $order_by = '',
-		string $order = 'ASC'
+		?string $order_by = '',
+		?string $order = 'ASC'
 	): \WP_Error|array|null {
 		global $wpdb;
 
@@ -360,7 +360,7 @@ trait Db {
 		}
 
 		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
-		$query      = "SELECT * FROM `$table_name`";
+		$query      = "SELECT * FROM `{$table_name}`";
 
 		// Add ORDER BY clause if provided
 		if ( ! empty( $order_by ) ) {
@@ -384,21 +384,21 @@ trait Db {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $table_name
-	 * @param $id
+	 * @param string|null $table_name
+	 * @param int|null $id
 	 * @param bool $sanitize
 	 *
 	 * @return bool
 	 */
-	public static function checkOneRow( $table_name, $id, bool $sanitize = true ): bool {
+	public static function checkOneRow( ?string $table_name, ?int $id, bool $sanitize = true ): bool {
 		global $wpdb;
 
-		if ( empty( $table_name ) || empty( $id ) ) {
+		if ( empty( $table_name ) || $id === null ) {
 			return false;
 		}
 
 		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
-		$query      = $wpdb->prepare( "SELECT COUNT(*) FROM `$table_name` WHERE `id` = %d", (int) $id );
+		$query      = $wpdb->prepare( "SELECT COUNT(*) FROM `{$table_name}` WHERE `id` = %d", (int) $id );
 
 		$exists = $wpdb->get_var( $query );
 
@@ -409,14 +409,14 @@ trait Db {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $table_name
-	 * @param null $column
-	 * @param null $value
+	 * @param string|null $table_name
+	 * @param string|null $column
+	 * @param string|int|null $value
 	 * @param bool $sanitize
 	 *
 	 * @return int
 	 */
-	public static function countRowsBy( $table_name, $column = null, $value = null, bool $sanitize = true ): int {
+	public static function countRowsBy( ?string $table_name, ?string $column = null, string|int|null $value = null, bool $sanitize = true ): int {
 		global $wpdb;
 
 		if ( empty( $table_name ) ) {
@@ -427,10 +427,10 @@ trait Db {
 		$column     = $sanitize ? sanitize_text_field( $column ) : $column;
 
 		if ( ! $column ) {
-			return (int) $wpdb->get_var( "SELECT COUNT(*) FROM `$table_name`" );
+			return (int) $wpdb->get_var( "SELECT COUNT(*) FROM `{$table_name}`" );
 		}
 
 		// Execute the query and get the count
-		return (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM `$table_name` WHERE `$column` = %s", $value ) );
+		return (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM `{$table_name}` WHERE `{$column}` = %s", $value ) );
 	}
 }
