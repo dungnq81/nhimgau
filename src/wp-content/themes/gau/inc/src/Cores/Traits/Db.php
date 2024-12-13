@@ -9,13 +9,13 @@ trait Db {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $table_name
-	 * @param $data
+	 * @param string|null $table_name
+	 * @param array|null $data
 	 * @param bool $sanitize
 	 *
 	 * @return \WP_Error|int
 	 */
-	public static function bulkInsertRows( $table_name, $data, bool $sanitize = true ): \WP_Error|int {
+	public static function bulkInsertRows( ?string $table_name, ?array $data, bool $sanitize = true ): \WP_Error|int {
 		global $wpdb;
 
 		// Check if there is any data to insert

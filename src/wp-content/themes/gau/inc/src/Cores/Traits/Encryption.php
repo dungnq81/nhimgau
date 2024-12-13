@@ -2,6 +2,8 @@
 
 namespace Cores\Traits;
 
+use Random\RandomException;
+
 \defined( 'ABSPATH' ) || die;
 
 trait Encryption {
@@ -35,12 +37,16 @@ trait Encryption {
 	/**
 	 * Encode a string with encryption
 	 *
-	 * @param string $data
+	 * @param string|null $data
 	 *
-	 * @return string
-	 * @throws \Random\RandomException
+	 * @return string|null
+	 * @throws RandomException
 	 */
-	public static function encode( string $data ): string {
+	public static function encode( ?string $data ): ?string {
+		if ( is_null( $data ) ) {
+			return null;
+		}
+
 		self::loadKeys();
 
 		$iv        = random_bytes( openssl_cipher_iv_length( self::$method ) );
@@ -55,11 +61,15 @@ trait Encryption {
 	/**
 	 * Decode an encrypted string
 	 *
-	 * @param string $encryptedData
+	 * @param string|null $encryptedData
 	 *
 	 * @return string|null
 	 */
-	public static function decode( string $encryptedData ): ?string {
+	public static function decode( ?string $encryptedData ): ?string {
+		if ( is_null( $encryptedData ) ) {
+			return null;
+		}
+
 		self::loadKeys();
 
 		$data = base64_decode( $encryptedData );

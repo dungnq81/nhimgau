@@ -22,17 +22,17 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $js
+	 * @param string|null $js
 	 * @param bool $debug_check
 	 *
-	 * @return mixed|string
+	 * @return string|null
 	 */
-	public static function JSMinify( $js, bool $debug_check = true ): mixed {
+	public static function JSMinify( ?string $js, bool $debug_check = true ): ?string {
 		if ( empty( $js ) ) {
-			return $js;
+			return null;
 		}
 
-		if ( $debug_check && WP_DEBUG ) {
+		if ( $debug_check && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			return $js;
 		}
 
@@ -46,17 +46,17 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $css
+	 * @param string|null $css
 	 * @param bool $debug_check
 	 *
-	 * @return mixed|string
+	 * @return string|null
 	 */
-	public static function CSSMinify( $css, bool $debug_check = true ): mixed {
+	public static function CSSMinify( ?string $css, bool $debug_check = true ): ?string {
 		if ( empty( $css ) ) {
-			return $css;
+			return null;
 		}
 
-		if ( $debug_check && WP_DEBUG ) {
+		if ( $debug_check && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			return $css;
 		}
 
@@ -77,7 +77,7 @@ trait Wp {
 	 *
 	 * @return string|void
 	 */
-	public static function CSRFToken( mixed $action = - 1, string $name = '_csrf_token', bool $referer = false, bool $display = false ) {
+	public static function CSRFToken( string|int $action = - 1, string $name = '_csrf_token', bool $referer = false, bool $display = false ) {
 		$name        = esc_attr( $name );
 		$token       = wp_create_nonce( $action );
 		$nonce_field = '<input type="hidden" id="' . self::random( 10 ) . '" name="' . $name . '" value="' . esc_attr( $token ) . '" />';
@@ -163,14 +163,14 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $link
-	 * @param string $class
-	 * @param string $label
-	 * @param string $extra_title
+	 * @param mixed $link
+	 * @param string|null $class
+	 * @param string|null $label
+	 * @param string|null $extra_title
 	 *
 	 * @return string
 	 */
-	public static function ACFLink( $link, string $class = '', string $label = '', string $extra_title = '' ): string {
+	public static function ACFLink( mixed $link, ?string $class = '', ?string $label = '', ?string $extra_title = '' ): string {
 
 		// string
 		if ( ! empty( $link ) && is_string( $link ) ) {
@@ -207,7 +207,7 @@ trait Wp {
 				);
 
 				if ( ! empty( $_link_target ) ) {
-					$link_return .= ' target="_blank" rel="noopener noreferrer"';
+					$link_return .= ' target="_blank" rel="noopener noreferrer nofollow"';
 				}
 
 				$link_return .= '>';
@@ -224,13 +224,13 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $link
-	 * @param string $class
-	 * @param string $label
+	 * @param mixed $link
+	 * @param string|null $class
+	 * @param string|null $label
 	 *
 	 * @return string
 	 */
-	public static function ACFLinkOpen( $link, string $class = '', string $label = '' ): string {
+	public static function ACFLinkOpen( mixed $link, ?string $class = '', ?string $label = '' ): string {
 
 		// string
 		if ( ! empty( $link ) && is_string( $link ) ) {
@@ -261,7 +261,7 @@ trait Wp {
 				);
 
 				if ( ! empty( $_link_target ) ) {
-					$link_return .= ' target="_blank" rel="noopener noreferrer"';
+					$link_return .= ' target="_blank" rel="noopener noreferrer nofollow"';
 				}
 				$link_return .= '>';
 
@@ -275,15 +275,15 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $content
-	 * @param $link
-	 * @param string $class
-	 * @param string $label
+	 * @param string|null $content
+	 * @param mixed $link
+	 * @param string|null $class
+	 * @param string|null $label
 	 * @param string|bool $empty_link_default_tag
 	 *
 	 * @return string
 	 */
-	public static function ACFLinkWrap( $content, $link, string $class = '', string $label = '', string|bool $empty_link_default_tag = 'span' ): string {
+	public static function ACFLinkWrap( ?string $content, mixed $link, ?string $class = '', ?string $label = '', string|bool $empty_link_default_tag = 'span' ): string {
 
 		// string
 		if ( is_string( $link ) && ! empty( $link ) ) {
@@ -318,7 +318,7 @@ trait Wp {
 				);
 
 				if ( ! empty( $_link_target ) ) {
-					$link_return .= ' target="_blank" rel="noopener noreferrer"';
+					$link_return .= ' target="_blank" rel="noopener noreferrer nofollow"';
 				}
 
 				$link_return .= '>';
@@ -379,7 +379,7 @@ trait Wp {
 	 */
 	public static function horizontalNav( array $args = [] ) {
 		$args = wp_parse_args(
-			(array) $args,
+			$args,
 			[
 				'container'      => false,
 				'menu_id'        => '',
@@ -409,9 +409,9 @@ trait Wp {
 	 * @param array $atts Optional. An array of attributes to pass to the shortcode function.
 	 * @param string|null $content Optional. The content enclosed by the shortcode. Default is null (no content).
 	 *
-	 * @return mixed|false Returns the result of the shortcode on success, or false if the shortcode does not exist.
+	 * @return mixed Returns the result of the shortcode on success, or false if the shortcode does not exist.
 	 */
-	public static function doShortcode( string $tag, array $atts = [], string $content = null ): mixed {
+	public static function doShortcode( string $tag, array $atts = [], ?string $content = null ): mixed {
 		global $shortcode_tags;
 
 		// Check if the shortcode exists
@@ -448,13 +448,13 @@ trait Wp {
 	/**
 	 * Retrieves attachment details by its ID.
 	 *
-	 * @param int $attachment_id The ID of the attachment.
+	 * @param int|\WP_Post|null $attachment_id
 	 * @param bool $return_object Optional. Whether to return the result as an object. Default true.
 	 *
 	 * @return object|array|null Attachment details as an object or array, or null if not found.
 	 * @throws \JsonException If JSON encoding fails.
 	 */
-	public static function getAttachment( int $attachment_id, bool $return_object = true ): object|array|null {
+	public static function getAttachment( int|\WP_Post|null $attachment_id, bool $return_object = true ): object|array|null {
 
 		// Fetch the attachment post object
 		$attachment = get_post( $attachment_id );
@@ -486,11 +486,15 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param array $arr_parsed
+	 * @param array|null $arr_parsed
 	 *
 	 * @return bool
 	 */
-	public static function hasDelayScriptTag( array $arr_parsed ): bool {
+	public static function hasDelayScriptTag( ?array $arr_parsed ): bool {
+		if ( is_null( $arr_parsed ) ) {
+			return false;
+		}
+
 		foreach ( $arr_parsed as $str => $value ) {
 			if ( 'delay' === $value ) {
 				return true;
@@ -503,14 +507,17 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param array $arr_parsed [ $handle: $value ] -- $value[ 'defer', 'delay' ]
+	 * @param array|null $arr_parsed
 	 * @param string $tag
 	 * @param string $handle
-	 * @param string $src
 	 *
-	 * @return array|string|string[]|null
+	 * @return string
 	 */
-	public static function lazyScriptTag( array $arr_parsed, string $tag, string $handle, string $src ): array|string|null {
+	public static function lazyScriptTag( ?array $arr_parsed, string $tag, string $handle ): string {
+		if ( is_null( $arr_parsed ) ) {
+			return $tag;
+		}
+
 		foreach ( $arr_parsed as $str => $value ) {
 			if ( str_contains( $handle, $str ) ) {
 				if ( 'defer' === $value ) {
@@ -537,13 +544,17 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param array $arr_styles
+	 * @param array|null $arr_styles
 	 * @param string $html
 	 * @param string $handle
 	 *
-	 * @return array|string|string[]|null
+	 * @return string
 	 */
-	public static function lazyStyleTag( array $arr_styles, string $html, string $handle ): array|string|null {
+	public static function lazyStyleTag( ?array $arr_styles, string $html, string $handle ): string {
+		if ( is_null( $arr_styles ) ) {
+			return $html;
+		}
+
 		foreach ( $arr_styles as $style ) {
 			if ( str_contains( $handle, $style ) ) {
 				return preg_replace( '/media=\'all\'/', 'media=\'print\' onload=\'this.media="all"\'', $html );
@@ -687,11 +698,11 @@ trait Wp {
 	/**
 	 * Set the number of posts per page for non-admin pages.
 	 *
-	 * @param int $post_limit The maximum number of posts to display per page. Default is 12.
+	 * @param int $post_limit The maximum number of posts to display per page. Default is -1.
 	 *
 	 * @return void
 	 */
-	public static function setPostsPerPage( int $post_limit = 12 ): void {
+	public static function setPostsPerPage( int $post_limit = - 1 ): void {
 
 		// Check if we are not in the admin area and the main query is not being processed
 		if ( ! is_admin() && ! is_main_query() ) {
@@ -700,8 +711,6 @@ trait Wp {
 			// Only modify the query if the new limit exceeds the default
 			if ( $post_limit > (int) $limit_default ) {
 				add_action( 'pre_get_posts', static function ( $query ) use ( $post_limit ) {
-
-					// Set the posts_per_page parameter
 					$query->set( 'posts_per_page', $post_limit );
 				}, 9999 );
 			}
@@ -716,7 +725,7 @@ trait Wp {
 	 * @param mixed $term The term to query.
 	 * @param string $post_type The post-type to query. The default is 'post'.
 	 * @param bool $include_children Whether to include children of the term. Default is false.
-	 * @param int $posts_per_page Number of posts to return. Default is 12.
+	 * @param int $posts_per_page Number of posts to return. Default is -1.
 	 * @param array $orderby Array of orderby parameters. Default is [ 'date' => 'DESC' ].
 	 * @param array $meta_query Array of meta query parameters.
 	 * @param bool|string $strtotime_recent Timestamp string for recent posts. Default is false.
@@ -728,7 +737,7 @@ trait Wp {
 		mixed $term,
 		string $post_type = 'post',
 		bool $include_children = false,
-		int $posts_per_page = 12,
+		int $posts_per_page = - 1,
 		array $orderby = [ 'date' => 'DESC' ],
 		array $meta_query = [],
 		bool|string $strtotime_recent = false
@@ -777,7 +786,7 @@ trait Wp {
 		// Handle date_query for recent posts
 		if ( $strtotime_recent ) {
 			$recent = strtotime( $strtotime_recent );
-			if ( self::isInteger( $recent ) ) {
+			if ( $recent ) {
 				$_args['date_query'] = [
 					'after' => [
 						'year'  => date( 'Y', $recent ),
@@ -819,7 +828,7 @@ trait Wp {
 	 * @param string $post_type The post-type to query. The default is 'post'.
 	 * @param string $taxonomy The taxonomy to query. Default is 'category'.
 	 * @param bool $include_children Whether to include children of the terms. Default is false.
-	 * @param int $posts_per_page Number of posts to return. Default is 12.
+	 * @param int $posts_per_page Number of posts to return. Default is -1.
 	 * @param array $orderby Array of orderby parameters. Default is [ 'date' => 'DESC' ].
 	 * @param array $meta_query Array of meta query parameters.
 	 * @param bool|string $strtotime_str Timestamp string for recent posts. Default is false.
@@ -831,7 +840,7 @@ trait Wp {
 		string $post_type = 'post',
 		string $taxonomy = 'category',
 		bool $include_children = false,
-		int $posts_per_page = 12,
+		int $posts_per_page = - 1,
 		array $orderby = [ 'date' => 'DESC' ],
 		array $meta_query = [],
 		bool|string $strtotime_str = false,
@@ -878,7 +887,7 @@ trait Wp {
 		// Handle date_query for recent posts
 		if ( $strtotime_str ) {
 			$recent = strtotime( $strtotime_str );
-			if ( self::isInteger( $recent ) ) {
+			if ( $recent ) {
 				$_args['date_query'] = [
 					'after' => [
 						'year'  => date( 'Y', $recent ),
@@ -920,13 +929,14 @@ trait Wp {
 	 * @param int $blog_id
 	 *
 	 * @return string
-	 * Modified from the native \get_custom_logo () function
+	 *
+	 * Modified from the native get_custom_logo() function
 	 */
 	public static function customSiteLogo( int $blog_id = 0 ): string {
 		$html          = '';
 		$switched_blog = false;
 
-		if ( ! empty( $blog_id ) && is_multisite() && get_current_blog_id() !== (int) $blog_id ) {
+		if ( ! empty( $blog_id ) && is_multisite() && get_current_blog_id() !== $blog_id ) {
 			switch_to_blog( $blog_id );
 			$switched_blog = true;
 		}
@@ -1035,12 +1045,12 @@ trait Wp {
 
 	/**
 	 * @param bool $echo
-	 * @param string|bool $home_heading
-	 * @param string $class
+	 * @param string|null $home_heading
+	 * @param string|null $class
 	 *
 	 * @return string|void
 	 */
-	public static function siteTitleOrLogo( bool $echo = true, string|bool $home_heading = 'h1', string $class = 'logo' ) {
+	public static function siteTitleOrLogo( bool $echo = true, ?string $home_heading = 'h1', ?string $class = 'logo' ) {
 
 		$logo_title = self::getThemeMod( 'logo_title_setting' );
 		$logo_title = $logo_title ? '<span class="logo-txt">' . $logo_title . '</span>' : '';
@@ -1072,7 +1082,7 @@ trait Wp {
 			return $html;
 		}
 
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $html;
 	}
 
 	// -------------------------------------------------------------
@@ -1126,18 +1136,18 @@ trait Wp {
 			}
 		}
 
-		return $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		return $html;
 	}
 
 	// -------------------------------------------------------------
 
 	/**
-	 * @param        $post
-	 * @param string $class
+	 * @param int|\WP_Post|null $post
+	 * @param string|null $class
 	 *
 	 * @return string|null
 	 */
-	public static function loopExcerpt( $post = null, string $class = 'excerpt' ): ?string {
+	public static function loopExcerpt( int|\WP_Post|null $post = null, ?string $class = 'excerpt' ): ?string {
 		$excerpt = get_the_excerpt( $post );
 		if ( ! self::stripSpace( $excerpt ) ) {
 			return null;
@@ -1154,24 +1164,26 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param null $post
-	 * @param string $class
-	 * @param bool $glyph_icon
+	 * @param int|\WP_Post|null $post
+	 * @param string|null $class
+	 * @param string|null $fa_glyph
 	 *
 	 * @return string|null
 	 */
-	public static function postExcerpt( $post = null, string $class = 'excerpt', bool $glyph_icon = false ): ?string {
+	public static function postExcerpt( int|\WP_Post|null $post = null, ?string $class = 'excerpt', ?string $fa_glyph = '' ): ?string {
 		$post = get_post( $post );
-		if ( ! self::stripSpace( $post->post_excerpt ) ) {
+		if ( ! $post || ! self::stripSpace( $post->post_excerpt ) ) {
 			return null;
 		}
 
 		$open  = '';
 		$close = '';
 		$glyph = '';
-		if ( true === $glyph_icon ) {
-			$glyph = ' data-fa=""';
+
+		if ( $fa_glyph ) {
+			$glyph = ' data-fa="' . $fa_glyph . '"';
 		}
+
 		if ( $class ) {
 			$open  = '<div class="' . $class . '"' . $glyph . '>';
 			$close = '</div>';
@@ -1184,36 +1196,37 @@ trait Wp {
 
 	/**
 	 * @param int $term
-	 * @param string $class
+	 * @param string|null $class
 	 *
 	 * @return string|null
 	 */
-	public static function termExcerpt( int $term = 0, string $class = 'excerpt' ): ?string {
+	public static function termExcerpt( int $term = 0, ?string $class = 'excerpt' ): ?string {
 		$description = term_description( $term );
 		if ( ! self::stripSpace( $description ) ) {
 			return null;
 		}
 
+		$description = strip_tags( $description );
 		if ( ! $class ) {
 			return $description;
 		}
 
-		return "<div class=\"$class\">$description</div>";
+		return "<p class=\"$class\">$description</p>";
 	}
 
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $post
+	 * @param int|\WP_Post|null $post
 	 * @param string $taxonomy
 	 *
 	 * @return mixed
 	 */
-	public static function primaryTerm( $post, string $taxonomy = '' ): mixed {
+	public static function primaryTerm( int|\WP_Post|null $post, string $taxonomy = '' ): mixed {
 		// Ensure $post is a valid post object
 		$post = get_post( $post );
 		if ( ! $post ) {
-			return false;
+			return null;
 		}
 
 		$post_id = $post->ID;
@@ -1241,7 +1254,7 @@ trait Wp {
 		// Get all terms associated with the post for the specified taxonomy
 		$post_terms = get_the_terms( $post, $taxonomy );
 		if ( ! is_array( $post_terms ) || empty( $post_terms ) ) {
-			return false;
+			return null;
 		}
 
 		// Extract term IDs for further processing
@@ -1279,20 +1292,20 @@ trait Wp {
 		}
 
 		// Default: return the first term if no primary term is found
-		return $post_terms[0] ?? false;
+		return $post_terms[0] ?? null;
 	}
 
 	// -------------------------------------------------------------
 
 	/**
-	 * @param null $post
+	 * @param int|\WP_Post|null $post
 	 * @param string $taxonomy
-	 * @param string $wrapper_open
+	 * @param string|null $wrapper_open
 	 * @param string|null $wrapper_close
 	 *
 	 * @return string|null
 	 */
-	public static function getPrimaryTerm( $post = null, string $taxonomy = '', string $wrapper_open = '<div class="terms">', ?string $wrapper_close = '</div>' ): ?string {
+	public static function getPrimaryTerm( int|\WP_Post|null $post = null, string $taxonomy = '', ?string $wrapper_open = '<div class="terms">', ?string $wrapper_close = '</div>' ): ?string {
 		$term = self::primaryTerm( $post, $taxonomy );
 		if ( ! $term ) {
 			return null;
@@ -1309,14 +1322,14 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param             $post
-	 * @param string $taxonomy
-	 * @param string $wrapper_open
+	 * @param int|\WP_Post|null $post
+	 * @param string|null $taxonomy
+	 * @param string|null $wrapper_open
 	 * @param string|null $wrapper_close
 	 *
-	 * @return false|string|null
+	 * @return string|null
 	 */
-	public static function postTerms( $post, string $taxonomy = 'category', string $wrapper_open = '<div class="terms">', ?string $wrapper_close = '</div>' ): false|string|null {
+	public static function postTerms( int|\WP_Post|null $post, ?string $taxonomy = 'category', ?string $wrapper_open = '<div class="terms">', ?string $wrapper_close = '</div>' ): ?string {
 		if ( ! $taxonomy ) {
 			$post_type = get_post_type( $post );
 			$taxonomy  = $post_type . '_cat';
@@ -1338,7 +1351,7 @@ trait Wp {
 		$link       = '';
 		$post_terms = get_the_terms( $post, $taxonomy );
 		if ( empty( $post_terms ) ) {
-			return false;
+			return null;
 		}
 
 		foreach ( $post_terms as $term ) {
@@ -1357,13 +1370,13 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param string $taxonomy
+	 * @param string|null $taxonomy
 	 * @param int $id
 	 * @param string $sep
 	 *
 	 * @return void
 	 */
-	public static function hashTags( string $taxonomy = 'post_tag', int $id = 0, string $sep = '' ): void {
+	public static function hashTags( ?string $taxonomy = 'post_tag', int $id = 0, string $sep = '' ): void {
 		if ( ! $taxonomy ) {
 			$taxonomy = 'post_tag';
 		}
@@ -1389,25 +1402,25 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param null $post
+	 * @param int|\WP_Post|null $post
 	 * @param string $size
 	 *
 	 * @return string|null
 	 */
-	public static function postImageSrc( $post = null, string $size = 'thumbnail' ): ?string {
+	public static function postImageSrc( int|\WP_Post|null $post = null, string $size = 'thumbnail' ): ?string {
 		return get_the_post_thumbnail_url( $post, $size );
 	}
 
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $post
+	 * @param int|\WP_Post|null $post
 	 * @param string $size
 	 * @param string|array $attr
 	 *
 	 * @return string
 	 */
-	public static function iconPostImage( $post = null, string $size = 'thumbnail', string|array $attr = '' ): string {
+	public static function iconPostImage( int|\WP_Post|null $post = null, string $size = 'thumbnail', string|array $attr = '' ): string {
 		$post = get_post( $post );
 		if ( ! $post ) {
 			return '';
@@ -1425,12 +1438,12 @@ trait Wp {
 
 	/**
 	 *
-	 * @param        $attachment_id
+	 * @param int $attachment_id
 	 * @param string $size
 	 *
 	 * @return string|null
 	 */
-	public static function attachmentImageSrc( $attachment_id, string $size = 'thumbnail' ): ?string {
+	public static function attachmentImageSrc( int $attachment_id, string $size = 'thumbnail' ): ?string {
 		return wp_get_attachment_image_url( $attachment_id, $size );
 	}
 
@@ -1511,10 +1524,10 @@ trait Wp {
 	 * @param bool $format_value
 	 * @param bool $escape_html
 	 *
-	 * @return false|array
+	 * @return array|false|object
 	 * @throws \JsonException
 	 */
-	public static function getFields( mixed $post_id = false, bool $force_object = false, bool $format_value = true, bool $escape_html = false ): false|array {
+	public static function getFields( mixed $post_id = false, bool $force_object = false, bool $format_value = true, bool $escape_html = false ): object|false|array {
 		if ( ! self::isAcfActive() ) {
 			return [];
 		}
@@ -1527,15 +1540,15 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param string $selector
+	 * @param string|null $selector
 	 * @param mixed $post_id
 	 * @param boolean $format_value
 	 * @param boolean $escape_html
 	 *
 	 * @return false|mixed
 	 */
-	public static function getField( string $selector, mixed $post_id = false, bool $format_value = true, bool $escape_html = false ): mixed {
-		if ( ! self::isAcfActive() ) {
+	public static function getField( ?string $selector, mixed $post_id = false, bool $format_value = true, bool $escape_html = false ): mixed {
+		if ( ! $selector || ! self::isAcfActive() ) {
 			return false;
 		}
 
@@ -1545,7 +1558,7 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param        $term
+	 * @param \WP_Term|null $term
 	 * @param null $acf_field_name
 	 * @param string $size
 	 * @param bool $img_wrap
@@ -1553,9 +1566,9 @@ trait Wp {
 	 *
 	 * @return string|null
 	 */
-	public static function acfTermThumb( $term, $acf_field_name = null, string $size = "thumbnail", bool $img_wrap = false, string|array $attr = '' ): ?string {
-		if ( is_numeric( $term ) ) {
-			$term = get_term( $term );
+	public static function acfTermThumb( \WP_Term|null $term, $acf_field_name = null, string $size = "thumbnail", bool $img_wrap = false, string|array $attr = '' ): ?string {
+		if ( ! $term ) {
+			return null;
 		}
 
 		if ( class_exists( \ACF::class ) ) {
@@ -1693,11 +1706,11 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $user_id
+	 * @param int|false $user_id
 	 *
 	 * @return string
 	 */
-	public static function getUserLink( $user_id = null ): string {
+	public static function getUserLink( int|false $user_id = false ): string {
 		if ( ! $user_id ) {
 			$user_id = get_the_author_meta( 'ID' );
 		}
@@ -1799,11 +1812,11 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param string $url
+	 * @param string|null $url
 	 *
 	 * @return int
 	 */
-	public static function getPostIdFromUrl( string $url = '' ): int {
+	public static function getPostIdFromUrl( ?string $url = '' ): int {
 		if ( ! $url ) {
 			global $wp;
 			$url = home_url( add_query_arg( [], $wp->request ) );

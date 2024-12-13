@@ -287,7 +287,7 @@ final class Optimizer {
 		// Add script handles to the array
 		$str_parsed = Helper::filterSettingOptions( 'defer_script', [] );
 
-		return Helper::lazyScriptTag( $str_parsed, $tag, $handle, $src );
+		return Helper::lazyScriptTag( $str_parsed, $tag, $handle );
 	}
 
 	// ------------------------------------------------------

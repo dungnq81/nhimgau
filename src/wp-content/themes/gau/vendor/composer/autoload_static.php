@@ -33,6 +33,7 @@ class ComposerStaticInitbad06eea79b9e83fa6bd3014a8024525
         array (
             'Psr\\SimpleCache\\' => 16,
             'Psr\\Http\\Message\\' => 17,
+            'Psr\\Cache\\' => 10,
             'Plugins\\' => 8,
         ),
         'M' => 
@@ -78,6 +79,10 @@ class ComposerStaticInitbad06eea79b9e83fa6bd3014a8024525
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Psr\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/cache/src',
         ),
         'Plugins\\' => 
         array (

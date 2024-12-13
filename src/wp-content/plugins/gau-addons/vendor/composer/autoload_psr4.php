@@ -12,6 +12,7 @@ return array(
     'Symfony\\Component\\VarDumper\\' => array($vendorDir . '/symfony/var-dumper'),
     'Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
+    'Psr\\Cache\\' => array($vendorDir . '/psr/cache/src'),
     'MatthiasMullie\\PathConverter\\' => array($vendorDir . '/matthiasmullie/path-converter/src'),
     'MatthiasMullie\\Minify\\' => array($vendorDir . '/matthiasmullie/minify/src'),
     'Detection\\' => array($vendorDir . '/mobiledetect/mobiledetectlib/src'),

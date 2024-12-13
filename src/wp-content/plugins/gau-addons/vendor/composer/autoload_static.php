@@ -29,6 +29,7 @@ class ComposerStaticInitb1d011e3e021839ea87b839dd827e727
         array (
             'Psr\\SimpleCache\\' => 16,
             'Psr\\Http\\Message\\' => 17,
+            'Psr\\Cache\\' => 10,
         ),
         'M' => 
         array (
@@ -69,6 +70,10 @@ class ComposerStaticInitb1d011e3e021839ea87b839dd827e727
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Psr\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/cache/src',
         ),
         'MatthiasMullie\\PathConverter\\' => 
         array (
