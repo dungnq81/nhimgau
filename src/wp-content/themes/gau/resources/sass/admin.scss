@@ -1,6 +1,8 @@
 @use "functions" as func;
 @use "mixins" as mixin;
 
+@use "components/awesome_font";
+
 $body-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Ubuntu", Arial, sans-serif;
 
 /** */

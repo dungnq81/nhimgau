@@ -317,6 +317,18 @@ final class Option_Page {
 
 		/** ---------------------------------------- */
 
+		/** File */
+		$file_setting_options = [];
+		foreach ( \filter_setting_options( 'file_settings', [] ) as $i => $item ) {
+			$file_setting_options[ $i ] = [
+				'value' => ! empty( $data[ $i ] ) ? sanitize_text_field( $data[ $i ] ) : '',
+			];
+		}
+
+		update_option( 'file_setting__options', $file_setting_options );
+
+		/** ---------------------------------------- */
+
 		/** Remove base slug */
 		$base_slug_reset = ! empty( $data['base_slug_reset'] ) ? sanitize_text_field( $data['base_slug_reset'] ) : '';
 		if ( empty( $base_slug_reset ) ) {

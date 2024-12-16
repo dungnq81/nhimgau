@@ -726,8 +726,8 @@ trait Wp {
 	 * @param string $post_type The post-type to query. The default is 'post'.
 	 * @param bool $include_children Whether to include children of the term. Default is false.
 	 * @param int $posts_per_page Number of posts to return. Default is -1.
-	 * @param array $orderby Array of orderby parameters. Default is [ 'date' => 'DESC' ].
-	 * @param array $meta_query Array of meta query parameters.
+	 * @param array|null $orderby Array of orderby parameters. Ex. [ 'date' => 'DESC' ]. Default is null.
+	 * @param array|null $meta_query Array of meta query parameters. Default is null.
 	 * @param bool|string $strtotime_recent Timestamp string for recent posts. Default is false.
 	 *
 	 * @return \WP_Query|bool False on failure or if no posts found, WP_Query object on success.
@@ -738,8 +738,8 @@ trait Wp {
 		string $post_type = 'post',
 		bool $include_children = false,
 		int $posts_per_page = - 1,
-		array $orderby = [ 'date' => 'DESC' ],
-		array $meta_query = [],
+		?array $orderby = null,
+		?array $meta_query = null,
 		bool|string $strtotime_recent = false
 	): \WP_Query|bool {
 
@@ -748,6 +748,7 @@ trait Wp {
 		}
 
 		$posts_per_page = max( $posts_per_page, - 1 );
+
 		$_args          = [
 			'post_type'              => $post_type,
 			'post_status'            => 'publish',
@@ -829,8 +830,8 @@ trait Wp {
 	 * @param string $taxonomy The taxonomy to query. Default is 'category'.
 	 * @param bool $include_children Whether to include children of the terms. Default is false.
 	 * @param int $posts_per_page Number of posts to return. Default is -1.
-	 * @param array $orderby Array of orderby parameters. Default is [ 'date' => 'DESC' ].
-	 * @param array $meta_query Array of meta query parameters.
+	 * @param array|null $orderby Array of orderby parameters.
+	 * @param array|null $meta_query Array of meta query parameters.
 	 * @param bool|string $strtotime_str Timestamp string for recent posts. Default is false.
 	 *
 	 * @return \WP_Query|false False on failure or if no posts found, WP_Query object on success.
@@ -841,12 +842,13 @@ trait Wp {
 		string $taxonomy = 'category',
 		bool $include_children = false,
 		int $posts_per_page = - 1,
-		array $orderby = [ 'date' => 'DESC' ],
-		array $meta_query = [],
+		?array $orderby = null,
+		?array $meta_query = null,
 		bool|string $strtotime_str = false,
 	): \WP_Query|false {
 
 		$posts_per_page = max( $posts_per_page, - 1 );
+
 		$_args          = [
 			'post_type'              => $post_type,
 			'post_status'            => 'publish',
@@ -2198,4 +2200,33 @@ trait Wp {
 
 		return apply_filters( "{$context}_microdata_filter", $data );
 	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param int|null $term_id
+	 * @param $taxonomy
+	 * @param bool $hide_empty
+	 *
+	 * @return int[]|string|string[]|\WP_Error|\WP_Term[]|null
+	 */
+	public static function childTerms( ?int $term_id, $taxonomy, bool $hide_empty = true ): array|\WP_Error|string|null {
+		if ( ! $term_id || ! taxonomy_exists( $taxonomy ) ) {
+			return null;
+		}
+
+		$child_terms = get_terms( [
+			'taxonomy'   => $taxonomy,
+			'parent'     => $term_id,
+			'hide_empty' => $hide_empty,
+		] );
+
+		if ( empty( $child_terms ) || is_wp_error( $child_terms ) ) {
+			return null;
+		}
+
+		return $child_terms;
+	}
+
+	// -------------------------------------------------------------
 }

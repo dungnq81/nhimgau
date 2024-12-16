@@ -409,6 +409,7 @@ function __menu_options_page(): array {
 		'security'       => __( 'Security', TEXT_DOMAIN ),
 		'login_security' => __( 'Login Security', TEXT_DOMAIN ),
 		'social'         => __( 'Social', TEXT_DOMAIN ),
+		'file'           => __( 'File', TEXT_DOMAIN ),
 		'base_slug'      => __( 'Remove Base Slug', TEXT_DOMAIN ),
 		//'custom_email_from' => __( 'Custom Email From', TEXT_DOMAIN ),
 		'custom_email'   => __( 'Custom Email To', TEXT_DOMAIN ),
@@ -601,13 +602,13 @@ function __theme_setting_options( array $arr ): array {
 			],
 			'linkedin'  => [
 				'name'  => 'Linkedin',
-				'icon'  => '<i class="fa-brands fa-linkedin"></i>',
+				'icon'  => 'fa-brands fa-linkedin',
 				'color' => '#0a66c2',
 				'url'   => '',
 			],
 			'zalo'      => [
 				'name'  => 'Zalo',
-				'icon'  => THEME_URL . 'storage/img/zlogo.png',
+				'icon'  => THEME_URL . 'assets/img/zlogo.png',
 				'color' => '#0068FF',
 				'url'   => 'https://chat.zalo.me/?phone=xxx',
 			],
@@ -619,20 +620,20 @@ function __theme_setting_options( array $arr ): array {
 //			],
 			'hotline'   => [
 				'name'  => 'Hotline',
-				'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M497.39 361.8l-112-48a24 24 0 0 0-28 6.9l-49.6 60.6A370.66 370.66 0 0 1 130.6 204.11l60.6-49.6a23.94 23.94 0 0 0 6.9-28l-48-112A24.16 24.16 0 0 0 122.6.61l-104 24A24 24 0 0 0 0 48c0 256.5 207.9 464 464 464a24 24 0 0 0 23.4-18.6l24-104a24.29 24.29 0 0 0-14.01-27.6z" fill="currentColor"></path></svg>',
+				'icon'  => 'fa-solid fa-phone',
 				'color' => '',
 				'url'   => '',
 			],
 			'email'     => [
 				'name'  => 'Email',
-				'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7c22.4 17.4 52.1 39.5 154.1 113.6c21.1 15.4 56.7 47.8 92.2 47.6c35.7.3 72-32.8 92.3-47.6c102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4c132.7-96.3 142.8-104.7 173.4-128.7c5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9c30.6 23.9 40.7 32.4 173.4 128.7c16.8 12.2 50.2 41.8 73.4 41.4z" fill="currentColor"></path></svg>',
+				'icon'  => 'fa-solid fa-envelope',
 				'color' => '',
 				'url'   => '',
 			],
 		],
 
 		// Other setting ( file upload, v.v... )
-		'other_settings'                      => [
+		'file_settings'                      => [
 			'upload_size_limit' => [
 				'name'  => 'Maximum upload file size',
 				'value' => 2, // MB

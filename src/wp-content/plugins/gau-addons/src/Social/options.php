@@ -32,7 +32,7 @@ if ( ! empty( $social_follows_links ) ) :
             <label for="<?=esc_attr( $key ) ?>"<?=$bg_class?>>
                 <?php
                 if ( filter_var( $icon, FILTER_VALIDATE_URL ) || str_starts_with( $icon, 'data:' ) ) :
-	                echo '<img src="' . $icon . '" alt="' . esc_attr( $name ) . '">';
+                    echo '<img src="' . $icon . '" alt="' . esc_attr( $name ) . '">';
                 elseif ( str_starts_with( $icon, '<svg' ) ) : echo $icon;
                 elseif ( is_string( $icon ) ) : echo '<i class="' . $icon . '"></i>';
                 endif;
