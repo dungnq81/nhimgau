@@ -90,6 +90,7 @@ if ( ! function_exists( '_footer_widgets' ) ) {
 		if ( 1 > $rows || 1 > $regions ) {
 			return;
 		}
+
 		?>
 		<div id="footer-widgets" class="footer-widgets">
 			<?php
@@ -152,6 +153,7 @@ if ( ! function_exists( '_footer_credit' ) ) {
 				get_bloginfo( 'name' ),
 				apply_filters( 'copyright_text_filter', __( 'All rights reserved.', TEXT_DOMAIN ) )
 			);
+
 			echo apply_filters( 'copyright_filter', $copyright );
 
 			// footer-credit sidebar
