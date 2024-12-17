@@ -34,7 +34,7 @@ if ( $home_flexible_content ) {
 		$acf_fc_layout = $section['acf_fc_layout'] ?? '';
 
 		if ( $acf_fc_layout ) {
-			get_template_part( 'template-parts/blocks/home/' . $acf_fc_layout, null, $section );
+			get_template_part( 'template-parts/home/' . $acf_fc_layout, null, $section );
 		}
 	}
 }

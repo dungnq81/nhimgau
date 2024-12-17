@@ -2341,7 +2341,7 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $term
+	 * @param mixed $term
 	 * @param bool $hide_empty
 	 * @param int $depth
 	 * @param mixed|null $selected_request
@@ -2351,39 +2351,44 @@ trait Wp {
 	 * @return string
 	 */
 	private static function _build_term_option(
-		$term,
+		mixed $term,
 		bool $hide_empty = true,
 		int $depth = 0,
 		mixed $selected_request = null,
 		?int $disabled_parent = null,
 		bool $only_parent = false
 	): string {
-		$prefix   = str_repeat( '— ', $depth );
-		$selected = '';
+		$options = '';
 
-		if ( ! is_array( $selected_request ) ) {
-			$selected = ' ' . selected( $selected_request, $term->term_id, false );
-		} elseif ( in_array( $term->term_id, $selected_request, false ) ) {
-			$selected = ' selected="selected"';
-		}
+		if ( $term?->term_id ) {
 
-		$disabled = '';
-		if ( isset( $disabled_parent ) && $term?->parent === $disabled_parent ) {
-			$disabled = ' disabled="disabled"';
-		}
+			$prefix   = str_repeat( '— ', $depth );
+			$selected = '';
 
-		$options = '<option value="' . $term->term_id . '"' . $selected . $disabled . '>' . $prefix . $term->name . '</option>';
+			if ( ! is_array( $selected_request ) ) {
+				$selected = ' ' . selected( $selected_request, $term->term_id, false );
+			} elseif ( in_array( $term->term_id, $selected_request, false ) ) {
+				$selected = ' selected="selected"';
+			}
 
-		if ( ! $only_parent ) {
-			$child_terms = get_terms( [
-				'taxonomy'   => $term->taxonomy,
-				'hide_empty' => $hide_empty,
-				'parent'     => $term->term_id,
-			] );
+			$disabled = '';
+			if ( isset( $disabled_parent ) && $term?->parent === $disabled_parent ) {
+				$disabled = ' disabled="disabled"';
+			}
 
-			if ( ! empty( $child_terms ) && ! is_wp_error( $child_terms ) ) {
-				foreach ( $child_terms as $child_term ) {
-					$options .= self::_build_term_option( $child_term, $hide_empty, $depth + 1, $selected_request, $disabled_parent );
+			$options = '<option value="' . $term->term_id . '"' . $selected . $disabled . '>' . $prefix . $term->name . '</option>';
+
+			if ( ! $only_parent ) {
+				$child_terms = get_terms( [
+					'taxonomy'   => $term->taxonomy,
+					'hide_empty' => $hide_empty,
+					'parent'     => $term->term_id,
+				] );
+
+				if ( ! empty( $child_terms ) && ! is_wp_error( $child_terms ) ) {
+					foreach ( $child_terms as $child_term ) {
+						$options .= self::_build_term_option( $child_term, $hide_empty, $depth + 1, $selected_request, $disabled_parent );
+					}
 				}
 			}
 		}
