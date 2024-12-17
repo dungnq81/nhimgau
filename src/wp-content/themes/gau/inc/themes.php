@@ -438,6 +438,15 @@ function __theme_setting_options( array $arr ): array {
 			//'edit.php',
 		],
 
+		// hide admin submenu
+		'admin_hide_submenu' => [
+//			'options-general.php' => [
+//				'options-discussion.php',
+//				'options-privacy.php'
+//			]
+		],
+
+		// ignore user
 		'admin_hide_menu_ignore_user'         => [ 1 ],
 
 		// defer, delay script - default 5s.

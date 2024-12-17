@@ -122,7 +122,6 @@ trait Cast {
 	 * @return string The converted string.
 	 */
 	public static function toString( mixed $value, bool $strict = true ): string {
-
 		// Handle object conversion using __toString method
 		if ( is_object( $value ) && in_array( '__toString', get_class_methods( $value ) ) ) {
 			return (string) $value->__toString();
@@ -157,7 +156,6 @@ trait Cast {
 	 * @return bool True for "truthy" values, false otherwise.
 	 */
 	public static function toBool( mixed $value ): bool {
-
 		// Handle null explicitly if needed (optional)
 		if ( is_null( $value ) ) {
 			return false;

@@ -96,7 +96,7 @@ trait Db {
 			return count( $values );
 		}
 
-		// rollback the transaction
+		// Roll back the transaction
 		$wpdb->query( 'ROLLBACK' );
 
 		return new \WP_Error( 'insert_error', $wpdb->last_error );
@@ -248,19 +248,11 @@ trait Db {
 	 * @param int $limit
 	 * @param string|null $order_by
 	 * @param string|null $order
+	 * @param bool $return_object
 	 *
-	 * @return array|null|\WP_Error
+	 * @return array|object|null
 	 */
-	public static function getRowsBy(
-		?string $table_name,
-		?string $column,
-		string|int|null $key,
-		bool $sanitize = true,
-		int $offset = 0,
-		int $limit = - 1,
-		?string $order_by = '',
-		?string $order = 'ASC'
-	): \WP_Error|array|null {
+	public static function getRowsBy( ?string $table_name, ?string $column, string|int|null $key, bool $return_object = false, bool $sanitize = true, int $offset = 0, int $limit = - 1, ?string $order_by = '', ?string $order = 'ASC' ): array|object|null {
 		global $wpdb;
 
 		// Validate input
@@ -291,7 +283,7 @@ trait Db {
 			$query .= $wpdb->prepare( " LIMIT %d, 18446744073709551615", $offset ); // max 'UNSIGNED BIGINT'
 		}
 
-		return $wpdb->get_results( $query, ARRAY_A );
+		return $return_object ? $wpdb->get_results( $query ) : $wpdb->get_results( $query, ARRAY_A );
 	}
 
 	// -------------------------------------------------------------
@@ -300,11 +292,13 @@ trait Db {
 	 * @param string|null $table_name
 	 * @param string|null $column
 	 * @param string|int|null $key
+	 * @param bool $return_object
+	 *
 	 * @param bool $sanitize
 	 *
-	 * @return array|\WP_Error|null
+	 * @return array|object|null
 	 */
-	public static function getOneRowBy( ?string $table_name, ?string $column, string|int|null $key, bool $sanitize = true ): \WP_Error|array|null {
+	public static function getOneRowBy( ?string $table_name, ?string $column, string|int|null $key, bool $return_object = false, bool $sanitize = true ): array|object|null {
 		global $wpdb;
 
 		// Validate input and return WP_Error if invalid
@@ -318,7 +312,7 @@ trait Db {
 
 		$query = $wpdb->prepare( "SELECT * FROM `{$table_name}` WHERE `{$column}` = %s ORDER BY `id` DESC", $key );
 
-		return $wpdb->get_row( $query, ARRAY_A );
+		return $return_object ? $wpdb->get_row( $query ) : $wpdb->get_row( $query, ARRAY_A );
 	}
 
 	// -------------------------------------------------------------
@@ -326,11 +320,12 @@ trait Db {
 	/**
 	 * @param string|null $table_name
 	 * @param int|null $id
+	 * @param bool $return_object
 	 * @param bool $sanitize
 	 *
-	 * @return array|\WP_Error|null
+	 * @return array|object|null
 	 */
-	public static function getOneRow( ?string $table_name, ?int $id, bool $sanitize = true ): \WP_Error|array|null {
+	public static function getOneRow( ?string $table_name, ?int $id, bool $return_object = false, bool $sanitize = true ): array|object|null {
 		global $wpdb;
 
 		if ( empty( $table_name ) || $id === null ) {
@@ -340,7 +335,7 @@ trait Db {
 		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
 		$query      = $wpdb->prepare( "SELECT * FROM `{$table_name}` WHERE `id` = %d", (int) $id );
 
-		return $wpdb->get_row( $query, ARRAY_A );
+		return $return_object ? $wpdb->get_row( $query ) : $wpdb->get_row( $query, ARRAY_A );
 	}
 
 	// -------------------------------------------------------------
@@ -352,17 +347,11 @@ trait Db {
 	 * @param bool $sanitize
 	 * @param string|null $order_by
 	 * @param string|null $order
+	 * @param bool $return_object
 	 *
-	 * @return array|null|\WP_Error
+	 * @return array|object|null
 	 */
-	public static function getRows(
-		?string $table_name,
-		int $offset = 0,
-		int $limit = - 1,
-		bool $sanitize = true,
-		?string $order_by = '',
-		?string $order = 'ASC'
-	): \WP_Error|array|null {
+	public static function getRows( ?string $table_name, int $offset = 0, int $limit = - 1, bool $return_object = false, bool $sanitize = true, ?string $order_by = '', ?string $order = 'ASC' ): array|object|null {
 		global $wpdb;
 
 		// Validate input
@@ -389,7 +378,7 @@ trait Db {
 			$query .= $wpdb->prepare( " LIMIT %d, 18446744073709551615", $offset ); // max 'UNSIGNED BIGINT'
 		}
 
-		return $wpdb->get_results( $query, ARRAY_A );
+		return $return_object ? $wpdb->get_results( $query ) : $wpdb->get_results( $query, ARRAY_A );
 	}
 
 	// -------------------------------------------------------------

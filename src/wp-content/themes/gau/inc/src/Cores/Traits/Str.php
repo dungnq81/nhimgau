@@ -239,11 +239,13 @@ trait Str {
 
 			// Check if to keep the tags or just their content
 			if ( $keepTags ) {
+
 				// Check if the style content is not empty
 				if ( trim( $style_matches[1][ $index ] ) !== '' ) {
 					$valid_css[] = $styleTag;
 				}
 			} else {
+
 				// Just add the style content without tags
 				$valid_css[] = $style_matches[1][ $index ];
 			}

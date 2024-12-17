@@ -4,7 +4,6 @@ namespace Cores\Traits;
 
 use Detection\Exception\MobileDetectException;
 use Detection\MobileDetect;
-use JetBrains\PhpStorm\NoReturn;
 
 \defined( 'ABSPATH' ) || die;
 
@@ -13,30 +12,43 @@ trait Base {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param string|\WP_Error $message
-	 * @param string|int $title
-	 * @param string|array|int $args
+	 * Check if the current page is using a specific page template.
 	 *
-	 * @return void
+	 * @param string|null $template
+	 *
+	 * @return bool
 	 */
-	public static function wpDie( string|\WP_Error $message = '', string|int $title = '', string|array|int $args = [] ): void {
-		wp_die( $message, $title, $args );
+	public static function isPageTemplate( ?string $template = null ): bool {
+		if ( $template === null || ! is_page() ) {
+			return false;
+		}
+
+		$current_template_slug = get_page_template_slug( get_the_ID() );
+		if ( ! $current_template_slug ) {
+			return false;
+		}
+
+		return $current_template_slug === trim( $template );
 	}
 
 	// -------------------------------------------------------------
 
 	/**
-	 * @param string $message
-	 * @param int $message_type
-	 * @param string|null $destination
-	 * @param string|null $additional_headers
+	 * Check if the current page is a category page and belongs to a specific taxonomy.
 	 *
-	 * @return bool|void
+	 * @param string|null $taxonomy
+	 *
+	 * @return bool
 	 */
-	public static function errorLog( string $message, int $message_type = 0, ?string $destination = null, ?string $additional_headers = null ) {
-		if ( WP_DEBUG ) {
-			return error_log( $message, $message_type, $destination, $additional_headers );
+	public static function isTaxonomy( ?string $taxonomy = null ): bool {
+		$queried_object = get_queried_object();
+
+		if ( $taxonomy === null ) {
+			return $queried_object && ! empty( $queried_object?->taxonomy );
 		}
+
+		// Validate queried object and its taxonomy.
+		return $queried_object && isset( $queried_object->taxonomy ) && $queried_object->taxonomy === $taxonomy;
 	}
 
 	// --------------------------------------------------
@@ -141,13 +153,13 @@ trait Base {
 	// -------------------------------------------------------------
 
 	/**
-	 * Determines whether the current request is a WP-CLI request.
+	 * Determines whether the current request is a WP_CLI request.
 	 *
 	 * This function checks if the WP_CLI constant is defined and true,
 	 * indicating that the code is being executed in the context of
 	 * the WordPress Command Line Interface.
 	 *
-	 * @return bool True if the current request is a WP CLI request, false otherwise.
+	 * @return bool True if the current request is a WP_CLI request, false otherwise.
 	 */
 	public static function isWpCli(): bool {
 		return defined( 'WP_CLI' ) && \WP_CLI;
@@ -174,7 +186,7 @@ trait Base {
 	// -------------------------------------------------------------
 
 	/**
-	 * Check if plugin is installed by getting all plugins from the plugins dir
+	 * Check if a plugin is installed by getting all plugins from the plugins dir
 	 *
 	 * @param string $plugin_slug
 	 *

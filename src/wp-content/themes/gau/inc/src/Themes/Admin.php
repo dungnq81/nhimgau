@@ -94,7 +94,7 @@ final class Admin {
 	 * @return void
 	 */
 	public function admin_menu(): void {
-		//global $menu, $submenu;
+		global $menu, $submenu;
 		//dump($menu);
 		//dump($submenu);
 
@@ -105,23 +105,37 @@ final class Admin {
 		remove_meta_box( 'dashboard_secondary', 'dashboard', 'side' );
 
 		$admin_hide_menu             = Helper::filterSettingOptions( 'admin_hide_menu', [] );
+		$admin_hide_submenu          = Helper::filterSettingOptions( 'admin_hide_submenu', [] );
 		$admin_hide_menu_ignore_user = Helper::filterSettingOptions( 'admin_hide_menu_ignore_user', [] );
 
 		$user_id = get_current_user_id();
 
+		// menu
 		if ( $admin_hide_menu && ! in_array( $user_id, $admin_hide_menu_ignore_user, false ) ) {
 			foreach ( $admin_hide_menu as $menu_slug ) {
 				if ( $menu_slug ) {
-					$_item = remove_menu_page( $menu_slug );
+					$_a = remove_menu_page( $menu_slug );
 				}
 			}
 		}
 
+		// submenu
+		if ( $admin_hide_submenu && ! in_array( $user_id, $admin_hide_menu_ignore_user, false ) ) {
+			foreach ( $admin_hide_submenu as $menu_slug => $_submenu ) {
+				foreach ( $_submenu as $_submenu_item ) {
+					if ( $_submenu_item ) {
+						$_b = remove_submenu_page( $menu_slug, $_submenu_item );
+					}
+				}
+			}
+		}
+
+        // other settings
 		$remove_menu_setting = Helper::getThemeMod( 'remove_menu_setting' );
 		if ( $remove_menu_setting ) {
 			foreach ( explode( "\n", $remove_menu_setting ) as $menu_slug ) {
 				if ( $menu_slug ) {
-					$_item = remove_menu_page( $menu_slug );
+					$c = remove_menu_page( $menu_slug );
 				}
 			}
 		}

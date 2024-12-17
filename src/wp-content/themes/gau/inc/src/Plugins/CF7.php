@@ -60,7 +60,7 @@ final class CF7 {
 			}
 		}
 
-		// Ensure we have a term arguments to work with
+		// Ensure we have a term argument to work with
 		if ( empty( $term_args ) ) {
 			return $tag;
 		}

@@ -28,7 +28,7 @@ final class Theme {
 
 		// plugins_loaded -> after_setup_theme -> init -> rest_api_init -> widgets_init -> wp_loaded -> admin_menu -> admin_init ...
 
-		// Login
+		/** Login page */
 		$this->_admin_login();
 
 		add_action( 'after_setup_theme', [ $this, 'i18n' ], 10 );

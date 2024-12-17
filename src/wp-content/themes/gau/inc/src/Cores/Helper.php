@@ -17,6 +17,35 @@ final class Helper {
 	// -------------------------------------------------------------
 
 	/**
+	 * @param string|\WP_Error $message
+	 * @param string|int $title
+	 * @param string|array|int $args
+	 *
+	 * @return void
+	 */
+	public static function wpDie( string|\WP_Error $message = '', string|int $title = '', string|array|int $args = [] ): void {
+		wp_die( $message, $title, $args );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string $message
+	 * @param int $message_type
+	 * @param string|null $destination
+	 * @param string|null $additional_headers
+	 *
+	 * @return bool|void
+	 */
+	public static function errorLog( string $message, int $message_type = 0, ?string $destination = null, ?string $additional_headers = null ) {
+		if ( WP_DEBUG ) {
+			return error_log( $message, $message_type, $destination, $additional_headers );
+		}
+	}
+
+	// -------------------------------------------------------------
+
+	/**
 	 * @param $route
 	 * @param bool $default
 	 *
