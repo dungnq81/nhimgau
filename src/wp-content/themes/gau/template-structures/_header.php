@@ -55,13 +55,13 @@ if ( ! function_exists( '__critical_css' ) ) {
 	function __critical_css(): void {
 		if ( is_front_page() || is_home() ) {
 
-			$critical_css = get_transient( 'index_critical_css' );
+			$critical_css = get_transient( '_transient_index_critical' );
 			if ( false === $critical_css ) {
 				$critical_css_file = THEME_PATH . 'assets/css/index_critical.min.css';
 
 				if ( is_file( $critical_css_file ) ) {
 					$critical_css = file_get_contents( $critical_css_file );
-					set_transient( 'index_critical_css', $critical_css, 2 * HOUR_IN_SECONDS );
+					set_transient( '_transient_index_critical', $critical_css, 2 * HOUR_IN_SECONDS );
 				}
 			}
 

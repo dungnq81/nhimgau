@@ -2349,6 +2349,7 @@ trait Wp {
 	 * @param bool $only_parent
 	 *
 	 * @return string
+	 * @private
 	 */
 	private static function _build_term_option(
 		mixed $term,

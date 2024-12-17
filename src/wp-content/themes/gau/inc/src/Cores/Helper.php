@@ -81,7 +81,7 @@ final class Helper {
 	// -------------------------------------------------------------
 
 	/**
-	 * Get lang code
+	 * Get lang-code
 	 *
 	 * @return string
 	 */
