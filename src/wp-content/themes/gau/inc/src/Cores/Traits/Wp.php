@@ -448,13 +448,13 @@ trait Wp {
 	/**
 	 * Retrieves attachment details by its ID.
 	 *
-	 * @param int|\WP_Post|null $attachment_id
+	 * @param mixed $attachment_id
 	 * @param bool $return_object Optional. Whether to return the result as an object. Default true.
 	 *
 	 * @return object|array|null Attachment details as an object or array, or null if not found.
 	 * @throws \JsonException If JSON encoding fails.
 	 */
-	public static function getAttachment( int|\WP_Post|null $attachment_id, bool $return_object = true ): object|array|null {
+	public static function getAttachment( mixed $attachment_id, bool $return_object = true ): object|array|null {
 
 		// Fetch the attachment post object
 		$attachment = get_post( $attachment_id );
@@ -676,9 +676,9 @@ trait Wp {
 	 * @param mixed $term_id The term ID (integer) or slug/name (string) of the term to retrieve.
 	 * @param string $taxonomy The taxonomy to search for the term. Default is 'category'.
 	 *
-	 * @return \WP_Term|\WP_Error|false|null The term object, a WP_Error on failure, false if `term` doesn't exist, or null if term ID is invalid.
+	 * @return \WP_Term|\WP_Error|bool|null The term object, a WP_Error on failure, false if `term` doesn't exist, or null if term ID is invalid.
 	 */
-	public static function getTerm( mixed $term_id, string $taxonomy = 'category' ): \WP_Term|\WP_Error|false|null {
+	public static function getTerm( mixed $term_id, string $taxonomy = 'category' ): \WP_Term|\WP_Error|bool|null {
 
 		// Check if the term ID is numeric and retrieve term by ID
 		if ( is_numeric( $term_id ) ) {
@@ -928,17 +928,17 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param int $blog_id
+	 * @param int|null $blog_id
 	 *
 	 * @return string
 	 *
 	 * Modified from the native get_custom_logo() function
 	 */
-	public static function customSiteLogo( int $blog_id = 0 ): string {
+	public static function customSiteLogo( ?int $blog_id = 0 ): string {
 		$html          = '';
 		$switched_blog = false;
 
-		if ( ! empty( $blog_id ) && is_multisite() && get_current_blog_id() !== $blog_id ) {
+		if ( $blog_id !== null && is_multisite() && get_current_blog_id() !== $blog_id ) {
 			switch_to_blog( $blog_id );
 			$switched_blog = true;
 		}
@@ -1144,12 +1144,13 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param int|\WP_Post|null $post
+	 * @param mixed|null $post
 	 * @param string|null $class
+	 * @param string|null $default_tag
 	 *
 	 * @return string|null
 	 */
-	public static function loopExcerpt( int|\WP_Post|null $post = null, ?string $class = 'excerpt' ): ?string {
+	public static function loopExcerpt( mixed $post = null, ?string $class = 'excerpt', ?string $default_tag = 'div' ): ?string {
 		$excerpt = get_the_excerpt( $post );
 		if ( ! self::stripSpace( $excerpt ) ) {
 			return null;
@@ -1160,19 +1161,22 @@ trait Wp {
 			return $excerpt;
 		}
 
-		return "<p class=\"$class\">{$excerpt}</p>";
+		$tag = $default_tag ?? 'p';
+
+		return "<" . $tag . " class=\"$class\">{$excerpt}</" . $tag . ">";
 	}
 
 	// -------------------------------------------------------------
 
 	/**
-	 * @param int|\WP_Post|null $post
+	 * @param mixed|null $post
 	 * @param string|null $class
+	 * @param string|null $default_tag
 	 * @param string|null $fa_glyph
 	 *
 	 * @return string|null
 	 */
-	public static function postExcerpt( int|\WP_Post|null $post = null, ?string $class = 'excerpt', ?string $fa_glyph = '' ): ?string {
+	public static function postExcerpt( mixed $post = null, ?string $class = 'excerpt', ?string $default_tag = 'div', ?string $fa_glyph = '' ): ?string {
 		$post = get_post( $post );
 		if ( ! $post || ! self::stripSpace( $post->post_excerpt ) ) {
 			return null;
@@ -1187,8 +1191,10 @@ trait Wp {
 		}
 
 		if ( $class ) {
-			$open  = '<div class="' . $class . '"' . $glyph . '>';
-			$close = '</div>';
+			$tag = $default_tag ?? 'div';
+
+			$open  = '<' . $tag . ' class="' . $class . '"' . $glyph . '>';
+			$close = '</' . $tag . '>';
 		}
 
 		return $open . $post->post_excerpt . $close;
@@ -1197,12 +1203,13 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param int $term
+	 * @param int|null $term
 	 * @param string|null $class
+	 * @param string|null $default_tag
 	 *
 	 * @return string|null
 	 */
-	public static function termExcerpt( int $term = 0, ?string $class = 'excerpt' ): ?string {
+	public static function termExcerpt( ?int $term = 0, ?string $class = 'excerpt', ?string $default_tag = 'p' ): ?string {
 		$description = term_description( $term );
 		if ( ! self::stripSpace( $description ) ) {
 			return null;
@@ -1213,18 +1220,20 @@ trait Wp {
 			return $description;
 		}
 
-		return "<p class=\"$class\">$description</p>";
+		$tag = $default_tag ?? 'p';
+
+		return "<" . $tag . " class=\"$class\">$description</" . $tag . ">";
 	}
 
 	// -------------------------------------------------------------
 
 	/**
-	 * @param int|\WP_Post|null $post
+	 * @param mixed $post
 	 * @param string $taxonomy
 	 *
 	 * @return mixed
 	 */
-	public static function primaryTerm( int|\WP_Post|null $post, string $taxonomy = '' ): mixed {
+	public static function primaryTerm( mixed $post, string $taxonomy = '' ): mixed {
 		// Ensure $post is a valid post object
 		$post = get_post( $post );
 		if ( ! $post ) {
@@ -1300,14 +1309,14 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param int|\WP_Post|null $post
+	 * @param mixed|null $post
 	 * @param string $taxonomy
 	 * @param string|null $wrapper_open
 	 * @param string|null $wrapper_close
 	 *
 	 * @return string|null
 	 */
-	public static function getPrimaryTerm( int|\WP_Post|null $post = null, string $taxonomy = '', ?string $wrapper_open = '<div class="terms">', ?string $wrapper_close = '</div>' ): ?string {
+	public static function getPrimaryTerm( mixed $post = null, string $taxonomy = '', ?string $wrapper_open = '<div class="terms">', ?string $wrapper_close = '</div>' ): ?string {
 		$term = self::primaryTerm( $post, $taxonomy );
 		if ( ! $term ) {
 			return null;
@@ -1324,14 +1333,14 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param int|\WP_Post|null $post
+	 * @param mixed $post
 	 * @param string|null $taxonomy
 	 * @param string|null $wrapper_open
 	 * @param string|null $wrapper_close
 	 *
 	 * @return string|null
 	 */
-	public static function postTerms( int|\WP_Post|null $post, ?string $taxonomy = 'category', ?string $wrapper_open = '<div class="terms">', ?string $wrapper_close = '</div>' ): ?string {
+	public static function postTerms( mixed $post, ?string $taxonomy = 'category', ?string $wrapper_open = '<div class="terms">', ?string $wrapper_close = '</div>' ): ?string {
 		if ( ! $taxonomy ) {
 			$post_type = get_post_type( $post );
 			$taxonomy  = $post_type . '_cat';
@@ -1404,25 +1413,25 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param int|\WP_Post|null $post
+	 * @param mixed|null $post
 	 * @param string $size
 	 *
 	 * @return string|null
 	 */
-	public static function postImageSrc( int|\WP_Post|null $post = null, string $size = 'thumbnail' ): ?string {
+	public static function postImageSrc( mixed $post = null, string $size = 'thumbnail' ): ?string {
 		return get_the_post_thumbnail_url( $post, $size );
 	}
 
 	// -------------------------------------------------------------
 
 	/**
-	 * @param int|\WP_Post|null $post
+	 * @param mixed|null $post
 	 * @param string $size
 	 * @param string|array $attr
 	 *
 	 * @return string
 	 */
-	public static function iconPostImage( int|\WP_Post|null $post = null, string $size = 'thumbnail', string|array $attr = '' ): string {
+	public static function iconPostImage( mixed $post = null, string $size = 'thumbnail', string|array $attr = '' ): string {
 		$post = get_post( $post );
 		if ( ! $post ) {
 			return '';
@@ -1526,10 +1535,10 @@ trait Wp {
 	 * @param bool $format_value
 	 * @param bool $escape_html
 	 *
-	 * @return array|false|object
+	 * @return array|bool|object
 	 * @throws \JsonException
 	 */
-	public static function getFields( mixed $post_id = false, bool $force_object = false, bool $format_value = true, bool $escape_html = false ): object|false|array {
+	public static function getFields( mixed $post_id = false, bool $force_object = false, bool $format_value = true, bool $escape_html = false ): object|bool|array {
 		if ( ! self::isAcfActive() ) {
 			return [];
 		}
@@ -1547,7 +1556,7 @@ trait Wp {
 	 * @param boolean $format_value
 	 * @param boolean $escape_html
 	 *
-	 * @return false|mixed
+	 * @return mixed
 	 */
 	public static function getField( ?string $selector, mixed $post_id = false, bool $format_value = true, bool $escape_html = false ): mixed {
 		if ( ! $selector || ! self::isAcfActive() ) {
@@ -1714,7 +1723,7 @@ trait Wp {
 	 */
 	public static function getUserLink( int|false $user_id = false ): string {
 		if ( ! $user_id ) {
-			$user_id = get_the_author_meta( 'ID' );
+			$user_id = (int) get_the_author_meta( 'ID' );
 		}
 
 		return get_author_posts_url( $user_id );
@@ -1986,13 +1995,13 @@ trait Wp {
 
 	/**
 	 * @param string $post_type
-	 * @param string $option
+	 * @param string|null $option
 	 *
 	 * @return string|string[]
 	 */
-	public static function getAspectRatioOption( string $post_type = '', string $option = '' ): array|string {
+	public static function getAspectRatioOption( string $post_type = '', ?string $option = '' ): array|string {
 		$post_type = $post_type ?: 'post';
-		$option    = $option ?: 'aspect_ratio__options';
+		$option    = $option ?? 'aspect_ratio__options';
 
 		$aspect_ratio_options = self::getOption( $option );
 		$width                = $aspect_ratio_options[ 'ar-' . $post_type . '-width' ] ?? '';
@@ -2025,12 +2034,12 @@ trait Wp {
 
 	/**
 	 * @param string $post_type
-	 * @param string $option
+	 * @param string|null $option
 	 * @param string $default
 	 *
 	 * @return object
 	 */
-	public static function getAspectRatio( string $post_type = 'post', string $option = '', string $default = 'ar[3-2]' ): object {
+	public static function getAspectRatio( string $post_type = 'post', ?string $option = '', string $default = 'ar[3-2]' ): object {
 		$ratio = self::getAspectRatioOption( $post_type, $option );
 
 		$ratio_x = $ratio[0] ?? '';
@@ -2070,13 +2079,13 @@ trait Wp {
 	/**
 	 * Get any necessary microdata.
 	 *
-	 * @param string $context The element to target.
+	 * @param string|null $context The element to target.
 	 *
 	 * @return string Our final attribute to add to the element.
 	 *
 	 * GeneratePress
 	 */
-	public static function microdata( string $context ): string {
+	public static function microdata( ?string $context ): string {
 		$data = false;
 
 		if ( 'body' === $context ) {
@@ -2205,12 +2214,12 @@ trait Wp {
 
 	/**
 	 * @param int|null $term_id
-	 * @param $taxonomy
+	 * @param string $taxonomy
 	 * @param bool $hide_empty
 	 *
 	 * @return int[]|string|string[]|\WP_Error|\WP_Term[]|null
 	 */
-	public static function childTerms( ?int $term_id, $taxonomy, bool $hide_empty = true ): array|\WP_Error|string|null {
+	public static function childTerms( ?int $term_id, string $taxonomy, bool $hide_empty = true ): array|\WP_Error|string|null {
 		if ( ! $term_id || ! taxonomy_exists( $taxonomy ) ) {
 			return null;
 		}
