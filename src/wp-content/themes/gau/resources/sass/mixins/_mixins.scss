@@ -724,7 +724,6 @@
 
     // Hover state
     @if $color-hover {
-        // Generate CSS
         @for $i from 2 through $bars {
             $offset: ($weight + $spacing) * ($i - 1);
             $hover-shadow: list.append($hover-shadow, 0 $offset 0 $color-hover, comma);
