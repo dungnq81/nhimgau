@@ -1,54 +1,55 @@
-@use "functions" as *;
-
 // variables
 // --------------------------
 
-$fa-css-prefix          : fa !default;
-$fa-style               : 900 !default;
-$fa-style-family        : "Font Awesome 6 Pro" !default;
+$fa-css-prefix            : fa !default;
+$fa-style                 : 900 !default;
+$fa-style-family          : "Font Awesome 6 Pro" !default;
 
-$fa-display             : inline-block !default;
+$fa-icon-property         : --fa;
+$fa-duotone-icon-property : --fa--fa;
 
-$fa-fw-width            : fa-divide(20em, 16) !default;
-$fa-inverse             : #fff !default;
+$fa-display               : inline-block !default;
 
-$fa-border-color        : #eee !default;
-$fa-border-padding      : .2em .25em .15em !default;
-$fa-border-radius       : .1em !default;
-$fa-border-style        : solid !default;
-$fa-border-width        : .08em !default;
+$fa-fw-width              : fa-divide(20em, 16) !default;
+$fa-inverse               : #fff !default;
 
-$fa-size-scale-2xs      : 10 !default;
-$fa-size-scale-xs       : 12 !default;
-$fa-size-scale-sm       : 14 !default;
-$fa-size-scale-base     : 16 !default;
-$fa-size-scale-lg       : 20 !default;
-$fa-size-scale-xl       : 24 !default;
-$fa-size-scale-2xl      : 32 !default;
+$fa-border-color          : #eee !default;
+$fa-border-padding        : .2em .25em .15em !default;
+$fa-border-radius         : .1em !default;
+$fa-border-style          : solid !default;
+$fa-border-width          : .08em !default;
+
+$fa-size-scale-2xs        : 10 !default;
+$fa-size-scale-xs         : 12 !default;
+$fa-size-scale-sm         : 14 !default;
+$fa-size-scale-base       : 16 !default;
+$fa-size-scale-lg         : 20 !default;
+$fa-size-scale-xl         : 24 !default;
+$fa-size-scale-2xl        : 32 !default;
 
 $fa-sizes: (
-  "2xs"                 : $fa-size-scale-2xs,
-  "xs"                  : $fa-size-scale-xs,
-  "sm"                  : $fa-size-scale-sm,
-  "lg"                  : $fa-size-scale-lg,
-  "xl"                  : $fa-size-scale-xl,
-  "2xl"                 : $fa-size-scale-2xl
+  "2xs"                   : $fa-size-scale-2xs,
+  "xs"                    : $fa-size-scale-xs,
+  "sm"                    : $fa-size-scale-sm,
+  "lg"                    : $fa-size-scale-lg,
+  "xl"                    : $fa-size-scale-xl,
+  "2xl"                   : $fa-size-scale-2xl
 ) !default;
 
-$fa-li-width            : 2em !default;
-$fa-li-margin           : $fa-li-width * fa-divide(5, 4) !default;
+$fa-li-width              : 2em !default;
+$fa-li-margin             : $fa-li-width * fa-divide(5, 4) !default;
 
-$fa-pull-margin         : .3em !default;
+$fa-pull-margin           : .3em !default;
 
-$fa-primary-opacity     : 1 !default;
-$fa-secondary-opacity   : .4 !default;
+$fa-primary-opacity       : 1 !default;
+$fa-secondary-opacity     : .4 !default;
 
-$fa-stack-vertical-align: middle !default;
-$fa-stack-width         : ($fa-fw-width * 2) !default;
-$fa-stack-z-index       : auto !default;
+$fa-stack-vertical-align  : middle !default;
+$fa-stack-width           : ($fa-fw-width * 2) !default;
+$fa-stack-z-index         : auto !default;
 
-$fa-font-display        : block !default;
-$fa-font-path           : "../webfonts" !default;
+$fa-font-display          : block !default;
+$fa-font-path             : "../webfonts" !default;
 
 $fa-var-0: \30;
 $fa-var-1: \31;
@@ -197,6 +198,8 @@ $fa-var-lightbulb-exclamation-on: \e1ca;
 $fa-var-people-line: \e534;
 $fa-var-beer-mug-empty: \f0fc;
 $fa-var-beer: \f0fc;
+$fa-var-carpool: \e69c;
+$fa-var-car-people: \e69c;
 $fa-var-crate-empty: \e151;
 $fa-var-diagram-predecessor: \e477;
 $fa-var-transporter: \e042;
@@ -283,6 +286,7 @@ $fa-var-code-pull-request: \e13c;
 $fa-var-pumpkin: \f707;
 $fa-var-clipboard-list: \f46d;
 $fa-var-pen-field: \e211;
+$fa-var-chart-sine: \e69d;
 $fa-var-blueberries: \e2e8;
 $fa-var-truck-ramp-box: \f4de;
 $fa-var-truck-loading: \f4de;
@@ -1408,6 +1412,7 @@ $fa-var-arrow-up-from-ground-water: \e4b5;
 $fa-var-bracket-square-right: \5d;
 $fa-var-martini-glass: \f57b;
 $fa-var-glass-martini-alt: \f57b;
+$fa-var-square-binary: \e69b;
 $fa-var-rotate-left: \f2ea;
 $fa-var-rotate-back: \f2ea;
 $fa-var-rotate-backward: \f2ea;
@@ -1555,6 +1560,7 @@ $fa-var-trash-can-plus: \e2ac;
 $fa-var-address-card: \f2bb;
 $fa-var-contact-card: \f2bb;
 $fa-var-vcard: \f2bb;
+$fa-var-chart-fft: \e69e;
 $fa-var-scale-unbalanced-flip: \f516;
 $fa-var-balance-scale-right: \f516;
 $fa-var-globe-snow: \f7a3;
@@ -2236,6 +2242,7 @@ $fa-var-circle-ellipsis-vertical: \e10b;
 $fa-var-hand-holding-dollar: \f4c0;
 $fa-var-hand-holding-usd: \f4c0;
 $fa-var-grid-dividers: \e3ad;
+$fa-var-chart-diagram: \e695;
 $fa-var-bacterium: \e05a;
 $fa-var-hand-pointer: \f25a;
 $fa-var-drum-steelpan: \f56a;
@@ -2316,6 +2323,7 @@ $fa-var-starfighter-twin-ion-engine: \e038;
 $fa-var-starfighter-alt: \e038;
 $fa-var-rocket-launch: \e027;
 $fa-var-mosquito-net: \e52c;
+$fa-var-file-fragment: \e697;
 $fa-var-vent-damper: \e465;
 $fa-var-bridge-water: \e4ce;
 $fa-var-ban-bug: \f7f9;
@@ -2774,6 +2782,7 @@ $fa-var-axe: \f6b2;
 $fa-var-square-d: \e268;
 $fa-var-grip-vertical: \f58e;
 $fa-var-mobile-signal-out: \e1f0;
+$fa-var-hexagon-nodes: \e699;
 $fa-var-arrow-turn-up: \f148;
 $fa-var-level-up: \f148;
 $fa-var-u: \55;
@@ -3384,6 +3393,8 @@ $fa-var-save-circle-xmark: \e181;
 $fa-var-save-times: \e181;
 $fa-var-naira-sign: \e1f6;
 $fa-var-peach: \e20b;
+$fa-var-circles-overlap-3: \e6a1;
+$fa-var-pronoun: \e6a1;
 $fa-var-taxi-bus: \e298;
 $fa-var-bracket-curly: \7b;
 $fa-var-bracket-curly-left: \7b;
@@ -3639,6 +3650,7 @@ $fa-var-photo-video: \f87c;
 $fa-var-floppy-disk-circle-arrow-right: \e180;
 $fa-var-save-circle-arrow-right: \e180;
 $fa-var-folder-minus: \f65d;
+$fa-var-hexagon-nodes-bolt: \e69a;
 $fa-var-planet-moon: \e01f;
 $fa-var-face-eyes-xmarks: \e374;
 $fa-var-chart-scatter: \f7ee;
@@ -3850,6 +3862,7 @@ $fa-var-repeat-1-alt: \f366;
 $fa-var-gun-slash: \e19c;
 $fa-var-avocado: \e0aa;
 $fa-var-binary: \e33b;
+$fa-var-comment-nodes: \e696;
 $fa-var-glasses-round: \f5f5;
 $fa-var-glasses-alt: \f5f5;
 $fa-var-phone-plus: \f4d2;
@@ -4194,6 +4207,7 @@ $fa-var-garlic: \e40e;
 $fa-var-mug-saucer: \f0f4;
 $fa-var-coffee: \f0f4;
 $fa-var-brush: \f55d;
+$fa-var-file-half-dashed: \e698;
 $fa-var-tree-decorated: \f7dc;
 $fa-var-mask: \f6fa;
 $fa-var-calendar-heart: \e0d3;
@@ -4465,6 +4479,7 @@ $fa-var-scribd: \f28a;
 $fa-var-debian: \e60b;
 $fa-var-openid: \f19b;
 $fa-var-instalod: \e081;
+$fa-var-files-pinwheel: \e69f;
 $fa-var-expeditedssl: \f23e;
 $fa-var-sellcast: \f2da;
 $fa-var-square-twitter: \f081;
@@ -4506,6 +4521,7 @@ $fa-var-square-letterboxd: \e62e;
 $fa-var-sticker-mule: \f3f7;
 $fa-var-creative-commons-zero: \f4f3;
 $fa-var-hips: \f452;
+$fa-var-css: \e6a2;
 $fa-var-behance: \f1b4;
 $fa-var-reddit: \f1a1;
 $fa-var-discord: \f392;
@@ -4649,6 +4665,7 @@ $fa-var-magento: \f3c4;
 $fa-var-spotify: \f1bc;
 $fa-var-optin-monster: \f23c;
 $fa-var-fly: \f417;
+$fa-var-square-bluesky: \e6a3;
 $fa-var-aviato: \f421;
 $fa-var-itunes: \f3b4;
 $fa-var-cuttlefish: \f38c;
@@ -5021,6 +5038,8 @@ $fa-icons: (
   "people-line": $fa-var-people-line,
   "beer-mug-empty": $fa-var-beer-mug-empty,
   "beer": $fa-var-beer,
+  "carpool": $fa-var-carpool,
+  "car-people": $fa-var-car-people,
   "crate-empty": $fa-var-crate-empty,
   "diagram-predecessor": $fa-var-diagram-predecessor,
   "transporter": $fa-var-transporter,
@@ -5107,6 +5126,7 @@ $fa-icons: (
   "pumpkin": $fa-var-pumpkin,
   "clipboard-list": $fa-var-clipboard-list,
   "pen-field": $fa-var-pen-field,
+  "chart-sine": $fa-var-chart-sine,
   "blueberries": $fa-var-blueberries,
   "truck-ramp-box": $fa-var-truck-ramp-box,
   "truck-loading": $fa-var-truck-loading,
@@ -6232,6 +6252,7 @@ $fa-icons: (
   "bracket-square-right": $fa-var-bracket-square-right,
   "martini-glass": $fa-var-martini-glass,
   "glass-martini-alt": $fa-var-glass-martini-alt,
+  "square-binary": $fa-var-square-binary,
   "rotate-left": $fa-var-rotate-left,
   "rotate-back": $fa-var-rotate-back,
   "rotate-backward": $fa-var-rotate-backward,
@@ -6379,6 +6400,7 @@ $fa-icons: (
   "address-card": $fa-var-address-card,
   "contact-card": $fa-var-contact-card,
   "vcard": $fa-var-vcard,
+  "chart-fft": $fa-var-chart-fft,
   "scale-unbalanced-flip": $fa-var-scale-unbalanced-flip,
   "balance-scale-right": $fa-var-balance-scale-right,
   "globe-snow": $fa-var-globe-snow,
@@ -7060,6 +7082,7 @@ $fa-icons: (
   "hand-holding-dollar": $fa-var-hand-holding-dollar,
   "hand-holding-usd": $fa-var-hand-holding-usd,
   "grid-dividers": $fa-var-grid-dividers,
+  "chart-diagram": $fa-var-chart-diagram,
   "bacterium": $fa-var-bacterium,
   "hand-pointer": $fa-var-hand-pointer,
   "drum-steelpan": $fa-var-drum-steelpan,
@@ -7140,6 +7163,7 @@ $fa-icons: (
   "starfighter-alt": $fa-var-starfighter-alt,
   "rocket-launch": $fa-var-rocket-launch,
   "mosquito-net": $fa-var-mosquito-net,
+  "file-fragment": $fa-var-file-fragment,
   "vent-damper": $fa-var-vent-damper,
   "bridge-water": $fa-var-bridge-water,
   "ban-bug": $fa-var-ban-bug,
@@ -7598,6 +7622,7 @@ $fa-icons: (
   "square-d": $fa-var-square-d,
   "grip-vertical": $fa-var-grip-vertical,
   "mobile-signal-out": $fa-var-mobile-signal-out,
+  "hexagon-nodes": $fa-var-hexagon-nodes,
   "arrow-turn-up": $fa-var-arrow-turn-up,
   "level-up": $fa-var-level-up,
   "u": $fa-var-u,
@@ -8208,6 +8233,8 @@ $fa-icons: (
   "save-times": $fa-var-save-times,
   "naira-sign": $fa-var-naira-sign,
   "peach": $fa-var-peach,
+  "circles-overlap-3": $fa-var-circles-overlap-3,
+  "pronoun": $fa-var-pronoun,
   "taxi-bus": $fa-var-taxi-bus,
   "bracket-curly": $fa-var-bracket-curly,
   "bracket-curly-left": $fa-var-bracket-curly-left,
@@ -8463,6 +8490,7 @@ $fa-icons: (
   "floppy-disk-circle-arrow-right": $fa-var-floppy-disk-circle-arrow-right,
   "save-circle-arrow-right": $fa-var-save-circle-arrow-right,
   "folder-minus": $fa-var-folder-minus,
+  "hexagon-nodes-bolt": $fa-var-hexagon-nodes-bolt,
   "planet-moon": $fa-var-planet-moon,
   "face-eyes-xmarks": $fa-var-face-eyes-xmarks,
   "chart-scatter": $fa-var-chart-scatter,
@@ -8674,6 +8702,7 @@ $fa-icons: (
   "gun-slash": $fa-var-gun-slash,
   "avocado": $fa-var-avocado,
   "binary": $fa-var-binary,
+  "comment-nodes": $fa-var-comment-nodes,
   "glasses-round": $fa-var-glasses-round,
   "glasses-alt": $fa-var-glasses-alt,
   "phone-plus": $fa-var-phone-plus,
@@ -9018,6 +9047,7 @@ $fa-icons: (
   "mug-saucer": $fa-var-mug-saucer,
   "coffee": $fa-var-coffee,
   "brush": $fa-var-brush,
+  "file-half-dashed": $fa-var-file-half-dashed,
   "tree-decorated": $fa-var-tree-decorated,
   "mask": $fa-var-mask,
   "calendar-heart": $fa-var-calendar-heart,
@@ -9291,6 +9321,7 @@ $fa-brand-icons: (
   "debian": $fa-var-debian,
   "openid": $fa-var-openid,
   "instalod": $fa-var-instalod,
+  "files-pinwheel": $fa-var-files-pinwheel,
   "expeditedssl": $fa-var-expeditedssl,
   "sellcast": $fa-var-sellcast,
   "square-twitter": $fa-var-square-twitter,
@@ -9332,6 +9363,7 @@ $fa-brand-icons: (
   "sticker-mule": $fa-var-sticker-mule,
   "creative-commons-zero": $fa-var-creative-commons-zero,
   "hips": $fa-var-hips,
+  "css": $fa-var-css,
   "behance": $fa-var-behance,
   "reddit": $fa-var-reddit,
   "discord": $fa-var-discord,
@@ -9475,6 +9507,7 @@ $fa-brand-icons: (
   "spotify": $fa-var-spotify,
   "optin-monster": $fa-var-optin-monster,
   "fly": $fa-var-fly,
+  "square-bluesky": $fa-var-square-bluesky,
   "aviato": $fa-var-aviato,
   "itunes": $fa-var-itunes,
   "cuttlefish": $fa-var-cuttlefish,
