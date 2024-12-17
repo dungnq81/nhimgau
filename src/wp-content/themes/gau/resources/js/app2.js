@@ -8,9 +8,6 @@ Object.assign( window, { Cookies } );
 
 import BackToTop from './components/back-to-top';
 import lazyLoader from './components/lazy-loader';
-
-lazyLoader( 4000, "script[data-type='lazy']" );
-
 import { initializeSocialShare } from './components/social-share';
 
 const customOptions = {
@@ -32,6 +29,7 @@ const customOptions = {
 // Initialize
 function init() {
     new BackToTop();
+    lazyLoader( 4000, "script[data-type='lazy']" );
     initializeSocialShare( 'social-share', customOptions );
 }
 

@@ -741,7 +741,7 @@ trait Wp {
 
 		$posts_per_page = max( $posts_per_page, - 1 );
 
-		$_args          = [
+		$_args = [
 			'post_type'              => $post_type,
 			'post_status'            => 'publish',
 			'posts_per_page'         => $posts_per_page,
@@ -841,7 +841,7 @@ trait Wp {
 
 		$posts_per_page = max( $posts_per_page, - 1 );
 
-		$_args          = [
+		$_args = [
 			'post_type'              => $post_type,
 			'post_status'            => 'publish',
 			'posts_per_page'         => $posts_per_page,
@@ -1709,6 +1709,67 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
+	 * @param string $template
+	 *
+	 * @return array|\WP_Post|null
+	 */
+	public static function getPageTemplate( string $template ): array|\WP_Post|null {
+		$query = new \WP_Query( [
+			'post_type'      => 'page',
+			'posts_per_page' => 1,
+			'meta_key'       => '_wp_page_template',
+			'meta_value'     => $template,
+			'orderby'        => 'menu_order',
+			'order'          => 'ASC',
+		] );
+
+		if ( $query->have_posts() ) {
+			$query->the_post();
+
+			$post = get_post();
+			wp_reset_postdata();
+
+			return $post;
+		}
+
+		wp_reset_postdata();
+
+		return null;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string $template
+	 *
+	 * @return bool|string|null
+	 */
+	public static function getPageLinkTemplate( string $template ): bool|string|null {
+		$query = new \WP_Query( [
+			'post_type'      => 'page',
+			'posts_per_page' => 1,
+			'meta_key'       => '_wp_page_template',
+			'meta_value'     => $template,
+			'orderby'        => 'menu_order',
+			'order'          => 'ASC',
+		] );
+
+		if ( $query->have_posts() ) {
+			$query->the_post();
+			$url = get_permalink();
+			wp_reset_postdata();
+
+			return $url;
+		}
+
+		wp_reset_postdata();
+
+		return null;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
 	 * @param int|false $user_id
 	 *
 	 * @return string
@@ -2227,6 +2288,107 @@ trait Wp {
 		}
 
 		return $child_terms;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string|null $taxonomy
+	 * @param bool $hide_empty
+	 * @param int|null $parent
+	 * @param mixed|null $selected_request
+	 * @param int|null $disabled_parent
+	 * @param bool $only_parent
+	 *
+	 * @return string|null
+	 */
+	public static function selectOptionTerms(
+		?string $taxonomy,
+		bool $hide_empty = true,
+		?int $parent = null,
+		mixed $selected_request = null,
+		?int $disabled_parent = null,
+		bool $only_parent = false,
+	): ?string {
+		if ( $taxonomy === null || ! taxonomy_exists( $taxonomy ) ) {
+			return null;
+		}
+
+		$args = [
+			'taxonomy'     => $taxonomy,
+			'hide_empty'   => $hide_empty,
+			'hierarchical' => true,
+			'parent'       => 0,
+		];
+
+		if ( ! is_null( $parent ) && $parent >= 0 ) {
+			$args['parent'] = $parent;
+		}
+
+		$terms = get_terms( $args );
+		if ( empty( $terms ) || is_wp_error( $terms ) ) {
+			return null;
+		}
+
+		$options = '';
+		foreach ( $terms as $term ) {
+			$options .= self::_build_term_option( $term, $hide_empty, 0, $selected_request, $disabled_parent, $only_parent );
+		}
+
+		return $options;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param $term
+	 * @param bool $hide_empty
+	 * @param int $depth
+	 * @param mixed|null $selected_request
+	 * @param int|null $disabled_parent
+	 * @param bool $only_parent
+	 *
+	 * @return string
+	 */
+	private static function _build_term_option(
+		$term,
+		bool $hide_empty = true,
+		int $depth = 0,
+		mixed $selected_request = null,
+		?int $disabled_parent = null,
+		bool $only_parent = false
+	): string {
+		$prefix   = str_repeat( '— ', $depth );
+		$selected = '';
+
+		if ( ! is_array( $selected_request ) ) {
+			$selected = ' ' . selected( $selected_request, $term->term_id, false );
+		} elseif ( in_array( $term->term_id, $selected_request, false ) ) {
+			$selected = ' selected="selected"';
+		}
+
+		$disabled = '';
+		if ( isset( $disabled_parent ) && $term?->parent === $disabled_parent ) {
+			$disabled = ' disabled="disabled"';
+		}
+
+		$options = '<option value="' . $term->term_id . '"' . $selected . $disabled . '>' . $prefix . $term->name . '</option>';
+
+		if ( ! $only_parent ) {
+			$child_terms = get_terms( [
+				'taxonomy'   => $term->taxonomy,
+				'hide_empty' => $hide_empty,
+				'parent'     => $term->term_id,
+			] );
+
+			if ( ! empty( $child_terms ) && ! is_wp_error( $child_terms ) ) {
+				foreach ( $child_terms as $child_term ) {
+					$options .= self::_build_term_option( $child_term, $hide_empty, $depth + 1, $selected_request, $disabled_parent );
+				}
+			}
+		}
+
+		return $options;
 	}
 
 	// -------------------------------------------------------------
