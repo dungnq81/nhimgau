@@ -156,7 +156,6 @@ trait Url {
 	 * @return string The server's IP address.
 	 */
 	public static function serverIpAddress(): string {
-
 		// Check for SERVER_ADDR first
 		if ( ! empty( $_SERVER['SERVER_ADDR'] ) ) {
 			return $_SERVER['SERVER_ADDR'];
@@ -244,7 +243,6 @@ trait Url {
 	 * @return string The corresponding file system path.
 	 */
 	public static function urlToPath( string $url ): string {
-
 		// Ensure the URL is absolute before converting
 		if ( ! filter_var( $url, FILTER_VALIDATE_URL ) ) {
 			return '';

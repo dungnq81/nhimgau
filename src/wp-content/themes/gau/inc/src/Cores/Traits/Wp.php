@@ -171,7 +171,6 @@ trait Wp {
 	 * @return string
 	 */
 	public static function ACFLink( mixed $link, ?string $class = '', ?string $label = '', ?string $extra_title = '' ): string {
-
 		// string
 		if ( ! empty( $link ) && is_string( $link ) ) {
 			$link_return = sprintf(
@@ -231,7 +230,6 @@ trait Wp {
 	 * @return string
 	 */
 	public static function ACFLinkOpen( mixed $link, ?string $class = '', ?string $label = '' ): string {
-
 		// string
 		if ( ! empty( $link ) && is_string( $link ) ) {
 			return sprintf(
@@ -284,7 +282,6 @@ trait Wp {
 	 * @return string
 	 */
 	public static function ACFLinkWrap( ?string $content, mixed $link, ?string $class = '', ?string $label = '', string|bool $empty_link_default_tag = 'span' ): string {
-
 		// string
 		if ( is_string( $link ) && ! empty( $link ) ) {
 			$link_return = sprintf(
@@ -435,7 +432,6 @@ trait Wp {
 	 * @return string The URL with the encoded query parameters added.
 	 */
 	public static function addQueryArg( array $args, string $url ): string {
-
 		// Encode each argument to prevent parameter hijacking
 		$encodedArgs = array_map( 'rawurlencode', $args );
 
@@ -455,7 +451,6 @@ trait Wp {
 	 * @throws \JsonException If JSON encoding fails.
 	 */
 	public static function getAttachment( mixed $attachment_id, bool $return_object = true ): object|array|null {
-
 		// Fetch the attachment post object
 		$attachment = get_post( $attachment_id );
 
@@ -576,7 +571,6 @@ trait Wp {
 	 * @return bool True on success, false on failure.
 	 */
 	public static function updateOption( string $option_name, mixed $new_options, bool $merge_arr = false ): bool {
-
 		// Retrieve current options if merging is requested
 		if ( $merge_arr ) {
 			$options = self::getOption( $option_name );
@@ -679,7 +673,6 @@ trait Wp {
 	 * @return \WP_Term|\WP_Error|bool|null The term object, a WP_Error on failure, false if `term` doesn't exist, or null if term ID is invalid.
 	 */
 	public static function getTerm( mixed $term_id, string $taxonomy = 'category' ): \WP_Term|\WP_Error|bool|null {
-
 		// Check if the term ID is numeric and retrieve term by ID
 		if ( is_numeric( $term_id ) ) {
 			$term_id = (int) $term_id;
@@ -703,7 +696,6 @@ trait Wp {
 	 * @return void
 	 */
 	public static function setPostsPerPage( int $post_limit = - 1 ): void {
-
 		// Check if we are not in the admin area and the main query is not being processed
 		if ( ! is_admin() && ! is_main_query() ) {
 			$limit_default = self::getOption( 'posts_per_page' );

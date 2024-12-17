@@ -35,6 +35,9 @@ trait Db {
 		$values            = [];
 		$columns_in_insert = [];
 
+		// Start a transaction
+		$wpdb->query( 'START TRANSACTION' );
+
 		// Loop through the data and validate each row
 		foreach ( $data as $row ) {
 			$valid_data = [];
@@ -84,9 +87,17 @@ trait Db {
 		// Build and execute the SQL query
 		$sql = "INSERT INTO `{$table_name}` (" . implode( ', ', $columns_in_insert ) . ") VALUES " . implode( ', ', $values );
 
-		if ( $wpdb->query( $sql ) ) {
+		$result = $wpdb->query( $sql );
+		if ( $result !== false ) {
+
+			// commit the transaction
+			$wpdb->query( 'COMMIT' );
+
 			return count( $values );
 		}
+
+		// rollback the transaction
+		$wpdb->query( 'ROLLBACK' );
 
 		return new \WP_Error( 'insert_error', $wpdb->last_error );
 	}
@@ -365,7 +376,7 @@ trait Db {
 		// Add ORDER BY clause if provided
 		if ( ! empty( $order_by ) ) {
 			$order = strtoupper( $order );
-			$order = in_array( $order, [ 'ASC', 'DESC' ], true ) ? $order : 'ASC';
+			$order = in_array( $order, [ 'ASC', 'DESC' ], false ) ? $order : 'ASC';
 			$query .= " ORDER BY `" . esc_sql( $order_by ) . "` $order";
 		}
 

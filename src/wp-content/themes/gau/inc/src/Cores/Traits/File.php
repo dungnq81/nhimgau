@@ -145,7 +145,7 @@ trait File {
 	 *
 	 * @param string $content Content to add.
 	 *
-	 * @return bool    True on success, false otherwise.
+	 * @return bool True on success, false otherwise.
 	 */
 	public static function doLockWrite( $path, string $content = '' ): bool {
 		$fp = fopen( $path, 'wb+' );

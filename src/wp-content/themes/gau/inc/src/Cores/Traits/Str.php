@@ -63,7 +63,6 @@ trait Str {
 	 * @return string The input string with the first character in uppercase.
 	 */
 	public static function mbUcFirst( string $str, string $encoding = null ): string {
-
 		// Check for an empty string
 		if ( $str === '' ) {
 			return $str;
@@ -143,7 +142,6 @@ trait Str {
 	 * @return string The cleaned HTML content without inline JavaScript and CSS.
 	 */
 	public static function removeInlineJsCss( string $content ): string {
-
 		// Ensure content is not empty
 		if ( empty( $content ) ) {
 			return '';
@@ -223,7 +221,6 @@ trait Str {
 	 * @return string
 	 */
 	public static function extractCss( $content, bool $keepTags = true ): string {
-
 		// Define patterns for matching <style> and <link> tags
 		$style_pattern = '/<style\b[^>]*>(.*?)<\/style>/is';
 		$link_pattern  = '/<link\b[^>]*rel=["\']?(stylesheet|prefetch|preload)["\']?[^>]*href=["\']?([^"\']+)["\']?[^>]*>/i';

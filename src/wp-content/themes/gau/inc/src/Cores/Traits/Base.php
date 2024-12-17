@@ -141,7 +141,7 @@ trait Base {
 	// -------------------------------------------------------------
 
 	/**
-	 * Determines whether the current request is a WP CLI request.
+	 * Determines whether the current request is a WP-CLI request.
 	 *
 	 * This function checks if the WP_CLI constant is defined and true,
 	 * indicating that the code is being executed in the context of
