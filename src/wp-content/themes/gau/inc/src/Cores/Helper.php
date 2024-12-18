@@ -17,35 +17,6 @@ final class Helper {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param string|\WP_Error $message
-	 * @param string|int $title
-	 * @param string|array|int $args
-	 *
-	 * @return void
-	 */
-	public static function wpDie( string|\WP_Error $message = '', string|int $title = '', string|array|int $args = [] ): void {
-		wp_die( $message, $title, $args );
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @param string $message
-	 * @param int $message_type
-	 * @param string|null $destination
-	 * @param string|null $additional_headers
-	 *
-	 * @return bool|void
-	 */
-	public static function errorLog( string $message, int $message_type = 0, ?string $destination = null, ?string $additional_headers = null ) {
-		if ( WP_DEBUG ) {
-			return error_log( $message, $message_type, $destination, $additional_headers );
-		}
-	}
-
-	// -------------------------------------------------------------
-
-	/**
 	 * @param $route
 	 * @param bool $default
 	 *
@@ -212,46 +183,6 @@ final class Helper {
 		}
 
 		return true;
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @param $message
-	 * @param bool $auto_hide
-	 *
-	 * @return void
-	 */
-	public static function messageSuccess( $message, bool $auto_hide = false ): void {
-		$message = $message ?: 'Values saved';
-		$message = __( $message, TEXT_DOMAIN );
-
-		$class = 'notice notice-success is-dismissible';
-		if ( $auto_hide ) {
-			$class .= ' dismissible-auto';
-		}
-
-		printf( '<div class="%1$s"><p><strong>%2$s</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>', self::escAttr( $class ), $message );
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @param $message
-	 * @param bool $auto_hide
-	 *
-	 * @return void
-	 */
-	public static function messageError( $message, bool $auto_hide = false ): void {
-		$message = $message ?: 'Values error';
-		$message = __( $message, TEXT_DOMAIN );
-
-		$class = 'notice notice-error is-dismissible';
-		if ( $auto_hide ) {
-			$class .= ' dismissible-auto';
-		}
-
-		printf( '<div class="%1$s"><p><strong>%2$s</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>', self::escAttr( $class ), $message );
 	}
 
 	// --------------------------------------------------

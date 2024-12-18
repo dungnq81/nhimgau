@@ -23,11 +23,11 @@ final class ACF {
 			add_filter( 'acf/settings/show_admin', '__return_false' );
 		}
 
-		add_filter( 'acf/format_value/type=textarea', [ Helper::class, 'removeInlineJsCss' ], 10, 1 );
-		add_filter( 'acf/fields/wysiwyg/toolbars', [ $this, 'wysiwyg_toolbars' ], 11, 1 );
+		add_filter( 'acf/format_value/type=textarea', [ Helper::class, 'removeInlineJsCss' ], 11 );
+		add_filter( 'acf/fields/wysiwyg/toolbars', [ $this, 'wysiwyg_toolbars' ], 98, 1 );
 		add_action( 'acf/input/admin_head', [ $this, 'acf_admin_head' ] );
 
-		add_filter( 'teeny_mce_buttons', [ $this, 'teeny_mce_buttons' ], 10, 2 );
+		add_filter( 'teeny_mce_buttons', [ $this, 'teeny_mce_buttons' ], 99, 2 );
 
 		// Auto-required fields
 		$fields_dir = __DIR__ . DIRECTORY_SEPARATOR . 'fields';

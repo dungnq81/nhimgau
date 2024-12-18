@@ -19,7 +19,6 @@ RUN add-apt-repository ppa:ondrej/php \
 # Install Apache2, PHP 8.2, and necessary modules
 RUN apt install -y \
     apache2 \
-    #curl \
     php8.2 \
     php8.2-mysql \
     php8.2-curl \

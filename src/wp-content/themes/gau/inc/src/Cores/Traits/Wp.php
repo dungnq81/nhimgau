@@ -404,7 +404,7 @@ trait Wp {
 	 *
 	 * @param string $tag The shortcode tag to call.
 	 * @param array $atts Optional. An array of attributes to pass to the shortcode function.
-	 * @param string|null $content Optional. The content enclosed by the shortcode. Default is null (no content).
+	 * @param string|null $content Optional. The content is enclosed by the shortcode. Default is null (no content).
 	 *
 	 * @return mixed Returns the result of the shortcode on success, or false if the shortcode does not exist.
 	 */
@@ -1045,7 +1045,6 @@ trait Wp {
 	 * @return string|void
 	 */
 	public static function siteTitleOrLogo( bool $echo = true, ?string $home_heading = 'h1', ?string $class = 'logo' ) {
-
 		$logo_title = self::getThemeMod( 'logo_title_setting' );
 		$logo_title = $logo_title ? '<span class="logo-txt">' . $logo_title . '</span>' : '';
 		$logo_class = ! empty( $class ) ? ' class="' . $class . '"' : '';

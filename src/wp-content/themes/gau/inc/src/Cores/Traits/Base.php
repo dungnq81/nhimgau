@@ -12,6 +12,75 @@ trait Base {
 	// -------------------------------------------------------------
 
 	/**
+	 * @param $message
+	 * @param bool $auto_hide
+	 *
+	 * @return void
+	 */
+	public static function messageSuccess( $message, bool $auto_hide = false ): void {
+		$message = $message ?: 'Values saved';
+		$message = __( $message, TEXT_DOMAIN );
+
+		$class = 'notice notice-success is-dismissible';
+		if ( $auto_hide ) {
+			$class .= ' dismissible-auto';
+		}
+
+		printf( '<div class="%1$s"><p><strong>%2$s</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>', self::escAttr( $class ), $message );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param $message
+	 * @param bool $auto_hide
+	 *
+	 * @return void
+	 */
+	public static function messageError( $message, bool $auto_hide = false ): void {
+		$message = $message ?: 'Values error';
+		$message = __( $message, TEXT_DOMAIN );
+
+		$class = 'notice notice-error is-dismissible';
+		if ( $auto_hide ) {
+			$class .= ' dismissible-auto';
+		}
+
+		printf( '<div class="%1$s"><p><strong>%2$s</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>', self::escAttr( $class ), $message );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string|\WP_Error $message
+	 * @param string|int $title
+	 * @param string|array|int $args
+	 *
+	 * @return void
+	 */
+	public static function wpDie( string|\WP_Error $message = '', string|int $title = '', string|array|int $args = [] ): void {
+		wp_die( $message, $title, $args );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string $message
+	 * @param int $message_type
+	 * @param string|null $destination
+	 * @param string|null $additional_headers
+	 *
+	 * @return void
+	 */
+	public static function errorLog( string $message, int $message_type = 0, ?string $destination = null, ?string $additional_headers = null ): void {
+		if ( WP_DEBUG ) {
+			error_log( $message, $message_type, $destination, $additional_headers );
+		}
+	}
+
+	// -------------------------------------------------------------
+
+	/**
 	 * Check if the current page is using a specific page template.
 	 *
 	 * @param string|null $template
@@ -49,6 +118,37 @@ trait Base {
 
 		// Validate queried object and its taxonomy.
 		return $queried_object && isset( $queried_object->taxonomy ) && $queried_object->taxonomy === $taxonomy;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * Check if the passed content is XML.
+	 *
+	 * @param string $content The page content.
+	 *
+	 * @return bool
+	 */
+	public static function isXml( string $content ): bool {
+		// Check for empty content
+		if ( trim( $content ) === '' ) {
+			return false;
+		}
+
+		// Get the first 50 chars of the content to check for XML declaration
+		$xml_part = mb_substr( $content, 0, 50 );
+
+		// Check if the content starts with an XML declaration
+		if ( preg_match( '/<\?xml version="/', $xml_part ) ) {
+			return true;
+		}
+
+		// Attempt to load the content as XML to ensure it is well-formed
+		libxml_use_internal_errors( true );
+		$xml = simplexml_load_string( $content );
+		libxml_clear_errors();
+
+		return $xml !== false;
 	}
 
 	// --------------------------------------------------

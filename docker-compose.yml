@@ -67,7 +67,7 @@ services:
         ports:
             - "8081:80"
 
-        # Start phpMyAdmin only after 'db' service is ready
+        # Start phpMyAdmin only after the 'db' service is ready
         depends_on:
             - db
 
