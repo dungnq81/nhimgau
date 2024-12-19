@@ -19,7 +19,7 @@ $exclude_lazyload = implode( PHP_EOL, $exclude_lazyload );
     </div>
 </div>
 
-<div class="section section-checkbox" id="section_lazyload_mobile">
+<div class="section section-checkbox !hide" id="section_lazyload_mobile">
 	<label class="heading inline-heading" for="lazy_load_mobile"><?php _e( 'Lazy-load on Mobile', ADDONS_TEXT_DOMAIN ); ?></label>
 	<div class="option">
         <div class="controls">

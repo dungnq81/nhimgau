@@ -344,7 +344,7 @@ final class Font {
 
 		}
 
-		// Return the combined tag if the css is empty.
+		// Return the combined tag if the CSS is empty.
 		if ( ! $css ) {
 			return implode( '', $combined_tags );
 		}
@@ -360,7 +360,7 @@ final class Font {
 			return implode( '', $combined_tags );
 		}
 
-		// Return the inline css.
+		// Return the inline CSS.
 		return '<style>' . $css . '</style>';
 	}
 

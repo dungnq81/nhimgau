@@ -350,21 +350,6 @@ function __nav_menu_item_title_filter( $title, $item, $args, $depth ) {
 }
 
 // --------------------------------------------------
-// Filter wp_insert_post_data
-// --------------------------------------------------
-
-add_filter( 'wp_insert_post_data', '__wp_insert_post_data_filter', 99 );
-
-function __wp_insert_post_data_filter( $data ): mixed {
-	if ( $data['post_status'] === 'auto-draft' ) {
-		// $data['comment_status'] = 0;
-		$data['ping_status'] = 0;
-	}
-
-	return $data;
-}
-
-// --------------------------------------------------
 // Filter widget_tag_cloud_args
 // --------------------------------------------------
 

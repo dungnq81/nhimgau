@@ -5,6 +5,8 @@ defined( 'ABSPATH' ) || die;
 $file_settings_options = get_option( 'file_setting__options' );
 $file_settings         = \filter_setting_options( 'file_settings', [] );
 
+$svgs = $file_settings_options['svgs'] ?? 'disable';
+
 ?>
 <h2><?php _e( 'Files Settings', ADDONS_TEXT_DOMAIN ); ?></h2>
 <?php
@@ -35,3 +37,5 @@ if ( ! empty( $file_settings ) ) :
     </div>
 </div>
 <?php endforeach; endif;
+
+include __DIR__ . '/SVG/options.php';

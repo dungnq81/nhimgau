@@ -4161,7 +4161,7 @@ svgo@^3.0.2, svgo@^3.3.2:
     csso "^5.0.5"
     picocolors "^1.0.0"
 
-sweetalert2@^11.14.5:
+sweetalert2@^11.15.2:
   version "11.15.2"
   resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.15.2.tgz#194f7f2a823a622424ba04427a8a13ac6a3ef466"
   integrity sha512-KSfHZTU2f+iivA2wudlL1jv9FjvEtJW9Fc0GKC6hhEsZS7SNz3Ppfv92Nerw0E2qqGNT9mPB/07SYEASbHvS+A==

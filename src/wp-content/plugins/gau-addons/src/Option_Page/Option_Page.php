@@ -96,12 +96,12 @@ final class Option_Page {
 	/**
 	 * @return void
 	 */
-    public function add_addon_capability_to_roles(): void {
-	    foreach ( [ 'administrator', 'editor' ] as $role_name ) {
-		    $role = get_role( $role_name );
-		    $role?->add_cap( 'addon_manage_options' );
-	    }
-    }
+	public function add_addon_capability_to_roles(): void {
+		foreach ( [ 'administrator', 'editor' ] as $role_name ) {
+			$role = get_role( $role_name );
+			$role?->add_cap( 'addon_manage_options' );
+		}
+	}
 
 	/** ----------------------------------------------- */
 
@@ -221,9 +221,21 @@ final class Option_Page {
 		$optimizer_options_current = get_option( 'optimizer__options' );
 		$https_enforce_current     = $optimizer_options_current['https_enforce'] ?? 0;
 
-		$exclude_lazyload = ! empty( $data['exclude_lazyload'] ) ? \explode_multi( [ ',', ' ', PHP_EOL, ], $data['exclude_lazyload'] ) : [ 'no-lazy' ];
-		$font_preload     = ! empty( $data['font_preload'] ) ? \explode_multi( [ ',', ' ', PHP_EOL ], $data['font_preload'] ) : [];
-		$dns_prefetch     = ! empty( $data['dns_prefetch'] ) ? \explode_multi( [ ',', ' ', PHP_EOL ], $data['dns_prefetch'] ) : [];
+		$exclude_lazyload = ! empty( $data['exclude_lazyload'] ) ? \explode_multi( [
+			',',
+			' ',
+			PHP_EOL,
+		], $data['exclude_lazyload'] ) : [ 'no-lazy' ];
+		$font_preload     = ! empty( $data['font_preload'] ) ? \explode_multi( [
+			',',
+			' ',
+			PHP_EOL
+		], $data['font_preload'] ) : [];
+		$dns_prefetch     = ! empty( $data['dns_prefetch'] ) ? \explode_multi( [
+			',',
+			' ',
+			PHP_EOL
+		], $data['dns_prefetch'] ) : [];
 
 		$exclude_lazyload = array_map( 'esc_textarea', $exclude_lazyload );
 		$font_preload     = array_map( 'sanitize_url', $font_preload );
@@ -235,9 +247,9 @@ final class Option_Page {
 			'browser_caching'        => ! empty( $data['browser_caching'] ) ? sanitize_text_field( $data['browser_caching'] ) : 0,
 			'heartbeat'              => ! empty( $data['heartbeat'] ) ? sanitize_text_field( $data['heartbeat'] ) : 0,
 			'minify_html'            => ! empty( $data['minify_html'] ) ? sanitize_text_field( $data['minify_html'] ) : 0,
-			'svgs'                   => ! empty( $data['svgs'] ) ? sanitize_text_field( $data['svgs'] ) : 'disable',
 			'lazy_load'              => ! empty( $data['lazy_load'] ) ? sanitize_text_field( $data['lazy_load'] ) : 0,
-			'lazy_load_mobile'       => ! empty( $data['lazy_load_mobile'] ) ? sanitize_text_field( $data['lazy_load_mobile'] ) : 0,
+			'lazy_load_mobile'       => ! empty( $data['lazy_load'] ) ? sanitize_text_field( $data['lazy_load'] ) : 0,
+			//'lazy_load_mobile'       => ! empty( $data['lazy_load_mobile'] ) ? sanitize_text_field( $data['lazy_load_mobile'] ) : 0,
 			'exclude_lazyload'       => $exclude_lazyload,
 			'font_optimize'          => ! empty( $data['font_optimize'] ) ? sanitize_text_field( $data['font_optimize'] ) : 0,
 			'font_combined_css'      => ! empty( $data['font_combined_css'] ) ? sanitize_text_field( $data['font_combined_css'] ) : 0,
@@ -325,6 +337,7 @@ final class Option_Page {
 			];
 		}
 
+		$file_setting_options['svgs'] = ! empty( $data['svgs'] ) ? sanitize_text_field( $data['svgs'] ) : 'disable';
 		update_option( 'file_setting__options', $file_setting_options );
 
 		/** ---------------------------------------- */
@@ -352,7 +365,7 @@ final class Option_Page {
 
 		if ( $custom_emails ) {
 			foreach ( $custom_emails as $i => $ar ) {
-				$from_name = ! empty( $data[ $i . '_from_name' ] ) ? sanitize_text_field( $data[ $i . '_from_name' ] ) : '';
+				$from_name  = ! empty( $data[ $i . '_from_name' ] ) ? sanitize_text_field( $data[ $i . '_from_name' ] ) : '';
 				$from_email = ! empty( $data[ $i . '_from_email' ] ) ? sanitize_text_field( $data[ $i . '_from_email' ] ) : '';
 
 				$email_options[ $i ] = [ $from_name, $from_email ];
@@ -396,7 +409,7 @@ final class Option_Page {
 
 		/** ---------------------------------------- */
 
-        /** reCAPTCHA */
+		/** reCAPTCHA */
 		$recaptcha_options = [
 			'recaptcha_v2_site_key'   => ! empty( $data['recaptcha_v2_site_key'] ) ? sanitize_text_field( $data['recaptcha_v2_site_key'] ) : '',
 			'recaptcha_v2_secret_key' => ! empty( $data['recaptcha_v2_secret_key'] ) ? sanitize_text_field( $data['recaptcha_v2_secret_key'] ) : '',
@@ -411,7 +424,7 @@ final class Option_Page {
 
 		/** ---------------------------------------- */
 
-        /** WooCommerce */
+		/** WooCommerce */
 		if ( \check_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 			$woocommerce_options = [
 				'remove_legacy_coupon'    => ! empty( $data['remove_legacy_coupon'] ) ? sanitize_text_field( $data['remove_legacy_coupon'] ) : '',
@@ -444,9 +457,9 @@ final class Option_Page {
 
 		/** ---------------------------------------- */
 
-        /** Custom CSS */
+		/** Custom CSS */
 		$html_custom_css = $data['html_custom_css'] ?? '';
-		$_css = \update_custom_post_option( $html_custom_css, 'addon_css', 'text/css' );
+		$_css            = \update_custom_post_option( $html_custom_css, 'addon_css', 'text/css' );
 
 		/** ---------------------------------------- */
 
@@ -486,7 +499,7 @@ final class Option_Page {
 	 * @return void
 	 */
 	public function _addon_server_info_callback(): void {
-        global $wpdb;
+		global $wpdb;
 
 		?>
         <div class="wrap">
@@ -501,14 +514,14 @@ final class Option_Page {
                             <li><?php echo sprintf( '<span>Server:</span> %s', $_SERVER['SERVER_SOFTWARE'] ); ?></li>
                             <li><?php echo sprintf( '<span>Server IP:</span> %s', $_SERVER['SERVER_ADDR'] ); ?></li>
 
-	                        <?php
-	                        $cpu_info = file_get_contents('/proc/cpuinfo');
-	                        preg_match('/^model name\s*:\s*(.+)$/m', $cpu_info, $matches);
-	                        $cpu_model = isset($matches[1]) ? trim($matches[1]) : 'Unknown';
-	                        ?>
+							<?php
+							$cpu_info = file_get_contents( '/proc/cpuinfo' );
+							preg_match( '/^model name\s*:\s*(.+)$/m', $cpu_info, $matches );
+							$cpu_model = isset( $matches[1] ) ? trim( $matches[1] ) : 'Unknown';
+							?>
                             <li><?php echo sprintf( '<span>CPU Info:</span> %s', $cpu_model ); ?></li>
 
-                            <li><?php echo sprintf( '<span>Memory Limit:</span> %s', ini_get('memory_limit') ); ?></li>
+                            <li><?php echo sprintf( '<span>Memory Limit:</span> %s', ini_get( 'memory_limit' ) ); ?></li>
                             <li><?php echo sprintf( '<span>PHP version:</span> %s', PHP_VERSION ); ?></li>
                             <li><?php echo sprintf( '<span>MySql version:</span> %s', $wpdb->db_version() ); ?></li>
 
@@ -548,7 +561,7 @@ final class Option_Page {
 
 							<?php
 							if ( $agent = $_SERVER['HTTP_USER_AGENT'] ?? null ) : ?>
-                            <li><?php echo sprintf( '<span>User agent:</span> %s', $agent ); ?></li>
+                                <li><?php echo sprintf( '<span>User agent:</span> %s', $agent ); ?></li>
 							<?php endif; ?>
 
                             <li><?php echo sprintf( '<span>IP:</span> %s', \ip_address() ); ?></li>

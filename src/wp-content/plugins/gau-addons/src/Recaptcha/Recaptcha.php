@@ -18,7 +18,6 @@ define( "GOOGLE_CAPTCHA_V3_SCORE", $recaptcha_options['recaptcha_v3_score'] ?? '
 define( "GOOGLE_CAPTCHA_GLOBAL", $recaptcha_options['recaptcha_global'] ?? false );
 
 final class Recaptcha {
-
 	use Singleton;
 
 	// --------------------------------------------------

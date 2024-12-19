@@ -1,6 +1,6 @@
 <?php
 
-namespace Addons\Optimizer\SVG;
+namespace Addons\File\SVG;
 
 use Addons\Base\Singleton;
 
@@ -26,8 +26,8 @@ final class SVG {
 	// ------------------------------------------------------
 
 	private function init(): void {
-		$optimizer_options = get_option( 'optimizer__options' );
-		$this->svg_option  = $optimizer_options['svgs'] ?? 'disable';
+		$file_setting_options = get_option( 'file_setting__options' );
+		$this->svg_option  = $file_setting_options['svgs'] ?? 'disable';
 
 		if ( 'disable' !== $this->svg_option ) {
 			$this->_init_svg();

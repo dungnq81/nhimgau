@@ -9,7 +9,6 @@ use Addons\Optimizer\Font\Font;
 use Addons\Optimizer\Heartbeat\Heartbeat;
 use Addons\Optimizer\Lazy_Load\Lazy_Load;
 use Addons\Optimizer\Minifier\Minify_Html;
-use Addons\Optimizer\SVG\SVG;
 
 \defined( 'ABSPATH' ) || die;
 
@@ -30,7 +29,6 @@ final class Optimizer {
 		( Attached_Media_Cleaner::get_instance() );
 		( Heartbeat::get_instance() );
 		( Lazy_Load::get_instance() );
-		( SVG::get_instance() );
 
 		// optimizer
 		$this->_optimizer();

@@ -20,7 +20,7 @@ $font_preload = implode( PHP_EOL, $font_preload );
     </div>
 </div>
 
-<div class="section section-checkbox" id="section_font_combined_css">
+<div class="section section-checkbox !hide" id="section_font_combined_css">
     <label class="heading inline-heading" for="font_combined_css"><?php _e( 'Combined CSS', ADDONS_TEXT_DOMAIN ) ?></label>
     <div class="desc"><?php _e( 'Return combined tag instead of using inline CSS.', ADDONS_TEXT_DOMAIN ) ?></div>
     <div class="option">

@@ -9,10 +9,9 @@ $gzip                   = $optimizer_options['gzip'] ?? 0;
 $browser_caching        = $optimizer_options['browser_caching'] ?? 0;
 $heartbeat              = $optimizer_options['heartbeat'] ?? 0;
 $attached_media_cleaner = $optimizer_options['attached_media_cleaner'] ?? 0;
-$svgs                   = $optimizer_options['svgs'] ?? 'disable';
 
 $lazy_load        = $optimizer_options['lazy_load'] ?? 0;
-$lazy_load_mobile = $optimizer_options['lazy_load_mobile'] ?? 0;
+$lazy_load_mobile = $optimizer_options['lazy_load'] ?? 0;
 $exclude_lazyload = $optimizer_options['exclude_lazyload'] ?? [ 'no-lazy' ];
 
 $font_preload      = $optimizer_options['font_preload'] ?? [];
@@ -57,7 +56,6 @@ $minify_html  = $optimizer_options['minify_html'] ?? 0;
 <?php
 
 include __DIR__ . '/Heartbeat/options.php';
-include __DIR__ . '/SVG/options.php';
 include __DIR__ . '/Minifier/options.php';
 include __DIR__ . '/Font/options.php';
 include __DIR__ . '/Lazy_Load/options.php';

@@ -10,6 +10,7 @@ use Addons\Custom_Email\Custom_Email;
 use Addons\Custom_Script\Custom_Script;
 use Addons\Custom_Sorting\Custom_Sorting;
 use Addons\Editor\Editor;
+use Addons\File\File;
 use Addons\Login_Security\Login_Security;
 use Addons\Optimizer\Optimizer;
 use Addons\Option_Page\Option_Page;
@@ -73,6 +74,7 @@ final class Addons {
 		( Editor::get_instance() );
 		( SMTP::get_instance() );
 		( Recaptcha::get_instance() );
+		( File::get_instance() );
 
 		\check_plugin_active( 'woocommerce/woocommerce.php' ) && WooCommerce::get_instance();
 		\check_plugin_active( 'wp-rocket/wp-rocket.php' ) && WpRocket::get_instance();
