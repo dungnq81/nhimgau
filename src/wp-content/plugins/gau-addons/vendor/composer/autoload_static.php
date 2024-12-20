@@ -40,6 +40,10 @@ class ComposerStaticInitb1d011e3e021839ea87b839dd827e727
         array (
             'Detection\\' => 10,
         ),
+        'B' => 
+        array (
+            'Box\\Spout\\' => 10,
+        ),
         'A' => 
         array (
             'Addons\\' => 7,
@@ -86,6 +90,10 @@ class ComposerStaticInitb1d011e3e021839ea87b839dd827e727
         'Detection\\' => 
         array (
             0 => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/src',
+        ),
+        'Box\\Spout\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/box/spout/src/Spout',
         ),
         'Addons\\' => 
         array (

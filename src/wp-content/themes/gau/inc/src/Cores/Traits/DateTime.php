@@ -29,14 +29,14 @@ trait DateTime {
 	/**
 	 * Humanizes the time difference between two timestamps.
 	 *
-	 * @param int|\WP_Post|null $post Optional. The post-ID to get the time from. Default is null.
+	 * @param mixed $post Optional. The post-ID to get the time from. Default is null.
 	 * @param false|int|string $from Optional. The starting timestamp. Default is null.
 	 * @param false|int|string $to Optional. The ending timestamp. Default is current time.
 	 *
 	 * @return string The human-readable time difference.
 	 */
 	public static function humanizeTime(
-		int|\WP_Post|null $post = null,
+		mixed $post = null,
 		false|int|string $from = false,
 		false|int|string $to = false
 	): string {
@@ -131,7 +131,7 @@ trait DateTime {
 			return $datetime->getTimestamp();
 		}
 
-		// Standardize 'mysql' format option
+		// Standardize `mysql` format option
 		if ( 'mysql' === $format ) {
 			$format = 'Y-m-d H:i:s';
 		}

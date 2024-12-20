@@ -3,13 +3,22 @@
         'name' => 'plugins/gau-addons',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '2165083beba19c9487fd5930f80af32b5936e26b',
+        'reference' => '0a1ec7d895fd200eced9a08ee6b18efa4c47144e',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
+        'box/spout' => array(
+            'pretty_version' => 'v3.3.0',
+            'version' => '3.3.0.0',
+            'reference' => '9bdb027d312b732515b884a341c0ad70372c6295',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../box/spout',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'enshrined/svg-sanitize' => array(
             'pretty_version' => '0.20.0',
             'version' => '0.20.0.0',
@@ -49,7 +58,7 @@
         'plugins/gau-addons' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '2165083beba19c9487fd5930f80af32b5936e26b',
+            'reference' => '0a1ec7d895fd200eced9a08ee6b18efa4c47144e',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

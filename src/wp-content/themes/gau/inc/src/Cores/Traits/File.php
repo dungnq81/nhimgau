@@ -224,4 +224,78 @@ trait File {
 
 		return $is_directory_created;
 	}
+
+	// --------------------------------------------------
+
+	/**
+	 * Upload a file from a URL to WordPress Media Library.
+	 *
+	 * @param string $fileUrl The URL of the file to download.
+	 * @param string|null $specificDir Optional specific directory. Defaults to WordPress uploads structure.
+	 *
+	 * @return array|null Details of the uploaded file or null on failure.
+	 */
+	public static function uploadFileFromUrl( string $fileUrl, ?string $specificDir = null ): ?array {
+		// Retrieve the file from the URL
+		$response = wp_remote_get( $fileUrl, [ 'timeout' => 10 ] );
+
+		if ( is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) !== 200 ) {
+			return null;
+		}
+
+		$fileContent = wp_remote_retrieve_body( $response );
+
+		if ( empty( $fileContent ) ) {
+			return null;
+		}
+
+		// Determine file name and directory
+		$filename  = basename( parse_url( $fileUrl, PHP_URL_PATH ) );
+		$uploadDir = wp_upload_dir();
+
+		if ( $specificDir ) {
+			$directory = trailingslashit( $uploadDir['basedir'] ) . trim( $specificDir, '/' );
+			self::createDirectory( $directory );
+		} else {
+			$directory = $uploadDir['path'];
+		}
+
+		$filePath = trailingslashit( $directory ) . $filename;
+
+		// Write the file to the filesystem
+		if ( ! self::doLockWrite( $filePath, $fileContent ) ) {
+			return null;
+		}
+
+		// Get a file type
+		$filetype = wp_check_filetype( $filePath );
+
+		if ( ! $filetype['type'] ) {
+			return null;
+		}
+
+		// Prepare attachment data
+		$attachment = [
+			'guid'           => $uploadDir['url'] . '/' . $filename,
+			'post_mime_type' => $filetype['type'],
+			'post_title'     => self::fileName( $filename, false ),
+			'post_content'   => '',
+			'post_status'    => 'inherit',
+		];
+
+		// Insert the attachment into the Media Library
+		$attachId = wp_insert_attachment( $attachment, $filePath );
+
+		if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/image.php';
+		}
+
+		$attachData = wp_generate_attachment_metadata( $attachId, $filePath );
+		wp_update_attachment_metadata( $attachId, $attachData );
+
+		return [
+			'id'  => $attachId,
+			'url' => wp_get_attachment_url( $attachId ),
+		];
+	}
 }

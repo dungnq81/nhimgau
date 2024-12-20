@@ -32,7 +32,7 @@
     /**
      * @see Custom_Script::body_scripts_top__hook - 99
      */
-    do_action( 'wp_body_open' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- core WP hook.
+    do_action( 'wp_body_open' );
 
     /**
      * Before Header

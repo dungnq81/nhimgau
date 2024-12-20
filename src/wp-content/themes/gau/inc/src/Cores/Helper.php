@@ -270,7 +270,6 @@ final class Helper {
 	 * @return string
 	 */
 	public static function appendToAttribute( string $str, string $attr, string $content_extra, bool $unique = false ): string {
-
 		// Check if the attribute has single or double quotes.
 		// @codingStandardsIgnoreLine
 		if ( $start = stripos( $str, $attr . '="' ) ) {

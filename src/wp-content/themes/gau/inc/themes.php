@@ -419,12 +419,12 @@ function __theme_setting_options( array $arr ): array {
 	$arr_new = [
 
 		// hide admin menu
-		'admin_hide_menu' => [
+		'admin_hide_menu'                     => [
 			//'edit.php',
 		],
 
 		// hide admin submenu
-		'admin_hide_submenu' => [
+		'admin_hide_submenu'                  => [
 //			'options-general.php' => [
 //				'options-discussion.php',
 //				'options-privacy.php'
@@ -454,8 +454,6 @@ function __theme_setting_options( array $arr ): array {
 		// Aspect Ratio - custom post-type and term.
 		'aspect_ratio_post_type_term'         => [
 			'post',
-
-			//...
 		],
 
 		// Aspect Ratio default.
@@ -472,8 +470,6 @@ function __theme_setting_options( array $arr ): array {
 		'term_row_actions'                    => [
 			'category',
 			'post_tag',
-
-			//...
 		],
 
 		// Add ID to the admin post-page.
@@ -487,8 +483,6 @@ function __theme_setting_options( array $arr ): array {
 		'term_thumb_columns'                  => [
 			'category',
 			'post_tag',
-
-			//...
 		],
 
 		// Exclude thumb post_type columns.
@@ -506,10 +500,7 @@ function __theme_setting_options( array $arr ): array {
 		'posts_num_per_page'                  => [],
 
 		// Custom post-type & taxonomy.
-		'post_type_terms'                     => [
-
-			//...
-		],
+		'post_type_terms'                     => [],
 
 		// smtp_plugins_support.
 		'smtp_plugins_support'                => [
@@ -627,7 +618,7 @@ function __theme_setting_options( array $arr ): array {
 		],
 
 		// Other setting ( file upload, v.v... )
-		'file_settings'                      => [
+		'file_settings'                       => [
 			'upload_size_limit' => [
 				'name'  => 'Maximum upload file size',
 				'value' => 2, // MB

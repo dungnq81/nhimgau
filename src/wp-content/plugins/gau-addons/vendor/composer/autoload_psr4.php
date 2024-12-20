@@ -16,5 +16,6 @@ return array(
     'MatthiasMullie\\PathConverter\\' => array($vendorDir . '/matthiasmullie/path-converter/src'),
     'MatthiasMullie\\Minify\\' => array($vendorDir . '/matthiasmullie/minify/src'),
     'Detection\\' => array($vendorDir . '/mobiledetect/mobiledetectlib/src'),
+    'Box\\Spout\\' => array($vendorDir . '/box/spout/src/Spout'),
     'Addons\\' => array($baseDir . '/src'),
 );
