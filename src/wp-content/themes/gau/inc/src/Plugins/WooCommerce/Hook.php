@@ -18,7 +18,7 @@ class Hook {
 		} );
 
 		add_filter( 'woocommerce_product_get_rating_html', [ $this, '_hook_woocommerce_product_get_rating_html' ], 10, 3 );
-		add_filter( 'woocommerce_defer_transactional_emails','__return_true' );
+		add_filter( 'woocommerce_defer_transactional_emails', '__return_true' );
 	}
 
 	// ------------------------------------------------------

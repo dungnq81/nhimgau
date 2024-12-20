@@ -15,7 +15,6 @@ require __DIR__ . "/functions.php";
  * @author   Gaudev
  */
 final class WooCommerce {
-
 	use Singleton;
 
 	// ------------------------------------------------------
@@ -93,7 +92,7 @@ final class WooCommerce {
 	public function enqueue_scripts(): void {
 		wp_enqueue_style( '_wc-style', ASSETS_URL . "css/woocommerce.css", [ "app-style" ], THEME_VERSION );
 		wp_enqueue_script( "_wc", ASSETS_URL . "js/woocommerce2.js", [ "app" ], THEME_VERSION, true );
-		wp_script_add_data( "_wc", "defer", true );
+		wp_script_add_data( '_wc', 'extra', [ 'module', 'defer' ] );
 	}
 
 	// ------------------------------------------------------
