@@ -18,7 +18,7 @@ trait Encryption {
 	 */
 	private static function loadKeys(): void {
 		if ( is_null( self::$method ) || is_null( self::$secretKey ) ) {
-			$keyFile = INC_PATH . 'encryption_key.php';
+			$keyFile = INC_PATH . 'encryption-key.php';
 
 			if ( ! is_file( $keyFile ) ) {
 				throw new \RuntimeException( "Key file not found: $keyFile" );

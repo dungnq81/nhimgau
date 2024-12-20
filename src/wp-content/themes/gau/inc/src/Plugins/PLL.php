@@ -120,8 +120,6 @@ final class PLL {
 	 * @return void
 	 */
 	public function register_and_translate_wc_attributes(): void {
-
-		// Get all product attributes
 		foreach ( wc_get_attribute_taxonomies() as $attribute ) {
 
 			// Register attribute label with Polylang

@@ -2299,16 +2299,17 @@ trait Wp {
 	 * @param int|null $disabled_parent
 	 * @param bool $only_parent
 	 *
-	 * @return string|null
+	 * @return array|null
 	 */
-	public static function selectOptionTerms(
+	public static function hierarchyTerms(
 		?string $taxonomy,
 		bool $hide_empty = true,
 		?int $parent = null,
 		mixed $selected_request = null,
 		?int $disabled_parent = null,
-		bool $only_parent = false,
-	): ?string {
+		bool $only_parent = false
+	): ?array {
+
 		if ( $taxonomy === null || ! taxonomy_exists( $taxonomy ) ) {
 			return null;
 		}
@@ -2329,9 +2330,14 @@ trait Wp {
 			return null;
 		}
 
-		$options = '';
+		$options = [];
 		foreach ( $terms as $term ) {
-			$options .= self::_build_term_option( $term, $hide_empty, 0, $selected_request, $disabled_parent, $only_parent );
+
+			// Append options from the term and its children using the spread operator
+			$options = [
+				...$options,
+				...self::_buildTreeTerms( $term, $hide_empty, 0, $selected_request, $disabled_parent, $only_parent )
+			];
 		}
 
 		return $options;
@@ -2347,18 +2353,19 @@ trait Wp {
 	 * @param int|null $disabled_parent
 	 * @param bool $only_parent
 	 *
-	 * @return string
+	 * @return array
 	 * @private
 	 */
-	private static function _build_term_option(
+	private static function _buildTreeTerms(
 		mixed $term,
 		bool $hide_empty = true,
 		int $depth = 0,
 		mixed $selected_request = null,
 		?int $disabled_parent = null,
 		bool $only_parent = false
-	): string {
-		$options = '';
+	): array {
+
+		$options = [];
 
 		if ( $term?->term_id ) {
 
@@ -2376,18 +2383,28 @@ trait Wp {
 				$disabled = ' disabled="disabled"';
 			}
 
-			$options = '<option value="' . $term->term_id . '"' . $selected . $disabled . '>' . $prefix . $term->name . '</option>';
+			$options[] = [
+				'value'    => $term?->term_id,
+				'label'    => $prefix . $term?->name,
+				'selected' => ! empty( $selected ),
+				'disabled' => ! empty( $disabled ),
+			];
 
 			if ( ! $only_parent ) {
 				$child_terms = get_terms( [
-					'taxonomy'   => $term->taxonomy,
+					'taxonomy'   => $term?->taxonomy,
 					'hide_empty' => $hide_empty,
-					'parent'     => $term->term_id,
+					'parent'     => $term?->term_id,
 				] );
 
 				if ( ! empty( $child_terms ) && ! is_wp_error( $child_terms ) ) {
 					foreach ( $child_terms as $child_term ) {
-						$options .= self::_build_term_option( $child_term, $hide_empty, $depth + 1, $selected_request, $disabled_parent );
+
+						// Append child options directly to the array
+						$options = [
+							...$options,
+							...self::_buildTreeTerms( $child_term, $hide_empty, $depth + 1, $selected_request, $disabled_parent )
+						];
 					}
 				}
 			}

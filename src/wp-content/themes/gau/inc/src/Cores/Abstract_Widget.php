@@ -193,11 +193,11 @@ abstract class Abstract_Widget extends \WP_Widget {
 	/**
 	 * @param $id
 	 *
-	 * @return object|mixed|null
+	 * @return object|bool
 	 * @throws \JsonException
 	 */
-	protected function acfFields( $id ): mixed {
-		return Helper::toObject( Helper::getFields( $id ) );
+	protected function acfFields( $id ): object|bool {
+		return Helper::getFields( $id, true );
 	}
 
 	// --------------------------------------------------
@@ -275,16 +275,8 @@ abstract class Abstract_Widget extends \WP_Widget {
 			$value = $instance[ $key ] ?? $setting['std'];
 
 			switch ( $setting['type'] ) {
-				case 'text':
-					$this->render_text_input( $key, $setting, $value, $class );
-					break;
-
 				case 'number':
 					$this->render_number_input( $key, $setting, $value, $class );
-					break;
-
-				case 'select':
-					$this->render_select( $key, $setting, $value, $class );
 					break;
 
 				case 'textarea':
@@ -293,6 +285,18 @@ abstract class Abstract_Widget extends \WP_Widget {
 
 				case 'checkbox':
 					$this->render_checkbox( $key, $setting, $value, $class );
+					break;
+
+				case 'text':
+					$this->render_text_input( $key, $setting, $value, $class );
+					break;
+
+				case 'select':
+					$this->render_select( $key, $setting, $value, $class );
+					break;
+
+				case 'select_multi':
+					$this->render_select( $key, $setting, $value, $class, true );
 					break;
 
 				// Default: run an action.
@@ -360,13 +364,24 @@ abstract class Abstract_Widget extends \WP_Widget {
 	 * @param array $setting
 	 * @param mixed $value
 	 * @param string $class
+	 * @param bool $multi
 	 */
-	protected function render_select( string $key, array $setting, mixed $value, string $class ): void {
+	protected function render_select( string $key, array $setting, mixed $value, string $class, bool $multi = false ): void {
+		if ( $multi ) {
+			$class .= ' select2 select2-multi';
+		}
+
 		echo '<p>';
 		echo '<label for="' . Helper::escAttr( $this->get_field_id( $key ) ) . '">' . wp_kses_post( $setting['label'] ) . '</label>';
 		echo '<select class="widefat ' . Helper::escAttr( $class ) . '"';
+
+		if ( $multi ) {
+			echo ' multiple';
+		}
+
 		echo ' id="' . Helper::escAttr( $this->get_field_id( $key ) ) . '"';
 		echo ' name="' . Helper::escAttr( $this->get_field_name( $key ) ) . '">';
+
 		foreach ( $setting['options'] as $option_key => $option_value ) {
 			echo '<option value="' . Helper::escAttr( $option_key ) . '" ' . selected( $option_key, $value ) . '>';
 			echo esc_html( $option_value );
