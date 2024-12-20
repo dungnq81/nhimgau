@@ -2,6 +2,8 @@
 
 namespace Cores\Traits;
 
+use Random\RandomException;
+
 \defined( 'ABSPATH' ) || die;
 
 trait File {
@@ -194,7 +196,7 @@ trait File {
 		}
 
 		foreach ( scandir( $dirname, SCANDIR_SORT_NONE ) as $file ) {
-			if ( ! in_array( $file, [ '.', '..', '.svn', '.git' ] ) ) {
+			if ( ! in_array( $file, [ '.', '..', '.svn', '.git' ], false ) ) {
 				return false;
 			}
 		}
@@ -228,14 +230,14 @@ trait File {
 	// --------------------------------------------------
 
 	/**
-	 * Upload a file from a URL to WordPress Media Library.
+	 * @param string $fileUrl
+	 * @param array|null $allowedTypes
+	 * @param int|null $maxFileSize
+	 * @param string|null $specificDir
 	 *
-	 * @param string $fileUrl The URL of the file to download.
-	 * @param string|null $specificDir Optional specific directory. Defaults to WordPress uploads structure.
-	 *
-	 * @return array|null Details of the uploaded file or null on failure.
+	 * @return array|null
 	 */
-	public static function uploadFileFromUrl( string $fileUrl, ?string $specificDir = null ): ?array {
+	public static function uploadFileFromUrl( string $fileUrl, ?array $allowedTypes = null, ?int $maxFileSize = null, ?string $specificDir = null ): ?array {
 		// Retrieve the file from the URL
 		$response = wp_remote_get( $fileUrl, [ 'timeout' => 10 ] );
 
@@ -262,6 +264,11 @@ trait File {
 
 		$filePath = trailingslashit( $directory ) . $filename;
 
+		// Check file size if applicable
+		if ( $maxFileSize !== null && mb_strlen( $fileContent ) > $maxFileSize ) {
+			return null;
+		}
+
 		// Write the file to the filesystem
 		if ( ! self::doLockWrite( $filePath, $fileContent ) ) {
 			return null;
@@ -270,7 +277,7 @@ trait File {
 		// Get a file type
 		$filetype = wp_check_filetype( $filePath );
 
-		if ( ! $filetype['type'] ) {
+		if ( $allowedTypes !== null && ( ! $filetype['type'] || ! in_array( $filetype['type'], $allowedTypes, false ) ) ) {
 			return null;
 		}
 
