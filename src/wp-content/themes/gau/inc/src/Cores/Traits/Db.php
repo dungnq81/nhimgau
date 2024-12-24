@@ -398,11 +398,34 @@ trait Db {
 		}
 
 		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
-		$query      = $wpdb->prepare( "SELECT COUNT(*) FROM `{$table_name}` WHERE `id` = %d", (int) $id );
-
-		$exists = $wpdb->get_var( $query );
+		$exists = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM `{$table_name}` WHERE `id` = %d", $id ) );
 
 		// Return true if row exists, false otherwise
+		return (bool) $exists;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string|null $table_name
+	 * @param string|null $column
+	 * @param string|int|null $value
+	 * @param bool $sanitize
+	 *
+	 * @return bool
+	 */
+	public static function checkRowBy( ?string $table_name, ?string $column = null, string|int|null $value = null, bool $sanitize = true ): bool {
+		global $wpdb;
+
+		if ( empty( $table_name ) || empty( $column ) ) {
+			return false;
+		}
+
+		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
+		$column     = $sanitize ? sanitize_text_field( $column ) : $column;
+
+		$exists = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM `{$table_name}` WHERE `{$column}` = %s LIMIT 1", $value ) );
+
 		return (bool) $exists;
 	}
 
