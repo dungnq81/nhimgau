@@ -1,3 +1,5 @@
+@use "sass:string";
+
 /*!
  * Font Awesome Pro 6.7.1 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license (Commercial License)
@@ -26,5 +28,5 @@
 }
 
 @each $name, $icon in $fa-brand-icons {
-  .#{$fa-css-prefix}-#{$name} { #{$fa-icon-property}: unquote("\"#{ $icon }\""); }
+  .#{$fa-css-prefix}-#{$name} { #{$fa-icon-property}: string.unquote("\"#{ $icon }\""); }
 }
