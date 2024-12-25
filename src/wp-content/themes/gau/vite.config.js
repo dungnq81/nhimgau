@@ -15,7 +15,6 @@ const node_modules = './node_modules';
 // COPY
 const directoriesToCopy = [
     { src: `${ storage }/fonts/fontawesome/webfonts`, dest: '' },
-    { src: `${ storage }/fonts/SVN-Poppins`, dest: 'fonts' },
     { src: `${ resources }/img`, dest: '' },
     { src: `${ node_modules }/pace-js/pace.min.js`, dest: 'js' },
 ];
@@ -65,7 +64,7 @@ export default {
         } ),
         isProduction ? PluginCritical( {
             criticalUrl: process.env.CRITICAL_URL || 'http://localhost:8080',
-            criticalBase: `./wp-content/themes/${ directory }/assets/css`,
+            criticalBase: `${ dir }/assets/css`,
             criticalPages: [
                 { uri: '', template: 'index' }
             ],
