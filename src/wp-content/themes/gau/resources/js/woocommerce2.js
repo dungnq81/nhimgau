@@ -1,5 +1,4 @@
 jQuery( function ( $ ) {
-
     const wpg__image = $( '.wpg__image' );
     wpg__image.find( 'a' ).on( 'click', function ( e ) {
         e.preventDefault();

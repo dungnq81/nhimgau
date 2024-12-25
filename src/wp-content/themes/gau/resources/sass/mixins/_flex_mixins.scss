@@ -5,6 +5,7 @@
 
 @use "../functions" as func;
 @use "../variables" as vars;
+
 @use "mixins" as mixin;
 
 @function calculate-flex-width( $columns: 12, $span: 1, $gap: 0 ) {

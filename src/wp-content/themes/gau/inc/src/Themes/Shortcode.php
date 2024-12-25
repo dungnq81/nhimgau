@@ -116,7 +116,7 @@ final class Shortcode {
                     <li>
                         <a href="<?= $data['url'] ?>" title="<?= Helper::escAttr( $data['name'] ) ?>" target="_blank">
 							<?= $thumb ?>
-                            <span class="hidden-text"><?= $data['name'] ?></span>
+                            <span class="sr-only"><?= $data['name'] ?></span>
                         </a>
                     </li>
 				<?php

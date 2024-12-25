@@ -2,7 +2,7 @@
 /**
  * Theme functions and definitions
  *
- * @package Gaudev
+ * @package Gau
  */
 
 $theme_version = ( wp_get_theme()->get( 'Version' ) ) ?: false;

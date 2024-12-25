@@ -1,7 +1,7 @@
 {
     "name": "gau",
     "private": true,
-    "version": "0.24.12",
+    "version": "0.25.01",
     "type": "module",
     "scripts": {
         "watch:plugin": "cross-env NODE_ENV=development vite build --watch --config wp-content/plugins/gau-addons/vite.config.js",

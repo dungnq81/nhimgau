@@ -398,10 +398,9 @@ trait Db {
 		}
 
 		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
-		$exists = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM `{$table_name}` WHERE `id` = %d", $id ) );
+		$query      = $wpdb->prepare( "SELECT 1 FROM `{$table_name}` WHERE `id` = %d LIMIT 1", $id );
 
-		// Return true if row exists, false otherwise
-		return (bool) $exists;
+		return (bool) $wpdb->get_var( $query );
 	}
 
 	// -------------------------------------------------------------
@@ -424,9 +423,9 @@ trait Db {
 		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
 		$column     = $sanitize ? sanitize_text_field( $column ) : $column;
 
-		$exists = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM `{$table_name}` WHERE `{$column}` = %s LIMIT 1", $value ) );
+		$query = $wpdb->prepare( "SELECT 1 FROM `{$table_name}` WHERE `{$column}` = %s LIMIT 1", $value );
 
-		return (bool) $exists;
+		return (bool) $wpdb->get_var( $query );
 	}
 
 	// -------------------------------------------------------------

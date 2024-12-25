@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the WordPress - 6.7.x - Development package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-11-20 13:04:32+0000\n"
+"PO-Revision-Date: 2024-12-24 04:11:11+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -285,6 +285,41 @@ msgstr "Tháng Một"
 #, gp-priority: high
 msgid "Uncategorized"
 msgstr "Chưa phân loại"
+
+#: wp-includes/theme.json
+msgctxt "Aspect ratio name"
+msgid "Tall - 9:16"
+msgstr "Chiều cao - 9:16"
+
+#: wp-includes/theme.json
+msgctxt "Aspect ratio name"
+msgid "Wide - 16:9"
+msgstr "Chiều rộng - 16:9"
+
+#: wp-includes/theme.json
+msgctxt "Aspect ratio name"
+msgid "Classic Portrait - 2:3"
+msgstr "Classic Portrait - 2:3"
+
+#: wp-includes/theme.json
+msgctxt "Aspect ratio name"
+msgid "Classic - 3:2"
+msgstr "Classic - 3:2"
+
+#: wp-includes/theme.json
+msgctxt "Aspect ratio name"
+msgid "Portrait - 3:4"
+msgstr "Portrait - 3:4"
+
+#: wp-includes/theme.json
+msgctxt "Aspect ratio name"
+msgid "Standard - 4:3"
+msgstr "Chuẩn - 4:3"
+
+#: wp-includes/theme.json
+msgctxt "Aspect ratio name"
+msgid "Square - 1:1"
+msgstr "Hình vuông - 1:1"
 
 #: wp-includes/blocks/tag-cloud/block.json
 msgctxt "block description"
@@ -2998,6 +3033,11 @@ msgstr "Biểu tượng"
 msgid "Site icon."
 msgstr "Biểu tượng của web."
 
+#: wp-includes/theme.json
+msgctxt "Font size name"
+msgid "Extra Large"
+msgstr "Rất lớn"
+
 #: wp-includes/blocks/term-description/block.json
 msgctxt "block description"
 msgid "Display the description of categories, tags and custom taxonomies when viewing an archive."
@@ -3849,6 +3889,181 @@ msgstr "Các mẫu chung thường thực hiện một vai trò cụ thể như 
 #: wp-includes/admin-bar.php:482 wp-admin/site-editor.php:185
 msgid "Edit site"
 msgstr "Sửa mẫu trang"
+
+#: wp-includes/theme.json
+msgctxt "Duotone name"
+msgid "Blue and orange"
+msgstr "Xanh da trời và vàng cam"
+
+#: wp-includes/theme.json
+msgctxt "Duotone name"
+msgid "Purple and green"
+msgstr "Tím và xanh lá"
+
+#: wp-includes/theme.json
+msgctxt "Duotone name"
+msgid "Magenta and yellow"
+msgstr "Đỏ tươi và vàng"
+
+#: wp-includes/theme.json
+msgctxt "Duotone name"
+msgid "Midnight"
+msgstr "Đen đêm"
+
+#: wp-includes/theme.json
+msgctxt "Duotone name"
+msgid "Blue and red"
+msgstr "Xanh da trời và đỏ"
+
+#: wp-includes/theme.json
+msgctxt "Duotone name"
+msgid "Purple and yellow"
+msgstr "Tím và vàng"
+
+#: wp-includes/theme.json
+msgctxt "Duotone name"
+msgid "Grayscale"
+msgstr "Xám"
+
+#: wp-includes/theme.json
+msgctxt "Duotone name"
+msgid "Dark grayscale"
+msgstr "Xám đậm"
+
+#: wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Midnight"
+msgstr "Nửa đêm"
+
+#: wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Electric grass"
+msgstr "Cỏ nhám"
+
+#: wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Pale ocean"
+msgstr "Đại dương nhạt"
+
+#: wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Luminous dusk"
+msgstr "Hoàng hôn rực rỡ"
+
+#: wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Blush bordeaux"
+msgstr "Màu đỏ tía"
+
+#: wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Blush light purple"
+msgstr "Màu tím tía tươi"
+
+#: wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Cool to warm spectrum"
+msgstr "Quang phổ từ lạnh đến ấm"
+
+#: wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Very light gray to cyan bluish gray"
+msgstr "Xám rất nhạt đến xám xanh lục lam"
+
+#: wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Luminous vivid orange to vivid red"
+msgstr "Màu cam rực rỡ đến màu đỏ sống động"
+
+#: wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Luminous vivid amber to luminous vivid orange"
+msgstr "Nâu đậm đến màu cam"
+
+#: wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Light green cyan to vivid green cyan"
+msgstr "Màu xanh lá nhạt đến xanh lá lam"
+
+#: wp-includes/theme.json
+msgctxt "Gradient name"
+msgid "Vivid cyan blue to vivid purple"
+msgstr "Màu xanh lam sống động đến màu tím sống động"
+
+#: wp-includes/theme.json
+msgctxt "Color name"
+msgid "Vivid purple"
+msgstr "Màu tím sống động"
+
+#: wp-includes/theme.json
+msgctxt "Color name"
+msgid "Vivid cyan blue"
+msgstr "Xanh lam rực rỡ"
+
+#: wp-includes/theme.json
+msgctxt "Color name"
+msgid "Pale cyan blue"
+msgstr "Xanh lam nhạt"
+
+#: wp-includes/theme.json
+msgctxt "Color name"
+msgid "Vivid green cyan"
+msgstr "Xanh lam rực rỡ"
+
+#: wp-includes/theme.json
+msgctxt "Color name"
+msgid "Light green cyan"
+msgstr "Xanh lá tươi"
+
+#: wp-includes/theme.json
+msgctxt "Color name"
+msgid "Luminous vivid amber"
+msgstr "Hổ phách sinh động"
+
+#: wp-includes/theme.json
+msgctxt "Color name"
+msgid "Luminous vivid orange"
+msgstr "Vàng cam rực rỡ"
+
+#: wp-includes/theme.json
+msgctxt "Color name"
+msgid "Vivid red"
+msgstr "Đỏ tươi"
+
+#: wp-includes/theme.json
+msgctxt "Color name"
+msgid "Pale pink"
+msgstr "Hồng nhạt"
+
+#: wp-includes/theme.json
+msgctxt "Color name"
+msgid "White"
+msgstr "Trắng"
+
+#: wp-includes/theme.json
+msgctxt "Color name"
+msgid "Cyan bluish gray"
+msgstr "Cyan bluish gray"
+
+#: wp-includes/theme.json
+msgctxt "Color name"
+msgid "Black"
+msgstr "Đen"
+
+#: wp-includes/theme.json
+msgctxt "Font size name"
+msgid "Large"
+msgstr "Lớn"
+
+#: wp-includes/theme.json
+msgctxt "Font size name"
+msgid "Medium"
+msgstr "Trung bình"
+
+#: wp-includes/theme.json
+msgctxt "Font size name"
+msgid "Small"
+msgstr "Nhỏ"
 
 #: wp-includes/blocks/query-pagination-previous.php:26
 #: wp-includes/js/dist/block-library.js:49958
@@ -5160,7 +5375,7 @@ msgstr "(Link trang chủ, mở ở tab mới)"
 
 #. translators: 1: Block type, 2: Typography supports key, e.g: fontSize,
 #. lineHeight, etc. 3: block.json, 4: Old metadata key, 5: New metadata key.
-#: wp-includes/blocks.php:2383
+#: wp-includes/blocks.php:2384
 msgid "Block \"%1$s\" is declaring %2$s support in %3$s file under %4$s. %2$s support is now declared under %5$s."
 msgstr "Khối \"%1$s\" đang khai báo hỗ trợ %2$s trong file %3$s dưới %4$s. Hỗ trợ %2$s hiện được khai báo dưới %5$s."
 
@@ -5805,7 +6020,7 @@ msgid "An application name is required to create an application password."
 msgstr "Cần có tên ứng dụng để tạo mật khẩu ứng dụng."
 
 #: wp-includes/media-template.php:552 wp-includes/media-template.php:804
-#: wp-admin/async-upload.php:77 wp-admin/includes/media.php:3367
+#: wp-admin/async-upload.php:79 wp-admin/includes/media.php:3367
 msgid "Copy URL to clipboard"
 msgstr "Sao chép liên kết"
 
@@ -8215,7 +8430,7 @@ msgstr "Hiển thị:"
 
 #: wp-includes/media-template.php:553 wp-includes/media-template.php:805
 #: wp-includes/js/dist/components.js:37976 wp-includes/js/dist/editor.js:19228
-#: wp-admin/async-upload.php:78
+#: wp-admin/async-upload.php:80
 #: wp-admin/includes/class-wp-media-list-table.php:830
 #: wp-admin/includes/class-wp-privacy-policy-content.php:431
 #: wp-admin/includes/media.php:3368 wp-admin/site-health-info.php:59
@@ -16838,7 +17053,7 @@ msgstr "%s vượt quá kích thước tải lên tối đa trong chương trìn
 
 #. translators: %s: File name.
 #. translators: %s: Name of the file that failed to upload.
-#: wp-includes/script-loader.php:1008 wp-admin/async-upload.php:124
+#: wp-includes/script-loader.php:1008 wp-admin/async-upload.php:126
 msgid "&#8220;%s&#8221; has failed to upload."
 msgstr "&#8220;%s&#8221; không thể tải lên."
 
@@ -20179,7 +20394,7 @@ msgstr "Tìm kiếm"
 #: wp-includes/script-loader.php:1004
 #: wp-includes/widgets/class-wp-widget-text.php:547
 #: wp-includes/widgets/class-wp-widget-text.php:562
-#: wp-includes/js/wp-pointer.js:20 wp-admin/async-upload.php:120
+#: wp-includes/js/wp-pointer.js:20 wp-admin/async-upload.php:122
 #: wp-admin/includes/dashboard.php:1763 wp-admin/includes/file.php:348
 #: wp-admin/index.php:187
 msgid "Dismiss"
