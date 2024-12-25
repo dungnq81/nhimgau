@@ -25,7 +25,6 @@ final class ACF {
 
 		add_filter( 'acf/format_value/type=textarea', [ Helper::class, 'removeInlineJsCss' ], 11 );
 		add_filter( 'acf/fields/wysiwyg/toolbars', [ $this, 'wysiwyg_toolbars' ], 98, 1 );
-		add_action( 'acf/input/admin_head', [ $this, 'acf_admin_head' ] );
 
 		add_filter( 'teeny_mce_buttons', [ $this, 'teeny_mce_buttons' ], 99, 2 );
 
@@ -37,6 +36,41 @@ final class ACF {
 
 		add_action( 'wp_loaded', [ $this, 'widget_css_classes_frontend' ] );
 		add_filter( 'wp_nav_menu_objects', [ $this, 'wp_nav_menu_objects' ], 1000, 2 );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param $toolbars
+	 *
+	 * @return mixed
+	 */
+	public function wysiwyg_toolbars( $toolbars ): mixed {
+		// Add a new toolbar called "Minimal" - this toolbar has only 1 row of buttons
+//		$toolbars['Minimal']    = [];
+//		$toolbars['Minimal'][1] = [
+//			'formatselect',
+//			'bold',
+//			'underline',
+//			'bullist',
+//			'numlist',
+//			'link',
+//			'unlink',
+//			'forecolor',
+//			//'blockquote',
+//			'table',
+//			'codesample',
+//			'subscript',
+//			'superscript',
+//			'ml_tinymce_language_select_button', // wpglobus plugin
+//			'fullscreen',
+//		];
+
+		// remove the 'Basic' toolbar completely (if you want)
+		//unset( $toolbars['Full'] );
+		//unset( $toolbars['Basic'] );
+
+		return $toolbars;
 	}
 
 	// -------------------------------------------------------------
@@ -65,13 +99,6 @@ final class ACF {
 			'fullscreen',
 		];
 	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @return void
-	 */
-	public function acf_admin_head(): void {}
 
 	// -------------------------------------------------------------
 
@@ -199,41 +226,6 @@ final class ACF {
 		}
 
 		return $widget_opt;
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @param $toolbars
-	 *
-	 * @return mixed
-	 */
-	public function wysiwyg_toolbars( $toolbars ): mixed {
-		// Add a new toolbar called "Minimal" - this toolbar has only 1 row of buttons
-//		$toolbars['Minimal']    = [];
-//		$toolbars['Minimal'][1] = [
-//			'formatselect',
-//			'bold',
-//			'underline',
-//			'bullist',
-//			'numlist',
-//			'link',
-//			'unlink',
-//			'forecolor',
-//			//'blockquote',
-//			'table',
-//			'codesample',
-//			'subscript',
-//			'superscript',
-//			'ml_tinymce_language_select_button', // wpglobus plugin
-//			'fullscreen',
-//		];
-
-		// remove the 'Basic' toolbar completely (if you want)
-		//unset( $toolbars['Full'] );
-		//unset( $toolbars['Basic'] );
-
-		return $toolbars;
 	}
 
 	// -------------------------------------------------------------

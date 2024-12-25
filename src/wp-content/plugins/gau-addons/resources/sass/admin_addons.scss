@@ -521,3 +521,27 @@ input[type=number].tiny-text {
         max-height: 43px;
     }
 }
+
+/** */
+.mce-wordcount, .mce-charcount {
+    display: none !important;
+}
+
+.acf-editor-wrap .mce-wordcount,
+.acf-editor-wrap .mce-charcount {
+    display: inline-block !important;
+    font-size: inherit;
+    text-transform: capitalize !important;
+    padding: 8px 0;
+    position: relative;
+}
+
+.acf-editor-wrap .mce-charcount:after {
+    content: "|";
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.mce-statusbar>.mce-container-body .mce-path {
+    padding-top: 8px;
+}

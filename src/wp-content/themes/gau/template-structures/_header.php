@@ -149,7 +149,7 @@ if ( ! function_exists( '_masthead_container_open' ) ) {
 	add_action( 'masthead', '_masthead_container_open', 11 );
 
 	function _masthead_container_open(): void {
-		echo apply_filters( 'masthead_container_open_filter', '' );
+		echo apply_filters( 'masthead_container_open_filter', null );
 	}
 }
 
@@ -159,7 +159,7 @@ if ( ! function_exists( '_masthead_container_close' ) ) {
 	add_action( 'masthead', '_masthead_container_close', 99 );
 
 	function _masthead_container_close(): void {
-		echo apply_filters( 'masthead_container_close_filter', '' );
+		echo apply_filters( 'masthead_container_close_filter', null );
 	}
 }
 

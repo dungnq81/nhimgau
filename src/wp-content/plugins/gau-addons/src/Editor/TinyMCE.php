@@ -37,8 +37,6 @@ class TinyMCE {
 		array_push( $buttons, 'separator', 'codesample' );
 		array_push( $buttons, 'separator', 'toc' );
 
-		//array_push( $buttons, 'separator', 'fullscreen' );
-
 		return $buttons;
 	}
 
@@ -54,8 +52,8 @@ class TinyMCE {
 		$plugins['table']      = ADDONS_URL . 'src/Editor/tinymce/table/plugin.min.js';
 		$plugins['codesample'] = ADDONS_URL . 'src/Editor/tinymce/codesample/plugin.min.js';
 		$plugins['toc']        = ADDONS_URL . 'src/Editor/tinymce/toc/plugin.min.js';
-
-		//$plugins['fullscreen'] = ADDONS_URL . 'src/Editor/tinymce/fullscreen/plugin.min.js';
+		$plugins['wordcount']  = ADDONS_URL . 'src/Editor/tinymce/wordcount/plugin.min.js';
+		$plugins['charcount']  = ADDONS_URL . 'src/Editor/tinymce/charcount/plugin.min.js';
 
 		return $plugins;
 	}
