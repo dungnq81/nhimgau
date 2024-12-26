@@ -61,7 +61,7 @@ function __register_sidebars_action(): void {
 	if ( $top_header_cols > 0 ) {
 		for ( $i = 1; $i <= $top_header_cols; $i ++ ) {
 			$_name              = sprintf( __( 'Top-Header %d', TEXT_DOMAIN ), $i );
-			$top_header_sidebar = register_sidebar(
+			register_sidebar(
 				[
 					'container'     => false,
 					'id'            => 'top-header-' . $i . '-sidebar',
@@ -79,7 +79,7 @@ function __register_sidebars_action(): void {
 	if ( $header_cols > 0 ) {
 		for ( $i = 1; $i <= $header_cols; $i ++ ) {
 			$_name          = sprintf( __( 'Header %d', TEXT_DOMAIN ), $i );
-			$header_sidebar = register_sidebar(
+			register_sidebar(
 				[
 					'container'     => false,
 					'id'            => 'header-' . $i . '-sidebar',
@@ -97,7 +97,7 @@ function __register_sidebars_action(): void {
 	if ( $bottom_header_cols > 0 ) {
 		for ( $i = 1; $i <= $bottom_header_cols; $i ++ ) {
 			$_name                 = sprintf( __( 'Bottom-Header %d', TEXT_DOMAIN ), $i );
-			$bottom_header_sidebar = register_sidebar(
+			register_sidebar(
 				[
 					'container'     => false,
 					'id'            => 'bottom-header-' . $i . '-sidebar',
@@ -152,7 +152,7 @@ function __register_sidebars_action(): void {
 			'after_title'   => '</p>',
 		];
 
-		$footer_sidebar = register_sidebar( $args + $footer_tags );
+		register_sidebar( $args + $footer_tags );
 	}
 
 	//----------------------------------------------------------
@@ -160,7 +160,7 @@ function __register_sidebars_action(): void {
 	//----------------------------------------------------------
 
 	// Footer Credit
-	$footer_credit_sidebar = register_sidebar(
+	register_sidebar(
 		[
 			'container'     => false,
 			'id'            => 'footer-credit-sidebar',

@@ -78,6 +78,9 @@ const WP_DEBUG_DISPLAY = false;
 
 /* Add any custom values between this line and the "stop editing" line. */
 
+const WP_SITEURL = 'http://localhost:8080';
+const WP_HOME    = 'http://localhost:8080';
+
 /**
  * Allow WordPress to detect HTTPS when used behind a reverse proxy or a load balancer
  * See https://codex.wordpress.org/Function_Reference/is_ssl#Notes
