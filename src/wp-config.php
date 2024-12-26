@@ -105,7 +105,6 @@ const DISALLOW_FILE_EDIT = false;
 const DISALLOW_FILE_MODS = false;
 
 /* SSL */
-const FORCE_SSL_LOGIN = false;
 const FORCE_SSL_ADMIN = false;
 
 const WP_POST_REVISIONS = 2;
@@ -113,6 +112,7 @@ const EMPTY_TRASH_DAYS  = 15;
 const AUTOSAVE_INTERVAL = 120;
 
 /** WordPress core auto-update, */
+const AUTOMATIC_UPDATER_DISABLED = true;
 const WP_AUTO_UPDATE_CORE = false;
 
 /* That's all, stop editing! Happy publishing. */
