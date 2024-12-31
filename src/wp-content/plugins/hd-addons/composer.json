@@ -22,6 +22,7 @@
 		"openspout/openspout": "^4.28"
 	},
 	"require-dev": {
+		"laravel/pint": "^v1.18.3",
 		"symfony/var-dumper": "^v7.1.8",
 		"roave/security-advisories": "dev-latest"
 	},

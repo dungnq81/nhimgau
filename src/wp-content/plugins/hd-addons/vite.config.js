@@ -1,9 +1,9 @@
 import * as path from 'path';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
-import { sharedConfig } from '../../../../vite.config.shared.js';
+import { sharedConfig } from '../../../vite.config.shared';
 
 const directory = path.basename(path.resolve(__dirname));
-const dir = `./web/app/plugins/${directory}`;
+const dir = `./wp-content/plugins/${directory}`;
 const resources = `${dir}/resources`;
 const assets = `${dir}/assets`;
 const node_modules = './node_modules';

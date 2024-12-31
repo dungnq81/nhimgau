@@ -3,7 +3,7 @@
         'name' => 'plugins/hd-addons',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '460d9ef9b8c55764626ebbd61a93224ce5e65bb0',
+        'reference' => 'c6ea7e9309b096585fd8c1851c01675828e44206',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -18,6 +18,15 @@
             'install_path' => __DIR__ . '/../enshrined/svg-sanitize',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'laravel/pint' => array(
+            'pretty_version' => 'v1.19.0',
+            'version' => '1.19.0.0',
+            'reference' => '8169513746e1bac70c85d6ea1524d9225d4886f0',
+            'type' => 'project',
+            'install_path' => __DIR__ . '/../laravel/pint',
+            'aliases' => array(),
+            'dev_requirement' => true,
         ),
         'matthiasmullie/minify' => array(
             'pretty_version' => '1.3.73',
@@ -58,7 +67,7 @@
         'plugins/hd-addons' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '460d9ef9b8c55764626ebbd61a93224ce5e65bb0',
+            'reference' => 'c6ea7e9309b096585fd8c1851c01675828e44206',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
