@@ -49,7 +49,7 @@ add_action('acf/include_fields', static function () {
         'instruction_placement' => 'label',
         'hide_on_screen'        => '',
         'active'                => true,
-        'description'           => __('Thêm Css-class vào tất cả widget', TEXT_DOMAIN),
+        'description'           => __('Add CSS class to all widgets.', TEXT_DOMAIN),
         'show_in_rest'          => 0,
     ]);
 });

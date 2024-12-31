@@ -21,7 +21,7 @@ final class TGMPA
 
     private function init(): void
     {
-        add_action('tgmpa_register', [ $this, 'register_required_plugins' ]);
+        add_action('tgmpa_register', [$this, 'register_required_plugins']);
     }
 
     // -------------------------------------------------------------
@@ -40,26 +40,26 @@ final class TGMPA
             //
             // From the WordPress repository
             //
-    //		[
-    //			'name'     => 'Contact Form 7',
-    //			'slug'     => 'contact-form-7',
-    //			'required' => false, // required / recommended
-    //		],
-    //		[
-    //			'name'     => 'Elementor',
-    //			'slug'     => 'elementor',
-    //			'required' => false,
-    //		],
-    //		[
-    //			'name'     => 'WooCommerce',
-    //			'slug'     => 'woocommerce',
-    //			'required' => false,
-    //		],
-    //		[
-    //			'name'     => 'Variation Swatches for WooCommerce',
-    //			'slug'     => 'woo-variation-swatches',
-    //			'required' => false,
-    //		],
+            //		[
+            //			'name'     => 'Contact Form 7',
+            //			'slug'     => 'contact-form-7',
+            //			'required' => false, // required / recommended
+            //		],
+            //		[
+            //			'name'     => 'Elementor',
+            //			'slug'     => 'elementor',
+            //			'required' => false,
+            //		],
+            //		[
+            //			'name'     => 'WooCommerce',
+            //			'slug'     => 'woocommerce',
+            //			'required' => false,
+            //		],
+            //		[
+            //			'name'     => 'Variation Swatches for WooCommerce',
+            //			'slug'     => 'woo-variation-swatches',
+            //			'required' => false,
+            //		],
             [
                 'name'     => 'Akismet Anti-Spam',
                 'slug'     => 'akismet',
@@ -70,21 +70,21 @@ final class TGMPA
                 'slug'     => 'seo-by-rank-math',
                 'required' => false,
             ],
-    //		[
-    //			'name'     => 'Comments – wpDiscuz',
-    //			'slug'     => 'wpdiscuz',
-    //			'required' => false,
-    //		],
-    //		[
-    //			'name'     => 'Converter for Media',
-    //			'slug'     => 'webp-converter-for-media',
-    //			'required' => false,
-    //		],
-    //		[
-    //			'name'     => 'Easy Table of Contents',
-    //			'slug'     => 'easy-table-of-contents',
-    //			'required' => false,
-    //		],
+            //		[
+            //			'name'     => 'Comments – wpDiscuz',
+            //			'slug'     => 'wpdiscuz',
+            //			'required' => false,
+            //		],
+            //		[
+            //			'name'     => 'Converter for Media',
+            //			'slug'     => 'webp-converter-for-media',
+            //			'required' => false,
+            //		],
+            //		[
+            //			'name'     => 'Easy Table of Contents',
+            //			'slug'     => 'easy-table-of-contents',
+            //			'required' => false,
+            //		],
 
             //
             // Include a plugin bundled with a theme.
@@ -94,7 +94,7 @@ final class TGMPA
                 'slug'             => 'advanced-custom-fields-pro',
                 'source'           => THEME_PATH . 'storage/bundled/advanced-custom-fields-pro.zip',
                 'required'         => true,
-                'force_activation' => false,
+                'force_activation' => true,
                 'external_url'     => 'https://www.advancedcustomfields.com/'
             ],
         ];
@@ -103,9 +103,9 @@ final class TGMPA
          * Array of configuration settings. Amend each line as needed.
          */
         $config = [
-            'id'           => 'haku',
+            'id'           => 'hd-tgmpa',
             'default_path' => '',
-            'menu'         => 'haku-install-plugins',
+            'menu'         => 'tgmpa-install-plugins',
             'parent_slug'  => 'themes.php',
             'capability'   => 'edit_theme_options',
             'has_notices'  => true,
