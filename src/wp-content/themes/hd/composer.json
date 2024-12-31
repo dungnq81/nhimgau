@@ -1,8 +1,7 @@
 {
-    "name": "wordpress/hd",
+    "name": "themes/hd",
     "type": "project",
-	"license": "MIT",
-    "description": "HD Theme",
+    "license": "MIT",
     "authors": [
         {
             "name": "Gaudev",
@@ -15,8 +14,7 @@
             "Plugins\\": "inc/src/Plugins",
             "Themes\\": "inc/src/Themes",
             "Widgets\\": "inc/src/Widgets"
-        },
-        "files": []
+        }
     },
     "require": {
         "php": ">=8.2",
@@ -30,10 +28,8 @@
         "symfony/var-dumper": "^v7.2.0",
         "roave/security-advisories": "dev-latest"
     },
-    "minimum-stability": "dev",
-	"prefer-stable": true,
     "scripts": {
-		"lint": "pint --test",
-		"lint:fix": "pint"
-	}
+        "lint": "pint --test",
+        "lint:fix": "pint"
+    }
 }
