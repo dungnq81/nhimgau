@@ -1,12 +1,12 @@
-@use "sass:list";
-@use "sass:math";
-@use "sass:meta";
-@use "sass:map";
-@use "sass:color";
-@use "sass:string";
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'sass:map';
+@use 'sass:color';
+@use 'sass:string';
 
-@use "../functions" as func;
-@use "../variables" as vars;
+@use '../functions' as func;
+@use '../variables' as vars;
 
 @mixin color-scheme($name) {
     @media (prefers-color-scheme: #{$name}) {
@@ -26,7 +26,7 @@
     }
 }
 
-@mixin mq( $breakpoint, $type: min ) {
+@mixin mq($breakpoint, $type: min) {
     $breakpoint-value: func.get-breakpoint($breakpoint, vars.$mq-breakpoints, 768px); // Fallback
     @if $breakpoint-value {
         @if $type == max {
@@ -245,10 +245,12 @@
     max-height: 100%;
 }
 
-@mixin responsive-scale( $scale: 1.06, $opacity: 1 ) {
+@mixin responsive-scale($scale: 1.06, $opacity: 1) {
     transform: scale(1.0001);
     will-change: transform;
-    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s;
+    transition:
+        transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        opacity 0.3s;
 
     &:hover {
         transform: scale($scale);
@@ -256,7 +258,7 @@
     }
 }
 
-@mixin responsive-bg-ratio( $ratio-width: 4, $ratio-height: 3 ) {
+@mixin responsive-bg-ratio($ratio-width: 4, $ratio-height: 3) {
     background-size: cover;
     background-position: center;
     display: block;
@@ -271,7 +273,7 @@
     }
 }
 
-@mixin responsive-ratio( $ratio-width: 3, $ratio-height: 2, $width_percent: 100%, $pseudo: false ) {
+@mixin responsive-ratio($ratio-width: 3, $ratio-height: 2, $width_percent: 100%, $pseudo: false) {
     $padding: func.divide($width_percent * $ratio-height, $ratio-width);
     @if $pseudo {
         &::before {
@@ -292,11 +294,11 @@
     }
 }
 
-@mixin linear-gradient( $angle: 90deg, $c: vars.$primary, $hue: 12deg ) {
+@mixin linear-gradient($angle: 90deg, $c: vars.$primary, $hue: 12deg) {
     background: linear-gradient($angle, $c 0%, color.adjust($c, $hue: $hue) 100%);
 }
 
-@mixin gradient-text( $angle: 135deg, $c: vars.$primary, $hue: 12deg ) {
+@mixin gradient-text($angle: 135deg, $c: vars.$primary, $hue: 12deg) {
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
@@ -306,17 +308,16 @@
 }
 
 // alias of `layout-container`
-@mixin container( $padding_m: vars.$gutter-xs, $padding: vars.$gutter, $\2xl: false ) {
-    @include layout-container($padding_m, $padding, $\2xl)
+@mixin container($padding_m: vars.$gutter-xs, $padding: vars.$gutter, $\2xl: false) {
+    @include layout-container($padding_m, $padding, $\2xl);
 }
 
-@mixin layout-container( $padding_m: vars.$gutter-xs, $padding: vars.$gutter, $\2xl: false ) {
+@mixin layout-container($padding_m: vars.$gutter-xs, $padding: vars.$gutter, $\2xl: false) {
     margin-left: auto;
     margin-right: auto;
     max-width: map.get(vars.$container-max-widths, sm);
 
     &:not(.full) {
-
         @if math.is-unitless($padding_m) or math.unit($padding_m) == '%' {
             padding-left: func.fs($padding_m);
             padding-right: func.fs($padding_m);
@@ -354,7 +355,7 @@
     }
 }
 
-@mixin mx-gutter( $m: vars.$gutter-xs, $t: vars.$gutter ) {
+@mixin mx-gutter($m: vars.$gutter-xs, $t: vars.$gutter) {
     @if math.is-unitless($m) or math.unit($m) == '%' {
         margin-left: -#{func.fs($m)};
         margin-right: -#{func.fs($m)};
@@ -373,7 +374,7 @@
     }
 }
 
-@mixin my-gutter( $m: vars.$gutter-xs, $t: vars.$gutter ) {
+@mixin my-gutter($m: vars.$gutter-xs, $t: vars.$gutter) {
     @if math.is-unitless($m) or math.unit($m) == '%' {
         margin-top: -#{func.fs($m)};
         margin-bottom: -#{func.fs($m)};
@@ -392,7 +393,7 @@
     }
 }
 
-@mixin px-gutter( $m: vars.$gutter-xs, $t: vars.$gutter ) {
+@mixin px-gutter($m: vars.$gutter-xs, $t: vars.$gutter) {
     @if math.is-unitless($m) or math.unit($m) == '%' {
         padding-left: func.fs($m);
         padding-right: func.fs($m);
@@ -406,7 +407,7 @@
     }
 }
 
-@mixin py-gutter( $m: vars.$gutter-xs, $t: vars.$gutter ) {
+@mixin py-gutter($m: vars.$gutter-xs, $t: vars.$gutter) {
     @if math.is-unitless($m) or math.unit($m) == '%' {
         padding-top: func.fs($m);
         padding-bottom: func.fs($m);
@@ -420,7 +421,15 @@
     }
 }
 
-@mixin line-clamp( $n: 2, $value_fallback: ( false, false, false ), $attr_fallback: max-height ) {
+@mixin line-clamp(
+    $n: 2,
+    $value_fallback: (
+        false,
+        false,
+        false,
+    ),
+    $attr_fallback: max-height
+) {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: initial;
@@ -439,7 +448,7 @@
     }
 }
 
-@mixin hover-bgcolor( $c1: false, $c2: $c1 ) {
+@mixin hover-bgcolor($c1: false, $c2: $c1) {
     @if meta.type-of($c1) != bool {
         background-color: $c1;
     }
@@ -451,7 +460,7 @@
     }
 }
 
-@mixin hover-color( $c1: false, $c2: $c1, $text-decoration: false ) {
+@mixin hover-color($c1: false, $c2: $c1, $text-decoration: false) {
     @if meta.type-of($c1) != bool {
         color: $c1;
     }
@@ -466,7 +475,7 @@
     }
 }
 
-@mixin hover-svg( $c1: false, $c2: $c1 ) {
+@mixin hover-svg($c1: false, $c2: $c1) {
     @if meta.type-of($c1) != bool {
         fill: $c1;
     }
@@ -478,18 +487,12 @@
     }
 }
 
-@mixin underline(
-    $color: vars.$primary,
-    $height: 1px,
-    $width: 100%,
-    $left: 0,
-    $bottom: 0
-) {
+@mixin underline($color: vars.$primary, $height: 1px, $width: 100%, $left: 0, $bottom: 0) {
     position: relative;
     display: inline-block;
 
     &::before {
-        content: "";
+        content: '';
         display: inline-block;
         position: absolute;
         bottom: func.fs($bottom);
@@ -509,7 +512,7 @@
     }
 }
 
-@mixin list-reset( $margin: false, $padding: false ) {
+@mixin list-reset($margin: false, $padding: false) {
     @if math.is-unitless($margin) {
         margin: func.fs($margin);
     }
@@ -533,7 +536,7 @@
     white-space: nowrap;
 }
 
-@mixin centering-self( $width: 300, $height: $width ) {
+@mixin centering-self($width: 300, $height: $width) {
     position: absolute;
     top: func.subtract(50%, func.fs(func.divide($height, 2)));
     left: func.subtract(50%, func.fs(func.divide($width, 2)));
@@ -586,14 +589,14 @@
 }
 
 // @link https://engageinteractive.co.uk/blog/top-10-scss-mixins
-@mixin pseudo( $content: '', $display: block, $pos: absolute ) {
+@mixin pseudo($content: '', $display: block, $pos: absolute) {
     content: $content;
     display: $display;
     position: $pos;
 }
 
 // @link https://www.developerdrive.com/10-best-sass-mixins-for-web-developers/
-@mixin arrow( $direction: down, $size: 5px, $color: #0a0a0a ) {
+@mixin arrow($direction: down, $size: 5px, $color: #0a0a0a) {
     width: 0;
     height: 0;
 
@@ -618,12 +621,7 @@
 
 // @link https://www.barrage.net/blog/technology/top-8-sass-mixins
 // Ex: @include fluid-font-size(320px, 1024px, 22px, 55px);
-@mixin fluid-font-size(
-    $min-width,
-    $max-width,
-    $min-font-size,
-    $max-font-size
-) {
+@mixin fluid-font-size($min-width, $max-width, $min-font-size, $max-font-size) {
     $unit1: math.unit($min-width);
     $unit2: math.unit($max-width);
     $unit3: math.unit($min-font-size);
@@ -636,12 +634,11 @@
 
             @media screen and (min-width: $min-width) {
                 font-size: calc(
-                        #{$min-font-size} + #{func.strip-unit($max-font-size - $min-font-size)} *
+                    #{$min-font-size} + #{func.strip-unit($max-font-size - $min-font-size)} *
                         ((100vw - #{$min-width}) / #{func.strip-unit($max-width - $min-width)})
                 );
                 line-height: calc(
-                        #{$min-font-size} + #{func.strip-unit($max-font-size - $min-font-size)} *
-                        1.618 *
+                    #{$min-font-size} + #{func.strip-unit($max-font-size - $min-font-size)} * 1.618 *
                         ((100vw - #{$min-width}) / #{func.strip-unit($max-width - $min-width)})
                 );
             }
@@ -657,7 +654,8 @@
 // @link http://nicolasgallagher.com/micro-clearfix-hack/ Micro Clearfix Hack
 // @link http://danisadesigner.com/blog/flexbox-clear-fix-pseudo-elements/ Flexbox fix
 @mixin clearfix {
-    &::before, &::after {
+    &::before,
+    &::after {
         display: table;
         content: '';
 
@@ -679,14 +677,7 @@
 // @param {Number} $height [16px] - Height of the icon.
 // @param {Number} $weight [2px] - Height of individual bars in the icon.
 // @param {Number} $bars [3] - Number of bars in the icon.
-@mixin hamburger(
-    $color: vars.$body-color,
-    $color-hover: vars.$gray-900,
-    $width: 20px,
-    $height: 16px,
-    $weight: 2px,
-    $bars: 3
-) {
+@mixin hamburger($color: vars.$body-color, $color-hover: vars.$gray-900, $width: 20px, $height: 16px, $weight: 2px, $bars: 3) {
     // box-shadow CSS output
     $shadow: ();
     $hover-shadow: ();
@@ -736,7 +727,7 @@
     }
 }
 
-@mixin animation-loading( $size: 30px, $c1: vars.$body-color, $c2: #f3f3f3, $border_width: 2px, $bg: rgb(0 0 0 / 5%) ) {
+@mixin animation-loading($size: 30px, $c1: vars.$body-color, $c2: #f3f3f3, $border_width: 2px, $bg: rgb(0 0 0 / 5%)) {
     position: relative;
 
     &::before {
@@ -760,13 +751,7 @@
     }
 }
 
-@mixin font-face(
-    $font-family,
-    $font-style: normal,
-    $font-weight: 400,
-    $file_name,
-    $base: '../fonts'
-) {
+@mixin font-face($font-family, $font-style: normal, $font-weight: 400, $file_name, $base: '../fonts') {
     $base: string.unquote($base);
     $version: string.unique_id();
     @font-face {
@@ -774,14 +759,15 @@
         font-style: $font-style;
         font-weight: $font-weight;
         font-display: swap;
-        src: url("#{$base}/WOFF2/#{$file_name}.woff2?v=#{$version}") format("woff2"),
-        url("#{$base}/TTF/#{$file_name}.ttf?v=#{$version}") format("truetype"),
-        url("#{$base}/OTF/#{$file_name}.otf?v=#{$version}") format("opentype");
+        src:
+            url('#{$base}/WOFF2/#{$file_name}.woff2?v=#{$version}') format('woff2'),
+            url('#{$base}/TTF/#{$file_name}.ttf?v=#{$version}') format('truetype'),
+            url('#{$base}/OTF/#{$file_name}.otf?v=#{$version}') format('opentype');
     }
 }
 
 /** keyframe */
-@mixin keyframes( $name ) {
+@mixin keyframes($name) {
     @-webkit-keyframes #{$name} {
         @content;
     }

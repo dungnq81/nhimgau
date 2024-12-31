@@ -1,14 +1,14 @@
-@use "sass:list";
-@use "sass:math";
-@use "sass:meta";
-@use "sass:string";
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'sass:string';
 
-@use "../functions" as func;
-@use "../variables" as vars;
+@use '../functions' as func;
+@use '../variables' as vars;
 
-@use "mixins" as mixin;
+@use 'mixins' as mixin;
 
-@function calculate-flex-width( $columns: 12, $span: 1, $gap: 0 ) {
+@function calculate-flex-width($columns: 12, $span: 1, $gap: 0) {
     @if math.is-unitless($columns) and math.is-unitless($span) and $columns > 0 and $span > 0 {
         @if $columns == $span {
             @return math.percentage(1);
@@ -18,7 +18,7 @@
             }
 
             $width: math.percentage(func.divide($span, $columns));
-            $gap_adjust: func.fs(( $columns - $span ) * func.divide($gap, $columns ));
+            $gap_adjust: func.fs(($columns - $span) * func.divide($gap, $columns));
 
             @return func.subtract($width, $gap_adjust);
         }
@@ -28,20 +28,14 @@
     @return 0;
 }
 
-@mixin flex-self( $total: 12, $n: 1, $gap: 0 ) {
+@mixin flex-self($total: 12, $n: 1, $gap: 0) {
     $width: calculate-flex-width($total, $n, $gap);
     @if $width != 0 {
         width: $width;
     }
 }
 
-@mixin media-flex-self(
-    $m: 1,
-    $t: false,
-    $d: false,
-    $gap_m: false,
-    $gap: false
-) {
+@mixin media-flex-self($m: 1, $t: false, $d: false, $gap_m: false, $gap: false) {
     @if math.is-unitless($m) and $m > 0 {
         @include flex-self($m, 1, $gap_m);
     }
@@ -57,17 +51,11 @@
     }
 }
 
-@mixin flex-basis( $n: 1, $gap: false ) {
+@mixin flex-basis($n: 1, $gap: false) {
     @include flex-self(vars.$grid-columns, $n, $gap);
 }
 
-@mixin media-flex-basis(
-    $m: 1,
-    $t: false,
-    $d: false,
-    $gap_m: false,
-    $gap: false
-) {
+@mixin media-flex-basis($m: 1, $t: false, $d: false, $gap_m: false, $gap: false) {
     flex: 0 0 auto;
 
     @if math.is-unitless($m) and $m > 0 {
@@ -85,13 +73,7 @@
     }
 }
 
-@mixin media-flex(
-    $m: 1 1 auto,
-    $t: false,
-    $d: false,
-    $gap-m: false,
-    $gap: false
-) {
+@mixin media-flex($m: 1 1 auto, $t: false, $d: false, $gap-m: false, $gap: false) {
     flex: $m;
 
     @if $gap-m {
@@ -115,13 +97,7 @@
     }
 }
 
-@mixin flex-layout-auto(
-    $gap_m: false,
-    $gap: false,
-    $min_width: 0,
-    $max_width: 100%,
-    $class_cell: '.cell'
-) {
+@mixin flex-layout-auto($gap_m: false, $gap: false, $min_width: 0, $max_width: 100%, $class_cell: '.cell') {
     @include flex-x(true);
     @include mixin.media-gap($gap_m, $gap, false);
 
@@ -132,14 +108,7 @@
     }
 }
 
-@mixin flex-layout(
-    $m: 1,
-    $t: false,
-    $d: false,
-    $gap_m: false,
-    $gap: false,
-    $class_cell: '.cell'
-) {
+@mixin flex-layout($m: 1, $t: false, $d: false, $gap_m: false, $gap: false, $class_cell: '.cell') {
     @include flex-x(true);
     @include mixin.media-gap($gap_m, $gap, false);
 
@@ -152,7 +121,7 @@
     }
 }
 
-@mixin cell( $grow: 0, $shrink: 0, $basis: auto, $w: false ) {
+@mixin cell($grow: 0, $shrink: 0, $basis: auto, $w: false) {
     flex: $grow $shrink $basis;
     max-width: 100%;
     min-width: 0;
@@ -174,7 +143,7 @@
     @include cell(0, 0, auto, 100%);
 }
 
-@mixin flex-x( $flex: true, $reverse: false ) {
+@mixin flex-x($flex: true, $reverse: false) {
     @if true == $flex {
         & {
             display: flex;
@@ -192,7 +161,7 @@
     }
 }
 
-@mixin flex-y( $flex: true, $reverse: false ) {
+@mixin flex-y($flex: true, $reverse: false) {
     @if true == $flex {
         display: flex;
     }
@@ -204,11 +173,7 @@
     }
 }
 
-@mixin flex-padding-x(
-    $padding_m: vars.$gutter-xs,
-    $padding: vars.$gutter,
-    $class_cell: '.cell'
-) {
+@mixin flex-padding-x($padding_m: vars.$gutter-xs, $padding: vars.$gutter, $class_cell: '.cell') {
     @include mixin.mx-gutter($padding_m, $padding);
 
     & > #{string.unquote($class_cell)} {
@@ -220,11 +185,7 @@
     }
 }
 
-@mixin flex-padding-y(
-    $padding_m: vars.$gutter-xs,
-    $padding: vars.$gutter,
-    $class_cell: '.cell'
-) {
+@mixin flex-padding-y($padding_m: vars.$gutter-xs, $padding: vars.$gutter, $class_cell: '.cell') {
     @include mixin.my-gutter($padding_m, $padding);
 
     & > #{string.unquote($class_cell)} {
@@ -236,12 +197,7 @@
     }
 }
 
-@mixin flex-align(
-    $align: flex-start,
-    $justify: false,
-    $direction_column: false,
-    $wrap: true
-) {
+@mixin flex-align($align: flex-start, $justify: false, $direction_column: false, $wrap: true) {
     display: flex;
     align-items: $align;
 
@@ -258,7 +214,7 @@
     }
 }
 
-@mixin flex-align-center( $direction_column: false ) {
+@mixin flex-align-center($direction_column: false) {
     @include flex-align(center, false, $direction_column);
 }
 

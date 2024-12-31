@@ -27,7 +27,7 @@ final class Admin
         add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts'], 99999);
         add_action('admin_menu', [$this, 'admin_menu']);
         add_action('admin_init', [$this, 'admin_init'], 11);
-        add_action('admin_footer', [$this, 'add_custom_admin_script']);
+        add_action('admin_footer', [$this, 'admin_footer_script']);
     }
 
     // --------------------------------------------------
@@ -35,7 +35,7 @@ final class Admin
     /**
      * @return void
      */
-    public function add_custom_admin_script(): void
+    public function admin_footer_script(): void
     { ?>
         <script>
             document.addEventListener('DOMContentLoaded', function() {

@@ -1,34 +1,34 @@
-@use "sass:map";
-@use "sass:color";
+@use 'sass:map';
+@use 'sass:color';
 
-@use "../variables" as vars;
-@use "../functions" as func;
-@use "../mixins" as mixin;
+@use '../variables' as vars;
+@use '../functions' as func;
+@use '../mixins' as mixin;
 
 :root {
-    --black: #{map.get(vars.$colors, "black")};
-    --white: #{map.get(vars.$colors, "white")};
-    --gray: #{map.get(vars.$colors, "gray")};
-    --gray-dark: #{map.get(vars.$colors, "gray-dark")};
-    --blue: #{map.get(vars.$colors, "blue")};
-    --indigo: #{map.get(vars.$colors, "indigo")};
-    --purple: #{map.get(vars.$colors, "purple")};
-    --pink: #{map.get(vars.$colors, "pink")};
-    --red: #{map.get(vars.$colors, "red")};
-    --orange: #{map.get(vars.$colors, "orange")};
-    --yellow: #{map.get(vars.$colors, "yellow")};
-    --green: #{map.get(vars.$colors, "green")};
-    --teal: #{map.get(vars.$colors, "teal")};
-    --cyan: #{map.get(vars.$colors, "cyan")};
+    --black: #{map.get(vars.$colors, 'black')};
+    --white: #{map.get(vars.$colors, 'white')};
+    --gray: #{map.get(vars.$colors, 'gray')};
+    --gray-dark: #{map.get(vars.$colors, 'gray-dark')};
+    --blue: #{map.get(vars.$colors, 'blue')};
+    --indigo: #{map.get(vars.$colors, 'indigo')};
+    --purple: #{map.get(vars.$colors, 'purple')};
+    --pink: #{map.get(vars.$colors, 'pink')};
+    --red: #{map.get(vars.$colors, 'red')};
+    --orange: #{map.get(vars.$colors, 'orange')};
+    --yellow: #{map.get(vars.$colors, 'yellow')};
+    --green: #{map.get(vars.$colors, 'green')};
+    --teal: #{map.get(vars.$colors, 'teal')};
+    --cyan: #{map.get(vars.$colors, 'cyan')};
 
-    --primary: #{map.get(vars.$theme-colors, "primary")};
-    --secondary: #{map.get(vars.$theme-colors, "secondary")};
-    --success: #{map.get(vars.$theme-colors, "success")};
-    --info: #{map.get(vars.$theme-colors, "info")};
-    --warning: #{map.get(vars.$theme-colors, "warning")};
-    --alert: #{map.get(vars.$theme-colors, "alert")};
-    --light: #{map.get(vars.$theme-colors, "light")};
-    --dark: #{map.get(vars.$theme-colors, "dark")};
+    --primary: #{map.get(vars.$theme-colors, 'primary')};
+    --secondary: #{map.get(vars.$theme-colors, 'secondary')};
+    --success: #{map.get(vars.$theme-colors, 'success')};
+    --info: #{map.get(vars.$theme-colors, 'info')};
+    --warning: #{map.get(vars.$theme-colors, 'warning')};
+    --alert: #{map.get(vars.$theme-colors, 'alert')};
+    --light: #{map.get(vars.$theme-colors, 'light')};
+    --dark: #{map.get(vars.$theme-colors, 'dark')};
 
     --body-color: #{vars.$body-color};
     --body-bg: #{vars.$body-bg};
@@ -36,10 +36,10 @@
     --link-color: #{vars.$link-color};
     --link-hover-color: #{vars.$link-hover-color};
 
-    --gutter: #{map.get(vars.$spacers, "gutter")};
-    --gutter-xs: #{map.get(vars.$spacers, "gutter-xs")};
-    --gap: #{map.get(vars.$spacers, "gap")};
-    --gap-xs: #{map.get(vars.$spacers, "gap-xs")};
+    --gutter: #{map.get(vars.$spacers, 'gutter')};
+    --gutter-xs: #{map.get(vars.$spacers, 'gutter-xs')};
+    --gap: #{map.get(vars.$spacers, 'gap')};
+    --gap-xs: #{map.get(vars.$spacers, 'gap-xs')};
 
     --line-height-header: #{vars.$line-height-header};
     --line-height-paragraph: #{vars.$line-height-paragraph};
@@ -49,8 +49,8 @@
     --Primary-03: #{vars.$Primary-03};
     --Primary-04: #{vars.$Primary-04};
 
-    --img-path: "#{vars.$img-path}";
-    --font-path: "#{vars.$font-path}";
+    --img-path: '#{vars.$img-path}';
+    --font-path: '#{vars.$font-path}';
 }
 
 //
@@ -72,7 +72,9 @@
     }
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
@@ -90,21 +92,21 @@ body {
     }
 }
 
-:is(a, button, [role="button"], input, select, textarea) {
+:is(a, button, [role='button'], input, select, textarea) {
     transition: 0.3s;
 }
 
-:is(a, area, button, [role="button"], input, label, select, summary, textarea) {
+:is(a, area, button, [role='button'], input, label, select, summary, textarea) {
     touch-action: manipulation;
 }
 
-:is([type="submit"], [type="reset"], [type="button"]) {
+:is([type='submit'], [type='reset'], [type='button']) {
     cursor: pointer;
 }
 
 *:disabled {
     cursor: not-allowed;
-    opacity: .9;
+    opacity: 0.9;
 }
 
 * > p {
@@ -120,7 +122,10 @@ body {
     }
 }
 
-code, kbd, pre, samp {
+code,
+kbd,
+pre,
+samp {
     font-family: vars.$monospace-font;
     font-size: 1rem;
 }
@@ -133,8 +138,9 @@ sup {
     padding-left: 2px;
 }
 
-.cite-block::before, cite::before {
-    content: "";
+.cite-block::before,
+cite::before {
+    content: '';
 }
 
 :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6) {
@@ -432,15 +438,16 @@ figure {
 
 @for $i from 1 through vars.$grid-columns-max {
     :is(.flex, .\!flex) {
-
         &:not(.gap):not(.flex-gap) {
-            &.sm-up-#{$i} > .cell, & > .cell.sm-#{$i} {
+            &.sm-up-#{$i} > .cell,
+            & > .cell.sm-#{$i} {
                 @include mixin.flex-self($i, 1, false);
             }
         }
 
         &:where(.gap, .flex-gap) {
-            &.sm-up-#{$i} > .cell, & > .cell.sm-#{$i} {
+            &.sm-up-#{$i} > .cell,
+            & > .cell.sm-#{$i} {
                 @include mixin.flex-self($i, 1, vars.$gap-xs);
             }
         }
@@ -456,15 +463,16 @@ figure {
 @include mixin.mq-min(md) {
     @for $i from 1 through vars.$grid-columns-max {
         :is(.flex, .\!flex) {
-
             &:not(.gap):not(.flex-gap) {
-                &.md-up-#{$i} > .cell, & > .cell.md-#{$i} {
+                &.md-up-#{$i} > .cell,
+                & > .cell.md-#{$i} {
                     @include mixin.flex-self($i, 1, false);
                 }
             }
 
             &:where(.gap, .flex-gap) {
-                &.md-up-#{$i} > .cell, & > .cell.md-#{$i} {
+                &.md-up-#{$i} > .cell,
+                & > .cell.md-#{$i} {
                     @include mixin.flex-self($i, 1, vars.$gap);
                 }
             }
@@ -481,15 +489,16 @@ figure {
 @include mixin.mq-min(lg) {
     @for $i from 1 through vars.$grid-columns-max {
         :is(.flex, .\!flex) {
-
             &:not(.gap):not(.flex-gap) {
-                &.lg-up-#{$i} > .cell, & > .cell.lg-#{$i} {
+                &.lg-up-#{$i} > .cell,
+                & > .cell.lg-#{$i} {
                     @include mixin.flex-self($i, 1, false);
                 }
             }
 
             &:where(.gap, .flex-gap) {
-                &.lg-up-#{$i} > .cell, & > .cell.lg-#{$i} {
+                &.lg-up-#{$i} > .cell,
+                & > .cell.lg-#{$i} {
                     @include mixin.flex-self($i, 1, vars.$gap);
                 }
             }
@@ -693,7 +702,7 @@ $step: 100;
 //
 // gallery.
 
-[id^=gallery-] {
+[id^='gallery-'] {
     $gap: 10;
     @include mixin.flex-x(true);
     @include mixin.gap($gap);
@@ -754,7 +763,7 @@ body.ajax-loader {
 
         &::before {
             background: #ccc;
-            content: "";
+            content: '';
             height: 1px;
             margin-right: 3px;
             width: 10px;
@@ -786,12 +795,7 @@ body.ajax-loader {
                     }
                 }
 
-                &:where(
-                    .share-action-whatsapp,
-                    .share-action-telegram,
-                    .share-action-linkedin,
-                    .share-action-copy-link
-                ) {
+                &:where(.share-action-whatsapp, .share-action-telegram, .share-action-linkedin, .share-action-copy-link) {
                     display: none !important;
                 }
             }
@@ -824,55 +828,57 @@ body.ajax-loader {
 
     &.icon-facebook {
         &::before {
-            background-image: url("#{vars.$img-path}/svg/facebook.svg");
+            background-image: url('#{vars.$img-path}/svg/facebook.svg');
         }
     }
 
     &.icon-ex {
         &::before {
-            background-image: url("#{vars.$img-path}/svg/x.svg");
+            background-image: url('#{vars.$img-path}/svg/x.svg');
         }
     }
 
     &.icon-whatsapp {
         &::before {
-            background-image: url("#{vars.$img-path}/svg/whatsapp.svg");
+            background-image: url('#{vars.$img-path}/svg/whatsapp.svg');
         }
     }
 
     &.icon-messenger {
         &::before {
-            background-image: url("#{vars.$img-path}/svg/messenger.svg");
+            background-image: url('#{vars.$img-path}/svg/messenger.svg');
         }
     }
 
     &.icon-telegram {
         &::before {
-            background-image: url("#{vars.$img-path}/svg/telegram.svg");
+            background-image: url('#{vars.$img-path}/svg/telegram.svg');
         }
     }
 
     &.icon-linkedin {
         &::before {
-            background-image: url("#{vars.$img-path}/svg/linkedin.svg");
+            background-image: url('#{vars.$img-path}/svg/linkedin.svg');
         }
     }
 
     &.icon-copy-link {
         &::before {
-            background-image: url("#{vars.$img-path}/svg/copy.svg");
+            background-image: url('#{vars.$img-path}/svg/copy.svg');
         }
     }
 
-    &.icon-send-email, &.icon-mail {
+    &.icon-send-email,
+    &.icon-mail {
         &::before {
-            background-image: url("#{vars.$img-path}/svg/envelope.svg");
+            background-image: url('#{vars.$img-path}/svg/envelope.svg');
         }
     }
 
-    &.icon-web-share, &.icon-share {
+    &.icon-web-share,
+    &.icon-share {
         &::before {
-            background-image: url("#{vars.$img-path}/svg/share.svg");
+            background-image: url('#{vars.$img-path}/svg/share.svg');
         }
     }
 }
@@ -923,12 +929,12 @@ body.ajax-loader {
         overflow: hidden;
         pointer-events: none;
         position: absolute;
-        top: .03125rem;
-        transition: .2s;
+        top: 0.03125rem;
+        transition: 0.2s;
 
         &::before {
             color: vars.$orange;
-            content: "\f005\f005\f005\f005\f005";
+            content: '\f005\f005\f005\f005\f005';
             display: block;
             font-family: vars.$awesome-font;
             font-size: inherit;
@@ -1065,7 +1071,7 @@ body.ajax-loader {
 .woocommerce p.stars.selected a.active ~ a::before,
 .woocommerce p.stars.selected a.active::before,
 .woocommerce p.stars a:hover ~ a::before {
-    content: "\f005";
+    content: '\f005';
 }
 
 .loop-stars-rating {
@@ -1076,7 +1082,7 @@ body.ajax-loader {
 
     &::before {
         color: vars.$orange;
-        content: "\f005\f005\f005\f005\f005";
+        content: '\f005\f005\f005\f005\f005';
         font-family: vars.$awesome-font;
         font-weight: 300;
         letter-spacing: 5px;
@@ -1091,7 +1097,7 @@ body.ajax-loader {
 
         &::before {
             color: vars.$orange;
-            content: "\f005\f005\f005\f005\f005";
+            content: '\f005\f005\f005\f005\f005';
             font-family: vars.$awesome-font;
             font-weight: 700;
             letter-spacing: 5px;
@@ -1125,7 +1131,8 @@ nav.nav-pagination {
             overflow: hidden;
             @include mixin.flex-center();
 
-            a, .current {
+            a,
+            .current {
                 height: 100%;
                 width: 100%;
                 line-height: inherit;
@@ -1142,7 +1149,8 @@ nav.nav-pagination {
                 font-style: normal;
             }
 
-            &.current, .current {
+            &.current,
+            .current {
                 color: #fff;
                 background-color: vars.$Primary-02;
             }
@@ -1373,7 +1381,7 @@ nav.nav-pagination {
                         padding-left: 25px;
                     }
 
-                    button[type="submit"] {
+                    button[type='submit'] {
                         position: absolute;
                         top: 50%;
                         transform: translateY(-50%);

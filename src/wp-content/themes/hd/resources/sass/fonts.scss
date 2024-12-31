@@ -1,9 +1,9 @@
-@use "sass:string";
+@use 'sass:string';
 
-@use "variables" as vars;
-@use "mixins" as mixin;
+@use 'variables' as vars;
+@use 'mixins' as mixin;
 
-@use "components/awesome_font";
+@use 'components/awesome_font';
 
 /** Poppins fonts */
 //$poppins_base: string.unquote("#{vars.$font-path}/SVN-Poppins");

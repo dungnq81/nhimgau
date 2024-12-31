@@ -1,5 +1,5 @@
-@use "../functions" as func;
-@use "colors" as *;
+@use '../functions' as func;
+@use 'colors' as *;
 
 //
 // theme color
@@ -25,14 +25,14 @@ $light: $gray-100 !default;
 $dark: $gray-900 !default;
 
 $theme-colors: (
-        "primary": $primary,
-        "secondary": $secondary,
-        "success": $success,
-        "info": $info,
-        "warning": $warning,
-        "alert": $alert,
-        "light": $light,
-        "dark": $dark
+    'primary': $primary,
+    'secondary': $secondary,
+    'success': $success,
+    'info': $info,
+    'warning': $warning,
+    'alert': $alert,
+    'light': $light,
+    'dark': $dark,
 ) !default;
 
 // See https://www.w3.org/TR/WCAG20/#visual-audio-contrast-contrast
@@ -73,12 +73,12 @@ $\2xl: 1440px !default;
 $wp: 782px !default;
 
 $mq-breakpoints: (
-        sm: 0,
-        md: func.fs($md),
-        lg: func.fs($lg),
-        xl: func.fs($xl),
-        2xl: func.fs($\2xl),
-        wp: func.fs($wp),
+    sm: 0,
+    md: func.fs($md),
+    lg: func.fs($lg),
+    xl: func.fs($xl),
+    2xl: func.fs($\2xl),
+    wp: func.fs($wp),
 ) !default;
 
 // Layout containers
@@ -93,12 +93,12 @@ $screen-2xl: 1360px !default;
 $screen-wp: 750px !default;
 
 $container-max-widths: (
-        sm: func.fs($screen-sm),
-        md: func.fs($screen-md),
-        lg: func.fs($screen-lg),
-        xl: func.fs($screen-xl),
-        2xl: func.fs($screen-2xl),
-        wp: func.fs($screen-wp),
+    sm: func.fs($screen-sm),
+    md: func.fs($screen-md),
+    lg: func.fs($screen-lg),
+    xl: func.fs($screen-xl),
+    2xl: func.fs($screen-2xl),
+    wp: func.fs($screen-wp),
 ) !default;
 
 // Typography
@@ -106,21 +106,21 @@ $container-max-widths: (
 // Font, line-height, gutter, and more.
 
 $font-sizes: (
-        h1: 35px,
-        h2: 29px,
-        h3: 25px,
-        h4: 21px,
-        h5: 18px,
-        h6: 16px
+    h1: 35px,
+    h2: 29px,
+    h3: 25px,
+    h4: 21px,
+    h5: 18px,
+    h6: 16px,
 ) !default;
 
 $font-sizes-large: (
-        h1: 43px,
-        h2: 35px,
-        h3: 29px,
-        h4: 24px,
-        h5: 20px,
-        h6: 17px
+    h1: 43px,
+    h2: 35px,
+    h3: 29px,
+    h4: 24px,
+    h5: 20px,
+    h6: 17px,
 ) !default;
 
 //
@@ -158,19 +158,19 @@ $grid-columns: 12 !default;
 $grid-columns-max: 8 !default;
 
 $spacers: (
-        gutter-xs: func.fs($gutter-xs),
-        gutter: func.fs($gutter),
-        gap-xs: func.fs($gap-xs),
-        gap: func.fs($gap)
+    gutter-xs: func.fs($gutter-xs),
+    gutter: func.fs($gutter),
+    gap-xs: func.fs($gap-xs),
+    gap: func.fs($gap),
 ) !default;
 
 //
 $scrollbar-w: 10px !default;
 $scrollbar-h: 5px !default;
 
-$header-font: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "Ubuntu", Arial, cursive, serif !default;
-$body-font: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "Ubuntu", Arial, cursive, sans-serif !default;
-$awesome-font: "Font Awesome 6 Pro", "Font Awesome 6 Brands", "Font Awesome 6 Free", sans-serif;
+$header-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Ubuntu', Arial, cursive, serif !default;
+$body-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Ubuntu', Arial, cursive, sans-serif !default;
+$awesome-font: 'Font Awesome 6 Pro', 'Font Awesome 6 Brands', 'Font Awesome 6 Free', sans-serif;
 $monospace-font: Consolas, 'Liberation Mono', Courier, monospace;
 
 $img-path: '../img';

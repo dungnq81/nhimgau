@@ -1,9 +1,9 @@
-@use "functions" as func;
-@use "mixins" as mixin;
+@use 'functions' as func;
+@use 'mixins' as mixin;
 
-@use "components/awesome_font";
+@use 'components/awesome_font';
 
-$body-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Ubuntu", Arial, sans-serif;
+$body-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Ubuntu', Arial, sans-serif;
 
 /** */
 :is(.screen-reader-text, .submenu-toggle-text, .hidden-text, .sr-only) {
@@ -31,7 +31,8 @@ $body-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Ubuntu", Arial, sans
     display: block !important;
 }
 
-.hide, .hidden {
+.hide,
+.hidden {
     display: none;
 }
 
@@ -47,7 +48,8 @@ $body-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Ubuntu", Arial, sans
     align-items: center;
 }
 
-.\!hide, .\!hidden {
+.\!hide,
+.\!hidden {
     display: none !important;
 }
 
@@ -79,11 +81,13 @@ $body-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Ubuntu", Arial, sans
     width: 200px !important;
 }
 
-.ajax-loader, .ajax-loading {
+.ajax-loader,
+.ajax-loading {
     @include mixin.animation-loading(14px, #2271b1, #f3f3f3);
 }
 
-.ajax-loader2, .ajax-loading2 {
+.ajax-loader2,
+.ajax-loading2 {
     @include mixin.animation-loading(30px, #2271b1, #f3f3f3, 3px, rgb(0 0 0 / 20%));
 }
 
@@ -271,8 +275,9 @@ body.login {
     min-height: 100%;
     height: auto;
 
-    &::after, &::before {
-        content: "";
+    &::after,
+    &::before {
+        content: '';
         position: absolute;
         left: 0;
         top: 0;
@@ -402,8 +407,8 @@ body.wp-admin {
                 margin: 0 auto;
 
                 &::before {
-                    content: "";
-                    font-family: "Dashicons", sans-serif;
+                    content: '';
+                    font-family: 'Dashicons', sans-serif;
                     position: absolute;
                     top: 0;
                     left: 0;
@@ -422,7 +427,8 @@ body.wp-admin {
 
 /** */
 .post-type-site-review {
-    #contentdiv textarea, .wp-editor-area {
+    #contentdiv textarea,
+    .wp-editor-area {
         font-family: $body-font;
     }
 }
@@ -464,13 +470,15 @@ body.wp-admin {
         //    width: 80px;
         //}
 
-        & > .acf-label, & > label {
+        & > .acf-label,
+        & > label {
             flex: 0 0 auto;
             width: 176px;
             margin-bottom: 0;
         }
 
-        & > .acf-input, & > input[type="number"] {
+        & > .acf-input,
+        & > input[type='number'] {
             flex: 1 1 0;
             min-width: 0;
             max-width: 80px;
@@ -485,9 +493,11 @@ body.wp-admin {
     }
 }
 
-#acf-term-fields, #edittag {
+#acf-term-fields,
+#edittag {
     .acf-field {
-        select, input[type=number] {
+        select,
+        input[type='number'] {
             width: auto;
             max-width: 100%;
         }
@@ -551,7 +561,8 @@ table.wp-list-table .column-price {
     }
 }
 
-table.wp-list-table .column-handle, table.wp-list-table tbody td.column-handle {
+table.wp-list-table .column-handle,
+table.wp-list-table tbody td.column-handle {
     width: 38px;
 }
 
@@ -594,7 +605,7 @@ table.wp-list-table .column-handle, table.wp-list-table tbody td.column-handle {
     }
 }
 
-:is(input[type="checkbox"].checkbox, .acf-field.checkbox > .acf-input input[type="checkbox"], .menu-item-settings .field-link-target input[type="checkbox"]) {
+:is(input[type='checkbox'].checkbox, .acf-field.checkbox > .acf-input input[type='checkbox'], .menu-item-settings .field-link-target input[type='checkbox']) {
     appearance: none;
     -webkit-tap-highlight-color: transparent;
     width: auto;
@@ -607,7 +618,7 @@ table.wp-list-table .column-handle, table.wp-list-table tbody td.column-handle {
     margin: 0 5px 0 0;
     background: none;
     box-shadow: none;
-    transition: ease .15s;
+    transition: ease 0.15s;
 
     &:focus {
         box-shadow: none;
@@ -626,7 +637,7 @@ table.wp-list-table .column-handle, table.wp-list-table tbody td.column-handle {
         background-color: rgb(167 170 173 / 60%);
         border-radius: 80px;
         box-shadow: 0 0 12px rgb(0 0 0 / 15%) inset;
-        transition: ease .15s;
+        transition: ease 0.15s;
     }
 
     &::before {
@@ -640,7 +651,7 @@ table.wp-list-table .column-handle, table.wp-list-table tbody td.column-handle {
         margin: 0;
         border-radius: 50%;
         background-color: #ffffff;
-        transition: ease .15s;
+        transition: ease 0.15s;
     }
 
     &:checked {
@@ -648,13 +659,13 @@ table.wp-list-table .column-handle, table.wp-list-table tbody td.column-handle {
             left: 23px;
             margin: 0;
             background-color: #ffffff;
-            transition: ease .15s;
+            transition: ease 0.15s;
         }
 
         &::after {
             content: '';
             background-color: #2271b1;
-            transition: ease .15s;
+            transition: ease 0.15s;
         }
     }
 }
@@ -750,7 +761,7 @@ table.wp-list-table .column-handle, table.wp-list-table tbody td.column-handle {
     }
 }
 
-.acf-admin-page .acf-field.acf-field-number .acf-input input[type=number] {
+.acf-admin-page .acf-field.acf-field-number .acf-input input[type='number'] {
     max-width: unset;
 }
 

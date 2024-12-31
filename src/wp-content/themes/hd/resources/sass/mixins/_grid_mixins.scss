@@ -1,6 +1,6 @@
-@use "sass:map";
-@use "sass:meta";
-@use "mixins" as mixin;
+@use 'sass:map';
+@use 'sass:meta';
+@use 'mixins' as mixin;
 
 @function process-grid-template($value) {
     @if meta.type-of($value) == 'number' {
@@ -9,14 +9,14 @@
     @return $value;
 }
 
-@mixin grid-x( $grid: true  ) {
+@mixin grid-x($grid: true) {
     @if true == $grid {
         display: grid;
     }
     grid-auto-flow: row;
 }
 
-@mixin grid-y( $grid: true  ) {
+@mixin grid-y($grid: true) {
     @if true == $grid {
         display: grid;
     }
@@ -42,10 +42,25 @@
 ///    );
 /// }
 @mixin grid-layout(
-    $columns: (m: 1, t: null, d: null),
-    $rows: (m: auto, t: null, d: null),
-    $gap: (m: 0, t: null, d: null),
-    $align: (items: stretch, justify: stretch)
+    $columns: (
+        m: 1,
+        t: null,
+        d: null,
+    ),
+    $rows: (
+        m: auto,
+        t: null,
+        d: null,
+    ),
+    $gap: (
+        m: 0,
+        t: null,
+        d: null,
+    ),
+    $align: (
+        items: stretch,
+        justify: stretch,
+    )
 ) {
     display: grid;
     @include grid-template($columns, 'columns');
@@ -150,18 +165,22 @@
     }
 }
 
-@mixin grid-template-item( $n: 1, $columns: true ) {
+@mixin grid-template-item($n: 1, $columns: true) {
     @if true == $columns {
-        grid-template-columns: repeat( $n, 1fr );
+        grid-template-columns: repeat($n, 1fr);
     } @else {
-        grid-template-rows: repeat( $n, 1fr );
+        grid-template-rows: repeat($n, 1fr);
     }
 }
 
 @mixin grid-auto-fit($min-size: 100px, $gap: 0) {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax($min-size, 1fr));
-    @include grid-gap((m: $gap));
+    @include grid-gap(
+        (
+            m: $gap,
+        )
+    );
 }
 
 /// .container {

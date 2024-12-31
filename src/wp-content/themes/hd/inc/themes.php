@@ -15,7 +15,6 @@ use Cores\Helper;
 // --------------------------------------------------
 
 add_action('after_setup_theme', '__after_setup_theme_action', 11);
-
 function __after_setup_theme_action(): void
 {
     register_nav_menus(
@@ -32,7 +31,6 @@ function __after_setup_theme_action(): void
 // --------------------------------------------------
 
 add_action('widgets_init', '__register_sidebars_action', 11);
-
 function __register_sidebars_action(): void
 {
     //----------------------------------------------------------
@@ -181,7 +179,6 @@ function __register_sidebars_action(): void
 // --------------------------------------------------
 
 add_action('wp_default_scripts', '__wp_default_scripts');
-
 function __wp_default_scripts($scripts): void
 {
     if (isset($scripts->registered['jquery']) && ! is_admin()) {
@@ -201,7 +198,6 @@ function __wp_default_scripts($scripts): void
 // --------------------------------------------------
 
 add_filter('body_class', '__body_classes_filter', 11, 1);
-
 function __body_classes_filter(array $classes): array
 {
     // Check whether we're in the customizer preview.
@@ -236,7 +232,6 @@ function __body_classes_filter(array $classes): array
 // --------------------------------------------------
 
 add_filter('post_class', '__post_classes_filter', 11, 1);
-
 function __post_classes_filter(array $classes): array
 {
     // remove_sticky_class
@@ -263,7 +258,6 @@ function __post_classes_filter(array $classes): array
 // --------------------------------------------------
 
 add_filter('nav_menu_css_class', '__nav_menu_css_classes_filter', 999, 4);
-
 function __nav_menu_css_classes_filter($classes, $menu_item, $args, $depth): array
 {
     if (! is_array($classes)) {
@@ -309,7 +303,6 @@ function __nav_menu_css_classes_filter($classes, $menu_item, $args, $depth): arr
 // --------------------------------------------------
 
 add_filter('nav_menu_link_attributes', '__nav_menu_link_attributes_filter', 999, 4);
-
 function __nav_menu_link_attributes_filter($atts, $menu_item, $args, $depth): array
 {
     // link_class
@@ -342,7 +335,6 @@ function __nav_menu_link_attributes_filter($atts, $menu_item, $args, $depth): ar
 // --------------------------------------------------
 
 add_filter('nav_menu_item_title', '__nav_menu_item_title_filter', 999, 4);
-
 function __nav_menu_item_title_filter($title, $item, $args, $depth)
 {
     //	if ($args->theme_location === 'main-nav') {
@@ -357,7 +349,6 @@ function __nav_menu_item_title_filter($title, $item, $args, $depth)
 // --------------------------------------------------
 
 add_filter('widget_tag_cloud_args', '__widget_tag_cloud_args_filter', 99);
-
 function __widget_tag_cloud_args_filter($args): array
 {
     $args['smallest'] = '10';
@@ -373,7 +364,6 @@ function __widget_tag_cloud_args_filter($args): array
 // --------------------------------------------------
 
 add_filter('query_vars', '__query_vars', 99);
-
 function __query_vars($vars): array
 {
     $vars[] = 'page';
@@ -387,7 +377,6 @@ function __query_vars($vars): array
 // --------------------------------------------------
 
 add_filter('addon_menu_options_page_filter', '__menu_options_page', 99);
-
 function __menu_options_page(): array
 {
     return [
@@ -415,12 +404,6 @@ function __menu_options_page(): array
 // --------------------------------------------------
 
 add_filter('addon_theme_setting_options_filter', '__theme_setting_options', 99);
-
-/**
- * @param array $arr
- *
- * @return array
- */
 function __theme_setting_options(array $arr): array
 {
     $arr_new = [
