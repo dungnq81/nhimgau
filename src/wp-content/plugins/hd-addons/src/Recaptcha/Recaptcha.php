@@ -4,7 +4,7 @@ namespace Addons\Recaptcha;
 
 use Addons\Base\Singleton;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 $recaptcha_options = get_option('recaptcha__options');
 
@@ -30,25 +30,31 @@ final class Recaptcha
         $default_forms = [];
 
         $custom_forms = apply_filters('recaptcha_custom_forms', []);
-        $this->forms = apply_filters('recaptcha_forms', array_merge($default_forms, $custom_forms));
+        $this->forms  = apply_filters('recaptcha_forms', array_merge($default_forms, $custom_forms));
 
         add_action('wp_enqueue_scripts', [$this, 'wp_enqueue_scripts'], 99);
     }
 
     // ------------------------------------------------------
 
+    /**
+     * @param string $version
+     * @param string|null $render
+     *
+     * @return string|null
+     */
     public function get_api_url(string $version = 'v2', ?string $render = null): ?string
     {
         $use_globally = GOOGLE_CAPTCHA_GLOBAL ? 'recaptcha.net' : 'google.com';
 
         // For v2 (Invisible or Checkbox), skip the render parameter
         if ($version === 'v2') {
-            return 'https://www.'.$use_globally.'/recaptcha/api.js?render=explicit';
+            return 'https://www.' . $use_globally . '/recaptcha/api.js?render=explicit';
         }
 
         // For v3, include render parameter with the site key
         if ($version === 'v3' && $render) {
-            return sprintf('https://www.'.$use_globally.'/recaptcha/api.js?render=%s', $render);
+            return sprintf('https://www.' . $use_globally . '/recaptcha/api.js?render=%s', $render);
         }
 
         return null;
@@ -56,6 +62,9 @@ final class Recaptcha
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     public function wp_enqueue_scripts(): void
     {
         $api_url = $this->get_api_url('v2', null);

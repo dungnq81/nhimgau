@@ -60,7 +60,8 @@ final class CSS
      * Sets a selector to the object and changes the current selector to a new one
      *
      *
-     * @param  string  $selector  - the css identifier of the html that you wish to target.
+     * @param string $selector - the css identifier of the html that you wish to target.
+     *
      * @return $this
      *
      * @since  1.0
@@ -68,7 +69,7 @@ final class CSS
     public function set_selector($selector = '')
     {
         // Render the css in the output string everytime the selector changes.
-        if ($this->_selector !== '') {
+        if ('' !== $this->_selector) {
             $this->add_selector_rules_to_output();
         }
 
@@ -81,10 +82,11 @@ final class CSS
      * Adds a css property with value to the css output
      *
      *
-     * @param  string  $property  The css property.
-     * @param  string  $value  The value to be placed with the property.
-     * @param  string  $og_default  Check to see if the value matches the default.
-     * @param  string  $unit  The unit for the value (px).
+     * @param string $property The css property.
+     * @param string $value The value to be placed with the property.
+     * @param string $og_default Check to see if the value matches the default.
+     * @param string $unit The unit for the value (px).
+     *
      * @return $this
      *
      * @since  1.0
@@ -92,15 +94,15 @@ final class CSS
     public function add_property($property, $value, $og_default = false, $unit = false)
     {
         // Setting font-size to 0 is rarely ever a good thing.
-        if ($property === 'font-size' && $value === 0) {
+        if ('font-size' === $property && 0 === $value) {
             return false;
         }
 
         // Add our unit to our value if it exists.
-        if ($unit && $unit !== '' && is_numeric($value)) {
-            $value = $value.$unit;
-            if ($og_default !== '') {
-                $og_default = $og_default.$unit;
+        if ($unit && '' !== $unit && is_numeric($value)) {
+            $value = $value . $unit;
+            if ('' !== $og_default) {
+                $og_default = $og_default . $unit;
             }
         }
 
@@ -109,7 +111,7 @@ final class CSS
             return false;
         }
 
-        $this->_css .= $property.':'.$value.';';
+        $this->_css .= $property . ':' . $value . ';';
 
         return $this;
     }
@@ -117,7 +119,8 @@ final class CSS
     /**
      * Sets a media query in the class
      *
-     * @param  string  $value  The media query.
+     * @param string $value The media query.
+     *
      * @return $this
      *
      * @since  1.1
@@ -181,12 +184,12 @@ final class CSS
     {
         if (! empty($this->_css)) {
             $this->_selector_output = $this->_selector;
-            $selector_output = sprintf('%1$s{%2$s}', $this->_selector_output, $this->_css);
+            $selector_output        = sprintf('%1$s{%2$s}', $this->_selector_output, $this->_css);
 
             // Add our CSS to the output.
             if (! empty($this->_media_query)) {
                 $this->_media_query_output .= $selector_output;
-                $this->_css = '';
+                $this->_css                = '';
             } else {
                 $this->_output .= $selector_output;
             }

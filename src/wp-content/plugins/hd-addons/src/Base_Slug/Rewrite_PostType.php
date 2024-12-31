@@ -2,7 +2,7 @@
 
 namespace Addons\Base_Slug;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 class Rewrite_PostType
 {
@@ -10,16 +10,18 @@ class Rewrite_PostType
 
     public function __construct()
     {
-        $custom_base_slug_options = get_option('base_slug__options', []);
+        $custom_base_slug_options  = get_option('base_slug__options', []);
         $this->base_slug_post_type = $custom_base_slug_options['base_slug_post_type'] ?? [];
     }
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     public function run(): void
     {
         if (! empty($this->base_slug_post_type)) {
-
             add_filter('post_type_link', [$this, 'post_type_link'], 10, 2); // remove base slug from URLs
 
             add_action('wp', [$this, 'redirect']); // auto redirect old URLs to non-base versions
@@ -30,6 +32,9 @@ class Rewrite_PostType
     // ------------------------------------------------------
 
     /**
+     * @param $permalink
+     * @param $post
+     *
      * @return array|string|string[]|void
      */
     public function post_type_link($permalink, $post)
@@ -42,16 +47,16 @@ class Rewrite_PostType
             }
 
             if (! $custom_post->_builtin &&
-                 $custom_post->public &&
-                 $custom_post->show_ui &&
+                 $custom_post->public    &&
+                 $custom_post->show_ui   &&
                  in_array($custom_post->name, $this->base_slug_post_type, false)
             ) {
                 // woocommerce
-                if ($post->post_type === 'product' && check_plugin_active('woocommerce/woocommerce.php')) {
+                if ('product' === $post->post_type && check_plugin_active('woocommerce/woocommerce.php')) {
                     return str_replace($this->_get_product_base(), '/', $permalink);
                 }
 
-                return str_replace('/'.trim($custom_post->rewrite['slug'], '/').'/', '/', $permalink);
+                return str_replace('/' . trim($custom_post->rewrite['slug'], '/') . '/', '/', $permalink);
             }
         }
 
@@ -60,17 +65,20 @@ class Rewrite_PostType
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     public function redirect(): void
     {
         global $post;
 
         if (is_object($post) &&
-             ! is_preview() &&
-             ! is_admin() &&
-             is_single() &&
+             ! is_preview()  &&
+             ! is_admin()    &&
+             is_single()     &&
              in_array($post->post_type, $this->base_slug_post_type, false)
         ) {
-            $new_url = get_permalink();
+            $new_url  = get_permalink();
             $real_url = get_current_url();
 
             if (! str_contains($real_url, $new_url) && substr_count($new_url, '/') !== substr_count($real_url, '/')) {
@@ -88,6 +96,8 @@ class Rewrite_PostType
     // ------------------------------------------------------
 
     /**
+     * @param $request
+     *
      * @return array|mixed
      */
     public function request($request): mixed
@@ -99,12 +109,12 @@ class Rewrite_PostType
             return $request;
         }
 
-        $replace = [];
+        $replace   = [];
         $url_parts = explode('/', $url_request);
-        $slug = end($url_parts);
+        $slug      = end($url_parts);
 
-        if ($slug === 'feed' || $slug === 'amp') {
-            $replace[$slug] = $slug;
+        if ('feed' === $slug || 'amp' === $slug) {
+            $replace[ $slug ] = $slug;
         }
 
         if (str_starts_with($slug, 'comment-page-')) {
@@ -125,64 +135,60 @@ class Rewrite_PostType
 
                 foreach ($ancestors as $ancestor) {
                     if (! empty($ancestor)) {
-                        $post_name = get_post_field('post_name', $ancestor).'/'.$post_name;
+                        $post_name = get_post_field('post_name', $ancestor) . '/' . $post_name;
                     }
                 }
 
-                $replace['page'] = '';
-                $replace['name'] = $post_name;
-                $replace['post_type'] = $post_data->post_type;
-                $replace[$post_data->post_type] = $post_name;
+                $replace['page']                  = '';
+                $replace['name']                  = $post_name;
+                $replace['post_type']             = $post_data->post_type;
+                $replace[ $post_data->post_type ] = $post_name;
 
                 return $replace;
-
             } else {
-
                 /**
                  * @author KubiQ
                  */
+
                 global $wp_rewrite;
 
                 foreach ($this->base_slug_post_type as $post_type) {
                     $query_var = get_post_type_object($post_type)->query_var;
                     foreach ($wp_rewrite->rules as $pattern => $rewrite) {
-
                         // current rules
                         if (str_contains($pattern, $query_var)) {
-
-                            if (! str_contains($pattern, '('.$query_var.')')) {
-                                preg_match_all('#'.$pattern.'#', '/'.$query_var.'/'.$url_request, $matches, PREG_SET_ORDER);
+                            if (! str_contains($pattern, '(' . $query_var . ')')) {
+                                preg_match_all('#' . $pattern . '#', '/' . $query_var . '/' . $url_request, $matches, PREG_SET_ORDER);
                             } else {
-                                preg_match_all('#'.$pattern.'#', $query_var.'/'.$url_request, $matches, PREG_SET_ORDER);
+                                preg_match_all('#' . $pattern . '#', $query_var . '/' . $url_request, $matches, PREG_SET_ORDER);
                             }
 
-                            if (isset($matches[0]) && count($matches) !== 0) {
-
+                            if (isset($matches[0]) && 0 !== count($matches)) {
                                 // build URL query array
                                 $rewrite = str_replace('index.php?', '', $rewrite);
                                 parse_str($rewrite, $url_query);
                                 foreach ($url_query as $key => $value) {
                                     $value = (int) str_replace(['$matches[', ']'], '', $value);
-                                    if (isset($matches[0][$value])) {
-                                        $value = $matches[0][$value];
-                                        $url_query[$key] = $value;
+                                    if (isset($matches[0][ $value ])) {
+                                        $value             = $matches[0][ $value ];
+                                        $url_query[ $key ] = $value;
                                     }
                                 }
 
                                 // new path
-                                if (isset($url_query[$query_var])) {
-                                    $post_data = get_page_by_path('/'.$url_query[$query_var], OBJECT, $this->base_slug_post_type);
+                                if (isset($url_query[ $query_var ])) {
+                                    $post_data = get_page_by_path('/' . $url_query[ $query_var ], OBJECT, $this->base_slug_post_type);
 
                                     if (is_object($post_data)) {
-                                        $replace['page'] = '';
-                                        $replace['name'] = $url_request;
-                                        $replace['post_type'] = $post_data->post_type;
-                                        $replace[$post_data->post_type] = $url_request;
+                                        $replace['page']                  = '';
+                                        $replace['name']                  = $url_request;
+                                        $replace['post_type']             = $post_data->post_type;
+                                        $replace[ $post_data->post_type ] = $url_request;
 
                                         // rewrites, pagination, etc.
                                         foreach ($url_query as $key => $value) {
                                             if ($key !== 'post_type' && ! str_starts_with($value, '$matches')) {
-                                                $replace[$key] = $value;
+                                                $replace[ $key ] = $value;
                                             }
                                         }
 
@@ -203,17 +209,18 @@ class Rewrite_PostType
 
     /**
      * Get product base.
+     *
+     * @return string
      */
     private function _get_product_base(): string
     {
-
         $permalink_structure = wc_get_permalink_structure();
-        $product_base = $permalink_structure['product_rewrite_slug'];
+        $product_base        = $permalink_structure['product_rewrite_slug'];
 
         if (str_contains($product_base, '%product_cat%')) {
             $product_base = str_replace('%product_cat%', '', $product_base);
         }
 
-        return '/'.trim($product_base, '/').'/';
+        return '/' . trim($product_base, '/') . '/';
     }
 }

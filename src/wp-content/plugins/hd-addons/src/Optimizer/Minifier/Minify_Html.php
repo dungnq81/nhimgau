@@ -2,7 +2,7 @@
 
 namespace Addons\Optimizer\Minifier;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 /**
  * Compress HTML
@@ -18,7 +18,7 @@ namespace Addons\Optimizer\Minifier;
 class Minify_Html
 {
     /**
-     * @var bool
+     * @var boolean
      */
     protected $_jsCleanComments = true;
 
@@ -30,8 +30,8 @@ class Minify_Html
     /**
      * "Minify" an HTML page
      *
-     * @param  string  $html
-     * @param  array  $options
+     * @param string $html
+     * @param array $options
      *
      * 'cssMinifier' : (optional) callback function to process content of STYLE
      * elements.
@@ -41,6 +41,7 @@ class Minify_Html
      *
      * 'xhtml' : (optional boolean) should content be treated as XHTML1.0? If
      * unset, minify will sniff for an XHTML doctype.
+     *
      * @return string
      */
     public static function minify($html, $options = [])
@@ -53,8 +54,8 @@ class Minify_Html
     /**
      * Create a minifier object
      *
-     * @param  string  $html
-     * @param  array  $options
+     * @param string $html
+     * @param array $options
      *
      * 'cssMinifier' : (optional) callback function to process content of STYLE
      * elements.
@@ -95,8 +96,8 @@ class Minify_Html
             $this->_isXhtml = (str_contains($this->_html, '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML'));
         }
 
-        $this->_replacementHash = 'MINIFYHTML'.md5($_SERVER['REQUEST_TIME']);
-        $this->_placeholders = [];
+        $this->_replacementHash = 'MINIFYHTML' . md5($_SERVER['REQUEST_TIME']);
+        $this->_placeholders    = [];
 
         // replace SCRIPTs (and minify) with placeholders
         $this->_html = preg_replace_callback(
@@ -138,10 +139,10 @@ class Minify_Html
 
         // remove ws around block/undisplayed elements
         $this->_html = preg_replace('/\\s+(<\\/?(?:area|article|aside|base(?:font)?|blockquote|body'
-                                     .'|canvas|caption|center|col(?:group)?|dd|dir|div|dl|dt|fieldset|figcaption|figure|footer|form'
-                                     .'|frame(?:set)?|h[1-6]|head|header|hgroup|hr|html|legend|li|link|main|map|menu|meta|nav'
-                                     .'|ol|opt(?:group|ion)|output|p|param|section|t(?:able|body|head|d|h||r|foot|itle)'
-                                     .'|ul|video)\\b[^>]*>)/iu', '$1', $this->_html);
+                                     . '|canvas|caption|center|col(?:group)?|dd|dir|div|dl|dt|fieldset|figcaption|figure|footer|form'
+                                     . '|frame(?:set)?|h[1-6]|head|header|hgroup|hr|html|legend|li|link|main|map|menu|meta|nav'
+                                     . '|ol|opt(?:group|ion)|output|p|param|section|t(?:able|body|head|d|h||r|foot|itle)'
+                                     . '|ul|video)\\b[^>]*>)/iu', '$1', $this->_html);
 
         // remove ws outside of all elements
         $this->_html = preg_replace(
@@ -178,8 +179,8 @@ class Minify_Html
 
     protected function _reservePlace($content)
     {
-        $placeholder = '%'.$this->_replacementHash.count($this->_placeholders).'%';
-        $this->_placeholders[$placeholder] = $content;
+        $placeholder                         = '%' . $this->_replacementHash . count($this->_placeholders) . '%';
+        $this->_placeholders[ $placeholder ] = $content;
 
         return $placeholder;
     }
@@ -207,7 +208,7 @@ class Minify_Html
     protected function _removeStyleCB($m)
     {
         $openStyle = "<style{$m[1]}";
-        $css = $m[2];
+        $css       = $m[2];
         // remove HTML comments
         $css = preg_replace('/(?:^\\s*<!--|-->\\s*$)/u', '', $css);
 
@@ -218,7 +219,7 @@ class Minify_Html
         $minifier = $this->_cssMinifier
             ? $this->_cssMinifier
             : 'trim';
-        $css = call_user_func($minifier, $css);
+        $css      = call_user_func($minifier, $css);
 
         return $this->_reservePlace(
             $this->_needsCdata($css)
@@ -230,7 +231,7 @@ class Minify_Html
     protected function _removeScriptCB($m)
     {
         $openScript = "<script{$m[2]}";
-        $js = $m[3];
+        $js         = $m[3];
 
         // whitespace surrounding? preserve at least one space
         $ws1 = ($m[1] === '') ? '' : ' ';
@@ -248,7 +249,7 @@ class Minify_Html
         $minifier = $this->_jsMinifier
             ? $this->_jsMinifier
             : 'trim';
-        $js = call_user_func($minifier, $js);
+        $js       = call_user_func($minifier, $js);
 
         return $this->_reservePlace(
             $this->_needsCdata($js)
@@ -266,6 +267,6 @@ class Minify_Html
 
     protected function _needsCdata($str)
     {
-        return  $this->_isXhtml && preg_match('/(?:[<&]|\\-\\-|\\]\\]>)/u', $str);
+        return ($this->_isXhtml && preg_match('/(?:[<&]|\\-\\-|\\]\\]>)/u', $str));
     }
 }

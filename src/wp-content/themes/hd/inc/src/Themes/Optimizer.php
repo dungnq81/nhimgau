@@ -22,6 +22,15 @@ final class Optimizer
     {
         $this->_cleanup();
         $this->_optimizer();
+
+        // lost-password
+        add_action('lostpassword_form', [$this, 'add_csrf_token_to_lostpassword_form']);
+        add_action('lostpassword_post', [$this, 'verify_csrf_token_on_lostpassword_post']);
+
+        // login form
+        add_action('login_form', [$this, 'add_csrf_token_to_login_form']);
+        add_filter('authenticate', [$this, 'verify_csrf_token_on_login'], 30, 3);
+        add_filter('login_message', [$this, 'show_csrf_error_message']);
     }
 
     // ------------------------------------------------------
@@ -72,8 +81,6 @@ final class Optimizer
      */
     private function _optimizer(): void
     {
-        add_action('wp_head', [$this, 'wp_head'], 10);
-
         add_filter('script_loader_tag', [$this, 'script_loader_tag'], 12, 3);
         add_filter('style_loader_tag', [$this, 'style_loader_tag'], 12, 2);
 
@@ -81,9 +88,7 @@ final class Optimizer
         add_filter('widget_text', 'do_shortcode');
         add_filter('widget_text', 'shortcode_unautop');
 
-        add_action('wp_enqueue_scripts', [$this, 'enqueue'], 11);
         add_filter('posts_search', [$this, 'post_search_by_title'], 500, 2);
-        //add_filter( 'posts_where', [ $this, 'posts_title_filter' ], 499, 2 );
 
         // if not admin page
         if (! is_admin()) {
@@ -92,7 +97,6 @@ final class Optimizer
             // only front-end
             if (! Helper::isLogin()) {
                 add_action('wp_print_footer_scripts', [$this, 'print_footer_scripts'], 999);
-                add_action('wp_footer', [$this, 'deferred_scripts'], 1000);
             }
         }
     }
@@ -102,21 +106,29 @@ final class Optimizer
     /**
      * @return void
      */
-    public function wp_head(): void
+    public function add_csrf_token_to_lostpassword_form(): void
     {
-        // manifest.json
-        //echo '<link rel="manifest" href="' . Helper::home( 'manifest.json' ) . '">';
+        $nonce = wp_create_nonce('lostpassword_csrf_token');
+        echo '<input type="hidden" name="lostpassword_csrf_token" value="' . esc_attr($nonce) . '">';
+    }
 
-        // Theme color
-        $theme_color = Helper::getThemeMod('theme_color_setting');
-        if ($theme_color) {
-            echo '<meta name="theme-color" content="' . $theme_color . '" />';
-        }
+    // ------------------------------------------------------
 
-        // Fb
-        $fb_appid = Helper::getThemeMod('social_fb_setting');
-        if ($fb_appid) {
-            echo '<meta property="fb:app_id" content="' . $fb_appid . '" />';
+    /**
+     * @return void
+     */
+    public function verify_csrf_token_on_lostpassword_post(): void
+    {
+        if (isset($_POST['lostpassword_csrf_token'])) {
+            $nonce = $_POST['lostpassword_csrf_token'];
+
+            if (! wp_verify_nonce($nonce, 'lostpassword_csrf_token')) {
+                Helper::wpDie(
+                    __('Invalid CSRF token. Please try again.', TEXT_DOMAIN),
+                    __('Error', TEXT_DOMAIN),
+                    ['response' => 403]
+                );
+            }
         }
     }
 
@@ -125,15 +137,50 @@ final class Optimizer
     /**
      * @return void
      */
-    public function enqueue(): void
+    public function add_csrf_token_to_login_form(): void
     {
-        wp_dequeue_style('classic-theme-styles');
+        $csrf_token = wp_create_nonce('login_csrf_token');
+        echo '<input type="hidden" name="login_csrf_token" value="' . esc_attr($csrf_token) . '">';
     }
 
     // ------------------------------------------------------
 
     /**
-     * Search only in post title or excerpt
+     * @param $user
+     * @param $username
+     * @param $password
+     *
+     * @return mixed|\WP_Error
+     */
+    public function verify_csrf_token_on_login($user, $username, $password): mixed
+    {
+        if (empty($_POST['login_csrf_token']) || ! wp_verify_nonce($_POST['login_csrf_token'], 'login_csrf_token')) {
+            return new \WP_Error('csrf_error', __('Invalid CSRF token. Please try again.'));
+        }
+
+        return $user;
+    }
+
+    // ------------------------------------------------------
+
+    /**
+     * @param $message
+     *
+     * @return mixed|string
+     */
+    public function show_csrf_error_message($message): mixed
+    {
+        if (isset($_GET['login']) && $_GET['login'] === 'csrf_error') {
+            $message .= '<div id="login_error">' . __('Invalid CSRF token. Please try again.') . '</div>';
+        }
+
+        return $message;
+    }
+
+    // ------------------------------------------------------
+
+    /**
+     * Search only in post-title or excerpt
      *
      * @param $search
      * @param $wp_query
@@ -174,33 +221,11 @@ final class Optimizer
     // ------------------------------------------------------
 
     /**
-     * Search only in post-title - wp_query
-     *
-     * @param $where
-     * @param $wp_query
-     *
-     * @return mixed|string
-     */
-    //	public function posts_title_filter( $where, $wp_query ) {
-    //		global $wpdb;
-    //
-    //		if ( $search_term = $wp_query->get( 'title_filter' ) ) {
-    //			$term = esc_sql( $wpdb->esc_like( $search_term ) );
-    //			$where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'%' . $term . '%\'';
-    //		}
-    //
-    //		return $where;
-    //	}
-
-    // ------------------------------------------------------
-
-    /**
      * @param $query
      */
     public function set_posts_per_page($query): void
     {
         if (! is_admin()) {
-
             // get default value
             $posts_per_page_default = $posts_per_page = Helper::getOption('posts_per_page');
             $posts_num_per_page_arr = Helper::filterSettingOptions('posts_num_per_page', []);
@@ -234,9 +259,9 @@ final class Optimizer
      */
     public function print_footer_scripts(): void
     { ?>
-		<script>
-			document.documentElement.classList.remove('no-js');
-		</script>
+        <script>
+            document.documentElement.classList.remove('no-js');
+        </script>
 <?php
 
         if (is_file(THEME_PATH . 'assets/js/skip-link-focus.js')) {
@@ -273,7 +298,6 @@ final class Optimizer
 
         // Process combined attributes (e.g., `module defer`) from `extra`
         if (! empty($attributes['extra'])) {
-
             // Convert space-separated string to array if necessary
             $extra_attrs = is_array($attributes['extra'])
                 ? $attributes['extra']
@@ -316,15 +340,5 @@ final class Optimizer
         $styles = Helper::filterSettingOptions('defer_style', []);
 
         return Helper::lazyStyleTag($styles, $html, $handle);
-    }
-
-    // ------------------------------------------------------
-
-    /**
-     * @return void
-     */
-    public function deferred_scripts(): void
-    {
-        //...
     }
 }

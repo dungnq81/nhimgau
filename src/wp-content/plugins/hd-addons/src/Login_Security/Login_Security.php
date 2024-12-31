@@ -4,7 +4,7 @@ namespace Addons\Login_Security;
 
 use Addons\Base\Singleton;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 final class Login_Security
 {
@@ -31,6 +31,8 @@ final class Login_Security
 
     /**
      * Add username hooks.
+     *
+     * @return void
      */
     private function _illegal_users(): void
     {
@@ -44,14 +46,16 @@ final class Login_Security
 
     /**
      * Add login service hooks.
+     *
+     * @return void
      */
     private function _login_attempts(): void
     {
         $limit_login_attempts = $this->login_security_options['limit_login_attempts'] ?? 0;
-        $security_login = new Login_Attempts();
+        $security_login       = new Login_Attempts();
 
         // Bail if optimization is disabled.
-        if ((int) $limit_login_attempts === 0) {
+        if (0 === (int) $limit_login_attempts) {
             $security_login->reset_login_attempts();
 
             return;

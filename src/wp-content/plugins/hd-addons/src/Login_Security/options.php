@@ -2,22 +2,22 @@
 
 use Addons\Login_Security\Login_Attempts;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 $login_security_options = get_option('login_security__options');
 
-$custom_login_uri = $login_security_options['custom_login_uri'] ?? '';
+$custom_login_uri          = $login_security_options['custom_login_uri'] ?? '';
 
-$login_ips_access = $login_security_options['login_ips_access'] ?? '';
-$disable_ips_access = $login_security_options['disable_ips_access'] ?? '';
+$login_ips_access          = $login_security_options['login_ips_access']          ?? '';
+$disable_ips_access        = $login_security_options['disable_ips_access']        ?? '';
 $two_factor_authentication = $login_security_options['two_factor_authentication'] ?? '';
-$limit_login_attempts = $login_security_options['limit_login_attempts'] ?? 0;
-$illegal_users = $login_security_options['illegal_users'] ?? '';
+$limit_login_attempts      = $login_security_options['limit_login_attempts']      ?? 0;
+$illegal_users             = $login_security_options['illegal_users']             ?? '';
 
-echo '<h2>'.__('Login Security Settings', ADDONS_TEXT_DOMAIN).'</h2>';
+echo '<h2>' . __('Login Security Settings', ADDONS_TEXT_DOMAIN) . '</h2>';
 
 $login_security_default = \filter_setting_options('login_security', false);
-if ($login_security_default['enable_custom_login_options']) {
+if ($login_security_default['enable_custom_login_options']) :
 
     ?>
 <div class="section section-text" id="section_custom_login_uri">
@@ -26,7 +26,7 @@ if ($login_security_default['enable_custom_login_options']) {
 	<div class="option">
 		<div class="controls control-prefix" style="height: unset;">
             <div class="prefix">
-                <span class="input-txt" title="<?= esc_attr(esc_url(network_home_url('/')))?>"><?= esc_url(network_home_url('/'))?></span>
+                <span class="input-txt" title="<?= esc_attr(esc_url(network_home_url('/')))?>"><?=esc_url(network_home_url('/'))?></span>
             </div>
             <?php
 
@@ -40,11 +40,11 @@ if ($login_security_default['enable_custom_login_options']) {
                 }
 
     ?>
-			<input value="<?php echo esc_attr($custom_login_uri); ?>" class="input" type="text" id="custom_login_uri" name="custom_login_uri" placeholder="<?= esc_attr($custom_login_uri)?>">
+			<input value="<?php echo esc_attr($custom_login_uri); ?>" class="input" type="text" id="custom_login_uri" name="custom_login_uri" placeholder="<?=esc_attr($custom_login_uri)?>">
 		</div>
 	</div>
 </div>
-<?php } ?>
+<?php endif; ?>
 
 <div class="section section-select" id="section_login_ips_access">
 	<label class="heading" for="login_ips_access"><?php _e('Allowlist IPs Login Access', ADDONS_TEXT_DOMAIN); ?></label>
@@ -54,12 +54,11 @@ if ($login_security_default['enable_custom_login_options']) {
 			<div class="select_wrapper">
 				<select multiple placeholder="Enter IP addresses" class="select select2-ips !w[100%]" name="login_ips_access" id="login_ips_access">
                     <?php
-            if ($login_ips_access) {
-                foreach ((array) $login_ips_access as $ip) {
+            if ($login_ips_access) :
+                foreach ((array) $login_ips_access as $ip) :
                     ?>
-                    <option selected value="<?= esc_attr($ip)?>"><?= $ip?></option>
-                    <?php }
-                } ?>
+                    <option selected value="<?=esc_attr($ip)?>"><?=$ip?></option>
+                    <?php endforeach; endif; ?>
                 </select>
 			</div>
 		</div>
@@ -74,12 +73,11 @@ if ($login_security_default['enable_custom_login_options']) {
 			<div class="select_wrapper">
 				<select multiple placeholder="Enter IP addresses" class="select select2-ips !w[100%]" name="disable_ips_access" id="disable_ips_access">
                     <?php
-                if ($disable_ips_access) {
-                    foreach ((array) $disable_ips_access as $ip) {
-                        ?>
-                    <option selected value="<?= esc_attr($ip)?>"><?= $ip?></option>
-                    <?php }
-                    } ?>
+                    if ($disable_ips_access) :
+                        foreach ((array) $disable_ips_access as $ip) :
+                            ?>
+                    <option selected value="<?=esc_attr($ip)?>"><?=$ip?></option>
+                    <?php endforeach; endif; ?>
                 </select>
 			</div>
 		</div>
@@ -104,9 +102,9 @@ if ($login_security_default['enable_custom_login_options']) {
         <div class="controls">
             <div class="select_wrapper">
                 <select class="select" name="limit_login_attempts" id="limit_login_attempts">
-                    <?php foreach (Login_Attempts::$login_attempts_data as $key => $value) { ?>
-                    <option value="<?= $key?>"<?= selected($limit_login_attempts, $key, false) ?>><?= $value?></option>
-                    <?php } ?>
+                    <?php foreach (Login_Attempts::$login_attempts_data as $key => $value) : ?>
+                    <option value="<?=$key?>"<?= selected($limit_login_attempts, $key, false) ?>><?=$value?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
         </div>

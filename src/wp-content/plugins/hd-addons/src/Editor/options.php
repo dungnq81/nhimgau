@@ -1,13 +1,13 @@
 <?php
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 $block_editor_options = get_option('editor__options');
 
-$use_widgets_block_editor_off = $block_editor_options['use_widgets_block_editor_off'] ?? '';
+$use_widgets_block_editor_off           = $block_editor_options['use_widgets_block_editor_off']           ?? '';
 $gutenberg_use_widgets_block_editor_off = $block_editor_options['gutenberg_use_widgets_block_editor_off'] ?? '';
-$use_block_editor_for_post_type_off = $block_editor_options['use_block_editor_for_post_type_off'] ?? '';
-$block_style_off = $block_editor_options['block_style_off'] ?? '';
+$use_block_editor_for_post_type_off     = $block_editor_options['use_block_editor_for_post_type_off']     ?? '';
+$block_style_off                        = $block_editor_options['block_style_off']                        ?? '';
 
 ?>
 <h2><?php _e('Editor Settings', ADDONS_TEXT_DOMAIN); ?></h2>

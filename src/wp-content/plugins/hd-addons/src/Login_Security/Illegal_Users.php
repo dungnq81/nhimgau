@@ -6,6 +6,8 @@ final class Illegal_Users
 {
     /**
      * Array containing common usernames.
+     *
+     * @var array
      */
     public array $common_usernames = [
         'administrator',
@@ -20,7 +22,8 @@ final class Illegal_Users
     /**
      * Add illegal usernames
      *
-     * @param  array  $usernames  Default illegal usernames.
+     * @param array $usernames Default illegal usernames.
+     *
      * @return array Default + custom illegal usernames.
      */
     public function get_illegal_usernames(array $usernames = []): array
@@ -41,7 +44,8 @@ final class Illegal_Users
     /**
      * Change the default admin username.
      *
-     * @param  array  $new_username  The new username provided by the user.
+     * @param array $new_username The new username provided by the user.
+     *
      * @return int|false The number of rows updated, or false on error.
      */
     public function change_common_username(array $new_username): false|int
@@ -51,7 +55,7 @@ final class Illegal_Users
         return $wpdb->update(
             $wpdb->users,
             ['user_login' => $new_username['user_login']],
-            ['ID' => $new_username['ID']]
+            ['ID'         => $new_username['ID']]
         );
     }
 
@@ -68,8 +72,8 @@ final class Illegal_Users
         $all_users = get_users(
             [
                 'orderby' => 'user_login',
-                'order' => 'ASC',
-                'fields' => [
+                'order'   => 'ASC',
+                'fields'  => [
                     'ID',
                     'user_login',
                 ],
@@ -79,10 +83,10 @@ final class Illegal_Users
         // Get all admins.
         $admins = get_users(
             [
-                'role' => 'administrator',
+                'role'    => 'administrator',
                 'orderby' => 'user_login',
-                'order' => 'ASC',
-                'fields' => [
+                'order'   => 'ASC',
+                'fields'  => [
                     'ID',
                     'user_login',
                 ],
@@ -91,16 +95,15 @@ final class Illegal_Users
 
         // Check for illegal usernames.
         foreach ($admins as $key => $admin) {
-
             // Remove the user if its username is not in the illegal list.
             if (! in_array(strtolower($admin->user_login), $this->get_illegal_usernames(), false)) {
-                unset($admins[$key]);
+                unset($admins[ $key ]);
             }
         }
 
         // Build the response array.
         return [
-            'all_users' => $all_users,
+            'all_users'     => $all_users,
             'admin_matches' => array_values($admins),
         ];
     }
@@ -110,7 +113,8 @@ final class Illegal_Users
     /**
      * Start the name change for common usernames.
      *
-     * @param  array  $usernames  The array containing the changed usernames.
+     * @param array $usernames The array containing the changed usernames.
+     *
      * @return array $result Array containing the result for each username update.
      */
     public function update_common_usernames(array $usernames): array
@@ -122,10 +126,9 @@ final class Illegal_Users
 
         // Loop the specified usernames.
         foreach ($usernames as $key => $username) {
-
             // Remove the successful changes and return the failed only if any.
-            if ($this->change_common_username($username) === 1) {
-                unset($usernames[$key]);
+            if (1 === $this->change_common_username($username)) {
+                unset($usernames[ $key ]);
             }
         }
 

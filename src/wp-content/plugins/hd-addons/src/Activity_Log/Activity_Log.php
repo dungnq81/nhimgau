@@ -4,7 +4,7 @@ namespace Addons\Activity_Log;
 
 use Addons\Base\Singleton;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 final class Activity_Log
 {

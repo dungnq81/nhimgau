@@ -4,7 +4,7 @@ namespace Addons\Custom_Css;
 
 use Addons\Base\Singleton;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 final class Custom_Css
 {
@@ -12,6 +12,9 @@ final class Custom_Css
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     private function init(): void
     {
         add_action('wp_enqueue_scripts', [$this, 'header_inline_custom_css'], 99);
@@ -19,6 +22,9 @@ final class Custom_Css
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     public function header_inline_custom_css(): void
     {
         $css = \get_custom_post_option_content('addon_css', false);

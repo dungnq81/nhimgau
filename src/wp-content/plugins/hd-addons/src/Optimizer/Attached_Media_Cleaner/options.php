@@ -1,6 +1,6 @@
 <?php
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 $attached_media_cleaner = $attached_media_cleaner ?? 0;
 

@@ -39,10 +39,8 @@ final class Theme
         /** Enqueue Scripts */
         add_action('wp_enqueue_scripts', [$this, 'wp_enqueue_scripts'], 14);
 
-        /** Restrict admin install plugin */
+        /** Restrict */
         add_filter('user_has_cap', [$this, 'restrict_admin_plugin_install'], 10, 3);
-
-        /** Prevent the deletion of admin accounts */
         add_filter('user_has_cap', [$this, 'prevent_deletion_admin_accounts'], 10, 3);
         add_action('delete_user', [$this, 'prevent_deletion_user'], 10);
 
@@ -220,6 +218,7 @@ final class Theme
 
         // Removes the styling added to the header for recent comments
         global $wp_widget_factory;
+
         remove_action('wp_head', [
             $wp_widget_factory->widgets['WP_Widget_Recent_Comments'],
             'recent_comments_style'

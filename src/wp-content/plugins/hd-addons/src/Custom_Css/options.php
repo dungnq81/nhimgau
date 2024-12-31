@@ -1,6 +1,6 @@
 <?php
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 $css = \get_custom_post_option_content('addon_css', false);
 

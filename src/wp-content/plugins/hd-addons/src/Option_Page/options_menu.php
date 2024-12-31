@@ -1,6 +1,6 @@
 <?php
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 $menu_options_page = apply_filters('addon_menu_options_page_filter', []);
 
@@ -20,23 +20,22 @@ $menu_options_page = apply_filters('addon_menu_options_page_filter', []);
 	<ul class="ul-menu-list">
         <?php
         $i = 0;
-foreach ($menu_options_page as $slug => $value) {
-    $current = ($i === 0) ? ' class="current"' : '';
+foreach ($menu_options_page as $slug => $value) :
+    $current = (0 === $i) ? ' class="current"' : '';
 
     // WooCommerce
-    if ((string) $slug === 'woocommerce' && ! \check_plugin_active('woocommerce/woocommerce.php')) {
+    if ('woocommerce' === (string) $slug && ! \check_plugin_active('woocommerce/woocommerce.php')) {
         continue;
     }
 
     // SMTP
-    if ((string) $slug === 'smtp' && ! \check_smtp_plugin_active()) {
+    if ('smtp' === (string) $slug && ! \check_smtp_plugin_active()) {
         continue;
     }
     ?>
-        <li class="<?= $slug?>-settings">
-            <a<?= $current?> title="<?= esc_attr($value) ?>" href="#<?= $slug?>_settings"><?= $value ?></a>
+        <li class="<?=$slug?>-settings">
+            <a<?=$current?> title="<?= esc_attr($value) ?>" href="#<?=$slug?>_settings"><?= $value ?></a>
         </li>
-        <?php $i++;
-} ?>
+        <?php $i++; endforeach; ?>
 	</ul>
 </div>

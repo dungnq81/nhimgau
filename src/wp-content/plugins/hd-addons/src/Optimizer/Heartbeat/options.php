@@ -1,6 +1,6 @@
 <?php
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 $heartbeat = $heartbeat ?? 0;
 

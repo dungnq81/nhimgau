@@ -3,7 +3,7 @@
         'name' => 'wordpress/hd',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '4ec126d9bf0cc889698ac5984007520ec0531fba',
+        'reference' => '460d9ef9b8c55764626ebbd61a93224ce5e65bb0',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -123,7 +123,7 @@
         'wordpress/hd' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '4ec126d9bf0cc889698ac5984007520ec0531fba',
+            'reference' => '460d9ef9b8c55764626ebbd61a93224ce5e65bb0',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

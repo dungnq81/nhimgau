@@ -2,7 +2,7 @@
 
 namespace Addons\Security;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 /**
  * Class that manages the Readme.html.
@@ -18,9 +18,8 @@ final class Readme
      */
     public function readme_exist(): bool
     {
-
         // Check if the readme.html file exists at the root of the application.
-        return file_exists(ABSPATH.'readme.html');
+        return file_exists(ABSPATH . 'readme.html');
     }
 
     // --------------------------------------------------
@@ -38,12 +37,12 @@ final class Readme
         }
 
         // Check if file permissions are set accordingly.
-        if ((int) substr(sprintf('%o', fileperms(ABSPATH.'readme.html')), -3) <= 600) {
+        if (600 >= (int) substr(sprintf('%o', fileperms(ABSPATH . 'readme.html')), -3)) {
             return false;
         }
 
         // Try to remove the file.
-        if (@unlink(ABSPATH.'readme.html') === false) {
+        if (@unlink(ABSPATH . 'readme.html') === false) {
             return false;
         }
 

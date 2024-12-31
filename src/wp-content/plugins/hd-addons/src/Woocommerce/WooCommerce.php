@@ -4,7 +4,7 @@ namespace Addons\Woocommerce;
 
 use Addons\Base\Singleton;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 final class WooCommerce
 {
@@ -17,9 +17,8 @@ final class WooCommerce
     private function init(): void
     {
         $this->woocommerce_options = get_option('woocommerce__options', false);
-        $woocommerce_jsonld = $this->woocommerce_options['woocommerce_jsonld'] ?? '';
+        $woocommerce_jsonld        = $this->woocommerce_options['woocommerce_jsonld'] ?? '';
         if ($woocommerce_jsonld) {
-
             // Remove the default WooCommerce 3 JSON/LD structured data format
             add_action('init', [$this, 'remove_woocommerce_jsonld'], 10);
         }
@@ -31,6 +30,9 @@ final class WooCommerce
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     public function remove_woocommerce_jsonld(): void
     {
         remove_action('wp_footer', [\WC()->structured_data, 'output_structured_data'], 10);
@@ -42,9 +44,11 @@ final class WooCommerce
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     public function after_setup_theme(): void
     {
-
         // Remove woocommerce default styles
         $woocommerce_default_css = $this->woocommerce_options['woocommerce_default_css'] ?? '';
         if ($woocommerce_default_css) {
@@ -54,9 +58,11 @@ final class WooCommerce
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     public function enqueue_scripts(): void
     {
-
         // remove 'woocommerce-inline-inline-css'
         $woocommerce_default_css = $this->woocommerce_options['woocommerce_default_css'] ?? '';
         if ($woocommerce_default_css) {
@@ -66,6 +72,9 @@ final class WooCommerce
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     public function enqueue_block_assets(): void
     {
         global $wp_styles;
@@ -74,7 +83,6 @@ final class WooCommerce
         $block_editor_options = get_option('editor__options', false);
 
         if ($block_editor_options['block_style_off'] ?? '') {
-
             wp_deregister_style('wc-block-editor');
 
             wp_deregister_style('wc-blocks-style');

@@ -4,7 +4,7 @@ namespace Addons\Custom_Script;
 
 use Addons\Base\Singleton;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 final class Custom_Script
 {
@@ -12,6 +12,9 @@ final class Custom_Script
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     private function init(): void
     {
         add_action('wp_head', [$this, 'header_scripts__hook'], 99); // header scripts
@@ -25,6 +28,8 @@ final class Custom_Script
 
     /**
      * Header scripts
+     *
+     * @return void
      */
     public function header_scripts__hook(): void
     {
@@ -38,6 +43,8 @@ final class Custom_Script
 
     /**
      * Body scripts - TOP
+     *
+     * @return void
      */
     public function body_scripts_top__hook(): void
     {
@@ -51,6 +58,8 @@ final class Custom_Script
 
     /**
      * Footer scripts
+     *
+     * @return void
      */
     public function footer_scripts__hook(): void
     {
@@ -64,6 +73,8 @@ final class Custom_Script
 
     /**
      * Body scripts - BOTTOM
+     *
+     * @return void
      */
     public function body_scripts_bottom__hook(): void
     {

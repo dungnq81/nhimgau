@@ -1,18 +1,18 @@
 <?php
 
-defined('ABSPATH') || exit;
+defined('ABSPATH') || die;
 
 $smtp_options = get_option('smtp__options');
 
-$smtp_host = $smtp_options['smtp_host'] ?? '';
-$smtp_auth = $smtp_options['smtp_auth'] ?? 'false';
-$smtp_username = $smtp_options['smtp_username'] ?? '';
-$smtp_password = $smtp_options['smtp_password'] ?? '';
-$smtp_encryption = $smtp_options['smtp_encryption'] ?? 'none';
-$smtp_port = $smtp_options['smtp_port'] ?? '';
-$smtp_from_email = $smtp_options['smtp_from_email'] ?? '';
-$smtp_from_name = $smtp_options['smtp_from_name'] ?? '';
-$smtp_force_from_address = $smtp_options['smtp_force_from_address'] ?? '';
+$smtp_host                     = $smtp_options['smtp_host']                     ?? '';
+$smtp_auth                     = $smtp_options['smtp_auth']                     ?? 'false';
+$smtp_username                 = $smtp_options['smtp_username']                 ?? '';
+$smtp_password                 = $smtp_options['smtp_password']                 ?? '';
+$smtp_encryption               = $smtp_options['smtp_encryption']               ?? 'none';
+$smtp_port                     = $smtp_options['smtp_port']                     ?? '';
+$smtp_from_email               = $smtp_options['smtp_from_email']               ?? '';
+$smtp_from_name                = $smtp_options['smtp_from_name']                ?? '';
+$smtp_force_from_address       = $smtp_options['smtp_force_from_address']       ?? '';
 $smtp_disable_ssl_verification = $smtp_options['smtp_disable_ssl_verification'] ?? '';
 
 ?>

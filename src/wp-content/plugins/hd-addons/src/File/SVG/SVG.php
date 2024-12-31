@@ -7,7 +7,7 @@ use enshrined\svgSanitize\data\AllowedAttributes;
 use enshrined\svgSanitize\data\AllowedTags;
 use enshrined\svgSanitize\Sanitizer;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 /**
  * SVG support in WordPress
@@ -28,18 +28,20 @@ final class SVG
     private function init(): void
     {
         $file_setting_options = get_option('file_setting__options');
-        $this->svg_option = $file_setting_options['svgs'] ?? 'disable';
+        $this->svg_option     = $file_setting_options['svgs'] ?? 'disable';
 
-        if ($this->svg_option !== 'disable') {
+        if ('disable' !== $this->svg_option) {
             $this->_init_svg();
         }
     }
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     private function _init_svg(): void
     {
-
         $this->sanitizer = new Sanitizer();
         $this->sanitizer->removeXMLTag(true);
         $this->sanitizer->minify(true);
@@ -59,6 +61,13 @@ final class SVG
 
     // ------------------------------------------------------
 
+    /**
+     * @param array $sizes
+     * @param array $metadata
+     * @param int $attachment_id
+     *
+     * @return array
+     */
     public function disable_upload_sizes(array $sizes, array $metadata, int $attachment_id): array
     {
         if (get_post_mime_type($attachment_id) === 'image/svg+xml') {
@@ -72,20 +81,23 @@ final class SVG
     // ------------------------------------------------------
 
     /**
+     * @param $block_content
+     * @param $block
+     *
      * @return array|mixed|string|string[]
      */
     public function fix_missing_width_height_on_image_block($block_content, $block): mixed
     {
-        if ($block['blockName'] === 'core/image' &&
-             isset($block['attrs']['id']) &&
-             ! str_contains($block_content, 'width=') &&
+        if ($block['blockName'] === 'core/image'       &&
+             isset($block['attrs']['id'])              &&
+             ! str_contains($block_content, 'width=')  &&
              ! str_contains($block_content, 'height=') &&
              get_post_mime_type($block['attrs']['id']) === 'image/svg+xml'
         ) {
-            $svg_path = get_attached_file($block['attrs']['id']);
+            $svg_path   = get_attached_file($block['attrs']['id']);
             $dimensions = $this->svg_dimensions($svg_path);
 
-            $block_content = str_replace('<img ', '<img width="'.$dimensions->width.'" height="'.$dimensions->height.'" ', $block_content);
+            $block_content = str_replace('<img ', '<img width="' . $dimensions->width . '" height="' . $dimensions->height . '" ', $block_content);
         }
 
         return $block_content;
@@ -93,6 +105,14 @@ final class SVG
 
     // ------------------------------------------------------
 
+    /**
+     * @param $regex
+     * @param $type
+     * @param $ext
+     * @param $file
+     *
+     * @return mixed
+     */
     public function fl_module_upload_regex($regex, $type, $ext, $file): mixed
     {
         if ($ext === 'svg' || $ext === 'svgz') {
@@ -104,12 +124,18 @@ final class SVG
 
     // ------------------------------------------------------
 
+    /**
+     * @param $metadata
+     * @param $attachment_id
+     *
+     * @return mixed
+     */
     public function wp_generate_attachment_metadata($metadata, $attachment_id): mixed
     {
         if (get_post_mime_type($attachment_id) === 'image/svg+xml') {
-            $svg_path = get_attached_file($attachment_id);
-            $dimensions = $this->svg_dimensions($svg_path);
-            $metadata['width'] = $dimensions->width;
+            $svg_path           = get_attached_file($attachment_id);
+            $dimensions         = $this->svg_dimensions($svg_path);
+            $metadata['width']  = $dimensions->width;
             $metadata['height'] = $dimensions->height;
         }
 
@@ -118,14 +144,22 @@ final class SVG
 
     // ------------------------------------------------------
 
+    /**
+     * @param $filetype_ext_data
+     * @param $file
+     * @param $filename
+     * @param $mimes
+     *
+     * @return mixed
+     */
     public function wp_check_filetype_and_ext($filetype_ext_data, $file, $filename, $mimes): mixed
     {
-        if ($this->svg_option !== 'disable' && current_user_can('upload_files')) {
+        if ('disable' !== $this->svg_option && current_user_can('upload_files')) {
             if (str_ends_with($filename, '.svg')) {
-                $filetype_ext_data['ext'] = 'svg';
+                $filetype_ext_data['ext']  = 'svg';
                 $filetype_ext_data['type'] = 'image/svg+xml';
             } elseif (str_ends_with($filename, '.svgz')) {
-                $filetype_ext_data['ext'] = 'svgz';
+                $filetype_ext_data['ext']  = 'svgz';
                 $filetype_ext_data['type'] = 'image/svg+xml';
             }
         }
@@ -135,10 +169,15 @@ final class SVG
 
     // ------------------------------------------------------
 
+    /**
+     * @param array $mimes
+     *
+     * @return array
+     */
     public function add_svg_mime(array $mimes = []): array
     {
-        if ($this->svg_option !== 'disable' && current_user_can('upload_files')) {
-            $mimes['svg'] = 'image/svg+xml';
+        if ('disable' !== $this->svg_option && current_user_can('upload_files')) {
+            $mimes['svg']  = 'image/svg+xml';
             $mimes['svgz'] = 'image/svg+xml';
         }
 
@@ -147,6 +186,9 @@ final class SVG
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     public function fix_svg_thumbnail_size(): void
     {
         echo '<style>.attachment-info .thumbnail img[src$=".svg"],#postimagediv .inside img[src$=".svg"]{width:100%;height:auto}</style>';
@@ -154,6 +196,9 @@ final class SVG
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     public function add_svg_support(): void
     {
         ob_start(static function ($content) {
@@ -166,9 +211,13 @@ final class SVG
 
     // ------------------------------------------------------
 
+    /**
+     * @param $content
+     *
+     * @return string
+     */
     public function final_output($content): string
     {
-
         return str_replace([
             '<# } else if ( \'image\' === data.type && data.sizes && data.sizes.full ) { #>',
             '<# } else if ( \'image\' === data.type && data.sizes ) { #>',
@@ -186,6 +235,13 @@ final class SVG
 
     // ------------------------------------------------------
 
+    /**
+     * @param $response
+     * @param $attachment
+     * @param $meta
+     *
+     * @return mixed
+     */
     public function wp_prepare_attachment_for_js($response, $attachment, $meta): mixed
     {
         if ((string) $response['mime'] === 'image/svg+xml' && empty($response['sizes'])) {
@@ -194,12 +250,12 @@ final class SVG
                 $svg_path = $response['url'];
             }
 
-            $dimensions = $this->svg_dimensions($svg_path);
+            $dimensions        = $this->svg_dimensions($svg_path);
             $response['sizes'] = [
                 'full' => [
-                    'url' => $response['url'],
-                    'width' => $dimensions->width,
-                    'height' => $dimensions->height,
+                    'url'         => $response['url'],
+                    'width'       => $dimensions->width,
+                    'height'      => $dimensions->height,
                     'orientation' => $dimensions->width > $dimensions->height ? 'landscape' : 'portrait',
                 ],
             ];
@@ -210,10 +266,15 @@ final class SVG
 
     // ------------------------------------------------------
 
+    /**
+     * @param $svg
+     *
+     * @return object
+     */
     public function svg_dimensions($svg): object
     {
-        $svg = simplexml_load_string(file_get_contents($svg));
-        $width = 0;
+        $svg    = simplexml_load_string(file_get_contents($svg));
+        $width  = 0;
         $height = 0;
         if ($svg) {
             $attributes = $svg->attributes();
@@ -228,7 +289,7 @@ final class SVG
             if ((! $width || ! $height) && isset($attributes->viewBox)) {
                 $sizes = explode(' ', $attributes->viewBox);
                 if (isset($sizes[2], $sizes[3])) {
-                    $width = (float) $sizes[2];
+                    $width  = (float) $sizes[2];
                     $height = (float) $sizes[3];
                 }
             }
@@ -239,11 +300,16 @@ final class SVG
 
     // ------------------------------------------------------
 
+    /**
+     * @param $file
+     *
+     * @return mixed
+     */
     public function wp_handle_upload_prefilter($file): mixed
     {
-        if ((string) $file['type'] === 'image/svg+xml' &&
-             (string) $this->svg_option === 'sanitized' &&
-             current_user_can('upload_files') &&
+        if ((string) $file['type'] === 'image/svg+xml'  &&
+             'sanitized'           === (string) $this->svg_option &&
+             current_user_can('upload_files')           &&
              ! $this->sanitize($file['tmp_name'])
         ) {
             $file['error'] = __('This SVG can not be sanitized.', ADDONS_TEXT_DOMAIN);
@@ -254,6 +320,11 @@ final class SVG
 
     // ------------------------------------------------------
 
+    /**
+     * @param $file
+     *
+     * @return bool
+     */
     public function sanitize($file): bool
     {
         $svg_code = file_get_contents($file);
@@ -285,12 +356,17 @@ final class SVG
 
     // ------------------------------------------------------
 
+    /**
+     * @param $svg_code
+     *
+     * @return bool
+     */
     public function is_gzipped($svg_code): bool
     {
         if (function_exists('mb_strpos')) {
-            return mb_strpos($svg_code, "\x1f"."\x8b"."\x08") === 0;
+            return 0 === mb_strpos($svg_code, "\x1f" . "\x8b" . "\x08");
         }
 
-        return str_starts_with($svg_code, "\x1f"."\x8b"."\x08");
+        return str_starts_with($svg_code, "\x1f" . "\x8b" . "\x08");
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Addons\Optimizer\Lazy_Load;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 /**
  * @author SiteGround
@@ -12,6 +12,8 @@ abstract class Abstract_Lazy_Load
 {
     /**
      * Regex for class matching.
+     *
+     * @var string
      */
     public string $regex_classes = '/class=["\'](.*?)["\']/is';
 
@@ -27,24 +29,37 @@ abstract class Abstract_Lazy_Load
 
     /**
      * Add class-name to the html element.
+     *
+     * @param $element
+     *
+     * @return string|array
      */
     abstract public function add_lazyload_class($element): string|array;
 
     /** ---------------------------------------- */
+
+    /**
+     * @param $content
+     *
+     * @return bool
+     */
     public function should_process($content): bool
     {
-        return empty($content) ||
+        return empty($content)               ||
                $this->is_lazy_url_excluded() ||
-               is_feed() ||
-               is_admin() ||
-               wp_doing_ajax() ||
+               is_feed()                     ||
+               is_admin()                    ||
+               wp_doing_ajax()               ||
                \is_amp_enabled($content);
     }
 
     /** ---------------------------------------- */
+
+    /**
+     * @return bool
+     */
     public function is_lazy_url_excluded(): bool
     {
-
         // Get the urls where a lazy load is excluded.
         $excluded_urls = \filter_setting_options('lazy_load_exclude_urls', []);
 
@@ -55,11 +70,12 @@ abstract class Abstract_Lazy_Load
     /** ---------------------------------------- */
 
     /**
+     * @param $content
+     *
      * @return array|mixed|string|string[]
      */
     public function filter_html($content): mixed
     {
-
         // Bail if it's feed, ajax, admin, amp... or if the content is empty.
         if ($this->should_process($content)) {
             return $content;
@@ -68,13 +84,13 @@ abstract class Abstract_Lazy_Load
         // Check for items.
         preg_match_all($this->regexp, $content, $matches);
 
-        $search = [];
+        $search  = [];
         $replace = [];
 
         // Check for specific asset being excluded.
         $optimizer_options = get_option('optimizer__options');
-        $exclude_lazyload = $optimizer_options['exclude_lazyload'] ?? [];
-        $excluded_all = array_unique(
+        $exclude_lazyload  = $optimizer_options['exclude_lazyload'] ?? [];
+        $excluded_all      = array_unique(
             array_merge(
                 \filter_setting_options('lazy_load_exclude', []),
                 $exclude_lazyload
@@ -82,7 +98,6 @@ abstract class Abstract_Lazy_Load
         );
 
         foreach ($matches[0] as $item) {
-
             // Skip already replaced item.
             if (preg_match($this->regex_replaced, $item)) {
                 continue;
@@ -90,7 +105,6 @@ abstract class Abstract_Lazy_Load
 
             // Check if we have a filter for excluding specific asset from being lazily loaded.
             if (! empty($excluded_all)) {
-
                 // Match the url of the asset.
                 preg_match('~(?:src=")([^"]*)"~', $item, $src_match);
 
@@ -117,7 +131,7 @@ abstract class Abstract_Lazy_Load
                     continue;
                 }
 
-                $orig_item = str_replace($classes, $classes.' lazy', $item);
+                $orig_item = str_replace($classes, $classes . ' lazy', $item);
             } else {
                 $orig_item = $this->add_lazyload_class($item);
             }
@@ -129,7 +143,7 @@ abstract class Abstract_Lazy_Load
                 $orig_item
             );
 
-            $search[] = $item;
+            $search[]  = $item;
             $replace[] = $new_item;
         }
 

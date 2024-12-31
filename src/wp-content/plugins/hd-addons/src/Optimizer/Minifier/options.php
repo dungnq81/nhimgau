@@ -1,6 +1,6 @@
 <?php
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 $minify_html = $minify_html ?? 0;
 

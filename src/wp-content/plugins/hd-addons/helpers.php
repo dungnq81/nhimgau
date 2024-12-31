@@ -5,10 +5,16 @@ use Detection\MobileDetect;
 use MatthiasMullie\Minify;
 use Vectorface\Whip\Whip;
 
-defined('ABSPATH') || exit;
+defined('ABSPATH') || die;
 
 /** ----------------------------------------------- */
+
 if (! function_exists('is_valid_phone')) {
+    /**
+     * @param $phone
+     *
+     * @return bool
+     */
     function is_valid_phone($phone): bool
     {
         if (! is_string($phone) || trim($phone) === '') {
@@ -22,7 +28,13 @@ if (! function_exists('is_valid_phone')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('is_xml')) {
+    /**
+     * @param $content
+     *
+     * @return false|int
+     */
     function is_xml($content): false|int
     {
         // Get the first 200 chars of the file to make the preg_match check faster.
@@ -33,7 +45,13 @@ if (! function_exists('is_xml')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('is_amp_enabled')) {
+    /**
+     * @param $html
+     *
+     * @return false|int
+     */
     function is_amp_enabled($html): false|int
     {
         // Get the first 200 chars of the file to make the preg_match check faster.
@@ -45,11 +63,14 @@ if (! function_exists('is_amp_enabled')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('is_mobile')) {
     /**
      * Test if the current browser runs on a mobile device (smartphone, tablet, etc.)
      *
      * @throws MobileDetectException
+     *
+     * @return boolean
      */
     function is_mobile(): bool
     {
@@ -62,6 +83,7 @@ if (! function_exists('is_mobile')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('get_current_url')) {
     /**
      * Get the current url.
@@ -78,12 +100,16 @@ if (! function_exists('get_current_url')) {
         $protocol = isset($_SERVER['HTTPS']) ? 'https' : 'http';
 
         // Build the current url.
-        return $protocol.'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        return $protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     }
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('lighthouse')) {
+    /**
+     * @return bool
+     */
     function lighthouse(): bool
     {
         $header = $_SERVER['HTTP_USER_AGENT'];
@@ -93,7 +119,13 @@ if (! function_exists('lighthouse')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('extract_js')) {
+    /**
+     * @param string $content
+     *
+     * @return string
+     */
     function extract_js(string $content = ''): string
     {
         $script_pattern = '/<script\b[^>]*>(.*?)<\/script>/is';
@@ -112,14 +144,15 @@ if (! function_exists('extract_js')) {
 
         // Loop through all matched <script> tags
         foreach ($matches[0] as $index => $scriptTag) {
-            $scriptContent = trim($matches[1][$index]);
-            $hasSrc = preg_match('/\bsrc=["\'].*?["\']/', $scriptTag);
+            $scriptContent = trim($matches[1][ $index ]);
+            $hasSrc        = preg_match('/\bsrc=["\'].*?["\']/', $scriptTag);
 
             // Check if the script content is not malicious
             $isMalicious = false;
             foreach ($malicious_patterns as $pattern) {
                 if (preg_match($pattern, $scriptContent)) {
                     $isMalicious = true;
+
                     break;
                 }
             }
@@ -133,14 +166,19 @@ if (! function_exists('extract_js')) {
         return preg_replace_callback($script_pattern, static function ($match) use ($valid_scripts) {
             static $i = 0;
 
-            return isset($valid_scripts[$i]) ? $valid_scripts[$i++] : '';
+            return isset($valid_scripts[ $i ]) ? $valid_scripts[ $i++ ] : '';
         }, $content);
     }
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('explode_multi')) {
     /**
+     * @param $delimiters
+     * @param $string
+     * @param bool $remove_empty
+     *
      * @return mixed|string[]
      */
     function explode_multi($delimiters, $string, bool $remove_empty = true): mixed
@@ -150,7 +188,7 @@ if (! function_exists('explode_multi')) {
         }
 
         if (is_array($delimiters)) {
-            $ready = str_replace($delimiters, $delimiters[0], $string);
+            $ready  = str_replace($delimiters, $delimiters[0], $string);
             $launch = explode($delimiters[0], $ready);
             if ($remove_empty) {
                 $launch = array_filter($launch);
@@ -164,7 +202,14 @@ if (! function_exists('explode_multi')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('message_success')) {
+    /**
+     * @param $message
+     * @param bool $auto_hide
+     *
+     * @return void
+     */
     function message_success($message, bool $auto_hide = false): void
     {
         $message = $message ?: 'Values saved';
@@ -180,7 +225,14 @@ if (! function_exists('message_success')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('message_error')) {
+    /**
+     * @param $message
+     * @param bool $auto_hide
+     *
+     * @return void
+     */
     function message_error($message, bool $auto_hide = false): void
     {
         $message = $message ?: 'Values error';
@@ -196,13 +248,21 @@ if (! function_exists('message_error')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('in_array_checked')) {
     /**
      * Conditionally adds an HTML attribute based on array membership.
+     *
+     * @param array $checked_arr
+     * @param $current
+     * @param bool $display
+     * @param string $type
+     *
+     * @return string|null
      */
     function in_array_checked(array $checked_arr, $current, bool $display = true, string $type = 'checked'): ?string
     {
-        $type = preg_match('/^[a-zA-Z0-9\-]+$/', $type) ? $type : 'checked';
+        $type   = preg_match('/^[a-zA-Z0-9\-]+$/', $type) ? $type : 'checked';
         $result = in_array($current, $checked_arr, false) ? " $type='$type'" : '';
 
         // Echo or return the result
@@ -217,8 +277,12 @@ if (! function_exists('in_array_checked')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('redirect')) {
     /**
+     * @param string $uri
+     * @param int $status
+     *
      * @return true|void
      */
     function redirect(string $uri = '', int $status = 301)
@@ -226,8 +290,8 @@ if (! function_exists('redirect')) {
         if (! headers_sent()) {
             wp_redirect($uri, $status);
         } else {
-            echo '<script>window.location.href="'.$uri.'";</script>';
-            echo '<noscript><meta http-equiv="refresh" content="0;url='.$uri.'" /></noscript>';
+            echo '<script>window.location.href="' . $uri . '";</script>';
+            echo '<noscript><meta http-equiv="refresh" content="0;url=' . $uri . '" /></noscript>';
 
             return true;
         }
@@ -235,8 +299,12 @@ if (! function_exists('redirect')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('js_minify')) {
     /**
+     * @param $js
+     * @param bool $debug_check
+     *
      * @return mixed|string
      */
     function js_minify($js, bool $debug_check = true): mixed
@@ -258,7 +326,14 @@ if (! function_exists('js_minify')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('css_minify')) {
+    /**
+     * @param $css
+     * @param bool $debug_check
+     *
+     * @return string
+     */
     function css_minify($css, bool $debug_check = true): string
     {
         if (empty($css)) {
@@ -278,9 +353,13 @@ if (! function_exists('css_minify')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('get_custom_post_option_content')) {
     /**
-     * @param  string  $post_type  - max 20 characters
+     * @param string $post_type - max 20 characters
+     * @param bool $encode
+     *
+     * @return array|string
      */
     function get_custom_post_option_content(string $post_type, bool $encode = false): array|string
     {
@@ -303,9 +382,12 @@ if (! function_exists('get_custom_post_option_content')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('get_custom_post_option')) {
     /**
-     * @param  string  $post_type  - max 20 characters
+     * @param string $post_type - max 20 characters
+     *
+     * @return array|WP_Post|null
      */
     function get_custom_post_option(string $post_type): array|WP_Post|null
     {
@@ -314,28 +396,28 @@ if (! function_exists('get_custom_post_option')) {
         }
 
         $custom_query_vars = [
-            'post_type' => $post_type,
-            'post_status' => get_post_stati(),
-            'posts_per_page' => 1,
-            'no_found_rows' => true,
-            'cache_results' => true,
+            'post_type'              => $post_type,
+            'post_status'            => get_post_stati(),
+            'posts_per_page'         => 1,
+            'no_found_rows'          => true,
+            'cache_results'          => true,
             'update_post_meta_cache' => false,
             'update_post_term_cache' => false,
-            'lazy_load_term_meta' => false,
+            'lazy_load_term_meta'    => false,
         ];
 
-        $post = null;
-        $post_id = get_theme_mod($post_type.'_option_id');
+        $post    = null;
+        $post_id = get_theme_mod($post_type . '_option_id');
 
         if ($post_id > 0 && get_post($post_id)) {
             $post = get_post($post_id);
         }
 
         // `-1` indicates no post exists; no query necessary.
-        if (! $post && $post_id !== -1) {
+        if (! $post && -1 !== $post_id) {
             $post = (new \WP_Query($custom_query_vars))->post;
 
-            set_theme_mod($post_type.'_option_id', $post->ID ?? -1);
+            set_theme_mod($post_type . '_option_id', $post->ID ?? -1);
         }
 
         return $post;
@@ -343,9 +425,16 @@ if (! function_exists('get_custom_post_option')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('update_custom_post_option')) {
     /**
-     * @param  string  $post_type  - max 20 characters
+     * @param string $mixed
+     * @param string $post_type - max 20 characters
+     * @param string $code_type
+     * @param bool $encode
+     * @param string $preprocessed
+     *
+     * @return array|int|WP_Error|WP_Post|null
      */
     function update_custom_post_option(string $mixed = '', string $post_type = 'addon_css', string $code_type = 'css', bool $encode = false, string $preprocessed = ''): WP_Error|array|int|WP_Post|null
     {
@@ -361,9 +450,9 @@ if (! function_exists('update_custom_post_option')) {
         }
 
         $post_data = [
-            'post_type' => $post_type,
-            'post_status' => 'publish',
-            'post_content' => $mixed,
+            'post_type'             => $post_type,
+            'post_status'           => 'publish',
+            'post_content'          => $mixed,
             'post_content_filtered' => $preprocessed,
         ];
 
@@ -371,18 +460,18 @@ if (! function_exists('update_custom_post_option')) {
         $post = \get_custom_post_option($post_type);
         if ($post) {
             $post_data['ID'] = $post->ID;
-            $r = wp_update_post(wp_slash($post_data), true);
+            $r               = wp_update_post(wp_slash($post_data), true);
         } else {
-            $post_data['post_title'] = $post_type.'_post_title';
-            $post_data['post_name'] = wp_generate_uuid4();
-            $r = wp_insert_post(wp_slash($post_data), true);
+            $post_data['post_title'] = $post_type . '_post_title';
+            $post_data['post_name']  = wp_generate_uuid4();
+            $r                       = wp_insert_post(wp_slash($post_data), true);
 
             if (! is_wp_error($r)) {
-                set_theme_mod($post_type.'_option_id', $r);
+                set_theme_mod($post_type . '_option_id', $r);
 
                 // Trigger creation of a revision. This should be removed once #30854 is resolved.
                 $revisions = wp_get_latest_revision_id_and_total_count($r);
-                if (! is_wp_error($revisions) && $revisions['count'] === 0) {
+                if (! is_wp_error($revisions) && 0 === $revisions['count']) {
                     $revision = wp_save_post_revision($r);
                 }
             }
@@ -397,9 +486,15 @@ if (! function_exists('update_custom_post_option')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('strip_all_tags')) {
     /**
-     * @param  null  $allowed_tags
+     * @param $string
+     * @param bool $remove_js_css
+     * @param bool $flatten
+     * @param null $allowed_tags
+     *
+     * @return string
      */
     function strip_all_tags($string, bool $remove_js_css = true, bool $flatten = true, $allowed_tags = null): string
     {
@@ -422,16 +517,20 @@ if (! function_exists('strip_all_tags')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('filter_setting_options')) {
     /**
+     * @param $name
+     * @param mixed $default
+     *
      * @return array|mixed
      */
     function filter_setting_options($name, mixed $default = []): mixed
     {
         $filters = apply_filters('addon_theme_setting_options_filter', []);
 
-        if (isset($filters[$name])) {
-            return $filters[$name] ?: $default;
+        if (isset($filters[ $name ])) {
+            return $filters[ $name ] ?: $default;
         }
 
         return [];
@@ -439,10 +538,16 @@ if (! function_exists('filter_setting_options')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('capitalized_slug')) {
+    /**
+     * @param $slug
+     *
+     * @return string
+     */
     function capitalized_slug($slug): string
     {
-        $words = preg_split('/[_-]/', $slug);
+        $words            = preg_split('/[_-]/', $slug);
         $capitalizedWords = array_map('ucfirst', $words);
 
         if (str_contains($slug, '_')) {
@@ -454,19 +559,30 @@ if (! function_exists('capitalized_slug')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('mb_ucfirst')) {
-    function mb_ucfirst(string $str, ?string $encoding = null): string
+    /**
+     * @param string $str
+     * @param string|null $encoding
+     *
+     * @return string
+     */
+    function mb_ucfirst(string $str, string $encoding = null): string
     {
         if (is_null($encoding)) {
             $encoding = mb_internal_encoding();
         }
 
-        return mb_strtoupper(mb_substr($str, 0, 1, $encoding), $encoding).mb_substr($str, 1, null, $encoding);
+        return mb_strtoupper(mb_substr($str, 0, 1, $encoding), $encoding) . mb_substr($str, 1, null, $encoding);
     }
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('htaccess')) {
+    /**
+     * @return bool
+     */
     function htaccess(): bool
     {
         global $is_apache;
@@ -476,7 +592,7 @@ if (! function_exists('htaccess')) {
         }
 
         // ?
-        if (isset($_SERVER['HTACCESS']) && $_SERVER['HTACCESS'] === 'on') {
+        if (isset($_SERVER['HTACCESS']) && 'on' === $_SERVER['HTACCESS']) {
             return true;
         }
 
@@ -485,21 +601,22 @@ if (! function_exists('htaccess')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('ip_address')) {
     /**
      * Get the IP address from which the user is viewing the current page.
+     *
+     * @return string
      */
     function ip_address(): string
     {
         if (class_exists('Whip')) {
-
             // Use a Whip library to get the valid IP address
             $clientAddress = (new Whip(Whip::ALL_METHODS))->getValidIpAddress();
-            if ($clientAddress !== false) {
+            if (false !== $clientAddress) {
                 return preg_replace('/^::1$/', '127.0.0.1', $clientAddress);
             }
         } else {
-
             // Check for CloudFlare's connecting IP
             if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {
                 return $_SERVER['HTTP_CF_CONNECTING_IP'];
@@ -532,7 +649,11 @@ if (! function_exists('ip_address')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('clear_all_cache')) {
+    /**
+     * @return void
+     */
     function clear_all_cache(): void
     {
         global $wpdb;
@@ -575,27 +696,37 @@ if (! function_exists('clear_all_cache')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('check_plugin_active')) {
     /**
      * Check if the plugin is installed
+     *
+     * @param $plugin_slug
+     *
+     * @return bool
      */
     function check_plugin_active($plugin_slug): bool
     {
         return \check_plugin_installed($plugin_slug) &&
-            is_plugin_active($plugin_slug);
+               is_plugin_active($plugin_slug);
     }
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('check_plugin_installed')) {
     /**
      * Check if plugin is installed by getting all plugins from the plugins dir
+     *
+     * @param $plugin_slug
+     *
+     * @return bool
      */
     function check_plugin_installed($plugin_slug): bool
     {
         // Check if the necessary functions exist - if not, require them
         if (! function_exists('get_plugins') || ! function_exists('is_plugin_active')) {
-            require_once ABSPATH.'wp-admin/includes/plugin.php';
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
         }
 
         $installed_plugins = \get_plugins();
@@ -605,7 +736,11 @@ if (! function_exists('check_plugin_installed')) {
 }
 
 /** ----------------------------------------------- */
+
 if (! function_exists('check_smtp_plugin_active')) {
+    /**
+     * @return bool
+     */
     function check_smtp_plugin_active(): bool
     {
         $smtp_plugins_support = \filter_setting_options('smtp_plugins_support', []);
@@ -615,6 +750,7 @@ if (! function_exists('check_smtp_plugin_active')) {
             foreach ($smtp_plugins_support as $plugin_slug) {
                 if (\check_plugin_active($plugin_slug)) {
                     $check = false;
+
                     break;
                 }
             }

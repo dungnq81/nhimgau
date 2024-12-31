@@ -2,7 +2,7 @@
 
 namespace Addons\Base;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 /**
  * Singleton base class for having singleton implementation
@@ -25,7 +25,7 @@ trait Singleton
      */
     final public static function get_instance(): static
     {
-        if (static::$instance === null) {
+        if (null === static::$instance) {
             self::$instance = new static();
         }
 

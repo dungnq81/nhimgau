@@ -2,11 +2,11 @@
 
 $contact_options = get_option('contact_button__options');
 
-$contact_title = $contact_options['contact_title'] ?? '';
-$contact_url = $contact_options['contact_url'] ?? '';
-$contact_window = $contact_options['contact_window'] ?? '';
+$contact_title        = $contact_options['contact_title']        ?? '';
+$contact_url          = $contact_options['contact_url']          ?? '';
+$contact_window       = $contact_options['contact_window']       ?? '';
 $contact_waiting_time = $contact_options['contact_waiting_time'] ?? '';
-$contact_show_repeat = $contact_options['contact_show_repeat'] ?? '';
+$contact_show_repeat  = $contact_options['contact_show_repeat']  ?? '';
 
 $contact_popup_content = get_custom_post_option_content('html_contact', false);
 

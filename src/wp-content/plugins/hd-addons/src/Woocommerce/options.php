@@ -2,8 +2,8 @@
 
 $woocommerce__options = get_option('woocommerce__options');
 
-$remove_legacy_coupon = $woocommerce__options['remove_legacy_coupon'] ?? '';
-$woocommerce_jsonld = $woocommerce__options['woocommerce_jsonld'] ?? '';
+$remove_legacy_coupon    = $woocommerce__options['remove_legacy_coupon']    ?? '';
+$woocommerce_jsonld      = $woocommerce__options['woocommerce_jsonld']      ?? '';
 $woocommerce_default_css = $woocommerce__options['woocommerce_default_css'] ?? '';
 
 ?>

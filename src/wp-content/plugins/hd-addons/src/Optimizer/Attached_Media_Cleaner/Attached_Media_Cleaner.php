@@ -4,7 +4,7 @@ namespace Addons\Optimizer\Attached_Media_Cleaner;
 
 use Addons\Base\Singleton;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 final class Attached_Media_Cleaner
 {
@@ -14,7 +14,7 @@ final class Attached_Media_Cleaner
 
     private function init(): void
     {
-        // ...
+        //...
     }
 
     // ------------------------------------------------------

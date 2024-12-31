@@ -4,7 +4,7 @@ namespace Addons\Custom_Sorting;
 
 use Addons\Base\Singleton;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 /**
  * Order Items (Posts, Pages, and Custom Post Types) using a Drag-and-Drop Sortable JavaScript.
@@ -24,7 +24,6 @@ final class Custom_Sorting
 
     private function init(): void
     {
-
         // setup db
         if (! get_theme_mod('_custom_sorting_')) {
             global $wpdb;
@@ -38,10 +37,10 @@ final class Custom_Sorting
         }
 
         // Check custom order
-        $custom_order_options = get_option('custom_sorting__options', []);
+        $custom_order_options  = get_option('custom_sorting__options', []);
 
         $this->order_post_type = $custom_order_options['order_post_type'] ?? [];
-        $this->order_taxonomy = $custom_order_options['order_taxonomy'] ?? [];
+        $this->order_taxonomy  = $custom_order_options['order_taxonomy']  ?? [];
 
         if (! empty($this->order_post_type) || ! empty($this->order_taxonomy)) {
             $this->_init_run();
@@ -50,6 +49,9 @@ final class Custom_Sorting
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     private function _init_run(): void
     {
         add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts'], 33);
@@ -79,12 +81,14 @@ final class Custom_Sorting
     // ------------------------------------------------------
 
     /**
-     * @param  $hook_suffix  - The current admin page.
+     * @param $hook_suffix - The current admin page.
+     *
+     * @return void
      */
     public function admin_enqueue_scripts($hook_suffix): void
     {
         if ($this->_check_custom_sorting_script()) {
-            wp_enqueue_script('addon-custom-sorting', ADDONS_URL.'assets/js/custom_sorting.js', ['jquery-core', 'jquery-ui-sortable'], ADDONS_VERSION, true);
+            wp_enqueue_script('addon-custom-sorting', ADDONS_URL . 'assets/js/custom_sorting.js', ['jquery-core', 'jquery-ui-sortable'], ADDONS_VERSION, true);
             wp_script_add_data('addon-custom-sorting', 'module', true);
         }
     }
@@ -103,11 +107,10 @@ final class Custom_Sorting
         global $wpdb;
 
         $objects = $this->order_post_type;
-        $tags = $this->order_taxonomy;
+        $tags    = $this->order_taxonomy;
 
         if (! empty($objects)) {
             foreach ($objects as $object) {
-
                 $result = $wpdb->get_results(
                     $wpdb->prepare(
                         "SELECT COUNT(*) AS `cnt`, MAX(menu_order) AS `max`, MIN(menu_order) AS `min`
@@ -137,7 +140,6 @@ final class Custom_Sorting
 
         if (! empty($tags)) {
             foreach ($tags as $taxonomy) {
-
                 $result = $wpdb->get_results(
                     $wpdb->prepare(
                         "SELECT COUNT(*) AS `cnt`, MAX(`term_order`) AS `max`, MIN(`term_order`) AS `min`
@@ -167,7 +169,7 @@ final class Custom_Sorting
                     $wpdb->update(
                         $wpdb->terms,
                         ['term_order' => $key + 1],
-                        ['term_id' => $result->term_id]
+                        ['term_id'    => $result->term_id]
                     );
                 }
             }
@@ -200,7 +202,7 @@ final class Custom_Sorting
 
         $menu_order_arr = [];
         foreach ($id_arr as $id) {
-            $id = (int) $id;
+            $id      = (int) $id;
             $results = $wpdb->get_results($wpdb->prepare("SELECT `menu_order` FROM {$wpdb->posts} WHERE `ID` = %d LIMIT 1", $id));
 
             $menu_order_arr[] = $results[0]->menu_order;
@@ -212,15 +214,15 @@ final class Custom_Sorting
             $id = (int) $id;
             $wpdb->update(
                 $wpdb->posts,
-                ['menu_order' => $menu_order_arr[$position]],
-                ['ID' => $id],
+                ['menu_order' => $menu_order_arr[ $position ]],
+                ['ID'         => $id],
                 ['%d'],
                 ['%d']
             );
         }
 
         do_action('addon_update_menu_order_post_type');
-        exit();
+        die();
     }
 
     // ------------------------------------------------------
@@ -246,7 +248,7 @@ final class Custom_Sorting
 
         $menu_order_arr = [];
         foreach ($id_arr as $id) {
-            $id = (int) $id;
+            $id      = (int) $id;
             $results = $wpdb->get_results($wpdb->prepare("SELECT `term_order` FROM {$wpdb->terms} WHERE `term_id` = %d LIMIT 1", $id));
 
             $menu_order_arr[] = $results[0]->term_order;
@@ -258,20 +260,22 @@ final class Custom_Sorting
             $id = (int) $id;
             $wpdb->update(
                 $wpdb->terms,
-                ['term_order' => $menu_order_arr[$position]],
-                ['term_id' => $id],
+                ['term_order' => $menu_order_arr[ $position ]],
+                ['term_id'    => $id],
                 ['%d'],
                 ['%d']
             );
         }
 
         do_action('addon_update_menu_order_taxonomy');
-        exit();
+        die();
     }
 
     // ------------------------------------------------------
 
     /**
+     * @param $where
+     *
      * @return array|mixed|string|string[]|null
      */
     public function custom_order_previous_post_where($where): mixed
@@ -284,7 +288,7 @@ final class Custom_Sorting
         }
 
         if (isset($post->post_type) && in_array($post->post_type, $objects, false)) {
-            $where = preg_replace("/p.post_date < \'[0-9\-\s\:]+\'/i", "p.menu_order > '".$post->menu_order."'", $where);
+            $where = preg_replace("/p.post_date < \'[0-9\-\s\:]+\'/i", "p.menu_order > '" . $post->menu_order . "'", $where);
         }
 
         return $where;
@@ -293,6 +297,8 @@ final class Custom_Sorting
     // ------------------------------------------------------
 
     /**
+     * @param $where
+     *
      * @return array|mixed|string|string[]|null
      */
     public function custom_order_next_post_where($where): mixed
@@ -305,7 +311,7 @@ final class Custom_Sorting
         }
 
         if (isset($post->post_type) && in_array($post->post_type, $objects, false)) {
-            $where = preg_replace("/p.post_date > \'[0-9\-\s\:]+\'/i", "p.menu_order < '".$post->menu_order."'", $where);
+            $where = preg_replace("/p.post_date > \'[0-9\-\s\:]+\'/i", "p.menu_order < '" . $post->menu_order . "'", $where);
         }
 
         return $where;
@@ -314,6 +320,8 @@ final class Custom_Sorting
     // ------------------------------------------------------
 
     /**
+     * @param $orderby
+     *
      * @return mixed|string
      */
     public function custom_order_previous_post_sort($orderby): mixed
@@ -335,6 +343,8 @@ final class Custom_Sorting
     // ------------------------------------------------------
 
     /**
+     * @param $orderby
+     *
      * @return mixed|string
      */
     public function custom_order_next_post_sort($orderby): mixed
@@ -356,6 +366,8 @@ final class Custom_Sorting
     // ------------------------------------------------------
 
     /**
+     * @param $wp_query
+     *
      * @return false|void
      */
     public function custom_order_pre_get_posts($wp_query)
@@ -367,7 +379,6 @@ final class Custom_Sorting
         }
 
         if (is_admin() && ! wp_doing_ajax()) {
-
             if (isset($wp_query->query['post_type']) && ! isset($_GET['orderby']) && in_array($wp_query->query['post_type'], $objects, false)) {
                 if (! $wp_query->get('orderby')) {
                     $wp_query->set('orderby', 'menu_order');
@@ -377,9 +388,7 @@ final class Custom_Sorting
                     $wp_query->set('order', 'ASC');
                 }
             }
-
         } else {
-
             $active = false;
 
             if (isset($wp_query->query['post_type'])) {
@@ -415,6 +424,9 @@ final class Custom_Sorting
     // ------------------------------------------------------
 
     /**
+     * @param $orderby
+     * @param $args
+     *
      * @return mixed|string
      */
     public function custom_order_get_terms_orderby($orderby, $args): mixed
@@ -445,6 +457,8 @@ final class Custom_Sorting
     // ------------------------------------------------------
 
     /**
+     * @param $terms
+     *
      * @return mixed|void
      */
     public function custom_order_get_object_terms($terms)
@@ -475,6 +489,12 @@ final class Custom_Sorting
 
     // ------------------------------------------------------
 
+    /**
+     * @param $a
+     * @param $b
+     *
+     * @return int
+     */
     public function taxonomy_cmp($a, $b): int
     {
         if ($a->term_order === $b->term_order) {
@@ -486,6 +506,9 @@ final class Custom_Sorting
 
     // ------------------------------------------------------
 
+    /**
+     * @return bool
+     */
     private function _check_custom_sorting_script(): bool
     {
         $active = false;
@@ -518,16 +541,18 @@ final class Custom_Sorting
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     public function update_options(): void
     {
         global $wpdb;
 
         $objects = $this->order_post_type;
-        $tags = $this->order_taxonomy;
+        $tags    = $this->order_taxonomy;
 
         if (! empty($objects)) {
             foreach ($objects as $object) {
-
                 $object = sanitize_text_field($object);
 
                 $result = $wpdb->get_results(
@@ -569,7 +594,7 @@ final class Custom_Sorting
                     $wpdb->update(
                         $wpdb->posts,
                         ['menu_order' => $key + 1],
-                        ['ID' => $result->ID]
+                        ['ID'         => $result->ID]
                     );
                 }
             }
@@ -577,7 +602,6 @@ final class Custom_Sorting
 
         if (! empty($tags)) {
             foreach ($tags as $taxonomy) {
-
                 $taxonomy = sanitize_text_field($taxonomy);
 
                 $result = $wpdb->get_results(
@@ -608,7 +632,7 @@ final class Custom_Sorting
                     $wpdb->update(
                         $wpdb->terms,
                         ['term_order' => $key + 1],
-                        ['term_id' => $result->term_id]
+                        ['term_id'    => $result->term_id]
                     );
                 }
             }
@@ -617,14 +641,16 @@ final class Custom_Sorting
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     public function reset_all(): void
     {
         global $wpdb;
 
         // posts
         if (! empty($this->order_post_type)) {
-
-            $in_list = implode(',', array_map(static fn ($value) => $wpdb->prepare('%s', $value), $this->order_post_type));
+            $in_list     = implode(',', array_map(static fn ($value) => $wpdb->prepare('%s', $value), $this->order_post_type));
             $status_cond = sprintf('`post_type` IN (%s)', $in_list);
 
             $wpdb->query("UPDATE {$wpdb->posts} SET `menu_order` = 0 WHERE {$status_cond}");
@@ -638,7 +664,7 @@ final class Custom_Sorting
         // reset
         $custom_order_options = [
             'order_post_type' => [],
-            'order_taxonomy' => [],
+            'order_taxonomy'  => [],
         ];
 
         update_option('custom_sorting__options', $custom_order_options);

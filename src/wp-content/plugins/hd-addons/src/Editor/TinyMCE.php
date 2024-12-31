@@ -2,7 +2,7 @@
 
 namespace Addons\Editor;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 /**
  * TinyMCE Plugin
@@ -21,9 +21,13 @@ class TinyMCE
 
     // --------------------------------------------------
 
+    /**
+     * @param $buttons
+     *
+     * @return mixed
+     */
     public function mce_buttons($buttons): mixed
     {
-
         array_push($buttons, 'separator', 'unlink');
         array_push($buttons, 'separator', 'alignjustify');
         array_push($buttons, 'separator', 'table');
@@ -39,14 +43,18 @@ class TinyMCE
 
     // --------------------------------------------------
 
+    /**
+     * @param $plugins
+     *
+     * @return mixed
+     */
     public function mce_external_plugins($plugins): mixed
     {
-
-        $plugins['table'] = ADDONS_URL.'src/Editor/tinymce/table/plugin.min.js';
-        $plugins['codesample'] = ADDONS_URL.'src/Editor/tinymce/codesample/plugin.min.js';
-        $plugins['toc'] = ADDONS_URL.'src/Editor/tinymce/toc/plugin.min.js';
-        $plugins['wordcount'] = ADDONS_URL.'src/Editor/tinymce/wordcount/plugin.min.js';
-        $plugins['charcount'] = ADDONS_URL.'src/Editor/tinymce/charcount/plugin.min.js';
+        $plugins['table']      = ADDONS_URL . 'src/Editor/tinymce/table/plugin.min.js';
+        $plugins['codesample'] = ADDONS_URL . 'src/Editor/tinymce/codesample/plugin.min.js';
+        $plugins['toc']        = ADDONS_URL . 'src/Editor/tinymce/toc/plugin.min.js';
+        $plugins['wordcount']  = ADDONS_URL . 'src/Editor/tinymce/wordcount/plugin.min.js';
+        $plugins['charcount']  = ADDONS_URL . 'src/Editor/tinymce/charcount/plugin.min.js';
 
         return $plugins;
     }

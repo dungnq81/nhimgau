@@ -1,16 +1,16 @@
 <?php
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 $security_options = get_option('security__options');
 
-$hide_wp_version = $security_options['hide_wp_version'] ?? '';
-$xml_rpc_off = $security_options['xml_rpc_off'] ?? '';
-$comments_off = $security_options['comments_off'] ?? '';
-$wp_links_opml_off = $security_options['wp_links_opml_off'] ?? '';
-$remove_readme = $security_options['remove_readme'] ?? '';
-$rss_feed_off = $security_options['rss_feed_off'] ?? '';
-$lock_protect_system = $security_options['lock_protect_system'] ?? '';
+$hide_wp_version         = $security_options['hide_wp_version']         ?? '';
+$xml_rpc_off             = $security_options['xml_rpc_off']             ?? '';
+$comments_off            = $security_options['comments_off']            ?? '';
+$wp_links_opml_off       = $security_options['wp_links_opml_off']       ?? '';
+$remove_readme           = $security_options['remove_readme']           ?? '';
+$rss_feed_off            = $security_options['rss_feed_off']            ?? '';
+$lock_protect_system     = $security_options['lock_protect_system']     ?? '';
 $advanced_xss_protection = $security_options['advanced_xss_protection'] ?? '';
 
 ?>

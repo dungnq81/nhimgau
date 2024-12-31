@@ -4,7 +4,7 @@ namespace Addons\Third_Party;
 
 use Addons\Base\Singleton;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 /*
  * https://github.com/wp-media/wp-rocket-helpers/tree/master/htaccess/wp-rocket-htaccess-remove-all/
@@ -19,10 +19,8 @@ final class WpRocket
 
     private function init(): void
     {
-
         /** Server does not support using .htaccess */
         if (! htaccess()) {
-
             // Remove the rewrite rules block of WP Rocket from .htaccess.
             add_filter('rocket_htaccess_charset', '__return_false');
             add_filter('rocket_htaccess_etag', '__return_false');

@@ -6,11 +6,6 @@
             "name": "Gaudev"
         }
     ],
-    "autoload": {
-        "psr-4": {},
-        "exclude-from-classmap": [],
-        "files": []
-    },
     "require": {
         "php": ">=8.2",
         "roots/bedrock-disallow-indexing": "^2.0.0",

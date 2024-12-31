@@ -4,7 +4,7 @@ namespace Addons\Security;
 
 use Addons\Base\Abstract_Htaccess;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 final class Xmlrpc extends Abstract_Htaccess
 {
@@ -17,6 +17,9 @@ final class Xmlrpc extends Abstract_Htaccess
         'jetpack/jetpack.php',
     ];
 
+    /**
+     * @var string|null
+     */
     public ?string $template = 'xml-rpc.tpl';
 
     /**
@@ -25,8 +28,8 @@ final class Xmlrpc extends Abstract_Htaccess
      * @var array Regular expressions to check if the rules are enabled.
      */
     public array $rules = [
-        'enabled' => '/\#\s+XML-RPC\s+Disable/si',
-        'disabled' => '/\#\s+XML-RPC\s+Disable(.+?)\#\s+XML-RPC\s+Disable\s+END(\n)?/ims',
+        'enabled'     => '/\#\s+XML-RPC\s+Disable/si',
+        'disabled'    => '/\#\s+XML-RPC\s+Disable(.+?)\#\s+XML-RPC\s+Disable\s+END(\n)?/ims',
         'disable_all' => '/\#\s+XML-RPC\s+Disable(.+?)\#\s+XML-RPC\s+Disable\s+END(\n)?/ims',
     ];
 
@@ -47,7 +50,7 @@ final class Xmlrpc extends Abstract_Htaccess
 
         // Check if the function exists, since we are connecting a bit early.
         if (! function_exists('get_plugin_data')) {
-            require_once ABSPATH.'wp-admin/includes/plugin.php';
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
         }
 
         // Loop through active plugins and check if any is present in the known plugins that use XML-RPC.
@@ -58,7 +61,7 @@ final class Xmlrpc extends Abstract_Htaccess
             }
 
             // Get the plugin data and push it to an array.
-            $plugin_data = get_plugin_data(ABSPATH.'wp-content/plugins/'.$plugin);
+            $plugin_data      = get_plugin_data(ABSPATH . 'wp-content/plugins/' . $plugin);
             $maybe_conflict[] = $plugin_data['Name'];
         }
 

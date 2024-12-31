@@ -1,0 +1,2189 @@
+# Translation of Plugins - FluentSMTP &#8211; WP SMTP Plugin with Amazon SES, SendGrid, MailGun, Postmark, Google and Any SMTP Provider - Stable (latest release) in Vietnamese
+# This file is distributed under the same license as the Plugins - FluentSMTP &#8211; WP SMTP Plugin with Amazon SES, SendGrid, MailGun, Postmark, Google and Any SMTP Provider - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2024-12-27 07:51:57+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: GlotPress/4.0.1\n"
+"Language: vi_VN\n"
+"Project-Id-Version: Plugins - FluentSMTP &#8211; WP SMTP Plugin with Amazon SES, SendGrid, MailGun, Postmark, Google and Any SMTP Provider - Stable (latest release)\n"
+
+#: app/Services/NotificationHelper.php:314
+#: app/Services/NotificationHelper.php:378
+msgid "[%s] Failed to send email"
+msgstr "[%s] Không gửi được email"
+
+#: app/Models/Traits/SendTestEmailTrait.php:13
+msgid "Fluent SMTP: Test Email - %s"
+msgstr "Fluent SMTP: Email thử nghiệm - %s"
+
+#: app/Http/Controllers/LoggerController.php:109
+msgid " And %d emails are failed to init the emails"
+msgstr " Và %d email không khởi tạo được."
+
+#: app/Http/Controllers/LoggerController.php:105
+msgid " But %d emails are reported to failed to send."
+msgstr " Nhưng %d email được báo cáo là gửi không thành công."
+
+#: app/Http/Controllers/LoggerController.php:46
+msgid "%s deleted successfully."
+msgstr "%s đã được xóa thành công."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:756
+msgid "If you are operating under EU laws, you may be required to use EU region. %s."
+msgstr "Nếu bạn hoạt động theo luật EU, bạn có thể được yêu cầu sử dụng khu vực EU. %s."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:755
+msgid "Google API version has been upgraded. Please %s."
+msgstr "Phiên bản Google API đã được nâng cấp. Vui lòng %s."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:754
+msgid "Please %s to create API keys on the Google Cloud Platform."
+msgstr "Vui lòng %s để tạo API Key trên Google Cloud Platform."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:753
+msgid "I agree to the  %s of this telegram integration."
+msgstr "Tôi đồng ý với %s của tích hợp telegram này."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:752
+msgid "Please find %s on telegram and send following text to activate this connection."
+msgstr "Vui lòng tìm %s trên telegram và gửi văn bản sau để kích hoạt kết nối này."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:748
+msgid "If you are a developer and would like to contribute to the project, Please %s"
+msgstr "Nếu bạn là nhà phát triển và muốn đóng góp vào dự án, vui lòng %s"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:747
+msgid "I agree to the %1s of this slack integration."
+msgstr "Tôi đồng ý với %1s của tích hợp slack này."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:746
+msgid "Get real - time notification on your %1$s on any email sending failure. Configure notification with FluentSMTP's official %2$s to start getting real time notifications. "
+msgstr "Nhận thông báo thời gian thực trên %1$s của bạn về bất kỳ lỗi gửi email nào. Cấu hình thông báo với %2$s chính thức của FluentSMTP để bắt đầu nhận thông báo thời gian thực. "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:741
+msgid "Please view the %1$s first. If you still can't find the answer %2$s  and we will be happy to answer your questions and assist you with any problems."
+msgstr "Vui lòng xem %1$s trước. Nếu bạn vẫn không tìm thấy câu trả lời, %2$s và chúng tôi rất vui được trả lời câu hỏi và hỗ trợ bạn giải quyết mọi vấn đề."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:731
+msgid "Your FluentSMTP plugin is currently integrated with Telegram.Receive timely notifications from %s on Telegram for any email sending issues from your website. This ongoing connection ensures you're always informed about your email delivery status."
+msgstr "Plugin FluentSMTP của bạn hiện đang được tích hợp với Telegram. Nhận thông báo kịp thời từ %s trên Telegram cho mọi sự cố gửi email từ trang web của bạn. Kết nối liên tục này đảm bảo bạn luôn được thông báo về trạng thái gửi email của mình."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:713
+msgid "Return Path indicates where non - delivery receipts - or bounce messages - %1$s are to be sent. If unchecked, bounce messages may be lost. With this enabled, %2$s you'll be emailed using \"From Email\" if any messages bounce as a result of issues with the recipient's email."
+msgstr "Đường dẫn trả về chỉ định nơi nhận biên lai không gửi - hoặc thư trả lại - %1$s. Nếu không chọn, thư trả lại có thể bị mất. Khi bật tính năng này, %2$s bạn sẽ được gửi email bằng \"From Email\" nếu có bất kỳ thư nào bị trả lại do sự cố với email của người nhận."
+
+#: app/views/admin/ses_connection_info.php:59
+msgid "Increase Sending Limits"
+msgstr "Tăng giới hạn gửi"
+
+#: app/views/admin/ses_connection_info.php:56
+msgid "Read More here."
+msgstr "Đọc thêm tại đây."
+
+#: app/views/admin/ses_connection_info.php:56
+msgid "Looks like you are in sandbox mode. Please apply to Amazon AWS to approve your account. "
+msgstr "Có vẻ như bạn đang ở chế độ sandbox. Vui lòng đăng ký với Amazon AWS để phê duyệt tài khoản của bạn. "
+
+#: app/views/admin/ses_connection_info.php:43
+msgid "Valid Sending Emails"
+msgstr "Email gửi hợp lệ"
+
+#: app/views/admin/ses_connection_info.php:26
+msgid "Max Sending Rate"
+msgstr "Tốc độ gửi tối đa"
+
+#: app/views/admin/ses_connection_info.php:20
+msgid "Sent in last 24 hours"
+msgstr "Đã gửi trong 24 giờ qua"
+
+#: app/views/admin/ses_connection_info.php:14
+msgid "Max Send in 24 hours"
+msgstr "Tối đa gửi trong 24 giờ"
+
+#: app/views/admin/ses_connection_info.php:4
+msgid "Connection Error: "
+msgstr "Lỗi kết nối: "
+
+#: app/views/admin/general_connection_info.php:8
+#: app/views/admin/ses_connection_info.php:31
+msgid "Sender Email"
+msgstr "Email người gửi"
+
+#: app/views/admin/general_connection_info.php:4
+#: app/views/admin/ses_connection_info.php:9
+msgid "Connection Type"
+msgstr "Loại kết nối"
+
+#: app/views/admin/email_html.php:53
+msgid "PS: if you have a minute please "
+msgstr "PS: Nếu bạn có một chút thời gian vui lòng "
+
+#: app/views/admin/email_html.php:42
+msgid "This email was sent from "
+msgstr "Email này được gửi từ "
+
+#: app/views/admin/email_html.php:30
+msgid "Learn why it's free"
+msgstr "Tìm hiểu lý do tại sao nó miễn phí"
+
+#: app/views/admin/email_html.php:30
+msgid "FluentSMTP is a free opensource plugin and it will be always free "
+msgstr "FluentSMTP là một plugin mã nguồn mở miễn phí và sẽ luôn miễn phí "
+
+#: app/views/admin/email_html.php:30
+msgid "Thank you for using Fluent SMTP Plugin. The ultimate SMTP plugin you need for making sure your emails are delivered."
+msgstr "Cảm ơn bạn đã sử dụng Fluent SMTP Plugin. Plugin SMTP tối ưu mà bạn cần để đảm bảo email của bạn được gửi đi."
+
+#: app/views/admin/email_html.php:27
+msgid "Congrats, test email was sent successfully!"
+msgstr "Chúc mừng, email thử nghiệm đã được gửi thành công!"
+
+#: app/views/admin/email_html.php:7
+msgid "FluentSMTP Test Email"
+msgstr "Email thử nghiệm FluentSMTP"
+
+#: app/views/admin/digest_email.php:200
+msgid "You received this email because the Email Sending Health Report is enabled in your FluentSMTP settings. Simply turn it off to stop these emails at "
+msgstr "Bạn nhận được email này vì Báo cáo tình trạng gửi email đã được bật trong cài đặt FluentSMTP của bạn. Chỉ cần tắt nó đi để ngừng nhận những email này. "
+
+#: app/views/admin/digest_email.php:82
+msgid "Email Sending Health"
+msgstr "Tình trạng gửi email"
+
+#: app/views/admin/digest_email.php:7
+msgid "FluentSMTP Email Health Report"
+msgstr "Báo cáo tình trạng email FluentSMTP"
+
+#: app/Services/NotificationHelper.php:386
+msgid "[View Failed Email(s)]("
+msgstr "[Xem Email Không thành công(s)]("
+
+#: app/Services/NotificationHelper.php:385
+msgid "**Error Message:** ```"
+msgstr "**Thông báo lỗi:** ```"
+
+#: app/Services/NotificationHelper.php:384
+msgid "**Email Subject:** "
+msgstr "**Tiêu đề email:** "
+
+#: app/Services/NotificationHelper.php:383
+msgid "**To Email Address:** "
+msgstr "**Địa chỉ email đến:** "
+
+#: app/Services/NotificationHelper.php:382
+msgid "**Sending Driver:** "
+msgstr "**Trình điều khiển gửi:** "
+
+#: app/Services/NotificationHelper.php:381
+msgid "**Website URL:** "
+msgstr "**URL trang web:** "
+
+#: app/Services/Mailer/Providers/SparkPost/Handler.php:79
+msgid "SparkPost API Error"
+msgstr "Lỗi API SparkPost"
+
+#: app/Services/Mailer/Providers/Simulator/Handler.php:28
+msgid "Email sending was simulated, No Email was sent originally"
+msgstr "Việc gửi email đã được mô phỏng, không có email nào được gửi ban đầu"
+
+#: app/Services/Mailer/Providers/SendInBlue/Handler.php:90
+msgid "SendInBlueError API Error"
+msgstr "Lỗi API SendInBlue"
+
+#: app/Services/Mailer/Providers/Outlook/API.php:76
+msgid "Something with wrong with Outlook API. Please check your API Settings"
+msgstr "Có sự cố với API Outlook. Vui lòng kiểm tra cài đặt API của bạn"
+
+#: app/Services/Mailer/Providers/Mailgun/Handler.php:108
+#: app/Services/Mailer/Providers/TransMail/Handler.php:113
+msgid "Mailgun API Error"
+msgstr "Lỗi API Mailgun"
+
+#: app/Services/Mailer/Providers/Gmail/Handler.php:323
+msgid "Invalid. Please re-authenticate"
+msgstr "Không hợp lệ. Vui lòng xác thực lại"
+
+#: app/Services/Mailer/Providers/Gmail/Handler.php:282
+msgid "Failed to renew token with Gmail Api"
+msgstr "Thất bại khi gia hạn token với Gmail Api"
+
+#: app/Services/Mailer/Providers/Factory.php:45
+msgid "There is no matching provider found by email: "
+msgstr "Không tìm thấy nhà cung cấp nào khớp với email: "
+
+#: app/Services/Mailer/Providers/config.php:175
+msgid " for how to configure Elastic Email with FluentSMTP."
+msgstr " hướng dẫn cấu hình Elastic Email với FluentSMTP."
+
+#: app/Services/Mailer/Providers/config.php:160
+msgid " for how to configure Postmark with FluentSMTP."
+msgstr " hướng dẫn cấu hình Postmark với FluentSMTP."
+
+#: app/Services/Mailer/Providers/config.php:143
+msgid " for how to configure Netcore (formerly Pepipost) with FluentSMTP."
+msgstr " hướng dẫn cấu hình Netcore (trước đây là Pepipost) với FluentSMTP."
+
+#: app/Services/Mailer/Providers/config.php:129
+msgid " for how to configure SparkPost with FluentSMTP."
+msgstr " hướng dẫn cấu hình SparkPost với FluentSMTP."
+
+#: app/Services/Mailer/Providers/config.php:115
+msgid " for how to configure Sendinblue with FluentSMTP."
+msgstr " hướng dẫn cấu hình Sendinblue với FluentSMTP."
+
+#: app/Services/Mailer/Providers/config.php:101
+msgid " for how to configure SendGrid with FluentSMTP."
+msgstr " hướng dẫn cấu hình SendGrid với FluentSMTP."
+
+#: app/Services/Mailer/Providers/config.php:87
+msgid " for how to configure Mailgun with FluentSMTP."
+msgstr " hướng dẫn cấu hình Mailgun với FluentSMTP."
+
+#: app/Services/Mailer/Providers/config.php:70
+msgid " for how to configure Amazon SES with FluentSMTP."
+msgstr " hướng dẫn cấu hình Amazon SES với FluentSMTP."
+
+#: app/Services/Mailer/Providers/AmazonSes/Validator.php:50
+msgid "The from email is not verified"
+msgstr "Email \"Từ\" chưa được xác minh"
+
+#: app/Services/Mailer/Providers/AmazonSes/Handler.php:283
+#: app/Services/Mailer/Providers/AmazonSes/Handler.php:288
+msgid "Email does not exists. Please try again."
+msgstr "Email không tồn tại. Vui lòng thử lại."
+
+#: app/Services/Mailer/Providers/AmazonSes/Handler.php:276
+msgid "Sorry! you can not remove this email from this connection"
+msgstr "Rất tiếc! bạn không thể xóa email này khỏi kết nối này"
+
+#: app/Services/Mailer/Providers/AmazonSes/Handler.php:251
+msgid "Email address already exists with another connection. Please choose a different email."
+msgstr "Địa chỉ email đã tồn tại với một kết nối khác. Vui lòng chọn một email khác."
+
+#: app/Services/Mailer/Providers/AmazonSes/Handler.php:244
+#: app/Services/Mailer/Providers/AmazonSes/Handler.php:272
+msgid "Invalid email address! Please use a verified domain."
+msgstr "Địa chỉ email không hợp lệ! Vui lòng sử dụng một miền đã được xác minh."
+
+#: app/Services/Mailer/Providers/AmazonSes/Handler.php:26
+#: app/Services/Mailer/Providers/DefaultMail/Handler.php:16
+#: app/Services/Mailer/Providers/ElasticMail/Handler.php:24
+#: app/Services/Mailer/Providers/Gmail/Handler.php:18
+#: app/Services/Mailer/Providers/Mailgun/Handler.php:27
+#: app/Services/Mailer/Providers/Outlook/Handler.php:20
+#: app/Services/Mailer/Providers/PepiPost/Handler.php:26
+#: app/Services/Mailer/Providers/Postmark/Handler.php:22
+#: app/Services/Mailer/Providers/SendGrid/Handler.php:26
+#: app/Services/Mailer/Providers/SendInBlue/Handler.php:34
+#: app/Services/Mailer/Providers/Smtp/Handler.php:23
+#: app/Services/Mailer/Providers/SparkPost/Handler.php:26
+#: app/Services/Mailer/Providers/TransMail/Handler.php:23
+msgid "Something went wrong!"
+msgstr "Có lỗi xảy ra!"
+
+#: app/Services/Mailer/BaseHandler.php:438
+#: app/Services/Mailer/BaseHandler.php:443
+msgid "Not implemented"
+msgstr "Chưa được triển khai"
+
+#: app/Services/Mailer/BaseHandler.php:305
+msgid "Tried to send using fallback but failed. "
+msgstr "Đã thử gửi bằng kết nối dự phòng nhưng không thành công. "
+
+#: app/Services/Mailer/BaseHandler.php:302
+msgid "Sent using fallback connection "
+msgstr "Đã gửi bằng kết nối dự phòng "
+
+#: app/Services/Converter.php:404
+msgid "Import From Easy WP SMTP"
+msgstr "Nhập từ Easy WP SMTP"
+
+#: app/Services/Converter.php:400
+msgid "Import data from your current plugin (Easy WP SMTP)"
+msgstr "Nhập dữ liệu từ plugin hiện tại của bạn (Easy WP SMTP)"
+
+#: app/Services/Converter.php:111
+msgid "Import From WP Mail SMTP"
+msgstr "Nhập từ WP Mail SMTP"
+
+#: app/Services/Converter.php:109 app/Services/Converter.php:401
+msgid "We have detected other SMTP plugin's settings available on your site. Click bellow to pre-populate the values"
+msgstr "Chúng tôi đã phát hiện các cài đặt của plugin SMTP khác có sẵn trên trang web của bạn. Nhấp vào bên dưới để điền trước các giá trị"
+
+#: app/Services/Converter.php:108
+msgid "Import data from your current plugin (WP Mail SMTP)"
+msgstr "Nhập dữ liệu từ plugin hiện tại của bạn (WP Mail SMTP)"
+
+#: app/Http/Controllers/SettingsController.php:683
+msgid "Settings has been updated successfully"
+msgstr "Cài đặt đã được cập nhật thành công"
+
+#: app/Http/Controllers/SettingsController.php:614
+msgid "Please define FLUENTMAIL_OUTLOOK_CLIENT_SECRET in your wp-config.php file"
+msgstr "Vui lòng định nghĩa FLUENTMAIL_OUTLOOK_CLIENT_SECRET trong tệp wp-config.php của bạn"
+
+#: app/Http/Controllers/SettingsController.php:605
+msgid "Please define FLUENTMAIL_OUTLOOK_CLIENT_ID in your wp-config.php file"
+msgstr "Vui lòng định nghĩa FLUENTMAIL_OUTLOOK_CLIENT_ID trong tệp wp-config.php của bạn"
+
+#: app/Http/Controllers/SettingsController.php:568
+#: app/Http/Controllers/SettingsController.php:636
+msgid "Please provide application client secret"
+msgstr "Vui lòng cung cấp secret của ứng dụng"
+
+#: app/Http/Controllers/SettingsController.php:560
+#: app/Http/Controllers/SettingsController.php:628
+msgid "Please provide application client id"
+msgstr "Vui lòng cung cấp ID ứng dụng"
+
+#: app/Http/Controllers/SettingsController.php:551
+msgid "Please define FLUENTMAIL_GMAIL_CLIENT_SECRET in your wp-config.php file"
+msgstr "Vui lòng định nghĩa FLUENTMAIL_GMAIL_CLIENT_SECRET trong tệp wp-config.php của bạn"
+
+#: app/Http/Controllers/SettingsController.php:542
+msgid "Please define FLUENTMAIL_GMAIL_CLIENT_ID in your wp-config.php file"
+msgstr "Vui lòng định nghĩa FLUENTMAIL_GMAIL_CLIENT_ID trong tệp wp-config.php của bạn"
+
+#: app/Http/Controllers/SettingsController.php:202
+#: app/Services/Mailer/ValidatorTrait.php:36
+msgid "Unprocessable Entity"
+msgstr "Thực thể không thể xử lý"
+
+#: app/Http/Controllers/LoggerController.php:102
+msgid "Selected Emails have been proceed to send."
+msgstr "Các email đã chọn đã được xử lý để gửi."
+
+#: app/Http/Controllers/LoggerController.php:73
+msgid "Something went wrong"
+msgstr "Đã có lỗi xảy ra"
+
+#: app/Hooks/Handlers/SchedulerHandler.php:250
+msgid "Failed to renew the token"
+msgstr "Thất bại khi gia hạn token"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:773
+#: app/views/admin/email_html.php:53
+msgid "write a review for FluentSMTP"
+msgstr "viết đánh giá cho FluentSMTP"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:770
+msgid "read the documentation here"
+msgstr "đọc tài liệu ở đây"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:769
+msgid "provider for the connection."
+msgstr "nhà cung cấp cho kết nối."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:768
+msgid "open an issue on GitHub"
+msgstr "mở một vấn đề trên GitHub"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:765
+msgid "copy"
+msgstr "sao chép"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:763
+msgid "click here"
+msgstr "nhấp vào đây"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:762
+msgid "check the documentation first to create API keys at Microsoft"
+msgstr "kiểm tra tài liệu trước để tạo API Key tại Microsoft"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:760
+msgid "activate "
+msgstr "kích hoạt "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:759
+msgid "If you change your WordPress SALT Keys, this credential will become invalid. Please update this credential whenever the WP SALTS are modified."
+msgstr "Nếu bạn thay đổi Khóa SALT của WordPress, thông tin này sẽ trở nên không hợp lệ. Vui lòng cập nhật thông tin này bất cứ khi nào WP SALTS được sửa đổi."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:758
+msgid "This input will be securely encrypted using WP SALTS as encryption keys before save."
+msgstr "Dữ liệu nhập này sẽ được mã hóa an toàn bằng WP SALTS làm khóa mã hóa trước khi lưu."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:757
+msgid "Enable Multi-Part Plain Text version of your HTML Emails. This feature is in beta"
+msgstr "Bật phiên bản văn bản thuần Multi-Part cho email HTML của bạn. Tính năng này đang trong giai đoạn thử nghiệm"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:756
+msgid "More information on Mailgun.com"
+msgstr "Thêm thông tin trên Mailgun.com"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:755
+msgid "read the doc and upgrade your API connection"
+msgstr "đọc tài liệu và nâng cấp kết nối API của bạn"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:754
+msgid "check the documentation"
+msgstr "kiểm tra tài liệu"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:751
+msgid "If you enable this then open tracking header will be added to the email for postmark."
+msgstr "Nếu bạn bật tính năng này, tiêu đề theo dõi mở sẽ được thêm vào email cho Postmark."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:750
+msgid "If you enable this then link tracking header will be added to the email for postmark."
+msgstr "Nếu bạn bật tính năng này, tiêu đề theo dõi liên kết sẽ được thêm vào email cho Postmark."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:749
+msgid "If you are operating under EU laws, you may be required to use EU region."
+msgstr "Nếu bạn hoạt động theo luật EU, bạn có thể được yêu cầu sử dụng khu vực EU."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:748
+msgid "contribute on GitHub"
+msgstr "góp phần trên GitHub"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:747
+#: app/Hooks/Handlers/AdminMenuHandler.php:753
+msgid "terms and conditions"
+msgstr "điều khoản và điều kiện"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:745
+msgid "Follow this link to get an API Key from Postmark(Your API key is in the API Tokens tab of your):"
+msgstr "Làm theo liên kết này để lấy API Key từ Postmark (API Key của bạn nằm trong tab API Tokens của bạn):"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:744
+msgid "Follow this link to get an API Key from Pepipost(Click Show button on Settings Page):"
+msgstr "Làm theo liên kết này để lấy API Key từ Pepipost (Nhấp vào nút Hiển thị trên trang cài đặt):"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:743
+msgid "Define which endpoint you want to use for sending messages."
+msgstr "Xác định điểm cuối bạn muốn sử dụng để gửi tin nhắn."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:742
+msgid "Default and Fallback connection can not be same. Please select different connections."
+msgstr "Kết nối Mặc định và Kết nối Dự phòng không thể giống nhau. Vui lòng chọn các kết nối khác nhau."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:741
+msgid "open a github issue"
+msgstr "mở một vấn đề trên github"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:741
+msgid "documentation"
+msgstr "tài liệu"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:739
+msgid "We could not fetch the Telegram notification status.Here is the server response: "
+msgstr "Chúng tôi không thể lấy trạng thái thông báo Telegram. Đây là phản hồi của máy chủ: "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:738
+msgid "The Default(none) option does not use SMTP and will not improve email delivery on your site."
+msgstr "Tùy chọn Mặc định (không có) không sử dụng SMTP và sẽ không cải thiện việc gửi email trên trang web của bạn."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:737
+msgid "Subscribe with your email to know about this plugin updates, releases and useful tips."
+msgstr "Đăng ký bằng email của bạn để biết về các bản cập nhật, phát hành và mẹo hữu ích của plugin này."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:736
+msgid "Email summary is useful for getting weekly or daily emails about the all the email sending stats for this site."
+msgstr "Tóm tắt email rất hữu ích để nhận email hàng tuần hoặc hàng ngày về tất cả các thống kê gửi email cho trang web này."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:735
+msgid "Email Logging is currently turned off. Only Failed and resent emails will be shown here"
+msgstr "Tính năng ghi nhật ký email hiện đang tắt. Chỉ email thất bại và gửi lại sẽ được hiển thị ở đây"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:734
+msgid "Another connection with same email address exist. This connection will replace that connection"
+msgstr "Đã tồn tại một kết nối khác với cùng địa chỉ email. Kết nối này sẽ thay thế kết nối đó"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:733
+msgid "(If you need to provide your SMTP server's credentials (username and password) enable the authentication, in most cases this is required.)"
+msgstr "(Nếu bạn cần cung cấp thông tin đăng nhập máy chủ SMTP (tên người dùng và mật khẩu), hãy bật xác thực, trong hầu hết trường hợp điều này là bắt buộc.)"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:732
+msgid "(By default, the TLS encryption would be used if the server supports it. On some servers, it could be a problem and may need to be disabled.)"
+msgstr "(Theo mặc định, mã hóa TLS sẽ được sử dụng nếu máy chủ hỗ trợ. Trên một số máy chủ, điều này có thể gây vấn đề và cần phải tắt.)"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:730
+msgid "the best WP table plugin that comes with all the solutions to the problems you face while creating tables on your posts/pages."
+msgstr "plugin bảng WP tốt nhất đi kèm với tất cả các giải pháp cho các vấn đề bạn gặp phải khi tạo bảng trên bài đăng/trang của bạn."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:729
+msgid "Looking for a WordPress table plugin for your website? Then you’re in the right place."
+msgstr "Bạn đang tìm plugin bảng WordPress cho trang web của mình? Vậy thì bạn đã đến đúng nơi rồi."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:728
+msgid "is the ultimate user-friendly, fast, customizable drag-and-drop WordPress Contact Form Plugin that offers you all the premium features, plus many more completely unique additional features."
+msgstr "là plugin tạo biểu mẫu liên hệ WordPress thân thiện với người dùng, nhanh chóng, tùy chỉnh, kéo và thả tối ưu, cung cấp cho bạn tất cả các tính năng cao cấp, cộng với nhiều tính năng bổ sung hoàn toàn độc đáo khác."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:727
+msgid " is the best and complete feature-rich Email Marketing & CRM solution. It is also the simplest and fastest CRM and Marketing Plugin on WordPress. Manage your customer relationships, build your email lists, send email campaigns, build funnels, and make more profit and increase your conversion rates. (Yes, It’s Free!)"
+msgstr " là giải pháp Tiếp thị Email & CRM tốt nhất và đầy đủ tính năng. Nó cũng là Plugin CRM và Tiếp thị đơn giản và nhanh nhất trên WordPress. Quản lý mối quan hệ khách hàng, xây dựng danh sách email, gửi chiến dịch email, xây dựng phễu và kiếm được nhiều lợi nhuận hơn cũng như tăng tỷ lệ chuyển đổi. (Đúng vậy, nó miễn phí!)"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:726
+msgid "Get real - time notification on your Discord Channel on any email sending failure.Configure notification with Discord to start getting real time notifications."
+msgstr "Nhận thông báo thời gian thực trên kênh Discord của bạn về bất kỳ lỗi gửi email nào. Cấu hình thông báo với Discord để bắt đầu nhận thông báo thời gian thực."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:725
+msgid "Get real-time notification on your Slack Channel on any email sending failure. Configure notification with Slack Bot to start getting real time notifications."
+msgstr "Nhận thông báo thời gian thực trên kênh Slack của bạn về bất kỳ lỗi gửi email nào. Cấu hình thông báo với Slack Bot để bắt đầu nhận thông báo thời gian thực."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:724
+msgid "Simply copy the following snippet and replace the stars with the corresponding credential. Then simply paste to wp-config.php file of your WordPress installation"
+msgstr "Đơn giản chỉ cần sao chép đoạn mã sau và thay thế các dấu sao bằng thông tin xác thực tương ứng. Sau đó, chỉ cần dán vào tệp wp-config.php của bản cài đặt WordPress của bạn"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:723
+msgid "Your FluentSMTP plugin is currently integrated with your Discord Channel.Receive timely notifications on Discord for any email sending issues from your website.This ongoing connection ensures you're always informed about your email delivery status."
+msgstr "Plugin FluentSMTP của bạn hiện đang được tích hợp với kênh Discord của bạn. Nhận thông báo kịp thời trên Discord cho bất kỳ sự cố gửi email nào từ trang web của bạn. Kết nối liên tục này đảm bảo bạn luôn được thông báo về trạng thái gửi email của mình."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:722
+msgid "Your FluentSMTP plugin is currently integrated with your Slack Channel. Receive timely notifications on Slack for any email sending issues from your website. This ongoing connection ensures you're always informed about your email delivery status."
+msgstr "Plugin FluentSMTP của bạn hiện đang được tích hợp với kênh Slack của bạn. Nhận thông báo kịp thời trên Slack cho bất kỳ sự cố gửi email nào từ trang web của bạn. Kết nối liên tục này đảm bảo bạn luôn được thông báo về trạng thái gửi email của mình."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:721
+msgid "Simply copy the following snippet and replace the stars with the corresponding credential.Then simply paste to wp-config.php file of your WordPress installation"
+msgstr "Đơn giản chỉ cần sao chép đoạn mã sau và thay thế các dấu sao bằng thông tin xác thực tương ứng. Sau đó, chỉ cần dán vào tệp wp-config.php của bản cài đặt WordPress của bạn"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:720
+msgid "Your Gmail / Google Workspace Authentication has been enabled. No further action is needed. If you want to re-authenticate, "
+msgstr "Xác thực Gmail / Google Workspace của bạn đã được bật. Không cần phải thực hiện thêm hành động nào nữa. Nếu bạn muốn xác thực lại, "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:719
+msgid "Join our communities and participate in great conversations."
+msgstr "Tham gia cộng đồng của chúng tôi và tham gia vào những cuộc trò chuyện tuyệt vời."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:718
+msgid "FluentSMTP is powered by community.We listen to our community users and build products that add values to businesses and save time."
+msgstr "FluentSMTP được hỗ trợ bởi cộng đồng. Chúng tôi lắng nghe người dùng cộng đồng và xây dựng các sản phẩm mang lại giá trị cho doanh nghiệp và tiết kiệm thời gian."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:717
+msgid "FluentSMTP is powered by it's users like you. Feel free to contribute on Github. Thanks to all of our contributors."
+msgstr "FluentSMTP được hỗ trợ bởi những người dùng như bạn. Hãy thoải mái đóng góp trên Github. Cảm ơn tất cả những người đóng góp của chúng tôi."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:716
+msgid "FluentSMTP is free and will be always free.This is our pledge to WordPress community from WPManageNinja LLC."
+msgstr "FluentSMTP là miễn phí và sẽ luôn miễn phí. Đây là cam kết của chúng tôi với cộng đồng WordPress từ WPManageNinja LLC."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:715
+msgid "is a free and opensource WordPress Plugin. Our mission is to provide the ultimate email delivery solution with your favorite Email sending service.FluentSMTP is built for performance and speed."
+msgstr "là một Plugin WordPress miễn phí và mã nguồn mở. Nhiệm vụ của chúng tôi là cung cấp giải pháp gửi email tối ưu với dịch vụ gửi email yêu thích của bạn. FluentSMTP được xây dựng để tối ưu hiệu năng và tốc độ."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:714
+msgid "Enter email address where test email will be sent (By default, logged in user email will be used if email address is not provided)."
+msgstr "Nhập địa chỉ email nơi email thử nghiệm sẽ được gửi đến (Theo mặc định, email của người dùng đã đăng nhập sẽ được sử dụng nếu không cung cấp địa chỉ email)."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:712
+msgid "Return Path indicates where non-delivery receipts - or bounce messages - are to be sent. If unchecked, bounce messages may be lost. With this enabled, you'll be emailed using \"From Email\" if any messages bounce as a result of issues with the recipient’s email."
+msgstr "Return Path chỉ ra nơi mà biên lai không gửi - hoặc tin nhắn trả lại - sẽ được gửi đến. Nếu không được chọn, tin nhắn trả lại có thể bị mất. Khi bật tính năng này, bạn sẽ nhận được email bằng cách sử dụng \"From Email\" nếu có bất kỳ tin nhắn nào bị trả lại do sự cố với email của người nhận."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:702
+msgid "Your SMTP Username"
+msgstr "Tên người dùng SMTP của bạn"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:701
+msgid "Your Name"
+msgstr "Tên của bạn"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:700
+msgid "Your Email Address"
+msgstr "Địa chỉ Email của bạn"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:699
+msgid "Your Email"
+msgstr "Email của bạn"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:698
+msgid "Your Discord Channel Webhook URL"
+msgstr "URL Webhook Kênh Discord của bạn"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:697
+msgid "Your Discord Channel Name (For Internal Use)"
+msgstr "Tên Kênh Discord của bạn (Dùng trong nội bộ)"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:696
+msgid "You may add additional sending emails in this"
+msgstr "Bạn có thể thêm email gửi bổ sung ở đây"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:695
+msgid "Yes, Disconnect"
+msgstr "Có, Ngắt kết nối"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:694
+msgid "Write a review (really appreciate 😊)"
+msgstr "Viết đánh giá (thực sự trân trọng 😊)"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:692
+msgid "Use Auto TLS"
+msgstr "Sử dụng Auto TLS"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:689
+msgid "Try Again"
+msgstr "Thử lại"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:688
+msgid "Transactional"
+msgstr "Giao dịch"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:687
+msgid "Track Opens"
+msgstr "Theo dõi lượt mở"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:684
+msgid "To send emails you will need only a Mail Send access level for this API key."
+msgstr "Để gửi email, bạn chỉ cần cấp độ truy cập Mail Send cho API Key này."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:682
+msgid "The name which emails are sent from."
+msgstr "Tên người gửi email."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:681
+msgid "The email address which emails are sent from."
+msgstr "Địa chỉ email người gửi."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:680
+msgid "The email address must match the domain: "
+msgstr "Địa chỉ email phải khớp với tên miền: "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:679
+msgid "The email address already exists in the list"
+msgstr "Địa chỉ email này đã tồn tại trong danh sách"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:678
+msgid "Test Email Has been successfully sent"
+msgstr "Email thử nghiệm đã được gửi thành công"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:677
+msgid "Telegram Notifications Enable"
+msgstr "Bật thông báo Telegram"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:676
+msgid "Telegram Connection Status: "
+msgstr "Trạng thái kết nối Telegram: "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:675
+msgid "TLS"
+msgstr "TLS"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:674
+msgid "Summary Email"
+msgstr "Email tóm tắt"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:670
+msgid "Store Application Keys in DB"
+msgstr "Lưu khóa ứng dụng trong DB"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:669
+msgid "Store Access Keys in DB"
+msgstr "Lưu khóa truy cập trong DB"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:668
+msgid "Store API Keys in DB"
+msgstr "Lưu API Key trong DB"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:667
+msgid "Store API Keys in Config File"
+msgstr "Lưu API Key trong tệp cấu hình"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:666
+msgid "Status:"
+msgstr "Trạng thái:"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:663
+msgid "SparkPost API Settings"
+msgstr "Cài đặt API SparkPost"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:662
+msgid "Sorry! No docs found"
+msgstr "Xin lỗi! Không tìm thấy tài liệu nào."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:661
+msgid "Slack Notifications Enabled"
+msgstr "Bật thông báo Slack"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:660
+msgid "Slack Channel Details: "
+msgstr "Chi tiết kênh Slack: "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:657
+msgid "Server Response"
+msgstr "Phản hồi máy chủ"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:654
+msgid "Sendinblue API Settings"
+msgstr "Cài đặt API Sendinblue"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:652
+#: app/views/admin/general_connection_info.php:12
+#: app/views/admin/ses_connection_info.php:35
+msgid "Sender Name"
+msgstr "Tên người gửi"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:651
+msgid "Sender Email Address"
+msgstr "Địa chỉ email người gửi"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:650
+msgid "Sender Email "
+msgstr "Email người gửi "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:649
+msgid "SendGrid API Settings"
+msgstr "Cài đặt API SendGrid"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:648
+msgid "Send this email in HTML or in plain text format."
+msgstr "Gửi email này ở định dạng HTML hoặc văn bản thuần."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:647
+msgid "Send Test Message"
+msgstr "Gửi tin nhắn thử nghiệm"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:646
+msgid "Send Test Email"
+msgstr "Gửi email thử nghiệm"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:644
+msgid "Select Region"
+msgstr "Chọn khu vực"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:643
+msgid "Select Provider"
+msgstr "Chọn nhà cung cấp"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:642
+msgid "Select Email or Type"
+msgstr "Chọn Email hoặc Loại"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:640
+msgid "Secret Key"
+msgstr "Khóa bí mật"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:639
+msgid "Search Type and Enter..."
+msgstr "Tìm kiếm Loại và Nhập..."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:634
+msgid "SSL"
+msgstr "SSL"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:633
+msgid "SMTP Username"
+msgstr "Tên người dùng SMTP"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:632
+msgid "SMTP Port"
+msgstr "Cổng SMTP"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:631
+msgid "SMTP Password"
+msgstr "Mật khẩu SMTP"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:630
+msgid "SMTP Host"
+msgstr "SMTP Host"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:629
+msgid "Run Another Test Email"
+msgstr "Chạy email kiểm tra khác"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:624
+msgid "Remove"
+msgstr "Xóa"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:623
+msgid "Region "
+msgstr "Vùng "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:622
+msgid "Receiver's Telegram Username: "
+msgstr "Tên người dùng Telegram của người nhận: "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:621
+#: app/Services/Mailer/Providers/config.php:70
+#: app/Services/Mailer/Providers/config.php:87
+#: app/Services/Mailer/Providers/config.php:101
+#: app/Services/Mailer/Providers/config.php:115
+#: app/Services/Mailer/Providers/config.php:129
+#: app/Services/Mailer/Providers/config.php:143
+#: app/Services/Mailer/Providers/config.php:160
+#: app/Services/Mailer/Providers/config.php:175
+msgid "Read the documentation"
+msgstr "Đọc tài liệu"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:618
+msgid "Private API Key"
+msgstr "Private API Key"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:616
+msgid "Postmark API Settings"
+msgstr "Cài đặt API Postmark"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:615
+msgid "Please send test email to confirm if the connection is working or not."
+msgstr "Vui lòng gửi email kiểm tra để xác nhận xem kết nối có hoạt động hay không."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:614
+msgid "Please enter a valid email address"
+msgstr "Vui lòng nhập một địa chỉ email hợp lệ"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:613
+msgid "Please authenticate with Office365 to get "
+msgstr "Vui lòng xác thực với Office365 để lấy "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:612
+msgid "Please authenticate with Google to get "
+msgstr "Vui lòng xác thực với Google để lấy "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:610
+msgid "Please Provide an email"
+msgstr "Vui lòng cung cấp email"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:609
+msgid "Please "
+msgstr "Vui lòng "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:608
+msgid "Pin copied to clipboard"
+msgstr "Mã PIN đã được sao chép vào clipboard"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:607
+msgid "Pepipost API Settings"
+msgstr "Cài đặt API Pepipost"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:606
+msgid "Outlook / Office365 API Settings"
+msgstr "Cài đặt API Outlook / Office365"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:605
+msgid "On"
+msgstr "Bật"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:604
+msgid "Off"
+msgstr "Tắt"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:601
+msgid "None"
+msgstr "Không có"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:598
+msgid "Message Stream"
+msgstr "Luồng tin nhắn"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:597
+msgid "Meet "
+msgstr "Gặp gỡ "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:596
+msgid "Marketing"
+msgstr "Tiếp thị"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:595
+msgid "Manage Additional Senders"
+msgstr "Quản lý người gửi bổ sung"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:594
+msgid "Mailgun API Settings"
+msgstr "Cài đặt API Mailgun"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:593
+msgid "Log Emails"
+msgstr "Ghi nhật ký email"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:589
+msgid "Last step!"
+msgstr "Bước cuối cùng!"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:584
+msgid "Join FluentForms Facebook Community"
+msgstr "Tham gia cộng đồng FluentForms trên Facebook"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:583
+msgid "Join FluentCRM Facebook Community"
+msgstr "Tham gia cộng đồng FluentCRM trên Facebook"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:582
+msgid "Install Ninja Tables (Free)"
+msgstr "Cài đặt Ninja Tables (Miễn phí)"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:581
+msgid "Install FluentCRM (Free)"
+msgstr "Cài đặt FluentCRM (Miễn phí)"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:580
+msgid "Install Fluent Forms (Free)"
+msgstr "Cài đặt Fluent Forms (Miễn phí)"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:579
+msgid "If you have a minute, consider "
+msgstr "Nếu bạn có một chút thời gian, hãy cân nhắc "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:578
+msgid "If you find an issue or have a suggestion please "
+msgstr "Nếu bạn tìm thấy sự cố hoặc có đề xuất, vui lòng "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:577
+msgid "I have sent the code"
+msgstr "Tôi đã gửi mã"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:576
+msgid "How can we help you?"
+msgstr "Chúng tôi có thể giúp gì cho bạn?"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:575
+msgid "Gmail / Google Workspace API Settings"
+msgstr "Cài đặt API Gmail / Google Workspace"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:574
+msgid "Get v3 API Key."
+msgstr "Lấy API Key v3."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:573
+msgid "Get a Private API Key."
+msgstr "Lấy Private API Key."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:572
+msgid "Get a Domain Name."
+msgstr "Lấy tên miền."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:571
+msgid "Get API Key."
+msgstr "Lấy API Key."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:567
+msgid "From"
+msgstr "Từ"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:564
+msgid "Follow this link to get an API Key:"
+msgstr "Làm theo liên kết này để lấy API Key:"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:563
+msgid "Follow this link to get an API Key from SendGrid:"
+msgstr "Làm theo liên kết này để lấy API Key từ SendGrid:"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:562
+msgid "Follow this link to get an API Key from Mailgun:"
+msgstr "Làm theo liên kết này để lấy API Key từ Mailgun:"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:561
+msgid "Follow this link to get an API Key from ElasticEmail: "
+msgstr "Làm theo liên kết này để lấy API Key từ ElasticEmail: "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:560
+msgid "Follow this link to get a Domain Name from Mailgun:"
+msgstr "Làm theo liên kết này để lấy Tên miền từ Mailgun:"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:559
+msgid "FluentSMTP is built using the following open-source libraries and software"
+msgstr "FluentSMTP được xây dựng bằng các thư viện và phần mềm nguồn mở sau"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:558
+msgid "FluentSMTP does not store your email notifications data. "
+msgstr "FluentSMTP không lưu trữ dữ liệu thông báo email của bạn. "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:557
+msgid "FluentSMTP does not store your email notifications data."
+msgstr "FluentSMTP không lưu trữ dữ liệu thông báo email của bạn."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:554
+msgid "Fastest Contact Form Builder Plugin for WordPress"
+msgstr "Plugin tạo biểu mẫu liên hệ nhanh nhất cho WordPress"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:551
+msgid "Enter the sender email address(optional)."
+msgstr "Nhập địa chỉ email người gửi (tùy chọn)."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:550
+msgid "Enter new email address ex: new_sender@"
+msgstr "Nhập địa chỉ email mới ví dụ: new_sender@"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:547
+msgid "Encryption"
+msgstr "Mã hóa"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:546
+msgid "Enable link tracking on postmark (For HTML Emails only)."
+msgstr "Bật theo dõi liên kết trên postmark (Chỉ dành cho Email HTML)."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:545
+msgid "Enable email opens tracking on postmark(For HTML Emails only)."
+msgstr "Bật theo dõi mở email trên postmark (Chỉ dành cho Email HTML)."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:543
+msgid "Email Type"
+msgstr "Loại Email"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:540
+msgid "Email Sending Error Notifications"
+msgstr "Thông báo lỗi gửi Email"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:539
+msgid "Email Marketing Automation and CRM Plugin for WordPress"
+msgstr "Plugin tự động hóa tiếp thị Email và CRM cho WordPress"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:537
+msgid "Email Log"
+msgstr "Nhật ký Email"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:536
+msgid "Email Headers"
+msgstr "Tiêu đề Email"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:532
+msgid "ElasticEmail API Settings"
+msgstr "Cài đặt API ElasticEmail"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:530
+msgid "Domain Name"
+msgstr "Tên miền"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:529
+msgid "Documentation"
+msgstr "Tài liệu"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:528
+msgid "Discord Webhook URL"
+msgstr "URL Webhook Discord"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:527
+msgid "Discord Notifications Enabled"
+msgstr "Thông báo Discord đã bật"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:526
+msgid "Discord Channel Details: "
+msgstr "Chi tiết kênh Discord: "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:525
+msgid "Disconnect & Reconnect"
+msgstr "Ngắt kết nối & Kết nối lại"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:524
+msgid "Disconnect"
+msgstr "Ngắt kết nối"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:522
+msgid "Delete Selected"
+msgstr "Xóa đã chọn"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:516
+msgid "Current verified senders:"
+msgstr "Người gửi đã được xác minh hiện tại:"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:515
+msgid "Create API Key."
+msgstr "Tạo API Key."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:514
+msgid "Contributors"
+msgstr "Người đóng góp"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:513
+msgid "Continue to Slack"
+msgstr "Tiếp tục đến Slack"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:512
+msgid "Continue"
+msgstr "Tiếp tục"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:511
+msgid "Connection deleted Successfully."
+msgstr "Kết nối đã bị xóa thành công."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:510
+msgid "Connection Provider"
+msgstr "Nhà cung cấp kết nối"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:509
+msgid "Connection Name "
+msgstr "Tên kết nối "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:507
+msgid "Configure Discord Notification"
+msgstr "Cấu hình thông báo Discord"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:505
+msgid "Cancel"
+msgstr "Hủy"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:502
+msgid "Best WP DataTables Plugin for WordPress"
+msgstr "Plugin WP DataTables tốt nhất cho WordPress"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:501
+msgid "Awesome! Please check your email inbox and confirm your subscription."
+msgstr "Tuyệt vời! Vui lòng kiểm tra hộp thư đến email của bạn và xác nhận đăng ký."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:500
+msgid "Authorized Redirect URIs"
+msgstr "URI chuyển hướng được ủy quyền"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:499
+msgid "Authorized Redirect URI"
+msgstr "URI chuyển hướng được ủy quyền"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:498
+msgid "Authentication"
+msgstr "Xác thực"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:497
+msgid "Authenticate with Office365 & Get Access Token"
+msgstr "Xác thực với Office365 & Lấy Mã Truy cập"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:496
+msgid "Authenticate with Google & Get Access Token"
+msgstr "Xác thực với Google & Lấy Mã Truy cập"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:494
+msgid "Are you sure, you want to delete all the logs?"
+msgstr "Bạn có chắc chắn muốn xóa tất cả nhật ký?"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:493
+msgid "Are you sure you want to remove this email address?"
+msgstr "Bạn có chắc chắn muốn xóa địa chỉ email này?"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:492
+msgid "Are you sure you want to disconnect Telegram notifications?"
+msgstr "Bạn có chắc chắn muốn ngắt kết nối thông báo Telegram?"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:491
+msgid "Are you sure you want to disconnect Slack notifications?"
+msgstr "Bạn có chắc chắn muốn ngắt kết nối thông báo Slack?"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:490
+msgid "Are you sure you want to disconnect Discord notifications?"
+msgstr "Bạn có chắc chắn muốn ngắt kết nối thông báo Discord?"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:488
+msgid "Application Keys in Config File"
+msgstr "Application Key trong tệp cấu hình"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:487
+msgid "Application Client Secret"
+msgstr "Application Client Secret"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:486
+msgid "Application Client ID"
+msgstr "Application Client ID"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:485
+msgid "App Callback URL(Use this URL to your APP)"
+msgstr "URL Callback Ứng dụng (Sử dụng URL này cho Ứng dụng của bạn)"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:483
+msgid "All Statuses"
+msgstr "Tất cả Trạng thái"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:481
+msgid "After 90 Days"
+msgstr "Sau 90 Ngày"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:480
+msgid "After 7 Days"
+msgstr "Sau 7 Ngày"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:479
+msgid "After 60 Days"
+msgstr "Sau 60 Ngày"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:478
+msgid "After 6 Months"
+msgstr "Sau 6 Tháng"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:477
+msgid "After 30 Days"
+msgstr "Sau 30 Ngày"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:476
+msgid "After 2 Years"
+msgstr "Sau 2 Năm"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:475
+msgid "After 14 Days"
+msgstr "Sau 14 Ngày"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:474
+msgid "After 1 Year"
+msgstr "Sau 1 Năm"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:472
+msgid "Add Additional Senders"
+msgstr "Thêm Người Gửi Thêm"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:471
+msgid "Add"
+msgstr "Thêm"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:467
+msgid "Activation Pin"
+msgstr "Mã Kích hoạt"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:465
+msgid "Access Token"
+msgstr "Access Token"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:464
+msgid "Access Keys in Config File"
+msgstr "Access Key trong tệp cấu hình"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:463
+msgid "Access Key"
+msgstr "Access Key"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:462
+msgid "About"
+msgstr "Giới thiệu"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:461
+msgid "API Key"
+msgstr "API Key"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:460
+msgid "A name for the connection."
+msgstr "Tên cho kết nối."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:459
+msgid "*** It is very important to put "
+msgstr "*** Điều rất quan trọng là phải đặt "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:458
+msgid "(Re Authentication Required)"
+msgstr "(Cần Xác thực lại)"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:457
+msgid "(Default: US East(N.Virginia) / us - east - 1)"
+msgstr "(Mặc định: US East(N.Virginia) / us - east - 1)"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:456
+msgid " option in the Google Cloud Project."
+msgstr " tùy chọn trong Dự án Google Cloud."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:455
+msgid " in the "
+msgstr " trong "
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:454
+msgid " connection."
+msgstr " kết nối."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:85
+msgid ""
+"This notice is from FluentSMTP plugin to prevent plugin\n"
+"                    conflict."
+msgstr "Thông báo này từ plugin FluentSMTP để ngăn chặn xung đột plugin."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:84
+msgid "Go To FluentSMTP Settings"
+msgstr "Đi đến Cài đặt FluentSMTP"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:82
+msgid ". It's compatible with various SMTP services, including Amazon SES, SendGrid, MailGun, ElasticEmail, SendInBlue, Google, Microsoft, and others, providing you with a wide range of options for your email needs."
+msgstr ". Tương thích với nhiều dịch vụ SMTP khác nhau, bao gồm Amazon SES, SendGrid, MailGun, ElasticEmail, SendInBlue, Google, Microsoft và các dịch vụ khác, cung cấp cho bạn nhiều lựa chọn cho nhu cầu email của bạn."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:82
+msgid "learn why it's free"
+msgstr "tìm hiểu lý do tại sao nó miễn phí"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:81
+msgid "You seem to be looking for an SMTP plugin, but there's no need for another one — FluentSMTP is already installed on your site. FluentSMTP is a comprehensive, free, and open-source plugin with full features available without any upsell"
+msgstr "Có vẻ như bạn đang tìm kiếm một plugin SMTP, nhưng không cần thêm một cái nữa — FluentSMTP đã được cài đặt trên trang web của bạn. FluentSMTP là một plugin toàn diện, miễn phí và mã nguồn mở với đầy đủ tính năng mà không cần phải nâng cấp."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:80
+msgid "For SMTP, you already have FluentSMTP Installed"
+msgstr "Đối với SMTP, bạn đã cài đặt FluentSMTP"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:484
+msgid "All Time"
+msgstr "Tất cả thời gian"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:586
+msgid "Last 30 Days"
+msgstr "30 ngày gần đây"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:587
+msgid "Last 7 Days"
+msgstr "7 ngày gần đây"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:591
+msgid "Less"
+msgstr "Ít hơn"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:599
+msgid "More"
+msgstr "Thêm"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:656
+msgid "Sending by time of day"
+msgstr "Gửi theo thời gian trong ngày"
+
+#: app/Http/Controllers/TelegramController.php:160
+msgid "Telegram connection has been disconnected successfully"
+msgstr "Kết nối Telegram đã được ngắt kết nối thành công"
+
+#: app/Http/Controllers/TelegramController.php:99
+#: app/Http/Controllers/TelegramController.php:129
+#: app/Http/Controllers/TelegramController.php:153
+msgid "Telegram notification is not enabled"
+msgstr "Thông báo Telegram chưa được bật"
+
+#: app/Http/Controllers/TelegramController.php:87
+msgid "Connection successful"
+msgstr "Kết nối thành công"
+
+#: app/Http/Controllers/TelegramController.php:59
+msgid "Please provide site token"
+msgstr "Vui lòng cung cấp mã thông báo trang web"
+
+#: app/Http/Controllers/TelegramController.php:45
+msgid "Awesome! Please activate the connection from your telegram account."
+msgstr "Tuyệt vời! Vui lòng kích hoạt kết nối từ tài khoản Telegram của bạn."
+
+#: app/Http/Controllers/SlackController.php:103
+msgid "Slack connection has been disconnected successfully"
+msgstr "Kết nối Slack đã được ngắt kết nối thành công"
+
+#: app/Http/Controllers/SlackController.php:58
+msgid "Awesome! You are redirecting to slack"
+msgstr "Tuyệt vời! Bạn đang được chuyển hướng đến Slack"
+
+#: app/Http/Controllers/SettingsController.php:297
+msgid "Email has been removed successfully"
+msgstr "Email đã được xóa thành công"
+
+#: app/Http/Controllers/SettingsController.php:259
+msgid "Email has been added successfully"
+msgstr "Email đã được thêm thành công"
+
+#: app/Http/Controllers/SettingsController.php:246
+#: app/Http/Controllers/SettingsController.php:284
+#: app/Http/Controllers/SlackController.php:22
+#: app/Http/Controllers/TelegramController.php:22
+msgid "Please provide a valid email address"
+msgstr "Vui lòng cung cấp một địa chỉ email hợp lệ"
+
+#: app/Http/Controllers/DiscordController.php:91
+msgid "Discord connection has been disconnected successfully"
+msgstr "Kết nối Discord đã được ngắt kết nối thành công"
+
+#: app/Http/Controllers/DiscordController.php:71
+#: app/Http/Controllers/SlackController.php:86
+#: app/Http/Controllers/TelegramController.php:143
+msgid "Test message sent successfully"
+msgstr "Tin nhắn thử nghiệm đã được gửi thành công"
+
+#: app/Http/Controllers/DiscordController.php:55
+#: app/Http/Controllers/SlackController.php:70
+msgid "Slack notification is not enabled"
+msgstr "Thông báo Slack chưa được bật"
+
+#: app/Http/Controllers/DiscordController.php:44
+msgid "Your settings has been saved"
+msgstr "Cài đặt của bạn đã được lưu"
+
+#: app/Http/Controllers/DiscordController.php:26
+msgid "Channel Name required"
+msgstr "Tên kênh bắt buộc"
+
+#: app/Http/Controllers/DiscordController.php:20
+msgid "Webhook URL is required"
+msgstr "URL Webhook bắt buộc"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:482
+msgid "Alerts"
+msgstr "Cảnh báo"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:232
+msgid "<b>FluentSMTP</b> is a free plugin & it will be always free %1$s. %2$s"
+msgstr "<b>FluentSMTP</b> là một plugin miễn phí và sẽ luôn miễn phí %1$s. %2$s"
+
+#: app/Services/Mailer/Providers/config.php:217
+msgid "PHP mail()"
+msgstr "PHP mail()"
+
+#: app/Services/Mailer/Providers/config.php:198
+msgid "Outlook or Office 365"
+msgstr "Outlook hoặc Office 365"
+
+#: app/Services/Mailer/Providers/config.php:133
+msgid "Netcore Email API, formerly Pepipost"
+msgstr "Netcore Email API, trước đây là Pepipost"
+
+#: app/Services/Mailer/Providers/config.php:9
+msgid "SMTP server"
+msgstr "SMTP server"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:285
+msgid "FluentSMTP needs to be configured for it to work."
+msgstr "Cần cấu hình FluentSMTP để nó hoạt động."
+
+#: app/Services/Mailer/Providers/config.php:164
+msgid "Elastic Email"
+msgstr "Elastic Email"
+
+#: app/Hooks/filters.php:6
+msgid "SMTP/Mail Settings"
+msgstr "Cài đặt SMTP/Mail"
+
+#: app/Services/Mailer/Providers/ElasticMail/ValidatorTrait.php:23
+msgid "Please define FLUENTMAIL_ELASTICMAIL_API_KEY in wp-config.php file."
+msgstr "Vui lòng định nghĩa FLUENTMAIL_ELASTICMAIL_API_KEY trong tệp wp-config.php."
+
+#: app/Services/Mailer/Providers/Postmark/ValidatorTrait.php:24
+msgid "Please define FLUENTMAIL_POSTMARK_API_KEY in wp-config.php file."
+msgstr "Vui lòng định nghĩa FLUENTMAIL_POSTMARK_API_KEY trong tệp wp-config.php."
+
+#: app/Services/Mailer/Providers/config.php:147
+msgid "Postmark"
+msgstr "Postmark"
+
+#: app/views/admin/digest_email.php:182
+msgid "Your email sending health is perfect"
+msgstr "Tình trạng gửi email của bạn hoàn hảo"
+
+#: app/views/admin/digest_email.php:180
+msgid "Awesome! no failures! 🎉"
+msgstr "Tuyệt vời! Không có lỗi nào! 🎉"
+
+#: app/views/admin/digest_email.php:165
+msgid "Failed Count"
+msgstr "Số lượng thất bại"
+
+#: app/views/admin/digest_email.php:133
+msgid "If this is unusual you should probably check if your site is broken."
+msgstr "Nếu điều này bất thường, bạn nên kiểm tra xem trang web của mình có bị hỏng không."
+
+#: app/views/admin/digest_email.php:131
+msgid "Looks like no email has been sent to the time period"
+msgstr "Có vẻ như không có email nào được gửi trong khoảng thời gian này"
+
+#: app/Services/Mailer/Providers/Outlook/Handler.php:96
+msgid "Please define FLUENTMAIL_OUTLOOK_CLIENT_SECRET in wp-config.php file."
+msgstr "Vui lòng định nghĩa FLUENTMAIL_OUTLOOK_CLIENT_SECRET trong tệp wp-config.php."
+
+#: app/Services/Mailer/Providers/Outlook/Handler.php:90
+msgid "Please define FLUENTMAIL_OUTLOOK_CLIENT_ID in wp-config.php file."
+msgstr "Vui lòng định nghĩa FLUENTMAIL_OUTLOOK_CLIENT_ID trong tệp wp-config.php."
+
+#: app/Services/Mailer/Providers/Gmail/Handler.php:318
+#: app/Services/Mailer/Providers/Outlook/Handler.php:192
+msgid "Token Validity"
+msgstr "Thời hạn Token"
+
+#: app/Services/Mailer/Providers/config.php:213
+msgid "Outlook/Office365 is not recommended for sending mass marketing emails."
+msgstr "Không khuyến nghị sử dụng Outlook/Office365 để gửi email marketing hàng loạt."
+
+#: app/Services/Mailer/Providers/config.php:68
+msgid "China (Ningxia)"
+msgstr "Trung Quốc (Ningxia)"
+
+#: app/Services/Mailer/Providers/config.php:67
+msgid "Africa (Cape Town)"
+msgstr "Châu Phi (Cape Town)"
+
+#: app/Services/Mailer/Providers/config.php:57
+msgid "Europe (Milan)"
+msgstr "Châu Âu (Milan)"
+
+#: app/Http/Controllers/Controller.php:59
+msgid "Security Failed. Please reload the page"
+msgstr "Bảo mật thất bại. Vui lòng tải lại trang"
+
+#: app/Hooks/Handlers/SchedulerHandler.php:124
+msgid "Email Failures"
+msgstr "Thất bại gửi email"
+
+#: app/Hooks/Handlers/SchedulerHandler.php:120
+#: app/views/admin/digest_email.php:115
+msgid "Emails Sent"
+msgstr "Email đã gửi"
+
+#: app/Hooks/Handlers/SchedulerHandler.php:114
+msgid "Showing %1$s of %2$s different subject lines failed in the past %3$s"
+msgstr "Hiển thị %1$s trong số %2$s dòng tiêu đề khác nhau đã thất bại trong %3$s qua"
+
+#: app/Hooks/Handlers/SchedulerHandler.php:107
+msgid "Showing %1$s of %2$s different subject lines sent in the past %3$s"
+msgstr "Hiển thị %1$s trong số %2$s dòng tiêu đề khác nhau đã được gửi trong %3$s qua"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:711
+msgid "No Emails will be sent from your WordPress."
+msgstr "Sẽ không có email nào được gửi từ WordPress của bạn."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:710
+msgid "Disable sending all emails. If you enable this, no email will be sent."
+msgstr "Tắt gửi tất cả email. Nếu bạn bật tính năng này, sẽ không có email nào được gửi."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:541
+msgid "Email Simulation"
+msgstr "Mô phỏng email"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:611
+msgid "Please add another connection to use fallback feature"
+msgstr "Vui lòng thêm kết nối khác để sử dụng tính năng dự phòng"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:709
+msgid "Fallback Connection will be used if an email is failed to send in one connection. Please select a different connection than the default connection"
+msgstr "Kết nối dự phòng sẽ được sử dụng nếu email không gửi được trong một kết nối. Vui lòng chọn kết nối khác với kết nối mặc định"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:708
+msgid "Select which connection will be used for sending transactional emails from your WordPress. If you use multiple connection then email will be routed based on source from email address"
+msgstr "Chọn kết nối sẽ được sử dụng để gửi email giao dịch từ WordPress của bạn. Nếu bạn sử dụng nhiều kết nối, email sẽ được định tuyến dựa trên nguồn từ địa chỉ email"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:553
+msgid "Fallback Connection"
+msgstr "Kết nối dự phòng"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:519
+msgid "Default Connection"
+msgstr "Kết nối mặc định"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:766
+msgid "Select how many days, the logs will be saved. If you select 7 days, then logs older than 7 days will be deleted automatically."
+msgstr "Chọn số ngày lưu trữ nhật ký. Nếu bạn chọn 7 ngày, nhật ký cũ hơn 7 ngày sẽ tự động bị xóa."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:520
+msgid "Delete Logs"
+msgstr "Xóa Nhật ký"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:556
+msgid "FluentCRM Email Logging"
+msgstr "Nhật ký Email FluentCRM"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:523
+msgid "Disable Logging for FluentCRM Emails"
+msgstr "Tắt Nhật ký cho Email FluentCRM"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:592
+msgid "Log All Emails for Reporting"
+msgstr "Lưu tất cả Email để Báo cáo"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:637
+msgid "Save Settings"
+msgstr "Lưu Cài đặt"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:602
+msgid "Notification Days"
+msgstr "Số ngày Thông báo"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:533
+msgid "Email Address"
+msgstr "Địa chỉ Email"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:603
+msgid "Notification Email Addresses"
+msgstr "Địa chỉ Email Thông báo"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:544
+msgid "Enable Email Summary"
+msgstr "Bật Tóm tắt Email"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:707
+msgid "Your emails will be routed automatically based on From email address. No additional configuration is required."
+msgstr "Email của bạn sẽ được định tuyến tự động dựa trên địa chỉ email \"Từ\". Không cần cấu hình bổ sung."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:531
+msgid "Edit Connection"
+msgstr "Chỉnh sửa Kết nối"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:570
+msgid "General Settings"
+msgstr "Cài đặt Chung"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:506
+msgid "Close"
+msgstr "Đóng"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:508
+msgid "Connection Details"
+msgstr "Chi tiết Kết nối"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:619
+msgid "Provider"
+msgstr "Nhà cung cấp"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:473
+msgid "Add Another Connection"
+msgstr "Thêm Kết nối Khác"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:469
+msgid "Active Email Connections"
+msgstr "Kết nối Email đang hoạt động"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:693
+msgid "Validating Data. Please wait..."
+msgstr "Đang xác thực dữ liệu. Vui lòng chờ..."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:740
+#: app/Hooks/Handlers/AdminMenuHandler.php:767
+msgid "When checked, the From Name setting above will be used for all emails, ignoring values set by other plugins."
+msgstr "Khi được chọn, cài đặt Tên \"Từ\" ở trên sẽ được sử dụng cho tất cả email, bỏ qua các giá trị được đặt bởi các plugin khác."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:772
+msgid "Credential Verification Failed. Please check your inputs"
+msgstr "Xác minh thông tin đăng nhập thất bại. Vui lòng kiểm tra lại đầu vào của bạn"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:771
+msgid "Please select your email service provider"
+msgstr "Vui lòng chọn nhà cung cấp dịch vụ email của bạn"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:635
+msgid "Save Connection Settings"
+msgstr "Lưu Cài đặt Kết nối"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:566
+#: app/views/admin/general_connection_info.php:16
+#: app/views/admin/ses_connection_info.php:39
+msgid "Force Sender Name"
+msgstr "Tên người gửi bắt buộc"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:569
+msgid "From Name"
+msgstr "Tên người gửi"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:658
+msgid "Set the return-path to match the From Email"
+msgstr "Đặt đường dẫn trả về khớp với Email người gửi"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:703
+msgid "If checked, the From Email setting above will be used for all emails (It will check if the from email is listed to available connections)."
+msgstr "Nếu được chọn, cài đặt Email người gửi ở trên sẽ được sử dụng cho tất cả email (Nó sẽ kiểm tra xem email người gửi có được liệt kê vào các kết nối khả dụng hay không)."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:565
+msgid "Force From Email (Recommended Settings: Enable)"
+msgstr "Bắt buộc Email người gửi (Cài đặt đề xuất: Bật)"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:568
+msgid "From Email"
+msgstr "Email người gửi"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:653
+msgid "Sender Settings"
+msgstr "Cài đặt người gửi"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:638
+msgid "Search Results for"
+msgstr "Kết quả tìm kiếm cho"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:617
+msgid "Prev"
+msgstr "Trước"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:600
+msgid "Next"
+msgstr "Tiếp"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:495
+msgid "Attachments"
+msgstr "Tệp đính kèm"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:534
+msgid "Email Body"
+msgstr "Nội dung email"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:627
+msgid "Resent Count"
+msgstr "Số lần gửi lại"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:690
+msgid "Turn On"
+msgstr "Bật"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:625
+msgid "Resend"
+msgstr "Gửi lại"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:628
+msgid "Retry"
+msgstr "Thử lại"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:466
+msgid "Actions"
+msgstr "Hành động"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:517
+msgid "Date-Time"
+msgstr "Ngày-giờ"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:683
+msgid "To"
+msgstr "Đến"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:671
+#: app/views/admin/digest_email.php:114 app/views/admin/digest_email.php:164
+msgid "Subject"
+msgstr "Chủ đề"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:691
+msgid "Type & press enter..."
+msgstr "Nhập & nhấn enter..."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:555
+msgid "Filter"
+msgstr "Bộ lọc"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:548
+msgid "End date"
+msgstr "Ngày kết thúc"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:664
+msgid "Start date"
+msgstr "Ngày bắt đầu"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:645
+msgid "Select date and time"
+msgstr "Chọn ngày và giờ"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:673
+msgid "Successful"
+msgstr "Thành công"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:641
+msgid "Select"
+msgstr "Chọn"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:665
+msgid "Status"
+msgstr "Trạng thái"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:549
+msgid "Enter Full Screen"
+msgstr "Chuyển sang chế độ toàn màn hình"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:503
+msgid "Bulk Action"
+msgstr "Hành động hàng loạt"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:626
+msgid "Resend Selected Emails"
+msgstr "Gửi lại các email đã chọn"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:489
+msgid "Apply"
+msgstr "Áp dụng"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:504
+msgid "By Date"
+msgstr "Theo ngày"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:585
+msgid "Last 3 months"
+msgstr "3 tháng gần đây"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:588
+msgid "Last month"
+msgstr "Tháng trước"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:590
+msgid "Last week"
+msgstr "Tuần trước"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:672
+msgid "Subscribe To Updates"
+msgstr "Đăng ký cập nhật"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:518
+msgid "Days"
+msgstr "Ngày"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:521
+msgid "Delete Logs:"
+msgstr "Xóa nhật ký:"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:636
+msgid "Save Email Logs:"
+msgstr "Lưu nhật ký email:"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:470
+msgid "Active Senders:"
+msgstr "Người gửi đang hoạt động:"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:468
+msgid "Active Connections:"
+msgstr "Kết nối đang hoạt động:"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:535
+msgid "Email Failed:"
+msgstr "Email thất bại:"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:686
+msgid "Total Email Sent (Logged):"
+msgstr "Tổng số email đã gửi (được ghi lại):"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:620
+msgid "Quick Overview"
+msgstr "Tổng quan nhanh"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:655
+msgid "Sending Stats"
+msgstr "Đang gửi thống kê"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:706
+msgid "Please configure your first email service provider connection"
+msgstr "Vui lòng cấu hình kết nối nhà cung cấp dịch vụ email đầu tiên của bạn"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:705
+msgid "Thank you for installing FluentSMTP - The ultimate SMTP & Email Service Connection Plugin for WordPress"
+msgstr "Cảm ơn bạn đã cài đặt FluentSMTP - Plugin kết nối dịch vụ SMTP & Email tối ưu cho WordPress"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:704
+msgid "Welcome to FluentSMTP"
+msgstr "Chào mừng đến với FluentSMTP"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:764
+msgid "confirm"
+msgstr "xác nhận"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:761
+msgid "cancel"
+msgstr "hủy bỏ"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:538
+msgid "Email Logs"
+msgstr "Nhật ký Email"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:542
+msgid "Email Test"
+msgstr "Kiểm tra Email"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:445
+msgid "View All"
+msgstr "Xem tất cả"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:430
+#: app/Hooks/Handlers/AdminMenuHandler.php:552
+msgid "Failed"
+msgstr "Thất bại"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:429
+msgid "Sent"
+msgstr "Đã gửi"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:428
+msgid "Date"
+msgstr "Ngày"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:419
+msgid "All"
+msgstr "Tất cả"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:413
+msgid "Last 7 days"
+msgstr "7 ngày qua"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:406
+#: app/Hooks/Handlers/AdminMenuHandler.php:685
+msgid "Today"
+msgstr "Hôm nay"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:310
+msgid "Email Disabled"
+msgstr "Email đã bị vô hiệu hóa"
+
+#: app/Services/Mailer/Providers/config.php:194
+msgid "Gmail/Google Workspace is not recommended for sending mass marketing emails."
+msgstr "Gmail/Google Workspace không được khuyến nghị để gửi email tiếp thị hàng loạt."
+
+#: app/Services/Mailer/Providers/config.php:179
+msgid "Gmail or Google Workspace"
+msgstr "Gmail hoặc Google Workspace"
+
+#: app/Services/Mailer/Providers/Gmail/Handler.php:177
+#: app/Services/Mailer/Providers/Outlook/Handler.php:133
+msgid "Please Provide Auth Token."
+msgstr "Vui lòng cung cấp mã thông báo xác thực."
+
+#: app/Services/Mailer/Providers/Gmail/Handler.php:131
+msgid "Please define FLUENTMAIL_GMAIL_CLIENT_SECRET in wp-config.php file."
+msgstr "Vui lòng định nghĩa FLUENTMAIL_GMAIL_CLIENT_SECRET trong tệp wp-config.php."
+
+#: app/Services/Mailer/Providers/Gmail/Handler.php:125
+msgid "Please define FLUENTMAIL_GMAIL_CLIENT_ID in wp-config.php file."
+msgstr "Vui lòng định nghĩa FLUENTMAIL_GMAIL_CLIENT_ID trong tệp wp-config.php."
+
+#: app/Services/Mailer/Providers/Gmail/Handler.php:121
+#: app/Services/Mailer/Providers/Outlook/Handler.php:86
+msgid "Application Client Secret key is required."
+msgstr "Cần có Application Client Secret."
+
+#: app/Services/Mailer/Providers/Gmail/Handler.php:117
+#: app/Services/Mailer/Providers/Outlook/Handler.php:82
+msgid "Application Client ID is required."
+msgstr "Cần có Application Client ID"
+
+#: app/Functions/helpers.php:862
+msgid "Possible Conflict: "
+msgstr "Xung đột có thể xảy ra: "
+
+#: app/Services/Mailer/Providers/Smtp/ValidatorTrait.php:33
+msgid "Please define FLUENTMAIL_SMTP_PASSWORD in wp-config.php file."
+msgstr "Vui lòng định nghĩa FLUENTMAIL_SMTP_PASSWORD trong tệp wp-config.php."
+
+#: app/Services/Mailer/Providers/Smtp/ValidatorTrait.php:29
+msgid "Please define FLUENTMAIL_SMTP_USERNAME in wp-config.php file."
+msgstr "Vui lòng định nghĩa FLUENTMAIL_SMTP_USERNAME trong tệp wp-config.php."
+
+#: app/Hooks/filters.php:18 app/Hooks/Handlers/AdminMenuHandler.php:659
+msgid "Settings"
+msgstr "Cài đặt"
+
+#: app/Hooks/filters.php:17
+msgid "Go to Fluent SMTP Settings page"
+msgstr "Đi đến trang Cài đặt Fluent SMTP"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:290
+msgid "Configure FluentSMTP"
+msgstr "Cấu hình FluentSMTP"
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:278
+msgid "WordPress version 5.5 or greater is required for FluentSMTP. You are using version %s currently. Please update your WordPress Core to use FluentSMTP Plugin."
+msgstr "Phiên bản WordPress 5.5 trở lên là bắt buộc đối với FluentSMTP. Hiện tại bạn đang sử dụng phiên bản %s. Vui lòng cập nhật WordPress Core để sử dụng Plugin FluentSMTP."
+
+#: app/Hooks/Handlers/AdminMenuHandler.php:348
+msgid "Fluent SMTP"
+msgstr "Fluent SMTP"
+
+#: app/Http/Controllers/Controller.php:51
+msgid "You do not have permission to do this action"
+msgstr "Bạn không có quyền thực hiện thao tác này"
+
+#: app/Http/Controllers/LoggerController.php:69
+msgid "Email sent successfully."
+msgstr "Email đã được gửi thành công."
+
+#: app/Http/Controllers/SettingsController.php:336
+msgid "Plugin has been successfully installed."
+msgstr "Plugin đã được cài đặt thành công."
+
+#: app/Http/Controllers/SettingsController.php:329
+msgid "Sorry, You can not install this plugin"
+msgstr "Rất tiếc, bạn không thể cài đặt plugin này"
+
+#: app/Http/Controllers/SettingsController.php:323
+msgid "Go to Ninja Tables Dashboard"
+msgstr "Đi đến bảng điều khiển Ninja Tables"
+
+#: app/Http/Controllers/SettingsController.php:319
+msgid "Go to FluentCRM Dashboard"
+msgstr "Đi đến bảng điều khiển FluentCRM"
+
+#: app/Http/Controllers/SettingsController.php:315
+msgid "Go to Fluent Forms Dashboard"
+msgstr "Đi đến bảng điều khiển Fluent Forms"
+
+#: app/Http/Controllers/SettingsController.php:215
+#: app/Http/Controllers/SettingsController.php:235
+#: app/Http/Controllers/SettingsController.php:273
+msgid "Sorry no connection found. Please reload the page and try again"
+msgstr "Không tìm thấy kết nối. Vui lòng tải lại trang và thử lại"
+
+#: app/Http/Controllers/SettingsController.php:167
+msgid "Email delivered successfully."
+msgstr "Email đã được gửi thành công."
+
+#: app/Http/Controllers/SettingsController.php:156
+msgid "The email field is required."
+msgstr "Trường email là bắt buộc."
+
+#: app/Http/Controllers/SettingsController.php:95
+#: app/Http/Controllers/SettingsController.php:140
+msgid "Settings saved successfully."
+msgstr "Cài đặt đã được lưu thành công."
+
+#: app/Http/Controllers/SettingsController.php:117
+msgid "General Settings has been updated"
+msgstr "Cài đặt chung đã được cập nhật"
+
+#: app/Services/Mailer/Providers/SendInBlue/ValidatorTrait.php:23
+msgid "Please define FLUENTMAIL_SENDINBLUE_API_KEY in wp-config.php file."
+msgstr "Vui lòng định nghĩa FLUENTMAIL_SENDINBLUE_API_KEY trong tệp wp-config.php."
+
+#: app/Services/Mailer/Providers/SparkPost/ValidatorTrait.php:24
+msgid "Please define FLUENTMAIL_SPARKPOST_API_KEY in wp-config.php file."
+msgstr "Vui lòng định nghĩa FLUENTMAIL_SPARKPOST_API_KEY trong tệp wp-config.php."
+
+#: app/Services/Mailer/Providers/SendGrid/ValidatorTrait.php:24
+msgid "Please define FLUENTMAIL_SENDGRID_API_KEY in wp-config.php file."
+msgstr "Vui lòng định nghĩa FLUENTMAIL_SENDGRID_API_KEY trong tệp wp-config.php."
+
+#: app/Services/Mailer/Providers/Mailgun/ValidatorTrait.php:31
+#: app/Services/Mailer/Providers/TransMail/ValidatorTrait.php:31
+msgid "Please define FLUENTMAIL_MAILGUN_DOMAIN in wp-config.php file."
+msgstr "Vui lòng định nghĩa FLUENTMAIL_MAILGUN_DOMAIN trong tệp wp-config.php."
+
+#: app/Services/Mailer/Providers/Mailgun/ValidatorTrait.php:27
+#: app/Services/Mailer/Providers/TransMail/ValidatorTrait.php:27
+msgid "Please define FLUENTMAIL_MAILGUN_API_KEY in wp-config.php file."
+msgstr "Vui lòng định nghĩa FLUENTMAIL_MAILGUN_API_KEY trong tệp wp-config.php."
+
+#: app/Services/Mailer/Providers/Mailgun/ValidatorTrait.php:23
+#: app/Services/Mailer/Providers/TransMail/ValidatorTrait.php:23
+msgid "Domain name is required."
+msgstr "Tên miền là bắt buộc."
+
+#: app/Services/Mailer/Providers/AmazonSes/ValidatorTrait.php:32
+msgid "Please define FLUENTMAIL_AWS_SECRET_ACCESS_KEY in wp-config.php file."
+msgstr "Vui lòng định nghĩa FLUENTMAIL_AWS_SECRET_ACCESS_KEY trong tệp wp-config.php."
+
+#: app/Services/Mailer/Providers/AmazonSes/ValidatorTrait.php:28
+msgid "Please define FLUENTMAIL_AWS_ACCESS_KEY_ID in wp-config.php file."
+msgstr "Vui lòng định nghĩa FLUENTMAIL_AWS_ACCESS_KEY_ID trong tệp wp-config.php."
+
+#: app/Services/Mailer/Providers/AmazonSes/ValidatorTrait.php:24
+msgid "Secret key is required."
+msgstr "Khóa bí mật là bắt buộc."
+
+#: app/Services/Mailer/Providers/AmazonSes/ValidatorTrait.php:20
+msgid "Access key is required."
+msgstr "Access Key là bắt buộc."
+
+#: app/Services/Mailer/Providers/Smtp/ValidatorTrait.php:41
+msgid "SMTP password is required."
+msgstr "Mật khẩu SMTP là bắt buộc."
+
+#: app/Services/Mailer/Providers/Smtp/ValidatorTrait.php:37
+msgid "SMTP username is required."
+msgstr "Tên người dùng SMTP là bắt buộc."
+
+#: app/Services/Mailer/Providers/Smtp/ValidatorTrait.php:23
+msgid "SMTP port is required."
+msgstr "Cổng SMTP là bắt buộc."
+
+#: app/Services/Mailer/Providers/Smtp/ValidatorTrait.php:19
+msgid "SMTP host is required."
+msgstr "Host SMTP là bắt buộc."
+
+#: app/Services/Mailer/Providers/config.php:228
+msgid "The Default option does not use SMTP or any Email Service Providers so it will not improve email delivery on your site."
+msgstr "Tùy chọn Mặc định không sử dụng SMTP hoặc bất kỳ nhà cung cấp dịch vụ Email nào nên nó sẽ không cải thiện việc gửi email trên trang web của bạn."
+
+#: app/Services/Mailer/Providers/config.php:119
+msgid "SparkPost"
+msgstr "SparkPost"
+
+#: app/Services/Mailer/Providers/config.php:105
+msgid "Sendinblue"
+msgstr "Sendinblue"
+
+#: app/Services/Mailer/Providers/config.php:91
+msgid "SendGrid"
+msgstr "SendGrid"
+
+#: app/Services/Mailer/Providers/config.php:74
+msgid "Mailgun"
+msgstr "Mailgun"
+
+#: app/Services/Mailer/Providers/config.php:66
+msgid "AWS GovCloud (US)"
+msgstr "AWS GovCloud (US)"
+
+#: app/Services/Mailer/Providers/config.php:65
+msgid "Middle East (Bahrain)"
+msgstr "Trung đông (Bahrain)"
+
+#: app/Services/Mailer/Providers/config.php:64
+msgid "South America (São Paulo)"
+msgstr "Nam Mỹ (São Paulo)"
+
+#: app/Services/Mailer/Providers/config.php:63
+msgid "Asia Pacific (Tokyo)"
+msgstr "Châu Á Thái Bình Dương (Tokyo)"
+
+#: app/Services/Mailer/Providers/config.php:62
+msgid "Asia Pacific (Sydney)"
+msgstr "Châu Á Thái Bình Dương (Sydney)"
+
+#: app/Services/Mailer/Providers/config.php:61
+msgid "Asia Pacific (Singapore)"
+msgstr "Châu Á Thái Bình Dương (Singapore)"
+
+#: app/Services/Mailer/Providers/config.php:60
+msgid "Asia Pacific (Seoul)"
+msgstr "Châu Á Thái Bình Dương (Seoul)"
+
+#: app/Services/Mailer/Providers/config.php:59
+msgid "Asia Pacific (Mumbai)"
+msgstr "Châu Á Thái Bình Dương (Mumbai)"
+
+#: app/Services/Mailer/Providers/config.php:58
+msgid "Europe (Stockholm)"
+msgstr "Châu Âu (Stockholm)"
+
+#: app/Services/Mailer/Providers/config.php:56
+msgid "EU (Frankfurt)"
+msgstr "EU (Frankfurt)"
+
+#: app/Services/Mailer/Providers/config.php:55
+msgid "Europe (Paris)"
+msgstr "Châu Âu (Paris)"
+
+#: app/Services/Mailer/Providers/config.php:54
+msgid "EU (London)"
+msgstr "EU (London)"
+
+#: app/Services/Mailer/Providers/config.php:53
+msgid "EU (Ireland)"
+msgstr "EU (Ireland)"
+
+#: app/Services/Mailer/Providers/config.php:52
+msgid "Canada (Central)"
+msgstr "Canada (Trung tâm)"
+
+#: app/Services/Mailer/Providers/config.php:51
+msgid "US West (Oregon)"
+msgstr "Mỹ Tây (Oregon)"
+
+#: app/Services/Mailer/Providers/config.php:50
+msgid "US West (N. California)"
+msgstr "Mỹ Tây (Bắc California)"
+
+#: app/Services/Mailer/Providers/config.php:49
+msgid "US East (Ohio)"
+msgstr "Mỹ Đông (Ohio)"
+
+#: app/Services/Mailer/Providers/config.php:48
+msgid "US East (N. Virginia)"
+msgstr "Mỹ Đông (Bắc Virginia)"
+
+#: app/Services/Mailer/Providers/config.php:33
+msgid "Amazon SES"
+msgstr "Amazon SES"
+
+#: app/Services/Mailer/Providers/PepiPost/ValidatorTrait.php:24
+msgid "Please define FLUENTMAIL_PEPIPOST_API_KEY in wp-config.php file."
+msgstr "Vui lòng định nghĩa FLUENTMAIL_PEPIPOST_API_KEY trong tệp wp-config.php."
+
+#: app/Services/Mailer/Providers/ElasticMail/ValidatorTrait.php:19
+#: app/Services/Mailer/Providers/Mailgun/ValidatorTrait.php:19
+#: app/Services/Mailer/Providers/PepiPost/ValidatorTrait.php:20
+#: app/Services/Mailer/Providers/Postmark/ValidatorTrait.php:20
+#: app/Services/Mailer/Providers/SendGrid/ValidatorTrait.php:20
+#: app/Services/Mailer/Providers/SendInBlue/ValidatorTrait.php:19
+#: app/Services/Mailer/Providers/SparkPost/ValidatorTrait.php:20
+#: app/Services/Mailer/Providers/TransMail/ValidatorTrait.php:19
+msgid "Api key is required."
+msgstr "API Key là bắt buộc."
+
+#: app/Services/Mailer/ValidatorTrait.php:20
+msgid "Invalid email address."
+msgstr "Địa chỉ email không hợp lệ."
+
+#: app/Services/Mailer/ValidatorTrait.php:16
+msgid "Sender email is required."
+msgstr "Email người gửi là bắt buộc."
+
+#. Author of the plugin
+#: fluent-smtp.php
+msgid "FluentSMTP & WPManageNinja Team"
+msgstr "Nhóm FluentSMTP & WPManageNinja"
+
+#. Description of the plugin
+#: fluent-smtp.php
+msgid "The Ultimate SMTP Connection Plugin for WordPress."
+msgstr "Plugin kết nối SMTP tối ưu cho WordPress."
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: fluent-smtp.php
+msgid "https://fluentsmtp.com"
+msgstr "https://fluentsmtp.com"
+
+#. Plugin Name of the plugin
+#: fluent-smtp.php app/Hooks/Handlers/AdminMenuHandler.php:108
+msgid "FluentSMTP"
+msgstr "FluentSMTP"

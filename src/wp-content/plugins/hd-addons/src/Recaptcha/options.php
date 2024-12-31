@@ -2,14 +2,14 @@
 
 $recaptcha_options = get_option('recaptcha__options');
 
-$recaptcha_v2_site_key = $recaptcha_options['recaptcha_v2_site_key'] ?? '';
+$recaptcha_v2_site_key   = $recaptcha_options['recaptcha_v2_site_key']   ?? '';
 $recaptcha_v2_secret_key = $recaptcha_options['recaptcha_v2_secret_key'] ?? '';
 
-$recaptcha_v3_site_key = $recaptcha_options['recaptcha_v3_site_key'] ?? '';
+$recaptcha_v3_site_key   = $recaptcha_options['recaptcha_v3_site_key']   ?? '';
 $recaptcha_v3_secret_key = $recaptcha_options['recaptcha_v3_secret_key'] ?? '';
-$recaptcha_v3_score = $recaptcha_options['recaptcha_v3_score'] ?? '0.5';
+$recaptcha_v3_score      = $recaptcha_options['recaptcha_v3_score']      ?? '0.5';
 
-$recaptcha_global = $recaptcha_options['recaptcha_global'] ?? false;
+$recaptcha_global        = $recaptcha_options['recaptcha_global']        ?? false;
 $recaptcha_allowlist_ips = $recaptcha_options['recaptcha_allowlist_ips'] ?? [];
 
 ?>
@@ -82,12 +82,11 @@ $recaptcha_allowlist_ips = $recaptcha_options['recaptcha_allowlist_ips'] ?? [];
 			<div class="select_wrapper">
 				<select multiple class="select !w[100%] select2-ips" name="recaptcha_allowlist_ips[]" id="recaptcha_allowlist_ips">
 					<?php
-                    if ($recaptcha_allowlist_ips) {
-                        foreach ((array) $recaptcha_allowlist_ips as $ip) {
+                    if ($recaptcha_allowlist_ips) :
+                        foreach ((array) $recaptcha_allowlist_ips as $ip) :
                             ?>
-                    <option selected value="<?= esc_attr($ip)?>"><?= $ip?></option>
-                    <?php }
-                        } ?>
+                    <option selected value="<?=esc_attr($ip)?>"><?=$ip?></option>
+                    <?php endforeach; endif; ?>
 				</select>
 			</div>
 		</div>

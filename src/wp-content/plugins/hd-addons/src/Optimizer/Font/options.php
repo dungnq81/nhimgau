@@ -1,8 +1,8 @@
 <?php
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
-$font_optimize = $font_optimize ?? 0;
+$font_optimize     = $font_optimize     ?? 0;
 $font_combined_css = $font_combined_css ?? 0;
 
 $font_preload = $font_preload ?? [];

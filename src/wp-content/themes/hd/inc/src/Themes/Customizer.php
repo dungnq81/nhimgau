@@ -258,7 +258,7 @@ final class Customizer
         // Min height control
         $wp_customize->add_setting('breadcrumb_min_height_setting', [
             'capability'        => 'edit_theme_options',
-            'sanitize_callback' => 'sanitize_text_field'
+            'sanitize_callback' => 'sanitize_text_field',
         ]);
         $wp_customize->add_control(
             'breadcrumb_min_height_control',
@@ -274,7 +274,7 @@ final class Customizer
         // Max height control
         $wp_customize->add_setting('breadcrumb_max_height_setting', [
             'capability'        => 'edit_theme_options',
-            'sanitize_callback' => 'sanitize_text_field'
+            'sanitize_callback' => 'sanitize_text_field',
         ]);
         $wp_customize->add_control(
             'breadcrumb_max_height_control',
@@ -308,7 +308,7 @@ final class Customizer
         // Add control
         $wp_customize->add_setting('breadcrumb_bgcolor_setting', [
             'capability'        => 'edit_theme_options',
-            'sanitize_callback' => 'sanitize_hex_color'
+            'sanitize_callback' => 'sanitize_hex_color',
         ]);
         $wp_customize->add_control(
             new \WP_Customize_Color_Control(
@@ -326,7 +326,7 @@ final class Customizer
         // Add control
         $wp_customize->add_setting('breadcrumb_color_setting', [
             'capability'        => 'edit_theme_options',
-            'sanitize_callback' => 'sanitize_hex_color'
+            'sanitize_callback' => 'sanitize_hex_color',
         ]);
         $wp_customize->add_control(
             new \WP_Customize_Color_Control(
@@ -467,7 +467,7 @@ final class Customizer
         // Add control
         $wp_customize->add_setting('header_bgcolor_setting', [
             'capability'        => 'edit_theme_options',
-            'sanitize_callback' => 'sanitize_hex_color'
+            'sanitize_callback' => 'sanitize_hex_color',
         ]);
         $wp_customize->add_control(
             new \WP_Customize_Color_Control(
@@ -502,7 +502,7 @@ final class Customizer
         // Add control
         $wp_customize->add_setting('top_header_setting', [
             'capability'        => 'edit_theme_options',
-            'sanitize_callback' => 'sanitize_text_field'
+            'sanitize_callback' => 'sanitize_text_field',
         ]);
         $wp_customize->add_control(
             'top_header_control',
@@ -566,7 +566,7 @@ final class Customizer
         // Add control
         $wp_customize->add_setting('bottom_header_setting', [
             'capability'        => 'edit_theme_options',
-            'sanitize_callback' => 'sanitize_text_field'
+            'sanitize_callback' => 'sanitize_text_field',
         ]);
         $wp_customize->add_control(
             'bottom_header_control',
@@ -612,7 +612,7 @@ final class Customizer
         // Add control
         $wp_customize->add_setting('footer_bgcolor_setting', [
             'capability'        => 'edit_theme_options',
-            'sanitize_callback' => 'sanitize_hex_color'
+            'sanitize_callback' => 'sanitize_hex_color',
         ]);
         $wp_customize->add_control(
             new \WP_Customize_Color_Control(
@@ -630,7 +630,7 @@ final class Customizer
         // Add control
         $wp_customize->add_setting('footer_color_setting', [
             'capability'        => 'edit_theme_options',
-            'sanitize_callback' => 'sanitize_hex_color'
+            'sanitize_callback' => 'sanitize_hex_color',
         ]);
         $wp_customize->add_control(
             new \WP_Customize_Color_Control(

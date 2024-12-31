@@ -1,8 +1,8 @@
 <?php
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
-$lazy_load = $lazy_load ?? 0;
+$lazy_load        = $lazy_load        ?? 0;
 $lazy_load_mobile = $lazy_load_mobile ?? 0;
 $exclude_lazyload = $exclude_lazyload ?? [];
 $exclude_lazyload = implode(PHP_EOL, $exclude_lazyload);

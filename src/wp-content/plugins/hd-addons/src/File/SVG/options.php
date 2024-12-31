@@ -1,10 +1,10 @@
 <?php
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 $options = [
-    'disable' => esc_html__('Disable SVG images', ADDONS_TEXT_DOMAIN),
-    'sanitized' => esc_html__('Sanitized SVG images', ADDONS_TEXT_DOMAIN),
+    'disable'      => esc_html__('Disable SVG images', ADDONS_TEXT_DOMAIN),
+    'sanitized'    => esc_html__('Sanitized SVG images', ADDONS_TEXT_DOMAIN),
     'unrestricted' => esc_html__('Unrestricted SVG images', ADDONS_TEXT_DOMAIN),
 ];
 
@@ -17,12 +17,12 @@ $svgs = $svgs ?? 'disable';
     <div class="option inline-option">
         <div class="controls">
             <div class="inline-group">
-                <?php foreach ($options as $key => $opt) { ?>
+                <?php foreach ($options as $key => $opt) : ?>
                 <label>
-                    <input type="radio" name="svgs" class="radio" id="svgs-<?= $key?>" value="<?= $key?>" <?php echo checked($svgs, $key); ?> />
-                    <span><?= $opt?></span>
+                    <input type="radio" name="svgs" class="radio" id="svgs-<?=$key?>" value="<?=$key?>" <?php echo checked($svgs, $key); ?> />
+                    <span><?=$opt?></span>
                 </label>
-                <?php } ?>
+                <?php endforeach; ?>
             </div>
         </div>
         <div class="explain"></div>

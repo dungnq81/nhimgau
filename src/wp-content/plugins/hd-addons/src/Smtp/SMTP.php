@@ -5,7 +5,7 @@ namespace Addons\Smtp;
 use Addons\Base\Singleton;
 use PHPMailer\PHPMailer\Exception;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 final class SMTP
 {
@@ -24,6 +24,9 @@ final class SMTP
 
     // ------------------------------------------------------
 
+    /**
+     * @return bool
+     */
     private function _check_smtp_menu(): bool
     {
         $menu_options_page = apply_filters('addon_menu_options_page_filter', []);
@@ -34,7 +37,12 @@ final class SMTP
     // ------------------------------------------------------
 
     /**
+     * @param $null
+     * @param $atts
+     *
      * @throws Exception
+     *
+     * @return void
      */
     public function pre_wp_mail($null, $atts): void
     {
@@ -46,16 +54,20 @@ final class SMTP
     /**
      * SMTP Mailer plugin - https://vi.wordpress.org/plugins/smtp-mailer/
      *
+     * @param $null
+     * @param $atts
+     * @param string|null $option_name
      *
      * @throws Exception
+     *
+     * @return bool
      */
     private function _smtp_mailer_pre_wp_mail($null, $atts, ?string $option_name = null): bool
     {
-
-        // ------------------------------------------------
+        //------------------------------------------------
         $option_name = $option_name ?: 'smtp__options';
-        $options = get_option($option_name);
-        // ------------------------------------------------
+        $options     = get_option($option_name);
+        //------------------------------------------------
 
         if (isset($atts['to'])) {
             $to = $atts['to'];
@@ -88,9 +100,9 @@ final class SMTP
 
         // (Re)create it, if it's gone missing.
         if (! ($phpmailer instanceof \PHPMailer\PHPMailer\PHPMailer)) {
-            require_once ABSPATH.WPINC.'/PHPMailer/PHPMailer.php';
-            require_once ABSPATH.WPINC.'/PHPMailer/SMTP.php';
-            require_once ABSPATH.WPINC.'/PHPMailer/Exception.php';
+            require_once ABSPATH . WPINC . '/PHPMailer/PHPMailer.php';
+            require_once ABSPATH . WPINC . '/PHPMailer/SMTP.php';
+            require_once ABSPATH . WPINC . '/PHPMailer/Exception.php';
             $phpmailer = new \PHPMailer\PHPMailer\PHPMailer(true);
 
             $phpmailer::$validator = static function ($email) {
@@ -99,8 +111,8 @@ final class SMTP
         }
 
         // Headers.
-        $cc = [];
-        $bcc = [];
+        $cc       = [];
+        $bcc      = [];
         $reply_to = [];
 
         if (empty($headers)) {
@@ -122,8 +134,8 @@ final class SMTP
                 // Iterate through the raw headers.
                 foreach ((array) $tempheaders as $header) {
                     if (! str_contains($header, ':')) {
-                        if (stripos($header, 'boundary=') !== false) {
-                            $parts = preg_split('/boundary=/i', trim($header));
+                        if (false !== stripos($header, 'boundary=')) {
+                            $parts    = preg_split('/boundary=/i', trim($header));
                             $boundary = trim(str_replace(["'", '"'], '', $parts[1]));
                         }
 
@@ -133,14 +145,14 @@ final class SMTP
                     [$name, $content] = explode(':', trim($header), 2);
 
                     // Cleanup crew.
-                    $name = trim($name);
+                    $name    = trim($name);
                     $content = trim($content);
 
                     switch (strtolower($name)) {
                         // Mainly for legacy -- process a "From:" header if it's there.
                         case 'from':
                             $bracket_pos = strpos($content, '<');
-                            if ($bracket_pos !== false) {
+                            if (false !== $bracket_pos) {
                                 // Text before the bracketed email is the "From" name.
                                 if ($bracket_pos > 0) {
                                     $from_name = substr($content, 0, $bracket_pos);
@@ -153,38 +165,44 @@ final class SMTP
                                 $from_email = trim($from_email);
 
                                 // Avoid setting an empty $from_email.
-                            } elseif (trim($content) !== '') {
+                            } elseif ('' !== trim($content)) {
                                 $from_email = trim($content);
                             }
+
                             break;
                         case 'content-type':
                             if (str_contains($content, ';')) {
                                 [$type, $charset_content] = explode(';', $content);
-                                $content_type = trim($type);
-                                if (stripos($charset_content, 'charset=') !== false) {
+                                $content_type             = trim($type);
+                                if (false !== stripos($charset_content, 'charset=')) {
                                     $charset = trim(str_replace(['charset=', '"'], '', $charset_content));
-                                } elseif (stripos($charset_content, 'boundary=') !== false) {
+                                } elseif (false !== stripos($charset_content, 'boundary=')) {
                                     $boundary = trim(str_replace(['BOUNDARY=', 'boundary=', '"'], '', $charset_content));
-                                    $charset = '';
+                                    $charset  = '';
                                 }
 
                                 // Avoid setting an empty $content_type.
-                            } elseif (trim($content) !== '') {
+                            } elseif ('' !== trim($content)) {
                                 $content_type = trim($content);
                             }
+
                             break;
                         case 'cc':
                             $cc = array_merge((array) $cc, explode(',', $content));
+
                             break;
                         case 'bcc':
                             $bcc = array_merge((array) $bcc, explode(',', $content));
+
                             break;
                         case 'reply-to':
                             $reply_to = array_merge((array) $reply_to, explode(',', $content));
+
                             break;
                         default:
                             // Add it to our grand headers array.
-                            $headers[trim($name)] = trim($content);
+                            $headers[ trim($name) ] = trim($content);
+
                             break;
                     }
                 }
@@ -196,7 +214,7 @@ final class SMTP
         $phpmailer->clearAttachments();
         $phpmailer->clearCustomHeaders();
         $phpmailer->clearReplyTos();
-        $phpmailer->Body = '';
+        $phpmailer->Body    = '';
         $phpmailer->AltBody = '';
 
         // Set "From" name and email.
@@ -205,11 +223,11 @@ final class SMTP
         if (! isset($from_name)) {
             $from_name = 'WordPress';
 
-            // ------------------------------------------------
+            //------------------------------------------------
             if ($options['smtp_from_name']) {
                 $from_name = $options['smtp_from_name'];
             }
-            // ------------------------------------------------
+            //------------------------------------------------
         }
 
         /*
@@ -221,10 +239,10 @@ final class SMTP
          */
         if (! isset($from_email)) {
             // Get the site domain and get rid of www.
-            $sitename = wp_parse_url(network_home_url(), PHP_URL_HOST);
+            $sitename   = wp_parse_url(network_home_url(), PHP_URL_HOST);
             $from_email = 'wordpress@';
 
-            if ($sitename !== null) {
+            if (null !== $sitename) {
                 if (str_starts_with($sitename, 'www.')) {
                     $sitename = substr($sitename, 4);
                 }
@@ -232,17 +250,17 @@ final class SMTP
                 $from_email .= $sitename;
             }
 
-            // ------------------------------------------------
+            //------------------------------------------------
             if ($options['smtp_from_email']) {
                 $from_email = $options['smtp_from_email'];
             }
-            // ------------------------------------------------
+            //------------------------------------------------
         }
 
         /**
          * Filters the email address to send from.
          *
-         * @param  string  $from_email  Email address to send from.
+         * @param string $from_email Email address to send from.
          *
          * @since 2.2.0
          */
@@ -251,23 +269,23 @@ final class SMTP
         /**
          * Filters the name to associate with the "from" email address.
          *
-         * @param  string  $from_name  Name associated with the "from" email address.
+         * @param string $from_name Name associated with the "from" email address.
          *
          * @since 2.3.0
          */
         $from_name = apply_filters('wp_mail_from_name', $from_name);
 
-        // -----------------------------------------------
+        //-----------------------------------------------
         if (! empty($options['smtp_force_from_address'])) {
-            $from_name = $options['smtp_from_name'];
+            $from_name  = $options['smtp_from_name'];
             $from_email = $options['smtp_from_email'];
         }
-        // ------------------------------------------------
+        //------------------------------------------------
 
         try {
             $phpmailer->setFrom($from_email, $from_name, false);
         } catch (Exception $e) {
-            $mail_error_data = compact('to', 'subject', 'message', 'headers', 'attachments');
+            $mail_error_data                             = compact('to', 'subject', 'message', 'headers', 'attachments');
             $mail_error_data['phpmailer_exception_code'] = $e->getCode();
 
             /** This filter is documented in wp-includes/pluggable.php */
@@ -276,21 +294,21 @@ final class SMTP
             return false;
         }
 
-        // ------------------------------------------------
+        //------------------------------------------------
         $smtp_mailer_reply_to = '';
         $smtp_mailer_reply_to = apply_filters('smtp_mailer_reply_to', $smtp_mailer_reply_to);
         if (! empty($smtp_mailer_reply_to)) {
             $temp_reply_to_addresses = explode(',', $smtp_mailer_reply_to);
-            $reply_to = [];
+            $reply_to                = [];
             foreach ($temp_reply_to_addresses as $temp_reply_to_address) {
                 $reply_to[] = trim($temp_reply_to_address);
             }
         }
-        // ------------------------------------------------
+        //------------------------------------------------
 
         // Set mail's subject and body.
         $phpmailer->Subject = $subject;
-        $phpmailer->Body = $message;
+        $phpmailer->Body    = $message;
 
         // Set destination addresses, using appropriate methods for handling addresses.
         $address_headers = compact('to', 'cc', 'bcc', 'reply_to');
@@ -308,22 +326,26 @@ final class SMTP
                     if (preg_match('/(.*)<(.+)>/', $address, $matches)) {
                         if (count($matches) === 3) {
                             $recipient_name = $matches[1];
-                            $address = $matches[2];
+                            $address        = $matches[2];
                         }
                     }
 
                     switch ($address_header) {
                         case 'to':
                             $phpmailer->addAddress($address, $recipient_name);
+
                             break;
                         case 'cc':
                             $phpmailer->addCc($address, $recipient_name);
+
                             break;
                         case 'bcc':
                             $phpmailer->addBcc($address, $recipient_name);
+
                             break;
                         case 'reply_to':
                             $phpmailer->addReplyTo($address, $recipient_name);
+
                             break;
                     }
                 } catch (Exception $e) {
@@ -333,12 +355,12 @@ final class SMTP
         }
 
         // Set to use PHP's mail().
-        // $phpmailer->isMail();
+        //$phpmailer->isMail();
 
-        // ------------------------------------------------
+        //------------------------------------------------
         $phpmailer->isSMTP(); // Tell PHPMailer to use SMTP
-        $phpmailer->Host = $options['smtp_host']; // Set the hostname of the mail server
-        $phpmailer->Port = $options['smtp_port']; // SMTP port
+        $phpmailer->Host        = $options['smtp_host']; // Set the hostname of the mail server
+        $phpmailer->Port        = $options['smtp_port']; // SMTP port
         $phpmailer->SMTPAutoTLS = false; // Whether to enable TLS encryption automatically if a server supports it
 
         // Whether to use SMTP authentication
@@ -355,23 +377,23 @@ final class SMTP
         }
         $phpmailer->SMTPSecure = $smtp_encryption;
 
-        // enable debug when sending a test mail
+        //enable debug when sending a test mail
         if (isset($_POST['smtp_mailer_send_test_email'])) {
-            $phpmailer->SMTPDebug = 4;
+            $phpmailer->SMTPDebug   = 4;
             $phpmailer->Debugoutput = 'html'; // Ask for HTML-friendly debug output
         }
 
-        // disable ssl certificate verification if checked
+        //disable ssl certificate verification if checked
         if (! empty($options['smtp_disable_ssl_verification'])) {
             $phpmailer->SMTPOptions = [
                 'ssl' => [
-                    'verify_peer' => false,
-                    'verify_peer_name' => false,
+                    'verify_peer'       => false,
+                    'verify_peer_name'  => false,
                     'allow_self_signed' => true,
                 ],
             ];
         }
-        // ------------------------------------------------
+        //------------------------------------------------
 
         // Set Content-Type and charset.
 
@@ -383,7 +405,7 @@ final class SMTP
         /**
          * Filters the wp_mail() content type.
          *
-         * @param  string  $content_type  Default wp_mail() content type.
+         * @param string $content_type Default wp_mail() content type.
          *
          * @since 2.3.0
          */
@@ -392,7 +414,7 @@ final class SMTP
         $phpmailer->ContentType = $content_type;
 
         // Set whether it's plaintext, depending on $content_type.
-        if ($content_type === 'text/html') {
+        if ('text/html' === $content_type) {
             $phpmailer->isHTML(true);
         }
 
@@ -404,7 +426,7 @@ final class SMTP
         /**
          * Filters the default wp_mail() charset.
          *
-         * @param  string  $charset  Default email charset.
+         * @param string $charset Default email charset.
          *
          * @since 2.3.0
          */
@@ -423,7 +445,7 @@ final class SMTP
                 }
             }
 
-            if (stripos($content_type, 'multipart') !== false && ! empty($boundary)) {
+            if (false !== stripos($content_type, 'multipart') && ! empty($boundary)) {
                 $phpmailer->addCustomHeader(sprintf('Content-Type: %s; boundary="%s"', $content_type, $boundary));
             }
         }
@@ -443,7 +465,7 @@ final class SMTP
         /**
          * Fires after PHPMailer is initialized.
          *
-         * @param  \PHPMailer  $phpmailer  The PHPMailer instance (passed by reference).
+         * @param \PHPMailer $phpmailer The PHPMailer instance (passed by reference).
          *
          * @since 2.2.0
          */
@@ -462,8 +484,8 @@ final class SMTP
              * email successfully. It only means that the `send` method above was able to
              * process the request without any errors.
              *
-             * @param  array  $mail_data  {
-             *                            An array containing the email recipient(s), subject, message, headers, and attachments.
+             * @param array $mail_data {
+             *                         An array containing the email recipient(s), subject, message, headers, and attachments.
              *
              * @type string[] $to Email addresses to send message.
              * @type string $subject Email subject.
@@ -483,8 +505,8 @@ final class SMTP
             /**
              * Fires after a \PHPMailer\PHPMailer\Exception is caught.
              *
-             * @param  \WP_Error  $error  A WP_Error object with the PHPMailer\PHPMailer\Exception message, and an array
-             *                            containing the mail recipient, subject, message, headers, and attachments.
+             * @param \WP_Error $error A WP_Error object with the PHPMailer\PHPMailer\Exception message, and an array
+             *                         containing the mail recipient, subject, message, headers, and attachments.
              *
              * @since 4.4.0
              */
@@ -498,11 +520,13 @@ final class SMTP
 
     /**
      * SMTP notices
+     *
+     * @return void
      */
     public function options_admin_notice(): void
     {
         if (! $this->smtpConfigured() && check_smtp_plugin_active() && $this->_check_smtp_menu()) {
-            $class = 'notice notice-error';
+            $class   = 'notice notice-error';
             $message = __('You need to configure your SMTP credentials in the settings to send emails.', ADDONS_TEXT_DOMAIN);
 
             printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), $message);
@@ -511,9 +535,12 @@ final class SMTP
 
     // -------------------------------------------------------------
 
+    /**
+     * @return bool
+     */
     public function smtpConfigured(): bool
     {
-        $smtp_options = get_option('smtp__options');
+        $smtp_options    = get_option('smtp__options');
         $smtp_configured = true;
 
         if (isset($smtp_options['smtp_auth']) && $smtp_options['smtp_auth'] === 'true') {
@@ -522,10 +549,10 @@ final class SMTP
             }
         }
 
-        if (empty($smtp_options['smtp_host']) ||
-             empty($smtp_options['smtp_auth']) ||
+        if (empty($smtp_options['smtp_host'])        ||
+             empty($smtp_options['smtp_auth'])       ||
              empty($smtp_options['smtp_encryption']) ||
-             empty($smtp_options['smtp_port']) ||
+             empty($smtp_options['smtp_port'])       ||
              empty($smtp_options['smtp_from_email']) ||
              empty($smtp_options['smtp_from_name'])
         ) {

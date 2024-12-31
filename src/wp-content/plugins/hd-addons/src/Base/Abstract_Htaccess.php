@@ -2,7 +2,7 @@
 
 namespace Addons\Base;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 /**
  * Htaccess Class
@@ -14,11 +14,15 @@ abstract class Abstract_Htaccess
 {
     /**
      * WordPress filesystem.
+     *
+     * @var ?\WP_Filesystem_Base
      */
     protected ?\WP_Filesystem_Base $wp_filesystem = null;
 
     /**
      * Path to htaccess file.
+     *
+     * @var ?string
      */
     public ?string $path = null;
 
@@ -31,6 +35,8 @@ abstract class Abstract_Htaccess
 
     /**
      * Template file name.
+     *
+     * @var ?string
      */
     protected ?string $template = null;
 
@@ -48,6 +54,8 @@ abstract class Abstract_Htaccess
 
     /**
      * Initialize WordPress filesystem.
+     *
+     * @return ?\WP_Filesystem_Base
      */
     private function _wp_filesystem(): ?\WP_Filesystem_Base
     {
@@ -56,7 +64,7 @@ abstract class Abstract_Htaccess
         // Initialize the WP filesystem, no more using the 'file-put-contents' function.
         // Front-end only in the back-end, it's already included
         if (empty($wp_filesystem)) {
-            require_once ABSPATH.'wp-admin/includes/file.php';
+            require_once ABSPATH . 'wp-admin/includes/file.php';
             WP_Filesystem();
         }
 
@@ -67,10 +75,12 @@ abstract class Abstract_Htaccess
 
     /**
      * Get the filepath to the htaccess.
+     *
+     * @return string
      */
     public function get_filepath(): string
     {
-        return $this->wp_filesystem->abspath().'.htaccess';
+        return $this->wp_filesystem->abspath() . '.htaccess';
     }
 
     // --------------------------------------------------
@@ -82,7 +92,7 @@ abstract class Abstract_Htaccess
      */
     public function set_filepath(): self
     {
-        if ($this->path === null) {
+        if (null === $this->path) {
             $filepath = $this->get_filepath();
 
             // Create the htaccess if it doesn't exist.
@@ -103,6 +113,8 @@ abstract class Abstract_Htaccess
 
     /**
      * Disable the rule and remove it from the htaccess.
+     *
+     * @return bool
      */
     public function disable(): bool
     {
@@ -123,6 +135,8 @@ abstract class Abstract_Htaccess
 
     /**
      * Add rule to htaccess and enable it.
+     *
+     * @return bool
      */
     public function enable(): bool
     {
@@ -130,11 +144,11 @@ abstract class Abstract_Htaccess
             $content = $this->wp_filesystem->get_contents($this->path);
 
             if ($content) {
-                $content = preg_replace($this->rules['disable_all'], '', $content);
-                $new_rule = $this->wp_filesystem->get_contents(ADDONS_PATH.'tpl/'.$this->template);
+                $content  = preg_replace($this->rules['disable_all'], '', $content);
+                $new_rule = $this->wp_filesystem->get_contents(ADDONS_PATH . 'tpl/' . $this->template);
 
                 if ($new_rule) {
-                    $content .= PHP_EOL.$new_rule;
+                    $content .= PHP_EOL . $new_rule;
                     $content = $this->do_replacement($content);
 
                     return $this->lock_and_write($content);
@@ -150,7 +164,9 @@ abstract class Abstract_Htaccess
     /**
      * Lock a file and write something in it.
      *
-     * @param  string  $content  Content to write.
+     * @param string $content Content to write.
+     *
+     * @return bool
      */
     protected function lock_and_write(string $content): bool
     {
@@ -162,8 +178,10 @@ abstract class Abstract_Htaccess
     /**
      * Lock a file and write content into it.
      *
-     * @param  string  $path  Filepath.
-     * @param  string  $content  Content to write.
+     * @param string $path Filepath.
+     * @param string $content Content to write.
+     *
+     * @return bool
      */
     private function _do_lock_write(string $path, string $content = ''): bool
     {
@@ -188,6 +206,8 @@ abstract class Abstract_Htaccess
 
     /**
      * Check if the rule is enabled.
+     *
+     * @return bool
      */
     public function is_enabled(): bool
     {
@@ -201,7 +221,9 @@ abstract class Abstract_Htaccess
     /**
      * Perform replacements in htaccess content.
      *
-     * @param  string  $content  The htaccess content.
+     * @param string $content The htaccess content.
+     *
+     * @return string
      */
     public function do_replacement(string $content): string
     {
@@ -213,7 +235,7 @@ abstract class Abstract_Htaccess
     /**
      * Toggle specific rules in htaccess.
      *
-     * @param  bool|int  $rule  Whether to enable or disable the rules.
+     * @param bool|int $rule Whether to enable or disable the rules.
      */
     public function toggle_rules(bool|int $rule = 1): void
     {

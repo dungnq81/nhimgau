@@ -4,7 +4,7 @@ namespace Addons\Third_Party;
 
 use Addons\Base\Singleton;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 /**
  * RankMath Plugins
@@ -19,14 +19,13 @@ final class RankMath
 
     private function init(): void
     {
-
         add_filter('rank_math/frontend/breadcrumb/args', [$this, 'breadcrumb_args']);
         add_filter('rank_math/frontend/show_keywords', '__return_true');
 
         /**
          * Filter if XML sitemap transient cache is enabled.
          *
-         * @param  bool  $unsigned  Enable cache or not, defaults to true
+         * @param boolean $unsigned Enable cache or not, defaults to true
          */
         add_filter('rank_math/sitemap/enable_caching', '__return_false');
 
@@ -56,16 +55,18 @@ final class RankMath
     // --------------------------------------------------
 
     /**
+     * @param $args
+     *
      * @return string[]
      */
     public function breadcrumb_args($args): array
     {
         return [
-            'delimiter' => '',
+            'delimiter'   => '',
             'wrap_before' => '<ul id="breadcrumbs" class="breadcrumbs" aria-label="Breadcrumbs">',
-            'wrap_after' => '</ul>',
-            'before' => '<li><span property="itemListElement" typeof="ListItem">',
-            'after' => '</span></li>',
+            'wrap_after'  => '</ul>',
+            'before'      => '<li><span property="itemListElement" typeof="ListItem">',
+            'after'       => '</span></li>',
         ];
     }
 }

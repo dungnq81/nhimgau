@@ -5,13 +5,10 @@ namespace Addons\Rest;
 abstract class Rest_Helper
 {
     /** bypass wpnonce, recaptcha .v.v...*/
-    public const BYPASS_NONCE = true;
-
-    public const REST_NAMESPACE = 'wp/v2';
-
+    public const BYPASS_NONCE              = true;
+    public const REST_NAMESPACE            = 'wp/v2';
     public const REST_MAX_FILE_SIZE_UPLOAD = 10 * 1024 * 1024; // 10M
-
-    public const REST_ALLOW_TYPES_UPLOAD = [
+    public const REST_ALLOW_TYPES_UPLOAD   = [
         'application/pdf',
     ];
 
@@ -19,12 +16,24 @@ abstract class Rest_Helper
     abstract public function register_rest_routes();
 
     /** ---------------------------------------- */
+
+    /**
+     * @param string $route
+     *
+     * @return string
+     */
     public function rest_api_url(string $route = ''): string
     {
-        return esc_url_raw(rest_url(self::REST_NAMESPACE.'/'.$route));
+        return esc_url_raw(rest_url(self::REST_NAMESPACE . '/' . $route));
     }
 
     /** ---------------------------------------- */
+
+    /**
+     * @param string $route
+     *
+     * @return string
+     */
     public function rest_api_uri(string $route = ''): string
     {
         $full_url = $this->rest_api_url($route);
@@ -33,10 +42,18 @@ abstract class Rest_Helper
     }
 
     /** ---------------------------------------- */
+
+    /**
+     * @param array $result
+     * @param int $status
+     * @param array $data
+     *
+     * @return \WP_Error|\WP_REST_Response
+     */
     public static function send_response(array $result = [], int $status = 1, array $data = []): \WP_Error|\WP_REST_Response
     {
         // Prepare the status code, based on the optimization result.
-        $status_code = ($status === 1) ? 200 : 400;
+        $status_code      = (1 === $status) ? 200 : 400;
         $result['status'] = $status_code;
 
         if (! empty($data)) {
@@ -55,7 +72,7 @@ abstract class Rest_Helper
         $response->set_status($status_code);
 
         if (! headers_sent()) {
-            $response->header('Content-Type', 'application/json; charset='.get_option('blog_charset'));
+            $response->header('Content-Type', 'application/json; charset=' . get_option('blog_charset'));
         }
 
         return $response;

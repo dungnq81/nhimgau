@@ -4,9 +4,9 @@ namespace Addons\Optimizer\Font;
 
 use Addons\Base\Singleton;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
-const GOOGLE_API_URL = 'https://fonts.googleapis.com/';
+const GOOGLE_API_URL       = 'https://fonts.googleapis.com/';
 const GOOGLE_FONTS_DISPLAY = 'swap';
 
 /**
@@ -60,18 +60,20 @@ final class Font
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     private function _set_assets_directory_path(): void
     {
-
         // Bail if the assets dir has been set.
-        if ($this->assets_dir !== null) {
+        if (null !== $this->assets_dir) {
             return;
         }
 
         $cache_dir = $this->_get_cache_dir();
 
         // Build the assets dir name.
-        $directory = $cache_dir.'/addons';
+        $directory = $cache_dir . '/addons';
 
         // Check if a directory exists and try to create it if not.
         if (is_dir($directory) || wp_mkdir_p($directory)) {
@@ -81,6 +83,9 @@ final class Font
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     private function _setup_wp_filesystem(): void
     {
         $this->wp_filesystem = $this->_wp_filesystem();
@@ -88,6 +93,9 @@ final class Font
 
     // --------------------------------------------------
 
+    /**
+     * @return mixed
+     */
     private function _wp_filesystem(): mixed
     {
         global $wp_filesystem;
@@ -95,7 +103,7 @@ final class Font
         // Initialize the WP filesystem, no more using 'file-put-contents' function.
         // Front-end only. In the back-end, it's already included
         if (empty($wp_filesystem)) {
-            require_once ABSPATH.'/wp-admin/includes/file.php';
+            require_once ABSPATH . '/wp-admin/includes/file.php';
             WP_Filesystem();
         }
 
@@ -104,11 +112,13 @@ final class Font
 
     // ------------------------------------------------------
 
+    /**
+     * @return string
+     */
     private function _get_cache_dir(): string
     {
-
         // Set the main cache dir.
-        $dir = WP_CONTENT_DIR.'/cache';
+        $dir = WP_CONTENT_DIR . '/cache';
 
         // Bail if the main directory exists.
         if (is_dir($dir)) { // phpcs:ignore
@@ -125,11 +135,12 @@ final class Font
     // ------------------------------------------------------
 
     /**
+     * @param $html
+     *
      * @return array|mixed|string|string[]|void|null
      */
     public function run($html)
     {
-
         // Get fonts if any.
         $fonts = $this->get_items($html);
 
@@ -137,7 +148,7 @@ final class Font
         $html = $this->font_preload($html);
 
         // get font optimize options
-        $font_optimize = $this->optimizer_options['font_optimize'] ?? 0;
+        $font_optimize = $this->optimizer_options[ 'font_optimize' ] ?? 0;
 
         // Bail if there are no fonts, no options or if there is only one font.
         if (empty($font_optimize) || empty($fonts)) {
@@ -158,7 +169,7 @@ final class Font
             $_fonts = $this->$method($_fonts);
         }
 
-        $html = preg_replace('~<\/title>~', '</title>'.$_fonts, $html, 1);
+        $html = preg_replace('~<\/title>~', '</title>' . $_fonts, $html, 1);
 
         // Remove old fonts.
         foreach ($fonts as $font) {
@@ -170,9 +181,13 @@ final class Font
 
     // ------------------------------------------------------
 
+    /**
+     * @param $html
+     *
+     * @return array
+     */
     public function get_items($html): array
     {
-
         // Build the regular expression.
         $regex = implode('', $this->regex_parts);
 
@@ -187,15 +202,14 @@ final class Font
     /**
      * Parse fonts.
      *
+     * @param $fonts
      *
      * @return array|void
      */
     public function parse_fonts($fonts)
     {
-
         $parts = [];
         foreach ($fonts as $font) {
-
             // Decode the entities.
             $url = html_entity_decode($font[2]);
 
@@ -211,11 +225,11 @@ final class Font
             $parsed_font = wp_parse_args($query_string);
 
             // Assign parsed fonts to the part array.
-            $parts[$font['type']]['fonts'][] = $parsed_font['family'];
+            $parts[ $font['type'] ]['fonts'][] = $parsed_font['family'];
 
             // Add a subset to a collection.
             if (isset($parsed_font['subset'])) {
-                $parts[$font['type']]['subset'][] = $parsed_font['subset'];
+                $parts[ $font['type'] ]['subset'][] = $parsed_font['subset'];
             }
         }
 
@@ -226,13 +240,16 @@ final class Font
 
     /**
      * Beautify and remove duplicates.
+     *
+     * @param $parts
+     *
+     * @return mixed
      */
     public function beautify($parts): mixed
     {
-
         // URL encode & convert characters to HTML entities.
         foreach ($parts as $key => $type) {
-            if ((string) $key === 'css2') {
+            if ('css2' === (string) $key) {
                 continue;
             }
 
@@ -244,12 +261,12 @@ final class Font
                 )
             ), $type);
 
-            $parts[$key] = $type;
+            $parts[ $key ] = $type;
         }
 
         // Remove duplicates.
         foreach ($parts as $key => $type) {
-            if ((string) $key === 'css2') {
+            if ('css2' === (string) $key) {
                 continue;
             }
 
@@ -262,7 +279,7 @@ final class Font
             );
 
             // Assign an array with removed duplicates to the main one.
-            $parts[$key] = $type;
+            $parts[ $key ] = $type;
         }
 
         return $parts;
@@ -272,10 +289,13 @@ final class Font
 
     /**
      * Prepare the combined urls.
+     *
+     * @param $fonts
+     *
+     * @return array
      */
     public function prepare_urls($fonts): array
     {
-
         // Define the display variable.
         $display = GOOGLE_FONTS_DISPLAY ?: 'swap';
 
@@ -283,23 +303,25 @@ final class Font
 
         // Implode different fonts into one.
         foreach ($fonts as $css_type => $value) {
-            $url = GOOGLE_API_URL.$css_type;
+            $url     = GOOGLE_API_URL . $css_type;
             $subsets = ! empty($value['subset']) ? implode(',', $value['subset']) : '';
             switch ($css_type) {
                 case 'css':
-                    $url .= '?family='.implode('%7C', $value['fonts']);
+                    $url .= '?family=' . implode('%7C', $value['fonts']);
+
                     break;
                 case 'css2':
                     $query_string = '';
                     foreach ($value['fonts'] as $index => $font_family) {
-                        $delimiter = ($index === 0) ? '?' : '&';
-                        $query_string .= $delimiter.'family='.$font_family;
+                        $delimiter    = (0 === $index) ? '?' : '&';
+                        $query_string .= $delimiter . 'family=' . $font_family;
                     }
                     $url .= $query_string;
+
                     break;
             }
 
-            $urls[] = $url.'&display='.$display.'&subset='.$subsets;
+            $urls[] = $url . '&display=' . $display . '&subset=' . $subsets;
         }
 
         return $urls;
@@ -309,19 +331,20 @@ final class Font
 
     /**
      * Get combined css.
+     *
+     * @param $urls
+     *
+     * @return string
      */
     public function get_combined_css($urls): string
     {
-
         // Gather all the Google fonts and generate the combined tag.
         $combined_tags = [];
-        $css = '';
+        $css           = '';
         foreach ($urls as $url) {
-
             // Get the font CSS.
-            $css .= $this->get_external_file_content($url, 'css', 'fonts');
-            $combined_tags[] = '<link rel="stylesheet" href="'.$url.'" />';
-
+            $css             .= $this->get_external_file_content($url, 'css', 'fonts');
+            $combined_tags[] = '<link rel="stylesheet" href="' . $url . '" />';
         }
 
         // Return the combined tag if the CSS is empty.
@@ -335,25 +358,26 @@ final class Font
         }
 
         // Force combined tag
-        $font_combined_css = $this->optimizer_options['font_combined_css'] ?? 0;
+        $font_combined_css = $this->optimizer_options[ 'font_combined_css' ] ?? 0;
         if (! empty($font_combined_css)) {
             return implode('', $combined_tags);
         }
 
         // Return the inline CSS.
-        return '<style>'.$css.'</style>';
+        return '<style>' . $css . '</style>';
     }
 
     // ------------------------------------------------------
 
     /**
+     * @param $html
+     *
      * @return array|mixed|string|string[]|null
      */
     public function font_preload($html): mixed
     {
-
         // Check if there are any urls inserted by the user.
-        $urls = $this->optimizer_options['font_preload'] ?? false;
+        $urls = $this->optimizer_options[ 'font_preload' ] ?? false;
 
         // Return, if no url's are set by the user.
         if (empty($urls)) {
@@ -363,29 +387,34 @@ final class Font
         $new_html = '';
 
         foreach ($urls as $url) {
-            $new_html .= '<link rel="preload" as="font" href="'.$url.'" crossorigin />';
+            $new_html .= '<link rel="preload" as="font" href="' . $url . '" crossorigin />';
         }
 
-        return preg_replace('~<\/title>~', '</title>'.$new_html, $html, 1);
+        return preg_replace('~<\/title>~', '</title>' . $new_html, $html, 1);
     }
 
     // ------------------------------------------------------
 
+    /**
+     * @param $url
+     * @param $type
+     * @param string $add_dir
+     *
+     * @return false|string
+     */
     public function get_external_file_content($url, $type, string $add_dir = ''): false|string
     {
-
         // Generate a unique hashtag using the url.
         $hash = md5($url);
 
         // Build the dir.
-        $dir = $this->assets_dir.$add_dir;
+        $dir = $this->assets_dir . $add_dir;
 
         // Build the file path.
-        $file_path = $dir.'/'.$hash.'.'.$type;
+        $file_path = $dir . '/' . $hash . '.' . $type;
 
         // Check if a cached version of the file exists.
         if ($this->wp_filesystem->exists($file_path)) {
-
             // Get the file content.
             $content = $this->wp_filesystem->get_contents($file_path);
 
@@ -410,7 +439,7 @@ final class Font
             return false;
         }
 
-        if (wp_remote_retrieve_response_code($request) !== 200) {
+        if (200 !== wp_remote_retrieve_response_code($request)) {
             return false;
         }
 

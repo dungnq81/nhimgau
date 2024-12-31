@@ -4,8 +4,8 @@ $contact_info_options = get_option('contact_info__options');
 
 $hotline = $contact_info_options['hotline'] ?? '';
 $address = ! empty($contact_info_options['address']) ? wp_unslash($contact_info_options['address']) : '';
-$phones = $contact_info_options['phones'] ?? '';
-$emails = $contact_info_options['emails'] ?? '';
+$phones  = $contact_info_options['phones'] ?? '';
+$emails  = $contact_info_options['emails'] ?? '';
 
 $contact_info_others = get_custom_post_option_content('html_others', false);
 

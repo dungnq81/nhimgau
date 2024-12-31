@@ -4,7 +4,7 @@ namespace Addons\Custom_Email;
 
 use Addons\Base\Singleton;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 final class Custom_Email
 {

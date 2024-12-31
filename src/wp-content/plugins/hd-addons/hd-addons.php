@@ -1,11 +1,11 @@
 <?php
 
-/**
+/*!
  * Plugin Name: HD Addons
  * Plugin URI: https://webhd.vn
  * Version: 0.15.01
  * Requires PHP: 8.2
- * Author: Gaudev
+ * Author: Gau
  * Author URI: https://webhd.vn
  * Text Domain: hd-addons
  * Description: Addons plugin for HD Theme
@@ -15,19 +15,19 @@
  * Requires Plugins: advanced-custom-fields-pro
  */
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 $default_headers = [
-    'Name' => 'Plugin Name',
-    'Version' => 'Version',
+    'Name'       => 'Plugin Name',
+    'Version'    => 'Version',
     'TextDomain' => 'Text Domain',
-    'Author' => 'Author',
+    'Author'     => 'Author',
 ];
 
 $plugin_data = get_file_data(__FILE__, $default_headers, 'plugin');
 
-define('ADDONS_URL', untrailingslashit(plugin_dir_url(__FILE__)) . '/'); // https://**/wp-content/plugins/**/
-define('ADDONS_PATH', untrailingslashit(plugin_dir_path(__FILE__)) . DIRECTORY_SEPARATOR); // **\wp-content\plugins\**\
+define('ADDONS_URL', untrailingslashit(plugin_dir_url(__FILE__)) . '/'); // https://**/app/plugins/**/
+define('ADDONS_PATH', untrailingslashit(plugin_dir_path(__FILE__)) . DIRECTORY_SEPARATOR); // **/web/app/plugins/**/
 define('ADDONS_BASENAME', plugin_basename(__FILE__)); // **/**.php
 
 define('ADDONS_VERSION', $plugin_data['Version']);
@@ -35,7 +35,7 @@ define('ADDONS_TEXT_DOMAIN', $plugin_data['TextDomain']);
 define('ADDONS_AUTHOR', $plugin_data['Author']);
 
 const ADDONS_SRC_PATH = ADDONS_PATH . 'src' . DIRECTORY_SEPARATOR;
-const ADDONS_SRC_URL = ADDONS_URL . 'src/';
+const ADDONS_SRC_URL  = ADDONS_URL . 'src/';
 
 if (! file_exists(__DIR__ . '/vendor/autoload.php')) {
     error_log('Autoloader not found: ' . __DIR__ . '/vendor/autoload.php');

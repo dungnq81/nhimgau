@@ -2,7 +2,7 @@
 
 namespace Addons\Base_Slug;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 class Rewrite_Taxonomy
 {
@@ -16,15 +16,18 @@ class Rewrite_Taxonomy
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     public function run(): void
     {
         if (! empty($this->base_slug_taxonomy)) {
             add_filter('term_link', [$this, 'term_link'], 10, 3);
 
             foreach ($this->base_slug_taxonomy as $base_slug) {
-                add_action('created_'.$base_slug, [$this, 'flush_rules']);
-                add_action('delete_'.$base_slug, [$this, 'flush_rules']);
-                add_action('edited_'.$base_slug, [$this, 'flush_rules']);
+                add_action('created_' . $base_slug, [$this, 'flush_rules']);
+                add_action('delete_' . $base_slug, [$this, 'flush_rules']);
+                add_action('edited_' . $base_slug, [$this, 'flush_rules']);
             }
 
             add_filter('query_vars', [$this, 'query_vars']);
@@ -35,6 +38,10 @@ class Rewrite_Taxonomy
     // ------------------------------------------------------
 
     /**
+     * @param $link
+     * @param $term
+     * @param $taxonomy
+     *
      * @return mixed|void
      */
     public function term_link($link, $term, $taxonomy)
@@ -44,7 +51,7 @@ class Rewrite_Taxonomy
         $taxonomies = get_taxonomies(
             [
                 'show_ui' => true,
-                'public' => true,
+                'public'  => true,
             ],
             'objects'
         );
@@ -54,16 +61,16 @@ class Rewrite_Taxonomy
                 continue;
             }
 
-            if ($custom_tax->public &&
+            if ($custom_tax->public   &&
                  $custom_tax->show_ui &&
                  in_array($custom_tax->name, $this->base_slug_taxonomy, false)
             ) {
-                $category_base = trim(str_replace('%'.$custom_tax->name.'%', '', $wp_rewrite->get_extra_permastruct($custom_tax->name)), '/');
+                $category_base = trim(str_replace('%' . $custom_tax->name . '%', '', $wp_rewrite->get_extra_permastruct($custom_tax->name)), '/');
 
                 // woocommerce
-                if ($custom_tax->name === 'product_cat' && check_plugin_active('woocommerce/woocommerce.php')) {
+                if ('product_cat' === $custom_tax->name && check_plugin_active('woocommerce/woocommerce.php')) {
                     $permalink_structure = wc_get_permalink_structure();
-                    $category_base = trim($permalink_structure['category_rewrite_slug'], '/');
+                    $category_base       = trim($permalink_structure['category_rewrite_slug'], '/');
                 }
 
                 // Remove initial slash.
@@ -73,7 +80,7 @@ class Rewrite_Taxonomy
 
                 $category_base .= '/';
 
-                return preg_replace('`'.preg_quote($category_base, '`').'`u', '', $link, 1);
+                return preg_replace('`' . preg_quote($category_base, '`') . '`u', '', $link, 1);
             }
         }
 
@@ -82,6 +89,11 @@ class Rewrite_Taxonomy
 
     // ------------------------------------------------------
 
+    /**
+     * @param $query_vars
+     *
+     * @return mixed
+     */
     public function query_vars($query_vars): mixed
     {
         $query_vars[] = 'addons_category_redirect';
@@ -92,12 +104,14 @@ class Rewrite_Taxonomy
     // ------------------------------------------------------
 
     /**
+     * @param $query_vars
+     *
      * @return mixed|void
      */
     public function request($query_vars)
     {
         if (isset($query_vars['addons_category_redirect'])) {
-            $cat_link = trailingslashit(get_option('home')).user_trailingslashit($query_vars['addons_category_redirect'], 'category');
+            $cat_link = trailingslashit(get_option('home')) . user_trailingslashit($query_vars['addons_category_redirect'], 'category');
             redirect($cat_link);
             exit;
         }
@@ -107,6 +121,9 @@ class Rewrite_Taxonomy
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     public function flush_rules(): void
     {
         flush_rewrite_rules(false);

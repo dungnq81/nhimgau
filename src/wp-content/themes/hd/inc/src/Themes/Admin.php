@@ -24,12 +24,9 @@ final class Admin
         add_editor_style(ASSETS_URL . 'css/editor-style.css');
         add_action('enqueue_block_editor_assets', [$this, 'enqueue_block_editor_assets']);
 
-        // admin.js, admin.css v.v
         add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts'], 99999);
-
         add_action('admin_menu', [$this, 'admin_menu']);
         add_action('admin_init', [$this, 'admin_init'], 11);
-
         add_action('admin_footer', [$this, 'add_custom_admin_script']);
     }
 
@@ -40,21 +37,58 @@ final class Admin
      */
     public function add_custom_admin_script(): void
     { ?>
-		<script>
-			jQuery(document).ready(function($) {
-				$('a').each(function() {
-					let link = $(this).attr('href');
-					if (link && link.indexOf('action=trash') !== -1) {
-						$(this).on('click', function(e) {
-							let confirmAction = confirm("Are you sure you want to move this post to the trash?");
-							if (!confirmAction) {
-								e.preventDefault();
-							}
-						});
-					}
-				});
-			});
-		</script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let postTitleInput = document.querySelector('input[name="post_title"]');
+                if (postTitleInput) {
+                    postTitleInput.setAttribute('required', 'required');
+                }
+
+                let postForm = document.querySelector('#post');
+                let submitButton = document.querySelector('#publish');
+                if (postForm && submitButton) {
+
+                    submitButton.addEventListener('click', function(event) {
+                        let currentUrl = window.location.href;
+                        if (currentUrl.includes('wp-post-new-reload=true')) {
+                            let newUrl = currentUrl.replace(/&?wp-post-new-reload=true/g, '');
+                            window.history.replaceState({}, document.title, newUrl);
+                        }
+                    });
+
+                    postForm.addEventListener('submit', function(event) {
+                        let postTitleInput = document?.querySelector('input[name="post_title"]');
+                        let postTitleEntered = false;
+
+                        if (postTitleInput && postTitleInput.value.trim() !== '') {
+                            postTitleEntered = true;
+                        }
+
+                        if (postTitleInput && !postTitleEntered) {
+                            alert('Please enter a Post Title.');
+                            event.preventDefault();
+                            return;
+                        }
+                    });
+                }
+
+                // popup confirmation for trash action
+                const links = document.querySelectorAll('a');
+
+                links.forEach(function(link) {
+                    const href = link.getAttribute('href');
+
+                    if (href && href.includes('action=trash')) {
+                        link.addEventListener('click', function(e) {
+                            const confirmAction = confirm("Are you sure you want to move this post to the trash?");
+                            if (!confirmAction) {
+                                e.preventDefault();
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
 <?php
     }
 
@@ -85,8 +119,7 @@ final class Admin
         wp_enqueue_style('admin-style', ASSETS_URL . 'css/admin.css', [], $version);
 
         wp_register_script('pace-js', ASSETS_URL . 'js/pace.min.js', [], $version, true);
-        $pace_js_inline = 'paceOptions = {startOnPageLoad:!1}';
-        wp_add_inline_script('pace-js', $pace_js_inline, 'before');
+        wp_add_inline_script('pace-js', 'paceOptions = {startOnPageLoad:!1}', 'before');
 
         wp_enqueue_script('admin', ASSETS_URL . 'js/admin2.js', ['jquery-core', 'pace-js'], $version, true);
         wp_script_add_data('admin', 'extra', ['module', 'defer']);
@@ -119,7 +152,7 @@ final class Admin
         if ($admin_hide_menu && ! in_array($user_id, $admin_hide_menu_ignore_user, false)) {
             foreach ($admin_hide_menu as $menu_slug) {
                 if ($menu_slug) {
-                    $_a = remove_menu_page($menu_slug);
+                    remove_menu_page($menu_slug);
                 }
             }
         }
@@ -129,7 +162,7 @@ final class Admin
             foreach ($admin_hide_submenu as $menu_slug => $_submenu) {
                 foreach ($_submenu as $_submenu_item) {
                     if ($_submenu_item) {
-                        $_b = remove_submenu_page($menu_slug, $_submenu_item);
+                        remove_submenu_page($menu_slug, $_submenu_item);
                     }
                 }
             }
@@ -140,7 +173,7 @@ final class Admin
         if ($remove_menu_setting) {
             foreach (explode("\n", $remove_menu_setting) as $menu_slug) {
                 if ($menu_slug) {
-                    $c = remove_menu_page($menu_slug);
+                    remove_menu_page($menu_slug);
                 }
             }
         }

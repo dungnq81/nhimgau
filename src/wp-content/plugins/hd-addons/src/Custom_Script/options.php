@@ -1,10 +1,10 @@
 <?php
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
-$html_header = get_custom_post_option_content('html_header', true);
-$html_footer = get_custom_post_option_content('html_footer', true);
-$html_body_top = get_custom_post_option_content('html_body_top', true);
+$html_header      = get_custom_post_option_content('html_header', true);
+$html_footer      = get_custom_post_option_content('html_footer', true);
+$html_body_top    = get_custom_post_option_content('html_body_top', true);
 $html_body_bottom = get_custom_post_option_content('html_body_bottom', true);
 
 ?>

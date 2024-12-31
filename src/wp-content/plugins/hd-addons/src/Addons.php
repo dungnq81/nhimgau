@@ -22,7 +22,7 @@ use Addons\Third_Party\RankMath;
 use Addons\Third_Party\WpRocket;
 use Addons\Woocommerce\WooCommerce;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 /**
  * Addons Class
@@ -46,14 +46,20 @@ final class Addons
 
     /**
      * Load localization file
+     *
+     * @return void
      */
     public function i18n(): void
     {
         load_plugin_textdomain(ADDONS_TEXT_DOMAIN);
-        load_plugin_textdomain(ADDONS_TEXT_DOMAIN, false, ADDONS_PATH.'languages');
+        load_plugin_textdomain(ADDONS_TEXT_DOMAIN, false, ADDONS_PATH . 'languages');
     }
 
     /** ----------------------------------------------- */
+
+    /**
+     * @return void
+     */
     public function plugins_loaded(): void
     {
         (Option_Page::get_instance());
@@ -71,8 +77,8 @@ final class Addons
         (Recaptcha::get_instance());
         (File::get_instance());
 
-        \check_plugin_active('woocommerce/woocommerce.php') && WooCommerce::get_instance();
-        \check_plugin_active('wp-rocket/wp-rocket.php') && WpRocket::get_instance();
+        \check_plugin_active('woocommerce/woocommerce.php')    && WooCommerce::get_instance();
+        \check_plugin_active('wp-rocket/wp-rocket.php')        && WpRocket::get_instance();
         \check_plugin_active('seo-by-rank-math/rank-math.php') && RankMath::get_instance();
 
         (Faker::get_instance());
@@ -84,6 +90,12 @@ final class Addons
     }
 
     /** ----------------------------------------------- */
+
+    /**
+     * @param $hook
+     *
+     * @return void
+     */
     public function admin_enqueue_scripts($hook): void
     {
         $version = ADDONS_VERSION;
@@ -91,27 +103,26 @@ final class Addons
             $version = date('YmdHis', current_time('U', 0));
         }
 
-        wp_enqueue_style('admin-addons-style', ADDONS_URL.'assets/css/admin_addons.css', [], $version);
-        wp_enqueue_script('admin-addons', ADDONS_URL.'assets/js/admin_addons2.js', ['jquery-core'], $version, true);
+        wp_enqueue_style('admin-addons-style', ADDONS_URL . 'assets/css/admin_addons.css', [], $version);
+        wp_enqueue_script('admin-addons', ADDONS_URL . 'assets/js/admin_addons2.js', ['jquery-core'], $version, true);
         wp_script_add_data('admin-addons', 'extra', ['module', 'defer']);
 
         // options_enqueue_assets
         $allowed_pages = 'toplevel_page_addon-settings';
         if ($allowed_pages === $hook) {
-
             if (! wp_style_is('select2-style')) {
-                wp_enqueue_style('select2-style', ADDONS_URL.'assets/css/select2.min.css', [], $version);
+                wp_enqueue_style('select2-style', ADDONS_URL . 'assets/css/select2.min.css', [], $version);
             }
 
             if (! wp_script_is('select2', 'registered')) {
-                wp_register_script('select2', ADDONS_URL.'assets/js/select2.full.min.js', ['jquery-core'], $version, true);
+                wp_register_script('select2', ADDONS_URL . 'assets/js/select2.full.min.js', ['jquery-core'], $version, true);
             }
 
-            wp_enqueue_script('select2-addons', ADDONS_URL.'assets/js/select2.js', ['select2'], $version, true);
+            wp_enqueue_script('select2-addons', ADDONS_URL . 'assets/js/select2.js', ['select2'], $version, true);
             wp_script_add_data('select2-addons', 'extra', ['module', 'defer']);
 
             $codemirror_settings = [
-                'codemirror_css' => wp_enqueue_code_editor(['type' => 'text/css']),
+                'codemirror_css'  => wp_enqueue_code_editor(['type' => 'text/css']),
                 'codemirror_html' => wp_enqueue_code_editor(['type' => 'text/html']),
             ];
 

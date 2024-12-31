@@ -4,7 +4,7 @@ namespace Addons\Editor;
 
 use Addons\Base\Singleton;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 final class Editor
 {
@@ -22,13 +22,16 @@ final class Editor
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     public function editor_admin_init(): void
     {
         $block_editor_options = get_option('editor__options');
 
-        $use_widgets_block_editor_off = $block_editor_options['use_widgets_block_editor_off'] ?? '';
+        $use_widgets_block_editor_off           = $block_editor_options['use_widgets_block_editor_off']           ?? '';
         $gutenberg_use_widgets_block_editor_off = $block_editor_options['gutenberg_use_widgets_block_editor_off'] ?? '';
-        $use_block_editor_for_post_type_off = $block_editor_options['use_block_editor_for_post_type_off'] ?? '';
+        $use_block_editor_for_post_type_off     = $block_editor_options['use_block_editor_for_post_type_off']     ?? '';
 
         // Disables the block editor from managing widgets.
         if ($use_widgets_block_editor_off) {
@@ -50,7 +53,7 @@ final class Editor
             // Fix for the Categories `postbox` on the classic Edit Post screen for WP 6.7.1.
             global $wp_version;
 
-            if ($wp_version === '6.7.1' && is_admin()) {
+            if ('6.7.1' === $wp_version && is_admin()) {
                 add_filter('script_loader_src', [$this, 'replace_post_js'], 11, 2);
             }
 
@@ -59,7 +62,6 @@ final class Editor
             add_filter('use_block_editor_for_post_type', '__return_false', 100);
 
             if ($gutenberg) {
-
                 // Support older Gutenberg versions.
                 add_filter('gutenberg_can_edit_post_type', '__return_false', 100);
                 $this->_remove_gutenberg_hooks();
@@ -69,10 +71,15 @@ final class Editor
 
     // ------------------------------------------------------
 
+    /**
+     * @return void
+     */
     public function editor_enqueue_scripts(): void
     {
+        wp_dequeue_style('classic-theme-styles');
+
         $block_editor_options = get_option('editor__options');
-        $block_style_off = $block_editor_options['block_style_off'] ?? '';
+        $block_style_off      = $block_editor_options['block_style_off'] ?? '';
 
         /** Remove block CSS */
         if ($block_style_off) {
@@ -101,7 +108,7 @@ final class Editor
     {
         global $current_screen;
 
-        if (isset($current_screen->base) && $current_screen->base === 'post') {
+        if (isset($current_screen->base) && 'post' === $current_screen->base) {
             $clear = is_rtl() ? 'right' : 'left';
 
             ?>
@@ -120,12 +127,15 @@ final class Editor
      * Fix for the Categories postbox on the classic Edit Post screen for WP 6.7.1.
      * See: https://core.trac.wordpress.org/ticket/62504 and
      * https://github.com/WordPress/classic-editor/issues/222.
+     *
+     * @param mixed $src
+     * @param mixed $handle
      */
     public static function replace_post_js($src, $handle)
     {
-        if ($handle === 'post' && is_string($src) && ! str_contains($src, 'ver=62504-20241121')) {
-            $src = ADDONS_SRC_URL.'Editor/js/post.min.js';
-            $src = add_query_arg('ver', '62504-20241121', $src);
+        if ('post' === $handle && is_string($src) && ! str_contains($src, 'ver=62504-20241121')) {
+            $src    = ADDONS_SRC_URL . 'Editor/js/post.min.js';
+            $src    = add_query_arg('ver', '62504-20241121', $src);
         }
 
         return $src;
@@ -133,6 +143,11 @@ final class Editor
 
     // ------------------------------------------------------
 
+    /**
+     * @param string|null $remove
+     *
+     * @return void
+     */
     private function _remove_gutenberg_hooks(?string $remove = 'all'): void
     {
         if ($remove !== 'all') {

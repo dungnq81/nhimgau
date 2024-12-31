@@ -5,7 +5,7 @@ namespace Addons\Optimizer\Lazy_Load;
 use Addons\Base\Singleton;
 use Detection\Exception\MobileDetectException;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 final class Lazy_Load
 {
@@ -22,11 +22,11 @@ final class Lazy_Load
             'the_content',
             'widget_text',
         ],
-        'lazyload_videos' => [
+        'lazyload_videos'  => [
             'the_content',
             'widget_text',
         ],
-        'lazyload_images' => [
+        'lazyload_images'  => [
             'the_content',
             'widget_text',
             'widget_block_content',
@@ -46,8 +46,8 @@ final class Lazy_Load
     private function init(): void
     {
         $optimizer_options = get_option('optimizer__options');
-        $lazy_load = $optimizer_options['lazy_load'] ?? 0;
-        $lazy_load_mobile = $optimizer_options['lazy_load_mobile'] ?? 0;
+        $lazy_load         = $optimizer_options[ 'lazy_load' ]        ?? 0;
+        $lazy_load_mobile  = $optimizer_options[ 'lazy_load_mobile' ] ?? 0;
 
         if (empty($lazy_load)) {
             return;
@@ -59,23 +59,25 @@ final class Lazy_Load
         }
 
         // Disable the native lazy-loading.
-        // add_filter( 'wp_lazy_loading_enabled', '__return_false' );
+        //add_filter( 'wp_lazy_loading_enabled', '__return_false' );
 
         $this->lazyload_iframes = new Lazy_Load_Iframes();
-        $this->lazyload_videos = new Lazy_Load_Videos();
-        $this->lazyload_images = new Lazy_Load_Images();
+        $this->lazyload_videos  = new Lazy_Load_Videos();
+        $this->lazyload_images  = new Lazy_Load_Images();
 
         $this->_add_lazy_load_hooks();
     }
 
     /** ---------------------------------------- */
+
+    /**
+     * @return void
+     */
     private function _add_lazy_load_hooks(): void
     {
         foreach ($this->lazyload_hooks as $name => $attributes) {
-
             // Loop through all attributes.
             foreach ($attributes as $hook) {
-
                 // Add the hooks.
                 add_filter($hook, [$this->{$name}, 'filter_html'], 999999);
             }
@@ -86,9 +88,13 @@ final class Lazy_Load
     }
 
     /** ---------------------------------------- */
+
+    /**
+     * @return void
+     */
     public function load_scripts(): void
     {
-        wp_enqueue_script('lazy-js', ADDONS_URL.'assets/js/lazyload.js', [], ADDONS_VERSION, true);
+        wp_enqueue_script('lazy-js', ADDONS_URL . 'assets/js/lazyload.js', [], ADDONS_VERSION, true);
         wp_script_add_data('lazy-js', 'module', true);
     }
 }

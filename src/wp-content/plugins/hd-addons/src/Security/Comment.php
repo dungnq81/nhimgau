@@ -2,12 +2,15 @@
 
 namespace Addons\Security;
 
-\defined('ABSPATH') || exit;
+\defined('ABSPATH') || die;
 
 final class Comment
 {
     // --------------------------------------------------
 
+    /**
+     * @return void
+     */
     public function disable_comments_post_types_support(): void
     {
         foreach (get_post_types() as $post_type) {
@@ -20,6 +23,9 @@ final class Comment
 
     // --------------------------------------------------
 
+    /**
+     * @return void
+     */
     public function disable_comments_admin_menu_redirect(): void
     {
         global $pagenow;
@@ -31,6 +37,9 @@ final class Comment
 
     // --------------------------------------------------
 
+    /**
+     * @return void
+     */
     public function disable_comments_admin_menu(): void
     {
         $removed_menu = remove_menu_page('edit-comments.php');
@@ -38,6 +47,9 @@ final class Comment
 
     // --------------------------------------------------
 
+    /**
+     * @return void
+     */
     public function disable_comments_dashboard(): void
     {
         remove_meta_box('dashboard_recent_comments', 'dashboard', 'normal');
@@ -45,6 +57,11 @@ final class Comment
 
     // --------------------------------------------------
 
+    /**
+     * @param $wp_admin_bar
+     *
+     * @return void
+     */
     public function remove_comments_admin_bar($wp_admin_bar): void
     {
         if (is_admin_bar_showing()) {
