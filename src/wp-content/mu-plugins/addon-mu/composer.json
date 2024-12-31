@@ -1,0 +1,23 @@
+{
+    "name": "mu-plugins/gau-mu",
+    "description": "Gau mu-plugins",
+    "authors": [
+        {
+            "name": "Gaudev"
+        }
+    ],
+    "autoload": {
+        "psr-4": {},
+        "exclude-from-classmap": [],
+        "files": []
+    },
+    "require": {
+        "php": ">=8.2",
+        "roots/bedrock-disallow-indexing": "^2.0.0",
+        "roots/wp-password-bcrypt": "^1.2.0",
+        "lukasbesch/bedrock-plugin-disabler": "^v1.4.0"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
+    }
+}

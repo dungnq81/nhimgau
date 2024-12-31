@@ -12,20 +12,20 @@ export const sharedConfig = {
     base: './',
     resolve: {
         alias: {
-            '@': path.resolve( __dirname ),
-            '~': path.resolve( __dirname ),
+            '@': path.resolve(__dirname),
+            '~': path.resolve(__dirname),
         },
     },
     plugins: [
-        viteImagemin( {
+        viteImagemin({
             plugins: {
-                jpg: imageminMozjpeg( {
+                jpg: imageminMozjpeg({
                     quality: 80,
-                } ),
-                png: imageminPngquant( {
+                }),
+                png: imageminPngquant({
                     strip: true,
-                    quality: [ 0.7, 0.9 ],
-                } ),
+                    quality: [0.7, 0.9],
+                }),
                 svg: imageminSVGO(),
             },
             // makeWebp: {
@@ -34,7 +34,7 @@ export const sharedConfig = {
             //         png: imageminWebp(),
             //     },
             // },
-        } ),
+        }),
     ],
     css: {
         preprocessorOptions: {
@@ -45,16 +45,16 @@ export const sharedConfig = {
         },
         postcss: {
             plugins: [
-                autoprefixer( {
+                autoprefixer({
                     remove: false,
                     flexbox: 'no-2009',
-                } ),
+                }),
             ],
         },
         devSourcemap: !isProduction,
     },
     optimizeDeps: {
-        include: [ 'jQuery' ],
+        include: ['jQuery'],
     },
     define: {
         $: 'jQuery',
@@ -75,7 +75,7 @@ export const sharedConfig = {
             },
             format: {
                 comments: false,
-            }
-        }
-    }
-}
+            },
+        },
+    },
+};
