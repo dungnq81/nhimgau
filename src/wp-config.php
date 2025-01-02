@@ -116,7 +116,7 @@ const DISALLOW_FILE_MODS = false;
 /** SSL */
 const FORCE_SSL_ADMIN = false;
 
-/** Increase post revisions */
+/** Increase post-revisions */
 const WP_POST_REVISIONS = 2;
 const EMPTY_TRASH_DAYS  = 15;
 const AUTOSAVE_INTERVAL = 120;
