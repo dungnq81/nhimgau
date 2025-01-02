@@ -3,7 +3,7 @@
         'name' => 'themes/hd',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '9b5a2d8c829cc95cd318de20f728db6f1904deed',
+        'reference' => '2c8ede6b5e8a7863d1778d7231a63d1398a34ffb',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -114,7 +114,7 @@
         'themes/hd' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '9b5a2d8c829cc95cd318de20f728db6f1904deed',
+            'reference' => '2c8ede6b5e8a7863d1778d7231a63d1398a34ffb',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

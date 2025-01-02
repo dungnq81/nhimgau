@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the WordPress - 6.7.x - Development package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-12-24 04:11:11+0000\n"
+"PO-Revision-Date: 2024-12-31 14:36:51+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -75,18 +75,6 @@ msgctxt "Open Sans font: on or off"
 msgid "on"
 msgstr "on"
 
-#. translators: Localized date and time format, see
-#. https://www.php.net/manual/datetime.format.php
-#. translators: Date/Time format, see
-#. https://www.php.net/manual/datetime.format.php
-#. translators: Links last updated date format, see
-#. https://www.php.net/manual/datetime.format.php
-#: wp-includes/class-wp-locale.php:400 wp-includes/script-loader.php:159
-#: wp-includes/script-loader.php:470 wp-admin/includes/schema.php:439
-#, gp-priority: high
-msgid "F j, Y g:i a"
-msgstr "j F, Y g:i a"
-
 #. translators: Localized date format, see
 #. https://www.php.net/manual/datetime.format.php
 #. translators: Date format, see https://www.php.net/manual/datetime.format.php
@@ -111,6 +99,18 @@ msgstr "j F, Y g:i a"
 #, gp-priority: high
 msgid "F j, Y"
 msgstr "j F, Y"
+
+#. translators: Localized date and time format, see
+#. https://www.php.net/manual/datetime.format.php
+#. translators: Date/Time format, see
+#. https://www.php.net/manual/datetime.format.php
+#. translators: Links last updated date format, see
+#. https://www.php.net/manual/datetime.format.php
+#: wp-includes/class-wp-locale.php:400 wp-includes/script-loader.php:159
+#: wp-includes/script-loader.php:470 wp-admin/includes/schema.php:439
+#, gp-priority: high
+msgid "F j, Y g:i a"
+msgstr "j F, Y g:i a"
 
 #. translators: 'rtl' or 'ltr'. This sets the text direction for WordPress.
 #: wp-includes/class-wp-locale.php:248 wp-includes/script-loader.php:322
@@ -2456,12 +2456,6 @@ msgstr "Đã có một lỗi nghiêm trọng trên trang web này. Vui lòng li�
 msgid "When checking for the %s capability, you must always check it against a specific user."
 msgstr "Khi kiểm tra khả năng của %s, bạn phải luôn kiểm tra khả năng đó với một người dùng cụ thể."
 
-#. translators: 1: theme.json, 2: Value name, 3: Value path, 4: Another value
-#. name.
-#: wp-includes/class-wp-theme-json.php:2485
-msgid "Your %1$s file uses a dynamic value (%2$s) for the path at %3$s. However, the value at %3$s is also a dynamic value (pointing to %4$s) and pointing to another dynamic value is not supported. Please update %3$s to point directly to %4$s."
-msgstr "Tệp %1$s của bạn sử dụng một giá trị động (%2$s) cho đường dẫn tại %3$s. Tuy nhiên, giá trị tại %3$s cũng là một giá trị động (trỏ đến %4$s) và việc trỏ đến một giá trị động khác không được hỗ trợ. Vui lòng cập nhật %3$s để trỏ trực tiếp đến %4$s."
-
 #. translators: %s: Capability name.
 #: wp-includes/capabilities.php:441 wp-includes/capabilities.php:710
 msgid "When checking for the %s capability, you must always check it against a specific term."
@@ -2471,6 +2465,12 @@ msgstr "Khi kiểm tra khả năng %s, bạn phải luôn kiểm tra nó đối 
 #: wp-includes/capabilities.php:438 wp-includes/capabilities.php:554
 msgid "When checking for the %s capability, you must always check it against a specific comment."
 msgstr "Khi kiểm tra khả năng %s, bạn phải luôn kiểm tra nó đối với một bình luận cụ thể."
+
+#. translators: 1: theme.json, 2: Value name, 3: Value path, 4: Another value
+#. name.
+#: wp-includes/class-wp-theme-json.php:2485
+msgid "Your %1$s file uses a dynamic value (%2$s) for the path at %3$s. However, the value at %3$s is also a dynamic value (pointing to %4$s) and pointing to another dynamic value is not supported. Please update %3$s to point directly to %4$s."
+msgstr "Tệp %1$s của bạn sử dụng một giá trị động (%2$s) cho đường dẫn tại %3$s. Tuy nhiên, giá trị tại %3$s cũng là một giá trị động (trỏ đến %4$s) và việc trỏ đến một giá trị động khác không được hỗ trợ. Vui lòng cập nhật %3$s để trỏ trực tiếp đến %4$s."
 
 #. translators: Custom template title in the Site Editor, referencing a deleted
 #. author. %s: Author nicename.
@@ -18146,45 +18146,6 @@ msgstr "Xin lỗi, không có trang này."
 msgid "Failed to delete the page."
 msgstr "Bạn không có quyền xóa trang."
 
-#: wp-includes/class-wp-xmlrpc-server.php:4319
-msgid "Sorry, you are not allowed to update options."
-msgstr "Bạn không có quyền chỉnh sửa tùy chọn."
-
-#: wp-includes/class-wp-xmlrpc-server.php:5042
-#: wp-includes/class-wp-xmlrpc-server.php:6523
-msgid "Either there are no posts, or something went wrong."
-msgstr "Hoặc không có bài viết mới, hoặc là có trục trặc gì đó."
-
-#: wp-includes/class-wp-xmlrpc-server.php:5209
-#: wp-includes/class-wp-xmlrpc-server.php:5283
-#: wp-includes/class-wp-xmlrpc-server.php:6181
-#: wp-includes/class-wp-xmlrpc-server.php:6757
-msgid "Sorry, no such post."
-msgstr "Xin lỗi, bài viết này không tồn tại."
-
-#: wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php:878
-msgid "Sorry, you are not allowed to update posts as this user."
-msgstr "Bạn không có quyền tạo trang mới."
-
-#: wp-includes/class-wp-xmlrpc-server.php:5825
-msgid "Sorry, you are not allowed to change the post author as this user."
-msgstr "Xin lỗi, bạn không có quyền thay đổi tác giả của bài viết này."
-
-#: wp-includes/class-wp-xmlrpc-server.php:5830
-msgid "Sorry, you are not allowed to change the page author as this user."
-msgstr "Xin lỗi, bạn không có quyền thay đổi tác giả của trang."
-
-#: wp-includes/class-wp-xmlrpc-server.php:6878
-msgid "Is there no link to us?"
-msgstr "Đã có liên kết tới chúng tôi chưa?"
-
-#: wp-includes/class-wp-xmlrpc-server.php:6918
-#: wp-includes/class-wp-xmlrpc-server.php:6925
-#: wp-includes/class-wp-xmlrpc-server.php:6934
-#: wp-includes/class-wp-xmlrpc-server.php:7116
-msgid "The specified target URL cannot be used as a target. It either does not exist, or it is not a pingback-enabled resource."
-msgstr "Đường dẫn URL đích không thể sử dụng được. Hoặc đường dẫn đó không tồn tại, hoặc nó không phải là một đường dẫn pingback."
-
 #: wp-includes/class-wp-xmlrpc-server.php:1450
 #: wp-includes/class-wp-xmlrpc-server.php:1753
 #: wp-includes/class-wp-xmlrpc-server.php:1835
@@ -18213,6 +18174,30 @@ msgstr "Đường dẫn URL đích không thể sử dụng được. Hoặc đ�
 msgid "Invalid post ID."
 msgstr "ID bài viết không hợp lệ."
 
+#: wp-includes/class-wp-xmlrpc-server.php:4319
+msgid "Sorry, you are not allowed to update options."
+msgstr "Bạn không có quyền chỉnh sửa tùy chọn."
+
+#: wp-includes/class-wp-xmlrpc-server.php:5042
+#: wp-includes/class-wp-xmlrpc-server.php:6523
+msgid "Either there are no posts, or something went wrong."
+msgstr "Hoặc không có bài viết mới, hoặc là có trục trặc gì đó."
+
+#: wp-includes/class-wp-xmlrpc-server.php:5209
+#: wp-includes/class-wp-xmlrpc-server.php:5283
+#: wp-includes/class-wp-xmlrpc-server.php:6181
+#: wp-includes/class-wp-xmlrpc-server.php:6757
+msgid "Sorry, no such post."
+msgstr "Xin lỗi, bài viết này không tồn tại."
+
+#: wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php:878
+msgid "Sorry, you are not allowed to update posts as this user."
+msgstr "Bạn không có quyền tạo trang mới."
+
+#: wp-includes/class-wp-xmlrpc-server.php:5825
+msgid "Sorry, you are not allowed to change the post author as this user."
+msgstr "Xin lỗi, bạn không có quyền thay đổi tác giả của bài viết này."
+
 #: wp-includes/class-wp-customize-nav-menus.php:951
 #: wp-includes/class-wp-xmlrpc-server.php:1443
 #: wp-includes/class-wp-xmlrpc-server.php:2000
@@ -18229,6 +18214,21 @@ msgstr "ID bài viết không hợp lệ."
 #: wp-admin/post.php:283 wp-admin/post.php:312 wp-admin/site-editor.php:79
 msgid "Invalid post type."
 msgstr "Định dạng bài viết không hợp lệ."
+
+#: wp-includes/class-wp-xmlrpc-server.php:5830
+msgid "Sorry, you are not allowed to change the page author as this user."
+msgstr "Xin lỗi, bạn không có quyền thay đổi tác giả của trang."
+
+#: wp-includes/class-wp-xmlrpc-server.php:6878
+msgid "Is there no link to us?"
+msgstr "Đã có liên kết tới chúng tôi chưa?"
+
+#: wp-includes/class-wp-xmlrpc-server.php:6918
+#: wp-includes/class-wp-xmlrpc-server.php:6925
+#: wp-includes/class-wp-xmlrpc-server.php:6934
+#: wp-includes/class-wp-xmlrpc-server.php:7116
+msgid "The specified target URL cannot be used as a target. It either does not exist, or it is not a pingback-enabled resource."
+msgstr "Đường dẫn URL đích không thể sử dụng được. Hoặc đường dẫn đó không tồn tại, hoặc nó không phải là một đường dẫn pingback."
 
 #: wp-includes/class-wp-xmlrpc-server.php:6929
 msgid "The source URL and the target URL cannot both point to the same resource."
@@ -20337,16 +20337,6 @@ msgstr "Không"
 msgid "Restore"
 msgstr "Khôi phục lại"
 
-#: wp-includes/js/dist/editor.js:26145
-#: wp-admin/includes/class-wp-media-list-table.php:819
-#: wp-admin/includes/class-wp-posts-list-table.php:1556
-#: wp-admin/includes/class-wp-terms-list-table.php:531
-#: wp-admin/includes/class-wp-users-list-table.php:498
-#: wp-admin/includes/dashboard.php:802
-#: wp-admin/includes/class-wp-ms-users-list-table.php:427
-msgid "View"
-msgstr "Xem"
-
 #. translators: %s: human-readable time difference.
 #. translators: %s: Human-readable time difference.
 #. translators: %s: Duration.
@@ -20452,23 +20442,6 @@ msgstr "Hoàn thành"
 #: wp-includes/comment.php:3892 wp-includes/js/dist/block-library.js:9565
 msgid "Anonymous"
 msgstr "Khách"
-
-#: wp-includes/class-wp-customize-manager.php:4337
-#: wp-includes/class-wp-editor.php:1255
-#: wp-includes/js/dist/block-editor.js:54185
-#: wp-includes/js/dist/block-library.js:24521
-#: wp-includes/js/dist/edit-site.js:35942
-#: wp-includes/js/dist/edit-site.js:38160 wp-admin/customize.php:211
-#: wp-admin/includes/class-custom-background.php:282
-#: wp-admin/includes/class-custom-image-header.php:553
-#: wp-admin/includes/class-wp-posts-list-table.php:1547
-#: wp-admin/includes/class-wp-theme-install-list-table.php:350
-#: wp-admin/includes/meta-boxes.php:73 wp-admin/includes/post.php:1889
-#: wp-admin/theme-install.php:425 wp-admin/theme-install.php:438
-#: wp-admin/theme-install.php:448 wp-admin/theme-install.php:455
-#: wp-admin/theme-install.php:608
-msgid "Preview"
-msgstr "Xem thử"
 
 #. translators: accessibility text for the content landmark region.
 #: wp-includes/revision.php:33 wp-includes/js/dist/block-editor.js:69897
@@ -20624,6 +20597,10 @@ msgstr "Thêm"
 msgid "Version"
 msgstr "Phiên bản"
 
+#: wp-includes/class-wp-post-type.php:980
+msgid "View Post"
+msgstr "Xem bài viết"
+
 #. translators: %s: Name of the block author.
 #. translators: %s: Plugin author name.
 #. translators: %s: Theme author name.
@@ -20645,10 +20622,6 @@ msgstr "Phiên bản"
 #: wp-admin/includes/class-wp-ms-themes-list-table.php:734
 msgid "By %s"
 msgstr "Bởi %s"
-
-#: wp-includes/class-wp-post-type.php:980
-msgid "View Post"
-msgstr "Xem bài viết"
 
 #: wp-includes/deprecated.php:3152
 msgid "Are you sure you want to do this?"
@@ -20798,6 +20771,23 @@ msgstr "Lưu thay đổi"
 msgid "Cancel"
 msgstr "Hủy"
 
+#: wp-includes/post.php:3427 wp-includes/js/dist/editor.js:22087
+msgid "Images"
+msgstr "Hình ảnh"
+
+#: wp-includes/class-wp-post-type.php:980
+msgid "View Page"
+msgstr "Xem trang"
+
+#: wp-includes/widgets/class-wp-widget-links.php:29
+#: wp-includes/js/dist/edit-site.js:12753
+#: wp-includes/js/dist/edit-site.js:19692
+#: wp-admin/includes/class-wp-terms-list-table.php:198
+#: wp-admin/includes/class-wp-terms-list-table.php:223
+#: wp-admin/link-manager.php:50 wp-admin/menu.php:79
+msgid "Links"
+msgstr "Liên kết"
+
 #. translators: Hidden accessibility text.
 #: wp-includes/admin-bar.php:1196 wp-includes/admin-bar.php:1198
 #: wp-includes/blocks/search.php:27 wp-includes/blocks/search.php:28
@@ -20827,23 +20817,6 @@ msgstr "Hủy"
 #: wp-admin/includes/theme-install.php:139
 msgid "Search"
 msgstr "Tìm kiếm"
-
-#: wp-includes/post.php:3427 wp-includes/js/dist/editor.js:22087
-msgid "Images"
-msgstr "Hình ảnh"
-
-#: wp-includes/class-wp-post-type.php:980
-msgid "View Page"
-msgstr "Xem trang"
-
-#: wp-includes/widgets/class-wp-widget-links.php:29
-#: wp-includes/js/dist/edit-site.js:12753
-#: wp-includes/js/dist/edit-site.js:19692
-#: wp-admin/includes/class-wp-terms-list-table.php:198
-#: wp-admin/includes/class-wp-terms-list-table.php:223
-#: wp-admin/link-manager.php:50 wp-admin/menu.php:79
-msgid "Links"
-msgstr "Liên kết"
 
 #: wp-includes/post-template.php:1300 wp-includes/theme-compat/sidebar.php:119
 #: wp-includes/widgets/class-wp-widget-pages.php:31
@@ -21229,6 +21202,33 @@ msgstr "Bình luận"
 msgid "Dismiss"
 msgstr "Tắt thông báo"
 
+#: wp-includes/class-wp-customize-manager.php:4337
+#: wp-includes/class-wp-editor.php:1255
+#: wp-includes/js/dist/block-editor.js:54185
+#: wp-includes/js/dist/block-library.js:24521
+#: wp-includes/js/dist/edit-site.js:35942
+#: wp-includes/js/dist/edit-site.js:38160 wp-admin/customize.php:211
+#: wp-admin/includes/class-custom-background.php:282
+#: wp-admin/includes/class-custom-image-header.php:553
+#: wp-admin/includes/class-wp-posts-list-table.php:1547
+#: wp-admin/includes/class-wp-theme-install-list-table.php:350
+#: wp-admin/includes/meta-boxes.php:73 wp-admin/includes/post.php:1889
+#: wp-admin/theme-install.php:425 wp-admin/theme-install.php:438
+#: wp-admin/theme-install.php:448 wp-admin/theme-install.php:455
+#: wp-admin/theme-install.php:608
+msgid "Preview"
+msgstr "Xem trước"
+
+#: wp-includes/js/dist/editor.js:26145
+#: wp-admin/includes/class-wp-media-list-table.php:819
+#: wp-admin/includes/class-wp-posts-list-table.php:1556
+#: wp-admin/includes/class-wp-terms-list-table.php:531
+#: wp-admin/includes/class-wp-users-list-table.php:498
+#: wp-admin/includes/dashboard.php:802
+#: wp-admin/includes/class-wp-ms-users-list-table.php:427
+msgid "View"
+msgstr "Xem"
+
 #: wp-includes/class-wp-editor.php:1215 wp-includes/media-template.php:523
 #: wp-includes/media-template.php:775 wp-includes/option.php:2696
 #: wp-includes/revision.php:32 wp-includes/js/dist/block-library.js:26407
@@ -21259,11 +21259,6 @@ msgstr "Kích hoạt"
 #: wp-admin/includes/meta-boxes.php:218
 msgid "Password:"
 msgstr "Mật khẩu:"
-
-#: wp-includes/admin-bar.php:412 wp-includes/admin-bar.php:761
-#: wp-includes/deprecated.php:2820
-msgid "Visit Site"
-msgstr "Xem trang"
 
 #: wp-includes/admin-bar.php:353
 msgid "Log Out"
@@ -21339,3 +21334,8 @@ msgstr "Chờ duyệt"
 #: wp-admin/js/post.js:821
 msgid "Published"
 msgstr "Đã xuất bản"
+
+#: wp-includes/admin-bar.php:412 wp-includes/admin-bar.php:761
+#: wp-includes/deprecated.php:2820
+msgid "Visit Site"
+msgstr "Xem trang web"

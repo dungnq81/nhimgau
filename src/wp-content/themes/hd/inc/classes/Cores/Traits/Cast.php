@@ -92,15 +92,8 @@ trait Cast
      */
     public static function toArray(mixed $value, bool $explode = true): array
     {
-        // If the value is an object
-        if (is_object($value)) {
-            $reflection = new \ReflectionObject($value);
-            $properties = $reflection->hasMethod('toArray')
-                ? $value->toArray()  // Call toArray method if available
-                : get_object_vars($value);  // Otherwise get object properties
-
-            // Convert properties to JSON and back to an array
-            return json_decode(json_encode($properties, JSON_THROW_ON_ERROR), true, 512, JSON_THROW_ON_ERROR);
+        if (is_bool($value)) {
+            return [$value];
         }
 
         // If the value is scalar and explosion is allowed
@@ -108,9 +101,40 @@ trait Cast
             return self::convertFromString($value);  // Convert scalar to array
         }
 
-        // For all other cases, cast value to array
+        // If the value is an object
+        if (is_object($value)) {
+            $reflection = new \ReflectionObject($value);
+            $value = $reflection->hasMethod('toArray')
+                ? $value->toArray()
+                : get_object_vars($value);
+        }
+
         return (array) $value;
     }
+
+    // --------------------------------------------------
+
+    /**
+     * @param mixed $value
+     */
+    public static function toArrayDeep(mixed $value, bool $explode = true): array
+    {
+        $values = static::toArray($value, $explode);
+        foreach ($values as $key => $value) {
+            if (is_object($value)) {
+                $values[$key] = static::toArrayDeep($value, $explode);
+            }
+        }
+        try {
+            $json = json_encode($values, JSON_INVALID_UTF8_IGNORE | JSON_THROW_ON_ERROR);
+            return json_decode($json, true, 512, JSON_INVALID_UTF8_IGNORE | JSON_THROW_ON_ERROR);
+        } catch (\JsonException $error) {
+            self::errorLog('Message: ' . $error->getMessage());
+
+            return [];
+        }
+    }
+
 
     // --------------------------------------------------
 
@@ -124,6 +148,10 @@ trait Cast
      */
     public static function toString(mixed $value, bool $strict = true): string
     {
+        if (is_scalar($value)) {
+            return (string) $value;
+        }
+
         // Handle object conversion using __toString method
         if (is_object($value) && in_array('__toString', get_class_methods($value))) {
             return (string) $value->__toString();
@@ -139,13 +167,7 @@ trait Cast
             return implode(', ', $value);
         }
 
-        // Handle non-scalar values
-        if (! is_scalar($value)) {
-            return $strict ? '' : serialize($value);
-        }
-
-        // Return the string representation of scalar values
-        return (string) $value;
+        return $strict ? '' : maybe_serialize($value);
     }
 
     // --------------------------------------------------
@@ -183,9 +205,7 @@ trait Cast
         if (! is_object($value)) {
 
             // Attempt to convert to array, catching any potential JsonException
-            $arrayValue = self::toArray($value);
-
-            return (object) $arrayValue;
+            return (object) self::toArray($value);
         }
 
         return $value;

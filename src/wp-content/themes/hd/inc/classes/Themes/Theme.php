@@ -197,7 +197,7 @@ final class Theme
      */
     public function register_widgets(): void
     {
-        $widgets_dir = INC_PATH . 'src/Widgets';
+        $widgets_dir = INC_PATH . 'classes/Widgets';
         $FQN         = '\\Widgets\\';
 
         Helper::createDirectory($widgets_dir);

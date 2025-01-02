@@ -6,20 +6,20 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Widgets\\' => array($baseDir . '/inc/src/Widgets'),
+    'Widgets\\' => array($baseDir . '/inc/classes/Widgets'),
     'Vectorface\\Whip\\' => array($vendorDir . '/vectorface/whip/src'),
-    'Themes\\' => array($baseDir . '/inc/src/Themes'),
+    'Themes\\' => array($baseDir . '/inc/classes/Themes'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Component\\VarDumper\\' => array($vendorDir . '/symfony/var-dumper'),
     'Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
     'Psr\\Cache\\' => array($vendorDir . '/psr/cache/src'),
-    'Plugins\\' => array($baseDir . '/inc/src/Plugins'),
+    'Plugins\\' => array($baseDir . '/inc/classes/Plugins'),
     'MatthiasMullie\\PathConverter\\' => array($vendorDir . '/matthiasmullie/path-converter/src'),
     'MatthiasMullie\\Minify\\' => array($vendorDir . '/matthiasmullie/minify/src'),
     'Detection\\' => array($vendorDir . '/mobiledetect/mobiledetectlib/src'),
     'Database\\Seeders\\' => array($vendorDir . '/laravel/pint/database/seeders'),
     'Database\\Factories\\' => array($vendorDir . '/laravel/pint/database/factories'),
-    'Cores\\' => array($baseDir . '/inc/src/Cores'),
+    'Cores\\' => array($baseDir . '/inc/classes/Cores'),
     'App\\' => array($vendorDir . '/laravel/pint/app'),
 );

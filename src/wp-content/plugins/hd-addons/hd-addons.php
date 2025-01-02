@@ -1,16 +1,15 @@
 <?php
 
-/*!
+/**
  * Plugin Name: HD Addons
  * Plugin URI: https://webhd.vn
  * Version: 0.15.01
  * Requires PHP: 8.2
- * Author: Gau
+ * Author: Gaudev
  * Author URI: https://webhd.vn
  * Text Domain: hd-addons
  * Description: Addons plugin for HD Theme
- * License: GPLv2 or later
- * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ * License: MIT License
  *
  * Requires Plugins: advanced-custom-fields-pro
  */
@@ -26,8 +25,8 @@ $default_headers = [
 
 $plugin_data = get_file_data(__FILE__, $default_headers, 'plugin');
 
-define('ADDONS_URL', untrailingslashit(plugin_dir_url(__FILE__)) . '/'); // https://**/app/plugins/**/
-define('ADDONS_PATH', untrailingslashit(plugin_dir_path(__FILE__)) . DIRECTORY_SEPARATOR); // **/web/app/plugins/**/
+define('ADDONS_PATH', untrailingslashit(plugin_dir_path(__FILE__)) . DIRECTORY_SEPARATOR); // **/wp-content/plugins/**/
+define('ADDONS_URL', untrailingslashit(plugin_dir_url(__FILE__)) . '/'); // https://**/wp-content/plugins/**/
 define('ADDONS_BASENAME', plugin_basename(__FILE__)); // **/**.php
 
 define('ADDONS_VERSION', $plugin_data['Version']);

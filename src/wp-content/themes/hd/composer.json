@@ -10,10 +10,10 @@
     ],
     "autoload": {
         "psr-4": {
-            "Cores\\": "inc/src/Cores",
-            "Plugins\\": "inc/src/Plugins",
-            "Themes\\": "inc/src/Themes",
-            "Widgets\\": "inc/src/Widgets"
+            "Cores\\": "inc/classes/Cores",
+            "Plugins\\": "inc/classes/Plugins",
+            "Themes\\": "inc/classes/Themes",
+            "Widgets\\": "inc/classes/Widgets"
         }
     },
     "require": {

@@ -68,7 +68,7 @@ final class WooCommerce
      */
     public function register_widgets(): void
     {
-        $widgets_dir = INC_PATH . 'src/Plugins/WooCommerce/Widgets';
+        $widgets_dir = INC_PATH . 'classes/Plugins/WooCommerce/Widgets';
         $FQN         = '\\Plugins\\WooCommerce\\Widgets\\';
 
         Helper::createDirectory($widgets_dir);
