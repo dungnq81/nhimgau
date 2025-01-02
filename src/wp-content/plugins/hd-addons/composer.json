@@ -1,5 +1,7 @@
 {
     "name": "plugins/hd-addons",
+    "type": "wordpress-plugin",
+    "license": "MIT",
     "authors": [
         {
             "name": "Gaudev",
@@ -21,7 +23,6 @@
     },
     "require-dev": {
         "symfony/var-dumper": "^v7.2.0",
-        "laravel/pint": "^v1.18.3",
         "roave/security-advisories": "dev-latest"
     },
     "scripts": {

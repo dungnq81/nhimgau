@@ -56,7 +56,7 @@ const random = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 // swipers single
 //
 const initializeSwipers = () => {
-    const swiperElements = [...document?.querySelectorAll('.w-swiper')];
+    const swiperElements = [ ...document?.querySelectorAll('.w-swiper') ];
 
     swiperElements.forEach((el, index) => {
         const classes = generateClasses();
@@ -228,7 +228,7 @@ const initializeSwipers = () => {
 // Products slides
 //
 const spgSwipers = () => {
-    const swiperElements = [...document?.querySelectorAll('.swiper-product-gallery')];
+    const swiperElements = [ ...document?.querySelectorAll('.swiper-product-gallery') ];
 
     swiperElements.forEach((el, index) => {
         const classes = generateClasses();
@@ -318,7 +318,7 @@ const spgSwipers = () => {
         /** WC event */
         const variations_form = jQuery('form.variations_form');
         if (variations_form) {
-            variations_form.on('found_variation', function (event, variation) {
+            variations_form.on('found_variation', function(event, variation) {
                 if (variation.image.src) {
                     firstImage.setAttribute('src', variation.image.src);
                     imagePopupSrc.setAttribute('data-src', variation.image.full_src);
@@ -330,7 +330,7 @@ const spgSwipers = () => {
                 }
             });
 
-            variations_form.on('reset_image', function () {
+            variations_form.on('reset_image', function() {
                 firstImage.setAttribute('src', firstImageSrc);
                 imagePopupSrc.setAttribute('data-src', dataLargeImage);
                 if (swiper_thumbs) {

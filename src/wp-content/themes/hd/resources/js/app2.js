@@ -11,7 +11,7 @@ import lazyLoader from './components/lazy-loader';
 import { initializeSocialShare } from './components/social-share';
 
 const customOptions = {
-    displays: ['facebook', 'ex', 'whatsapp', 'messenger', 'telegram', 'linkedin', 'send-email', 'copy-link', 'web-share'],
+    displays: [ 'facebook', 'ex', 'whatsapp', 'messenger', 'telegram', 'linkedin', 'send-email', 'copy-link', 'web-share' ],
 };
 
 // Custom
@@ -19,12 +19,12 @@ const customOptions = {
 // Initialize
 function init() {
     new BackToTop();
-    lazyLoader(4000, "script[data-type='lazy']");
+    lazyLoader(4000, 'script[data-type=\'lazy\']');
     initializeSocialShare('social-share', customOptions);
 }
 
 // Document ready
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     // Initialize
     init();
 });

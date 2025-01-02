@@ -6,6 +6,6 @@
  * @package HD
  */
 
-\defined('ABSPATH') || die;
+\defined( 'ABSPATH' ) || die;
 
-wp_redirect(\Cores\Helper::home());
+wp_redirect( \Cores\Helper::home() );

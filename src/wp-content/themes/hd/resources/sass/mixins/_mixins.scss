@@ -248,9 +248,8 @@
 @mixin responsive-scale($scale: 1.06, $opacity: 1) {
     transform: scale(1.0001);
     will-change: transform;
-    transition:
-        transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-        opacity 0.3s;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 0.3s;
 
     &:hover {
         transform: scale($scale);
@@ -635,11 +634,11 @@
             @media screen and (min-width: $min-width) {
                 font-size: calc(
                     #{$min-font-size} + #{func.strip-unit($max-font-size - $min-font-size)} *
-                        ((100vw - #{$min-width}) / #{func.strip-unit($max-width - $min-width)})
+                    ((100vw - #{$min-width}) / #{func.strip-unit($max-width - $min-width)})
                 );
                 line-height: calc(
                     #{$min-font-size} + #{func.strip-unit($max-font-size - $min-font-size)} * 1.618 *
-                        ((100vw - #{$min-width}) / #{func.strip-unit($max-width - $min-width)})
+                    ((100vw - #{$min-width}) / #{func.strip-unit($max-width - $min-width)})
                 );
             }
 
@@ -759,10 +758,9 @@
         font-style: $font-style;
         font-weight: $font-weight;
         font-display: swap;
-        src:
-            url('#{$base}/WOFF2/#{$file_name}.woff2?v=#{$version}') format('woff2'),
-            url('#{$base}/TTF/#{$file_name}.ttf?v=#{$version}') format('truetype'),
-            url('#{$base}/OTF/#{$file_name}.otf?v=#{$version}') format('opentype');
+        src: url('#{$base}/WOFF2/#{$file_name}.woff2?v=#{$version}') format('woff2'),
+        url('#{$base}/TTF/#{$file_name}.ttf?v=#{$version}') format('truetype'),
+        url('#{$base}/OTF/#{$file_name}.otf?v=#{$version}') format('opentype');
     }
 }
 

@@ -3,22 +3,13 @@
         'name' => 'themes/hd',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '2c8ede6b5e8a7863d1778d7231a63d1398a34ffb',
+        'reference' => '2bbf345ecbe3bb6082dbd681a351db171cb33802',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        'laravel/pint' => array(
-            'pretty_version' => 'v1.19.0',
-            'version' => '1.19.0.0',
-            'reference' => '8169513746e1bac70c85d6ea1524d9225d4886f0',
-            'type' => 'project',
-            'install_path' => __DIR__ . '/../laravel/pint',
-            'aliases' => array(),
-            'dev_requirement' => true,
-        ),
         'matthiasmullie/minify' => array(
             'pretty_version' => '1.3.73',
             'version' => '1.3.73.0',
@@ -45,15 +36,6 @@
             'install_path' => __DIR__ . '/../mobiledetect/mobiledetectlib',
             'aliases' => array(),
             'dev_requirement' => false,
-        ),
-        'php-stubs/wordpress-stubs' => array(
-            'pretty_version' => 'v6.7.1',
-            'version' => '6.7.1.0',
-            'reference' => '83448e918bf06d1ed3d67ceb6a985fc266a02fd1',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../php-stubs/wordpress-stubs',
-            'aliases' => array(),
-            'dev_requirement' => true,
         ),
         'psr/cache' => array(
             'pretty_version' => '3.0.0',
@@ -114,7 +96,7 @@
         'themes/hd' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '2c8ede6b5e8a7863d1778d7231a63d1398a34ffb',
+            'reference' => '2bbf345ecbe3bb6082dbd681a351db171cb33802',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

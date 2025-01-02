@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The base configuration for WordPress
  *
@@ -55,8 +56,8 @@ define( 'WP_CACHE_KEY_SALT', 'En:Ge$R`m4Q^!$5BBf`V@i^`[oVfA4)?+{uQiW,L5sQ[e.5}W`
 /**
  * WordPress database table prefix.
  *
- * You can have multiple installations in one database if you give each
- * a unique prefix. Only numbers, letters, and underscores please!
+ * You can have multiple installations in one database if you give each a unique prefix.
+ * Only numbers, letters, and underscores, please!
  */
 $table_prefix = 'w_';
 
@@ -77,6 +78,9 @@ const WP_DEBUG_LOG     = true;
 const WP_DEBUG_DISPLAY = false;
 
 /* Add any custom values between this line and the "stop editing" line. */
+
+/** Disable indexing */
+const DISALLOW_INDEXING = true;
 
 const WP_SITEURL = 'http://localhost:8080';
 const WP_HOME    = 'http://localhost:8080';
@@ -113,7 +117,7 @@ const AUTOSAVE_INTERVAL = 120;
 
 /** WordPress core auto-update, */
 const AUTOMATIC_UPDATER_DISABLED = true;
-const WP_AUTO_UPDATE_CORE = false;
+const WP_AUTO_UPDATE_CORE        = false;
 
 /* That's all, stop editing! Happy publishing. */
 

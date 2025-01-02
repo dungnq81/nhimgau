@@ -16,10 +16,10 @@ const directoriesToCopy = [
 ];
 
 // SASS
-const sassFiles = ['admin_addons'];
+const sassFiles = [ 'admin_addons' ];
 
 // JS
-const jsFiles = ['custom_sorting', 'lazyload', 'recaptcha', 'select2', 'admin_addons2'];
+const jsFiles = [ 'custom_sorting', 'lazyload', 'recaptcha', 'select2', 'admin_addons2' ];
 
 export default {
     ...sharedConfig,

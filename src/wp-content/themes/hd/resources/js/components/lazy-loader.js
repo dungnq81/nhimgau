@@ -1,5 +1,5 @@
-const lazyLoader = (timeout = 4000, scriptSelector = "script[data-type='lazy']") => {
-    const userInteractionEvents = ['mouseover', 'keydown', 'touchstart', 'touchmove', 'wheel'];
+const lazyLoader = (timeout = 4000, scriptSelector = 'script[data-type=\'lazy\']') => {
+    const userInteractionEvents = [ 'mouseover', 'keydown', 'touchstart', 'touchmove', 'wheel' ];
     const loadScriptsTimer = setTimeout(loadScripts, timeout);
 
     // Attach event listeners to trigger script loading on user interaction

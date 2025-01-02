@@ -15,7 +15,7 @@
  * @package     WooCommerce\Templates
  */
 
-\defined('ABSPATH') || die;
+\defined( 'ABSPATH' ) || die;
 
 $template = wc_get_theme_slug_for_templates();
 

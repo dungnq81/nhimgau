@@ -43,12 +43,9 @@ class ComposerStaticInitb1d011e3e021839ea87b839dd827e727
         'D' => 
         array (
             'Detection\\' => 10,
-            'Database\\Seeders\\' => 17,
-            'Database\\Factories\\' => 19,
         ),
         'A' => 
         array (
-            'App\\' => 4,
             'Addons\\' => 7,
         ),
     );
@@ -97,18 +94,6 @@ class ComposerStaticInitb1d011e3e021839ea87b839dd827e727
         'Detection\\' => 
         array (
             0 => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/src',
-        ),
-        'Database\\Seeders\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laravel/pint/database/seeders',
-        ),
-        'Database\\Factories\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laravel/pint/database/factories',
-        ),
-        'App\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laravel/pint/app',
         ),
         'Addons\\' => 
         array (
