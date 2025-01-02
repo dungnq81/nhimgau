@@ -50,7 +50,6 @@ define( 'LOGGED_IN_SALT', 'o@!zG}/aD0Jg+j, V&a=v9J_~j2 E8g%^Fo8{28WO>T^8QyDfqnqK
 define( 'NONCE_SALT', 'ga,t|aYL:ZqUgI{zLW]aN$p+95lO0,##YzkZP$p9{T:LCIfkp_eg]#NRy0F@5Q3a' );
 define( 'WP_CACHE_KEY_SALT', 'En:Ge$R`m4Q^!$5BBf`V@i^`[oVfA4)?+{uQiW,L5sQ[e.5}W`?8l^y;whB=z7,*' );
 
-
 /**#@-*/
 
 /**
@@ -82,6 +81,11 @@ const WP_DEBUG_DISPLAY = false;
 /** Disable indexing */
 const DISALLOW_INDEXING = true;
 
+/** Disable plugins */
+const DISABLED_PLUGINS = [
+	//'wp-rocket/wp-rocket.php',
+];
+
 const WP_SITEURL = 'http://localhost:8080';
 const WP_HOME    = 'http://localhost:8080';
 
@@ -105,12 +109,14 @@ if ( ! defined( 'FS_METHOD' ) ) {
 const WP_MEMORY_LIMIT     = '512M';
 const WP_MAX_MEMORY_LIMIT = '512M';
 
+/** Disable file editor */
 const DISALLOW_FILE_EDIT = false;
 const DISALLOW_FILE_MODS = false;
 
-/* SSL */
+/** SSL */
 const FORCE_SSL_ADMIN = false;
 
+/** Increase post revisions */
 const WP_POST_REVISIONS = 2;
 const EMPTY_TRASH_DAYS  = 15;
 const AUTOSAVE_INTERVAL = 120;
