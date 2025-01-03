@@ -93,7 +93,7 @@ trait Cast {
 
 		// If the value is scalar and explosion is allowed
 		if ( is_scalar( $value ) && $explode ) {
-			return self::convertFromString( $value );  // Convert scalar to array
+			return self::convertFromString( $value );
 		}
 
 		// If the value is an object
@@ -111,9 +111,14 @@ trait Cast {
 
 	/**
 	 * @param mixed $value
+	 * @param bool $explode
+	 *
+	 * @return array
+	 * @throws \JsonException
 	 */
 	public static function toArrayDeep( mixed $value, bool $explode = true ): array {
 		$values = static::toArray( $value, $explode );
+
 		foreach ( $values as $key => $value ) {
 			if ( is_object( $value ) ) {
 				$values[ $key ] = static::toArrayDeep( $value, $explode );

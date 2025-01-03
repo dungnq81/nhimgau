@@ -58,7 +58,7 @@ final class Plugin_Disabler {
 	/**
 	 * Prints the admin notice that the plugin should be installed
 	 * as a must-use plugin and deactivates the plugin itself.
-	 *MU_TEXT_DOMAIN
+	 *
 	 * @return void
 	 */
 	public function printNoticeAndDeactivate(): void {

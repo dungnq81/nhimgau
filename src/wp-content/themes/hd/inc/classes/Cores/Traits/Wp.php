@@ -2133,8 +2133,6 @@ trait Wp {
 	 * @param string|null $context The element to target.
 	 *
 	 * @return string Our final attribute to add to the element.
-	 *
-	 * GeneratePress
 	 */
 	public static function microdata( ?string $context ): string {
 		$data = false;

@@ -9,7 +9,7 @@ namespace MU\Plugin_Disabler;
  */
 class DisablePlugins {
 	public static $instance;
-	private $disabled = [];
+	private array $disabled = [];
 
 	// ------------------------------------------------------
 
@@ -60,7 +60,7 @@ class DisablePlugins {
 	 */
 	public function doDisabling( ?array $plugins ): array {
 		if ( count( $this->disabled ) ) {
-			foreach ( (array) $this->disabled as $plugin ) {
+			foreach ( $this->disabled as $plugin ) {
 				$key = array_search( $plugin, $plugins, false );
 				if ( false !== $key ) {
 					unset( $plugins[ $key ] );
@@ -82,7 +82,7 @@ class DisablePlugins {
 	 */
 	public function doNetworkDisabling( ?array $plugins ): array {
 		if ( count( $this->disabled ) ) {
-			foreach ( (array) $this->disabled as $plugin ) {
+			foreach ( $this->disabled as $plugin ) {
 				if ( isset( $plugins[ $plugin ] ) ) {
 					unset( $plugins[ $plugin ] );
 				}
