@@ -35,7 +35,7 @@ function __register_sidebars_action(): void {
 	// Homepage
 	//----------------------------------------------------------
 
-	$home_sidebar = register_sidebar(
+	register_sidebar(
 		[
 			'container'     => false,
 			'id'            => 'home-sidebar',

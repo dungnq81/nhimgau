@@ -271,7 +271,7 @@ final class Optimizer {
 	public function script_loader_tag( string $tag, string $handle, string $src ): string {
 		$attributes = wp_scripts()->registered[ $handle ]->extra ?? [];
 
-		// Add `type="module"` and `crossorigin` attributes if the script is marked as a module
+		// Add `type="module"` attributes if the script is marked as a module
 		if ( ! empty( $attributes['module'] ) ) {
 			$tag = preg_replace( '#(?=></script>)#', ' type="module"', $tag, 1 );
 		}

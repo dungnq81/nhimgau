@@ -11,10 +11,33 @@ import lazyLoader from './components/lazy-loader';
 import { initializeSocialShare } from './components/social-share';
 
 const customOptions = {
-    displays: [ 'facebook', 'ex', 'whatsapp', 'messenger', 'telegram', 'linkedin', 'send-email', 'copy-link', 'web-share' ],
+    displays: [
+        'facebook',
+        'ex',
+        'whatsapp',
+        'messenger',
+        'telegram',
+        'linkedin',
+        'send-email',
+        'copy-link',
+        'web-share',
+    ],
 };
 
-// Custom
+const ajaxUrl = typeof hd !== 'undefined' && typeof hd.ajaxUrl !== 'undefined' ? hd.ajaxUrl : '/wp-admin/admin-ajax.php';
+const baseUrl = typeof hd !== 'undefined' && typeof hd.baseUrl !== 'undefined' ? hd.baseUrl : 'http://localhost:8080/';
+const themeUrl = typeof hd !== 'undefined' && typeof hd.themeUrl !== 'undefined' ? hd.themeUrl : 'http://localhost:8080/wp-content/themes/hd/';
+
+'serviceWorker' in navigator && window.addEventListener('load', function() {
+    navigator.serviceWorker.register(themeUrl + 'assets/js/workbox.js').then(
+        function(e) {
+            console.log('ServiceWorker registration successful with scope: ', e.scope);
+        },
+        function(e) {
+            console.log('ServiceWorker registration failed: ', e);
+        },
+    );
+});
 
 // Initialize
 function init() {
@@ -25,6 +48,5 @@ function init() {
 
 // Document ready
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize
     init();
 });
