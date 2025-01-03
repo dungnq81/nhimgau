@@ -199,7 +199,6 @@ abstract class Abstract_Widget extends \WP_Widget {
 	 * @param $id
 	 *
 	 * @return object|bool
-	 * @throws \JsonException
 	 */
 	protected function acfFields( $id ): object|bool {
 		return Helper::getFields( $id, true );
