@@ -447,7 +447,6 @@ trait Wp {
 	 * @param bool $return_object Optional. Whether to return the result as an object. Default true.
 	 *
 	 * @return object|array|null Attachment details as an object or array, or null if not found.
-	 * @throws \JsonException If JSON encoding fails.
 	 */
 	public static function getAttachment( mixed $attachment_id, bool $return_object = true ): object|array|null {
 		// Fetch the attachment post object
@@ -722,7 +721,6 @@ trait Wp {
 	 * @param bool|string $strtotime_recent Timestamp string for recent posts. Default is false.
 	 *
 	 * @return \WP_Query|bool False on failure or if no posts found, WP_Query object on success.
-	 * @throws \JsonException
 	 */
 	public static function queryByTerm(
 		mixed $term,
@@ -1525,8 +1523,7 @@ trait Wp {
 	 * @param bool $format_value
 	 * @param bool $escape_html
 	 *
-	 * @return array|bool|object
-	 * @throws \JsonException
+	 * @return object|bool|array
 	 */
 	public static function getFields( mixed $post_id = false, bool $force_object = false, bool $format_value = true, bool $escape_html = false ): object|bool|array {
 		if ( ! self::isAcfActive() ) {
@@ -1543,8 +1540,8 @@ trait Wp {
 	/**
 	 * @param string|null $selector
 	 * @param mixed $post_id
-	 * @param boolean $format_value
-	 * @param boolean $escape_html
+	 * @param bool $format_value
+	 * @param bool $escape_html
 	 *
 	 * @return mixed
 	 */

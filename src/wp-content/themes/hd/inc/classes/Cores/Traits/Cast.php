@@ -84,7 +84,6 @@ trait Cast {
 	 * @param bool $explode If true, attempt to convert scalar values (like strings) to an array.
 	 *
 	 * @return array The converted array.
-	 * @throws \JsonException If JSON encoding/decoding fails.
 	 */
 	public static function toArray( mixed $value, bool $explode = true ): array {
 		if ( is_bool( $value ) ) {
@@ -114,7 +113,6 @@ trait Cast {
 	 * @param bool $explode
 	 *
 	 * @return array
-	 * @throws \JsonException
 	 */
 	public static function toArrayDeep( mixed $value, bool $explode = true ): array {
 		$values = static::toArray( $value, $explode );
@@ -191,14 +189,11 @@ trait Cast {
 	// --------------------------------------------------
 
 	/**
-	 * Convert a mixed value to an object.
+	 * @param mixed $value
 	 *
-	 * @param mixed $value The value to convert.
-	 *
-	 * @return object The converted object.
-	 * @throws \JsonException If the conversion fails due to JSON errors.
+	 * @return mixed|object
 	 */
-	public static function toObject( mixed $value ): object {
+	public static function toObject( mixed $value ): mixed {
 		if ( ! is_object( $value ) ) {
 
 			// Attempt to convert to array, catching any potential JsonException

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "de1210f5d6374599fb9fe82b12b9b915",
+    "content-hash": "fe586bd581df0f720806da88f79466e7",
     "packages": [
         {
             "name": "roots/wp-password-bcrypt",
@@ -1110,7 +1110,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.4"
+        "php": ">=8.2"
     },
     "platform-dev": {},
     "plugin-api-version": "2.6.0"
