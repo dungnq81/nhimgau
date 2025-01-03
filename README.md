@@ -38,8 +38,7 @@ A modular approach to managing theme functionality.
 - **css.php**: Handles inline CSS generation and output.
 - **helpers.php**: Utility functions for common tasks.
 - **js.php**: Handles inline JavaScript generation and output.
-- **src**: Core logic, widgets, and integrations:
-  - **Admin**: Functions specific to the WordPress admin area.
+- **classes**: Core logic, widgets, and integrations:
   - **Cores**: Core classes and helpers:
     - Abstract classes, CSS helpers, navigation walkers, and traits.
   - **Plugins**: Integration with popular plugins like ACF, WooCommerce, and Polylang.
