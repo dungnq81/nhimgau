@@ -410,7 +410,7 @@ if ( ! function_exists( 'filter_setting_options' ) ) {
 	 * @return array|mixed
 	 */
 	function filter_setting_options( $name, mixed $default = [] ): mixed {
-		$filters = apply_filters( 'addon_theme_setting_options_filter', [] );
+		$filters = apply_filters( 'hd/addon_theme_setting_options_filter', [] );
 
 		if ( isset( $filters[ $name ] ) ) {
 			return $filters[ $name ] ?: $default;

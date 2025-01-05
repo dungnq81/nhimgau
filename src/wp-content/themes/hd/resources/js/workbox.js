@@ -10,8 +10,7 @@ let maxEntries = 60;
 let cacheName = 'GAUDEV-workbox-cache';
 
 /**
- * Matches against local static files in assets/css, assets/js, and assets/img
- * folders.
+ * Matches against local static files in assets/css, assets/js, and assets/img folders.
  *
  * @param {Object} _ref
  * @param {Request} _ref.request
@@ -42,11 +41,11 @@ registerRoute(
 	} )
 );
 
-// console.log(matchCallback);
-// console.log(ExpirationPlugin);
-// console.log(CacheableResponsePlugin);
-// console.log(CacheFirst);
-// console.log(registerRoute);
+console.log(matchCallback);
+console.log(ExpirationPlugin);
+console.log(CacheableResponsePlugin);
+console.log(CacheFirst);
+console.log(registerRoute);
 
 // SELF INSTALL
 let expectedCaches = ['GAUDEV'];
@@ -79,7 +78,7 @@ self.addEventListener( 'activate', function ( event ) {
 } );
 
 self.addEventListener( 'fetch', function ( e ) {
-	// console.log(e.request.url);
+	console.log(e.request.url);
 	e.respondWith(
 		caches.match( e.request ).then( function ( response ) {
 			return response || fetch( e.request );

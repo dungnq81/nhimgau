@@ -7,33 +7,36 @@
  * @package HD
  */
 
-\defined('ABSPATH') || die;
+\defined( 'ABSPATH' ) || die;
 
-    do_action('after_site_content_action');
-    ?>
-    </div><!-- #site-content -->
-    <?php
+do_action( 'hd/after_site_content_action' );
 
-    do_action('before_footer_action');
-    ?>
-    <footer id="footer" class="site-footer" <?php echo \Cores\Helper::microdata('footer'); ?>>
-        <?php
+?>
+</div><!-- #site-content -->
+<?php
 
-        /**
-         * @see __construct_footer - 10
-         */
-        do_action('footer_action');
-        ?>
-    </footer><!-- #footer -->
-    <?php
+do_action( 'hd/before_footer_action' );
 
-    do_action('after_footer_action');
+?>
+<footer id="footer" class="site-footer" <?php echo \Cores\Helper::microdata( 'footer' ); ?>>
+	<?php
 
-    /**
-     * @see __wp_footer - 98
-     */
-    wp_footer();
-    ?>
+	/**
+	 * @see __construct_footer - 10
+	 */
+	do_action( 'hd/footer_action' );
+
+	?>
+</footer><!-- #footer -->
+<?php
+
+do_action( 'hd/after_footer_action' );
+
+/**
+ * @see __wp_footer - 98
+ */
+wp_footer();
+
+?>
 </body>
-
 </html>

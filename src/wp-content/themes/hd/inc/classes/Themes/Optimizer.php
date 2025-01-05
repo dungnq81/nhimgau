@@ -21,7 +21,7 @@ final class Optimizer {
 		$this->_cleanup();
 		$this->_optimizer();
 
-		// lost-password
+		// lost password
 		add_action( 'lostpassword_form', [ $this, 'add_csrf_token_to_lostpassword_form' ] );
 		add_action( 'lostpassword_post', [ $this, 'verify_csrf_token_on_lostpassword_post' ] );
 
@@ -247,9 +247,7 @@ final class Optimizer {
 	 * @return void
 	 */
 	public function print_footer_scripts(): void { ?>
-        <script>
-            document.documentElement.classList.remove('no-js');
-        </script>
+        <script>document.documentElement.classList.remove('no-js');</script>
 		<?php
 
 		if ( is_file( THEME_PATH . 'assets/js/skip-link-focus.js' ) ) {

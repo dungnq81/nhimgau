@@ -24,7 +24,7 @@ export const sharedConfig = {
                 }),
                 png: imageminPngquant({
                     strip: true,
-                    quality: [0.7, 0.9],
+                    quality: [ 0.7, 0.9 ],
                 }),
                 svg: imageminSVGO(),
             },
@@ -53,12 +53,9 @@ export const sharedConfig = {
         },
         devSourcemap: !isProduction,
     },
-    optimizeDeps: {
-        include: ['jQuery'],
-    },
     define: {
         $: 'jQuery',
-        jQuery: 'jQuery',
+        jquery: 'jQuery',
     },
     build: {
         sourcemap: !isProduction,

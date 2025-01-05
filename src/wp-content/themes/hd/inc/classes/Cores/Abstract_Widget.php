@@ -86,16 +86,16 @@ abstract class Abstract_Widget extends \WP_Widget {
 	 * @param        $widget_id
 	 * @param string $scheme
 	 *
-	 * @return mixed|void
+	 * @return string
 	 */
-	protected function get_widget_id_for_cache( $widget_id, string $scheme = '' ) {
+	protected function get_widget_id_for_cache( $widget_id, string $scheme = '' ): string {
 		if ( $scheme ) {
 			$widget_id_for_cache = $widget_id . '-' . $scheme;
 		} else {
 			$widget_id_for_cache = $widget_id . '-' . ( is_ssl() ? 'https' : 'http' );
 		}
 
-		return apply_filters( 'cached_widget_id_filter', $widget_id_for_cache );
+		return $widget_id_for_cache;
 	}
 
 	// --------------------------------------------------

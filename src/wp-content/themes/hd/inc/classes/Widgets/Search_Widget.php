@@ -48,7 +48,7 @@ class Search_Widget extends Abstract_Widget {
 		$shortcode_content = Helper::doShortcode(
 			'inline_search',
 			apply_filters(
-				'inline_search_widget_shortcode_args',
+				'hd/inline_search_widget_shortcode_args',
 				[
 					'title'       => $title,
 					'placeholder' => $placeholder_title,

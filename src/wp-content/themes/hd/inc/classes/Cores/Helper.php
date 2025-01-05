@@ -40,7 +40,7 @@ final class Helper {
 	 * @return array|mixed
 	 */
 	public static function filterSettingOptions( $name, mixed $default = [] ): mixed {
-		$filters = apply_filters( 'addon_theme_setting_options_filter', [] );
+		$filters = apply_filters( 'hd/addon_theme_setting_options_filter', [] );
 
 		if ( isset( $filters[ $name ] ) ) {
 			return $filters[ $name ] ?: $default;

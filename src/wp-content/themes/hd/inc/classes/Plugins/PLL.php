@@ -32,7 +32,7 @@ final class PLL {
 		}
 
 		// Home Url filter
-		add_filter( 'home_url_filter', static function ( $url, $path ) {
+		add_filter( 'hd/home_url_filter', static function ( $url, $path ) {
 			$path = trim( $path, '/' );
 			if ( empty( $path ) ) {
 				return pll_home_url();

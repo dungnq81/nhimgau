@@ -1,5 +1,7 @@
 // Import jQuery and assign to window
-Object.assign(window, { $: jQuery, jQuery });
+import $ from 'jquery';
+
+//Object.assign(window, { $: jQuery, jQuery });
 
 // Import Foundation core and utilities
 import { Foundation } from 'foundation-sites/js/foundation.core';

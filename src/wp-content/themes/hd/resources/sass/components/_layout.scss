@@ -6,30 +6,6 @@
 @use '../mixins' as mixin;
 
 :root {
-    --black: #{map.get(vars.$colors, 'black')};
-    --white: #{map.get(vars.$colors, 'white')};
-    --gray: #{map.get(vars.$colors, 'gray')};
-    --gray-dark: #{map.get(vars.$colors, 'gray-dark')};
-    --blue: #{map.get(vars.$colors, 'blue')};
-    --indigo: #{map.get(vars.$colors, 'indigo')};
-    --purple: #{map.get(vars.$colors, 'purple')};
-    --pink: #{map.get(vars.$colors, 'pink')};
-    --red: #{map.get(vars.$colors, 'red')};
-    --orange: #{map.get(vars.$colors, 'orange')};
-    --yellow: #{map.get(vars.$colors, 'yellow')};
-    --green: #{map.get(vars.$colors, 'green')};
-    --teal: #{map.get(vars.$colors, 'teal')};
-    --cyan: #{map.get(vars.$colors, 'cyan')};
-
-    --primary: #{map.get(vars.$theme-colors, 'primary')};
-    --secondary: #{map.get(vars.$theme-colors, 'secondary')};
-    --success: #{map.get(vars.$theme-colors, 'success')};
-    --info: #{map.get(vars.$theme-colors, 'info')};
-    --warning: #{map.get(vars.$theme-colors, 'warning')};
-    --alert: #{map.get(vars.$theme-colors, 'alert')};
-    --light: #{map.get(vars.$theme-colors, 'light')};
-    --dark: #{map.get(vars.$theme-colors, 'dark')};
-
     --body-color: #{vars.$body-color};
     --body-bg: #{vars.$body-bg};
 

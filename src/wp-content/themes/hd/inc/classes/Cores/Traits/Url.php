@@ -288,7 +288,7 @@ trait Url {
 	 * @return string
 	 */
 	public static function home( string $path = '' ): string {
-		return apply_filters( 'home_url_filter', esc_url( home_url( $path ) ), $path );
+		return apply_filters( 'hd/home_url_filter', esc_url( home_url( $path ) ), $path );
 	}
 
 	// --------------------------------------------------

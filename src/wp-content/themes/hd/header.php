@@ -18,11 +18,13 @@
 
     /**
      * @see __wp_head - 1
-     * @see __module_preload - 10
-     * @see __critical_css - 11
-     * @see __external_fonts - 12
+     * @see __other_head - 10
+     * @see __module_preload - 11
+     * @see __critical_css - 12
+     * @see __external_fonts - 99
      */
     wp_head();
+
     ?>
 </head>
 <body <?php body_class(); ?> <?php echo \Cores\Helper::microdata( 'body' ); ?>>
@@ -36,7 +38,8 @@
     /**
      * @see __skip_to_content_link - 2
      */
-    do_action( 'before_header_action' );
+    do_action( 'hd/before_header_action' );
+
     ?>
     <header id="header" class="site-header" <?php echo \Cores\Helper::microdata( 'header' ); ?>>
 		<?php
@@ -44,14 +47,16 @@
 		/**
 		 * @see __construct_header - 10
 		 */
-		do_action( 'header_action' );
+		do_action( 'hd/header_action' );
+
 		?>
     </header><!-- #header -->
     <?php
 
-    do_action( 'after_header_action' );
+    do_action( 'hd/after_header_action' );
+
     ?>
     <div class="main site-content" id="site-content">
         <?php
 
-        do_action( 'before_site_content_action' );
+        do_action( 'hd/before_site_content_action' );

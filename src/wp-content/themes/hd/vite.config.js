@@ -47,8 +47,10 @@ const jsFiles = [
 
     // (site)
     'swiper2',
+    'swiper2',
     'woocommerce2',
     'app2',
+    'workbox',
 ];
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -81,6 +83,7 @@ export default {
         ...sharedConfig.build,
         outDir: `${assets}`,
         rollupOptions: {
+            ...sharedConfig.build.rollupOptions,
             input: [
                 ...sassFiles.map((file) => path.resolve(`${resources}/sass/${file}.scss`)),
                 ...jsFiles.map((file) => path.resolve(`${resources}/js/${file}.js`)),

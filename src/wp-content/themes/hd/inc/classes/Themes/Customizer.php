@@ -736,7 +736,7 @@ final class Customizer {
 			)
 		);
 
-		// Hide menu
+		// Hide a menu
 		$wp_customize->add_setting( 'remove_menu_setting', [
 			'capability'        => 'edit_theme_options',
 			'sanitize_callback' => 'sanitize_textarea_field',

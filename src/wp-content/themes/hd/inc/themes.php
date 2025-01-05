@@ -366,7 +366,7 @@ function __query_vars( $vars ): array {
 // custom filter
 // --------------------------------------------------
 
-add_filter( 'addon_menu_options_page_filter', '__menu_options_page', 99 );
+add_filter( 'hd/addon_menu_options_page_filter', '__menu_options_page', 99 );
 function __menu_options_page(): array {
 	return [
 		'aspect_ratio'   => __( 'Aspect Ratio', TEXT_DOMAIN ),
@@ -392,7 +392,7 @@ function __menu_options_page(): array {
 
 // --------------------------------------------------
 
-add_filter( 'addon_theme_setting_options_filter', '__theme_setting_options', 99 );
+add_filter( 'hd/addon_theme_setting_options_filter', '__theme_setting_options', 99 );
 function __theme_setting_options( array $arr ): array {
 	$arr_new = [
 
