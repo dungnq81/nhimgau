@@ -15,7 +15,7 @@ final class Disallow_Indexing {
 
 		add_action( 'pre_option_blog_public', '__return_zero' );
 		add_action( 'admin_init', static function () {
-			if ( ! apply_filters( 'hd/disallow_indexing_admin_notice', true ) ) {
+			if ( ! apply_filters( 'hd_disallow_indexing_admin_notice', true ) ) {
 				return;
 			}
 

@@ -64,7 +64,7 @@ export const sharedConfig = {
         minify: isProduction ? 'terser' : false,
         watch: isProduction ? false : { exclude: 'node_modules/**' },
         cssCodeSplit: true,
-        emptyOutDir: true,
+        //emptyOutDir: true,
         terserOptions: {
             compress: {
                 drop_console: true,

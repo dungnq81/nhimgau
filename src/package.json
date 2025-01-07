@@ -1,13 +1,13 @@
 {
-    "name": "hd",
+    "name": "hd2025",
     "private": true,
     "version": "0.25.01",
     "type": "module",
     "scripts": {
         "watch:plugin": "cross-env NODE_ENV=development vite build --watch --config wp-content/plugins/hd-addons/vite.config.js",
-        "watch:theme": "cross-env NODE_ENV=development vite build --watch --config wp-content/themes/hd/vite.config.js",
+        "watch:theme": "cross-env NODE_ENV=development vite build --watch --config wp-content/themes/hd2025/vite.config.js",
         "build:plugin": "cross-env vite build --config wp-content/plugins/hd-addons/vite.config.js",
-        "build:theme": "cross-env vite build --config wp-content/themes/hd/vite.config.js",
+        "build:theme": "cross-env vite build --config wp-content/themes/hd2025/vite.config.js",
         "watch": "concurrently \"pnpm run watch:plugin\" \"pnpm run watch:theme\"",
         "build": "concurrently \"pnpm run build:plugin\" \"pnpm run build:theme\""
     },
