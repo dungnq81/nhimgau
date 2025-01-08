@@ -1017,11 +1017,12 @@ trait Wp {
 		/**
 		 * Filters the custom logo output.
 		 *
+		 * @param string $html Custom logo HTML output.
+		 * @param int $blog_id ID of the blog to get the custom logo for.
+		 *
 		 * @since 4.5.0
 		 * @since 4.6.0 Added the `$blog_id` parameter.
 		 *
-		 * @param string $html    Custom logo HTML output.
-		 * @param int    $blog_id ID of the blog to get the custom logo for.
 		 */
 		return apply_filters( 'get_custom_logo', $html, $blog_id );
 	}
@@ -1390,7 +1391,7 @@ trait Wp {
 		if ( $hashtag_list ) {
 			echo '<div class="hashtags">';
 			printf(
-				/* translators: 1: SVG icon. 2: posted in label, only visible to screen readers. 3: list of tags. */
+			/* translators: 1: SVG icon. 2: posted in label, only visible to screen readers. 3: list of tags. */
 				'<div class="hashtag-links links">%1$s<span class="sr-only">%2$s</span>%3$s</div>',
 				'<i data-fa="#"></i>',
 				__( 'Tags', TEXT_DOMAIN ),

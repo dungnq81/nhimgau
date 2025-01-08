@@ -3,7 +3,7 @@
         'name' => 'themes/hd2025',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'b186d99863c973721a97824c8f3a40c50256af39',
+        'reference' => '54154da7d6e25986ef0a7849bf63408ebef9b879',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -67,7 +67,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => '0739463889fe714daa685817789aef000c6774cc',
+            'reference' => '19bf84017a308ac32893551b899bac74d2aba856',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(
@@ -78,7 +78,7 @@
         'themes/hd2025' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'b186d99863c973721a97824c8f3a40c50256af39',
+            'reference' => '54154da7d6e25986ef0a7849bf63408ebef9b879',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -321,15 +321,21 @@ trait Base {
 	// -------------------------------------------------------------
 
 	/**
-	 * Check if the Advanced Custom Fields (ACF) plugin is active.
-	 *
-	 * This function checks for both the free and Pro versions of ACF.
-	 *
-	 * @return bool True if either the free or Pro version of ACF is active, false otherwise.
+	 * @return bool
 	 */
 	public static function isAcfActive(): bool {
-		return self::checkPluginActive( 'advanced-custom-fields/acf.php' ) ||
+		return self::checkPluginActive( 'secure-custom-fields/secure-custom-fields.php' ) ||
+		       self::checkPluginActive( 'advanced-custom-fields/acf.php' ) ||
 		       self::checkPluginActive( 'advanced-custom-fields-pro/acf.php' );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @return bool
+	 */
+	public static function isAcfProActive(): bool {
+		return self::checkPluginActive( 'advanced-custom-fields-pro/acf.php' );
 	}
 
 	// -------------------------------------------------------------
@@ -358,5 +364,15 @@ trait Base {
 	 */
 	public static function isWoocommerceActive(): bool {
 		return self::checkPluginActive( 'woocommerce/woocommerce.php' );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @return bool
+	 */
+	public static function isRankMathActive(): bool {
+		return self::checkPluginActive( 'seo-by-rank-math/rank-math.php' ) ||
+		       self::checkPluginActive( 'seo-by-rank-math-pro/rank-math-pro.php' );
 	}
 }

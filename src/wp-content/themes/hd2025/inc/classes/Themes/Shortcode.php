@@ -112,13 +112,13 @@ final class Shortcode {
 				endif;
 
 				if ( ! empty( $data['url'] ) ) :
-					?>
-                    <li>
-                        <a href="<?= $data['url'] ?>" title="<?= Helper::escAttr( $data['name'] ) ?>" target="_blank">
-							<?= $thumb ?>
-                            <span class="sr-only"><?= $data['name'] ?></span>
-                        </a>
-                    </li>
+                ?>
+                <li>
+                    <a href="<?= $data['url'] ?>" title="<?= Helper::escAttr( $data['name'] ) ?>" target="_blank">
+                        <?= $thumb ?>
+                        <span class="sr-only"><?= $data['name'] ?></span>
+                    </a>
+                </li>
 				<?php
 				endif;
 			}
@@ -406,7 +406,8 @@ final class Shortcode {
 		?>
         <form action="<?= Helper::home() ?>" class="frm-search" method="get" accept-charset="UTF-8" data-abide novalidate>
             <label for="<?= $id ?>" class="screen-reader-text"><?= $title_for ?></label>
-            <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" autocomplete="off" name="s" value="<?= get_search_query() ?>" placeholder="<?= $placeholder_title; ?>">
+            <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" autocomplete="off" name="s"
+                   value="<?= get_search_query() ?>" placeholder="<?= $placeholder_title; ?>">
             <button type="submit" data-fa=""><span><?= $title ?></span></button>
 			<?php
 			if ( Helper::isWoocommerceActive() ) : ?>
@@ -453,7 +454,8 @@ final class Shortcode {
             <form action="<?= Helper::home() ?>" class="frm-search" method="get" accept-charset="UTF-8" data-abide novalidate>
                 <div class="frm-container">
                     <label for="<?= $id ?>" class="screen-reader-text"><?= $title_for ?></label>
-                    <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" name="s" value="<?= get_search_query() ?>" placeholder="<?= $placeholder_title ?>">
+                    <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" name="s" value="<?= get_search_query() ?>"
+                           placeholder="<?= $placeholder_title ?>">
                     <button class="btn-s" type="submit" data-fa=""><span><?= $title ?></span></button>
                     <button class="trigger-s-close" type="button" data-fa=""><span><?= $close_title ?></span></button>
                 </div>

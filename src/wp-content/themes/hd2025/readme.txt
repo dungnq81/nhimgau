@@ -1,9 +1,8 @@
 === HD Theme ===
 
 Contributors: Gaudev
-Requires at least: WordPress 6.3
-Tested up to: WordPress 6.7
-Stable tag: 1.0.0
+Requires at least: WordPress 6.5
+Tested up to: WordPress 6.7.1
 Version: 0.25.01
 Requires PHP: 8.2
 License: GPLv2 or later

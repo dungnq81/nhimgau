@@ -28,7 +28,7 @@ final class Helper {
 			$default_url = esc_url_raw( rest_url( 'wp/v2/' . $route ) );
 		}
 
-		return $default_url;
+		return apply_filters( 'hd_rest_url', $default_url, $route, $default );
 	}
 
 	// -------------------------------------------------------------
@@ -288,7 +288,6 @@ final class Helper {
 		$content_extra = trim( $content_extra );
 
 		if ( $unique ) {
-
 			$start += strlen( $attr );
 			$end   = strpos( $str, $quote, $start );
 
@@ -325,7 +324,7 @@ final class Helper {
 	// --------------------------------------------------
 
 	/**
-	 * @param       $url
+	 * @param $url
 	 * @param int $resolution_key
 	 *
 	 * @return string
@@ -356,7 +355,7 @@ final class Helper {
 	// --------------------------------------------------
 
 	/**
-	 * @param      $url
+	 * @param $url
 	 * @param int $autoplay
 	 * @param bool $lazyload
 	 * @param bool $control

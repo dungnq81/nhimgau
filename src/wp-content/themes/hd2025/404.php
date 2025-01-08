@@ -7,3 +7,5 @@
  */
 
 \defined( 'ABSPATH' ) || die;
+
+wp_redirect( \HD\Helper::home( '/' ) );

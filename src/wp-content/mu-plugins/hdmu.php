@@ -26,7 +26,6 @@ define( 'MU_BASENAME', plugin_basename( __FILE__ ) ); // **/**.php
 define( 'MU_TEXT_DOMAIN', $plugin_data['TextDomain'] );
 
 if ( ! file_exists( __DIR__ . '/hdmu/vendor/autoload.php' ) ) {
-	error_log( 'Autoloader not found: ' . __DIR__ . '/hdmu/vendor/autoload.php' );
 	wp_die( __( 'Error locating autoloader. Please run <code>composer install</code>.', ADDONS_TEXT_DOMAIN ) );
 }
 

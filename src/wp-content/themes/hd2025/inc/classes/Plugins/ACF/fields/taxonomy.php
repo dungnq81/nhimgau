@@ -1,7 +1,5 @@
 <?php
 
-use HD\Helper;
-
 \defined( 'ABSPATH' ) || die;
 
 add_action( 'acf/include_fields', static function () {
@@ -10,7 +8,7 @@ add_action( 'acf/include_fields', static function () {
 	}
 
 	$location         = [];
-	$admin_list_table = Helper::filterSettingOptions( 'admin_list_table', [] );
+	$admin_list_table = \HD\Helper::filterSettingOptions( 'admin_list_table', [] );
 
 	foreach ( $admin_list_table['term_thumb_columns'] ?? [] as $term_column ) {
 		if ( $term_column ) {
@@ -18,7 +16,7 @@ add_action( 'acf/include_fields', static function () {
 				[
 					'param'    => 'taxonomy',
 					'operator' => '==',
-					'value'    => Helper::toString( $term_column ),
+					'value'    => \HD\Helper::toString( $term_column ),
 				]
 			];
 		}

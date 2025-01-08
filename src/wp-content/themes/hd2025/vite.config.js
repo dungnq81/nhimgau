@@ -66,12 +66,13 @@ export default {
             ? PluginCritical({
                 criticalUrl: process.env.CRITICAL_URL || 'http://localhost:8080',
                 criticalBase: `${dir}/assets/css`,
+                css: [ `${dir}/assets/css/app.css` ],
                 criticalPages: [ { uri: '', template: 'index' } ],
                 criticalConfig: {
                     inline: false,
-                    strict: true,
-                    width: 1920,
-                    height: 1080,
+                    strict: false,
+                    width: 1024,
+                    height: 768,
                     penthouse: {
                         blockJSRequests: true,
                     },

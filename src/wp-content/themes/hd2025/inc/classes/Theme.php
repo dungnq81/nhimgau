@@ -5,6 +5,7 @@ namespace HD;
 use HD\Plugins\ACF\ACF;
 use HD\Plugins\CF7;
 use HD\Plugins\PLL;
+use HD\Plugins\RankMath;
 use HD\Plugins\TGMPA\TGMPA;
 use HD\Plugins\WooCommerce\WooCommerce;
 
@@ -173,10 +174,11 @@ final class Theme {
 		// TGMPA configuration
 		TGMPA::get_instance();
 
-		Helper::isWoocommerceActive() && WooCommerce::get_instance();
 		Helper::isAcfActive() && ACF::get_instance();
 		Helper::isCf7Active() && CF7::get_instance();
 		Helper::isPolylangActive() && PLL::get_instance();
+		Helper::isRankMathActive() && ( RankMath::get_instance() );
+		Helper::isWoocommerceActive() && WooCommerce::get_instance();
 	}
 
 	// --------------------------------------------------
@@ -365,13 +367,13 @@ final class Theme {
 		wp_enqueue_script( 'login', THEME_URL . 'assets/js/login.js', [ 'jquery' ], THEME_VERSION, true );
 		wp_script_add_data( 'login', 'module', true );
 
-		// $default_logo    = THEME_URL . "storage/img/logo.png";
-		// $default_logo_bg = THEME_URL . "storage/img/login-bg.jpg";
-
 		$default_logo    = '';
 		$default_logo_bg = '';
 
-		// script / style
+		// $default_logo    = THEME_URL . "storage/img/logo.png";
+		// $default_logo_bg = THEME_URL . "storage/img/login-bg.jpg";
+
+		// scripts / styles
 		$logo          = Helper::getThemeMod( 'login_page_logo_setting' ) ?: $default_logo;
 		$logo_bg       = Helper::getThemeMod( 'login_page_bgimage_setting' ) ?: $default_logo_bg;
 		$logo_bg_color = Helper::getThemeMod( 'login_page_bgcolor_setting' );

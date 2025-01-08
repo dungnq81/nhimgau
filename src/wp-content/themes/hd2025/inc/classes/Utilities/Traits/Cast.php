@@ -122,6 +122,7 @@ trait Cast {
 				$values[ $key ] = static::toArrayDeep( $value, $explode );
 			}
 		}
+
 		try {
 			$json = json_encode( $values, JSON_INVALID_UTF8_IGNORE | JSON_THROW_ON_ERROR );
 

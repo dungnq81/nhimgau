@@ -1,7 +1,5 @@
 <?php
 
-use HD\Helper;
-
 \defined( 'ABSPATH' ) || die;
 
 add_action( 'acf/include_fields', static function () {
@@ -10,7 +8,7 @@ add_action( 'acf/include_fields', static function () {
 	}
 
 	$location = [];
-	$acf_menu = Helper::filterSettingOptions( 'acf_menu', [] );
+	$acf_menu = \HD\Helper::filterSettingOptions( 'acf_menu', [] );
 
 	foreach ( $acf_menu['acf_mega_menu_locations'] ?? [] as $menu_items ) {
 		if ( $menu_items ) {
@@ -18,7 +16,7 @@ add_action( 'acf/include_fields', static function () {
 				[
 					'param'    => 'nav_menu_item',
 					'operator' => '==',
-					'value'    => 'location/' . Helper::toString( $menu_items ),
+					'value'    => 'location/' . \HD\Helper::toString( $menu_items ),
 				]
 			];
 		}

@@ -461,7 +461,8 @@ function __theme_settings_filter( array $arr ): array {
 
 	// --------------------------------------------------
 
-	$arr_new = [ ...$arr, ...$arr_new ];
+	// Merge the new array with the old array, prioritize the value of $arr
+	$arr_new = [ ...$arr_new, ...$arr ];
 
 	// Return a cached value if static caching is enabled and the value is already cached
 	if ( isset( $cache['theme_setting'] ) ) {
