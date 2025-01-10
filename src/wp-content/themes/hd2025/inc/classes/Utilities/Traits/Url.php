@@ -2,8 +2,6 @@
 
 namespace HD\Utilities\Traits;
 
-use Vectorface\Whip\Whip;
-
 \defined( 'ABSPATH' ) || die;
 
 trait Url {
@@ -192,13 +190,14 @@ trait Url {
 	 *
 	 * @return string The user's IP address.
 	 */
-	public static function getIpAddress(): string {
-		if ( class_exists( 'Whip' ) ) {
+	public static function ipAddress(): string {
+		if ( class_exists( '\Vectorface\Whip\Whip' ) ) {
 
 			// Use a Whip library to get the valid IP address
-			$clientAddress = ( new Whip( Whip::ALL_METHODS ) )->getValidIpAddress();
+			$clientAddress = ( new \Vectorface\Whip\Whip( \Vectorface\Whip\Whip::ALL_METHODS ) )->getValidIpAddress();
 			if ( false !== $clientAddress ) {
-				return preg_replace( '/^::1$/', '127.0.0.1', $clientAddress );
+				return $clientAddress;
+				//return preg_replace( '/^::1$/', '127.0.0.1', $clientAddress );
 			}
 		} else {
 

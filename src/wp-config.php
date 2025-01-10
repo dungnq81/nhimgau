@@ -25,7 +25,7 @@ const DB_NAME     = 'nhimgau';
 const DB_USER     = 'dbuser';
 const DB_PASSWORD = 'dbuser';
 
-const DB_HOST    = 'mysql8';
+const DB_HOST    = 'localhost';
 const DB_CHARSET = 'utf8mb4';
 const DB_COLLATE = 'utf8mb4_unicode_520_ci';
 
@@ -99,7 +99,7 @@ const WP_MEMORY_LIMIT     = '512M';
 const WP_MAX_MEMORY_LIMIT = '512M';
 
 /** Disable file editor */
-const DISALLOW_FILE_EDIT = false;
+const DISALLOW_FILE_EDIT = true;
 const DISALLOW_FILE_MODS = false;
 
 /** SSL */
@@ -118,8 +118,8 @@ const DISABLED_PLUGINS = [
 	//'wp-rocket/wp-rocket.php',
 ];
 
-const WP_SITEURL = 'http://localhost:8080';
-const WP_HOME    = 'http://localhost:8080';
+const WP_SITEURL = 'https://nhimgau.test';
+const WP_HOME    = 'https://nhimgau.test';
 
 /** WordPress core auto-update, */
 const AUTOMATIC_UPDATER_DISABLED = true;

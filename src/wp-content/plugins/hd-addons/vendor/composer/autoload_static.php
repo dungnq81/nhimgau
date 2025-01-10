@@ -11,28 +11,9 @@ class ComposerStaticInitf894941b8b4f5aa838ba9df71f684270
         array (
             'enshrined\\svgSanitize\\' => 22,
         ),
-        'V' => 
-        array (
-            'Vectorface\\Whip\\' => 16,
-        ),
-        'P' => 
-        array (
-            'Psr\\SimpleCache\\' => 16,
-            'Psr\\Http\\Message\\' => 17,
-            'Psr\\Cache\\' => 10,
-        ),
         'O' => 
         array (
             'OpenSpout\\' => 10,
-        ),
-        'M' => 
-        array (
-            'MatthiasMullie\\PathConverter\\' => 29,
-            'MatthiasMullie\\Minify\\' => 22,
-        ),
-        'D' => 
-        array (
-            'Detection\\' => 10,
         ),
         'A' => 
         array (
@@ -45,37 +26,9 @@ class ComposerStaticInitf894941b8b4f5aa838ba9df71f684270
         array (
             0 => __DIR__ . '/..' . '/enshrined/svg-sanitize/src',
         ),
-        'Vectorface\\Whip\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/vectorface/whip/src',
-        ),
-        'Psr\\SimpleCache\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/simple-cache/src',
-        ),
-        'Psr\\Http\\Message\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-        ),
-        'Psr\\Cache\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/cache/src',
-        ),
         'OpenSpout\\' => 
         array (
             0 => __DIR__ . '/..' . '/openspout/openspout/src',
-        ),
-        'MatthiasMullie\\PathConverter\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/matthiasmullie/path-converter/src',
-        ),
-        'MatthiasMullie\\Minify\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/matthiasmullie/minify/src',
-        ),
-        'Detection\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/src',
         ),
         'Addons\\' => 
         array (

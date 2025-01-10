@@ -62,11 +62,11 @@ final class TGMPA {
 				'slug'     => 'akismet',
 				'required' => false,
 			],
-//			[
-//				'name'     => 'Rank Math SEO',
-//				'slug'     => 'seo-by-rank-math',
-//				'required' => false,
-//			],
+			//	    [
+			//			'name'     => 'Rank Math SEO',
+			//			'slug'     => 'seo-by-rank-math',
+			//			'required' => false,
+			//		],
 			//		[
 			//			'name'     => 'Comments – wpDiscuz',
 			//			'slug'     => 'wpdiscuz',
@@ -86,14 +86,14 @@ final class TGMPA {
 			//
 			// Include a plugin bundled with a theme.
 			//
-//			[
-//				'name'             => 'Advanced Custom Fields PRO',
-//				'slug'             => 'advanced-custom-fields-pro',
-//				'source'           => THEME_PATH . 'storage/bundled/advanced-custom-fields-pro.zip',
-//				'required'         => false,
-//				'force_activation' => false,
-//				'external_url'     => 'https://www.advancedcustomfields.com/'
-//			],
+			[
+				'name'             => 'Advanced Custom Fields PRO',
+				'slug'             => 'advanced-custom-fields-pro',
+				'source'           => THEME_PATH . 'storage/bundled/advanced-custom-fields-pro.zip',
+				'required'         => true,
+				'force_activation' => false,
+				'external_url'     => 'https://www.advancedcustomfields.com/'
+			],
 		];
 
 		/*

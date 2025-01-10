@@ -171,14 +171,14 @@ final class Theme {
 	 * @return void
 	 */
 	public function plugins_setup(): void {
-		// TGMPA configuration
-		TGMPA::get_instance();
-
 		Helper::isAcfActive() && ACF::get_instance();
 		Helper::isCf7Active() && CF7::get_instance();
 		Helper::isPolylangActive() && PLL::get_instance();
 		Helper::isRankMathActive() && ( RankMath::get_instance() );
 		Helper::isWoocommerceActive() && WooCommerce::get_instance();
+
+		// TGMPA configuration
+		TGMPA::get_instance();
 	}
 
 	// --------------------------------------------------

@@ -25,8 +25,8 @@ const customOptions = {
 };
 
 const ajaxUrl = typeof hd !== 'undefined' && typeof hd.ajaxUrl !== 'undefined' ? hd.ajaxUrl : '/wp-admin/admin-ajax.php';
-const baseUrl = typeof hd !== 'undefined' && typeof hd.baseUrl !== 'undefined' ? hd.baseUrl : 'http://localhost:8080/';
-const themeUrl = typeof hd !== 'undefined' && typeof hd.themeUrl !== 'undefined' ? hd.themeUrl : 'http://localhost:8080/wp-content/themes/hd/';
+const baseUrl = typeof hd !== 'undefined' && typeof hd.baseUrl !== 'undefined' ? hd.baseUrl : 'https://nhimgau.test/';
+const themeUrl = typeof hd !== 'undefined' && typeof hd.themeUrl !== 'undefined' ? hd.themeUrl : 'https://nhimgau.test/wp-content/themes/hd/';
 
 'serviceWorker' in navigator && window.addEventListener('load', function() {
     navigator.serviceWorker.register(themeUrl + 'assets/js/workbox.js').then(

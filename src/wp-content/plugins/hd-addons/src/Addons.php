@@ -5,7 +5,6 @@ namespace Addons;
 use Addons\OptionPage\OptionPage;
 
 use Addons\ThirdParty\Faker;
-use Addons\ThirdParty\RankMath;
 use Addons\ThirdParty\WpRocket;
 
 \defined( 'ABSPATH' ) || exit;
@@ -39,6 +38,7 @@ final class Addons {
 		( new OptionPage() );
 		( new Faker() );
 
+		// WP Rocket
 		Helper::checkPluginActive( 'wp-rocket/wp-rocket.php' ) && ( new WpRocket() );
 
 		// Classic Editor

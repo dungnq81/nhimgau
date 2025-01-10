@@ -7,63 +7,16 @@ namespace Composer\Autoload;
 class ComposerStaticInite44779db83c1176b098d00141af7bdba
 {
     public static $prefixLengthsPsr4 = array (
-        'V' => 
-        array (
-            'Vectorface\\Whip\\' => 16,
-        ),
-        'P' => 
-        array (
-            'Psr\\SimpleCache\\' => 16,
-            'Psr\\Http\\Message\\' => 17,
-            'Psr\\Cache\\' => 10,
-        ),
-        'M' => 
-        array (
-            'MatthiasMullie\\PathConverter\\' => 29,
-            'MatthiasMullie\\Minify\\' => 22,
-        ),
         'H' => 
         array (
             'HD\\' => 3,
         ),
-        'D' => 
-        array (
-            'Detection\\' => 10,
-        ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Vectorface\\Whip\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/vectorface/whip/src',
-        ),
-        'Psr\\SimpleCache\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/simple-cache/src',
-        ),
-        'Psr\\Http\\Message\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-        ),
-        'Psr\\Cache\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/cache/src',
-        ),
-        'MatthiasMullie\\PathConverter\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/matthiasmullie/path-converter/src',
-        ),
-        'MatthiasMullie\\Minify\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/matthiasmullie/minify/src',
-        ),
         'HD\\' => 
         array (
             0 => __DIR__ . '/../..' . '/inc/classes',
-        ),
-        'Detection\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/src',
         ),
     );
 

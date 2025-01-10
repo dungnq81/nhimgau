@@ -64,7 +64,7 @@ export default {
         }),
         isProduction
             ? PluginCritical({
-                criticalUrl: process.env.CRITICAL_URL || 'http://localhost:8080',
+                criticalUrl: process.env.CRITICAL_URL || 'https://nhimgau.test',
                 criticalBase: `${dir}/assets/css`,
                 css: [ `${dir}/assets/css/app.css` ],
                 criticalPages: [ { uri: '', template: 'index' } ],
