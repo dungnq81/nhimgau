@@ -561,115 +561,102 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * Updates a WordPress option with new values.
+	 * @param string $option
+	 * @param mixed $new_value
+	 * @param int $expire_cache
+	 * @param bool|null $autoload
 	 *
-	 * @param string $option_name The name of the option to update.
-	 * @param mixed $new_options The new options to set, either as a single value or an array.
-	 * @param bool $merge_arr Optional. Whether to merge new options with existing options. Default false.
-	 *
-	 * @return bool True on success, false on failure.
+	 * @return bool
 	 */
-	public static function updateOption( string $option_name, mixed $new_options, bool $merge_arr = false ): bool {
-		// Retrieve current options if merging is requested
-		if ( $merge_arr ) {
-			$options = self::getOption( $option_name );
-
-			// Ensure both are arrays before merging
-			if ( is_array( $options ) && is_array( $new_options ) ) {
-				$updated_options = array_merge( $options, $new_options );
-			} else {
-
-				// If current options are not an array, just set new options
-				$updated_options = is_array( $new_options ) ? $new_options : [ $new_options ];
-			}
-		} else {
-
-			// No merging, set updated options directly
-			$updated_options = $new_options;
+	public static function updateOption( string $option, mixed $new_value, int $expire_cache = 43200, ?bool $autoload = null ): bool {
+		$option = strtolower( trim( $option ) );
+		if ( empty( $option ) ) {
+			return false;
 		}
 
+		$site_id   = is_multisite() ? get_current_blog_id() : null;
+		$cache_key = $site_id ? "site_option_{$site_id}_{$option}" : "option_{$option}";
+
 		// Update the option in the appropriate context (multisite or not)
-		return is_multisite()
-			? update_site_option( $option_name, $updated_options )
-			: update_option( $option_name, $updated_options );
+		$updated = is_multisite()
+			? update_site_option( $option, $new_value )
+			: update_option( $option, $new_value, $autoload );
+
+		if ( $updated ) {
+			wp_cache_delete( $cache_key, 'options' );
+			wp_cache_set( $cache_key, $new_value, 'options', $expire_cache );
+		}
+
+		return $updated;
 	}
 
 	// -------------------------------------------------------------
 
 	/**
-	 * Retrieve a WordPress option value.
+	 * @param string $option
+	 * @param mixed $default
+	 * @param int $expire_cache
 	 *
-	 * @param string $option The name of the option to retrieve.
-	 * @param mixed $default Optional. The default value to return if the option does not exist. Default is false.
-	 * @param bool $static_cache Optional. Whether to use static caching for the option value. Default is false.
-	 *
-	 * @return mixed The option value, or the default if the option does not exist.
+	 * @return mixed
 	 */
-	public static function getOption( string $option, mixed $default = false, bool $static_cache = false ): mixed {
-		static $cache = [];
-
+	public static function getOption( string $option, mixed $default = false, int $expire_cache = 43200 ): mixed {
 		// Validate the option key
 		$option = strtolower( trim( $option ) );
 		if ( empty( $option ) ) {
 			return $default;
 		}
 
-		// Return a cached value if static caching is enabled and the value is already cached
-		if ( $static_cache && isset( $cache[ $option ] ) ) {
-			return $cache[ $option ];
+		$site_id      = is_multisite() ? get_current_blog_id() : null;
+		$cache_key    = $site_id ? "site_option_{$site_id}_{$option}" : "option_{$option}";
+		$cached_value = wp_cache_get( $cache_key, 'options' );
+		if ( $cached_value !== false ) {
+			return $cached_value;
 		}
+
+		$option_value = is_multisite() ? get_site_option( $option, $default ) : get_option( $option, $default );
+		wp_cache_set( $cache_key, $option_value, 'options', $expire_cache );
 
 		// Retrieve the option value
-		$value = is_multisite() ? get_site_option( $option, $default ) : get_option( $option, $default );
-
-		// Cache the value if static caching is enabled
-		if ( $static_cache ) {
-			$cache[ $option ] = $value;
-		}
-
-		return $value;
+		return $option_value;
 	}
 
 	// -------------------------------------------------------------
 
 	/**
-	 * Retrieve a theme modification value.
+	 * @param string|null $mod_name
+	 * @param mixed $default
+	 * @param int $expire_cache
 	 *
-	 * @param string $mod_name The name of the theme modification to retrieve.
-	 * @param mixed $default Optional. The default value to return if the theme modification does not exist. Default is false.
-	 *
-	 * @return mixed The theme modification value, or the default if the theme modification does not exist.
+	 * @return mixed
 	 */
-	public static function getThemeMod( string $mod_name, mixed $default = false ): mixed {
-		static $_is_loaded = [];
-
-		// Check if the modification name is provided
-		if ( $mod_name ) {
-			$mod_name_lower = strtolower( $mod_name );
-
-			// Load the modification if not already loaded
-			if ( ! isset( $_is_loaded[ $mod_name_lower ] ) ) {
-				$_mod = get_theme_mod( $mod_name, $default );
-
-				// If using SSL, ensure the URL is HTTPS
-				$_is_loaded[ $mod_name_lower ] = is_ssl() ? str_replace( 'http://', 'https://', $_mod ) : $_mod;
-			}
-
-			return $_is_loaded[ $mod_name_lower ];
+	public static function getThemeMod( ?string $mod_name, mixed $default = false, int $expire_cache = 43200 ): mixed {
+		if ( empty( $mod_name ) ) {
+			return $default;
 		}
 
-		return $default;
+		$mod_name_lower = strtolower( $mod_name );
+
+		$cache_key    = "theme_mod_{$mod_name_lower}";
+		$cached_value = wp_cache_get( $cache_key, 'theme_mods' );
+		if ( $cached_value !== false ) {
+			return $cached_value;
+		}
+
+		$_mod      = get_theme_mod( $mod_name, $default );
+		$mod_value = is_ssl() ? str_replace( 'http://', 'https://', $_mod ) : $_mod;
+
+		wp_cache_set( $cache_key, $mod_value, 'theme_mods', $expire_cache );
+
+		return $mod_value;
 	}
 
 	// -------------------------------------------------------------
 
 	/**
-	 * Retrieve a term by ID or slug/name in a specified taxonomy.
+	 * @param mixed $term_id
+	 * @param string $taxonomy
 	 *
-	 * @param mixed $term_id The term ID (integer) or slug/name (string) of the term to retrieve.
-	 * @param string $taxonomy The taxonomy to search for the term. Default is 'category'.
-	 *
-	 * @return \WP_Term|\WP_Error|bool|null The term object, a WP_Error on failure, false if `term` doesn't exist, or null if term ID is invalid.
+	 * @return \WP_Term|\WP_Error|bool|null
 	 */
 	public static function getTerm( mixed $term_id, string $taxonomy = 'category' ): \WP_Term|\WP_Error|bool|null {
 		// Check if the term ID is numeric and retrieve term by ID
@@ -711,17 +698,15 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * Query posts by term.
+	 * @param mixed $term
+	 * @param string $post_type
+	 * @param bool $include_children
+	 * @param int $posts_per_page
+	 * @param array|null $orderby
+	 * @param array|null $meta_query
+	 * @param bool|string $strtotime_recent
 	 *
-	 * @param mixed $term The term to query.
-	 * @param string $post_type The post-type to query. The default is 'post'.
-	 * @param bool $include_children Whether to include children of the term. Default is false.
-	 * @param int $posts_per_page Number of posts to return. Default is -1.
-	 * @param array|null $orderby Array of orderby parameters. Ex. [ 'date' => 'DESC' ]. Default is null.
-	 * @param array|null $meta_query Array of meta query parameters. Default is null.
-	 * @param bool|string $strtotime_recent Timestamp string for recent posts. Default is false.
-	 *
-	 * @return \WP_Query|bool False on failure or if no posts found, WP_Query object on success.
+	 * @return \WP_Query|bool
 	 */
 	public static function queryByTerm(
 		mixed $term,

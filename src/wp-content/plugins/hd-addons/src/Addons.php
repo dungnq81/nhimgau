@@ -2,8 +2,7 @@
 
 namespace Addons;
 
-use Addons\OptionPage\OptionPage;
-
+use Addons\GlobalSetting\GlobalSetting;
 use Addons\ThirdParty\Faker;
 use Addons\ThirdParty\WpRocket;
 
@@ -35,7 +34,7 @@ final class Addons {
 	// -------------------------------------------------------------
 
 	public function plugins_loaded(): void {
-		( new OptionPage() );
+		( new GlobalSetting() );
 		( new Faker() );
 
 		// WP Rocket

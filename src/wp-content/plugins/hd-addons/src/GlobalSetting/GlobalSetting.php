@@ -1,10 +1,10 @@
 <?php
 
-namespace Addons\OptionPage;
+namespace Addons\GlobalSetting;
 
 \defined( 'ABSPATH' ) || exit;
 
-final class OptionPage {
+final class GlobalSetting {
 
 	// --------------------------------------------------
 

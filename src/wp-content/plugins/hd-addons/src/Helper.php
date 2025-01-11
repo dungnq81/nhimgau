@@ -2,7 +2,9 @@
 
 namespace Addons;
 
+use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
+use Vectorface\Whip\Whip;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -16,30 +18,92 @@ final class Helper {
 	// --------------------------------------------------
 
 	/**
+	 * @param string $option
+	 * @param mixed $default
+	 * @param int $expire_cache
+	 *
+	 * @return mixed
+	 */
+	public static function getOption( string $option, mixed $default = false, int $expire_cache = 43200 ): mixed {
+		// Validate the option key
+		$option = strtolower( trim( $option ) );
+		if ( empty( $option ) ) {
+			return $default;
+		}
+
+		$site_id      = is_multisite() ? get_current_blog_id() : null;
+		$cache_key    = $site_id ? "site_option_{$site_id}_{$option}" : "option_{$option}";
+		$cached_value = wp_cache_get( $cache_key, 'options' );
+		if ( $cached_value !== false ) {
+			return $cached_value;
+		}
+
+		$option_value = is_multisite() ? get_site_option( $option, $default ) : get_option( $option, $default );
+		wp_cache_set( $cache_key, $option_value, 'options', $expire_cache );
+
+		// Retrieve the option value
+		return $option_value;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param $slug
+	 * @param bool $remove_symbols
+	 *
+	 * @return string
+	 */
+	public static function capitalizedSlug( $slug, bool $remove_symbols = true ): string {
+		$words = preg_split( '/[_-]/', $slug );
+		$capitalizedWords = array_map( 'ucfirst', $words );
+
+		if ( $remove_symbols ) {
+			return implode( '', $capitalizedWords );
+		}
+
+		if ( str_contains( $slug, '_' ) ) {
+			return implode( '_', $capitalizedWords );
+		}
+
+		return implode( '-', $capitalizedWords );
+	}
+
+	// --------------------------------------------------
+
+	/**
 	 * @param $configFile
-	 * @param $textDomain
 	 *
 	 * @return array
 	 */
-	public static function loadYaml( $configFile, $textDomain ): array {
+	public static function loadYaml( $configFile ): array {
+		// Check if the YAML class exists
+		if ( ! class_exists( Yaml::class ) ) {
+			error_log( 'Symfony Yaml class does not exist' );
+
+			return [];
+		}
+
 		try {
-			$configData = \Symfony\Component\Yaml\Yaml::parseFile( $configFile );
+			$configData = Yaml::parseFile( $configFile );
+			foreach ( $configData as $key => $value ) {
+				$configData[ $key ] = __( $value, ADDONS_TEXT_DOMAIN );
+			}
 
-
-		} catch ( \Symfony\Component\Yaml\Exception\ParseException $e ) {
-			error_log( 'YAML Parse error: ' . $e->getMessage() );
+			// Return the translated configuration array
+			return $configData;
+		} catch ( ParseException $e ) {
+			error_log( 'YAML Parse error in file ' . $configFile . ': ' . $e->getMessage() );
 
 			return [];
 		}
 	}
 
-// --------------------------------------------------
+	// --------------------------------------------------
 
 	/**
 	 * @return string
 	 */
-	public
-	static function serverIpAddress(): string {
+	public static function serverIpAddress(): string {
 		// Check for SERVER_ADDR first
 		if ( ! empty( $_SERVER['SERVER_ADDR'] ) ) {
 			return $_SERVER['SERVER_ADDR'];
@@ -67,23 +131,21 @@ final class Helper {
 		return '127.0.0.1';
 	}
 
-// --------------------------------------------------
+	// --------------------------------------------------
 
 	/**
 	 * @return string
 	 */
-	public
-	static function ipAddress(): string {
-		if ( class_exists( '\Vectorface\Whip\Whip' ) ) {
+	public static function ipAddress(): string {
+		if ( class_exists( Whip::class ) ) {
 
 			// Use a Whip library to get the valid IP address
-			$clientAddress = ( new \Vectorface\Whip\Whip( \Vectorface\Whip\Whip::ALL_METHODS ) )->getValidIpAddress();
+			$clientAddress = ( new Whip( Whip::ALL_METHODS ) )->getValidIpAddress();
 			if ( false !== $clientAddress ) {
 				return $clientAddress;
 				//return preg_replace( '/^::1$/', '127.0.0.1', $clientAddress );
 			}
 		} else {
-
 
 			// Check for CloudFlare's connecting IP
 			if ( isset( $_SERVER['HTTP_CF_CONNECTING_IP'] ) ) {
@@ -115,13 +177,12 @@ final class Helper {
 		return '127.0.0.1';
 	}
 
-// -------------------------------------------------------------
+	// -------------------------------------------------------------
 
 	/**
 	 * @return bool
 	 */
-	public
-	static function htAccess(): bool {
+	public static function htAccess(): bool {
 		global $is_apache;
 
 		if ( $is_apache ) {
@@ -135,31 +196,25 @@ final class Helper {
 		return false;
 	}
 
-// -------------------------------------------------------------
+	// -------------------------------------------------------------
 
 	/**
 	 * @param string $plugin_slug
 	 *
 	 * @return bool
 	 */
-	public
-	static function checkPluginActive(
-		string $plugin_slug
-	): bool {
+	public static function checkPluginActive( string $plugin_slug ): bool {
 		return self::checkPluginInstalled( $plugin_slug ) && is_plugin_active( $plugin_slug );
 	}
 
-// -------------------------------------------------------------
+	// -------------------------------------------------------------
 
 	/**
 	 * @param string $plugin_slug
 	 *
 	 * @return bool
 	 */
-	public
-	static function checkPluginInstalled(
-		string $plugin_slug
-	): bool {
+	public static function checkPluginInstalled( string $plugin_slug ): bool {
 
 		// Ensure required functions are available
 		if ( ! function_exists( 'get_plugins' ) || ! function_exists( 'is_plugin_active' ) ) {
@@ -173,38 +228,35 @@ final class Helper {
 		return array_key_exists( $plugin_slug, $installed_plugins );
 	}
 
-// -------------------------------------------------------------
+	// -------------------------------------------------------------
 
 	/**
 	 * @return bool
 	 */
-	public
-	static function isAcfActive(): bool {
+	public static function isAcfActive(): bool {
 		return self::checkPluginActive( 'secure-custom-fields/secure-custom-fields.php' ) ||
 		       self::checkPluginActive( 'advanced-custom-fields/acf.php' ) ||
 		       self::checkPluginActive( 'advanced-custom-fields-pro/acf.php' );
 	}
 
-// -------------------------------------------------------------
+	// -------------------------------------------------------------
 
 	/**
 	 * @return bool
 	 */
-	public
-	static function isAcfProActive(): bool {
+	public static function isAcfProActive(): bool {
 		return self::checkPluginActive( 'advanced-custom-fields-pro/acf.php' );
 	}
 
-// -------------------------------------------------------------
+	// -------------------------------------------------------------
 
 	/**
 	 * @return bool
 	 */
-	public
-	static function isRankMathActive(): bool {
+	public static function isRankMathActive(): bool {
 		return self::checkPluginActive( 'seo-by-rank-math/rank-math.php' ) ||
 		       self::checkPluginActive( 'seo-by-rank-math-pro/rank-math-pro.php' );
 	}
 
-// -------------------------------------------------------------
+	// -------------------------------------------------------------
 }
