@@ -4,7 +4,6 @@ namespace Addons;
 
 use Addons\GlobalSetting\GlobalSetting;
 use Addons\ThirdParty\Faker;
-use Addons\ThirdParty\WpRocket;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -36,9 +35,6 @@ final class Addons {
 	public function plugins_loaded(): void {
 		( new GlobalSetting() );
 		( new Faker() );
-
-		// WP Rocket
-		Helper::checkPluginActive( 'wp-rocket/wp-rocket.php' ) && ( new WpRocket() );
 
 		// Classic Editor
 		if ( Helper::checkPluginActive( 'classic-editor/classic-editor.php' ) ) {

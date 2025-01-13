@@ -415,15 +415,13 @@ figure {
 @for $i from 1 through vars.$grid-columns-max {
     :is(.flex, .\!flex) {
         &:not(.gap):not(.flex-gap) {
-            &.sm-up-#{$i} > .cell,
-            & > .cell.sm-#{$i} {
+            &.sm-up-#{$i} > .cell, & > .cell.sm-#{$i} {
                 @include mixin.flex-self($i, 1, false);
             }
         }
 
         &:where(.gap, .flex-gap) {
-            &.sm-up-#{$i} > .cell,
-            & > .cell.sm-#{$i} {
+            &.sm-up-#{$i} > .cell, & > .cell.sm-#{$i} {
                 @include mixin.flex-self($i, 1, vars.$gap-xs);
             }
         }
@@ -440,15 +438,13 @@ figure {
     @for $i from 1 through vars.$grid-columns-max {
         :is(.flex, .\!flex) {
             &:not(.gap):not(.flex-gap) {
-                &.md-up-#{$i} > .cell,
-                & > .cell.md-#{$i} {
+                &.md-up-#{$i} > .cell, & > .cell.md-#{$i} {
                     @include mixin.flex-self($i, 1, false);
                 }
             }
 
             &:where(.gap, .flex-gap) {
-                &.md-up-#{$i} > .cell,
-                & > .cell.md-#{$i} {
+                &.md-up-#{$i} > .cell, & > .cell.md-#{$i} {
                     @include mixin.flex-self($i, 1, vars.$gap);
                 }
             }
@@ -466,15 +462,13 @@ figure {
     @for $i from 1 through vars.$grid-columns-max {
         :is(.flex, .\!flex) {
             &:not(.gap):not(.flex-gap) {
-                &.lg-up-#{$i} > .cell,
-                & > .cell.lg-#{$i} {
+                &.lg-up-#{$i} > .cell, & > .cell.lg-#{$i} {
                     @include mixin.flex-self($i, 1, false);
                 }
             }
 
             &:where(.gap, .flex-gap) {
-                &.lg-up-#{$i} > .cell,
-                & > .cell.lg-#{$i} {
+                &.lg-up-#{$i} > .cell, & > .cell.lg-#{$i} {
                     @include mixin.flex-self($i, 1, vars.$gap);
                 }
             }

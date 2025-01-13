@@ -17,11 +17,11 @@
     <?php
 
     /**
-     * @see __wp_head - 1
-     * @see __other_head - 10
-     * @see __module_preload - 11
-     * @see __critical_css - 12
-     * @see __external_fonts - 99
+     * @see wp_head_action - 1
+     * @see other_head_action - 10
+     * @see module_preload_action - 11
+     * @see critical_css_action - 12
+     * @see external_fonts_action - 99
      */
     wp_head();
 
@@ -31,12 +31,12 @@
     <?php
 
     /**
-     * //@see Custom_Script::body_scripts_top__hook - 99
+     * //@see Custom_Script::body_scripts_top_action - 99
      */
     do_action( 'wp_body_open' );
 
     /**
-     * @see __skip_to_content_link - 2
+     * @see skip_to_content_link_action - 2
      */
     do_action( 'hd_before_header_action' );
 
@@ -45,7 +45,7 @@
 		<?php
 
 		/**
-		 * @see __construct_header - 10
+		 * @see construct_header_action - 10
 		 */
 		do_action( 'hd_header_action' );
 

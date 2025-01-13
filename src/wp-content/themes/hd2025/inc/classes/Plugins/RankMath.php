@@ -19,7 +19,7 @@ final class RankMath {
 	private function init(): void {
 		add_filter( 'rank_math/frontend/breadcrumb/args', [ $this, 'breadcrumb_args' ] );
 		add_filter( 'rank_math/frontend/show_keywords', '__return_true' );
-		add_filter( 'rank_math/sitemap/enable_caching', '__return_false' );
+		//add_filter( 'rank_math/sitemap/enable_caching', '__return_false' );
 
 		/**
 		 * Filter to add plugins to the RMS TOC.

@@ -1,1 +1,111 @@
-let e=(e=21)=>{let t="",r=crypto.getRandomValues(new Uint8Array(e|=0));for(;e--;)t+="useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict"[63&r[e]];return t};function t(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var n in r)e[n]=r[n]}return e}var r=function e(r,n){function o(e,o,i){if("undefined"!=typeof document){"number"==typeof(i=t({},n,i)).expires&&(i.expires=new Date(Date.now()+864e5*i.expires)),i.expires&&(i.expires=i.expires.toUTCString()),e=encodeURIComponent(e).replace(/%(2[346B]|5E|60|7C)/g,decodeURIComponent).replace(/[()]/g,escape);var c="";for(var a in i)i[a]&&(c+="; "+a,!0!==i[a]&&(c+="="+i[a].split(";")[0]));return document.cookie=e+"="+r.write(o,e)+c}}return Object.create({set:o,get:function(e){if("undefined"!=typeof document&&(!arguments.length||e)){for(var t=document.cookie?document.cookie.split("; "):[],n={},o=0;o<t.length;o++){var i=t[o].split("="),c=i.slice(1).join("=");try{var a=decodeURIComponent(i[0]);if(n[a]=r.read(c,a),e===a)break}catch(u){}}return e?n[e]:n}},remove:function(e,r){o(e,"",t({},r,{expires:-1}))},withAttributes:function(r){return e(this.converter,t({},this.attributes,r))},withConverter:function(r){return e(t({},this.converter,r),this.attributes)}},{attributes:{value:Object.freeze(n)},converter:{value:Object.freeze(r)}})}({read:function(e){return'"'===e[0]&&(e=e.slice(1,-1)),e.replace(/(%[\dA-F]{2})+/gi,decodeURIComponent)},write:function(e){return encodeURIComponent(e).replace(/%(2[346BF]|3[AC-F]|40|5[BDE]|60|7[BCD])/g,decodeURIComponent)}},{path:"/"});export{r as a,e as n};
+const urlAlphabet = "useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict";
+let nanoid = (size = 21) => {
+  let id = "";
+  let bytes = crypto.getRandomValues(new Uint8Array(size |= 0));
+  while (size--) {
+    id += urlAlphabet[bytes[size] & 63];
+  }
+  return id;
+};
+/*! js-cookie v3.0.5 | MIT */
+function assign(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+    for (var key in source) {
+      target[key] = source[key];
+    }
+  }
+  return target;
+}
+var defaultConverter = {
+  read: function(value) {
+    if (value[0] === '"') {
+      value = value.slice(1, -1);
+    }
+    return value.replace(/(%[\dA-F]{2})+/gi, decodeURIComponent);
+  },
+  write: function(value) {
+    return encodeURIComponent(value).replace(
+      /%(2[346BF]|3[AC-F]|40|5[BDE]|60|7[BCD])/g,
+      decodeURIComponent
+    );
+  }
+};
+function init(converter, defaultAttributes) {
+  function set(name, value, attributes) {
+    if (typeof document === "undefined") {
+      return;
+    }
+    attributes = assign({}, defaultAttributes, attributes);
+    if (typeof attributes.expires === "number") {
+      attributes.expires = new Date(Date.now() + attributes.expires * 864e5);
+    }
+    if (attributes.expires) {
+      attributes.expires = attributes.expires.toUTCString();
+    }
+    name = encodeURIComponent(name).replace(/%(2[346B]|5E|60|7C)/g, decodeURIComponent).replace(/[()]/g, escape);
+    var stringifiedAttributes = "";
+    for (var attributeName in attributes) {
+      if (!attributes[attributeName]) {
+        continue;
+      }
+      stringifiedAttributes += "; " + attributeName;
+      if (attributes[attributeName] === true) {
+        continue;
+      }
+      stringifiedAttributes += "=" + attributes[attributeName].split(";")[0];
+    }
+    return document.cookie = name + "=" + converter.write(value, name) + stringifiedAttributes;
+  }
+  function get(name) {
+    if (typeof document === "undefined" || arguments.length && !name) {
+      return;
+    }
+    var cookies = document.cookie ? document.cookie.split("; ") : [];
+    var jar = {};
+    for (var i = 0; i < cookies.length; i++) {
+      var parts = cookies[i].split("=");
+      var value = parts.slice(1).join("=");
+      try {
+        var found = decodeURIComponent(parts[0]);
+        jar[found] = converter.read(value, found);
+        if (name === found) {
+          break;
+        }
+      } catch (e) {
+      }
+    }
+    return name ? jar[name] : jar;
+  }
+  return Object.create(
+    {
+      set,
+      get,
+      remove: function(name, attributes) {
+        set(
+          name,
+          "",
+          assign({}, attributes, {
+            expires: -1
+          })
+        );
+      },
+      withAttributes: function(attributes) {
+        return init(this.converter, assign({}, this.attributes, attributes));
+      },
+      withConverter: function(converter2) {
+        return init(assign({}, this.converter, converter2), this.attributes);
+      }
+    },
+    {
+      attributes: { value: Object.freeze(defaultAttributes) },
+      converter: { value: Object.freeze(converter) }
+    }
+  );
+}
+var api = init(defaultConverter, { path: "/" });
+export {
+  api as a,
+  nanoid as n
+};
+//# sourceMappingURL=_vendor.js.map

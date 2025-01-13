@@ -1,3 +1,4 @@
+@use 'variables' as vars;
 @use 'functions' as func;
 @use 'mixins' as mixin;
 
@@ -31,8 +32,7 @@ $body-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Ubuntu', Arial, sans
     display: block !important;
 }
 
-.hide,
-.hidden {
+.hide, .hidden {
     display: none;
 }
 
@@ -48,8 +48,7 @@ $body-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Ubuntu', Arial, sans
     align-items: center;
 }
 
-.\!hide,
-.\!hidden {
+.\!hide, .\!hidden {
     display: none !important;
 }
 
@@ -81,14 +80,106 @@ $body-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Ubuntu', Arial, sans
     width: 200px !important;
 }
 
-.ajax-loader,
-.ajax-loading {
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.mb-30 {
+    margin-bottom: 30px;
+}
+
+.\!mt-15 {
+    margin-top: 15px !important;
+}
+
+.\!mb-15 {
+    margin-bottom: 15px !important;
+}
+
+/** */
+.ajax-loader, .ajax-loading {
     @include mixin.animation-loading(14px, #2271b1, #f3f3f3);
 }
 
-.ajax-loader2,
-.ajax-loading2 {
+.ajax-loader2, .ajax-loading2 {
     @include mixin.animation-loading(30px, #2271b1, #f3f3f3, 3px, rgb(0 0 0 / 20%));
+}
+
+:is(.grid-gap, .flex-gap, .gap) {
+    @include mixin.media-gap(vars.$gap-xs, vars.$gap, false);
+}
+
+//
+// layout.
+
+@for $i from 1 through vars.$grid-columns-max {
+    :is(.flex, .\!flex) {
+        &:not(.gap):not(.flex-gap) {
+            &.sm-up-#{$i} > .cell, & > .cell.sm-#{$i} {
+                @include mixin.flex-self($i, 1, false);
+            }
+        }
+
+        &:where(.gap, .flex-gap) {
+            &.sm-up-#{$i} > .cell, & > .cell.sm-#{$i} {
+                @include mixin.flex-self($i, 1, vars.$gap-xs);
+            }
+        }
+    }
+
+    :is(.grid, .\!grid) {
+        &.sm-up-#{$i} {
+            @include mixin.grid-template-item($i, true);
+        }
+    }
+}
+
+@include mixin.mq-min(md) {
+    @for $i from 1 through vars.$grid-columns-max {
+        :is(.flex, .\!flex) {
+            &:not(.gap):not(.flex-gap) {
+                &.md-up-#{$i} > .cell, & > .cell.md-#{$i} {
+                    @include mixin.flex-self($i, 1, false);
+                }
+            }
+
+            &:where(.gap, .flex-gap) {
+                &.md-up-#{$i} > .cell, & > .cell.md-#{$i} {
+                    @include mixin.flex-self($i, 1, vars.$gap);
+                }
+            }
+        }
+
+        :is(.grid, .\!grid) {
+            &.md-up-#{$i} {
+                @include mixin.grid-template-item($i, true);
+            }
+        }
+    }
+}
+
+@include mixin.mq-min(lg) {
+    @for $i from 1 through vars.$grid-columns-max {
+        :is(.flex, .\!flex) {
+            &:not(.gap):not(.flex-gap) {
+                &.lg-up-#{$i} > .cell, & > .cell.lg-#{$i} {
+                    @include mixin.flex-self($i, 1, false);
+                }
+            }
+
+            &:where(.gap, .flex-gap) {
+                &.lg-up-#{$i} > .cell, & > .cell.lg-#{$i} {
+                    @include mixin.flex-self($i, 1, vars.$gap);
+                }
+            }
+        }
+
+        :is(.grid, .\!grid) {
+            &.lg-up-#{$i} {
+                @include mixin.grid-template-item($i, true);
+            }
+        }
+    }
 }
 
 /** @todo flexbox & grid */
@@ -151,78 +242,6 @@ $body-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Ubuntu', Arial, sans
             width: 100%;
         }
     }
-}
-
-/** @todo font-size */
-$fs: 16;
-$fs_max: 18;
-
-@while $fs <= $fs_max {
-    :is(.fs-#{$fs}, .fs\[#{$fs}\]) {
-        font-size: func.fs($fs);
-    }
-
-    :is(.\!fs-#{$fs}, .\!fs\[#{$fs}\]) {
-        font-weight: func.fs($fs) !important;
-    }
-
-    $fs: $fs + 1;
-}
-
-/** @todo gutter */
-$count: 0;
-$count_max: 30;
-
-@while $count <= $count_max {
-    .mt-#{$count} {
-        margin-top: func.fs($count);
-    }
-
-    .\!mt-#{$count} {
-        margin-top: func.fs($count) !important;
-    }
-
-    .mb-#{$count} {
-        margin-bottom: func.fs($count);
-    }
-
-    .\!mb-#{$count} {
-        margin-bottom: func.fs($count) !important;
-    }
-
-    .pt-#{$count} {
-        padding-top: func.fs($count);
-    }
-
-    .\!pt-#{$count} {
-        padding-top: func.fs($count) !important;
-    }
-
-    .pb-#{$count} {
-        padding-bottom: func.fs($count);
-    }
-
-    .\!pb-#{$count} {
-        padding-bottom: func.fs($count) !important;
-    }
-
-    $count: $count + 5;
-}
-
-/** @todo font weight */
-$fw: 200;
-$fw_max: 900;
-
-@while $fw <= $fw_max {
-    .fw-#{$fw} {
-        font-weight: $fw;
-    }
-
-    .\!fw-#{$fw} {
-        font-weight: $fw !important;
-    }
-
-    $fw: $fw + 100;
 }
 
 /** */
@@ -952,63 +971,6 @@ body:not(.acf-admin-page) {
     .notice.notice-error {
         flex: 0 0 100%;
         max-width: 100%;
-    }
-}
-
-/** wpglobus */
-.wpglobus-wp-admin {
-    .acf-input-wrap {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-
-        p.description {
-            flex: 0 0 100%;
-            width: 100%;
-        }
-
-        .wpglobus_dialog_icon {
-            margin-top: 0;
-            display: inline-block;
-            position: relative;
-            top: 0;
-            flex: 0 0 auto;
-        }
-
-        input.wpglobus-translatable {
-            width: auto !important;
-            margin-right: 7px;
-            float: none !important;
-            flex: 1 1 0;
-        }
-    }
-
-    .acf-field-textarea {
-        .acf-input {
-            display: flex;
-            //align-items: center;
-            flex-wrap: wrap;
-
-            p.description {
-                flex: 0 0 100%;
-                width: 100%;
-            }
-
-            .wpglobus_dialog_icon {
-                margin-top: 0;
-                display: inline-block;
-                position: relative;
-                top: 0;
-                flex: 0 0 auto;
-            }
-
-            textarea.wpglobus-translatable {
-                width: auto !important;
-                margin-right: 7px;
-                float: none !important;
-                flex: 1 1 0;
-            }
-        }
     }
 }
 

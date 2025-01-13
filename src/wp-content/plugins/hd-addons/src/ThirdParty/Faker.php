@@ -12,12 +12,15 @@ final class Faker {
 	 * @throws \JsonException
 	 */
 	public function __construct() {
+
+		// ACF pro
 		$this->_acf_pro_faker();
 	}
 
 	// -------------------------------------------------------------
 
 	/**
+	 * @return void
 	 * @throws \JsonException
 	 */
 	private function _acf_pro_faker(): void {

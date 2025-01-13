@@ -19,6 +19,38 @@ final class Helper {
 
 	/**
 	 * @param string $option
+	 * @param mixed $new_value
+	 * @param int $expire_cache
+	 * @param bool|null $autoload
+	 *
+	 * @return bool
+	 */
+	public static function updateOption( string $option, mixed $new_value, int $expire_cache = 43200, ?bool $autoload = null ): bool {
+		$option = strtolower( trim( $option ) );
+		if ( empty( $option ) ) {
+			return false;
+		}
+
+		$site_id   = is_multisite() ? get_current_blog_id() : null;
+		$cache_key = $site_id ? "site_option_{$site_id}_{$option}" : "option_{$option}";
+
+		// Update the option in the appropriate context (multisite or not)
+		$updated = is_multisite()
+			? update_site_option( $option, $new_value )
+			: update_option( $option, $new_value, $autoload );
+
+		if ( $updated ) {
+			wp_cache_delete( $cache_key, 'options' );
+			wp_cache_set( $cache_key, $new_value, 'options', $expire_cache );
+		}
+
+		return $updated;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string $option
 	 * @param mixed $default
 	 * @param int $expire_cache
 	 *
@@ -54,7 +86,7 @@ final class Helper {
 	 * @return string
 	 */
 	public static function capitalizedSlug( $slug, bool $remove_symbols = true ): string {
-		$words = preg_split( '/[_-]/', $slug );
+		$words            = preg_split( '/[_-]/', $slug );
 		$capitalizedWords = array_map( 'ucfirst', $words );
 
 		if ( $remove_symbols ) {
@@ -84,13 +116,8 @@ final class Helper {
 		}
 
 		try {
-			$configData = Yaml::parseFile( $configFile );
-			foreach ( $configData as $key => $value ) {
-				$configData[ $key ] = __( $value, ADDONS_TEXT_DOMAIN );
-			}
-
 			// Return the translated configuration array
-			return $configData;
+			return Yaml::parseFile( $configFile );
 		} catch ( ParseException $e ) {
 			error_log( 'YAML Parse error in file ' . $configFile . ': ' . $e->getMessage() );
 
@@ -143,7 +170,6 @@ final class Helper {
 			$clientAddress = ( new Whip( Whip::ALL_METHODS ) )->getValidIpAddress();
 			if ( false !== $clientAddress ) {
 				return $clientAddress;
-				//return preg_replace( '/^::1$/', '127.0.0.1', $clientAddress );
 			}
 		} else {
 
@@ -175,25 +201,6 @@ final class Helper {
 
 		// Fallback to localhost IP
 		return '127.0.0.1';
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @return bool
-	 */
-	public static function htAccess(): bool {
-		global $is_apache;
-
-		if ( $is_apache ) {
-			return true;
-		}
-
-		if ( isset( $_SERVER['HTACCESS'] ) && $_SERVER['HTACCESS'] === 'on' ) {
-			return true;
-		}
-
-		return false;
 	}
 
 	// -------------------------------------------------------------
@@ -246,16 +253,6 @@ final class Helper {
 	 */
 	public static function isAcfProActive(): bool {
 		return self::checkPluginActive( 'advanced-custom-fields-pro/acf.php' );
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @return bool
-	 */
-	public static function isRankMathActive(): bool {
-		return self::checkPluginActive( 'seo-by-rank-math/rank-math.php' ) ||
-		       self::checkPluginActive( 'seo-by-rank-math-pro/rank-math-pro.php' );
 	}
 
 	// -------------------------------------------------------------

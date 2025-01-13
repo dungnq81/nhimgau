@@ -12,12 +12,12 @@
 // Custom CSS
 // --------------------------------------------------
 
-add_action( 'wp_enqueue_scripts', '__custom_css', 99 );
+add_action( 'wp_enqueue_scripts', 'custom_css_action', 99 );
 
 /**
  * @return void
  */
-function __custom_css(): void {
+function custom_css_action(): void {
 	//$css = \HD\Utilities\CSS::get_instance();
 
 	//...

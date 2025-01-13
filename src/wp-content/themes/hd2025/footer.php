@@ -22,7 +22,7 @@ do_action( 'hd_before_footer_action' );
 	<?php
 
 	/**
-	 * @see __construct_footer - 10
+	 * @see construct_footer_action - 10
 	 */
 	do_action( 'hd_footer_action' );
 
@@ -33,7 +33,7 @@ do_action( 'hd_before_footer_action' );
 do_action( 'hd_after_footer_action' );
 
 /**
- * @see __wp_footer - 98
+ * @see wp_footer_action - 98
  */
 wp_footer();
 

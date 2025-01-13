@@ -18,5 +18,13 @@
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest"
+    },
+    "replace": {
+        "symfony/yaml": "*",
+        "vectorface/whip": "*",
+        "mobiledetect/mobiledetectlib": "*",
+        "matthiasmullie/minify": "*",
+        "symfony/var-dumper": "*",
+        "roave/security-advisories": "*"
     }
 }

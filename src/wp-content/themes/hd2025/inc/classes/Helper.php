@@ -85,47 +85,40 @@ final class Helper {
 	public static function clearAllCache(): void {
 		global $wpdb;
 
+		// Clear object cache (e.g., Redis or Memcached)
+		if ( function_exists( 'wp_cache_flush' ) ) {
+			wp_cache_flush();
+		}
+
 		// LiteSpeed cache
 		if ( class_exists( \LiteSpeed\Purge::class ) ) {
 			\LiteSpeed\Purge::purge_all();
-			self::errorLog( 'LiteSpeed cache cleared.' );
 		}
 
 		// WP-Rocket cache
 		if ( \defined( 'WP_ROCKET_PATH' ) && \function_exists( 'rocket_clean_domain' ) ) {
 			\rocket_clean_domain();
-			self::errorLog( 'WP-Rocket cache cleared.' );
 		}
 
 		// Clearly minified CSS and JavaScript files (WP-Rocket)
 		if ( function_exists( 'rocket_clean_minify' ) ) {
 			\rocket_clean_minify();
-			self::errorLog( 'WP-Rocket minified files cleared.' );
 		}
 
 		// Jetpack transient cache
 		if ( self::checkPluginActive( 'jetpack/jetpack.php' ) ) {
 			$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_jetpack_%'" );
 			$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_jetpack_%'" );
-			self::errorLog( 'Jetpack transient cache cleared.' );
 
 			// Clear Jetpack Photon cache locally
 			if ( class_exists( \Jetpack_Photon::class ) ) {
 				\Jetpack_Photon::instance()->purge_cache();
-				self::errorLog( 'Jetpack Photon cache cleared.' );
 			}
 		}
 
 		// Clear all WordPress transients
 		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_%'" );
 		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_%'" );
-		self::errorLog( 'All WordPress transients cleared.' );
-
-		// Clear object cache (e.g., Redis or Memcached)
-		if ( function_exists( 'wp_cache_flush' ) ) {
-			wp_cache_flush();
-			self::errorLog( 'Object cache cleared.' );
-		}
 	}
 
 	// --------------------------------------------------

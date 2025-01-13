@@ -1,7 +1,5 @@
 <?php
 
-use Addons\Helper;
-
 \defined( 'ABSPATH' ) || exit;
 
 ?>
@@ -14,27 +12,34 @@ use Addons\Helper;
     </div>
 
     <div class="save-bar">
-        <button type="submit" name="_submit_settings" class="button button-primary"><?php _e( 'Save Changes', ADDONS_TEXT_DOMAIN ); ?></button>
+        <button type="submit" name="_submit_settings"
+                class="button button-primary"><?php _e( 'Save Changes', ADDONS_TEXT_DOMAIN ); ?></button>
     </div>
 
     <ul class="ul-menu-list">
 		<?php
 
-		$menu_options = Helper::loadYaml( ADDONS_PATH . 'config.yml' );
-        $menu_options_loaded =
-		$i = 0;
+		$menu_options           = \Addons\Helper::loadYaml( ADDONS_PATH . 'config.yaml' );
+		$global_setting_options = \Addons\Helper::getOption( 'global_setting_options' );
+		$i                      = 0;
 
 		foreach ( $menu_options as $slug => $value ) {
 			$current = ( $i === 0 ) ? ' class="current"' : '';
+			$title   = ! empty( $value['title'] ) ? __( $value['title'], ADDONS_TEXT_DOMAIN ) : '';
 
 			// WooCommerce
-			if ( (string) $slug === 'woocommerce' && ! Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {
+			if ( (string) $slug === 'woocommerce' && ! \Addons\Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {
 				continue;
 			}
 
-            ?>
+            // Check module active
+            if ( empty( $global_setting_options[$slug] ) && 'global_setting' !== $slug ) {
+                continue;
+            }
+
+			?>
             <li class="<?= $slug ?>-settings">
-                <a<?= $current ?> title="<?= esc_attr( $value ) ?>" href="#<?= $slug ?>_settings"><?= $value ?></a>
+                <a<?= $current ?> title="<?= esc_attr( $title ) ?>" href="#<?= $slug ?>_settings"><?= $title ?></a>
             </li>
 			<?php $i ++;
 		} ?>

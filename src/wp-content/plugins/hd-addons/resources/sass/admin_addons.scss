@@ -174,12 +174,16 @@
             h2 {
                 margin-top: 30px;
                 font-weight: 700;
+
+                & + .desc {
+                    margin-top: -5px;
+                }
             }
         }
 
         /** */
         .section {
-            margin-bottom: 10px;
+            /*margin-bottom: 10px;*/
 
             .controls {
                 &.control-img {
@@ -261,27 +265,28 @@
             .heading {
                 font-size: 14px;
                 text-transform: uppercase;
-                margin: 25px 0 0 0;
-                padding: 25px 0 20px 0;
+                margin: 20px 0 0 0;
+                padding: 20px 0 20px 0;
                 border-top: 1px solid #dddddd;
                 display: block;
                 width: 700px;
-                max-width: calc(100% - 15px);
+                max-width: 100%;
                 font-weight: 700;
 
                 &.inline-heading {
                     border-top: none;
                     margin-top: 0;
-                    padding-top: 20px;
+                    padding-top: 0;
                 }
             }
 
             .desc {
-                max-width: calc(100% - 15px);
+                max-width: 100%;
 
                 :where(b, strong) {
                     font-weight: 700;
                 }
+
             }
 
             .option {
