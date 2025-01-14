@@ -208,9 +208,8 @@
 #_settings_form #_content .section .heading {
   font-size: 14px;
   text-transform: uppercase;
-  margin: 20px 0 0 0;
-  padding: 20px 0 20px 0;
-  border-top: 1px solid #dddddd;
+  /*margin: 20px 0 0 0;*/
+  padding: 0 0 15px 0;
   display: block;
   width: 700px;
   max-width: 100%;
@@ -233,9 +232,9 @@
 }
 #_settings_form #_content .section .controls {
   position: relative;
-  margin: 0 10px 10px 0;
+  /*margin: 0 10px 10px 0;*/
   width: 700px;
-  max-width: calc(100% - 15px);
+  max-width: 100%;
 }
 #_settings_form #_content .section .controls > label {
   display: block;

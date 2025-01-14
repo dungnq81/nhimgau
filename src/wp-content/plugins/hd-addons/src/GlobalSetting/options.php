@@ -3,21 +3,23 @@
 \defined( 'ABSPATH' ) || exit;
 
 $menu_options           = \Addons\Helper::loadYaml( ADDONS_PATH . 'config.yaml' );
-$global_setting_options = \Addons\Helper::getOption( 'global_setting_options' );
+$global_setting_options = \Addons\Helper::getOption( 'global_setting__options' );
+
+$current_slug =	$current_slug ?? 'global_setting';
 
 ?>
-<div class="container flex flex-x flex-gap sm-up-1 md-up-2 lg-up-3">
+<div class="container flex flex-x flex-gap sm-up-2 md-up-3 lg-up-4">
 	<?php
 	foreach ( $menu_options as $slug => $value ) :
 		$title       = ! empty( $value['title'] ) ? __( $value['title'], ADDONS_TEXT_DOMAIN ) : '';
 		$description = ! empty( $value['description'] ) ? __( $value['description'], ADDONS_TEXT_DOMAIN ) : '';
 
-		if ( $slug === ( $current_slug ?? 'global_setting' ) ) {
+		if ( $slug === $current_slug ) {
 			continue;
 		}
     ?>
     <div class="section section-checkbox cell" id="section_<?= $slug ?>">
-        <label class="heading inline-heading" for="<?= $slug ?>"><?php echo $title; ?></label>
+        <label class="heading" for="<?= $slug ?>"><?php echo $title; ?></label>
         <div class="option">
             <div class="controls">
                 <input type="checkbox" class="checkbox" name="<?= $slug ?>" id="<?= $slug ?>" <?php echo checked( $global_setting_options[$slug] ?? false, 1 ); ?> value="1">

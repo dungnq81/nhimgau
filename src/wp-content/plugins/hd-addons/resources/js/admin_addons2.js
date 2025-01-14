@@ -3,33 +3,32 @@ import Cookies from 'js-cookie';
 
 Object.assign(window, { Cookies });
 
-jQuery(function ($) {
+jQuery(function($) {
 
     // random id
-    function rand_element_init( el ) {
-        const $el = $( el );
-        const _rand = nanoid( 9 );
-        $el.addClass( _rand );
-
-        let _id = $el.attr( 'id' );
-        if ( !_id ) {
+    function rand_element_init(el) {
+        const $el = $(el);
+        const _rand = nanoid(9);
+        $el.addClass(_rand);
+        let _id = $el.attr('id');
+        if (!_id) {
             _id = _rand;
-            $el.attr( 'id', _id );
+            $el.attr('id', _id);
         }
 
         return _id;
     }
 
     // codemirror
-    if ( typeof codemirror_settings !== 'undefined' ) {
-        const codemirror_css = [ ...document.querySelectorAll( '.codemirror_css' ) ];
-        const codemirror_html = [ ...document.querySelectorAll( '.codemirror_html' ) ];
+    if (typeof codemirror_settings !== 'undefined') {
+        const codemirror_css = [ ...document.querySelectorAll('.codemirror_css') ];
+        const codemirror_html = [ ...document.querySelectorAll('.codemirror_html') ];
 
-        function initializeCodeMirror( elements, settings, type ) {
-            elements.forEach( function ( el ) {
-                if ( !el.CodeMirror ) {
-                    console.log( `Initializing CodeMirror for ${ type } on element:`, el );
-                    rand_element_init( el );
+        function initializeCodeMirror(elements, settings, type) {
+            elements.forEach(function(el) {
+                if (!el.CodeMirror) {
+                    console.log(`Initializing CodeMirror for ${type} on element:`, el);
+                    rand_element_init(el);
                     let editorSettings = settings ? { ...settings } : {};
                     editorSettings.codemirror = {
                         ...editorSettings.codemirror,
@@ -37,47 +36,39 @@ jQuery(function ($) {
                         tabSize: 3,
                         autoRefresh: true,
                     };
-                    el.CodeMirror = wp.codeEditor.initialize( el, editorSettings );
+                    el.CodeMirror = wp.codeEditor.initialize(el, editorSettings);
                 } else {
-                    console.log( `CodeMirror already initialized for ${ type } on element:`, el );
+                    console.log(`CodeMirror already initialized for ${type} on element:`, el);
                 }
-            } );
+            });
         }
 
-        initializeCodeMirror( codemirror_css, codemirror_settings.codemirror_css, 'CSS' );
-        initializeCodeMirror( codemirror_html, codemirror_settings.codemirror_html, 'HTML' );
+        initializeCodeMirror(codemirror_css, codemirror_settings.codemirror_css, 'CSS');
+        initializeCodeMirror(codemirror_html, codemirror_settings.codemirror_html, 'HTML');
     }
 
-    $.fn.fadeOutAndRemove = function (speed) {
-        return this.fadeOut(speed, function () {
+    $.fn.fadeOutAndRemove = function(speed) {
+        return this.fadeOut(speed, function() {
             $(this).remove();
         });
     };
 
-    $.fn.serializeObject = function () {
+    $.fn.serializeObject = function() {
         let obj = {};
         let array = this.serializeArray();
-
-        $.each(array, function () {
+        $.each(array, function() {
             let name = this.name;
             let value = this.value || '';
-
-            // Check if the name ends with []
             if (name.indexOf('[]') > -1) {
                 name = name.replace('[]', '');
-
-                // Ensure the object property is an array
                 if (!obj[name]) {
                     obj[name] = [];
                 }
-
-                // Push the value into the array
                 obj[name].push(value);
             } else {
-                // Check if the object already has a property with the given name
                 if (obj[name] !== undefined) {
                     if (!Array.isArray(obj[name])) {
-                        obj[name] = [obj[name]];
+                        obj[name] = [ obj[name] ];
                     }
                     obj[name].push(value);
                 } else {
@@ -90,18 +81,18 @@ jQuery(function ($) {
     };
 
     // hide notice
-    $(document).on('click', '.notice-dismiss', function (e) {
-        $(this).closest('.notice.is-dismissible')?.fadeOutAndRemove(400);
+    $(document).on('click', '.notice-dismiss', function(e) {
+        $(this).closest('.notice.is-dismissible')?.fadeOutAndRemove(500);
     });
 
     // ajax submit settings
-    $(document).on('submit', '#_settings_form', function (e) {
+    $(document).on('submit', '#_settings_form', function(e) {
         e.preventDefault();
         let $this = $(this);
+        let $data = $this.serializeObject();
 
         let btn_submit = $this.find('button[name="_submit_settings"]');
         let button_text = btn_submit.html();
-        //let button_text_loading = '<i class="fa-solid fa-spinner fa-spin-pulse"></i>';
         let button_text_loading = '<span class="ajax-loader">&nbsp;</span>';
 
         btn_submit.prop('disabled', true).html(button_text_loading);
@@ -110,101 +101,110 @@ jQuery(function ($) {
             url: ajaxurl,
             data: {
                 action: 'submit_settings',
-                _data: $this.serializeObject(),
+                _data: $data,
                 _ajax_nonce: $this.find('input[name="_wpnonce"]').val(),
                 _wp_http_referer: $this.find('input[name="_wp_http_referer"]').val(),
             },
         })
-            .done(function (data) {
-                btn_submit.prop('disabled', false).html(button_text);
-                $this.find('#_content').prepend(data);
+        .done(function(data) {
+            btn_submit.prop('disabled', false).html(button_text);
+            $this.find('#_content').prepend(data);
 
-                // dismissible auto hide
-                setTimeout(() => {
-                    $this.find('#_content').find('.dismissible-auto')?.fadeOutAndRemove(400);
-                }, 4000);
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                btn_submit.prop('disabled', false).html(button_text);
-                console.log(errorThrown);
-            });
+            // auto reload tab `global_setting`
+            if (window.location.hash === '#global_setting_settings') {
+                window.location.reload();
+            }
+
+            // dismissible auto hide
+            setTimeout(() => {
+                $this.find('#_content')?.find('.dismissible-auto')?.fadeOutAndRemove(400);
+            }, 4000);
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+            btn_submit.prop('disabled', false).html(button_text);
+            console.log(errorThrown);
+        });
     });
 
     // filter tabs
-    const filter_tabs = $('.filter-tabs');
-    $.each(filter_tabs, function (i, el) {
-        const $el = $(el),
-            _id = rand_element_init(el),
+    const $filterTabs = $('.filter-tabs');
+    $filterTabs.each(function() {
+        const $el = $(this),
             $nav = $el.find('.tabs-nav'),
-            $content = $el.find('.tabs-content');
+            $content = $el.find('.tabs-content'),
+            $tabs = $nav.find('a'),
+            initialHash = window.location.hash;
 
-        const _cookie = `cookie_${_id}_${i}`;
-        let cookieValue = Cookies.get(_cookie);
+        const activateTab = (hash) => {
+            const $tab = $nav.find(`a[href="${hash}"]`);
+            $nav.find('a').removeClass('current');
+            $content.find('.tabs-panel').hide();
 
-        if (!cookieValue) {
-            cookieValue = $nav.find('a:first').attr('href');
-            Cookies.set(_cookie, cookieValue, { expires: 7, path: '', secure: true });
-        }
-        $nav.find('a.current').removeClass('current');
-        $nav.find(`a[href="${cookieValue}"]`).addClass('current');
-        $nav.find('a')
-            .on('click', function (e) {
-                e.preventDefault();
+            if ($tab.length) {
+                $tab.addClass('current');
+                $(hash).show();
+            } else {
+                $tabs.first().addClass('current');
+                $content.find('.tabs-panel').first().show();
+                window.history.replaceState(null, null, window.location.pathname + window.location.search);
+            }
+        };
 
-                const $this = $(this);
-                const hash = $this.attr('href');
-                Cookies.set(_cookie, hash, { expires: 7, path: '', secure: true });
+        activateTab(initialHash || $tabs.first().attr('href'));
 
-                $nav.find('a.current').removeClass('current');
-                $content.find('.tabs-panel:visible').removeClass('show')?.hide();
+        $nav.on('click', 'a', function(e) {
+            e.preventDefault();
+            const hash = $(this).attr('href');
+            window.location.hash = hash;
+            activateTab(hash);
+            $('html, body').animate({ scrollTop: $el.offset().top - $('header').outerHeight() }, 300);
+        });
 
-                $($this.attr('href')).addClass('show')?.show();
-                $this.addClass('current');
-            })
-            .filter('.current')
-            .trigger('click');
+        $(window).on('hashchange', function() {
+            activateTab(window.location.hash || $tabs.first().attr('href'));
+        });
     });
 
     // select2 multiple
-    const select2_multiple = $( '.select2-multiple' );
-    $.each( select2_multiple, function ( i, el ) {
-        $( el ).select2( {
+    const select2_multiple = $('.select2-multiple');
+    $.each(select2_multiple, function(i, el) {
+        $(el).select2({
             multiple: true,
             allowClear: true,
             width: 'resolve',
             dropdownAutoWidth: true,
-            placeholder: $( el ).attr( 'placeholder' ),
-        } );
-    } );
+            placeholder: $(el).attr('placeholder'),
+        });
+    });
 
     // select2 tags
-    const select2_tags = $( '.select2-tags' );
-    $.each( select2_tags, function ( i, el ) {
-        $( el ).select2( {
+    const select2_tags = $('.select2-tags');
+    $.each(select2_tags, function(i, el) {
+        $(el).select2({
             multiple: true,
             tags: true,
             allowClear: true,
             width: 'resolve',
             dropdownAutoWidth: true,
-            placeholder: $( el ).attr( 'placeholder' ),
-        } );
-    } );
+            placeholder: $(el).attr('placeholder'),
+        });
+    });
 
     // select2 IPs
-    const select2_ips = $( '.select2-ips' );
-    $.each( select2_ips, function ( i, el ) {
-        $( el ).select2( {
+    const select2_ips = $('.select2-ips');
+    $.each(select2_ips, function(i, el) {
+        $(el).select2({
             multiple: true,
             tags: true,
             allowClear: true,
             width: 'resolve',
             dropdownAutoWidth: true,
-            placeholder: $( el ).attr( 'placeholder' ),
-            createTag: function ( params ) {
-                let term = $.trim( params.term );
+            placeholder: $(el).attr('placeholder'),
+            createTag: function(params) {
+                let term = $.trim(params.term);
 
                 // Validate the term as an IP address or range
-                if ( isValidIPRange( term ) ) {
+                if (isValidIPRange(term)) {
                     return {
                         id: term, text: term,
                     };
@@ -212,8 +212,8 @@ jQuery(function ($) {
                     return null;
                 }
             },
-        } );
-    } );
+        });
+    });
 });
 
 /**
@@ -222,22 +222,22 @@ jQuery(function ($) {
  * @param range
  * @returns {boolean}
  */
-function isValidIPRange( range ) {
+function isValidIPRange(range) {
     const ipPattern = /^(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})$/;
     const rangePattern = /^(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})-(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])$/;
     const cidrPattern = /^(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\/(\d|[1-2]\d|3[0-2])$/;
 
-    if ( ipPattern.test( range ) ) {
+    if (ipPattern.test(range)) {
         return true;
     }
 
-    if ( rangePattern.test( range ) ) {
-        const [ startIP, endRange ] = range.split( '-' );
-        const endIP = startIP.split( '.' ).slice( 0, 3 ).join( '.' ) + '.' + endRange;
-        return compareIPs( startIP, endIP ) < 0;
+    if (rangePattern.test(range)) {
+        const [ startIP, endRange ] = range.split('-');
+        const endIP = startIP.split('.').slice(0, 3).join('.') + '.' + endRange;
+        return compareIPs(startIP, endIP) < 0;
     }
 
-    return cidrPattern.test( range );
+    return cidrPattern.test(range);
 }
 
 /**
@@ -247,13 +247,13 @@ function isValidIPRange( range ) {
  * @param ip2
  * @returns {number}
  */
-function compareIPs( ip1, ip2 ) {
-    const ip1Parts = ip1.split( '.' ).map( Number );
-    const ip2Parts = ip2.split( '.' ).map( Number );
+function compareIPs(ip1, ip2) {
+    const ip1Parts = ip1.split('.').map(Number);
+    const ip2Parts = ip2.split('.').map(Number);
 
-    for ( let i = 0; i < 4; i++ ) {
-        if ( ip1Parts[i] < ip2Parts[i] ) return -1;
-        if ( ip1Parts[i] > ip2Parts[i] ) return 1;
+    for (let i = 0; i < 4; i++) {
+        if (ip1Parts[i] < ip2Parts[i]) return -1;
+        if (ip1Parts[i] > ip2Parts[i]) return 1;
     }
     return 0;
 }

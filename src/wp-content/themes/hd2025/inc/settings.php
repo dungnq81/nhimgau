@@ -83,7 +83,7 @@ function wp_default_scripts_callback( $scripts ): void {
 
 add_filter( 'body_class', 'body_class_callback', 11, 1 );
 
-function __body_classes_filter( array $classes ): array {
+function body_class_callback( array $classes ): array {
 	// Check whether we're in the customizer preview.
 	if ( is_customize_preview() ) {
 		$classes[] = 'customizer-preview';
@@ -114,9 +114,9 @@ function __body_classes_filter( array $classes ): array {
 // Hook post_class
 // --------------------------------------------------
 
-add_filter( 'post_class', '__post_classes_filter', 11, 1 );
+add_filter( 'post_class', 'post_class_callback', 11, 1 );
 
-function __post_classes_filter( array $classes ): array {
+function post_class_callback( array $classes ): array {
 	// remove_sticky_class
 	if ( in_array( 'sticky', $classes, false ) ) {
 		$classes   = array_diff( $classes, [ 'sticky' ] );
@@ -140,9 +140,9 @@ function __post_classes_filter( array $classes ): array {
 // Filter nav_menu_css_class
 // --------------------------------------------------
 
-add_filter( 'nav_menu_css_class', '__nav_menu_css_classes_filter', 999, 4 );
+add_filter( 'nav_menu_css_class', 'nav_menu_css_class_callback', 999, 4 );
 
-function __nav_menu_css_classes_filter( $classes, $menu_item, $args, $depth ): array {
+function nav_menu_css_class_callback( $classes, $menu_item, $args, $depth ): array {
 	if ( ! is_array( $classes ) ) {
 		$classes = [];
 	}
@@ -185,9 +185,9 @@ function __nav_menu_css_classes_filter( $classes, $menu_item, $args, $depth ): a
 // Filter nav_menu_link_attributes
 // --------------------------------------------------
 
-add_filter( 'nav_menu_link_attributes', '__nav_menu_link_attributes_filter', 999, 4 );
+add_filter( 'nav_menu_link_attributes', 'nav_menu_link_attributes_callback', 999, 4 );
 
-function __nav_menu_link_attributes_filter( $atts, $menu_item, $args, $depth ): array {
+function nav_menu_link_attributes_callback( $atts, $menu_item, $args, $depth ): array {
 	// link_class
 	// link_depth_class
 
@@ -217,9 +217,9 @@ function __nav_menu_link_attributes_filter( $atts, $menu_item, $args, $depth ): 
 // Filter nav_menu_item_title
 // --------------------------------------------------
 
-add_filter( 'nav_menu_item_title', '__nav_menu_item_title_filter', 999, 4 );
+add_filter( 'nav_menu_item_title', 'nav_menu_item_title_callback', 999, 4 );
 
-function __nav_menu_item_title_filter( $title, $item, $args, $depth ) {
+function nav_menu_item_title_callback( $title, $item, $args, $depth ) {
 	//	if ($args->theme_location === 'main-nav') {
 	//		$title = '<span>' . $title . '</span>';
 	//	}
@@ -231,9 +231,9 @@ function __nav_menu_item_title_filter( $title, $item, $args, $depth ) {
 // query_vars
 // --------------------------------------------------
 
-add_filter( 'query_vars', '__query_vars', 99 );
+add_filter( 'query_vars', 'query_vars_callback', 99 );
 
-function __query_vars( $vars ): array {
+function query_vars_callback( $vars ): array {
 	$vars[] = 'page';
 	$vars[] = 'paged';
 
@@ -244,9 +244,9 @@ function __query_vars( $vars ): array {
 // custom filter
 // --------------------------------------------------
 
-add_filter( 'hd_theme_settings_filter', '__theme_settings_filter', 99 );
+add_filter( 'hd_theme_settings_filter', 'hd_theme_settings_filter_callback', 99 );
 
-function __theme_settings_filter( array $arr ): array {
+function hd_theme_settings_filter_callback( array $arr ): array {
 	static $cache = [];
 	$arr_new = [
 
@@ -279,22 +279,20 @@ function __theme_settings_filter( array $arr ): array {
 		],
 
 		//
-		// Aspect Ratio - custom post-type and term.
+		// Aspect Ratio.
 		//
-		'aspect_ratio_post_type_term'         => [
-			'post',
-		],
-
-		//
-		// Aspect Ratio default.
-		//
-		'aspect_ratio_default'                => [
-			'1-1',
-			'2-1',
-			'3-2',
-			'4-3',
-			'16-9',
-			'21-9',
+		'aspect_ratio' => [
+			'post_type_term' => [
+				'post',
+			],
+			'ratio_default' => [
+				'1-1',
+				'2-1',
+				'3-2',
+				'4-3',
+				'16-9',
+				'21-9',
+			]
 		],
 
 		//
@@ -350,7 +348,7 @@ function __theme_settings_filter( array $arr ): array {
 				'main-nav',
 			],
 
-			// ACF attributes `mega menu` locations.
+			// ACF attributes `mega-menu` locations.
 			'acf_mega_menu_locations'  => [],
 		],
 
@@ -450,6 +448,8 @@ function __theme_settings_filter( array $arr ): array {
 	// --------------------------------------------------
 
 	if ( Helper::isWoocommerceActive() ) {
+		$arr_new['aspect_ratio']['post_type_term'][]                      = 'product';
+		$arr_new['aspect_ratio']['post_type_term'][]                      = 'product_cat';
 		$arr_new['admin_list_table']['term_row_actions'][]                = 'product_cat';
 		$arr_new['admin_list_table']['post_type_exclude_thumb_columns'][] = 'product';
 		$arr_new['post_type_terms'][]                                     = [ 'product' => 'product_cat' ];

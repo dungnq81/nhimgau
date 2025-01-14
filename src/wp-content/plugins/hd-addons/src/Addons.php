@@ -2,6 +2,7 @@
 
 namespace Addons;
 
+use Addons\AspectRatio\AspectRatio;
 use Addons\GlobalSetting\GlobalSetting;
 use Addons\ThirdParty\Faker;
 
@@ -34,6 +35,7 @@ final class Addons {
 
 	public function plugins_loaded(): void {
 		( new GlobalSetting() );
+		( new AspectRatio() );
 		( new Faker() );
 
 		// Classic Editor
@@ -44,6 +46,11 @@ final class Addons {
 
 	// -------------------------------------------------------------
 
+	/**
+	 * @param $hook
+	 *
+	 * @return void
+	 */
 	public function admin_enqueue_scripts( $hook ): void {
 		$version = ADDONS_VERSION;
 		if ( WP_DEBUG ) {

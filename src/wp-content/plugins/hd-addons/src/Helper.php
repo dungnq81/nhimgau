@@ -15,6 +15,175 @@ use Vectorface\Whip\Whip;
  */
 final class Helper {
 
+	// -------------------------------------------------------------
+
+	/**
+	 * @param $name
+	 * @param mixed $default
+	 *
+	 * @return array|mixed
+	 */
+	public static function filterSettingOptions( $name, mixed $default = [] ): mixed {
+		$filters = apply_filters( 'hd_theme_settings_filter', [] );
+
+		if ( isset( $filters[ $name ] ) ) {
+			return $filters[ $name ] ?: $default;
+		}
+
+		return [];
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string|null $string
+	 * @param bool $remove_js
+	 * @param bool $flatten
+	 * @param $allowed_tags
+	 *
+	 * @return string
+	 */
+	public static function stripAllTags( ?string $string, bool $remove_js = true, bool $flatten = true, $allowed_tags = null ): string {
+		if ( ! is_scalar( $string ) ) {
+			return '';
+		}
+
+		if ( $remove_js ) {
+			$string = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', ' ', $string );
+		}
+
+		$string = strip_tags( $string, $allowed_tags );
+
+		if ( $flatten ) {
+			$string = preg_replace( '/[\r\n\t ]+/', ' ', $string );
+		}
+
+		return trim( $string );
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string|null $string
+	 *
+	 * @return string|null
+	 */
+	public static function escAttr( ?string $string ): ?string {
+		return esc_attr( self::stripAllTags( $string ) );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param $message
+	 * @param bool $auto_hide
+	 *
+	 * @return void
+	 */
+	public static function messageSuccess( $message, bool $auto_hide = false ): void {
+		$message = $message ?: 'Values saved';
+		$message = __( $message, ADDONS_TEXT_DOMAIN );
+
+		$class = 'notice notice-success is-dismissible';
+		if ( $auto_hide ) {
+			$class .= ' dismissible-auto';
+		}
+
+		printf( '<div class="%1$s"><p><strong>%2$s</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>', self::escAttr( $class ), $message );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param $message
+	 * @param bool $auto_hide
+	 *
+	 * @return void
+	 */
+	public static function messageError( $message, bool $auto_hide = false ): void {
+		$message = $message ?: 'Values error';
+		$message = __( $message, ADDONS_TEXT_DOMAIN );
+
+		$class = 'notice notice-error is-dismissible';
+		if ( $auto_hide ) {
+			$class .= ' dismissible-auto';
+		}
+
+		printf( '<div class="%1$s"><p><strong>%2$s</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>', self::escAttr( $class ), $message );
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @return void
+	 */
+	public static function clearAllCache(): void {
+		global $wpdb;
+
+		// Clear object cache (e.g., Redis or Memcached)
+		if ( function_exists( 'wp_cache_flush' ) ) {
+			wp_cache_flush();
+		}
+
+		// LiteSpeed cache
+		if ( class_exists( \LiteSpeed\Purge::class ) ) {
+			\LiteSpeed\Purge::purge_all();
+		}
+
+		// WP-Rocket cache
+		if ( \defined( 'WP_ROCKET_PATH' ) && \function_exists( 'rocket_clean_domain' ) ) {
+			\rocket_clean_domain();
+		}
+
+		// Clearly minified CSS and JavaScript files (WP-Rocket)
+		if ( function_exists( 'rocket_clean_minify' ) ) {
+			\rocket_clean_minify();
+		}
+
+		// Jetpack transient cache
+		if ( self::checkPluginActive( 'jetpack/jetpack.php' ) ) {
+			$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_jetpack_%'" );
+			$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_jetpack_%'" );
+
+			// Clear Jetpack Photon cache locally
+			if ( class_exists( \Jetpack_Photon::class ) ) {
+				\Jetpack_Photon::instance()->purge_cache();
+			}
+		}
+
+		// Clear all WordPress transients
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_%'" );
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_%'" );
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string $option
+	 *
+	 * @return bool
+	 */
+	public static function removeOption( string $option ): bool {
+		$option = strtolower( trim( $option ) );
+		if ( empty( $option ) ) {
+			return false;
+		}
+
+		$site_id   = is_multisite() ? get_current_blog_id() : null;
+		$cache_key = $site_id ? "site_option_{$site_id}_{$option}" : "option_{$option}";
+
+		// Remove the option from the appropriate context (multisite or not)
+		$removed = is_multisite()
+			? delete_site_option( $option )
+			: delete_option( $option );
+
+		if ( $removed ) {
+			wp_cache_delete( $cache_key, 'options' );
+		}
+
+		return $removed;
+	}
+
 	// --------------------------------------------------
 
 	/**
@@ -25,7 +194,7 @@ final class Helper {
 	 *
 	 * @return bool
 	 */
-	public static function updateOption( string $option, mixed $new_value, int $expire_cache = 43200, ?bool $autoload = null ): bool {
+	public static function updateOption( string $option, mixed $new_value, int $expire_cache = 21600, ?bool $autoload = null ): bool {
 		$option = strtolower( trim( $option ) );
 		if ( empty( $option ) ) {
 			return false;
@@ -56,7 +225,7 @@ final class Helper {
 	 *
 	 * @return mixed
 	 */
-	public static function getOption( string $option, mixed $default = false, int $expire_cache = 43200 ): mixed {
+	public static function getOption( string $option, mixed $default = false, int $expire_cache = 21600 ): mixed {
 		// Validate the option key
 		$option = strtolower( trim( $option ) );
 		if ( empty( $option ) ) {

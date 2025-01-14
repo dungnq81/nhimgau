@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the WordPress - 6.7.x - Development - Administration package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-12-31 09:41:22+0000\n"
+"PO-Revision-Date: 2025-01-14 00:43:38+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3815,7 +3815,7 @@ msgstr "<a href=\"https://wordpress.org/documentation/article/dashboard-screen/\
 
 #: wp-admin/user-new.php:310
 msgid "<a href=\"https://wordpress.org/documentation/article/users-add-new-screen/\">Documentation on Adding New Users</a>"
-msgstr "<a href=\"https://wordpress.org/documentation/article/users-add-new-screen/\">Tài liệu về cách thêm người dùng mới</a>"
+msgstr "<a href=\"https://wordpress.org/documentation/article/users-add-new-screen/\">Tài liệu về cách thêm người dùng</a>"
 
 #. translators: %s: URL to Site Health Status page.
 #: wp-admin/site-health-info.php:47
@@ -11366,11 +11366,11 @@ msgstr "Các vai trò người dùng"
 
 #: wp-admin/user-new.php:283
 msgid "Remember to click the Add New User button at the bottom of this screen when you are finished."
-msgstr "Hãy nhớ bấm vào nút \"Thêm người dùng mới\" ở phía dưới của màn hình này khi bạn hoàn tất."
+msgstr "Hãy nhớ bấm vào nút \"Thêm người dùng\" ở phía dưới của màn hình này khi bạn hoàn tất."
 
 #: wp-admin/user-new.php:272
 msgid "To add a new user to your site, fill in the form on this screen and click the Add New User button at the bottom."
-msgstr "Để thêm người dùng mới vào trang mạng của bạn, điền thông tin vào mẫu ở màn hình này và bấm vào nút \"Thêm người dùng mới\" phía dưới."
+msgstr "Để thêm người dùng mới vào trang mạng của bạn, điền thông tin vào mẫu ở màn hình này và bấm vào nút \"Thêm người dùng\" phía dưới."
 
 #: wp-admin/options-permalink.php:53
 msgid "Custom Structures"
@@ -11765,7 +11765,7 @@ msgstr "Khuyến cáo:"
 #: wp-admin/network/site-users.php:377 wp-admin/network/user-new.php:100
 #: wp-admin/network/user-new.php:107 wp-admin/network/users.php:292
 msgid "Add New User"
-msgstr "Thêm người dùng mới"
+msgstr "Thêm người dùng"
 
 #: wp-admin/user-new.php:377 wp-admin/network/site-users.php:243
 #: wp-admin/network/user-new.php:91 wp-admin/network/users.php:272
@@ -12509,7 +12509,7 @@ msgstr "Nếu bạn muốn xóa tiện ích nhưng lưu cài đặt của nó đ
 
 #: wp-admin/users.php:36
 msgid "To add a new user for your site, click the Add New User button at the top of the screen or Add New User in the Users menu section."
-msgstr "Để thêm người dùng mới cho trang web của bạn, hãy nhấp vào nút Thêm người dùng mới ở đầu màn hình hoặc Thêm người dùng mới trong phần menu Người dùng."
+msgstr "Để thêm người dùng mới cho trang web của bạn, hãy nhấp vào nút Thêm người dùng ở đầu màn hình hoặc thêm người dùng mới trong phần menu người dùng."
 
 #: wp-admin/options-media.php:20
 msgid "You can set maximum sizes for images inserted into your written content; you can also insert an image as Full Size."

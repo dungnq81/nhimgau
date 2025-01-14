@@ -14,8 +14,6 @@ final class GlobalSetting {
 		add_filter( 'custom_menu_order', '__return_true' );
 
 		add_action( 'admin_init', [ $this, 'add_addon_capability_to_roles' ] );
-
-		// ajax for settings
 		add_action( 'wp_ajax_submit_settings', [ $this, 'ajax_submit_settings' ] );
 	}
 
@@ -78,9 +76,6 @@ final class GlobalSetting {
 
 	// --------------------------------------------------
 
-	/**
-	 * @return void
-	 */
 	public function add_addon_capability_to_roles(): void {
 		foreach ( [ 'administrator', 'editor' ] as $role_name ) {
 			$role = get_role( $role_name );
@@ -90,22 +85,44 @@ final class GlobalSetting {
 
 	// --------------------------------------------------
 
-	/**
-	 * @return false|void
-	 */
 	public function ajax_submit_settings() {
 		if ( ! wp_doing_ajax() ) {
 			return false;
 		}
 
-		// Check nonce
+		check_ajax_referer( '_wpnonce_settings_form_' . get_current_user_id() );
+		$menu_options = \Addons\Helper::loadYaml( ADDONS_PATH . 'config.yaml' );
+		$data         = $_POST['_data'] ?? [];
+
+		/** ---------------------------------------- */
+
+		/** Global Setting */
+		$global_setting_options = [];
+		foreach ( $menu_options as $slug => $value ) {
+			if ( ! empty( $data[ $slug ] ) ) {
+				$global_setting_options[ $slug ] = 1;
+			}
+		}
+
+		if ( $global_setting_options ) {
+			\Addons\Helper::updateOption( 'global_setting__options', $global_setting_options );
+		} else {
+			\Addons\Helper::removeOption( 'global_setting__options' );
+		}
+
+		/** ---------------------------------------- */
+
+
+		/** ---------------------------------------- */
+
+		\Addons\Helper::clearAllCache();
+		\Addons\Helper::messageSuccess( __( 'Your settings have been saved.', ADDONS_TEXT_DOMAIN ), true );
+
+		exit();
 	}
 
 	// --------------------------------------------------
 
-	/**
-	 * @return void
-	 */
 	public function _addon_menu_callback(): void {
 		?>
         <div class="wrap" id="_container">
@@ -125,10 +142,7 @@ final class GlobalSetting {
 	}
 
 	// --------------------------------------------------
-
-	/**
-	 * @return void
-	 */
+    
 	public function _addon_server_info_callback(): void {
 		global $wpdb;
 

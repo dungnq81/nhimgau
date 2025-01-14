@@ -568,7 +568,7 @@ trait Wp {
 	 *
 	 * @return bool
 	 */
-	public static function updateOption( string $option, mixed $new_value, int $expire_cache = 43200, ?bool $autoload = null ): bool {
+	public static function updateOption( string $option, mixed $new_value, int $expire_cache = 21600, ?bool $autoload = null ): bool {
 		$option = strtolower( trim( $option ) );
 		if ( empty( $option ) ) {
 			return false;
@@ -599,7 +599,7 @@ trait Wp {
 	 *
 	 * @return mixed
 	 */
-	public static function getOption( string $option, mixed $default = false, int $expire_cache = 43200 ): mixed {
+	public static function getOption( string $option, mixed $default = false, int $expire_cache = 21600 ): mixed {
 		// Validate the option key
 		$option = strtolower( trim( $option ) );
 		if ( empty( $option ) ) {
@@ -629,7 +629,7 @@ trait Wp {
 	 *
 	 * @return mixed
 	 */
-	public static function getThemeMod( ?string $mod_name, mixed $default = false, int $expire_cache = 43200 ): mixed {
+	public static function getThemeMod( ?string $mod_name, mixed $default = false, int $expire_cache = 21600 ): mixed {
 		if ( empty( $mod_name ) ) {
 			return $default;
 		}

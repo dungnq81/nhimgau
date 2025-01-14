@@ -8,11 +8,12 @@
 	<?php
 
 	$menu_options           = \Addons\Helper::loadYaml( ADDONS_PATH . 'config.yaml' );
-	$global_setting_options = \Addons\Helper::getOption( 'global_setting_options' );
+	$global_setting_options = \Addons\Helper::getOption( 'global_setting__options' );
 	$i                      = 0;
 
 	foreach ( $menu_options as $current_slug => $value ) {
-		$show_class = ( $i === 0 ) ? ' show' : '';
+		//$show_class = ( $i === 0 ) ? ' show' : '';
+		$show_class = '';
 
 		$current_title       = ! empty( $value['title'] ) ? __( $value['title'], ADDONS_TEXT_DOMAIN ) : '';
 		$current_description = ! empty( $value['description'] ) ? __( $value['description'], ADDONS_TEXT_DOMAIN ) : '';

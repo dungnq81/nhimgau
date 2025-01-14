@@ -6,10 +6,13 @@
  * @author Gaudev
  */
 
-$theme_version = ( wp_get_theme()->get( 'Version' ) ) ?: false;
-$theme_author  = ( wp_get_theme()->get( 'Author' ) ) ?: 'Gaudev';
-$theme_uri     = ( wp_get_theme()->get( 'ThemeURI' ) ) ?: 'https://webhd.vn';
-$text_domain   = ( wp_get_theme()->get( 'TextDomain' ) ) ?: 'hd';
+$current_theme = wp_get_theme();
+$parent_theme  = $current_theme->parent() ?: $current_theme;
+
+$theme_version = $parent_theme->get( 'Version' ) ?: false;
+$theme_author  = $parent_theme->get( 'Author' ) ?: 'Gaudev';
+$theme_uri     = $parent_theme->get( 'ThemeURI' ) ?: 'https://webhd.vn';
+$text_domain   = $parent_theme->get( 'TextDomain' ) ?: 'hd';
 
 define( 'TEXT_DOMAIN', $text_domain );
 define( 'THEME_VERSION', $theme_version );

@@ -68,11 +68,12 @@ jQuery(function($) {
   };
   $(document).on("click", ".notice-dismiss", function(e) {
     var _a;
-    (_a = $(this).closest(".notice.is-dismissible")) == null ? void 0 : _a.fadeOutAndRemove(400);
+    (_a = $(this).closest(".notice.is-dismissible")) == null ? void 0 : _a.fadeOutAndRemove(500);
   });
   $(document).on("submit", "#_settings_form", function(e) {
     e.preventDefault();
     let $this = $(this);
+    let $data = $this.serializeObject();
     let btn_submit = $this.find('button[name="_submit_settings"]');
     let button_text = btn_submit.html();
     let button_text_loading = '<span class="ajax-loader">&nbsp;</span>';
@@ -82,44 +83,52 @@ jQuery(function($) {
       url: ajaxurl,
       data: {
         action: "submit_settings",
-        _data: $this.serializeObject(),
+        _data: $data,
         _ajax_nonce: $this.find('input[name="_wpnonce"]').val(),
         _wp_http_referer: $this.find('input[name="_wp_http_referer"]').val()
       }
     }).done(function(data) {
       btn_submit.prop("disabled", false).html(button_text);
       $this.find("#_content").prepend(data);
+      if (window.location.hash === "#global_setting_settings") {
+        window.location.reload();
+      }
       setTimeout(() => {
-        var _a;
-        (_a = $this.find("#_content").find(".dismissible-auto")) == null ? void 0 : _a.fadeOutAndRemove(400);
+        var _a, _b;
+        (_b = (_a = $this.find("#_content")) == null ? void 0 : _a.find(".dismissible-auto")) == null ? void 0 : _b.fadeOutAndRemove(400);
       }, 4e3);
     }).fail(function(jqXHR, textStatus, errorThrown) {
       btn_submit.prop("disabled", false).html(button_text);
       console.log(errorThrown);
     });
   });
-  const filter_tabs = $(".filter-tabs");
-  $.each(filter_tabs, function(i, el) {
-    const $el = $(el), _id = rand_element_init(el), $nav = $el.find(".tabs-nav"), $content = $el.find(".tabs-content");
-    const _cookie = `cookie_${_id}_${i}`;
-    let cookieValue = api.get(_cookie);
-    if (!cookieValue) {
-      cookieValue = $nav.find("a:first").attr("href");
-      api.set(_cookie, cookieValue, { expires: 7, path: "", secure: true });
-    }
-    $nav.find("a.current").removeClass("current");
-    $nav.find(`a[href="${cookieValue}"]`).addClass("current");
-    $nav.find("a").on("click", function(e) {
-      var _a, _b;
+  const $filterTabs = $(".filter-tabs");
+  $filterTabs.each(function() {
+    const $el = $(this), $nav = $el.find(".tabs-nav"), $content = $el.find(".tabs-content"), $tabs = $nav.find("a"), initialHash = window.location.hash;
+    const activateTab = (hash) => {
+      const $tab = $nav.find(`a[href="${hash}"]`);
+      $nav.find("a").removeClass("current");
+      $content.find(".tabs-panel").hide();
+      if ($tab.length) {
+        $tab.addClass("current");
+        $(hash).show();
+      } else {
+        $tabs.first().addClass("current");
+        $content.find(".tabs-panel").first().show();
+        window.history.replaceState(null, null, window.location.pathname + window.location.search);
+      }
+    };
+    activateTab(initialHash || $tabs.first().attr("href"));
+    $nav.on("click", "a", function(e) {
       e.preventDefault();
-      const $this = $(this);
-      const hash = $this.attr("href");
-      api.set(_cookie, hash, { expires: 7, path: "", secure: true });
-      $nav.find("a.current").removeClass("current");
-      (_a = $content.find(".tabs-panel:visible").removeClass("show")) == null ? void 0 : _a.hide();
-      (_b = $($this.attr("href")).addClass("show")) == null ? void 0 : _b.show();
-      $this.addClass("current");
-    }).filter(".current").trigger("click");
+      const hash = $(this).attr("href");
+      window.location.hash = hash;
+      activateTab(hash);
+      $("html, body").animate({ scrollTop: $el.offset().top - $("header").outerHeight() }, 300);
+    });
+    $(window).on("hashchange", function() {
+      activateTab(window.location.hash || $tabs.first().attr("href"));
+    });
   });
   const select2_multiple = $(".select2-multiple");
   $.each(select2_multiple, function(i, el) {
