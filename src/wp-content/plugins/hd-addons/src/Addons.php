@@ -7,6 +7,7 @@ use Addons\CustomCSS\CustomCSS;
 use Addons\CustomScript\CustomScript;
 use Addons\Editor\Editor;
 use Addons\GlobalSetting\GlobalSetting;
+use Addons\LoginSecurity\LoginSecurity;
 use Addons\ThirdParty\Faker;
 use Addons\Woocommerce\WooCommerce;
 
@@ -46,9 +47,11 @@ final class Addons {
 		( new GlobalSetting() );
 		( new AspectRatio() );
 		( new Editor() );
+		( new LoginSecurity() );
 		( new WooCommerce() );
 		( new CustomScript() );
 		( new CustomCSS() );
+
 		( new Faker() );
 	}
 

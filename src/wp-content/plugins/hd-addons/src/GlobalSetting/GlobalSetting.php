@@ -156,6 +156,30 @@ final class GlobalSetting {
 
 		/** ---------------------------------------- */
 
+		/** Login Security */
+		$login_security_options = [];
+		$arrs                   = [
+			'custom_login_uri',
+			'login_ips_access',
+			'disable_ips_access',
+			'limit_login_attempts',
+			'illegal_users'
+		];
+
+		foreach ( $arrs as $value ) {
+			if ( ! empty( $data[ $value ] ) ) {
+				$login_security_options[ $value ] = sanitize_text_field( $data[ $value ] );
+			}
+		}
+
+		if ( $login_security_options ) {
+			Helper::updateOption( 'login_security__options', $login_security_options );
+		} else {
+			Helper::removeOption( 'login_security__options' );
+		}
+
+		/** ---------------------------------------- */
+
 		/** WooCommerce */
 		if ( Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {
 			$arrs = [

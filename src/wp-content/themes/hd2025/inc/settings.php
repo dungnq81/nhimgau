@@ -254,7 +254,6 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 		// Customize table column information, table display content, etc.
 		//
 		'admin_list_table'                    => [
-
 			// Add ID to the admin category page.
 			'term_row_actions'                => [
 				'category',
@@ -299,7 +298,6 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 		// defer, delay script - default 5s.
 		//
 		'defer_script'                        => [
-
 			// defer.
 			'contact-form-7' => 'defer',
 
@@ -320,7 +318,6 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 		// Admin menu sidebar
 		//
 		'admin_menu'                          => [
-
 			// hide admin menu
 			'admin_hide_menu'             => [
 				//'edit.php',
@@ -342,7 +339,6 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 		// ACF menu
 		//
 		'acf_menu'                            => [
-
 			// ACF attributes in `menu` locations.
 			'acf_menu_items_locations' => [
 				'main-nav',
@@ -358,7 +354,7 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 		'post_type_terms'                     => [],
 
 		//
-		// Custom Email list (mail-to).
+		// Custom Email list (mailto).
 		//
 		'custom_emails'                       => [],
 
@@ -376,9 +372,16 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 		// Login security
 		//
 		'login_security'                      => [
-			'enable_custom_login_options' => false, // Allows customization of the Login URL in the admin options.
-			'allowlist_ips_login_access'  => [], // Allowlist IPs Login Access
-			'blocked_ips_login_access'    => [], // Blocked IPs Access
+			// Allows customization of the Login URL in the admin options.
+			'enable_custom_login'        => false,
+
+			// Allowlist IPs Login Access
+			'allowlist_ips_login_access' => [
+				'127.0.0.1',
+			],
+
+			// Blocked IPs Access
+			'blocked_ips_login_access'   => [],
 		],
 
 		//

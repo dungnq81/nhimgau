@@ -283,7 +283,7 @@
         }
     } @else {
         @supports (aspect-ratio: 1) {
-            aspect-ratio: auto list.slash($ratio-width, $ratio-height);
+            aspect-ratio: list.slash($ratio-width, $ratio-height);
         }
 
         @supports not (aspect-ratio: 1) {

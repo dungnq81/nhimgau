@@ -418,11 +418,19 @@ figure {
             &.sm-up-#{$i} > .cell, & > .cell.sm-#{$i} {
                 @include mixin.flex-self($i, 1, false);
             }
+
+            & > .cell.\!sm-#{$i} {
+                @include mixin.flex-self($i, 1, false, true);
+            }
         }
 
         &:where(.gap, .flex-gap) {
             &.sm-up-#{$i} > .cell, & > .cell.sm-#{$i} {
                 @include mixin.flex-self($i, 1, vars.$gap-xs);
+            }
+
+            & > .cell.\!sm-#{$i} {
+                @include mixin.flex-self($i, 1, vars.$gap-xs, true);
             }
         }
     }
@@ -441,11 +449,19 @@ figure {
                 &.md-up-#{$i} > .cell, & > .cell.md-#{$i} {
                     @include mixin.flex-self($i, 1, false);
                 }
+
+                & > .cell.\!md-#{$i} {
+                    @include mixin.flex-self($i, 1, false, true);
+                }
             }
 
             &:where(.gap, .flex-gap) {
                 &.md-up-#{$i} > .cell, & > .cell.md-#{$i} {
                     @include mixin.flex-self($i, 1, vars.$gap);
+                }
+
+                & > .cell.\!md-#{$i} {
+                    @include mixin.flex-self($i, 1, vars.$gap, true);
                 }
             }
         }
@@ -465,11 +481,19 @@ figure {
                 &.lg-up-#{$i} > .cell, & > .cell.lg-#{$i} {
                     @include mixin.flex-self($i, 1, false);
                 }
+
+                & > .cell.\!lg-#{$i} {
+                    @include mixin.flex-self($i, 1, false, true);
+                }
             }
 
             &:where(.gap, .flex-gap) {
                 &.lg-up-#{$i} > .cell, & > .cell.lg-#{$i} {
                     @include mixin.flex-self($i, 1, vars.$gap);
+                }
+
+                & > .cell.\!lg-#{$i} {
+                    @include mixin.flex-self($i, 1, vars.$gap, true);
                 }
             }
         }

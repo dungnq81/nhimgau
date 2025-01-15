@@ -18,7 +18,8 @@
     margin: 0 auto;
     padding: 25px 20px 15px 22px;
 
-    & > h2, & > .desc {}
+    & > h2, & > .desc {
+    }
 
     .server-info-inner {
         background: #ffffff;
@@ -545,6 +546,6 @@ input[type=number].tiny-text {
     padding-right: 5px;
 }
 
-.mce-statusbar>.mce-container-body .mce-path {
+.mce-statusbar > .mce-container-body .mce-path {
     padding-top: 8px;
 }
