@@ -62,7 +62,7 @@ function register_sidebar_callback(): void {
 // Hook default scripts
 // --------------------------------------------------
 
-add_action( 'wp_default_scripts', 'wp_default_scripts_callback' );
+add_action( 'wp_default_scripts', 'wp_default_scripts_callback', 11, 1 );
 
 function wp_default_scripts_callback( $scripts ): void {
 	if ( isset( $scripts->registered['jquery'] ) && ! is_admin() ) {
@@ -231,7 +231,7 @@ function nav_menu_item_title_callback( $title, $item, $args, $depth ) {
 // query_vars
 // --------------------------------------------------
 
-add_filter( 'query_vars', 'query_vars_callback', 99 );
+add_filter( 'query_vars', 'query_vars_callback', 99, 1 );
 
 function query_vars_callback( $vars ): array {
 	$vars[] = 'page';
@@ -244,7 +244,7 @@ function query_vars_callback( $vars ): array {
 // custom filter
 // --------------------------------------------------
 
-add_filter( 'hd_theme_settings_filter', 'hd_theme_settings_filter_callback', 99 );
+add_filter( 'hd_theme_settings_filter', 'hd_theme_settings_filter_callback', 99, 1 );
 
 function hd_theme_settings_filter_callback( array $arr ): array {
 	static $cache = [];
@@ -281,11 +281,11 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 		//
 		// Aspect Ratio.
 		//
-		'aspect_ratio' => [
+		'aspect_ratio'                        => [
 			'post_type_term' => [
 				'post',
 			],
-			'ratio_default' => [
+			'ratio_default'  => [
 				'1-1',
 				'2-1',
 				'3-2',
@@ -371,6 +371,15 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 		// List of user IDs that are not allowed to be deleted.
 		//
 		'disallowed_users_ids_delete_account' => [ 1 ],
+
+		//
+		// Login security
+		//
+		'login_security'                      => [
+			'enable_custom_login_options' => false, // Allows customization of the Login URL in the admin options.
+			'allowlist_ips_login_access'  => [], // Allowlist IPs Login Access
+			'blocked_ips_login_access'    => [], // Blocked IPs Access
+		],
 
 		//
 		// Links social.

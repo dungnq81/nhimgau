@@ -22,6 +22,74 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
+	 * @param string $content
+	 *
+	 * @return string
+	 */
+	public static function extractJS( string $content ): string {
+		$script_pattern = '/<script\b[^>]*>(.*?)<\/script>/is';
+		preg_match_all( $script_pattern, $content, $matches );
+
+		$valid_scripts = [];
+
+		// Define patterns for detecting potentially malicious code or encoding
+		$malicious_patterns = [
+			'/eval\(/i',            // Use of eval()
+			'/document\.write\(/i', // Use of document.write()
+			'/<script.*?src=[\'"]?data:/i', // Inline scripts with data URIs
+			'/base64,/i',           // Base64 encoding
+		];
+
+		foreach ( $matches[0] as $index => $scriptTag ) {
+			$scriptContent = trim( $matches[1][ $index ] );
+			$hasSrc        = preg_match( '/\bsrc=["\'].*?["\']/', $scriptTag );
+
+			$isMalicious = false;
+			foreach ( $malicious_patterns as $pattern ) {
+				if ( preg_match( $pattern, $scriptContent ) ) {
+					$isMalicious = true;
+
+					break;
+				}
+			}
+
+			if ( ! $isMalicious && ( $scriptContent !== '' || $hasSrc ) ) {
+				$valid_scripts[] = $scriptTag;
+			}
+		}
+
+		// Replace original <script> tags in the content with the valid ones
+		return preg_replace_callback( $script_pattern, static function ( $match ) use ( $valid_scripts ) {
+			static $i = 0;
+
+			return isset( $valid_scripts[ $i ] ) ? $valid_scripts[ $i ++ ] : '';
+		}, $content );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string $css
+	 *
+	 * @return string
+	 */
+	public static function extractCss( string $css ): string {
+		if ( empty( $css ) ) {
+			return '';
+		}
+
+		$css = preg_replace( '/<script\b[^>]*>(.*?)<\/script>/is', '', $css );
+
+		$css = strip_tags( $css );
+		$css = preg_replace( '/[^a-zA-Z0-9\s\.\#\:\;\,\-\_\(\)\{\}\/\*]/', '', $css );
+		$css = preg_replace( '/\/\*.*?\*\//s', '', $css );
+
+		return trim( $css );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
 	 * @param string|null $js
 	 * @param bool $debug_check
 	 *
@@ -1768,161 +1836,6 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param string $post_type - max 20 characters
-	 *
-	 * @return array|\WP_Post|null
-	 */
-	public static function getCustomPostOption( string $post_type = 'gau_css' ): array|\WP_Post|null {
-		if ( empty( $post_type ) ) {
-			return null;
-		}
-
-		$custom_query_vars = [
-			'post_type'              => $post_type,
-			'post_status'            => get_post_stati(),
-			'posts_per_page'         => 1,
-			'no_found_rows'          => true,
-			'cache_results'          => true,
-			'update_post_meta_cache' => false,
-			'update_post_term_cache' => false,
-			'lazy_load_term_meta'    => false,
-		];
-
-		$post    = null;
-		$post_id = self::getThemeMod( $post_type . '_option_id' );
-
-		if ( $post_id > 0 && get_post( $post_id ) ) {
-			$post = get_post( $post_id );
-		}
-
-		// `-1` indicates no post exists; no query necessary.
-		if ( ! $post && - 1 !== $post_id ) {
-			$post = ( new \WP_Query( $custom_query_vars ) )->post;
-
-			set_theme_mod( $post_type . '_option_id', $post->ID ?? - 1 );
-		}
-
-		return $post;
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @param string $post_type - max 20 characters
-	 * @param bool $encode
-	 *
-	 * @return array|string
-	 */
-	public static function getCustomPostContent( string $post_type, bool $encode = false ): array|string {
-		if ( empty( $post_type ) ) {
-			return '';
-		}
-
-		$post = self::getCustomPostOption( $post_type );
-		if ( isset( $post->post_content ) ) {
-			$post_content = wp_unslash( $post->post_content );
-			if ( $encode ) {
-				$post_content = wp_unslash( base64_decode( $post->post_content ) );
-			}
-
-			return $post_content;
-		}
-
-		return '';
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @param string $mixed
-	 * @param string $post_type - max 20 characters
-	 * @param string $code_type
-	 * @param bool $encode
-	 * @param string $preprocessed
-	 *
-	 * @return array|int|\WP_Error|\WP_Post|null
-	 */
-	public static function updateCustomPostOption(
-		string $mixed = '',
-		string $post_type = 'gau_css',
-		string $code_type = 'css',
-		bool $encode = false,
-		string $preprocessed = ''
-	): \WP_Error|array|int|\WP_Post|null {
-
-		$post_type = $post_type ?: 'gau_css';
-		$code_type = $code_type ?: 'text/css';
-
-		if ( in_array( $code_type, [ 'css', 'text/css' ] ) ) {
-			$mixed = self::stripAllTags( $mixed, true, false );
-		}
-
-		if ( $encode ) {
-			$mixed = base64_encode( $mixed );
-		}
-
-		//		else if ( in_array( $code_type, [ 'html', 'text/html' ] ) ) {
-		//			$mixed = base64_encode( $mixed );
-		//		}
-
-		$post_data = [
-			'post_type'             => $post_type,
-			'post_status'           => 'publish',
-			'post_content'          => $mixed,
-			'post_content_filtered' => $preprocessed,
-		];
-
-		// Update `post` if it already exists, otherwise create a new one.
-		$post = self::getCustomPostOption( $post_type );
-		if ( $post ) {
-			$post_data['ID'] = $post->ID;
-			$r               = wp_update_post( wp_slash( $post_data ), true );
-		} else {
-			$post_data['post_title'] = $post_type . '_post_title';
-			$post_data['post_name']  = wp_generate_uuid4();
-			$r                       = wp_insert_post( wp_slash( $post_data ), true );
-
-			if ( ! is_wp_error( $r ) ) {
-				set_theme_mod( $post_type . '_option_id', $r );
-
-				// Trigger creation of a revision. This should be removed once #30854 is resolved.
-				$revisions = wp_get_latest_revision_id_and_total_count( $r );
-				if ( ! is_wp_error( $revisions ) && 0 === $revisions['count'] ) {
-					$revision = wp_save_post_revision( $r );
-				}
-			}
-		}
-
-		if ( is_wp_error( $r ) ) {
-			return $r;
-		}
-
-		return get_post( $r );
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @param string $css - CSS, stored in `post_content`.
-	 * @param string $post_type - max 20 characters
-	 * @param bool $encode
-	 * @param string $preprocessed - Pre-processed CSS, stored in `post_content_filtered`. Normally empty string.
-	 *
-	 * @return array|int|\WP_Error|\WP_Post|null
-	 */
-	public static function updateCustomCssPost(
-		string $css,
-		string $post_type = 'gau_css',
-		bool $encode = false,
-		string $preprocessed = ''
-	): \WP_Error|array|int|\WP_Post|null {
-
-		return self::updateCustomPostOption( $css, $post_type, 'text/css', $encode, $preprocessed );
-	}
-
-	// -------------------------------------------------------------
-
-	/**
 	 * @param string $post_type
 	 * @param string|null $option
 	 *
@@ -1947,7 +1860,7 @@ trait Wp {
 	 *
 	 * @return string
 	 */
-	public static function aspectRatioClass( string $post_type = 'post', string $default = 'ar[3-2]' ): string {
+	public static function aspectRatioClass( string $post_type = 'post', string $default = 'ar-3-2' ): string {
 		$ratio = self::getAspectRatioOption( $post_type );
 
 		$ratio_x = $ratio[0] ?? '';
@@ -1956,7 +1869,7 @@ trait Wp {
 			return $default;
 		}
 
-		return 'ar[' . $ratio_x . '-' . $ratio_y . ']';
+		return 'ar-' . $ratio_x . '-' . $ratio_y;
 	}
 
 	// -------------------------------------------------------------
@@ -1968,7 +1881,7 @@ trait Wp {
 	 *
 	 * @return object
 	 */
-	public static function getAspectRatio( string $post_type = 'post', ?string $option = '', string $default = 'ar[3-2]' ): object {
+	public static function getAspectRatio( string $post_type = 'post', ?string $option = '', string $default = 'ar-3-2' ): object {
 		$ratio = self::getAspectRatioOption( $post_type, $option );
 
 		$ratio_x = $ratio[0] ?? '';
@@ -1979,20 +1892,18 @@ trait Wp {
 			$ratio_class = $default;
 		} else {
 
-			//$ratio_class         = 'ar-' . $ratio_x . '-' . $ratio_y;
-			$ratio_class             = 'ar[' . $ratio_x . '-' . $ratio_y . ']';
+			$ratio_class             = 'ar-' . $ratio_x . '-' . $ratio_y;
 			$ar_aspect_ratio_default = self::filterSettingOptions( 'aspect_ratio_default', [] );
 
 			if ( is_array( $ar_aspect_ratio_default ) && ! in_array( $ratio_x . '-' . $ratio_y, $ar_aspect_ratio_default, false ) ) {
 				$css = CSS::get_instance();
 
 				$css->set_selector( '.' . $ratio_class );
-				$css->add_property( 'height', 0 );
+				//$css->add_property( 'height', 0 );
 
-				$pb = ( $ratio_y / $ratio_x ) * 100;
-				$css->add_property( 'padding-bottom', $pb . '%' );
-				//$css->add_property( 'aspect-ratio', $ratio_x . '/' . $ratio_y );
-
+				//$pb = ( $ratio_y / $ratio_x ) * 100;
+				//$css->add_property( 'padding-bottom', $pb . '%' );
+				$css->add_property( 'aspect-ratio', $ratio_x . '/' . $ratio_y );
 				$ratio_style = $css->css_output();
 			}
 		}

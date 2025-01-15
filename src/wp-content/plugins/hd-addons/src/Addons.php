@@ -3,8 +3,12 @@
 namespace Addons;
 
 use Addons\AspectRatio\AspectRatio;
+use Addons\CustomCSS\CustomCSS;
+use Addons\CustomScript\CustomScript;
+use Addons\Editor\Editor;
 use Addons\GlobalSetting\GlobalSetting;
 use Addons\ThirdParty\Faker;
+use Addons\Woocommerce\WooCommerce;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -34,14 +38,18 @@ final class Addons {
 	// -------------------------------------------------------------
 
 	public function plugins_loaded(): void {
-		( new GlobalSetting() );
-		( new AspectRatio() );
-		( new Faker() );
-
 		// Classic Editor
 		if ( Helper::checkPluginActive( 'classic-editor/classic-editor.php' ) ) {
 			remove_action( 'admin_init', [ \Classic_Editor::class, 'register_settings' ] );
 		}
+
+		( new GlobalSetting() );
+		( new AspectRatio() );
+		( new Editor() );
+		( new WooCommerce() );
+		( new CustomScript() );
+		( new CustomCSS() );
+		( new Faker() );
 	}
 
 	// -------------------------------------------------------------

@@ -1,23 +1,8 @@
-import { nanoid } from 'nanoid';
 import Cookies from 'js-cookie';
 
 Object.assign(window, { Cookies });
 
 jQuery(function($) {
-
-    // random id
-    function rand_element_init(el) {
-        const $el = $(el);
-        const _rand = nanoid(9);
-        $el.addClass(_rand);
-        let _id = $el.attr('id');
-        if (!_id) {
-            _id = _rand;
-            $el.attr('id', _id);
-        }
-
-        return _id;
-    }
 
     // codemirror
     if (typeof codemirror_settings !== 'undefined') {
@@ -28,7 +13,6 @@ jQuery(function($) {
             elements.forEach(function(el) {
                 if (!el.CodeMirror) {
                     console.log(`Initializing CodeMirror for ${type} on element:`, el);
-                    rand_element_init(el);
                     let editorSettings = settings ? { ...settings } : {};
                     editorSettings.codemirror = {
                         ...editorSettings.codemirror,
@@ -106,24 +90,24 @@ jQuery(function($) {
                 _wp_http_referer: $this.find('input[name="_wp_http_referer"]').val(),
             },
         })
-        .done(function(data) {
-            btn_submit.prop('disabled', false).html(button_text);
-            $this.find('#_content').prepend(data);
+            .done(function(data) {
+                btn_submit.prop('disabled', false).html(button_text);
+                $this.find('#_content').prepend(data);
 
-            // auto reload tab `global_setting`
-            if (window.location.hash === '#global_setting_settings') {
-                window.location.reload();
-            }
+                // auto reload tabs
+                if (window.location.hash === '#global_setting_settings' || window.location.hash === '#custom_css_settings' || window.location.hash === '#custom_script_settings') {
+                    window.location.reload();
+                }
 
-            // dismissible auto hide
-            setTimeout(() => {
-                $this.find('#_content')?.find('.dismissible-auto')?.fadeOutAndRemove(400);
-            }, 4000);
-        })
-        .fail(function(jqXHR, textStatus, errorThrown) {
-            btn_submit.prop('disabled', false).html(button_text);
-            console.log(errorThrown);
-        });
+                // dismissible auto hide
+                setTimeout(() => {
+                    $this.find('#_content')?.find('.dismissible-auto')?.fadeOutAndRemove(400);
+                }, 4000);
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) {
+                btn_submit.prop('disabled', false).html(button_text);
+                console.log(errorThrown);
+            });
     });
 
     // filter tabs

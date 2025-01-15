@@ -68,6 +68,10 @@ final class Optimizer {
 	 * @return void
 	 */
 	private function _optimizer(): void {
+
+        // https://html.spec.whatwg.org/multipage/rendering.html#img-contain-size
+        add_filter( 'wp_img_tag_add_auto_sizes', '__return_false' );
+
 		// Filters the script, style tag
 		add_filter( 'script_loader_tag', [ $this, 'script_loader_tag' ], 12, 3 );
 		add_filter( 'style_loader_tag', [ $this, 'style_loader_tag' ], 12, 2 );
@@ -261,6 +265,10 @@ final class Optimizer {
 
 		// Handle `async` and `defer` attributes
 		foreach ( [ 'async', 'defer' ] as $attr ) {
+            if ( 'defer' === $attr ) {
+                $attr = 'defer data-wp-strategy="defer"';
+            }
+
 			if ( ! empty( $attributes[ $attr ] ) && ! preg_match( "#\s$attr(=|>|\s)#", $tag ) ) {
 				$tag = preg_replace( '#(?=></script>)#', " $attr", $tag, 1 );
 			}
@@ -274,6 +282,10 @@ final class Optimizer {
 				: explode( ' ', $attributes['extra'] );
 
 			foreach ( $extra_attrs as $attr ) {
+				if ( 'defer' === $attr ) {
+					$attr = 'defer data-wp-strategy="defer"';
+				}
+
 				if ( $attr === 'module' ) {
 					if ( ! preg_match( '#\stype=(["\'])module\1#', $tag ) ) {
 						$tag = preg_replace( '#(?=></script>)#', ' type="module"', $tag, 1 );

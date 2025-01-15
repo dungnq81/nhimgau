@@ -2,6 +2,8 @@
 
 namespace Addons\GlobalSetting;
 
+use Addons\Helper;
+
 \defined( 'ABSPATH' ) || exit;
 
 final class GlobalSetting {
@@ -91,12 +93,12 @@ final class GlobalSetting {
 		}
 
 		check_ajax_referer( '_wpnonce_settings_form_' . get_current_user_id() );
-		$menu_options = \Addons\Helper::loadYaml( ADDONS_PATH . 'config.yaml' );
-		$data         = $_POST['_data'] ?? [];
+		$data = $_POST['_data'] ?? [];
 
 		/** ---------------------------------------- */
 
 		/** Global Setting */
+		$menu_options           = Helper::loadYaml( ADDONS_PATH . 'config.yaml' );
 		$global_setting_options = [];
 		foreach ( $menu_options as $slug => $value ) {
 			if ( ! empty( $data[ $slug ] ) ) {
@@ -105,18 +107,99 @@ final class GlobalSetting {
 		}
 
 		if ( $global_setting_options ) {
-			\Addons\Helper::updateOption( 'global_setting__options', $global_setting_options );
+			Helper::updateOption( 'global_setting__options', $global_setting_options );
 		} else {
-			\Addons\Helper::removeOption( 'global_setting__options' );
+			Helper::removeOption( 'global_setting__options' );
 		}
 
 		/** ---------------------------------------- */
 
+		/** Aspect Ratio */
+		$aspect_ratio_options  = [];
+		$aspect_ratio_settings = Helper::filterSettingOptions( 'aspect_ratio', [] );
+
+		foreach ( $aspect_ratio_settings['post_type_term'] ?? [] as $ar ) {
+			if ( isset( $data[ $ar . '-width' ], $data[ $ar . '-height' ] ) ) {
+				$aspect_ratio_options[ 'ar-' . $ar . '-width' ]  = sanitize_text_field( $data[ $ar . '-width' ] );
+				$aspect_ratio_options[ 'ar-' . $ar . '-height' ] = sanitize_text_field( $data[ $ar . '-height' ] );
+			}
+		}
+
+		if ( $aspect_ratio_options ) {
+			Helper::updateOption( 'aspect_ratio__options', $aspect_ratio_options );
+		} else {
+			Helper::removeOption( 'aspect_ratio__options' );
+		}
 
 		/** ---------------------------------------- */
 
-		\Addons\Helper::clearAllCache();
-		\Addons\Helper::messageSuccess( __( 'Your settings have been saved.', ADDONS_TEXT_DOMAIN ), true );
+		/** Editor */
+		$editor_options = [];
+		$arrs           = [
+			'use_widgets_block_editor_off',
+			'gutenberg_use_widgets_block_editor_off',
+			'use_block_editor_for_post_type_off',
+			'block_style_off'
+		];
+
+		foreach ( $arrs as $value ) {
+			if ( isset( $data[ $value ] ) ) {
+				$editor_options[ $value ] = sanitize_text_field( $data[ $value ] );
+			}
+		}
+
+		if ( $editor_options ) {
+			Helper::updateOption( 'editor__options', $editor_options );
+		} else {
+			Helper::removeOption( 'editor__options' );
+		}
+
+		/** ---------------------------------------- */
+
+		/** WooCommerce */
+		if ( Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {
+			$arrs = [
+				'woocommerce_jsonld',
+				'woocommerce_default_css'
+			];
+
+			$woocommerce_options = [];
+			foreach ( $arrs as $value ) {
+				if ( isset( $data[ $value ] ) ) {
+					$woocommerce_options[ $value ] = sanitize_text_field( $data[ $value ] );
+				}
+			}
+
+			if ( $woocommerce_options ) {
+				Helper::updateOption( 'woocommerce__options', $woocommerce_options );
+			} else {
+				Helper::removeOption( 'woocommerce__options' );
+			}
+		}
+
+		/** ---------------------------------------- */
+
+		/** Custom JS */
+		$html_header      = $data['html_header'] ?? '';
+		$html_footer      = $data['html_footer'] ?? '';
+		$html_body_top    = $data['html_body_top'] ?? '';
+		$html_body_bottom = $data['html_body_bottom'] ?? '';
+
+		Helper::updateCustomPostOption( $html_header, 'html_header', 'text/html', true );
+		Helper::updateCustomPostOption( $html_footer, 'html_footer', 'text/html', true );
+		Helper::updateCustomPostOption( $html_body_top, 'html_body_top', 'text/html', true );
+		Helper::updateCustomPostOption( $html_body_bottom, 'html_body_bottom', 'text/html', true );
+
+		/** ---------------------------------------- */
+
+		/** Custom CSS */
+		$html_custom_css = $data['html_custom_css'] ?? '';
+		Helper::updateCustomPostOption( $html_custom_css, 'addon_css', 'text/css' );
+
+		/** ---------------------------------------- */
+
+		Helper::clearAllCache();
+		Helper::messageSuccess( __( 'Your settings have been saved.', ADDONS_TEXT_DOMAIN ), true );
 
 		exit();
 	}
@@ -142,7 +225,7 @@ final class GlobalSetting {
 	}
 
 	// --------------------------------------------------
-    
+
 	public function _addon_server_info_callback(): void {
 		global $wpdb;
 
@@ -157,7 +240,7 @@ final class GlobalSetting {
                         <ul>
                             <li><?php echo sprintf( '<span>Platform:</span> %s', php_uname() ); ?></li>
                             <li><?php echo sprintf( '<span>Server:</span> %s', $_SERVER['SERVER_SOFTWARE'] ); ?></li>
-                            <li><?php echo sprintf( '<span>Server IP:</span> %s', \Addons\Helper::serverIpAddress() ); ?></li>
+                            <li><?php echo sprintf( '<span>Server IP:</span> %s', Helper::serverIpAddress() ); ?></li>
 							<?php
 
 							$cpu_info = file_get_contents( '/proc/cpuinfo' );
@@ -215,7 +298,7 @@ final class GlobalSetting {
 							<?php endif;
 
 							?>
-                            <li><?php echo sprintf( '<span>IP:</span> %s', \Addons\Helper::ipAddress() ); ?></li>
+                            <li><?php echo sprintf( '<span>IP:</span> %s', Helper::ipAddress() ); ?></li>
                         </ul>
                     </div>
                 </div>

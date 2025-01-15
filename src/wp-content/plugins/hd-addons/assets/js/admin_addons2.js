@@ -1,23 +1,11 @@
-import { a as api, n as nanoid } from "./_vendor.js";
+import { a as api } from "./_vendor.js";
 Object.assign(window, { Cookies: api });
 jQuery(function($) {
-  function rand_element_init(el) {
-    const $el = $(el);
-    const _rand = nanoid(9);
-    $el.addClass(_rand);
-    let _id = $el.attr("id");
-    if (!_id) {
-      _id = _rand;
-      $el.attr("id", _id);
-    }
-    return _id;
-  }
   if (typeof codemirror_settings !== "undefined") {
     let initializeCodeMirror = function(elements, settings, type) {
       elements.forEach(function(el) {
         if (!el.CodeMirror) {
           console.log(`Initializing CodeMirror for ${type} on element:`, el);
-          rand_element_init(el);
           let editorSettings = settings ? { ...settings } : {};
           editorSettings.codemirror = {
             ...editorSettings.codemirror,
@@ -90,7 +78,7 @@ jQuery(function($) {
     }).done(function(data) {
       btn_submit.prop("disabled", false).html(button_text);
       $this.find("#_content").prepend(data);
-      if (window.location.hash === "#global_setting_settings") {
+      if (window.location.hash === "#global_setting_settings" || window.location.hash === "#custom_css_settings" || window.location.hash === "#custom_script_settings") {
         window.location.reload();
       }
       setTimeout(() => {

@@ -6,9 +6,9 @@ aspect_ratio:
     title: 'Aspect Ratio'
     description: 'Define the aspect ratio for images.'
 
-contact_button:
-    title: 'Contact Button'
-    description: 'Customize the contact button with content, images, and other options.'
+#contact_button:
+#    title: 'Contact Button'
+#    description: 'Customize the contact button with content, images, and other options.'
 
 editor:
     title: 'Editor'

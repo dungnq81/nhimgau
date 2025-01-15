@@ -31,32 +31,6 @@ if ( ! function_exists( '_is_valid_phone' ) ) {
 
 // --------------------------------------------------
 
-if ( ! function_exists( '_sanitize_css' ) ) {
-	/**
-	 * @param string $string
-	 *
-	 * @return string
-	 */
-	function _sanitize_css( string $string ): string {
-		return \HD\Helper::extractCss( $string );
-	}
-}
-
-// --------------------------------------------------
-
-if ( ! function_exists( '_sanitize_js' ) ) {
-	/**
-	 * @param string $string
-	 *
-	 * @return string
-	 */
-	function _sanitize_js( string $string ): string {
-		return \HD\Helper::extractJs( $string );
-	}
-}
-
-// --------------------------------------------------
-
 if ( ! function_exists( '_sanitize_image' ) ) {
 	/**
 	 * @param $file

@@ -144,12 +144,10 @@ final class Helper {
 	// -------------------------------------------------------------
 
 	/**
-	 * Check if all values in array_b do not lie within any range in array_a.
+	 * @param array $array_a
+	 * @param array $array_b
 	 *
-	 * @param array $array_a The multidimensional array of ranges.
-	 * @param array $array_b The array of values to check.
-	 *
-	 * @return bool True if all values in array_b do not lie within any range in array_a, false otherwise.
+	 * @return bool
 	 */
 	public static function checkValuesNotInRanges( array $array_a, array $array_b ): bool {
 		foreach ( $array_a as $range ) {
@@ -252,12 +250,10 @@ final class Helper {
 	// --------------------------------------------------
 
 	/**
-	 * Find an attribute and add the data as an HTML string.
-	 *
-	 * @param string $str The HTML string.
-	 * @param string $attr The attribute to find.
-	 * @param string $content_extra The content that needs to be appended.
-	 * @param bool $unique Do we need to filter for unique values?
+	 * @param string $str
+	 * @param string $attr
+	 * @param string $content_extra
+	 * @param bool $unique
 	 *
 	 * @return string
 	 */

@@ -1,12 +1,3 @@
-const urlAlphabet = "useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict";
-let nanoid = (size = 21) => {
-  let id = "";
-  let bytes = crypto.getRandomValues(new Uint8Array(size |= 0));
-  while (size--) {
-    id += urlAlphabet[bytes[size] & 63];
-  }
-  return id;
-};
 /*! js-cookie v3.0.5 | MIT */
 function assign(target) {
   for (var i = 1; i < arguments.length; i++) {
@@ -105,7 +96,6 @@ function init(converter, defaultAttributes) {
 }
 var api = init(defaultConverter, { path: "/" });
 export {
-  api as a,
-  nanoid as n
+  api as a
 };
 //# sourceMappingURL=_vendor.js.map
