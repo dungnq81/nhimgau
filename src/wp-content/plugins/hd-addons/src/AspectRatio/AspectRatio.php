@@ -19,15 +19,19 @@ final class AspectRatio {
 		$styles  = '';
 
 		$aspect_ratio_settings = \Addons\Helper::filterSettingOptions( 'aspect_ratio', [] );
-		foreach ( $aspect_ratio_settings['post_type_term'] ?? [] as $ar_post_type ) {
+		$post_type_term        = $aspect_ratio_settings['post_type_term'] ?? [];
 
-			$ratio_obj   = $this->_get_aspect_ratio( $ar_post_type );
-			$ratio_class = $ratio_obj->class ?: '';
-			$ratio_style = $ratio_obj->style ?: '';
+		if ( $post_type_term ) {
+			foreach ( $post_type_term as $ar_post_type ) {
 
-			if ( $ratio_style && ! in_array( $ratio_class, $classes, false ) ) {
-				$classes[] = $ratio_class;
-				$styles    .= $ratio_style;
+				$ratio_obj   = $this->_get_aspect_ratio( $ar_post_type );
+				$ratio_class = $ratio_obj->class ?: '';
+				$ratio_style = $ratio_obj->style ?: '';
+
+				if ( $ratio_style && ! in_array( $ratio_class, $classes, false ) ) {
+					$classes[] = $ratio_class;
+					$styles    .= $ratio_style;
+				}
 			}
 		}
 
@@ -92,7 +96,7 @@ final class AspectRatio {
 	 *
 	 * @return array|string
 	 */
-	private function _aspect_ratio_option( string $post_type = '', string $option = '' ): array|string {
+	private function _aspect_ratio_option( string $post_type, string $option ): array|string {
 		$post_type = $post_type ?: 'post';
 		$option    = $option ?: 'aspect_ratio__options';
 

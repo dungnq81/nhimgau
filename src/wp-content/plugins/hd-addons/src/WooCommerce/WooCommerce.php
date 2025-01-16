@@ -1,6 +1,6 @@
 <?php
 
-namespace Addons\Woocommerce;
+namespace Addons\WooCommerce;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -14,7 +14,8 @@ final class WooCommerce {
 		$this->woocommerce_options = \Addons\Helper::getOption( 'woocommerce__options' );
 
 		if ( $this->woocommerce_options['woocommerce_jsonld'] ?? '' ) {
-			add_action( 'init', [ $this, 'remove_woocommerce_jsonld' ], 10 ); // Remove the default WooCommerce 3 JSON/LD structured data format
+			// Remove the default WooCommerce 3 JSON/LD structured data format
+			add_action( 'init', [ $this, 'remove_woocommerce_jsonld' ], 10 );
 		}
 
 		add_action( 'after_setup_theme', [ $this, 'after_setup_theme' ], 33 );
@@ -52,27 +53,11 @@ final class WooCommerce {
 	// --------------------------------------------------
 
 	public function enqueue_block_assets(): void {
-		global $wp_styles;
-
 		// Remove woocommerce blocks styles
 		$editor_options = \Addons\Helper::getOption( 'editor__options' );
 
 		if ( $editor_options['block_style_off'] ?? '' ) {
-			wp_deregister_style( 'wc-block-editor' );
-
 			wp_deregister_style( 'wc-blocks-style' );
-			wp_deregister_style( 'wc-blocks-packages-style' );
-
-			$styles_to_remove = [];
-			foreach ( $wp_styles->registered as $handle => $style ) {
-				if ( str_starts_with( $handle, 'wc-blocks-style-' ) ) {
-					$styles_to_remove[] = $handle;
-				}
-			}
-
-			foreach ( $styles_to_remove as $handle ) {
-				wp_deregister_style( $handle );
-			}
 		}
 	}
 }

@@ -13,7 +13,7 @@ $woocommerce_default_css = $woocommerce_options['woocommerce_default_css'] ?? ''
 		<div class="desc"><?php _e( 'Remove the default WooCommerce 3 JSON/LD structured data format', ADDONS_TEXT_DOMAIN ) ?></div>
 		<div class="option">
 			<div class="controls">
-				<input type="checkbox" class="checkbox" name="woocommerce_jsonld" id="woocommerce_jsonld" <?php echo checked( $woocommerce_jsonld, 1 ); ?> value="1">
+				<input type="checkbox" class="checkbox" name="woocommerce_jsonld" id="woocommerce_jsonld" <?php checked( $woocommerce_jsonld, 1 ); ?> value="1">
 			</div>
 			<div class="explain"><?php _e( 'Remove WooCommerce JSON/LD', ADDONS_TEXT_DOMAIN ); ?></div>
 		</div>
@@ -24,7 +24,7 @@ $woocommerce_default_css = $woocommerce_options['woocommerce_default_css'] ?? ''
 		<div class="desc">Remove all default CSS of WooCommerce.</div>
 		<div class="option">
 			<div class="controls">
-				<input type="checkbox" class="checkbox" name="woocommerce_default_css" id="woocommerce_default_css" <?php echo checked( $woocommerce_default_css, 1 ); ?> value="1">
+				<input type="checkbox" class="checkbox" name="woocommerce_default_css" id="woocommerce_default_css" <?php checked( $woocommerce_default_css, 1 ); ?> value="1">
 			</div>
 			<div class="explain"><?php _e( 'Remove all', ADDONS_TEXT_DOMAIN ); ?></div>
 		</div>

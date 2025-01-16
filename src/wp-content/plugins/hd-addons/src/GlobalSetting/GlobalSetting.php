@@ -79,9 +79,13 @@ final class GlobalSetting {
 	// --------------------------------------------------
 
 	public function add_addon_capability_to_roles(): void {
-		foreach ( [ 'administrator', 'editor' ] as $role_name ) {
-			$role = get_role( $role_name );
-			$role?->add_cap( 'addon_manage_options' );
+		$capability_to_roles = apply_filters( 'addon_manage_roles', [ 'administrator', 'editor' ] );
+		if ( $capability_to_roles ) {
+
+			foreach ( $capability_to_roles as $role_name ) {
+				$role = get_role( $role_name );
+				$role?->add_cap( 'addon_manage_options' );
+			}
 		}
 	}
 
@@ -176,6 +180,32 @@ final class GlobalSetting {
 			Helper::updateOption( 'login_security__options', $login_security_options );
 		} else {
 			Helper::removeOption( 'login_security__options' );
+		}
+
+		/** ---------------------------------------- */
+
+		/** ReCaptcha */
+		$recaptcha_options = [];
+		$arrs              = [
+			'recaptcha_v2_site_key',
+			'recaptcha_v2_secret_key',
+			'recaptcha_v3_site_key',
+			'recaptcha_v3_secret_key',
+			'recaptcha_v3_score',
+			'recaptcha_global',
+			'recaptcha_allowlist_ips'
+		];
+
+		foreach ( $arrs as $value ) {
+			if ( ! empty( $data[ $value ] ) ) {
+				$recaptcha_options[ $value ] = sanitize_text_field( $data[ $value ] );
+			}
+		}
+
+		if ( $recaptcha_options ) {
+			Helper::updateOption( 'recaptcha__options', $recaptcha_options );
+		} else {
+			Helper::removeOption( 'recaptcha__options' );
 		}
 
 		/** ---------------------------------------- */

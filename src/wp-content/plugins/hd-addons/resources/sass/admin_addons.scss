@@ -190,8 +190,8 @@
                     display: flex;
                     align-items: center;
                     flex-flow: row wrap;
-                    grid-gap: 15px;
-                    gap: 15px;
+                    grid-gap: 10px;
+                    gap: 10px;
 
                     & > label {
                         flex: 0 0 auto;
@@ -220,6 +220,13 @@
                         flex: 1 1 0;
                         width: auto;
                         min-width: 0;
+                    }
+
+                    :where(input[type="color"], .input-color) {
+                        flex: 0 0 auto;
+                        min-width: 40px;
+                        padding: 0;
+                        cursor: pointer;
                     }
                 }
             }
@@ -312,7 +319,7 @@
                     background-color: #f9f9f9;
                     border: 1px solid #cccccc;
                     border-radius: 3px;
-                    padding: 12px;
+                    padding: 10px;
                     color: #454545;
                     font-size: 13px;
                     line-height: normal;

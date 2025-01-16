@@ -385,7 +385,7 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 		],
 
 		//
-		// Links social.
+		// Social Links.
 		//
 		'social_follows_links'                => [
 			'facebook'  => [
@@ -434,14 +434,8 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 				'name'  => 'Zalo',
 				'icon'  => THEME_URL . 'assets/img/zlogo.png',
 				'color' => '#0068FF',
-				'url'   => 'https://chat.zalo.me/?phone=xxx',
+				'url'   => '',
 			],
-			//			'skype'     => [
-			//				'name'  => 'Skype',
-			//				'icon'  => 'fa-brands fa-skype',
-			//				'color' => '#0092E0',
-			//				'url'   => '',
-			//			],
 			'hotline'   => [
 				'name'  => 'Hotline',
 				'icon'  => 'fa-solid fa-phone',

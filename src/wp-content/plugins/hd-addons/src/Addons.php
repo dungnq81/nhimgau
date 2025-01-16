@@ -8,8 +8,9 @@ use Addons\CustomScript\CustomScript;
 use Addons\Editor\Editor;
 use Addons\GlobalSetting\GlobalSetting;
 use Addons\LoginSecurity\LoginSecurity;
+use Addons\ReCaptcha\ReCaptcha;
 use Addons\ThirdParty\Faker;
-use Addons\Woocommerce\WooCommerce;
+use Addons\WooCommerce\WooCommerce;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -48,6 +49,7 @@ final class Addons {
 		( new AspectRatio() );
 		( new Editor() );
 		( new LoginSecurity() );
+		( new ReCaptcha() );
 		( new WooCommerce() );
 		( new CustomScript() );
 		( new CustomCSS() );

@@ -22,7 +22,7 @@ $current_slug =	$current_slug ?? 'global_setting';
         <label class="heading" for="<?= $slug ?>"><?php echo $title; ?></label>
         <div class="option">
             <div class="controls">
-                <input type="checkbox" class="checkbox" name="<?= $slug ?>" id="<?= $slug ?>" <?php echo checked( $global_setting_options[$slug] ?? false, 1 ); ?> value="1">
+                <input type="checkbox" class="checkbox" name="<?= $slug ?>" id="<?= $slug ?>" <?php checked( $global_setting_options[$slug] ?? false, 1 ); ?> value="1">
             </div>
             <div class="explain"><?php _e( 'Check to activate', ADDONS_TEXT_DOMAIN ); ?></div>
         </div>

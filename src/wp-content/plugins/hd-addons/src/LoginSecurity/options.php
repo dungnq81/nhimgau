@@ -85,7 +85,7 @@ $enable_custom_login    = $login_security_default['enable_custom_login'] ?? fals
         <div class="desc">Using common usernames like <b>'admin'</b> is a security threat that often results in unauthorized access. By enabling this option we will disable the creation of common usernames and if you already have one or more users with a weak username, we'll ask you to provide new one(s).</div>
         <div class="option">
             <div class="controls">
-                <input type="checkbox" class="checkbox" name="illegal_users" id="illegal_users" <?php echo checked( $illegal_users, 1 ); ?> value="1">
+                <input type="checkbox" class="checkbox" name="illegal_users" id="illegal_users" <?php checked( $illegal_users, 1 ); ?> value="1">
             </div>
             <div class="explain"><?php _e( 'Check to activate', ADDONS_TEXT_DOMAIN ); ?></div>
         </div>

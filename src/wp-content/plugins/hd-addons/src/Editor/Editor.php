@@ -5,7 +5,6 @@ namespace Addons\Editor;
 \defined( 'ABSPATH' ) || exit;
 
 final class Editor {
-
 	public mixed $editor_options = [];
 
 	// ------------------------------------------------------
@@ -75,12 +74,6 @@ final class Editor {
 
 			wp_dequeue_style( 'wp-block-library' );
 			wp_dequeue_style( 'wp-block-library-theme' );
-
-			// Remove WooCommerce block CSS
-			if ( \Addons\Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {
-				wp_deregister_style( 'wc-blocks-vendors-style' );
-				wp_deregister_style( 'wc-block-style' );
-			}
 		}
 	}
 
