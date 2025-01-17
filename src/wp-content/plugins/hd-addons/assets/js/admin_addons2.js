@@ -3,9 +3,8 @@ Object.assign(window, { Cookies: api });
 jQuery(function($) {
   if (typeof codemirror_settings !== "undefined") {
     let initializeCodeMirror = function(elements, settings, type) {
-      elements.forEach(function(el) {
+      elements.forEach((el) => {
         if (!el.CodeMirror) {
-          console.log(`Initializing CodeMirror for ${type} on element:`, el);
           let editorSettings = settings ? { ...settings } : {};
           editorSettings.codemirror = {
             ...editorSettings.codemirror,
@@ -14,15 +13,13 @@ jQuery(function($) {
             autoRefresh: true
           };
           el.CodeMirror = wp.codeEditor.initialize(el, editorSettings);
-        } else {
-          console.log(`CodeMirror already initialized for ${type} on element:`, el);
         }
       });
     };
-    const codemirror_css = [...document.querySelectorAll(".codemirror_css")];
-    const codemirror_html = [...document.querySelectorAll(".codemirror_html")];
-    initializeCodeMirror(codemirror_css, codemirror_settings.codemirror_css, "CSS");
-    initializeCodeMirror(codemirror_html, codemirror_settings.codemirror_html, "HTML");
+    const codemirror_css = document.querySelectorAll(".codemirror_css");
+    const codemirror_html = document.querySelectorAll(".codemirror_html");
+    initializeCodeMirror(codemirror_css, codemirror_settings.codemirror_css);
+    initializeCodeMirror(codemirror_html, codemirror_settings.codemirror_html);
   }
   $.fn.fadeOutAndRemove = function(speed) {
     return this.fadeOut(speed, function() {

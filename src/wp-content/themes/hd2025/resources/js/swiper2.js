@@ -56,7 +56,7 @@ const random = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 // swipers single
 //
 const initializeSwipers = () => {
-    const swiperElements = [ ...document?.querySelectorAll('.w-swiper') ];
+    const swiperElements = document.querySelectorAll('.w-swiper');
 
     swiperElements.forEach((el, index) => {
         const classes = generateClasses();
@@ -228,7 +228,7 @@ const initializeSwipers = () => {
 // Products slides
 //
 const spgSwipers = () => {
-    const swiperElements = [ ...document?.querySelectorAll('.swiper-product-gallery') ];
+    const swiperElements = document.querySelectorAll('.swiper-product-gallery');
 
     swiperElements.forEach((el, index) => {
         const classes = generateClasses();

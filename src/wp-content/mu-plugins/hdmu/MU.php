@@ -1,8 +1,5 @@
 <?php
 
-use MU\Disallow_Indexing;
-use MU\Plugin_Disabler\Plugin_Disabler;
-
 /**
  * MU Class
  *
@@ -10,7 +7,7 @@ use MU\Plugin_Disabler\Plugin_Disabler;
  */
 final class MU {
 	public function __construct() {
-		( new Disallow_Indexing() );
-		( new Plugin_Disabler() );
+		( new \MU\Disallow_Indexing() );
+		( new \MU\Plugin_Disabler\Plugin_Disabler() );
 	}
 }

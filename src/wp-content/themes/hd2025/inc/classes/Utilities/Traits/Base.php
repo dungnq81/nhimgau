@@ -163,25 +163,17 @@ trait Base {
 			return false;
 		}
 
-		$parsed_url = parse_url( $url );
-
-		// Validate scheme
+		// Ensure URL has a valid scheme (http or https)
 		$valid_schemes = [ 'http', 'https' ];
-		if ( ! isset( $parsed_url['scheme'] ) || ! in_array( $parsed_url['scheme'], $valid_schemes, true ) ) {
+		$scheme        = parse_url( $url, PHP_URL_SCHEME );
+		if ( ! in_array( $scheme, $valid_schemes, true ) ) {
 			return false;
 		}
 
-		// Validate host
-		if ( ! isset( $parsed_url['host'] ) || ! filter_var( $parsed_url['host'], FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME ) ) {
-			return false;
-		}
+		// Ensure URL has a valid host
+		$host = parse_url( $url, PHP_URL_HOST );
 
-		// Optional: Validate DNS resolution for the host
-		//		if ( ! checkdnsrr( $parsed_url['host'], 'A' ) && ! checkdnsrr( $parsed_url['host'], 'AAAA' ) ) {
-		//			return false;
-		//		}
-
-		return true;
+		return filter_var( $host, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME ) !== false;
 	}
 
 	// --------------------------------------------------

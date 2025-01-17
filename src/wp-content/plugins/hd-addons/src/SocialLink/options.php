@@ -16,16 +16,15 @@ $social_follows_links = \Addons\Helper::filterSettingOptions( 'social_follows_li
 
 			$name  = $social['name'];
 			$icon  = $social['icon'];
-			$color = $social_options[ $key ]['color'] ?? $social['color'];
 			$url   = $social_options[ $key ]['url'] ?? $social['url'];
     ?>
     <div class="cell section section-text">
-        <span class="heading !block"><?php _e( $name, ADDONS_TEXT_DOMAIN ); ?></span>
+        <span class="heading"><?php _e( $name, ADDONS_TEXT_DOMAIN ); ?></span>
         <div class="option">
             <div class="controls control-img">
                 <label for="<?= esc_attr( $key ) ?>">
 	                <?php
-	                if ( filter_var( $icon, FILTER_VALIDATE_URL ) || str_starts_with( $icon, 'data:' ) ) {
+	                if ( \Addons\Helper::isUrl( $icon ) || str_starts_with( $icon, 'data:' ) ) {
 		                echo '<img src="' . $icon . '" alt="' . esc_attr( $name ) . '">';
 	                } elseif ( str_starts_with( $icon, '<svg' ) ) {
 		                echo $icon;
@@ -34,7 +33,6 @@ $social_follows_links = \Addons\Helper::filterSettingOptions( 'social_follows_li
 	                }
 	                ?>
                 </label>
-                <input type="color" class="input-color" name="<?= esc_attr( $key ) ?>-color" value="<?= esc_attr( $color ) ?>" title="Color">
                 <input class="input" type="url" id="<?= esc_attr( $key ) ?>" name="<?= esc_attr( $key ) ?>-url" value="<?= esc_attr( $url ) ?>" title="URL">
             </div>
         </div>

@@ -5,10 +5,13 @@ namespace Addons;
 use Addons\AspectRatio\AspectRatio;
 use Addons\CustomCSS\CustomCSS;
 use Addons\CustomScript\CustomScript;
+use Addons\CustomSorting\CustomSorting;
 use Addons\Editor\Editor;
+use Addons\File\File;
 use Addons\GlobalSetting\GlobalSetting;
 use Addons\LoginSecurity\LoginSecurity;
 use Addons\ReCaptcha\ReCaptcha;
+use Addons\SocialLink\SocialLink;
 use Addons\ThirdParty\Faker;
 use Addons\WooCommerce\WooCommerce;
 
@@ -49,6 +52,9 @@ final class Addons {
 		( new AspectRatio() );
 		( new Editor() );
 		( new LoginSecurity() );
+		( new SocialLink() );
+		( new File() );
+		( new CustomSorting() );
 		( new ReCaptcha() );
 		( new WooCommerce() );
 		( new CustomScript() );

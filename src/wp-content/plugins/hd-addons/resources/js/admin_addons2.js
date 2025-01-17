@@ -3,16 +3,14 @@ import Cookies from 'js-cookie';
 Object.assign(window, { Cookies });
 
 jQuery(function($) {
-
     // codemirror
     if (typeof codemirror_settings !== 'undefined') {
-        const codemirror_css = [ ...document.querySelectorAll('.codemirror_css') ];
-        const codemirror_html = [ ...document.querySelectorAll('.codemirror_html') ];
+        const codemirror_css = document.querySelectorAll('.codemirror_css');
+        const codemirror_html = document.querySelectorAll('.codemirror_html');
 
         function initializeCodeMirror(elements, settings, type) {
-            elements.forEach(function(el) {
+            elements.forEach(el => {
                 if (!el.CodeMirror) {
-                    console.log(`Initializing CodeMirror for ${type} on element:`, el);
                     let editorSettings = settings ? { ...settings } : {};
                     editorSettings.codemirror = {
                         ...editorSettings.codemirror,
@@ -21,8 +19,6 @@ jQuery(function($) {
                         autoRefresh: true,
                     };
                     el.CodeMirror = wp.codeEditor.initialize(el, editorSettings);
-                } else {
-                    console.log(`CodeMirror already initialized for ${type} on element:`, el);
                 }
             });
         }

@@ -18,6 +18,83 @@ final class Helper {
 
 	// --------------------------------------------------
 
+	/**
+	 * @param array $checked_arr
+	 * @param $current
+	 * @param bool $display
+	 * @param string $type
+	 *
+	 * @return string|void
+	 */
+	public static function inArrayChecked( array $checked_arr, $current, bool $display = true, string $type = 'checked' ) {
+		$type   = preg_match( '/^[a-zA-Z0-9\-]+$/', $type ) ? $type : 'checked';
+		$result = in_array( $current, $checked_arr, false ) ? " $type='$type'" : '';
+
+		// Echo or return the result
+		if ( $display ) {
+			echo $result;
+		} else {
+			return $result;
+		}
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string $size
+	 *
+	 * @return int
+	 */
+	public static function convertToMB( string $size ): int {
+		// Define the multipliers for each unit
+		$unitMultipliers = [
+			'M' => 1,              // Megabyte
+			'G' => 1024,           // Gigabyte
+			'T' => 1024 * 1024     // Terabyte
+		];
+
+		// Extract the numeric part and the unit from the input string
+		$size = strtoupper( trim( $size ) );
+		if ( preg_match( '/^(\d+)(M|MB|G|GB|T|TB)?$/', $size, $matches ) ) {
+			$value = (int) $matches[1];
+			$unit  = rtrim( $matches[2] ?? 'M', 'B' ); // Remove 'B' if it exists
+
+			// Calculate the size in MB
+			return $value * ( $unitMultipliers[ $unit ] ?? 1 );
+		}
+
+		// Return 0 if the input is not valid
+		return 0;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string|null $url
+	 *
+	 * @return bool
+	 */
+	public static function isUrl( ?string $url ): bool {
+		// Basic URL validation using filter_var
+		if ( ! filter_var( $url, FILTER_VALIDATE_URL ) ) {
+			return false;
+		}
+
+		// Ensure URL has a valid scheme (http or https)
+		$valid_schemes = [ 'http', 'https' ];
+		$scheme        = parse_url( $url, PHP_URL_SCHEME );
+		if ( ! in_array( $scheme, $valid_schemes, true ) ) {
+			return false;
+		}
+
+		// Ensure URL has a valid host
+		$host = parse_url( $url, PHP_URL_HOST );
+
+		return filter_var( $host, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME ) !== false;
+	}
+
+	// --------------------------------------------------
+
 	public static function Lighthouse(): bool {
 		if ( ! isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
 			return false;

@@ -38,7 +38,7 @@ const getDefaultOptions = () => ({
 });
 const random = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 const initializeSwipers = () => {
-  const swiperElements = [...document == null ? void 0 : document.querySelectorAll(".w-swiper")];
+  const swiperElements = document.querySelectorAll(".w-swiper");
   swiperElements.forEach((el, index) => {
     var _a;
     const classes = generateClasses();
@@ -180,7 +180,7 @@ const initializeSwipers = () => {
   });
 };
 const spgSwipers = () => {
-  const swiperElements = [...document == null ? void 0 : document.querySelectorAll(".swiper-product-gallery")];
+  const swiperElements = document.querySelectorAll(".swiper-product-gallery");
   swiperElements.forEach((el, index) => {
     const classes = generateClasses();
     el.classList.add(classes.swiperClass);

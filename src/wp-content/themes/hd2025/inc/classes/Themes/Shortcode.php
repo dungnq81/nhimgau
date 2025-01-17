@@ -30,7 +30,6 @@ final class Shortcode {
 			'off_canvas_button' => [ $this, 'off_canvas_button' ],
 			'horizontal_menu'   => [ $this, 'horizontal_menu' ],
 			'vertical_menu'     => [ $this, 'vertical_menu' ],
-			'social_menu'       => [ $this, 'social_menu' ],
 			'posts'             => [ $this, 'posts' ],
 		];
 
@@ -66,65 +65,6 @@ final class Shortcode {
 		}
 
 		return Helper::safeMailTo( $atts['email'], $atts['title'], $attributes );
-	}
-
-	// ------------------------------------------------------
-
-	/**
-	 * @param array $atts
-	 *
-	 * @return string
-	 */
-	public function social_menu( array $atts = [] ): string {
-		$atts = shortcode_atts(
-			[
-				'class' => 'social-menu',
-				'id'    => Helper::escAttr( uniqid( 'menu-', false ) ),
-			],
-			$atts,
-			'social_menu'
-		);
-
-		$class = $atts['class'] ? ' ' . Helper::escAttr( $atts['class'] ) : ' social-menu';
-
-		ob_start();
-
-		$social_options       = Helper::getOption( 'social__options' );
-		$social_follows_links = Helper::filterSettingOptions( 'social_follows_links', [] );
-
-		if ( $social_options ) {
-			foreach ( $social_options as $key => $social_option ) {
-				$data = [
-					'url'        => $social_option['url'] ?? '',
-					'name'       => $key,
-					'color'      => $social_follows_links[ $key ]['color'] ?? '',
-					'background' => $social_follows_links[ $key ]['background'] ?? '',
-					'icon'       => $social_follows_links[ $key ]['icon'] ?? '',
-				];
-
-				$thumb = '';
-				if ( Helper::isUrl( $data['icon'] ) || str_starts_with( $data['icon'], 'data:' ) ) :
-					$thumb = '<img src="' . $data['icon'] . '" alt="' . Helper::escAttr( $data['name'] ) . '">';
-                elseif ( str_starts_with( $data['icon'], '<svg' ) ) :
-					$thumb = $data['icon'];
-                elseif ( is_string( $data['icon'] ) ) :
-					$thumb = '<i class="' . $data['icon'] . '"></i>';
-				endif;
-
-				if ( ! empty( $data['url'] ) ) :
-                ?>
-                <li>
-                    <a href="<?= $data['url'] ?>" title="<?= Helper::escAttr( $data['name'] ) ?>" target="_blank">
-                        <?= $thumb ?>
-                        <span class="sr-only"><?= $data['name'] ?></span>
-                    </a>
-                </li>
-				<?php
-				endif;
-			}
-		}
-
-		return '<ul class="menu' . $class . '">' . ob_get_clean() . '</ul>';
 	}
 
 	// ------------------------------------------------------

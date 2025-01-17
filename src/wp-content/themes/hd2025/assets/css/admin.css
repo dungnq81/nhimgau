@@ -24486,6 +24486,10 @@ readers do not read off random characters that represent icons */
   width: 200px !important;
 }
 
+.\!w-250 {
+  width: 250px !important;
+}
+
 .mb-20 {
   margin-bottom: 20px;
 }

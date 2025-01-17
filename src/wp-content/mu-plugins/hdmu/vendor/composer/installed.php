@@ -3,7 +3,7 @@
         'name' => 'mu-plugins/hdmu',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '40e76dfe9c3dc5916f8c75c62c5243cca431cb39',
+        'reference' => 'afce3f8c4d28f441e6d3b96103b9a0dc7e6b052e',
         'type' => 'wordpress-muplugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -40,7 +40,7 @@
         'mu-plugins/hdmu' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '40e76dfe9c3dc5916f8c75c62c5243cca431cb39',
+            'reference' => 'afce3f8c4d28f441e6d3b96103b9a0dc7e6b052e',
             'type' => 'wordpress-muplugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -76,7 +76,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => 'b3b47da8ab8f3fd7ab2881a1add662280d6257e2',
+            'reference' => 'e7a38fcc13e4ddfe9a28d5c7bf50aa9a9da758ec',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(

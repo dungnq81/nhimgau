@@ -184,6 +184,48 @@ final class GlobalSetting {
 
 		/** ---------------------------------------- */
 
+		/** Social Link */
+		$social_link_options  = [];
+		$social_follows_links = Helper::filterSettingOptions( 'social_follows_links', [] );
+
+		foreach ( $social_follows_links as $i => $item ) {
+			$url = ! empty( $data[ $i . '-url' ] ) ? sanitize_url( $data[ $i . '-url' ] ) : '';
+			if ( $url ) {
+				$social_link_options[ $i ] = [
+                    'url' => $url
+                ];
+			}
+		}
+
+		if ( $social_link_options ) {
+			Helper::updateOption( 'social_link__options', $social_link_options );
+		} else {
+			Helper::removeOption( 'social_link__options' );
+		}
+
+		/** ---------------------------------------- */
+
+        /** File */
+		$file_options = [];
+        $arrs = [
+            'upload_size_limit',
+            'svgs',
+        ];
+
+		foreach ( $arrs as $value ) {
+			if ( ! empty( $data[ $value ] ) ) {
+				$file_options[ $value ] = sanitize_text_field( $data[ $value ] );
+			}
+		}
+
+		if ( $file_options ) {
+			Helper::updateOption( 'file__options', $file_options );
+		} else {
+			Helper::removeOption( 'file__options' );
+		}
+
+		/** ---------------------------------------- */
+
 		/** ReCaptcha */
 		$recaptcha_options = [];
 		$arrs              = [

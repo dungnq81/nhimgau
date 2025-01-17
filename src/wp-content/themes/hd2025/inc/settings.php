@@ -247,9 +247,14 @@ function query_vars_callback( $vars ): array {
 add_filter( 'hd_theme_settings_filter', 'hd_theme_settings_filter_callback', 99, 1 );
 
 function hd_theme_settings_filter_callback( array $arr ): array {
-	static $cache = [];
-	$arr_new = [
+	static $setting_filter_cache = [];
 
+	// Return a cached value if static caching is enabled and the value is already cached
+	if ( ! empty( $setting_filter_cache['theme_setting'] ) ) {
+		return $setting_filter_cache['theme_setting'];
+	}
+
+	$arr_new = [
 		//
 		// Customize table column information, table display content, etc.
 		//
@@ -327,7 +332,7 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 			'admin_hide_submenu'          => [
 //				'options-general.php' => [
 //					'options-discussion.php',
-//					'options-privacy.php'
+//					'options-privacy.php',
 //				]
 			],
 
@@ -389,64 +394,54 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 		//
 		'social_follows_links'                => [
 			'facebook'  => [
-				'name'  => 'Facebook',
-				'icon'  => 'fa-brands fa-facebook',
-				'color' => '#0866FF',
-				'url'   => '',
+				'name' => 'Facebook',
+				'icon' => 'fa-brands fa-facebook',
+				'url'  => '',
 			],
 			'instagram' => [
-				'name'  => 'Instagram',
-				'icon'  => 'fa-brands fa-instagram',
-				'color' => 'rgb(224, 241, 255)',
-				'url'   => '',
+				'name' => 'Instagram',
+				'icon' => 'fa-brands fa-instagram',
+				'url'  => '',
 			],
 			'youtube'   => [
-				'name'  => 'Youtube',
-				'icon'  => 'fa-brands fa-youtube',
-				'color' => 'rgb(255, 0, 0)',
-				'url'   => '',
+				'name' => 'Youtube',
+				'icon' => 'fa-brands fa-youtube',
+				'url'  => '',
 			],
 			'twitter'   => [
-				'name'  => 'X (Twitter)',
-				'icon'  => 'fa-brands fa-x-twitter',
-				'color' => 'rgb(239, 243, 244)',
-				'url'   => '',
+				'name' => 'X (Twitter)',
+				'icon' => 'fa-brands fa-x-twitter',
+				'url'  => '',
 			],
 			'tiktok'    => [
-				'name'  => 'Tiktok',
-				'icon'  => 'fa-brands fa-tiktok',
-				'color' => 'rgba(255, 255, 255, 0.9)',
-				'url'   => '',
+				'name' => 'Tiktok',
+				'icon' => 'fa-brands fa-tiktok',
+				'url'  => '',
 			],
 			'telegram'  => [
-				'name'  => 'Telegram',
-				'icon'  => 'fa-brands fa-telegram',
-				'color' => '#2BA0E5',
-				'url'   => '',
+				'name' => 'Telegram',
+				'icon' => 'fa-brands fa-telegram',
+				'url'  => '',
 			],
 			'linkedin'  => [
-				'name'  => 'Linkedin',
-				'icon'  => 'fa-brands fa-linkedin',
-				'color' => '#0a66c2',
-				'url'   => '',
+				'name' => 'Linkedin',
+				'icon' => 'fa-brands fa-linkedin',
+				'url'  => '',
 			],
 			'zalo'      => [
-				'name'  => 'Zalo',
-				'icon'  => THEME_URL . 'assets/img/zlogo.png',
-				'color' => '#0068FF',
-				'url'   => '',
+				'name' => 'Zalo',
+				'icon' => THEME_URL . 'assets/img/zlogo.png',
+				'url'  => '',
 			],
 			'hotline'   => [
-				'name'  => 'Hotline',
-				'icon'  => 'fa-solid fa-phone',
-				'color' => '',
-				'url'   => '',
+				'name' => 'Hotline',
+				'icon' => 'fa-solid fa-phone',
+				'url'  => '',
 			],
 			'email'     => [
-				'name'  => 'Email',
-				'icon'  => 'fa-solid fa-envelope',
-				'color' => '',
-				'url'   => '',
+				'name' => 'Email',
+				'icon' => 'fa-solid fa-envelope',
+				'url'  => '',
 			],
 		]
 	];
@@ -470,12 +465,8 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 	// Merge the new array with the old array, prioritize the value of $arr
 	$arr_new = [ ...$arr_new, ...$arr ];
 
-	// Return a cached value if static caching is enabled and the value is already cached
-	if ( isset( $cache['theme_setting'] ) ) {
-		return $cache['theme_setting'];
-	}
-
-	$cache['theme_setting'] = $arr_new;
+	// Add to static cache
+	$setting_filter_cache['theme_setting'] = $arr_new;
 
 	return $arr_new;
 }
