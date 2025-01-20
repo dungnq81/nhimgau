@@ -448,22 +448,22 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 
 	// --------------------------------------------------
 
-	if ( Helper::isWoocommerceActive() ) {
-		$arr_new['aspect_ratio']['post_type_term'][]                      = 'product';
-		$arr_new['aspect_ratio']['post_type_term'][]                      = 'product_cat';
-		$arr_new['admin_list_table']['term_row_actions'][]                = 'product_cat';
-		$arr_new['admin_list_table']['post_type_exclude_thumb_columns'][] = 'product';
-		$arr_new['post_type_terms'][]                                     = [ 'product' => 'product_cat' ];
-	}
-
-	if ( Helper::isCf7Active() ) {
-		$arr_new['admin_list_table']['post_type_exclude_thumb_columns'][] = 'wpcf7_contact_form';
-	}
+//	if ( Helper::isWoocommerceActive() ) {
+//		$arr_new['aspect_ratio']['post_type_term'][]                      = 'product';
+//		$arr_new['aspect_ratio']['post_type_term'][]                      = 'product_cat';
+//		$arr_new['admin_list_table']['term_row_actions'][]                = 'product_cat';
+//		$arr_new['admin_list_table']['post_type_exclude_thumb_columns'][] = 'product';
+//		$arr_new['post_type_terms'][]                                     = [ 'product' => 'product_cat' ];
+//	}
+//
+//	if ( Helper::isCf7Active() ) {
+//		$arr_new['admin_list_table']['post_type_exclude_thumb_columns'][] = 'wpcf7_contact_form';
+//	}
 
 	// --------------------------------------------------
 
 	// Merge the new array with the old array, prioritize the value of $arr
-	$arr_new = [ ...$arr_new, ...$arr ];
+	$arr_new = [ ...$arr_new, ...$arr ]; //dump($arr_new);
 
 	// Add to static cache
 	$setting_filter_cache['theme_setting'] = $arr_new;

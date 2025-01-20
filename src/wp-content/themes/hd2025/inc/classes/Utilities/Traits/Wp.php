@@ -691,6 +691,29 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
+	 * @param string $mod_name
+	 * @param mixed $value
+	 * @param int $expire_cache
+	 *
+	 * @return bool
+	 */
+	public static function setThemeMod( string $mod_name, mixed $value, int $expire_cache = 21600 ): bool {
+		if ( empty( $mod_name ) ) {
+			return false;
+		}
+
+		$mod_name_lower = strtolower( $mod_name );
+
+		set_theme_mod( $mod_name, $value );
+		$cache_key = "theme_mod_{$mod_name_lower}";
+		wp_cache_set( $cache_key, $value, 'theme_mods', $expire_cache );
+
+		return true;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
 	 * @param string|null $mod_name
 	 * @param mixed $default
 	 * @param int $expire_cache

@@ -75,7 +75,7 @@ jQuery(function($) {
     }).done(function(data) {
       btn_submit.prop("disabled", false).html(button_text);
       $this.find("#_content").prepend(data);
-      if (window.location.hash === "#global_setting_settings" || window.location.hash === "#custom_css_settings" || window.location.hash === "#custom_script_settings") {
+      if (window.location.hash === "#global_setting_settings" || window.location.hash === "#custom_css_settings" || window.location.hash === "#custom_script_settings" || window.location.hash === "#custom_sorting_settings") {
         window.location.reload();
       }
       setTimeout(() => {

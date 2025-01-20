@@ -12,7 +12,7 @@ if ( post_password_required() ) {
 	return;
 }
 
-$fb_appid = \Cores\Helper::getThemeMod( 'social_fb_setting' );
+$fb_appid = \HD\Helper::getThemeMod( 'social_fb_setting' );
 if ( ! $fb_appid ) {
 	return;
 }

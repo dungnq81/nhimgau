@@ -2,7 +2,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$custom_sorting_options = \Addons\Helper::getOption( 'custom_sorting__options' );
+$custom_sorting_options = \Addons\Helper::getOption( 'custom_sorting__options', [] );
 $order_post_type        = $custom_sorting_options['order_post_type'] ?? [];
 $order_taxonomy         = $custom_sorting_options['order_taxonomy'] ?? [];
 

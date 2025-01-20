@@ -267,7 +267,7 @@ final class Helper {
 			$r                       = wp_insert_post( wp_slash( $post_data ), true );
 
 			if ( ! is_wp_error( $r ) ) {
-				set_theme_mod( $post_type . '_option_id', $r );
+				self::setThemeMod( $post_type . '_option_id', $r );
 
 				// Trigger creation of a revision. This should be removed once #30854 is resolved.
 				$revisions = wp_get_latest_revision_id_and_total_count( $r );
@@ -344,7 +344,7 @@ final class Helper {
 			];
 
 			$post = ( new \WP_Query( $custom_query_vars ) )->post;
-			set_theme_mod( $post_type . '_option_id', $post->ID ?? - 1 );
+			self::setThemeMod( $post_type . '_option_id', $post->ID ?? - 1 );
 		}
 
 		return $post;
@@ -576,6 +576,29 @@ final class Helper {
 
 		// Retrieve the option value
 		return $option_value;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string $mod_name
+	 * @param mixed $value
+	 * @param int $expire_cache
+	 *
+	 * @return bool
+	 */
+	public static function setThemeMod( string $mod_name, mixed $value, int $expire_cache = 21600 ): bool {
+		if ( empty( $mod_name ) ) {
+			return false;
+		}
+
+		$mod_name_lower = strtolower( $mod_name );
+
+		set_theme_mod( $mod_name, $value );
+		$cache_key = "theme_mod_{$mod_name_lower}";
+		wp_cache_set( $cache_key, $value, 'theme_mods', $expire_cache );
+
+		return true;
 	}
 
 	// --------------------------------------------------

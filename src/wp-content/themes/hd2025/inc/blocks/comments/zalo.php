@@ -12,7 +12,7 @@ if ( post_password_required() ) {
 	return;
 }
 
-$zalo_appid = \Cores\Helper::getThemeMod( 'social_zalo_setting' );
+$zalo_appid = \HD\Helper::getThemeMod( 'social_zalo_setting' );
 if ( ! $zalo_appid ) {
 	return;
 }

@@ -91,7 +91,11 @@ jQuery(function($) {
                 $this.find('#_content').prepend(data);
 
                 // auto reload tabs
-                if (window.location.hash === '#global_setting_settings' || window.location.hash === '#custom_css_settings' || window.location.hash === '#custom_script_settings') {
+                if (window.location.hash === '#global_setting_settings' ||
+                    window.location.hash === '#custom_css_settings' ||
+                    window.location.hash === '#custom_script_settings' ||
+                    window.location.hash === '#custom_sorting_settings'
+                ) {
                     window.location.reload();
                 }
 
