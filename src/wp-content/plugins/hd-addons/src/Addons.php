@@ -2,20 +2,6 @@
 
 namespace Addons;
 
-use Addons\AspectRatio\AspectRatio;
-use Addons\BaseSlug\BaseSlug;
-use Addons\CustomCSS\CustomCSS;
-use Addons\CustomScript\CustomScript;
-use Addons\CustomSorting\CustomSorting;
-use Addons\Editor\Editor;
-use Addons\File\File;
-use Addons\GlobalSetting\GlobalSetting;
-use Addons\LoginSecurity\LoginSecurity;
-use Addons\ReCaptcha\ReCaptcha;
-use Addons\SocialLink\SocialLink;
-use Addons\ThirdParty\Faker;
-use Addons\WooCommerce\WooCommerce;
-
 \defined( 'ABSPATH' ) || exit;
 
 /**
@@ -49,20 +35,21 @@ final class Addons {
 			remove_action( 'admin_init', [ \Classic_Editor::class, 'register_settings' ] );
 		}
 
-		( new GlobalSetting() );
-		( new AspectRatio() );
-		( new Editor() );
-		( new LoginSecurity() );
-		( new SocialLink() );
-		( new File() );
-		( new BaseSlug() );
-		( new CustomSorting() );
-		( new ReCaptcha() );
-		( new WooCommerce() );
-		( new CustomScript() );
-		( new CustomCSS() );
-
-		( new Faker() );
+		( new \Addons\GlobalSetting\GlobalSetting() );
+		( new \Addons\AspectRatio\AspectRatio() );
+		( new \Addons\Editor\Editor() );
+		( new \Addons\Optimizer\Optimizer() );
+		( new \Addons\Security\Security() );
+		( new \Addons\LoginSecurity\LoginSecurity() );
+		( new \Addons\SocialLink\SocialLink() );
+		( new \Addons\File\File() );
+		( new \Addons\BaseSlug\BaseSlug() );
+		( new \Addons\CustomSorting\CustomSorting() );
+		( new \Addons\Recaptcha\ReCaptcha() );
+		( new \Addons\Woocommerce\WooCommerce() );
+		( new \Addons\CustomScript\CustomScript() );
+		( new \Addons\CustomCSS\CustomCSS() );
+		( new \Addons\ThirdParty\Faker() );
 	}
 
 	// -------------------------------------------------------------

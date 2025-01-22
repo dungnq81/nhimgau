@@ -58,6 +58,7 @@ final class WooCommerce {
 
 		if ( $editor_options['block_style_off'] ?? '' ) {
 			wp_deregister_style( 'wc-blocks-style' );
+			delete_site_transient( 'woocommerce_blocks_patterns' );
 		}
 	}
 }

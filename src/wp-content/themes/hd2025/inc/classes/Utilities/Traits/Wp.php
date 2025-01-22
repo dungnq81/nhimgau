@@ -593,7 +593,7 @@ trait Wp {
 				if ( 'delay' === $value && ! self::isAdmin() ) {
 					return preg_replace(
 						[ '/\s+defer\s+/', '/\s+src=/' ],
-						[ ' ', ' defer data-type=\'lazy\' data-src=' ],
+						[ ' ', ' defer data-type="lazy" data-src=' ],
 						$tag
 					);
 				}
@@ -619,7 +619,11 @@ trait Wp {
 
 		foreach ( $arr_styles as $style ) {
 			if ( str_contains( $handle, $style ) ) {
-				return preg_replace( '/media=\'all\'/', 'media=\'print\' onload=\'this.media="all"\'', $html );
+				return preg_replace(
+					[ '/media=\'all\'/', '/media="all"/' ],
+					'media=\'print\' onload="this.media=\'all\'"',
+					$html
+				);
 			}
 		}
 

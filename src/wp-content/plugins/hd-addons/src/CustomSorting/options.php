@@ -50,8 +50,15 @@ $order_taxonomy         = $custom_sorting_options['order_taxonomy'] ?? [];
         <div class="desc">Sort by dragging and dropping categories.</div>
 		<?php
 		$taxonomies = get_taxonomies( [ 'show_ui' => true ], 'objects' );
+		$exclude_taxonomy = [
+			'link_category',
+			'wp_pattern_category',
+			'product_cat',
+			'product_brand',
+		];
+
 		foreach ( $taxonomies as $taxonomy ) :
-			if ( in_array( $taxonomy->name, [ 'link_category', 'wp_pattern_category', 'product_cat' ], false ) ) {
+			if ( in_array( $taxonomy->name, $exclude_taxonomy, false ) ) {
 				continue;
 			}
 

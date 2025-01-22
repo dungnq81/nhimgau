@@ -5,6 +5,7 @@ namespace Addons\GlobalSetting;
 use Addons\BaseSlug\BaseSlug;
 use Addons\CustomSorting\CustomSorting;
 use Addons\Helper;
+use Addons\Security\Readme;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -159,6 +160,34 @@ final class GlobalSetting {
 		} else {
 			Helper::removeOption( 'editor__options' );
 		}
+
+		/** ---------------------------------------- */
+
+        /** Security */
+		$security_options = [];
+        $arrs = [
+            'comments_off',
+	        'xmlrpc_off',
+            'hide_wp_version',
+            'wp_links_opml_off',
+            'rss_feed_off',
+            'remove_readme',
+        ];
+
+		foreach ( $arrs as $value ) {
+			if ( isset( $data[ $value ] ) ) {
+				$security_options[ $value ] = sanitize_text_field( $data[ $value ] );
+			}
+		}
+
+		if ( $security_options ) {
+			Helper::updateOption( 'security__options', $security_options );
+		} else {
+			Helper::removeOption( 'security__options' );
+		}
+
+		// Remove readme.html
+        isset( $security_options['remove_readme'] ) && ( new Readme() )->delete_readme();
 
 		/** ---------------------------------------- */
 
