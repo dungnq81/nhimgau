@@ -44,6 +44,9 @@ final class CustomSorting {
 
 	// ------------------------------------------------------
 
+	/**
+	 * @return void
+	 */
 	private function _init_run(): void {
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ], 33 );
 		add_action( 'admin_init', [ $this, 'refresh' ] );

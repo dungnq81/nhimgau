@@ -157,6 +157,7 @@
 #_settings_form #_content .section .controls.control-img > label {
   flex: 0 0 auto;
   width: auto;
+  min-width: 70px;
   margin-bottom: 0;
   line-height: 1;
 }
@@ -167,6 +168,7 @@
   -webkit-filter: grayscale(1);
           filter: grayscale(1);
   fill: #5d5d5d;
+  object-fit: contain;
 }
 #_settings_form #_content .section .controls.control-img > label > i {
   width: auto;

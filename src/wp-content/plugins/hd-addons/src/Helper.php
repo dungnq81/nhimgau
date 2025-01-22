@@ -18,6 +18,39 @@ final class Helper {
 
 	// --------------------------------------------------
 
+	public static function redirect( string $uri = '', int $status = 301 ) {
+		if ( ! headers_sent() ) {
+			wp_redirect( $uri, $status );
+			exit;
+		}
+
+		echo '<script>window.location.href="' . $uri . '";</script>';
+		echo '<noscript><meta http-equiv="refresh" content="0;url=' . $uri . '" /></noscript>';
+
+		return true;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * Get the current url.
+	 *
+	 * @return string The current url.
+	 */
+	public static function getCurrentUrl(): string {
+		// Return an empty string if it is not an HTTP request.
+		if ( ! isset( $_SERVER['HTTP_HOST'] ) ) {
+			return '';
+		}
+
+		$protocol = isset( $_SERVER['HTTPS'] ) ? 'https' : 'http';
+
+		// Build the current url.
+		return $protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+	}
+
+	// --------------------------------------------------
+
 	/**
 	 * @param array $checked_arr
 	 * @param $current

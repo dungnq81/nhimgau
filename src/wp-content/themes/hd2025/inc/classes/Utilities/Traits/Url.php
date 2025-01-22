@@ -10,13 +10,8 @@ trait Url {
 	// --------------------------------------------------
 
 	/**
-	 * Redirect to a specified URI with a given HTTP status code.
-	 *
-	 * This method handles both PHP header redirects and JavaScript/HTML
-	 * redirects when headers have already been sent.
-	 *
-	 * @param string $uri The URI to redirect to. Default is an empty string.
-	 * @param int $status The HTTP status code to use for the redirect. Default is 301.
+	 * @param string $uri
+	 * @param int $status
 	 *
 	 * @return true|void
 	 */
@@ -146,13 +141,7 @@ trait Url {
 	// --------------------------------------------------
 
 	/**
-	 * Retrieve the server's IP address.
-	 *
-	 * This method checks common server environment variables and performs
-	 * DNS resolution to determine the server's IP address. It prioritizes
-	 * IPv4 over IPv6. If no valid IP is found, it returns '127.0.0.1'.
-	 *
-	 * @return string The server's IP address.
+	 * @return string
 	 */
 	public static function serverIpAddress(): string {
 		// Check for SERVER_ADDR first
@@ -185,12 +174,7 @@ trait Url {
 	// --------------------------------------------------
 
 	/**
-	 * Get the IP address from which the user is viewing the current page.
-	 *
-	 * This method checks various server variables and headers to determine
-	 * the user's real IP address, handling cases like proxies and CloudFlare.
-	 *
-	 * @return string The user's IP address.
+	 * @return string
 	 */
 	public static function ipAddress(): string {
 		if ( class_exists( Whip::class ) ) {
@@ -236,11 +220,9 @@ trait Url {
 	// --------------------------------------------------
 
 	/**
-	 * Convert a URL to a file system path.
+	 * @param string $url
 	 *
-	 * @param string $url The URL to convert.
-	 *
-	 * @return string The corresponding file system path.
+	 * @return string
 	 */
 	public static function urlToPath( string $url ): string {
 		// Ensure the URL is absolute before converting
@@ -259,11 +241,9 @@ trait Url {
 	// --------------------------------------------------
 
 	/**
-	 * Convert a file system path to a URL.
+	 * @param string $dir
 	 *
-	 * @param string $dir The directory path to convert.
-	 *
-	 * @return string The corresponding URL.
+	 * @return string
 	 */
 	public static function pathToUrl( string $dir ): string {
 		$dirs = wp_upload_dir();

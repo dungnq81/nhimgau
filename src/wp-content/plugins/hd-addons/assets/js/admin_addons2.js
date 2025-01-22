@@ -75,7 +75,7 @@ jQuery(function($) {
     }).done(function(data) {
       btn_submit.prop("disabled", false).html(button_text);
       $this.find("#_content").prepend(data);
-      if (window.location.hash === "#global_setting_settings" || window.location.hash === "#custom_css_settings" || window.location.hash === "#custom_script_settings" || window.location.hash === "#custom_sorting_settings") {
+      if (window.location.hash === "#global_setting_settings" || window.location.hash === "#custom_css_settings" || window.location.hash === "#custom_script_settings" || window.location.hash === "#custom_sorting_settings" && $data["order_reset"] !== void 0 || window.location.hash === "#base_slug_settings" && $data["base_slug_reset"] !== void 0) {
         window.location.reload();
       }
       setTimeout(() => {
@@ -115,71 +115,5 @@ jQuery(function($) {
       activateTab(window.location.hash || $tabs.first().attr("href"));
     });
   });
-  const select2_multiple = $(".select2-multiple");
-  $.each(select2_multiple, function(i, el) {
-    $(el).select2({
-      multiple: true,
-      allowClear: true,
-      width: "resolve",
-      dropdownAutoWidth: true,
-      placeholder: $(el).attr("placeholder")
-    });
-  });
-  const select2_tags = $(".select2-tags");
-  $.each(select2_tags, function(i, el) {
-    $(el).select2({
-      multiple: true,
-      tags: true,
-      allowClear: true,
-      width: "resolve",
-      dropdownAutoWidth: true,
-      placeholder: $(el).attr("placeholder")
-    });
-  });
-  const select2_ips = $(".select2-ips");
-  $.each(select2_ips, function(i, el) {
-    $(el).select2({
-      multiple: true,
-      tags: true,
-      allowClear: true,
-      width: "resolve",
-      dropdownAutoWidth: true,
-      placeholder: $(el).attr("placeholder"),
-      createTag: function(params) {
-        let term = $.trim(params.term);
-        if (isValidIPRange(term)) {
-          return {
-            id: term,
-            text: term
-          };
-        } else {
-          return null;
-        }
-      }
-    });
-  });
 });
-function isValidIPRange(range) {
-  const ipPattern = /^(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})$/;
-  const rangePattern = /^(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})-(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])$/;
-  const cidrPattern = /^(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\/(\d|[1-2]\d|3[0-2])$/;
-  if (ipPattern.test(range)) {
-    return true;
-  }
-  if (rangePattern.test(range)) {
-    const [startIP, endRange] = range.split("-");
-    const endIP = startIP.split(".").slice(0, 3).join(".") + "." + endRange;
-    return compareIPs(startIP, endIP) < 0;
-  }
-  return cidrPattern.test(range);
-}
-function compareIPs(ip1, ip2) {
-  const ip1Parts = ip1.split(".").map(Number);
-  const ip2Parts = ip2.split(".").map(Number);
-  for (let i = 0; i < 4; i++) {
-    if (ip1Parts[i] < ip2Parts[i]) return -1;
-    if (ip1Parts[i] > ip2Parts[i]) return 1;
-  }
-  return 0;
-}
 //# sourceMappingURL=admin_addons2.js.map

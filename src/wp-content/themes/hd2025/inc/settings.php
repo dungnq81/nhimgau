@@ -361,7 +361,11 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 		//
 		// Custom Email list (mailto).
 		//
-		'custom_emails'                       => [],
+		'custom_emails'                       => [
+//			'job_contact'     => __( 'Job Contacts', TEXT_DOMAIN ),
+//			'job_alert'       => __( 'Job Alerts', TEXT_DOMAIN ),
+//			'job_application' => __( 'Job Applications', TEXT_DOMAIN ),
+		],
 
 		//
 		// List of admin IDs allowed installing plugins.

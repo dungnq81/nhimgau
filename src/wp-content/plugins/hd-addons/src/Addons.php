@@ -3,6 +3,7 @@
 namespace Addons;
 
 use Addons\AspectRatio\AspectRatio;
+use Addons\BaseSlug\BaseSlug;
 use Addons\CustomCSS\CustomCSS;
 use Addons\CustomScript\CustomScript;
 use Addons\CustomSorting\CustomSorting;
@@ -54,6 +55,7 @@ final class Addons {
 		( new LoginSecurity() );
 		( new SocialLink() );
 		( new File() );
+		( new BaseSlug() );
 		( new CustomSorting() );
 		( new ReCaptcha() );
 		( new WooCommerce() );

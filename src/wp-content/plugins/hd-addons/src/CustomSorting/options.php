@@ -9,7 +9,7 @@ $order_taxonomy         = $custom_sorting_options['order_taxonomy'] ?? [];
 ?>
 <div class="container flex flex-x flex-gap sm-up-1 lg-up-2">
     <div class="cell section section-checkbox">
-        <span class="heading block !fw-700"><?php _e( 'Check to Sort Post Types', ADDONS_TEXT_DOMAIN ); ?></span>
+        <span class="heading !fw-700"><?php _e( 'Check to Sort Post Types', ADDONS_TEXT_DOMAIN ); ?></span>
         <div class="desc">Sort by dragging and dropping post-types.</div>
 		<?php
 		$post_types        = get_post_types( [ 'show_ui' => true ], 'objects' );
@@ -29,7 +29,7 @@ $order_taxonomy         = $custom_sorting_options['order_taxonomy'] ?? [];
 			}
 			$label = $post_type->label;
 			if ( str_starts_with( $post_type->name, 'shop_' ) ) {
-				$label = 'Product ' . $label;
+				$label = 'WOO ' . $label;
 			}
 			if ( str_starts_with( $post_type->name, 'acf-' ) ) {
 				$label = 'ACF ' . $label;
@@ -46,7 +46,7 @@ $order_taxonomy         = $custom_sorting_options['order_taxonomy'] ?? [];
     </div>
 
     <div class="cell section section-checkbox">
-        <span class="heading block !fw-700"><?php _e( 'Check to Sort Taxonomies', ADDONS_TEXT_DOMAIN ); ?></span>
+        <span class="heading !fw-700"><?php _e( 'Check to Sort Taxonomies', ADDONS_TEXT_DOMAIN ); ?></span>
         <div class="desc">Sort by dragging and dropping categories.</div>
 		<?php
 		$taxonomies = get_taxonomies( [ 'show_ui' => true ], 'objects' );
@@ -68,7 +68,7 @@ $order_taxonomy         = $custom_sorting_options['order_taxonomy'] ?? [];
     </div>
 
     <div class="cell section section-checkbox !sm-1">
-        <span class="heading block !fw-700"><?php _e( 'Check to reset order', ADDONS_TEXT_DOMAIN ); ?></span>
+        <span class="heading !fw-700"><?php _e( 'Check to reset order', ADDONS_TEXT_DOMAIN ); ?></span>
         <div class="option mb-20">
             <label class="controls">
                 <input type="checkbox" class="checkbox" name="order_reset" id="order_reset" value="1">

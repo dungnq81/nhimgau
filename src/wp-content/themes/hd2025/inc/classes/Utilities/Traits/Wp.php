@@ -1544,7 +1544,7 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param \WP_Term|null $term
+	 * @param $term
 	 * @param null $acf_field_name
 	 * @param string $size
 	 * @param bool $img_wrap
@@ -1552,7 +1552,7 @@ trait Wp {
 	 *
 	 * @return string|null
 	 */
-	public static function acfTermThumb( \WP_Term|null $term, $acf_field_name = null, string $size = 'thumbnail', bool $img_wrap = false, string|array $attr = '' ): ?string {
+	public static function acfTermThumb( $term, $acf_field_name = null, string $size = 'thumbnail', bool $img_wrap = false, string|array $attr = '' ): ?string {
 		if ( ! $term ) {
 			return null;
 		}

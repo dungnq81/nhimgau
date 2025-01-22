@@ -196,6 +196,7 @@
                     & > label {
                         flex: 0 0 auto;
                         width: auto;
+                        min-width: 70px;
                         margin-bottom: 0;
                         line-height: 1;
 
@@ -205,6 +206,7 @@
                             min-width: 24px;
                             filter: grayscale(1);
                             fill: #5d5d5d;
+                            object-fit: contain;
                         }
 
                         & > i {

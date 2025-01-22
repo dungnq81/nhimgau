@@ -2,6 +2,8 @@
 
 namespace Addons\GlobalSetting;
 
+use Addons\BaseSlug\BaseSlug;
+use Addons\CustomSorting\CustomSorting;
 use Addons\Helper;
 
 \defined( 'ABSPATH' ) || exit;
@@ -192,8 +194,8 @@ final class GlobalSetting {
 			$url = ! empty( $data[ $i . '-url' ] ) ? sanitize_url( $data[ $i . '-url' ] ) : '';
 			if ( $url ) {
 				$social_link_options[ $i ] = [
-                    'url' => $url
-                ];
+					'url' => $url
+				];
 			}
 		}
 
@@ -205,12 +207,12 @@ final class GlobalSetting {
 
 		/** ---------------------------------------- */
 
-        /** File */
+		/** File */
 		$file_options = [];
-        $arrs = [
-            'upload_size_limit',
-            'svgs',
-        ];
+		$arrs         = [
+			'upload_size_limit',
+			'svgs',
+		];
 
 		foreach ( $arrs as $value ) {
 			if ( ! empty( $data[ $value ] ) ) {
@@ -222,6 +224,79 @@ final class GlobalSetting {
 			Helper::updateOption( 'file__options', $file_options );
 		} else {
 			Helper::removeOption( 'file__options' );
+		}
+
+		/** ---------------------------------------- */
+
+		/** Remove Base Slug */
+		$custom_base_slug_options = [];
+		$base_slug_reset          = ! empty( $data['base_slug_reset'] ) ? sanitize_text_field( $data['base_slug_reset'] ) : '';
+		if ( empty( $base_slug_reset ) ) {
+			$arrs = [
+				'base_slug_post_type',
+				'base_slug_taxonomy',
+			];
+
+			foreach ( $arrs as $value ) {
+				if ( ! empty( $data[ $value ] ) ) {
+					$custom_base_slug_options[ $value ] = array_map( 'sanitize_text_field', $data[ $value ] );
+				}
+			}
+		}
+
+		if ( $custom_base_slug_options ) {
+			Helper::updateOption( 'base_slug__options', $custom_base_slug_options );
+			( new BaseSlug() )->flush_rules();
+		} else {
+			Helper::removeOption( 'base_slug__options' );
+			( new BaseSlug() )->reset_all();
+		}
+
+		/** ---------------------------------------- */
+
+		/** Custom Email To */
+		$email_options = [];
+		$custom_emails = Helper::filterSettingOptions( 'custom_emails', [] );
+
+		if ( $custom_emails ) {
+			foreach ( $custom_emails as $i => $ar ) {
+				$email = ! empty( $data[ $i . '_email' ] ) ? $data[ $i . '_email' ] : '';
+				$email = is_array( $email ) ? array_map( 'sanitize_text_field', $email ) : sanitize_text_field( $email );
+
+				$email_options[ $i ] = $email;
+			}
+		}
+
+		if ( $email_options ) {
+			Helper::updateOption( 'custom_email_to__options', $email_options );
+		} else {
+			Helper::removeOption( 'custom_email_to__options' );
+		}
+
+		/** ---------------------------------------- */
+
+		/** Custom Sorting */
+		$custom_order_options = [];
+		$order_reset          = ! empty( $data['order_reset'] ) ? sanitize_text_field( $data['order_reset'] ) : '';
+		if ( empty( $order_reset ) ) {
+			$arrs = [
+				'order_post_type',
+				'order_taxonomy',
+			];
+
+			foreach ( $arrs as $value ) {
+				if ( ! empty( $data[ $value ] ) ) {
+					$custom_order_options[ $value ] = array_map( 'sanitize_text_field', $data[ $value ] );
+				}
+			}
+		}
+
+		if ( $custom_order_options ) {
+			Helper::updateOption( 'custom_sorting__options', $custom_order_options );
+			( new CustomSorting() )->update_options();
+		} else {
+			Helper::removeOption( 'custom_sorting__options' );
+			( new CustomSorting() )->reset_all();
 		}
 
 		/** ---------------------------------------- */
