@@ -68,10 +68,6 @@ final class Optimizer {
 	 * @return void
 	 */
 	private function _optimizer(): void {
-
-        // https://html.spec.whatwg.org/multipage/rendering.html#img-contain-size
-        add_filter( 'wp_img_tag_add_auto_sizes', '__return_false' );
-
 		// Filters the script, style tag
 		add_filter( 'script_loader_tag', [ $this, 'script_loader_tag' ], 12, 3 );
 		add_filter( 'style_loader_tag', [ $this, 'style_loader_tag' ], 12, 2 );
@@ -101,6 +97,37 @@ final class Optimizer {
 		add_action( 'login_form', [ $this, 'add_csrf_token_to_login_form' ] );
 		add_filter( 'authenticate', [ $this, 'verify_csrf_token_on_login' ], 30, 3 );
 		add_filter( 'login_message', [ $this, 'show_csrf_error_message' ] );
+
+        //--------------------------------
+        // custom
+		//--------------------------------
+
+		// https://html.spec.whatwg.org/multipage/rendering.html#img-contain-size
+		add_filter( 'wp_img_tag_add_auto_sizes', '__return_false' );
+
+		// excerpt_more
+		add_filter( 'excerpt_more', static function () {
+			return ' ' . '&hellip;';
+		} );
+
+		// Remove logo admin bar
+		add_action( 'wp_before_admin_bar_render', static function () {
+			global $wp_admin_bar;
+
+			if ( is_admin_bar_showing() ) {
+				$wp_admin_bar->remove_menu( 'wp-logo' );
+			}
+		} );
+
+		// Normalize upload filename
+		add_filter( 'sanitize_file_name', static function ( $filename ) {
+			return remove_accents( $filename );
+		}, 10, 1 );
+
+		// Remove archive title prefix
+		add_filter( 'get_the_archive_title_prefix', static function ( $prefix ) {
+			return __return_empty_string();
+		} );
 	}
 
 	// ------------------------------------------------------

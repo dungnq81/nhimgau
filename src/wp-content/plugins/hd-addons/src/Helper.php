@@ -18,6 +18,35 @@ final class Helper {
 
 	// --------------------------------------------------
 
+	/**
+	 * @param $content
+	 *
+	 * @return false|int
+	 */
+	public static function isXml( $content ): false|int {
+		// Get the first 200 chars of the file to make the preg_match check faster.
+		$xml_part = substr( $content, 0, 20 );
+
+		return preg_match( '/<\?xml version="/', $xml_part );
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param $html
+	 *
+	 * @return false|int
+	 */
+	public static function isAmpEnabled( $html ): false|int {
+		// Get the first 200 chars of the file to make the preg_match check faster.
+		$is_amp = substr( $html, 0, 200 );
+
+		// Checks if the document contains the amp tag.
+		return preg_match( '/<html[^>]+(amp|⚡)[^>]*>/u', $is_amp );
+	}
+
+	// --------------------------------------------------
+
 	public static function redirect( string $uri = '', int $status = 301 ) {
 		if ( ! headers_sent() ) {
 			wp_redirect( $uri, $status );

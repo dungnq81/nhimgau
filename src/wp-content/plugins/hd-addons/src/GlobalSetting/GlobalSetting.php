@@ -163,6 +163,26 @@ final class GlobalSetting {
 
 		/** ---------------------------------------- */
 
+        /** Optimizer */
+		$optimizer_options = [];
+        $arrs = [
+            'minify_html' => ! empty( $data['minify_html'] ) ? sanitize_text_field( $data['minify_html'] ) : '',
+        ];
+
+		foreach ( $arrs as $key => $value ) {
+			if ( isset( $data[ $key ] ) ) {
+				$optimizer_options[$key] = $value;
+			}
+		}
+
+        if ( $optimizer_options ) {
+	        Helper::updateOption( 'optimizer__options', $optimizer_options );
+        } else {
+	        Helper::removeOption( 'optimizer__options' );
+        }
+
+		/** ---------------------------------------- */
+
         /** Security */
 		$security_options = [];
         $arrs = [
