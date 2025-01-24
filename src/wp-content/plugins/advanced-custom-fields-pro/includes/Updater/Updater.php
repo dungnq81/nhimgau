@@ -484,7 +484,7 @@ if ( ! class_exists( 'Updater' ) ) {
 				'upgrade_notice' => '',
 			);
 			foreach ( $sections as $k => $v ) {
-				$sections[ $k ] = $response->$k ?? '';
+				$sections[ $k ] = $response->$k;
 			}
 			$response->sections = $sections;
 

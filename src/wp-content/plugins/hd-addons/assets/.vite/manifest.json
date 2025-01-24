@@ -22,7 +22,10 @@
     "file": "js/lazyload.js",
     "name": "lazyload",
     "src": "wp-content/plugins/hd-addons/resources/js/lazyload.js",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "__vendor.js"
+    ]
   },
   "wp-content/plugins/hd-addons/resources/js/recaptcha.js": {
     "file": "js/recaptcha.js",

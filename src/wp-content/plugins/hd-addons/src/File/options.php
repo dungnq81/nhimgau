@@ -37,7 +37,7 @@ $svg_options = [
                 <div class="inline-group">
 					<?php foreach ( $svg_options as $key => $opt ) : ?>
                     <label>
-                        <input type="radio" name="svgs" class="radio" id="svgs-<?= $key ?>" value="<?= $key ?>" <?php echo checked( $svgs, $key ); ?> />
+                        <input type="radio" name="svgs" class="radio" id="svgs-<?= $key ?>" value="<?= $key ?>" <?php checked( $svgs, $key ); ?> />
                         <span><?= $opt ?></span>
                     </label>
 					<?php endforeach; ?>

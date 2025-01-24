@@ -179,9 +179,7 @@ trait Base {
 	// --------------------------------------------------
 
 	/**
-	 * Test if the current browser runs on a mobile device (smartphone, tablet, etc.)
-	 *
-	 * @return boolean
+	 * @return bool
 	 * @throws MobileDetectException
 	 */
 	public static function isMobile(): bool {

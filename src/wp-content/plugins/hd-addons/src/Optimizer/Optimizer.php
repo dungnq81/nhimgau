@@ -11,7 +11,6 @@ final class Optimizer {
 
 	public function __construct() {
 		$this->optimizer_options = \Addons\Helper::getOption( 'optimizer__options' );
-
 		$this->_output_parser();
 	}
 
@@ -85,23 +84,51 @@ final class Optimizer {
 	 * @return string
 	 */
 	private function _optimize_for_visitors( $html ): string {
-		$minify_html = $this->optimizer_options['minify_html'] ?? 0;
+		$html = ( new Font() )->run( $html );
+		$html = $this->_dns_prefetch( $html );
 
+		$minify_html = $this->optimizer_options['minify_html'] ?? 0;
 		if ( ! empty( $minify_html ) ) {
-			$options = [
-				'cssMinifier' => function ($css) {
+			$_options = [
+				'cssMinifier'     => function ( $css ) {
 					return \Addons\Helper::CSSMinify( $css, false );
 				},
-				'jsMinifier' => function ($js) {
+				'jsMinifier'      => function ( $js ) {
 					return \Addons\Helper::JSMinify( $js, false );
 				},
 				'jsCleanComments' => true,
 			];
 
-			$html = Minify_Html::minify( $html, $options );
+			$html = Minify_Html::minify( $html, $_options );
 		}
 
 		return $html;
+	}
+
+	// ------------------------------------------------------
+
+	/**
+	 * @param $html
+	 *
+	 * @return mixed
+	 */
+	private function _dns_prefetch( $html ): mixed {
+		$urls = $this->optimizer_options['dns_prefetch'] ?? [];
+
+		// Return if no url's are set by the user.
+		if ( empty( $urls ) ) {
+			return $html;
+		}
+
+		$new_html = '';
+		foreach ( $urls as $url ) {
+			// Replace the protocol with //.
+			$url_without_protocol = preg_replace( '~(?:(?:https?:)?(?:\/\/)(?:www\.|(?!www)))?((?:.*?)\.(?:.*))~', '//$1', $url );
+			$new_html             .= '<link rel="dns-prefetch" href="' . $url_without_protocol . '" />';
+		}
+
+		return str_replace( '</head>', $new_html . '</head>', $html );
+		//return preg_replace( '~<\/title>~', '</title>' . $new_html, $html );
 	}
 
 	// ------------------------------------------------------

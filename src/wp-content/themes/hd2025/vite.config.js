@@ -67,12 +67,12 @@ export default {
                 criticalUrl: process.env.CRITICAL_URL || 'https://nhimgau.test',
                 criticalBase: `${dir}/assets/css`,
                 css: [ `${dir}/assets/css/app.css` ],
-                criticalPages: [ { uri: '', template: 'index' } ],
+                criticalPages: [ { uri: '/', template: 'index' } ],
                 criticalConfig: {
                     inline: false,
                     strict: false,
-                    width: 1024,
-                    height: 768,
+                    //width: 1024,
+                    //height: 768,
                     penthouse: {
                         blockJSRequests: true,
                     },

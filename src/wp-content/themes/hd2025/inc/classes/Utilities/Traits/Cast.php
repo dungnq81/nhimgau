@@ -11,13 +11,11 @@ trait Cast {
 	// --------------------------------------------------
 
 	/**
-	 * Split a string into an array using one or multiple delimiters.
+	 * @param mixed $delimiters
+	 * @param string|null $string
+	 * @param bool $remove_empty
 	 *
-	 * @param mixed $delimiters A single delimiter string or an array of delimiters.
-	 * @param string|null $string $string The string to be split.
-	 * @param bool $remove_empty Whether to remove empty elements from the result. Default is true.
-	 *
-	 * @return array The array of split strings.
+	 * @return null[]|string[]
 	 */
 	public static function explodeMulti( mixed $delimiters, ?string $string, bool $remove_empty = true ): array {
 		if ( is_string( $delimiters ) ) {

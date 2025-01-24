@@ -2,6 +2,8 @@
 
 namespace Addons;
 
+use Detection\Exception\MobileDetectException;
+use Detection\MobileDetect;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 use Vectorface\Whip\Whip;
@@ -15,6 +17,34 @@ use MatthiasMullie\Minify;
  * @author Gaudev
  */
 final class Helper {
+
+	// --------------------------------------------------
+
+	/**
+	 * @param mixed $delimiters
+	 * @param string|null $string
+	 * @param bool $remove_empty
+	 *
+	 * @return null[]|string[]
+	 */
+	public static function explodeMulti( mixed $delimiters, ?string $string, bool $remove_empty = true ): array {
+		if ( is_string( $delimiters ) ) {
+			return explode( $delimiters, $string );
+		}
+
+		if ( is_array( $delimiters ) ) {
+			$ready  = str_replace( $delimiters, $delimiters[0], $string );
+			$launch = explode( $delimiters[0], $ready );
+
+			if ( $remove_empty ) {
+				$launch = array_filter( $launch );
+			}
+
+			return array_values( $launch );
+		}
+
+		return [ $string ];
+	}
 
 	// --------------------------------------------------
 
@@ -811,6 +841,25 @@ final class Helper {
 
 		// Fallback to localhost IP
 		return '127.0.0.1';
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @return bool
+	 * @throws MobileDetectException
+	 */
+	public static function isMobile(): bool {
+		if ( class_exists( MobileDetect::class ) ) {
+			try {
+				return ( new MobileDetect() )->isMobile();
+			} catch ( \Exception $e ) {
+				throw new MobileDetectException( 'Error detecting mobile device', 0, $e );
+			}
+		}
+
+		// Fallback to WordPress function
+		return wp_is_mobile();
 	}
 
 	// -------------------------------------------------------------

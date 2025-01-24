@@ -165,9 +165,18 @@ final class GlobalSetting {
 
         /** Optimizer */
 		$optimizer_options = [];
-        $arrs = [
-            'minify_html' => ! empty( $data['minify_html'] ) ? sanitize_text_field( $data['minify_html'] ) : '',
-        ];
+		$dns_prefetch      = ! empty( $data['dns_prefetch'] ) ? \Addons\Helper::explodeMulti( [ ',', ' ', PHP_EOL, ], $data['dns_prefetch'] ) : [];
+		$dns_prefetch      = array_map( 'sanitize_url', $dns_prefetch );
+		$font_preload      = ! empty( $data['font_preload'] ) ? \Addons\Helper::explodeMulti( [ ',', ' ', PHP_EOL, ], $data['font_preload'] ) : [];
+		$font_preload      = array_map( 'sanitize_url', $font_preload );
+
+		$arrs = [
+			'minify_html'       => ! empty( $data['minify_html'] ) ? sanitize_text_field( $data['minify_html'] ) : '',
+			'dns_prefetch'      => $dns_prefetch,
+			'font_optimize'     => ! empty( $data['font_optimize'] ) ? sanitize_text_field( $data['font_optimize'] ) : 0,
+			'font_combined_css' => ! empty( $data['font_combined_css'] ) ? sanitize_text_field( $data['font_combined_css'] ) : 0,
+			'font_preload'      => $font_preload,
+		];
 
 		foreach ( $arrs as $key => $value ) {
 			if ( isset( $data[ $key ] ) ) {

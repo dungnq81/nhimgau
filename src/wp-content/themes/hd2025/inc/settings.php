@@ -354,6 +354,16 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 		],
 
 		//
+		// Lazy Load
+		'lazy_load' => [
+			'exclude_urls' => [],
+			'exclude_css' => [
+				'no-lazy',
+				'skip-lazy',
+			],
+		],
+
+		//
 		// Custom post-type and taxonomy.
 		//
 		'post_type_terms'                     => [],
