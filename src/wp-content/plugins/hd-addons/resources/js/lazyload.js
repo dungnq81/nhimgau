@@ -15,5 +15,7 @@ import LazyLoad from 'vanilla-lazyload';
         },
 
         unobserve_entered: true,
+        elements_selector: '.lazy',
+        use_native: true,
     });
 })();

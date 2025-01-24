@@ -8,15 +8,21 @@ $social_follows_links = \Addons\Helper::filterSettingOptions( 'social_follows_li
 ?>
 <div class="container flex flex-x flex-gap sm-up-1 lg-up-2">
 	<?php
-	if ( ! empty( $social_follows_links ) ) {
-		foreach ( $social_follows_links as $key => $social ) {
-			if ( empty( $social['name'] ) || empty( $social['icon'] ) ) {
-				continue;
-			}
+	if ( empty( $social_follows_links ) ) {
+		echo '<h3 class="cell">' . __( 'Not initialized yet', ADDONS_TEXT_DOMAIN ) . '</h3>';
+		echo '</div>';
+		return;
+	}
 
-			$name  = $social['name'];
-			$icon  = $social['icon'];
-			$url   = $social_options[ $key ]['url'] ?? $social['url'];
+
+    foreach ( $social_follows_links as $key => $social ) :
+        if ( empty( $social['name'] ) || empty( $social['icon'] ) ) {
+            continue;
+        }
+
+        $name  = $social['name'];
+        $icon  = $social['icon'];
+        $url   = $social_options[ $key ]['url'] ?? $social['url'];
     ?>
     <div class="cell section section-text">
         <span class="heading"><?php _e( $name, ADDONS_TEXT_DOMAIN ); ?></span>
@@ -37,6 +43,5 @@ $social_follows_links = \Addons\Helper::filterSettingOptions( 'social_follows_li
             </div>
         </div>
     </div>
-		<?php }
-	} ?>
+    <?php endforeach; ?>
 </div>

@@ -1,26 +1,26 @@
-jQuery(function ($) {
+jQuery(function($) {
     $('table.widefat tbody th, table.widefat tbody td').css('cursor', 'move');
 
-    const _helper = function (event, ui) {
-        ui.each(function () {
+    const _helper = function(event, ui) {
+        ui.each(function() {
             $(this).width($(this).width());
         });
         return ui;
     };
 
-    const _start = function (event, ui) {
+    const _start = function(event, ui) {
         ui.item.css('background-color', '#ffffff');
         ui.item.children('td, th').css('border-bottom-width', '0');
         ui.item.css('outline', '1px solid #dfdfdf');
     };
 
-    const _stop = function (event, ui) {
+    const _stop = function(event, ui) {
         ui.item.removeAttr('style');
         ui.item.children('td,th').css('border-bottom-width', '1px');
     };
 
-    const _sort = function (e, ui) {
-        ui.placeholder.find('td').each(function (key, value) {
+    const _sort = function(e, ui) {
+        ui.placeholder.find('td').each(function(key, value) {
             if (ui.helper.find('td').eq(key).is(':visible')) {
                 $(this).show();
             } else {
@@ -39,7 +39,7 @@ jQuery(function ($) {
         helper: _helper,
         start: _start,
         stop: _stop,
-        update: function (event, ui) {
+        update: function(event, ui) {
             $('table.widefat tbody th, table.widefat tbody td').css('cursor', 'default');
             $('table.widefat tbody').sortable('disable');
 
@@ -56,15 +56,15 @@ jQuery(function ($) {
                     action: 'update-menu-order',
                     order: $('#the-list').sortable('serialize'),
                 },
-                function (response) {
+                function(response) {
                     ui.item.find('.check-column input').show().siblings('img').remove();
                     $('table.widefat tbody th, table.widefat tbody td').css('cursor', 'move');
                     $('table.widefat tbody').sortable('enable');
-                }
+                },
             );
 
             // fix cell colors
-            $('table.widefat tbody tr').each(function () {
+            $('table.widefat tbody tr').each(function() {
                 let i = $('table.widefat tbody tr').index(this);
                 if (i % 2 === 0) {
                     $(this).addClass('alternate');
@@ -86,7 +86,7 @@ jQuery(function ($) {
         helper: _helper,
         start: _start,
         stop: _stop,
-        update: function (event, ui) {
+        update: function(event, ui) {
             $('table.widefat tbody th, table.widefat tbody td').css('cursor', 'default');
             $('table.widefat tbody').sortable('disable');
 
@@ -103,15 +103,15 @@ jQuery(function ($) {
                     action: 'update-menu-order-tags',
                     order: $('#the-list').sortable('serialize'),
                 },
-                function (response) {
+                function(response) {
                     ui.item.find('.check-column input').show().siblings('img').remove();
                     $('table.widefat tbody th, table.widefat tbody td').css('cursor', 'move');
                     $('table.widefat tbody').sortable('enable');
-                }
+                },
             );
 
             // fix cell colors
-            $('table.widefat tbody tr').each(function () {
+            $('table.widefat tbody tr').each(function() {
                 let i = $('table.widefat tbody tr').index(this);
                 if (i % 2 === 0) {
                     $(this).addClass('alternate');

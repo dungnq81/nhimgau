@@ -89,61 +89,6 @@ if ( ! function_exists( '_add_cookie' ) ) {
 
 // --------------------------------------------------
 
-if ( ! function_exists( '_toggle_container_open' ) ) {
-	/**
-	 * @param bool $check
-	 * @param string $css1
-	 * @param string $css2
-	 * @param bool $echo
-	 *
-	 * @return string|null
-	 */
-	function _toggle_container_open( bool $check, string $css1 = 'container', string $css2 = '', bool $echo = false ): ?string {
-		$values = '';
-
-		if ( $check && ! empty( $css1 ) ) {
-			$values = '<div class="' . $css1 . '">';
-		} elseif ( ! $check && ! empty( $css2 ) ) {
-			$values = '<div class="' . $css2 . '">';
-		}
-
-		if ( true === $echo ) {
-			echo $values;
-
-			return null;
-		}
-
-		return $values;
-	}
-}
-
-// --------------------------------------------------
-
-if ( ! function_exists( '_toggle_container_close' ) ) {
-	/**
-	 * @param bool $check
-	 * @param bool $echo
-	 *
-	 * @return string|null
-	 */
-	function _toggle_container_close( bool $check, bool $echo = false ): ?string {
-		$values = '';
-		if ( $check ) {
-			$values = '</div>';
-		}
-
-		if ( true === $echo ) {
-			echo $values;
-
-			return null;
-		}
-
-		return $values;
-	}
-}
-
-// --------------------------------------------------
-
 if ( ! function_exists( '_in_array_checked' ) ) {
 	/**
 	 * Conditionally adds an HTML attribute based on array membership.

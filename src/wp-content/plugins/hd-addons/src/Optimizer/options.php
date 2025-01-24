@@ -14,6 +14,11 @@ $font_combined_css = $optimizer_options['font_combined_css'] ?? 0;
 $font_preload      = $optimizer_options['font_preload'] ?? [];
 $font_preload      = implode( PHP_EOL, $font_preload );
 
+$lazyload         = $optimizer_options['lazyload'] ?? 0;
+$lazyload_mobile  = $optimizer_options['lazyload_mobile'] ?? 0;
+$lazyload_exclude = $optimizer_options['lazyload_exclude'] ?? [];
+$lazyload_exclude = implode( PHP_EOL, $lazyload_exclude );
+
 ?>
 <div class="container flex flex-x flex-gap sm-up-1 md-up-2">
     <div class="cell section section-checkbox">
@@ -65,4 +70,7 @@ $font_preload      = implode( PHP_EOL, $font_preload );
             </div>
         </div>
     </div>
+
+    <?php include __DIR__ . '/LazyLoad/options.php'; ?>
+
 </div>

@@ -45,15 +45,15 @@ final class LazyLoad {
 	 */
 	public function __construct() {
 		$optimizer_options = \Addons\Helper::getOption( 'optimizer__options' );
-		$lazy_load         = $optimizer_options['lazy_load'] ?? 0;
-		$lazy_load_mobile  = $optimizer_options['lazy_load_mobile'] ?? 0;
+		$lazyload         = $optimizer_options['lazyload'] ?? 0;
+		$lazyload_mobile  = $optimizer_options['lazyload_mobile'] ?? 0;
 
-		if ( empty( $lazy_load ) ) {
+		if ( empty( $lazyload ) ) {
 			return;
 		}
 
 		// Bail if the current browser runs on a mobile device and the lazy-load on mobile is deactivated.
-		if ( ! $lazy_load_mobile && \Addons\Helper::isMobile() ) {
+		if ( ! $lazyload_mobile && \Addons\Helper::isMobile() ) {
 			return;
 		}
 

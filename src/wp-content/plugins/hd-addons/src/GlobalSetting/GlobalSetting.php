@@ -166,9 +166,12 @@ final class GlobalSetting {
         /** Optimizer */
 		$optimizer_options = [];
 		$dns_prefetch      = ! empty( $data['dns_prefetch'] ) ? \Addons\Helper::explodeMulti( [ ',', ' ', PHP_EOL, ], $data['dns_prefetch'] ) : [];
-		$dns_prefetch      = array_map( 'sanitize_url', $dns_prefetch );
 		$font_preload      = ! empty( $data['font_preload'] ) ? \Addons\Helper::explodeMulti( [ ',', ' ', PHP_EOL, ], $data['font_preload'] ) : [];
-		$font_preload      = array_map( 'sanitize_url', $font_preload );
+		$lazyload_exclude  = ! empty( $data['lazyload_exclude'] ) ? \Addons\Helper::explodeMulti( [ ',', ' ', PHP_EOL, ], $data['lazyload_exclude'] ) : [];
+
+		$dns_prefetch     = array_map( 'sanitize_url', $dns_prefetch );
+		$font_preload     = array_map( 'sanitize_url', $font_preload );
+		$lazyload_exclude = array_map( 'esc_textarea', $lazyload_exclude );
 
 		$arrs = [
 			'minify_html'       => ! empty( $data['minify_html'] ) ? sanitize_text_field( $data['minify_html'] ) : '',
@@ -176,6 +179,9 @@ final class GlobalSetting {
 			'font_optimize'     => ! empty( $data['font_optimize'] ) ? sanitize_text_field( $data['font_optimize'] ) : 0,
 			'font_combined_css' => ! empty( $data['font_combined_css'] ) ? sanitize_text_field( $data['font_combined_css'] ) : 0,
 			'font_preload'      => $font_preload,
+			'lazyload'          => ! empty( $data['lazyload'] ) ? sanitize_text_field( $data['lazyload'] ) : 0,
+			'lazyload_mobile'   => ! empty( $data['lazyload_mobile'] ) ? sanitize_text_field( $data['lazyload_mobile'] ) : 0,
+            'lazyload_exclude'  => $lazyload_exclude,
 		];
 
 		foreach ( $arrs as $key => $value ) {

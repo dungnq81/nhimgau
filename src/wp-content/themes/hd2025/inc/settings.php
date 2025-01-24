@@ -354,13 +354,10 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 		],
 
 		//
-		// Lazy Load
-		'lazy_load' => [
-			'exclude_urls' => [],
-			'exclude_css' => [
-				'no-lazy',
-				'skip-lazy',
-			],
+		// LazyLoad
+		'lazyload_exclude' => [
+			'no-lazy',
+			'skip-lazy',
 		],
 
 		//

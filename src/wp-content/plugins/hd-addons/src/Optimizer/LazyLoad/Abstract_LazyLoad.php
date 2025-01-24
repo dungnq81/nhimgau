@@ -51,7 +51,7 @@ abstract class Abstract_LazyLoad {
 			return $content;
 		}
 
-		$lazy_load         = \Addons\Helper::filterSettingOptions( 'lazy_load', [] );
+		$lazyload_exclude  = \Addons\Helper::filterSettingOptions( 'lazyload_exclude', [] );
 		$optimizer_options = \Addons\Helper::getOption( 'optimizer__options' );
 
 		// Check for items.
@@ -63,8 +63,8 @@ abstract class Abstract_LazyLoad {
 		// Check for specific asset being excluded.
 		$excluded_all = array_unique(
 			array_merge(
-				$lazy_load['exclude_urls'] ?? [],
-				$optimizer_options['exclude_urls'] ?? []
+				$lazyload_exclude ?? [],
+				$optimizer_options['lazyload_exclude'] ?? []
 			)
 		);
 

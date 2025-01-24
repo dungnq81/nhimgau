@@ -11,7 +11,9 @@ import { g } from "./_vendor.js";
       el.removeAttribute("data-src");
       el.removeAttribute("data-srcset");
     },
-    unobserve_entered: true
+    unobserve_entered: true,
+    elements_selector: ".lazy",
+    use_native: true
   });
 })();
 //# sourceMappingURL=lazyload.js.map

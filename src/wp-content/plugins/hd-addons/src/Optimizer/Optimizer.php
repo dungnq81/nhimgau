@@ -10,6 +10,8 @@ final class Optimizer {
 	// ------------------------------------------------------
 
 	public function __construct() {
+		( new \Addons\Optimizer\LazyLoad\LazyLoad() );
+
 		$this->optimizer_options = \Addons\Helper::getOption( 'optimizer__options' );
 		$this->_output_parser();
 	}
