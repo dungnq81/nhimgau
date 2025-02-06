@@ -290,6 +290,33 @@ final class GlobalSetting {
 
 		/** ---------------------------------------- */
 
+        /** Contact Link */
+		if ( isset( $data['contact-link-hidden'] ) ) {
+			$contact_link_options = [];
+			$contact_links        = Helper::filterSettingOptions( 'contact_links', [] );
+
+			foreach ( $contact_links as $i => $link ) {
+                $color = $i . '-color';
+				$value = $i . '-value';
+
+                if ( isset( $data[ $color ] ) ) {
+	                $contact_link_options[ $i ]['color'] = sanitize_text_field( $data[ $color ] );
+                }
+
+				if ( isset( $data[ $value ] ) ) {
+					$contact_link_options[ $i ]['value'] = sanitize_text_field( $data[ $value ] );
+				}
+			}
+
+			if ( $contact_link_options ) {
+				Helper::updateOption( 'contact_link__options', $contact_link_options );
+			} else {
+				Helper::removeOption( 'contact_link__options' );
+			}
+		}
+
+		/** ---------------------------------------- */
+
 		/** File */
 		if ( isset( $data['file-hidden'] ) ) {
 			$file_options = [];

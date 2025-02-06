@@ -115,7 +115,7 @@ final class Admin {
 		wp_register_script( 'pace-js', ASSETS_URL . 'js/pace.min.js', [], $version, true );
 		wp_add_inline_script( 'pace-js', 'paceOptions = {startOnPageLoad:!1}', 'before' );
 
-		wp_enqueue_script( 'admin', ASSETS_URL . 'js/admin2.js', [ 'jquery-core', 'pace-js' ], $version, true );
+		wp_enqueue_script( 'admin', ASSETS_URL . 'js/admin2.js', [ 'jquery', 'pace-js' ], $version, true );
 		wp_script_add_data( 'admin', 'extra', [ 'module', 'defer' ] );
 	}
 

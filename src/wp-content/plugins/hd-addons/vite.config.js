@@ -11,8 +11,8 @@ const node_modules = './node_modules';
 // COPY
 const directoriesToCopy = [
     { src: `${resources}/img`, dest: '' },
-    { src: `${node_modules}/select2/dist/js/select2.full.min.js`, dest: 'js' },
     { src: `${node_modules}/select2/dist/css/select2.min.css`, dest: 'css' },
+    { src: `${node_modules}/select2/dist/js/select2.full.min.js`, dest: 'js' },
 ];
 
 // SASS

@@ -191,6 +191,7 @@
                     flex-flow: row wrap;
                     grid-gap: 10px;
                     gap: 10px;
+                    width: auto;
 
                     & > label {
                         flex: 0 0 auto;
@@ -512,6 +513,13 @@ input[type=number].tiny-text {
     padding-right: 0;
 }
 
+input.input-icon {
+    min-width: 200px !important;
+    width: 35% !important;
+    flex: 0 0 auto !important;
+    max-width: 100% !important;
+}
+
 /** */
 .controls.control-prefix {
     display: flex;
@@ -556,4 +564,16 @@ input[type=number].tiny-text {
 
 .mce-statusbar > .mce-container-body .mce-path {
     padding-top: 8px;
+}
+
+.wp-picker-container .wp-color-result.button {
+    margin-bottom: 0;
+}
+
+.addon-color-field.wp-color-picker {
+    padding: 0 5px !important;
+}
+
+.button.button-small.wp-picker-clear {
+    padding: 0 8px !important;
 }

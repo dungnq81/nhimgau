@@ -218,7 +218,7 @@ final class Theme {
 			'_csrf_token' => wp_create_nonce( 'wp_csrf_token' ),
 			'_wpnonce'    => wp_create_nonce( 'wp_rest' ),
 			'locale'      => esc_js( get_locale() ),
-			'lang'        => esc_js( Helper::getLang() ),
+			'lang'        => esc_js( Helper::currentLanguage() ),
 		];
 
 		if ( $recaptcha_v2_site_key ) {

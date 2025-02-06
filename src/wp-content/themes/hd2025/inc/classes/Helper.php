@@ -52,12 +52,28 @@ final class Helper {
 	// -------------------------------------------------------------
 
 	/**
-	 * Get lang-code
-	 *
-	 * @return string
+	 * @return mixed|string
 	 */
-	public static function getLang(): string {
-		return strtolower( substr( get_locale(), 0, 2 ) );
+	public static function currentLanguage(): mixed {
+		// Polylang
+		if ( function_exists( "pll_current_language" ) ) {
+			return pll_current_language( "slug" );
+		}
+
+		// Weglot
+		if ( function_exists( "weglot_get_current_language" ) ) {
+			return weglot_get_current_language();
+		}
+
+		// WMPL
+		$currentLanguage = apply_filters( 'wpml_current_language', null );
+
+		// Try to fall back on the current language
+		if ( ! $currentLanguage ) {
+			return strtolower( substr( get_bloginfo( 'language' ), 0, 2 ) );
+		}
+
+		return $currentLanguage;
 	}
 
 	// --------------------------------------------------

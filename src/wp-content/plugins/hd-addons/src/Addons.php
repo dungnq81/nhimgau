@@ -65,8 +65,17 @@ final class Addons {
 			$version = date( 'YmdHis', current_time( 'U', 0 ) );
 		}
 
+		wp_enqueue_style( 'wp-color-picker' );
+		wp_enqueue_script( 'wp-color-picker' );
+
 		wp_enqueue_style( 'admin-addons-style', ADDONS_URL . 'assets/css/admin_addons.css', [], $version );
-		wp_enqueue_script( 'admin-addons', ADDONS_URL . 'assets/js/admin_addons2.js', [ 'jquery-core' ], $version, true );
+		wp_enqueue_script(
+			'admin-addons',
+			ADDONS_URL . 'assets/js/admin_addons2.js',
+			[ 'jquery', 'wp-color-picker' ],
+			$version,
+			true
+		);
 		wp_script_add_data( 'admin-addons', 'extra', [ 'module', 'defer' ] );
 
 		// options_enqueue_assets
@@ -77,7 +86,7 @@ final class Addons {
 			}
 
 			if ( ! wp_script_is( 'select2', 'registered' ) ) {
-				wp_register_script( 'select2', ADDONS_URL . 'assets/js/select2.full.min.js', [ 'jquery-core' ], $version, true );
+				wp_register_script( 'select2', ADDONS_URL . 'assets/js/select2.full.min.js', [ 'jquery' ], $version, true );
 			}
 
 			wp_enqueue_script( 'select2-addons', ADDONS_URL . 'assets/js/select2.js', [ 'select2' ], $version, true );

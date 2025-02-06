@@ -7,12 +7,11 @@ use Addons\Helper;
 \defined( 'ABSPATH' ) || exit;
 
 final class SocialLink {
-
 	// ------------------------------------------------------
 
 	public function __construct() {
 		/**
-		 * @var ?array $shortcodes
+		 * @var array $shortcodes
 		 */
 		$shortcodes = [
 			'social_menu' => [ $this, 'social_menu' ],

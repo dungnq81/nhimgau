@@ -355,7 +355,7 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 
 		//
 		// LazyLoad
-		'lazyload_exclude' => [
+		'lazyload_exclude'                    => [
 			'no-lazy',
 			'skip-lazy',
 		],
@@ -405,54 +405,99 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 		//
 		'social_follows_links'                => [
 			'facebook'  => [
-				'name' => 'Facebook',
+				'name' => __( 'Facebook', TEXT_DOMAIN ),
 				'icon' => 'fa-brands fa-facebook',
 				'url'  => '',
 			],
 			'instagram' => [
-				'name' => 'Instagram',
+				'name' => __( 'Instagram', TEXT_DOMAIN ),
 				'icon' => 'fa-brands fa-instagram',
 				'url'  => '',
 			],
 			'youtube'   => [
-				'name' => 'Youtube',
+				'name' => __( 'Youtube', TEXT_DOMAIN ),
 				'icon' => 'fa-brands fa-youtube',
 				'url'  => '',
 			],
 			'twitter'   => [
-				'name' => 'X (Twitter)',
+				'name' => __( 'X (Twitter)', TEXT_DOMAIN ),
 				'icon' => 'fa-brands fa-x-twitter',
 				'url'  => '',
 			],
 			'tiktok'    => [
-				'name' => 'Tiktok',
+				'name' => __( 'Tiktok', TEXT_DOMAIN ),
 				'icon' => 'fa-brands fa-tiktok',
 				'url'  => '',
 			],
 			'telegram'  => [
-				'name' => 'Telegram',
+				'name' => __( 'Telegram', TEXT_DOMAIN ),
 				'icon' => 'fa-brands fa-telegram',
 				'url'  => '',
 			],
 			'linkedin'  => [
-				'name' => 'Linkedin',
+				'name' => __( 'Linkedin', TEXT_DOMAIN ),
 				'icon' => 'fa-brands fa-linkedin',
 				'url'  => '',
 			],
 			'zalo'      => [
-				'name' => 'Zalo',
+				'name' => __( 'Zalo', TEXT_DOMAIN ),
 				'icon' => THEME_URL . 'assets/img/zlogo.png',
 				'url'  => '',
 			],
 			'hotline'   => [
-				'name' => 'Hotline',
+				'name' => __( 'Hotline', TEXT_DOMAIN ),
 				'icon' => 'fa-solid fa-phone',
 				'url'  => '',
 			],
 			'email'     => [
-				'name' => 'Email',
+				'name' => __( 'Email', TEXT_DOMAIN ),
 				'icon' => 'fa-solid fa-envelope',
 				'url'  => '',
+			],
+		],
+
+		//
+		// Contact Links.
+		//
+		'contact_links'                       => [
+			'tiktok'       => [
+				'name'        => __( 'Tiktok', TEXT_DOMAIN ),
+				'icon'        => '',
+				'value'       => '',
+				'placeholder' => __( 'Link tiktok', TEXT_DOMAIN ),
+			],
+			'messenger'    => [
+				'name'        => __( 'Messenger', TEXT_DOMAIN ),
+				'icon'        => '',
+				'value'       => '',
+				'placeholder' => __( 'Link messenger', TEXT_DOMAIN ),
+			],
+			'zalo'         => [
+				'name'        => __( 'Zalo', TEXT_DOMAIN ),
+				'icon'        => '',
+				'value'       => '',
+				'placeholder' => '0123 456 789',
+			],
+			'hotline'      => [
+				'name'        => __( 'Hotline', TEXT_DOMAIN ),
+				'icon'        => '',
+				'color'       => '',
+				'value'       => '',
+				'placeholder' => '0123 456 789',
+			],
+			'contact_map'  => [
+				'name'        => __( 'Contact map', TEXT_DOMAIN ),
+				'icon'        => '',
+				'color'       => '',
+				'value'       => '',
+				'placeholder' => __( 'Link google map', TEXT_DOMAIN ),
+			],
+			'contact_link' => [
+				'name'        => __( 'Contact link', TEXT_DOMAIN ),
+				'icon'        => '',
+				'color'       => '',
+				'value'       => '',
+				'placeholder' => '/contact/',
 			],
 		]
 	];
