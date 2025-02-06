@@ -369,9 +369,9 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 		// Custom Email list (mailto).
 		//
 		'custom_emails'                       => [
-//			'job_contact'     => __( 'Job Contacts', TEXT_DOMAIN ),
-//			'job_alert'       => __( 'Job Alerts', TEXT_DOMAIN ),
-//			'job_application' => __( 'Job Applications', TEXT_DOMAIN ),
+//			'contact'     => __( 'Contacts', TEXT_DOMAIN ),
+//			'alert'       => __( 'Alerts', TEXT_DOMAIN ),
+//			'application' => __( 'Applications', TEXT_DOMAIN ),
 		],
 
 		//

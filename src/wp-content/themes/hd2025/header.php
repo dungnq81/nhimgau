@@ -31,7 +31,7 @@
     <?php
 
     /**
-     * //@see Custom_Script::body_scripts_top_action - 99
+     * @see CustomScript::body_scripts_top__hook - 99
      */
     do_action( 'wp_body_open' );
 

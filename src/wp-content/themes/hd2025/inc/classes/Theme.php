@@ -146,13 +146,7 @@ final class Theme {
 		// folders
 		$dirs = [
 			'template_structures' => THEME_PATH . 'template-structures',
-			'templates'           => THEME_PATH . 'templates',
-			'template_parts'      => THEME_PATH . 'template-parts',
-			'storage'             => THEME_PATH . 'storage',
-			'languages'           => THEME_PATH . 'languages',
-
-			'inc_ajax'   => INC_PATH . 'ajax',
-			'inc_blocks' => INC_PATH . 'blocks',
+			'inc_ajax'            => INC_PATH . 'ajax',
 		];
 
 		foreach ( $dirs as $dir => $path ) {
@@ -176,9 +170,6 @@ final class Theme {
 		Helper::isPolylangActive() && PLL::get_instance();
 		Helper::isRankMathActive() && ( RankMath::get_instance() );
 		Helper::isWoocommerceActive() && WooCommerce::get_instance();
-
-		// TGMPA configuration
-		TGMPA::get_instance();
 	}
 
 	// --------------------------------------------------
