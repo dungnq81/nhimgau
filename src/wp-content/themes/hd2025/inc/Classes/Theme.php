@@ -6,7 +6,6 @@ use HD\Plugins\ACF\ACF;
 use HD\Plugins\CF7;
 use HD\Plugins\PLL;
 use HD\Plugins\RankMath;
-use HD\Plugins\TGMPA\TGMPA;
 use HD\Plugins\WooCommerce\WooCommerce;
 
 use HD\Themes\Admin;
