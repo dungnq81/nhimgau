@@ -7,13 +7,13 @@ $social_follows_links = \Addons\Helper::filterSettingOptions( 'social_follows_li
 
 ?>
 <div class="container flex flex-x flex-gap sm-up-1 lg-up-2">
+    <input type="hidden" name="social-link-hidden" value="1">
 	<?php
 	if ( empty( $social_follows_links ) ) {
 		echo '<h3 class="cell">' . __( 'Not initialized yet', ADDONS_TEXT_DOMAIN ) . '</h3>';
 		echo '</div>';
 		return;
 	}
-
 
     foreach ( $social_follows_links as $key => $social ) :
         if ( empty( $social['name'] ) || empty( $social['icon'] ) ) {

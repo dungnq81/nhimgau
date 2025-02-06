@@ -7,6 +7,7 @@ $filter_custom_emails = \Addons\Helper::filterSettingOptions( 'custom_emails', [
 
 ?>
 <div class="container flex flex-x flex-gap sm-up-1 lg-up-2">
+    <input type="hidden" name="custom-email-to-hidden" value="1"
     <?php
     if ( empty( $filter_custom_emails ) ) {
 	    echo '<h3 class="cell">' . __( 'Not initialized yet', ADDONS_TEXT_DOMAIN ) . '</h3>';

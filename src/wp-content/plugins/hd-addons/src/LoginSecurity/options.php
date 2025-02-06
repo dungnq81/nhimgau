@@ -14,6 +14,8 @@ $enable_custom_login    = $login_security_default['enable_custom_login'] ?? fals
 
 ?>
 <div class="container flex flex-x flex-gap sm-up-1 lg-up-2">
+    <input type="hidden" name="login-security-hidden" value="1">
+
     <?php if ( $enable_custom_login ) : ?>
     <div class="cell !lg-1 section section-text">
         <label class="heading" for="custom_login_uri"><?php _e( 'Custom Login URL', ADDONS_TEXT_DOMAIN ); ?></label>

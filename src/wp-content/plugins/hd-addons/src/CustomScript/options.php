@@ -9,6 +9,7 @@ $html_body_bottom = \Addons\Helper::getCustomPostContent( 'html_body_bottom', tr
 
 ?>
 <div class="container flex flex-x flex-gap sm-up-1 lg-up-2">
+    <input type="hidden" name="custom-js-hidden" value="1">
 	<div class="cell section section-textarea">
 		<label class="heading" for="html_header"><?php _e( 'Header scripts', ADDONS_TEXT_DOMAIN ) ?></label>
 		<div class="desc">Add custom scripts inside HEAD tag. You need to have a SCRIPT tag around scripts.</div>

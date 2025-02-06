@@ -8,6 +8,7 @@ $woocommerce_default_css = $woocommerce_options['woocommerce_default_css'] ?? ''
 
 ?>
 <div class="container flex flex-x flex-gap sm-up-1 md-up-2">
+    <input type="hidden" name="woocommerce-hidden" value="1">
 	<div class="cell section section-checkbox">
 		<label class="heading" for="woocommerce_jsonld"><?php _e( 'WooCommerce 3 JSON/LD', ADDONS_TEXT_DOMAIN ); ?></label>
 		<div class="desc"><?php _e( 'Remove the default WooCommerce 3 JSON/LD structured data format', ADDONS_TEXT_DOMAIN ) ?></div>

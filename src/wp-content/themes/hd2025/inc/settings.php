@@ -101,7 +101,7 @@ function body_class_callback( array $classes ): array {
 		}
 	}
 
-	if ( \HD\Helper::isWoocommerceActive() ) {
+	if ( Helper::isWoocommerceActive() ) {
 		$classes[] = 'woocommerce';
 	}
 

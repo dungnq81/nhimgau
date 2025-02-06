@@ -21,6 +21,7 @@ $lazyload_exclude = implode( PHP_EOL, $lazyload_exclude );
 
 ?>
 <div class="container flex flex-x flex-gap sm-up-1 md-up-2">
+    <input type="hidden" name="optimizer-hidden" value="1">
     <div class="cell section section-checkbox">
         <label class="heading !block" for="minify_html"><?php _e( 'Minify HTML', ADDONS_TEXT_DOMAIN ); ?></label>
         <div class="desc"><?php _e( 'Remove unnecessary characters from your HTML output to reduce data size and improve your site\'s loading speed.', ADDONS_TEXT_DOMAIN ); ?></div>

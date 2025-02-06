@@ -8,6 +8,7 @@ $base_slug_taxonomy  = $base_slug_options['base_slug_taxonomy'] ?? [];
 
 ?>
 <div class="container flex flex-x flex-gap sm-up-1 lg-up-2">
+    <input type="hidden" name="base-slug-hidden" value="1">
     <div class="cell section section-checkbox">
         <span class="heading !fw-700"><?php _e( 'Taxonomies', ADDONS_TEXT_DOMAIN ); ?></span>
         <div class="desc">Remove category base from category URLs. E.g. <b>/category/my-category/</b> becomes <b>/my-category/</b></div>

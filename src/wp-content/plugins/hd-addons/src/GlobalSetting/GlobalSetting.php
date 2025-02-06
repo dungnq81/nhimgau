@@ -81,6 +81,9 @@ final class GlobalSetting {
 
 	// --------------------------------------------------
 
+	/**
+	 * @return void
+	 */
 	public function add_addon_capability_to_roles(): void {
 		$capability_to_roles = apply_filters( 'addon_manage_roles', [ 'administrator', 'editor' ] );
 		if ( $capability_to_roles ) {
@@ -94,6 +97,9 @@ final class GlobalSetting {
 
 	// --------------------------------------------------
 
+	/**
+	 * @return false|void
+	 */
 	public function ajax_submit_settings() {
 		if ( ! wp_doing_ajax() ) {
 			return false;
@@ -122,277 +128,302 @@ final class GlobalSetting {
 		/** ---------------------------------------- */
 
 		/** Aspect Ratio */
-		$aspect_ratio_options  = [];
-		$aspect_ratio_settings = Helper::filterSettingOptions( 'aspect_ratio', [] );
+        if ( isset( $data['aspect-ratio-hidden'] ) ) {
+	        $aspect_ratio_options  = [];
+	        $aspect_ratio_settings = Helper::filterSettingOptions( 'aspect_ratio', [] );
 
-		foreach ( $aspect_ratio_settings['post_type_term'] ?? [] as $ar ) {
-			if ( isset( $data[ $ar . '-width' ], $data[ $ar . '-height' ] ) ) {
-				$aspect_ratio_options[ 'ar-' . $ar . '-width' ]  = sanitize_text_field( $data[ $ar . '-width' ] );
-				$aspect_ratio_options[ 'ar-' . $ar . '-height' ] = sanitize_text_field( $data[ $ar . '-height' ] );
-			}
-		}
+	        foreach ( $aspect_ratio_settings['post_type_term'] ?? [] as $ar ) {
+		        if ( isset( $data[ $ar . '-width' ], $data[ $ar . '-height' ] ) ) {
+			        $aspect_ratio_options[ 'ar-' . $ar . '-width' ]  = sanitize_text_field( $data[ $ar . '-width' ] );
+			        $aspect_ratio_options[ 'ar-' . $ar . '-height' ] = sanitize_text_field( $data[ $ar . '-height' ] );
+		        }
+	        }
 
-		if ( $aspect_ratio_options ) {
-			Helper::updateOption( 'aspect_ratio__options', $aspect_ratio_options );
-		} else {
-			Helper::removeOption( 'aspect_ratio__options' );
-		}
+	        if ( $aspect_ratio_options ) {
+		        Helper::updateOption( 'aspect_ratio__options', $aspect_ratio_options );
+	        } else {
+		        Helper::removeOption( 'aspect_ratio__options' );
+	        }
+        }
 
 		/** ---------------------------------------- */
 
 		/** Editor */
-		$editor_options = [];
-		$arrs           = [
-			'use_widgets_block_editor_off',
-			'gutenberg_use_widgets_block_editor_off',
-			'use_block_editor_for_post_type_off',
-			'block_style_off'
-		];
+		if ( isset( $data['editor-hidden'] ) ) {
+			$editor_options = [];
+			$arrs           = [
+				'use_widgets_block_editor_off',
+				'gutenberg_use_widgets_block_editor_off',
+				'use_block_editor_for_post_type_off',
+				'block_style_off'
+			];
 
-		foreach ( $arrs as $value ) {
-			if ( isset( $data[ $value ] ) ) {
-				$editor_options[ $value ] = sanitize_text_field( $data[ $value ] );
+			foreach ( $arrs as $value ) {
+				if ( isset( $data[ $value ] ) ) {
+					$editor_options[ $value ] = sanitize_text_field( $data[ $value ] );
+				}
 			}
-		}
 
-		if ( $editor_options ) {
-			Helper::updateOption( 'editor__options', $editor_options );
-		} else {
-			Helper::removeOption( 'editor__options' );
+			if ( $editor_options ) {
+				Helper::updateOption( 'editor__options', $editor_options );
+			} else {
+				Helper::removeOption( 'editor__options' );
+			}
 		}
 
 		/** ---------------------------------------- */
 
         /** Optimizer */
-		$optimizer_options = [];
-		$dns_prefetch      = ! empty( $data['dns_prefetch'] ) ? \Addons\Helper::explodeMulti( [ ',', ' ', PHP_EOL, ], $data['dns_prefetch'] ) : [];
-		$font_preload      = ! empty( $data['font_preload'] ) ? \Addons\Helper::explodeMulti( [ ',', ' ', PHP_EOL, ], $data['font_preload'] ) : [];
-		$lazyload_exclude  = ! empty( $data['lazyload_exclude'] ) ? \Addons\Helper::explodeMulti( [ ',', ' ', PHP_EOL, ], $data['lazyload_exclude'] ) : [];
+		if ( isset( $data['optimizer-hidden'] ) ) {
 
-		$dns_prefetch     = array_map( 'sanitize_url', $dns_prefetch );
-		$font_preload     = array_map( 'sanitize_url', $font_preload );
-		$lazyload_exclude = array_map( 'esc_textarea', $lazyload_exclude );
+			$optimizer_options = [];
+			$dns_prefetch      = ! empty( $data['dns_prefetch'] ) ? \Addons\Helper::explodeMulti( [ ',', ' ', PHP_EOL, ], $data['dns_prefetch'] ) : [];
+			$font_preload      = ! empty( $data['font_preload'] ) ? \Addons\Helper::explodeMulti( [ ',', ' ', PHP_EOL, ], $data['font_preload'] ) : [];
+			$lazyload_exclude  = ! empty( $data['lazyload_exclude'] ) ? \Addons\Helper::explodeMulti( [ ',', ' ', PHP_EOL, ], $data['lazyload_exclude'] ) : [];
 
-		$arrs = [
-			'minify_html'       => ! empty( $data['minify_html'] ) ? sanitize_text_field( $data['minify_html'] ) : '',
-			'dns_prefetch'      => $dns_prefetch,
-			'font_optimize'     => ! empty( $data['font_optimize'] ) ? sanitize_text_field( $data['font_optimize'] ) : 0,
-			'font_combined_css' => ! empty( $data['font_combined_css'] ) ? sanitize_text_field( $data['font_combined_css'] ) : 0,
-			'font_preload'      => $font_preload,
-			'lazyload'          => ! empty( $data['lazyload'] ) ? sanitize_text_field( $data['lazyload'] ) : 0,
-			'lazyload_mobile'   => ! empty( $data['lazyload_mobile'] ) ? sanitize_text_field( $data['lazyload_mobile'] ) : 0,
-            'lazyload_exclude'  => $lazyload_exclude,
-		];
+			$dns_prefetch     = array_map( 'sanitize_url', $dns_prefetch );
+			$font_preload     = array_map( 'sanitize_url', $font_preload );
+			$lazyload_exclude = array_map( 'esc_textarea', $lazyload_exclude );
 
-		foreach ( $arrs as $key => $value ) {
-			if ( isset( $data[ $key ] ) ) {
-				$optimizer_options[$key] = $value;
+			$arrs = [
+				'minify_html'       => ! empty( $data['minify_html'] ) ? sanitize_text_field( $data['minify_html'] ) : '',
+				'dns_prefetch'      => $dns_prefetch,
+				'font_optimize'     => ! empty( $data['font_optimize'] ) ? sanitize_text_field( $data['font_optimize'] ) : 0,
+				'font_combined_css' => ! empty( $data['font_combined_css'] ) ? sanitize_text_field( $data['font_combined_css'] ) : 0,
+				'font_preload'      => $font_preload,
+				'lazyload'          => ! empty( $data['lazyload'] ) ? sanitize_text_field( $data['lazyload'] ) : 0,
+				'lazyload_mobile'   => ! empty( $data['lazyload_mobile'] ) ? sanitize_text_field( $data['lazyload_mobile'] ) : 0,
+				'lazyload_exclude'  => $lazyload_exclude,
+			];
+
+			foreach ( $arrs as $key => $value ) {
+				if ( isset( $data[ $key ] ) ) {
+					$optimizer_options[ $key ] = $value;
+				}
+			}
+
+			if ( $optimizer_options ) {
+				Helper::updateOption( 'optimizer__options', $optimizer_options );
+			} else {
+				Helper::removeOption( 'optimizer__options' );
 			}
 		}
-
-        if ( $optimizer_options ) {
-	        Helper::updateOption( 'optimizer__options', $optimizer_options );
-        } else {
-	        Helper::removeOption( 'optimizer__options' );
-        }
 
 		/** ---------------------------------------- */
 
         /** Security */
-		$security_options = [];
-        $arrs = [
-            'comments_off',
-	        'xmlrpc_off',
-            'hide_wp_version',
-            'wp_links_opml_off',
-            'rss_feed_off',
-            'remove_readme',
-        ];
+		if ( isset( $data['security-hidden'] ) ) {
+			$security_options = [];
+			$arrs             = [
+				'comments_off',
+				'xmlrpc_off',
+				'hide_wp_version',
+				'wp_links_opml_off',
+				'rss_feed_off',
+				'remove_readme',
+			];
 
-		foreach ( $arrs as $value ) {
-			if ( isset( $data[ $value ] ) ) {
-				$security_options[ $value ] = sanitize_text_field( $data[ $value ] );
+			foreach ( $arrs as $value ) {
+				if ( isset( $data[ $value ] ) ) {
+					$security_options[ $value ] = sanitize_text_field( $data[ $value ] );
+				}
 			}
-		}
 
-		if ( $security_options ) {
-			Helper::updateOption( 'security__options', $security_options );
-		} else {
-			Helper::removeOption( 'security__options' );
-		}
+			if ( $security_options ) {
+				Helper::updateOption( 'security__options', $security_options );
+			} else {
+				Helper::removeOption( 'security__options' );
+			}
 
-		// Remove readme.html
-        isset( $security_options['remove_readme'] ) && ( new Readme() )->delete_readme();
+			// Remove readme.html
+			isset( $security_options['remove_readme'] ) && ( new Readme() )->delete_readme();
+		}
 
 		/** ---------------------------------------- */
 
 		/** Login Security */
-		$login_security_options = [];
-		$arrs                   = [
-			'custom_login_uri',
-			'login_ips_access',
-			'disable_ips_access',
-			'limit_login_attempts',
-			'illegal_users'
-		];
+		if ( isset( $data['login-security-hidden'] ) ) {
+			$login_security_options = [];
+			$arrs                   = [
+				'custom_login_uri',
+				'login_ips_access',
+				'disable_ips_access',
+				'limit_login_attempts',
+				'illegal_users'
+			];
 
-		foreach ( $arrs as $value ) {
-			if ( ! empty( $data[ $value ] ) ) {
-				$login_security_options[ $value ] = sanitize_text_field( $data[ $value ] );
+			foreach ( $arrs as $value ) {
+				if ( ! empty( $data[ $value ] ) ) {
+					$login_security_options[ $value ] = sanitize_text_field( $data[ $value ] );
+				}
 			}
-		}
 
-		if ( $login_security_options ) {
-			Helper::updateOption( 'login_security__options', $login_security_options );
-		} else {
-			Helper::removeOption( 'login_security__options' );
+			if ( $login_security_options ) {
+				Helper::updateOption( 'login_security__options', $login_security_options );
+			} else {
+				Helper::removeOption( 'login_security__options' );
+			}
 		}
 
 		/** ---------------------------------------- */
 
 		/** Social Link */
-		$social_link_options  = [];
-		$social_follows_links = Helper::filterSettingOptions( 'social_follows_links', [] );
+		if ( isset( $data['social-link-hidden'] ) ) {
+			$social_link_options  = [];
+			$social_follows_links = Helper::filterSettingOptions( 'social_follows_links', [] );
 
-		foreach ( $social_follows_links as $i => $item ) {
-			$url = ! empty( $data[ $i . '-url' ] ) ? sanitize_url( $data[ $i . '-url' ] ) : '';
-			if ( $url ) {
-				$social_link_options[ $i ] = [
-					'url' => $url
-				];
+			foreach ( $social_follows_links as $i => $item ) {
+				$url = ! empty( $data[ $i . '-url' ] ) ? sanitize_url( $data[ $i . '-url' ] ) : '';
+				if ( $url ) {
+					$social_link_options[ $i ] = [
+						'url' => $url
+					];
+				}
 			}
-		}
 
-		if ( $social_link_options ) {
-			Helper::updateOption( 'social_link__options', $social_link_options );
-		} else {
-			Helper::removeOption( 'social_link__options' );
+			if ( $social_link_options ) {
+				Helper::updateOption( 'social_link__options', $social_link_options );
+			} else {
+				Helper::removeOption( 'social_link__options' );
+			}
 		}
 
 		/** ---------------------------------------- */
 
 		/** File */
-		$file_options = [];
-		$arrs         = [
-			'upload_size_limit',
-			'svgs',
-		];
+		if ( isset( $data['file-hidden'] ) ) {
+			$file_options = [];
+			$arrs         = [
+				'upload_size_limit',
+				'svgs',
+			];
 
-		foreach ( $arrs as $value ) {
-			if ( ! empty( $data[ $value ] ) ) {
-				$file_options[ $value ] = sanitize_text_field( $data[ $value ] );
+			foreach ( $arrs as $value ) {
+				if ( ! empty( $data[ $value ] ) ) {
+					$file_options[ $value ] = sanitize_text_field( $data[ $value ] );
+				}
 			}
-		}
 
-		if ( $file_options ) {
-			Helper::updateOption( 'file__options', $file_options );
-		} else {
-			Helper::removeOption( 'file__options' );
+			if ( $file_options ) {
+				Helper::updateOption( 'file__options', $file_options );
+			} else {
+				Helper::removeOption( 'file__options' );
+			}
 		}
 
 		/** ---------------------------------------- */
 
 		/** Remove Base Slug */
-		$custom_base_slug_options = [];
-		$base_slug_reset          = ! empty( $data['base_slug_reset'] ) ? sanitize_text_field( $data['base_slug_reset'] ) : '';
-		if ( empty( $base_slug_reset ) ) {
-			$arrs = [
-				'base_slug_post_type',
-				'base_slug_taxonomy',
-			];
+		if ( isset( $data['base-slug-hidden'] ) ) {
+			$custom_base_slug_options = [];
+			$base_slug_reset          = ! empty( $data['base_slug_reset'] ) ? sanitize_text_field( $data['base_slug_reset'] ) : '';
 
-			foreach ( $arrs as $value ) {
-				if ( ! empty( $data[ $value ] ) ) {
-					$custom_base_slug_options[ $value ] = array_map( 'sanitize_text_field', $data[ $value ] );
+			if ( empty( $base_slug_reset ) ) {
+				$arrs = [
+					'base_slug_post_type',
+					'base_slug_taxonomy',
+				];
+
+				foreach ( $arrs as $value ) {
+					if ( ! empty( $data[ $value ] ) ) {
+						$custom_base_slug_options[ $value ] = array_map( 'sanitize_text_field', $data[ $value ] );
+					}
 				}
 			}
-		}
 
-		if ( $custom_base_slug_options ) {
-			Helper::updateOption( 'base_slug__options', $custom_base_slug_options );
-			( new BaseSlug() )->flush_rules();
-		} else {
-			Helper::removeOption( 'base_slug__options' );
-			( new BaseSlug() )->reset_all();
+			if ( $custom_base_slug_options ) {
+				Helper::updateOption( 'base_slug__options', $custom_base_slug_options );
+				( new BaseSlug() )->flush_rules();
+			} else {
+				Helper::removeOption( 'base_slug__options' );
+				( new BaseSlug() )->reset_all();
+			}
 		}
 
 		/** ---------------------------------------- */
 
 		/** Custom Email To */
-		$email_options = [];
-		$custom_emails = Helper::filterSettingOptions( 'custom_emails', [] );
+		if ( isset( $data['custom-email-to-hidden'] ) ) {
+			$email_options = [];
+			$custom_emails = Helper::filterSettingOptions( 'custom_emails', [] );
 
-		if ( $custom_emails ) {
-			foreach ( $custom_emails as $i => $ar ) {
-				$email = ! empty( $data[ $i . '_email' ] ) ? $data[ $i . '_email' ] : '';
-				$email = is_array( $email ) ? array_map( 'sanitize_text_field', $email ) : sanitize_text_field( $email );
+			if ( $custom_emails ) {
+				foreach ( $custom_emails as $i => $ar ) {
+					$email = ! empty( $data[ $i . '_email' ] ) ? $data[ $i . '_email' ] : '';
+					$email = is_array( $email ) ? array_map( 'sanitize_text_field', $email ) : sanitize_text_field( $email );
 
-				$email_options[ $i ] = $email;
+					$email_options[ $i ] = $email;
+				}
 			}
-		}
 
-		if ( $email_options ) {
-			Helper::updateOption( 'custom_email_to__options', $email_options );
-		} else {
-			Helper::removeOption( 'custom_email_to__options' );
+			if ( $email_options ) {
+				Helper::updateOption( 'custom_email_to__options', $email_options );
+			} else {
+				Helper::removeOption( 'custom_email_to__options' );
+			}
 		}
 
 		/** ---------------------------------------- */
 
 		/** Custom Sorting */
-		$custom_order_options = [];
-		$order_reset          = ! empty( $data['order_reset'] ) ? sanitize_text_field( $data['order_reset'] ) : '';
-		if ( empty( $order_reset ) ) {
-			$arrs = [
-				'order_post_type',
-				'order_taxonomy',
-			];
+		if ( isset( $data['custom-sorting-hidden'] ) ) {
+			$custom_order_options = [];
+			$order_reset          = ! empty( $data['order_reset'] ) ? sanitize_text_field( $data['order_reset'] ) : '';
 
-			foreach ( $arrs as $value ) {
-				if ( ! empty( $data[ $value ] ) ) {
-					$custom_order_options[ $value ] = array_map( 'sanitize_text_field', $data[ $value ] );
+			if ( empty( $order_reset ) ) {
+				$arrs = [
+					'order_post_type',
+					'order_taxonomy',
+				];
+
+				foreach ( $arrs as $value ) {
+					if ( ! empty( $data[ $value ] ) ) {
+						$custom_order_options[ $value ] = array_map( 'sanitize_text_field', $data[ $value ] );
+					}
 				}
 			}
-		}
 
-		if ( $custom_order_options ) {
-			Helper::updateOption( 'custom_sorting__options', $custom_order_options );
-			( new CustomSorting() )->update_options();
-		} else {
-			Helper::removeOption( 'custom_sorting__options' );
-			( new CustomSorting() )->reset_all();
+			if ( $custom_order_options ) {
+				Helper::updateOption( 'custom_sorting__options', $custom_order_options );
+				( new CustomSorting() )->update_options();
+			} else {
+				Helper::removeOption( 'custom_sorting__options' );
+				( new CustomSorting() )->reset_all();
+			}
 		}
 
 		/** ---------------------------------------- */
 
 		/** ReCaptcha */
-		$recaptcha_options = [];
-		$arrs              = [
-			'recaptcha_v2_site_key',
-			'recaptcha_v2_secret_key',
-			'recaptcha_v3_site_key',
-			'recaptcha_v3_secret_key',
-			'recaptcha_v3_score',
-			'recaptcha_global',
-			'recaptcha_allowlist_ips'
-		];
+		if ( isset( $data['recaptcha-hidden'] ) ) {
+			$recaptcha_options = [];
+			$arrs              = [
+				'recaptcha_v2_site_key',
+				'recaptcha_v2_secret_key',
+				'recaptcha_v3_site_key',
+				'recaptcha_v3_secret_key',
+				'recaptcha_v3_score',
+				'recaptcha_global',
+				'recaptcha_allowlist_ips'
+			];
 
-		foreach ( $arrs as $value ) {
-			if ( ! empty( $data[ $value ] ) ) {
-				$recaptcha_options[ $value ] = sanitize_text_field( $data[ $value ] );
+			foreach ( $arrs as $value ) {
+				if ( ! empty( $data[ $value ] ) ) {
+					$recaptcha_options[ $value ] = sanitize_text_field( $data[ $value ] );
+				}
 			}
-		}
 
-		if ( $recaptcha_options ) {
-			Helper::updateOption( 'recaptcha__options', $recaptcha_options );
-		} else {
-			Helper::removeOption( 'recaptcha__options' );
+			if ( $recaptcha_options ) {
+				Helper::updateOption( 'recaptcha__options', $recaptcha_options );
+			} else {
+				Helper::removeOption( 'recaptcha__options' );
+			}
 		}
 
 		/** ---------------------------------------- */
 
 		/** WooCommerce */
-		if ( Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {
+		if ( isset( $data['woocommerce-hidden'] ) && Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {
 			$arrs = [
 				'woocommerce_jsonld',
 				'woocommerce_default_css'
@@ -415,21 +446,25 @@ final class GlobalSetting {
 		/** ---------------------------------------- */
 
 		/** Custom JS */
-		$html_header      = $data['html_header'] ?? '';
-		$html_footer      = $data['html_footer'] ?? '';
-		$html_body_top    = $data['html_body_top'] ?? '';
-		$html_body_bottom = $data['html_body_bottom'] ?? '';
+		if ( isset( $data['custom-js-hidden'] ) ) {
 
-		Helper::updateCustomPostOption( $html_header, 'html_header', 'text/html', true );
-		Helper::updateCustomPostOption( $html_footer, 'html_footer', 'text/html', true );
-		Helper::updateCustomPostOption( $html_body_top, 'html_body_top', 'text/html', true );
-		Helper::updateCustomPostOption( $html_body_bottom, 'html_body_bottom', 'text/html', true );
+			$html_header      = $data['html_header'] ?? '';
+			$html_footer      = $data['html_footer'] ?? '';
+			$html_body_top    = $data['html_body_top'] ?? '';
+			$html_body_bottom = $data['html_body_bottom'] ?? '';
+
+			Helper::updateCustomPostOption( $html_header, 'html_header', 'text/html', true );
+			Helper::updateCustomPostOption( $html_footer, 'html_footer', 'text/html', true );
+			Helper::updateCustomPostOption( $html_body_top, 'html_body_top', 'text/html', true );
+			Helper::updateCustomPostOption( $html_body_bottom, 'html_body_bottom', 'text/html', true );
+		}
 
 		/** ---------------------------------------- */
 
 		/** Custom CSS */
-		$html_custom_css = $data['html_custom_css'] ?? '';
-		Helper::updateCustomPostOption( $html_custom_css, 'addon_css', 'text/css' );
+        if ( isset( $data['html_custom_css'] ) ) {
+            Helper::updateCustomPostOption( $data['html_custom_css'], 'addon_css', 'text/css' );
+        }
 
 		/** ---------------------------------------- */
 
@@ -441,10 +476,13 @@ final class GlobalSetting {
 
 	// --------------------------------------------------
 
+	/**
+	 * @return void
+	 */
 	public function _addon_menu_callback(): void {
 		?>
         <div class="wrap" id="_container">
-            <form id="_settings_form" method="post" enctype="multipart/form-data">
+            <form role="form" id="_settings_form" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
 
 				<?php wp_nonce_field( '_wpnonce_settings_form_' . get_current_user_id() ); ?>
 

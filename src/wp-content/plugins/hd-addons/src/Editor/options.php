@@ -10,6 +10,7 @@ $block_style_off                        = $editor_options['block_style_off'] ?? 
 
 ?>
 <div class="container flex flex-x flex-gap sm-up-1 md-up-2">
+    <input type="hidden" name="editor-hidden" value="1">
     <div class="cell section section-checkbox">
         <label class="heading" for="use_widgets_block_editor_off"><?php _e( 'Disable widgets block editor', ADDONS_TEXT_DOMAIN ); ?></label>
         <div class="option">

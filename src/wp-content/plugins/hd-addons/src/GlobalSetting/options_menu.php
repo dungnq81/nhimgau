@@ -20,7 +20,8 @@
 
 		$menu_options           = \Addons\Helper::loadYaml( ADDONS_PATH . 'config.yaml' );
 		$global_setting_options = \Addons\Helper::getOption( 'global_setting__options' );
-		$i                      = 0;
+
+		$i = 0;
 
 		foreach ( $menu_options as $slug => $value ) {
 			//$current = ( $i === 0 ) ? ' class="current"' : '';

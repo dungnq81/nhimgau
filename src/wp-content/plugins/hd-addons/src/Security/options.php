@@ -12,6 +12,7 @@ $remove_readme     = $security_options['remove_readme'] ?? false;
 
 ?>
 <div class="container flex flex-x flex-gap sm-up-1 md-up-2">
+    <input type="hidden" name="security-hidden" value="1">
     <div class="cell section section-checkbox">
         <label class="heading" for="comments_off"><?php _e( 'Disable Comments', ADDONS_TEXT_DOMAIN ); ?></label>
         <div class="desc"><?php _e( 'WordPress comments foster user engagement by enabling feedback on posts, with administrators easily managing approvals or disabling them as needed.', ADDONS_TEXT_DOMAIN ) ?></div>
