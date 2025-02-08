@@ -25,15 +25,13 @@ define( 'MU_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) . '/' ); // ht
 define( 'MU_BASENAME', plugin_basename( __FILE__ ) ); // **/**.php
 define( 'MU_TEXT_DOMAIN', $plugin_data['TextDomain'] );
 
-if ( ! file_exists( __DIR__ . '/hdmu/vendor/autoload.php' ) ) {
-	wp_die( __( 'Error locating autoloader. Please run <code>composer install</code>.', ADDONS_TEXT_DOMAIN ) );
+if ( file_exists( __DIR__ . '/hdmu/vendor/autoload.php' ) ) {
+	require_once __DIR__ . '/hdmu/vendor/autoload.php';
+
+	function plugins_loaded(): void {
+		require_once MU_PATH . 'hdmu' . DIRECTORY_SEPARATOR . 'MU.php';
+		( new \MU() );
+	}
+
+	\plugins_loaded();
 }
-
-require_once __DIR__ . '/hdmu/vendor/autoload.php';
-
-function plugins_loaded(): void {
-	require_once MU_PATH . 'hdmu' . DIRECTORY_SEPARATOR . 'MU.php';
-	( new \MU() );
-}
-
-\plugins_loaded();
