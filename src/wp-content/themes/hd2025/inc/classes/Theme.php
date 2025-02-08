@@ -139,7 +139,7 @@ final class Theme {
 		( Optimizer::get_instance() );
 		( Shortcode::get_instance() );
 
-		// folders
+		// autoload
 		$dirs = [
 			'template_structures' => THEME_PATH . 'inc/structures',
 			'template_ajax'       => THEME_PATH . 'inc/ajax',
@@ -148,7 +148,7 @@ final class Theme {
 		foreach ( $dirs as $dir => $path ) {
 			Helper::createDirectory( $path );
 
-			// autoload template-structures & ajax
+			// structures & ajax
 			if ( in_array( $dir, [ 'template_structures', 'template_ajax' ], true ) ) {
 				Helper::FQNLoad( $path, true );
 			}
