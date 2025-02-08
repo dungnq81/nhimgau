@@ -21,6 +21,14 @@ final class RankMath {
 		add_filter( 'rank_math/frontend/show_keywords', '__return_true' );
 		//add_filter( 'rank_math/sitemap/enable_caching', '__return_false' );
 
+		// Remove admin bar
+		add_action( 'wp_before_admin_bar_render', static function () {
+			if ( is_admin_bar_showing() ) {
+				global $wp_admin_bar;
+				$wp_admin_bar->remove_menu( 'rank-math' );
+			}
+		} );
+
 		/**
 		 * Filter to add plugins to the RMS TOC.
 		 */

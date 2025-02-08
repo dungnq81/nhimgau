@@ -139,13 +139,10 @@ final class Theme {
 		( Optimizer::get_instance() );
 		( Shortcode::get_instance() );
 
-		/** template hooks */
-		$this->_hooks();
-
 		// folders
 		$dirs = [
-			'template_structures' => THEME_PATH . 'template-structures',
-			'template_ajax'       => THEME_PATH . 'template-ajax',
+			'template_structures' => THEME_PATH . 'inc/structures',
+			'template_ajax'       => THEME_PATH . 'inc/ajax',
 		];
 
 		foreach ( $dirs as $dir => $path ) {
@@ -262,66 +259,6 @@ final class Theme {
 
 		Helper::createDirectory( $widgets_dir );
 		Helper::FQNLoad( $widgets_dir, false, true, $FQN, true );
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @return void
-	 */
-	private function _hooks(): void {
-
-		// -------------------------------------------------------------
-		// images sizes
-		// -------------------------------------------------------------
-
-		/**
-		 * thumbnail (540x0)
-		 * medium (768x0)
-		 * large (1024x0)
-		 *
-		 * small-thumbnail (150x150)
-		 * widescreen (1920x9999)
-		 * post-thumbnail (1280x9999)
-		 */
-
-		/** Custom thumb */
-		add_image_size( 'small-thumbnail', 150, 150, true );
-		add_image_size( 'widescreen', 1920, 9999, false );
-		add_image_size( 'post-thumbnail', 1200, 9999, false );
-
-		/** Disable unwanted image sizes */
-		add_filter( 'intermediate_image_sizes_advanced', static function ( $sizes ) {
-			unset( $sizes['medium_large'], $sizes['1536x1536'], $sizes['2048x2048'] );
-
-			// disable 2x medium-large size
-			// disable 2x large size
-
-			return $sizes;
-		} );
-
-		/** Disable scaled */
-		//add_filter( 'big_image_size_threshold', '__return_false' );
-
-		/** Disable other sizes */
-		add_action( 'init', static function () {
-			remove_image_size( '1536x1536' ); // disable 2x medium-large size
-			remove_image_size( '2048x2048' ); // disable 2x large size
-		} );
-
-		// ------------------------------------------
-
-		add_filter( 'post_thumbnail_html', static function ( $html ) {
-			return preg_replace( '/(<img[^>]+)(style=\"[^\"]+\")([^>]+)(>)/', '${1}${3}${4}', $html );
-		}, 10, 1 );
-
-		//		add_filter( 'image_send_to_editor', function ( $html ) {
-		//			return preg_replace( '/(<img[^>]+)(style=\"[^\"]+\")([^>]+)(>)/', '${1}${3}${4}', $html );
-		//		}, 10, 1 );
-
-		add_filter( 'the_content', static function ( $html ) {
-			return preg_replace( '/(<img[^>]+)(style=\"[^\"]+\")([^>]+)(>)/', '${1}${3}${4}', $html );
-		}, 10, 1 );
 	}
 
 	// --------------------------------------------------

@@ -20,6 +20,140 @@ final class Optimizer {
 	private function init(): void {
 		$this->_cleanup();
 		$this->_optimizer();
+
+		/** custom hooks */
+		$this->_custom_hooks();
+	}
+
+	// ------------------------------------------------------
+
+	/**
+	 * @return void
+	 */
+	private function _custom_hooks(): void {
+
+		// -------------------------------------------------------------
+		// images sizes
+		// -------------------------------------------------------------
+
+		/**
+		 * thumbnail (540x0)
+		 * medium (768x0)
+		 * large (1024x0)
+		 *
+		 * small-thumbnail (150x150)
+		 * widescreen (1920x9999)
+		 * post-thumbnail (1280x9999)
+		 */
+
+		/** Custom thumb */
+		add_image_size( 'small-thumbnail', 150, 150, true );
+		add_image_size( 'widescreen', 1920, 9999, false );
+		add_image_size( 'post-thumbnail', 1200, 9999, false );
+
+		/** Disable unwanted image sizes */
+		add_filter( 'intermediate_image_sizes_advanced', static function ( $sizes ) {
+			unset( $sizes['medium_large'], $sizes['1536x1536'], $sizes['2048x2048'] );
+
+			// disable 2x medium-large size
+			// disable 2x large size
+
+			return $sizes;
+		} );
+
+		/** Disable scaled */
+		//add_filter( 'big_image_size_threshold', '__return_false' );
+
+		/** Disable other sizes */
+		add_action( 'init', static function () {
+			remove_image_size( '1536x1536' ); // disable 2x medium-large size
+			remove_image_size( '2048x2048' ); // disable 2x large size
+		} );
+
+		// ------------------------------------------
+
+		add_filter( 'post_thumbnail_html', static function ( $html ) {
+			return preg_replace( '/(<img[^>]+)(style=\"[^\"]+\")([^>]+)(>)/', '${1}${3}${4}', $html );
+		}, 10, 1 );
+
+		//		add_filter( 'image_send_to_editor', function ( $html ) {
+		//			return preg_replace( '/(<img[^>]+)(style=\"[^\"]+\")([^>]+)(>)/', '${1}${3}${4}', $html );
+		//		}, 10, 1 );
+
+		add_filter( 'the_content', static function ( $html ) {
+			return preg_replace( '/(<img[^>]+)(style=\"[^\"]+\")([^>]+)(>)/', '${1}${3}${4}', $html );
+		}, 10, 1 );
+
+		// -------------------------------------------------------------
+		// Custom
+		// -------------------------------------------------------------
+
+		// https://html.spec.whatwg.org/multipage/rendering.html#img-contain-size
+		add_filter( 'wp_img_tag_add_auto_sizes', '__return_false' );
+
+		// excerpt_more
+		add_filter( 'excerpt_more', static function () {
+			return ' ' . '&hellip;';
+		} );
+
+		// Remove logo admin bar
+		add_action( 'wp_before_admin_bar_render', static function () {
+			if ( is_admin_bar_showing() ) {
+				global $wp_admin_bar;
+
+				$wp_admin_bar->remove_menu( 'wp-logo' );
+				$wp_admin_bar->remove_menu( 'updates' );
+
+				//dump($wp_admin_bar);
+			}
+		} );
+
+		// Normalize upload filename
+		add_filter( 'sanitize_file_name', static function ( $filename ) {
+			return remove_accents( $filename );
+		}, 10, 1 );
+
+		// Remove archive title prefix
+		add_filter( 'get_the_archive_title_prefix', static function ( $prefix ) {
+			return __return_empty_string();
+		} );
+	}
+
+	// ------------------------------------------------------
+
+	/**
+	 * @return void
+	 */
+	private function _optimizer(): void {
+		// Filters the script, style tag
+		add_filter( 'script_loader_tag', [ $this, 'script_loader_tag' ], 12, 3 );
+		add_filter( 'style_loader_tag', [ $this, 'style_loader_tag' ], 12, 2 );
+
+		// Adding Shortcode in WordPress Using Custom HTML Widget
+		add_filter( 'widget_text', 'do_shortcode' );
+		add_filter( 'widget_text', 'shortcode_unautop' );
+
+		// Search by title
+		add_filter( 'posts_search', [ $this, 'post_search_by_title' ], 500, 2 );
+
+		// Front-end only, excluding the login page
+		if ( ! is_admin() && ! Helper::isLogin() ) {
+			add_action( 'wp_print_footer_scripts', [ $this, 'print_footer_scripts' ], 999 );
+		}
+
+		// Restrict mode
+		add_filter( 'user_has_cap', [ $this, 'restrict_admin_plugin_install' ], 10, 3 );
+		add_filter( 'user_has_cap', [ $this, 'prevent_deletion_admin_accounts' ], 10, 3 );
+		add_action( 'delete_user', [ $this, 'prevent_deletion_user' ], 10 );
+
+		// lost password
+		add_action( 'lostpassword_form', [ $this, 'add_csrf_token_to_lostpassword_form' ] );
+		add_action( 'lostpassword_post', [ $this, 'verify_csrf_token_on_lostpassword_post' ] );
+
+		// login form
+		add_action( 'login_form', [ $this, 'add_csrf_token_to_login_form' ] );
+		add_filter( 'authenticate', [ $this, 'verify_csrf_token_on_login' ], 30, 3 );
+		add_filter( 'login_message', [ $this, 'show_csrf_error_message' ] );
 	}
 
 	// ------------------------------------------------------
@@ -67,74 +201,6 @@ final class Optimizer {
 	/**
 	 * @return void
 	 */
-	private function _optimizer(): void {
-		// Filters the script, style tag
-		add_filter( 'script_loader_tag', [ $this, 'script_loader_tag' ], 12, 3 );
-		add_filter( 'style_loader_tag', [ $this, 'style_loader_tag' ], 12, 2 );
-
-		// Adding Shortcode in WordPress Using Custom HTML Widget
-		add_filter( 'widget_text', 'do_shortcode' );
-		add_filter( 'widget_text', 'shortcode_unautop' );
-
-		// Search by title
-		add_filter( 'posts_search', [ $this, 'post_search_by_title' ], 500, 2 );
-
-		// Front-end only, excluding the login page
-		if ( ! is_admin() && ! Helper::isLogin() ) {
-			add_action( 'wp_print_footer_scripts', [ $this, 'print_footer_scripts' ], 999 );
-		}
-
-		// Restrict mode
-		add_filter( 'user_has_cap', [ $this, 'restrict_admin_plugin_install' ], 10, 3 );
-		add_filter( 'user_has_cap', [ $this, 'prevent_deletion_admin_accounts' ], 10, 3 );
-		add_action( 'delete_user', [ $this, 'prevent_deletion_user' ], 10 );
-
-		// lost password
-		add_action( 'lostpassword_form', [ $this, 'add_csrf_token_to_lostpassword_form' ] );
-		add_action( 'lostpassword_post', [ $this, 'verify_csrf_token_on_lostpassword_post' ] );
-
-		// login form
-		add_action( 'login_form', [ $this, 'add_csrf_token_to_login_form' ] );
-		add_filter( 'authenticate', [ $this, 'verify_csrf_token_on_login' ], 30, 3 );
-		add_filter( 'login_message', [ $this, 'show_csrf_error_message' ] );
-
-        //--------------------------------
-        // custom
-		//--------------------------------
-
-		// https://html.spec.whatwg.org/multipage/rendering.html#img-contain-size
-		add_filter( 'wp_img_tag_add_auto_sizes', '__return_false' );
-
-		// excerpt_more
-		add_filter( 'excerpt_more', static function () {
-			return ' ' . '&hellip;';
-		} );
-
-		// Remove logo admin bar
-		add_action( 'wp_before_admin_bar_render', static function () {
-			global $wp_admin_bar;
-
-			if ( is_admin_bar_showing() ) {
-				$wp_admin_bar->remove_menu( 'wp-logo' );
-			}
-		} );
-
-		// Normalize upload filename
-		add_filter( 'sanitize_file_name', static function ( $filename ) {
-			return remove_accents( $filename );
-		}, 10, 1 );
-
-		// Remove archive title prefix
-		add_filter( 'get_the_archive_title_prefix', static function ( $prefix ) {
-			return __return_empty_string();
-		} );
-	}
-
-	// ------------------------------------------------------
-
-	/**
-	 * @return void
-	 */
 	public function add_csrf_token_to_lostpassword_form(): void {
 		$nonce = wp_create_nonce( 'lostpassword_csrf_token' );
 		echo '<input type="hidden" name="lostpassword_csrf_token" value="' . esc_attr( $nonce ) . '">';
@@ -151,7 +217,7 @@ final class Optimizer {
 
 			if ( ! wp_verify_nonce( $nonce, 'lostpassword_csrf_token' ) ) {
 				Helper::wpDie(
-					__( 'Invalid CSRF token. Please try again.', TEXT_DOMAIN ),
+					__( 'Invalid CSRF token, please try again.', TEXT_DOMAIN ),
 					__( 'Error', TEXT_DOMAIN ),
 					[ 'response' => 403 ]
 				);
@@ -292,9 +358,9 @@ final class Optimizer {
 
 		// Handle `async` and `defer` attributes
 		foreach ( [ 'async', 'defer' ] as $attr ) {
-            if ( 'defer' === $attr ) {
-                $attr = 'defer data-wp-strategy="defer"';
-            }
+			if ( 'defer' === $attr ) {
+				$attr = 'defer data-wp-strategy="defer"';
+			}
 
 			if ( ! empty( $attributes[ $attr ] ) && ! preg_match( "#\s$attr(=|>|\s)#", $tag ) ) {
 				$tag = preg_replace( '#(?=></script>)#', " $attr", $tag, 1 );
