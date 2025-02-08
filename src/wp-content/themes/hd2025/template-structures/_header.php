@@ -6,6 +6,8 @@
  * @author Gaudev
  */
 
+use HD\Helper;
+
 \defined( 'ABSPATH' ) || die;
 
 // -----------------------------------------------
@@ -13,7 +15,7 @@
 // -----------------------------------------------
 
 if ( ! function_exists( 'wp_head_action' ) ) {
-	\add_action( 'wp_head', 'wp_head_action', 1 );
+	add_action( 'wp_head', 'wp_head_action', 1 );
 
 	function wp_head_action(): void {
         //$meta_viewport = '<meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=1.0" />';
@@ -29,7 +31,7 @@ if ( ! function_exists( 'wp_head_action' ) ) {
 // -----------------------------------------------
 
 if ( ! function_exists( 'other_head_action' ) ) {
-	\add_action( 'wp_head', 'other_head_action', 10 );
+	add_action( 'wp_head', 'other_head_action', 10 );
 
 	function other_head_action(): void {
         //...
@@ -39,7 +41,7 @@ if ( ! function_exists( 'other_head_action' ) ) {
 // -----------------------------------------------
 
 if ( ! function_exists( 'module_preload_action' ) ) {
-	\add_action( 'wp_head', 'module_preload_action', 11 );
+	add_action( 'wp_head', 'module_preload_action', 11 );
 
 	function module_preload_action(): void {
 		?>
@@ -52,7 +54,7 @@ if ( ! function_exists( 'module_preload_action' ) ) {
 // -----------------------------------------------
 
 if ( ! function_exists( 'critical_css_action' ) ) {
-	\add_action( 'wp_head', 'critical_css_action', 12 );
+	add_action( 'wp_head', 'critical_css_action', 12 );
 
 	function critical_css_action(): void {
 		if ( is_front_page() || is_home() ) {
@@ -77,7 +79,7 @@ if ( ! function_exists( 'critical_css_action' ) ) {
 // -----------------------------------------------
 
 if ( ! function_exists( 'external_fonts_action' ) ) {
-	\add_action( 'wp_head', 'external_fonts_action', 99 );
+	add_action( 'wp_head', 'external_fonts_action', 99 );
 
 	function external_fonts_action(): void {
         //...
@@ -89,7 +91,7 @@ if ( ! function_exists( 'external_fonts_action' ) ) {
 // -----------------------------------------------
 
 if ( ! function_exists( 'skip_to_content_link_action' ) ) {
-	\add_action( 'hd_before_header_action', 'skip_to_content_link_action', 2 );
+	add_action( 'hd_before_header_action', 'skip_to_content_link_action', 2 );
 
 	function skip_to_content_link_action(): void {
 		printf(
@@ -126,7 +128,7 @@ if ( ! function_exists( '_masthead_home_seo_header' ) ) {
 	add_action( 'masthead', '_masthead_home_seo_header', 10 );
 
 	function _masthead_home_seo_header(): void {
-		$home_heading = \HD\Helper::getThemeMod( 'home_heading_setting' );
+		$home_heading = Helper::getThemeMod( 'home_heading_setting' );
 		$home_heading = ! empty( $home_heading ) ? esc_html( $home_heading ) : get_bloginfo( 'name' );
 
 		echo apply_filters( 'home_seo_header_filter', '<h1 class="sr-only">' . $home_heading . '</h1>' );

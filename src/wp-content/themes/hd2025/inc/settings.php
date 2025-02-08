@@ -21,7 +21,7 @@ function register_nav_menu_callback(): void {
 		[
 			'main-nav'   => __( 'Primary Menu', TEXT_DOMAIN ),
 			'mobile-nav' => __( 'Handheld Menu', TEXT_DOMAIN ),
-			//'policy-nav' => __( 'Term menu', TEXT_DOMAIN ),
+			'policy-nav' => __( 'Term menu', TEXT_DOMAIN ),
 		]
 	);
 }

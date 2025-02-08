@@ -152,3 +152,53 @@ if ( ! function_exists( '_in_array_toggle_class' ) ) {
 		return $class;
 	}
 }
+
+// --------------------------------------------------
+
+if ( ! function_exists( '_toggle_container_open' ) ) {
+	/**
+	 * @param bool $check
+	 * @param string $css1
+	 * @param bool $echo
+	 *
+	 * @return string|void
+	 */
+	function _toggle_container_open( bool $check, string $css1 = 'container', bool $echo = false ) {
+		$values = '';
+
+		if ( $check && ! empty( $css1 ) ) {
+			$values = '<div class="' . $css1 . '">';
+		}
+
+		if ( true === $echo ) {
+			echo $values;
+		} else {
+			return $values;
+		}
+
+
+	}
+}
+
+// --------------------------------------------------
+
+if ( ! function_exists( '_toggle_container_close' ) ) {
+	/**
+	 * @param bool $check
+	 * @param bool $echo
+	 *
+	 * @return string|void
+	 */
+	function _toggle_container_close( bool $check, bool $echo = false ) {
+		$values = '';
+		if ( $check ) {
+			$values = '</div>';
+		}
+
+		if ( true === $echo ) {
+			echo $values;
+		} else {
+			return $values;
+		}
+	}
+}

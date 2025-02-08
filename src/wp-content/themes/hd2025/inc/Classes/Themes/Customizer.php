@@ -288,6 +288,35 @@ final class Customizer {
 		);
 
 		// -------------------------------------------------------------
+		// Footer
+		// -------------------------------------------------------------
+
+		$wp_customize->add_section(
+			'footer_section',
+			[
+				'title'    => __( 'Footer', TEXT_DOMAIN ),
+				'panel'    => 'addon_menu_panel',
+				'priority' => 1010,
+			]
+		);
+
+		$wp_customize->add_setting( 'footer_credit_setting', [
+			'capability'        => 'edit_theme_options',
+			'sanitize_callback' => 'sanitize_text_field',
+		] );
+
+		$wp_customize->add_control(
+			'footer_credit_control',
+			[
+				'label'    => __( 'Footer copyright', TEXT_DOMAIN ),
+				'section'  => 'footer_section',
+				'settings' => 'footer_credit_setting',
+				'type'     => 'text',
+				'priority' => 10,
+			]
+		);
+
+		// -------------------------------------------------------------
 		// Others
 		// -------------------------------------------------------------
 
