@@ -58,11 +58,20 @@ final class ReCaptcha {
 
 	// ------------------------------------------------------
 
+	/**
+	 * @return void
+	 */
 	public function wp_enqueue_scripts(): void {
-		$api_url = $this->get_api_url( 'v2', null );
+		$version = 'v2';
+		$render  = null;
 
-		// Enqueue the script
-		wp_enqueue_script( 'recaptcha', $api_url, [], null, true );
-		wp_script_add_data( 'recaptcha', 'extra', [ 'async', 'defer' ] );
+		if (
+			GOOGLE_RECAPTCHA_V2_SITE_KEY &&
+			GOOGLE_RECAPTCHA_V2_SECRET_KEY
+		) {
+			// Enqueue the script
+			wp_enqueue_script( 'recaptcha', $this->get_api_url( $version, $render ), [], null, true );
+			wp_script_add_data( 'recaptcha', 'extra', [ 'async', 'defer' ] );
+		}
 	}
 }

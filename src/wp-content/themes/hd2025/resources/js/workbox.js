@@ -19,9 +19,9 @@ let cacheName = 'GAUDEV-workbox-cache';
 let matchCallback = function matchCallback ( _ref ) {
 	let request = _ref.request;
 	return (
-		request.destination === '/wp-content/themes/hd/assets/css/.*' ||
-		request.destination === '/wp-content/themes/hd/assets/js/.*' ||
-		request.destination === '/wp-content/themes/hd/assets/img/.*'
+		request.destination === '/wp-content/themes/hd2025/assets/css/.*' ||
+		request.destination === '/wp-content/themes/hd2025/assets/js/.*' ||
+		request.destination === '/wp-content/themes/hd2025/assets/img/.*'
 	);
 };
 
@@ -41,11 +41,11 @@ registerRoute(
 	} )
 );
 
-console.log(matchCallback);
-console.log(ExpirationPlugin);
-console.log(CacheableResponsePlugin);
-console.log(CacheFirst);
-console.log(registerRoute);
+// console.log(matchCallback);
+// console.log(ExpirationPlugin);
+// console.log(CacheableResponsePlugin);
+// console.log(CacheFirst);
+// console.log(registerRoute);
 
 // SELF INSTALL
 let expectedCaches = ['GAUDEV'];
@@ -78,7 +78,7 @@ self.addEventListener( 'activate', function ( event ) {
 } );
 
 self.addEventListener( 'fetch', function ( e ) {
-	console.log(e.request.url);
+	//console.log(e.request.url);
 	e.respondWith(
 		caches.match( e.request ).then( function ( response ) {
 			return response || fetch( e.request );
