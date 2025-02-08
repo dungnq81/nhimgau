@@ -60,8 +60,8 @@ final class Theme {
 		 * Translations can be filed at WordPress.org.
 		 */
 		load_theme_textdomain( TEXT_DOMAIN, trailingslashit( WP_LANG_DIR ) . 'themes/' );
-		load_theme_textdomain( TEXT_DOMAIN, get_template_directory() . '/inc/languages' );
-		load_theme_textdomain( TEXT_DOMAIN, get_stylesheet_directory() . '/inc/languages' );
+		load_theme_textdomain( TEXT_DOMAIN, get_template_directory() . '/languages' );
+		load_theme_textdomain( TEXT_DOMAIN, get_stylesheet_directory() . '/languages' );
 	}
 
 	// --------------------------------------------------

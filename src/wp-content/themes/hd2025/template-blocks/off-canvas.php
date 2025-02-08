@@ -6,7 +6,7 @@
  * @author Gaudev
  */
 
-use Cores\Helper;
+use HD\Helper;
 
 \defined( 'ABSPATH' ) || die;
 
