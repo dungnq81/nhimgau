@@ -4,7 +4,7 @@
  * Plugin Name: HDMU
  * Plugin URI: https://webhd.vn
  * Description: mu-plugins for HD theme
- * Version: 0.25.01
+ * Version: 0.25.02
  * Requires PHP: 8.2
  * Author: Gaudev
  * Author URI: https://webhd.vn

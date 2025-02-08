@@ -1,7 +1,7 @@
 {
     "name": "hd2025",
     "private": true,
-    "version": "0.25.01",
+    "version": "0.25.02",
     "type": "module",
     "scripts": {
         "watch:plugin": "cross-env NODE_ENV=development vite build --watch --config wp-content/plugins/hd-addons/vite.config.js",

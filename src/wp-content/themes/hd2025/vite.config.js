@@ -84,7 +84,6 @@ export default {
         ...sharedConfig.build,
         outDir: `${assets}`,
         rollupOptions: {
-            ...sharedConfig.build.rollupOptions,
             input: [
                 ...sassFiles.map((file) => path.resolve(`${resources}/sass/${file}.scss`)),
                 ...jsFiles.map((file) => path.resolve(`${resources}/js/${file}.js`)),
