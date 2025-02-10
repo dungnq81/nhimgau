@@ -17,23 +17,6 @@ final class Helper {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $route
-	 * @param bool $default
-	 *
-	 * @return string
-	 */
-	public static function RestApi( $route, bool $default = true ): string {
-		$default_url = '';
-		if ( $default ) {
-			$default_url = esc_url_raw( rest_url( 'wp/v2/' . $route ) );
-		}
-
-		return apply_filters( 'hd_rest_url', $default_url, $route, $default );
-	}
-
-	// -------------------------------------------------------------
-
-	/**
 	 * @param $name
 	 * @param mixed $default
 	 *

@@ -16,7 +16,7 @@ class ComposerStaticInitedba325158c750b2a115396df3b0241d
     public static $prefixDirsPsr4 = array (
         'HD\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/inc/Classes',
+            0 => __DIR__ . '/../..' . '/inc/classes',
         ),
     );
 

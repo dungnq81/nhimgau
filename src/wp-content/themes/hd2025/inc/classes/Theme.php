@@ -2,6 +2,8 @@
 
 namespace HD;
 
+use HD\Rest\Rest;
+
 use HD\Plugins\ACF\ACF;
 use HD\Plugins\CF7;
 use HD\Plugins\PLL;
@@ -135,6 +137,7 @@ final class Theme {
 			( Admin::get_instance() );
 		}
 
+		( Rest::get_instance() );
 		( Customizer::get_instance() );
 		( Optimizer::get_instance() );
 		( Shortcode::get_instance() );
@@ -229,27 +232,23 @@ final class Theme {
 	// --------------------------------------------------
 
 	/**
-	 * Unregister a WP_Widget widget
+	 * Unregister widgets
 	 *
 	 * @return void
 	 */
 	public function unregister_widgets(): void {
-		// unregister_widget( 'WP_Widget_Search' );
-		// unregister_widget( 'WP_Widget_Recent_Posts' );
+		unregister_widget( 'WP_Widget_Search' );
+		unregister_widget( 'WP_Widget_Recent_Posts' );
 
 		// Removes the styling added to the header for recent comments
 		global $wp_widget_factory;
-
-		remove_action( 'wp_head', [
-			$wp_widget_factory->widgets['WP_Widget_Recent_Comments'],
-			'recent_comments_style'
-		] );
+		remove_action( 'wp_head', [ $wp_widget_factory->widgets['WP_Widget_Recent_Comments'], 'recent_comments_style' ] );
 	}
 
 	// --------------------------------------------------
 
 	/**
-	 * Registers a WP_Widget widget
+	 * Registers widgets
 	 *
 	 * @return void
 	 */
