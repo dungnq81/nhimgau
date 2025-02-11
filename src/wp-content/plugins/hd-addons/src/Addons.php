@@ -29,7 +29,12 @@ final class Addons {
 
 	// -------------------------------------------------------------
 
+	/**
+	 * @return void
+	 */
 	public function plugins_loaded(): void {
+		add_action( 'script_loader_tag', [ $this, 'script_loader_tag' ], 11, 3 );
+
 		// Classic Editor
 		if ( Helper::checkPluginActive( 'classic-editor/classic-editor.php' ) ) {
 			remove_action( 'admin_init', [ \Classic_Editor::class, 'register_settings' ] );
@@ -50,6 +55,44 @@ final class Addons {
 		( new \Addons\CustomScript\CustomScript() );
 		( new \Addons\CustomCSS\CustomCSS() );
 		( new \Addons\ThirdParty\Faker() );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string $tag
+	 * @param string $handle
+	 * @param string $src
+	 *
+	 * @return string
+	 */
+	public function script_loader_tag( string $tag, string $handle, string $src ): string {
+		$attributes = wp_scripts()->registered[ $handle ]->extra ?? [];
+
+		// Process combined attributes (e.g., `module defer`) from `addons`
+		if ( ! empty( $attributes['addon'] ) ) {
+
+			// Convert space-separated string to array if necessary
+			$extra_attrs = is_array( $attributes['addon'] )
+				? $attributes['addon']
+				: explode( ' ', $attributes['addon'] );
+
+			foreach ( $extra_attrs as $attr ) {
+				if ( 'defer' === $attr ) {
+					$attr = 'defer data-wp-strategy="defer"';
+				}
+
+				if ( $attr === 'module' ) {
+					if ( ! preg_match( '#\stype=(["\'])module\1#', $tag ) ) {
+						$tag = preg_replace( '#(?=></script>)#', ' type="module"', $tag, 1 );
+					}
+				} elseif ( ! preg_match( "#\s$attr(=|>|\s)#", $tag ) ) {
+					$tag = preg_replace( '#(?=></script>)#', " $attr", $tag, 1 );
+				}
+			}
+		}
+
+		return $tag;
 	}
 
 	// -------------------------------------------------------------
@@ -76,7 +119,7 @@ final class Addons {
 			$version,
 			true
 		);
-		wp_script_add_data( 'admin-addons', 'extra', [ 'module', 'defer' ] );
+		wp_script_add_data( 'admin-addons', 'addon', [ 'module', 'defer' ] );
 
 		// options_enqueue_assets
 		$allowed_pages = 'toplevel_page_addon-settings';
@@ -90,7 +133,7 @@ final class Addons {
 			}
 
 			wp_enqueue_script( 'select2-addons', ADDONS_URL . 'assets/js/select2.js', [ 'select2' ], $version, true );
-			wp_script_add_data( 'select2-addons', 'extra', [ 'module', 'defer' ] );
+			wp_script_add_data( 'select2-addons', 'addon', [ 'module', 'defer' ] );
 
 			$codemirror_settings = [
 				'codemirror_css'  => wp_enqueue_code_editor( [ 'type' => 'text/css' ] ),

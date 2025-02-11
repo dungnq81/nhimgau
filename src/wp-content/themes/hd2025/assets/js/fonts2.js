@@ -1,0 +1,1 @@
+import{F as e}from"./_vendor.js";document.addEventListener("DOMContentLoaded",(()=>{const t=[{family:"Roboto",weights:[400,700]},{family:"Open Sans",weights:[300,600]},{family:"Lora",weights:[400]}].flatMap((t=>t.weights.map((a=>new e(t.family,{weight:a}).load()))));Promise.all(t).then((()=>{document.documentElement.classList.add("font-loaded")})).catch((e=>{}))}));

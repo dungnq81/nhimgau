@@ -17,9 +17,15 @@ importers:
       ensemble-social-share:
         specifier: github:loltgt/ensemble-social-share
         version: https://codeload.github.com/loltgt/ensemble-social-share/tar.gz/096f81062cef745e89d479b3f6605586caeeadb7
+      fontfaceobserver:
+        specifier: ^2.3.0
+        version: 2.3.0
       foundation-sites:
         specifier: ^6.9.0
         version: 6.9.0(jquery@3.7.1)(motion-ui@2.0.8(jquery@3.7.1))(what-input@5.2.12)
+      gsap:
+        specifier: ^3.12.7
+        version: 3.12.7
       jquery:
         specifier: ^3.7.1
         version: 3.7.1
@@ -72,9 +78,6 @@ importers:
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
-      gsap:
-        specifier: ^3.12.7
-        version: 3.12.7
       imagemin-mozjpeg:
         specifier: ^10.0.0
         version: 10.0.0
@@ -1261,6 +1264,9 @@ packages:
   find-versions@3.2.0:
     resolution: {integrity: sha512-P8WRou2S+oe222TOCHitLy8zj+SIsVJh52VP4lvXkaFVnOFFdoWv1H1Jjvel1aI6NCFOAaeAVm8qrI0odiLcww==}
     engines: {node: '>=6'}
+
+  fontfaceobserver@2.3.0:
+    resolution: {integrity: sha512-6FPvD/IVyT4ZlNe7Wcn5Fb/4ChigpucKYSvD6a+0iMoLn2inpo711eyIcKjmDtE5XNcgAkSH9uN/nfAeZzHEfg==}
 
   form-data-encoder@2.1.4:
     resolution: {integrity: sha512-yDYSgNMraqvnxiEXO4hi88+YZxaHC6QKzb5N84iRCTDeRO7ZALpir/lVmf/uXUhnwUr2O4HU8s/n6x+yNjQkHw==}
@@ -4141,6 +4147,8 @@ snapshots:
   find-versions@3.2.0:
     dependencies:
       semver-regex: 2.0.0
+
+  fontfaceobserver@2.3.0: {}
 
   form-data-encoder@2.1.4: {}
 

@@ -27,6 +27,15 @@
     "src": "wp-content/themes/hd2025/resources/js/components/back-to-top.js",
     "isEntry": true
   },
+  "wp-content/themes/hd2025/resources/js/components/fonts.js": {
+    "file": "js/fonts2.js",
+    "name": "fonts",
+    "src": "wp-content/themes/hd2025/resources/js/components/fonts.js",
+    "isEntry": true,
+    "imports": [
+      "__vendor.js"
+    ]
+  },
   "wp-content/themes/hd2025/resources/js/components/lazy-loader.js": {
     "file": "js/lazy-loader.js",
     "name": "lazy-loader",

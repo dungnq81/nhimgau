@@ -34,7 +34,7 @@ if ( ! function_exists( 'other_head_action' ) ) {
 	add_action( 'wp_head', 'other_head_action', 10 );
 
 	function other_head_action(): void {
-		// manifest file
+		// manifest.json
 		if ( is_file( ABSPATH . 'manifest.json' ) ) {
 			echo '<link rel="manifest" href="' . esc_url( home_url( 'manifest.json' ) ) . '" />';
 		}
@@ -91,7 +91,7 @@ if ( ! function_exists( 'external_fonts_action' ) ) {
 	add_action( 'wp_head', 'external_fonts_action', 99 );
 
 	function external_fonts_action(): void {
-        // External fonts
+        //...
 	}
 }
 

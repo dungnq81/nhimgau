@@ -71,7 +71,7 @@ final class ReCaptcha {
 		) {
 			// Enqueue the script
 			wp_enqueue_script( 'recaptcha', $this->get_api_url( $version, $render ), [], null, true );
-			wp_script_add_data( 'recaptcha', 'extra', [ 'async', 'defer' ] );
+			wp_script_add_data( 'recaptcha', 'addon', [ 'async', 'defer' ] );
 		}
 	}
 }
