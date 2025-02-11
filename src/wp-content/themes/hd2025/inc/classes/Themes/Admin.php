@@ -54,7 +54,7 @@ final class Admin {
                     });
 
                     postForm.addEventListener('submit', function(event) {
-                        let postTitleInput = document?.querySelector('input[name="post_title"]');
+                        let postTitleInput = document.querySelector('input[name="post_title"]');
                         let postTitleEntered = false;
 
                         if (postTitleInput && postTitleInput.value.trim() !== '') {
@@ -125,7 +125,7 @@ final class Admin {
 	 * @return void
 	 */
 	public function admin_menu(): void {
-		global $menu, $submenu;
+		//global $menu, $submenu;
 		// dump($menu);
 		// dump($submenu);
 

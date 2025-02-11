@@ -10,6 +10,19 @@ import BackToTop from './components/back-to-top';
 import lazyLoader from './components/lazy-loader';
 import { initializeSocialShare } from './components/social-share';
 
+// Global variables
+const hdDefaults = {
+    _ajaxUrl: '/wp-admin/admin-ajax.php',
+    _baseUrl: 'https://nhimgau.test/',
+    _themeUrl: 'https://nhimgau.test/wp-content/themes/hd2025/',
+};
+
+const {
+    _ajaxUrl: ajaxUrl,
+    _baseUrl: baseUrl,
+    _themeUrl: themeUrl,
+} = { ...hdDefaults, ...(typeof hd !== 'undefined' ? hd : {}) };
+
 const customOptions = {
     displays: [
         'facebook',
@@ -24,10 +37,7 @@ const customOptions = {
     ],
 };
 
-const ajaxUrl = typeof hd !== 'undefined' && typeof hd.ajaxUrl !== 'undefined' ? hd.ajaxUrl : '/wp-admin/admin-ajax.php';
-const baseUrl = typeof hd !== 'undefined' && typeof hd.baseUrl !== 'undefined' ? hd.baseUrl : 'https://nhimgau.test/';
-const themeUrl = typeof hd !== 'undefined' && typeof hd.themeUrl !== 'undefined' ? hd.themeUrl : 'https://nhimgau.test/wp-content/themes/hd/';
-
+// Service worker
 'serviceWorker' in navigator && window.addEventListener('load', function() {
     navigator.serviceWorker.register(themeUrl + 'assets/js/workbox.js').then(
         function(e) {

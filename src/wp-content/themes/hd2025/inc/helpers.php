@@ -1,7 +1,7 @@
 <?php
 
 /**
- * helpers.php
+ * Helper functions
  *
  * @author Gaudev
  */

@@ -1,12 +1,10 @@
 <?php
 
 /**
- * settings.php
+ * Theme Settings
  *
  * @author Gaudev
  */
-
-use HD\Helper;
 
 \defined( 'ABSPATH' ) || die;
 
@@ -101,7 +99,7 @@ function body_class_callback( array $classes ): array {
 		}
 	}
 
-	if ( Helper::isWoocommerceActive() ) {
+	if ( \HD\Helper::isWoocommerceActive() ) {
 		$classes[] = 'woocommerce';
 	}
 
@@ -504,7 +502,7 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 
 	// --------------------------------------------------
 
-	if ( Helper::isWoocommerceActive() ) {
+	if ( \HD\Helper::isWoocommerceActive() ) {
 		$arr_new['aspect_ratio']['post_type_term'][]                      = 'product';
 		$arr_new['aspect_ratio']['post_type_term'][]                      = 'product_cat';
 		$arr_new['admin_list_table']['term_row_actions'][]                = 'product_cat';
@@ -512,7 +510,7 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 		$arr_new['post_type_terms']['product']                            = 'product_cat';
 	}
 
-	if ( Helper::isCf7Active() ) {
+	if ( \HD\Helper::isCf7Active() ) {
 		$arr_new['admin_list_table']['post_type_exclude_thumb_columns'][] = 'wpcf7_contact_form';
 	}
 

@@ -202,13 +202,12 @@ final class Theme {
 		$recaptcha_v3_site_key = $recaptcha_options['recaptcha_v3_site_key'] ?? '';
 
 		$l10n = [
-			'ajaxUrl'     => esc_js( admin_url( 'admin-ajax.php', 'relative' ) ),
-			'baseUrl'     => esc_js( untrailingslashit( site_url() ) . '/' ),
-			'themeUrl'    => esc_js( THEME_URL ),
+			'_ajaxUrl'     => esc_js( admin_url( 'admin-ajax.php', 'relative' ) ),
+			'_baseUrl'     => esc_js( untrailingslashit( site_url() ) . '/' ),
+			'_themeUrl'    => esc_js( THEME_URL ),
 			'_csrf_token' => wp_create_nonce( 'wp_csrf_token' ),
 			'_wpnonce'    => wp_create_nonce( 'wp_rest' ),
-			'locale'      => esc_js( get_locale() ),
-			'lang'        => esc_js( Helper::currentLanguage() ),
+			'_lang'        => esc_js( Helper::currentLanguage() ),
 		];
 
 		if ( $recaptcha_v2_site_key ) {

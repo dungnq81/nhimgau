@@ -79,7 +79,7 @@ final class WooCommerce {
 	 * @return void
 	 */
 	public function unregister_default_widgets(): void {
-		//unregister_widget( 'WC_Widget_Product_Search' );
+		unregister_widget( 'WC_Widget_Product_Search' );
 		//unregister_widget( 'WC_Widget_Products' );
 	}
 
