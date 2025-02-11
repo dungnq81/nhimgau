@@ -34,7 +34,16 @@ if ( ! function_exists( 'other_head_action' ) ) {
 	add_action( 'wp_head', 'other_head_action', 10 );
 
 	function other_head_action(): void {
-        //...
+		// manifest file
+		if ( is_file( ABSPATH . 'manifest.json' ) ) {
+			echo '<link rel="manifest" href="' . esc_url( home_url( 'manifest.json' ) ) . '" />';
+		}
+
+		// Theme color
+		$theme_color = Helper::getThemeMod( 'theme_color_setting' );
+		if ( $theme_color ) {
+			echo '<meta name="theme-color" content="' . Helper::escAttr( $theme_color ) . '" />';
+		}
 	}
 }
 
@@ -61,11 +70,11 @@ if ( ! function_exists( 'critical_css_action' ) ) {
 
 			$critical_css = get_transient( 'index_critical_css' );
 			if ( false === $critical_css ) {
-				$critical_css_file = THEME_PATH . 'assets/css/critical/index_critical.min.css';
+				$critical_css_file = THEME_PATH . 'assets/css/index_critical.min.css';
 
 				if ( is_file( $critical_css_file ) ) {
 					$critical_css = file_get_contents( $critical_css_file );
-					set_transient( 'index_critical_css', $critical_css, 2 * HOUR_IN_SECONDS );
+					set_transient( 'index_critical_css', $critical_css, 1 * HOUR_IN_SECONDS );
 				}
 			}
 
@@ -82,7 +91,7 @@ if ( ! function_exists( 'external_fonts_action' ) ) {
 	add_action( 'wp_head', 'external_fonts_action', 99 );
 
 	function external_fonts_action(): void {
-        //...
+        // External fonts
 	}
 }
 

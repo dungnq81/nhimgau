@@ -37,5 +37,5 @@ require_once __DIR__ . '/inc/helpers.php';
 require_once __DIR__ . '/inc/css.php';
 require_once __DIR__ . '/inc/js.php';
 
-// Initialize theme settings.
+// Initialize theme.
 ( \HD\Theme::get_instance() );

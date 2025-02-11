@@ -62,23 +62,21 @@ export default {
         viteStaticCopy({
             targets: directoriesToCopy,
         }),
-        isProduction
-            ? PluginCritical({
-                criticalUrl: process.env.CRITICAL_URL || 'https://nhimgau.test',
-                criticalBase: `${dir}/assets/css`,
-                css: [ `${dir}/assets/css/app.css` ],
-                criticalPages: [ { uri: '/', template: 'index' } ],
-                criticalConfig: {
-                    inline: false,
-                    strict: false,
-                    //width: 1024,
-                    //height: 768,
-                    penthouse: {
-                        blockJSRequests: true,
-                    },
+        isProduction ? PluginCritical({
+            criticalUrl: process.env.CRITICAL_URL || 'https://nhimgau.test',
+            criticalBase: `${dir}/assets/css`,
+            css: [ `${dir}/assets/css/app.css` ],
+            criticalPages: [ { uri: '/', template: 'index' } ],
+            criticalConfig: {
+                inline: false,
+                strict: false,
+                //width: 1024,
+                //height: 768,
+                penthouse: {
+                    blockJSRequests: true,
                 },
-            })
-            : '',
+            },
+        }) : '',
     ],
     build: {
         ...sharedConfig.build,

@@ -6,8 +6,8 @@
     "scripts": {
         "watch:plugin": "cross-env NODE_ENV=development vite build --watch --config wp-content/plugins/hd-addons/vite.config.js",
         "watch:theme": "cross-env NODE_ENV=development vite build --watch --config wp-content/themes/hd2025/vite.config.js",
-        "build:plugin": "cross-env vite build --config wp-content/plugins/hd-addons/vite.config.js",
-        "build:theme": "cross-env vite build --config wp-content/themes/hd2025/vite.config.js",
+        "build:plugin": "cross-env NODE_ENV=production vite build --config wp-content/plugins/hd-addons/vite.config.js",
+        "build:theme": "cross-env NODE_ENV=production vite build --config wp-content/themes/hd2025/vite.config.js",
         "watch": "concurrently \"npm run watch:plugin\" \"npm run watch:theme\"",
         "build": "concurrently \"npm run build:plugin\" \"npm run build:theme\""
     },

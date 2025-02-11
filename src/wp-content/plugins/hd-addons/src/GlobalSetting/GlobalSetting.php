@@ -526,6 +526,9 @@ final class GlobalSetting {
 
 	// --------------------------------------------------
 
+	/**
+	 * @return void
+	 */
 	public function _addon_server_info_callback(): void {
 		global $wpdb;
 
