@@ -44,7 +44,6 @@ const jsFiles = [
     'components/lazy-loader',
     'components/skip-link-focus',
     'components/social-share',
-    'components/fonts',
 
     // (site)
     'swiper2',

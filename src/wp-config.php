@@ -125,6 +125,10 @@ const WP_HOME    = 'https://nhimgau.test';
 const AUTOMATIC_UPDATER_DISABLED = true;
 const WP_AUTO_UPDATE_CORE        = false;
 
+/** FluentSMTP */
+const FLUENTMAIL_SMTP_USERNAME = 'official.webhd@gmail.com';
+const FLUENTMAIL_SMTP_PASSWORD = 'obvyigyczmcbxgji';
+
 /* That's all, stop editing! Happy publishing. */
 
 /** Absolute path to the WordPress directory. */
