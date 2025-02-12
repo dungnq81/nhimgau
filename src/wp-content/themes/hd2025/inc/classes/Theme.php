@@ -185,8 +185,8 @@ final class Theme {
 		}
 
 		/** Stylesheet */
-		wp_enqueue_style( 'app-style', ASSETS_URL . 'css/app.css', [], $version );
 		wp_enqueue_style( 'fonts-style', ASSETS_URL . 'css/fonts.css', [], $version );
+		wp_enqueue_style( 'app-style', ASSETS_URL . 'css/app.css', [], $version );
 
 		/** Scripts */
 		wp_enqueue_script( 'modulepreload', ASSETS_URL . 'js/modulepreload-polyfill.js', [], $version, true );

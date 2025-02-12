@@ -47,6 +47,7 @@ final class WooCommerce {
 		$woocommerce_default_css = $this->woocommerce_options['woocommerce_default_css'] ?? '';
 		if ( $woocommerce_default_css ) {
 			wp_deregister_style( 'woocommerce-inline' );
+			wp_deregister_style( 'brands-styles' );
 		}
 	}
 
