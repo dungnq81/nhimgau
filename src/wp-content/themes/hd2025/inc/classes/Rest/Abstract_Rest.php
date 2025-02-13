@@ -3,7 +3,7 @@
 namespace HD\Rest;
 
 abstract class Abstract_Rest {
-	public const BYPASS_NONCE   = false; // bypass wpnonce, recaptcha .v.v...
+	public const BYPASS_NONCE = false; // bypass wpnonce, recaptcha .v.v...
 	public const REST_NAMESPACE = 'wp/v2';
 
 	/** ---------------------------------------- */

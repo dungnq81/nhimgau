@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the WordPress - 6.7.x - Development - Administration - Network Admin package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-07-16 07:16:37+0000\n"
+"PO-Revision-Date: 2025-02-02 11:09:59+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -374,25 +374,25 @@ msgstr[0] "Quản Trị Viên Cấp Cao <span class=\"count\">(%s)</span>"
 #: wp-admin/includes/class-wp-ms-users-list-table.php:117
 msgctxt "user"
 msgid "Not spam"
-msgstr "Không phải là người dùng spam"
+msgstr "Không phải spam"
 
 #: wp-admin/includes/class-wp-ms-users-list-table.php:116
 msgctxt "user"
 msgid "Mark as spam"
-msgstr "Đánh dấu người dùng là spam"
+msgstr "Đánh dấu là spam"
 
 #: wp-admin/includes/class-wp-ms-themes-list-table.php:744
 msgid "Visit Theme Site"
-msgstr "Xem website giao diện"
+msgstr "Truy cập trang giao diện"
 
 #: wp-admin/includes/class-wp-ms-themes-list-table.php:707
 msgid "Broken Theme:"
-msgstr "Giao diện Bị Lỗi:"
+msgstr "Giao diện bị lỗi:"
 
 #. translators: %s: Theme name.
 #: wp-admin/includes/class-wp-ms-themes-list-table.php:613
 msgid "Network Disable %s"
-msgstr "Tắt mạng cho %s"
+msgstr "Vô hiệu hóa mạng %s"
 
 #. translators: %s: Theme name.
 #: wp-admin/includes/class-wp-ms-themes-list-table.php:610
@@ -402,7 +402,7 @@ msgstr "Vô hiệu hóa %s"
 #. translators: %s: Theme name.
 #: wp-admin/includes/class-wp-ms-themes-list-table.php:587
 msgid "Network Enable %s"
-msgstr "Mạng đã được kích hoạt %s"
+msgstr "Kích hoạt mạng %s"
 
 #. translators: %s: Theme name.
 #: wp-admin/includes/class-wp-ms-themes-list-table.php:584
@@ -412,7 +412,7 @@ msgstr "Bật %s"
 #: wp-admin/includes/class-wp-ms-themes-list-table.php:472
 #: wp-admin/includes/class-wp-ms-themes-list-table.php:620
 msgid "Network Disable"
-msgstr "Tắt mạng"
+msgstr "Vô hiệu hóa mạng"
 
 #. translators: %s: Number of themes.
 #: wp-admin/includes/class-wp-ms-themes-list-table.php:416
@@ -480,7 +480,7 @@ msgstr "Cập nhật lần cuối:"
 #: wp-admin/includes/class-wp-ms-sites-list-table.php:809
 msgctxt "site"
 msgid "Not Spam"
-msgstr "Không Phải Rác"
+msgstr "Không phải Spam"
 
 #: wp-admin/includes/class-wp-ms-sites-list-table.php:296
 msgctxt "site"
@@ -604,7 +604,7 @@ msgstr "Bạn chuẩn bị lưu trữ trang web %s."
 #. translators: %s: Site URL.
 #: wp-admin/network/sites.php:68
 msgid "You are about to unarchive the site %s."
-msgstr "Bạn chuẩn bị phục hồi trang web %s từ mục lưu trữ."
+msgstr "Bạn chuẩn bị phục hồi trang web %s từ kho lưu trữ."
 
 #. translators: %s: Site URL.
 #: wp-admin/network/sites.php:66
@@ -627,7 +627,7 @@ msgstr "Đường dẫn"
 
 #: wp-admin/includes/class-wp-ms-sites-list-table.php:394
 msgid "Domain"
-msgstr "Địa chỉ trang web:"
+msgstr "Tên miền"
 
 #: wp-admin/network/user-new.php:29 wp-admin/network/users.php:242
 msgid "<a href=\"https://codex.wordpress.org/Network_Admin_Users_Screen\">Documentation on Network Users</a>"
@@ -893,7 +893,7 @@ msgstr "Biên Tập Trang Mạng: %s"
 #: wp-admin/network/site-info.php:23 wp-admin/network/site-settings.php:23
 #: wp-admin/network/site-themes.php:46 wp-admin/network/site-users.php:41
 msgid "Invalid site ID."
-msgstr "Số nhận diện trang mạng không hợp lệ."
+msgstr "ID trang web không hợp lệ."
 
 #. translators: %s: Site URL.
 #: wp-admin/network/sites.php:178

@@ -6,8 +6,6 @@
  * @author Gaudev
  */
 
-use HD\Helper;
-
 \defined( 'ABSPATH' ) || die;
 
 // -----------------------------------------------
@@ -33,13 +31,13 @@ add_action( 'wp_head', 'other_head_action', 10 );
 function other_head_action(): void {
 	// manifest.json
 	if ( is_file( ABSPATH . 'manifest.json' ) ) {
-		echo '<link rel="manifest" href="' . esc_url( home_url( 'manifest.json' ) ) . '" />';
+		printf( '<link rel="manifest" href="%s" />', esc_url( home_url( 'manifest.json' ) ) );
 	}
 
 	// Theme color
-	$theme_color = Helper::getThemeMod( 'theme_color_setting' );
+	$theme_color = \HD\Helper::getThemeMod( 'theme_color_setting' );
 	if ( $theme_color ) {
-		echo '<meta name="theme-color" content="' . Helper::escAttr( $theme_color ) . '" />';
+		printf( '<meta name="theme-color" content="%s" />', \HD\Helper::escAttr( $theme_color ) );
 	}
 }
 
@@ -122,7 +120,7 @@ function construct_header_action(): void {
 add_action( 'masthead', '_masthead_home_seo_header', 10 );
 
 function _masthead_home_seo_header(): void {
-	$home_heading = Helper::getThemeMod( 'home_heading_setting' );
+	$home_heading = \HD\Helper::getThemeMod( 'home_heading_setting' );
 	$home_heading = ! empty( $home_heading ) ? esc_html( $home_heading ) : get_bloginfo( 'name' );
 
 	echo apply_filters( 'home_seo_header_filter', '<h1 class="sr-only">' . $home_heading . '</h1>' );

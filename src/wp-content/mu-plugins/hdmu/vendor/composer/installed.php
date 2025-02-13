@@ -3,7 +3,7 @@
         'name' => 'mu-plugins/hdmu',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'ebb4401d97069c3af2a58beff1196da6572c3995',
+        'reference' => 'beba2046438f9278ce506765181c0ad98b7d65e6',
         'type' => 'wordpress-muplugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -40,7 +40,7 @@
         'mu-plugins/hdmu' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'ebb4401d97069c3af2a58beff1196da6572c3995',
+            'reference' => 'beba2046438f9278ce506765181c0ad98b7d65e6',
             'type' => 'wordpress-muplugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

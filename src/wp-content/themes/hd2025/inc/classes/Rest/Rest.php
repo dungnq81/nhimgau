@@ -96,8 +96,8 @@ final class Rest extends Abstract_Rest {
 		];
 
 		foreach ( $unset_endpoints as $ue ) {
-			if ( isset( $endpoints[$ue] ) ) {
-				unset( $endpoints[$ue] );
+			if ( isset( $endpoints[ $ue ] ) ) {
+				unset( $endpoints[ $ue ] );
 			}
 		}
 

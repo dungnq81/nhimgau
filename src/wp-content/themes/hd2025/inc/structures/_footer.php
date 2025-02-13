@@ -6,8 +6,6 @@
  * @author Gaudev
  */
 
-use HD\Helper;
-
 \defined( 'ABSPATH' ) || die;
 
 // -----------------------------------------------
@@ -60,8 +58,6 @@ function _construct_footer_columns(): void {
     <div id="footer-columns" class="footer-columns">
 		<?php
 		echo \_toggle_container_open( true, 'container' );
-
-
 		echo \_toggle_container_close( true );
 		?>
     </div>
@@ -78,10 +74,12 @@ function _construct_footer_credit(): void {
 		<?php
 		echo \_toggle_container_open( true, 'container' );
 
-		$footer_credit = Helper::getThemeMod( 'footer_credit_setting' );
+		$footer_credit = \HD\Helper::getThemeMod( 'footer_credit_setting' );
 		$footer_credit = ! empty( $footer_credit ) ? esc_html( $footer_credit ) : '&copy; ' . date( 'Y' ) . ' ' . get_bloginfo( 'name' ) . '. ' . esc_html__( 'All rights reserved.', TEXT_DOMAIN );
 
 		echo '<p class="copyright">' . apply_filters( 'footer_credit_filter', $footer_credit ) . '</p>';
+
+        //...
 
 		echo \_toggle_container_close( true );
 		?>
