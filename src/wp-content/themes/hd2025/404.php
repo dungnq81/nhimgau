@@ -8,4 +8,5 @@
 
 \defined( 'ABSPATH' ) || die;
 
-wp_redirect( \HD\Helper::home( '/' ) );
+wp_redirect( \HD\Helper::home( '/' ), 301 );
+die();

@@ -48,8 +48,8 @@ importers:
         specifier: ^6.3.0
         version: 6.3.0
       swiper:
-        specifier: ^11.2.2
-        version: 11.2.2
+        specifier: ^11.2.3
+        version: 11.2.3
       vanilla-lazyload:
         specifier: ^19.1.3
         version: 19.1.3
@@ -59,13 +59,13 @@ importers:
     devDependencies:
       '@mojojoejo/vite-plugin-purgecss':
         specifier: ^1.1.0
-        version: 1.1.0(vite@6.1.0(@types/node@22.13.1)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2))
+        version: 1.1.0(vite@6.1.0(@types/node@22.13.2)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2))
       '@vheemstra/vite-plugin-imagemin':
         specifier: ^2.0.0
-        version: 2.0.0(vite@6.1.0(@types/node@22.13.1)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2))
+        version: 2.0.0(vite@6.1.0(@types/node@22.13.2)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2))
       '@wordpress/browserslist-config':
-        specifier: ^6.17.0
-        version: 6.17.0
+        specifier: ^6.18.0
+        version: 6.18.0
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.5.2)
@@ -104,15 +104,15 @@ importers:
         version: 5.38.2
       vite:
         specifier: ^6.1.0
-        version: 6.1.0(@types/node@22.13.1)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2)
+        version: 6.1.0(@types/node@22.13.2)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2)
       vite-plugin-static-copy:
         specifier: ^2.2.0
-        version: 2.2.0(vite@6.1.0(@types/node@22.13.1)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2))
+        version: 2.2.0(vite@6.1.0(@types/node@22.13.2)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2))
 
 packages:
 
-  '@adobe/css-tools@4.4.1':
-    resolution: {integrity: sha512-12WGKBQzjUAI4ayyF4IAtfw2QR/IDoqk6jTddXDhtYTJF9ASmoE1zst7cVtP0aL/F1jUJL5r+JxKXKEgHNbEUQ==}
+  '@adobe/css-tools@4.4.2':
+    resolution: {integrity: sha512-baYZExFpsdkBNuvGKTKWCwKH57HRZLVtycZS05WTQNVOiXVSeAki3nU35zlRbToeMW8aHlJfyS+1C4BOv27q0A==}
 
   '@asamuzakjp/css-color@2.8.3':
     resolution: {integrity: sha512-GIc76d9UI1hCvOATjZPyHFmE5qhRccp3/zGfMPapK3jBi+yocEzp6BBB0UnfRYP9NP4FANqUZYb0hnfs3TM3hw==}
@@ -592,8 +592,8 @@ packages:
   '@types/minimist@1.2.5':
     resolution: {integrity: sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==}
 
-  '@types/node@22.13.1':
-    resolution: {integrity: sha512-jK8uzQlrvXqEU91UxiK5J7pKHyzgnI1Qnl0QDHIgVGuolJhRb9EEl28Cj9b3rGR8B2lhFCtvIm5os8lFnO/1Ew==}
+  '@types/node@22.13.2':
+    resolution: {integrity: sha512-Z+r8y3XL9ZpI2EY52YYygAFmo2/oWfNSj4BCpAXE2McAexDk8VcnBMGC9Djn9gTKt4d2T/hhXqmPzo4hfIXtTg==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -607,8 +607,8 @@ packages:
     peerDependencies:
       vite: ^3.0.0 || ^4.0.0 || ^4.3.9 || ^5.0.0
 
-  '@wordpress/browserslist-config@6.17.0':
-    resolution: {integrity: sha512-cjMclWLwfam5O03gOHWjD8veeLVnfmC93V9LX1aPt/ZT9aE0cmEZUxBa3VzkDM7NvuZFj7SjSvJr+vuar9Np1A==}
+  '@wordpress/browserslist-config@6.18.0':
+    resolution: {integrity: sha512-GhB3p+qrR2xFITPEMi9/w2KoLhz0uzA+sMwtREr4G5UZ37dmgN3XJN55NYe2ZduT6uZnaCVYskOmXGvmx/EEyw==}
     engines: {node: '>=18.12.0', npm: '>=8.19.2'}
 
   abort-controller@3.0.0:
@@ -1098,8 +1098,8 @@ packages:
   duplexer3@0.1.5:
     resolution: {integrity: sha512-1A8za6ws41LQgv9HrE/66jyC5yuSjQ3L/KOpFtoBilsAK2iA2wuS5rTt1OCzIvtS2V7nVmedsUU+DGRcjBmOYA==}
 
-  electron-to-chromium@1.5.97:
-    resolution: {integrity: sha512-HKLtaH02augM7ZOdYRuO19rWDeY+QSJ1VxnXFa/XDFLf07HvM90pALIJFgrO+UVaajI3+aJMMpojoUTLZyQ7JQ==}
+  electron-to-chromium@1.5.98:
+    resolution: {integrity: sha512-bI/LbtRBxU2GzK7KK5xxFd2y9Lf9XguHooPYbcXWy6wUoT8NMnffsvRhPmSeUHLSDKAEtKuTaEtK4Ms15zkIEA==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -2639,8 +2639,8 @@ packages:
     engines: {node: '>=14.0.0'}
     hasBin: true
 
-  swiper@11.2.2:
-    resolution: {integrity: sha512-FmAN6zACpVUbd/1prO9xQ9gKo9cc6RE2UKU/z4oXtS8fNyX4sdOW/HHT/e444WucLJs0jeMId6WjdWM2Lrs8zA==}
+  swiper@11.2.3:
+    resolution: {integrity: sha512-24m5tqHCd1Wmp9+86aKDoIGMsZGEjIL++3nuB1UjhAhIlvwj4k0Jikxu9PGQ/VswLpoje6JtMDWo12uu4aS2FA==}
     engines: {node: '>= 4.7.0'}
 
   symbol-tree@3.2.4:
@@ -2994,7 +2994,7 @@ packages:
 
 snapshots:
 
-  '@adobe/css-tools@4.4.1': {}
+  '@adobe/css-tools@4.4.2': {}
 
   '@asamuzakjp/css-color@2.8.3':
     dependencies:
@@ -3139,10 +3139,10 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@mojojoejo/vite-plugin-purgecss@1.1.0(vite@6.1.0(@types/node@22.13.1)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2))':
+  '@mojojoejo/vite-plugin-purgecss@1.1.0(vite@6.1.0(@types/node@22.13.2)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2))':
     dependencies:
       purgecss: 5.0.0
-      vite: 6.1.0(@types/node@22.13.1)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2)
+      vite: 6.1.0(@types/node@22.13.2)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2)
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -3308,7 +3308,7 @@ snapshots:
     dependencies:
       '@types/http-cache-semantics': 4.0.4
       '@types/keyv': 3.1.4
-      '@types/node': 22.13.1
+      '@types/node': 22.13.2
       '@types/responselike': 1.0.3
 
   '@types/estree@1.0.6': {}
@@ -3317,13 +3317,13 @@ snapshots:
 
   '@types/keyv@3.1.4':
     dependencies:
-      '@types/node': 22.13.1
+      '@types/node': 22.13.2
 
   '@types/mime-types@2.1.4': {}
 
   '@types/minimist@1.2.5': {}
 
-  '@types/node@22.13.1':
+  '@types/node@22.13.2':
     dependencies:
       undici-types: 6.20.0
 
@@ -3331,18 +3331,18 @@ snapshots:
 
   '@types/responselike@1.0.3':
     dependencies:
-      '@types/node': 22.13.1
+      '@types/node': 22.13.2
 
-  '@vheemstra/vite-plugin-imagemin@2.0.0(vite@6.1.0(@types/node@22.13.1)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2))':
+  '@vheemstra/vite-plugin-imagemin@2.0.0(vite@6.1.0(@types/node@22.13.2)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2))':
     dependencies:
       chalk: 5.4.1
       fast-glob: 3.3.3
       fs-extra: 11.3.0
       imagemin: 8.0.1
       is-apng: 1.2.0
-      vite: 6.1.0(@types/node@22.13.1)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2)
+      vite: 6.1.0(@types/node@22.13.2)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2)
 
-  '@wordpress/browserslist-config@6.17.0': {}
+  '@wordpress/browserslist-config@6.18.0': {}
 
   abort-controller@3.0.0:
     dependencies:
@@ -3477,7 +3477,7 @@ snapshots:
   browserslist@4.24.4:
     dependencies:
       caniuse-lite: 1.0.30001699
-      electron-to-chromium: 1.5.97
+      electron-to-chromium: 1.5.98
       node-releases: 2.0.19
       update-browserslist-db: 1.1.2(browserslist@4.24.4)
 
@@ -3681,7 +3681,7 @@ snapshots:
 
   critical@7.2.1:
     dependencies:
-      '@adobe/css-tools': 4.4.1
+      '@adobe/css-tools': 4.4.2
       async-traverse-tree: 1.1.0
       clean-css: 5.3.3
       common-tags: 1.8.2
@@ -3936,7 +3936,7 @@ snapshots:
 
   duplexer3@0.1.5: {}
 
-  electron-to-chromium@1.5.97: {}
+  electron-to-chromium@1.5.98: {}
 
   emoji-regex@8.0.0: {}
 
@@ -4468,7 +4468,7 @@ snapshots:
 
   inline-critical@12.1.0:
     dependencies:
-      '@adobe/css-tools': 4.4.1
+      '@adobe/css-tools': 4.4.2
       clean-css: 5.3.3
       detect-indent: 7.0.1
       fg-loadcss: 2.1.0
@@ -5515,7 +5515,7 @@ snapshots:
       csso: 5.0.5
       picocolors: 1.1.1
 
-  swiper@11.2.2: {}
+  swiper@11.2.3: {}
 
   symbol-tree@3.2.4: {}
 
@@ -5695,21 +5695,21 @@ snapshots:
       replace-ext: 2.0.0
       teex: 1.0.1
 
-  vite-plugin-static-copy@2.2.0(vite@6.1.0(@types/node@22.13.1)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2)):
+  vite-plugin-static-copy@2.2.0(vite@6.1.0(@types/node@22.13.2)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2)):
     dependencies:
       chokidar: 3.6.0
       fast-glob: 3.3.3
       fs-extra: 11.3.0
       picocolors: 1.1.1
-      vite: 6.1.0(@types/node@22.13.1)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2)
+      vite: 6.1.0(@types/node@22.13.2)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2)
 
-  vite@6.1.0(@types/node@22.13.1)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2):
+  vite@6.1.0(@types/node@22.13.2)(sass-embedded@1.83.4)(sass@1.84.0)(terser@5.38.2):
     dependencies:
       esbuild: 0.24.2
       postcss: 8.5.2
       rollup: 4.34.6
     optionalDependencies:
-      '@types/node': 22.13.1
+      '@types/node': 22.13.2
       fsevents: 2.3.3
       sass: 1.84.0
       sass-embedded: 1.83.4
