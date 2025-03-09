@@ -9,32 +9,30 @@ const node_modules = './node_modules';
 
 const resources = `${dir}/resources`;
 const assets = `${dir}/assets`;
-const storage = `${dir}/storage`;
 
 // COPY
 const directoriesToCopy = [
-    { src: `${storage}/fonts/fontawesome/webfonts`, dest: '' },
+    { src: `${resources}/fonts/fontawesome/webfonts`, dest: '' },
     { src: `${resources}/img`, dest: '' },
 ];
 
 // SASS
 const sassFiles = [
     // (admin)
-    'editor-style',
-    'awesome_font',
-    'admin',
+    'admin-css',
+    'editor-style-css',
 
     // (site)
-    'swiper',
-    'woocommerce',
-    'app',
+    'swiper-css',
+    'woocommerce-css',
+    'index-css',
 ];
 
 // JS
 const jsFiles = [
     // (admin)
     'login',
-    'admin2',
+    'admin',
 
     // (components)
     'components/modulepreload-polyfill',
@@ -43,9 +41,9 @@ const jsFiles = [
     'components/social-share',
 
     // (site)
-    'swiper2',
-    'woocommerce2',
-    'app2',
+    'swiper',
+    'woocommerce',
+    'index',
 ];
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -76,11 +74,7 @@ export default {
                     return `img/[name].[ext]`;
                 },
                 manualChunks(id) {
-                    if (id.includes('node_modules') ||
-                        id.includes('js/3rd') ||
-                        id.includes('sass/3rd') ||
-                        id.includes('sass/components/_awesome_font.scss')
-                    ) {
+                    if (id.includes('node_modules') || id.includes('js/3rd') || id.includes('sass/3rd')) {
                         return '_vendor';
                     }
                 },

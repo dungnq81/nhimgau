@@ -6,27 +6,24 @@ const directory = path.basename(path.resolve(__dirname));
 const dir = `./wp-content/plugins/${directory}`;
 const resources = `${dir}/resources`;
 const assets = `${dir}/assets`;
-const node_modules = './node_modules';
 
 // COPY
 const directoriesToCopy = [
+    { src: `${resources}/fonts/fontawesome/webfonts`, dest: '' },
     { src: `${resources}/img`, dest: '' },
-    { src: `${node_modules}/select2/dist/css/select2.min.css`, dest: 'css' },
-    { src: `${node_modules}/select2/dist/js/select2.full.min.js`, dest: 'js' },
 ];
 
 // SASS
 const sassFiles = [
-    'admin_addons',
+    'addon-css',
 ];
 
 // JS
 const jsFiles = [
-    'custom_sorting',
+    'addon',
     'lazyload',
     'recaptcha',
-    'select2',
-    'admin_addons2',
+    'sorting',
 ];
 
 export default {
@@ -55,7 +52,7 @@ export default {
                     return `img/[name].[ext]`;
                 },
                 manualChunks(id) {
-                    if (id.includes('node_modules')) {
+                    if (id.includes('node_modules') || id.includes('js/3rd') || id.includes('sass/3rd')) {
                         return '_vendor';
                     }
                 },

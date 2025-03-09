@@ -18,8 +18,6 @@ final class Admin {
 	// --------------------------------------------------
 
 	private function init(): void {
-		// editor-style.css
-		add_editor_style( ASSETS_URL . 'css/editor-style.css' );
 		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueue_block_editor_assets' ] );
 
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ], 99999 );
@@ -96,7 +94,7 @@ final class Admin {
 	 * @return void
 	 */
 	public function enqueue_block_editor_assets(): void {
-		wp_enqueue_style( 'editor-style', ASSETS_URL . 'css/editor-style.css' );
+		wp_enqueue_style( 'editor-style', ASSETS_URL . 'css/editor-style-css.css' );
 	}
 
 	// --------------------------------------------------
@@ -110,8 +108,8 @@ final class Admin {
 			$version = date( 'YmdHis', current_time( 'U', 0 ) );
 		}
 
-		wp_enqueue_style( 'admin-style', ASSETS_URL . 'css/admin.css', [], $version );
-		wp_enqueue_script( 'admin', ASSETS_URL . 'js/admin2.js', [ 'jquery' ], $version, true );
+		wp_enqueue_style( 'admin-style', ASSETS_URL . 'css/admin-css.css', [], $version );
+		wp_enqueue_script( 'admin', ASSETS_URL . 'js/admin.js', [ 'jquery' ], $version, true );
 		wp_script_add_data( 'admin', 'extra', [ 'module', 'defer' ] );
 	}
 
@@ -175,6 +173,9 @@ final class Admin {
 	 * @return void
 	 */
 	public function admin_init(): void {
+        // editor-style for Classic Editor
+		add_editor_style( ASSETS_URL . 'css/editor-style-css.css' );
+
 		$admin_list_table = Helper::filterSettingOptions( 'admin_list_table', [] );
 
 		$term_row_actions                = $admin_list_table['term_row_actions'] ?? [];

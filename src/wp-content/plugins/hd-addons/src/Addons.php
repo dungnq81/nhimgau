@@ -45,7 +45,7 @@ final class Addons {
 		if ( ! empty( $modules ) ) {
 			foreach ( $modules as $module_slug => $value ) {
 				$className = \Addons\Helper::capitalizedSlug( $module_slug, true );
-				$classFQN     = "\\Addons\\{$className}\\{$className}";
+				$classFQN  = "\\Addons\\{$className}\\{$className}";
 
 				// WooCommerce
 				if ( (string) $module_slug === 'woocommerce' && ! \Addons\Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {
@@ -131,32 +131,17 @@ final class Addons {
 			$version = date( 'YmdHis', current_time( 'U', 0 ) );
 		}
 
-		wp_enqueue_style( 'wp-color-picker' );
-		wp_enqueue_script( 'wp-color-picker' );
-
-		wp_enqueue_style( 'admin-addons-style', ADDONS_URL . 'assets/css/admin_addons.css', [], $version );
-		wp_enqueue_script(
-			'admin-addons',
-			ADDONS_URL . 'assets/js/admin_addons2.js',
-			[ 'jquery', 'wp-color-picker' ],
-			$version,
-			true
-		);
-		wp_script_add_data( 'admin-addons', 'addon', [ 'module', 'defer' ] );
-
-		// options_enqueue_assets
+		// addon page settings
 		$allowed_pages = 'toplevel_page_addon-settings';
 		if ( $allowed_pages === $hook ) {
-			if ( ! wp_style_is( 'select2-style' ) ) {
-				wp_enqueue_style( 'select2-style', ADDONS_URL . 'assets/css/select2.min.css', [], $version );
-			}
 
-			if ( ! wp_script_is( 'select2', 'registered' ) ) {
-				wp_register_script( 'select2', ADDONS_URL . 'assets/js/select2.full.min.js', [ 'jquery' ], $version, true );
-			}
+			wp_enqueue_style( 'wp-color-picker' );
+			wp_enqueue_script( 'wp-color-picker' );
 
-			wp_enqueue_script( 'select2-addons', ADDONS_URL . 'assets/js/select2.js', [ 'select2' ], $version, true );
-			wp_script_add_data( 'select2-addons', 'addon', [ 'module', 'defer' ] );
+			wp_enqueue_style( '_vendor-css', ADDONS_URL . 'assets/css/_vendor.css', [], $version );
+			wp_enqueue_style( 'addon-css', ADDONS_URL . 'assets/css/addon-css.css', [ '_vendor-css' ], $version );
+			wp_enqueue_script( 'addon-js', ADDONS_URL . 'assets/js/addon.js', [ 'jquery', 'wp-color-picker' ], $version, true );
+			wp_script_add_data( 'addon-js', 'addon', [ 'module', 'defer' ] );
 
 			$codemirror_settings = [
 				'codemirror_css'  => wp_enqueue_code_editor( [ 'type' => 'text/css' ] ),

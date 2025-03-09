@@ -1,2 +1,9 @@
 @use '../variables' as vars;
+@use '../functions' as func;
 @use '../mixins' as mixin;
+
+.site-footer {}
+
+#footer-credit {}
+
+#footer-columns {}

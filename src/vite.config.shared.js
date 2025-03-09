@@ -1,10 +1,8 @@
-import * as path from 'path';
 import autoprefixer from 'autoprefixer';
 import viteImagemin from '@vheemstra/vite-plugin-imagemin';
 import imageminMozjpeg from 'imagemin-mozjpeg';
 import imageminPngquant from 'imagemin-pngquant';
-import imageminWebp from 'imagemin-webp';
-import imageminSVGO from 'imagemin-svgo';
+//import imageminWebp from 'imagemin-webp';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -13,26 +11,21 @@ export const sharedConfig = {
     plugins: [
         viteImagemin({
             plugins: {
-                jpg: imageminMozjpeg({
-                    quality: 80,
-                }),
-                png: imageminPngquant({
-                    strip: true,
-                    quality: [ 0.7, 0.9 ],
-                }),
-                svg: imageminSVGO(),
+                jpg: imageminMozjpeg({ quality: 80 }),
+                png: imageminPngquant({ strip: true, quality: [ 0.8, 0.9 ] }),
             },
-            makeWebp: {
-                plugins: {
-                    jpg: imageminWebp(),
-                    png: imageminWebp(),
-                },
-            },
+            // makeWebp: {
+            //     plugins: {
+            //         jpg: imageminWebp({ quality: 80 }),
+            //         png: imageminWebp({ quality: 80 }),
+            //     },
+            // },
         }),
     ],
     css: {
         preprocessorOptions: {
             scss: {
+                sourceMap: !isProduction,
                 api: 'modern-compiler',
                 quietDeps: true,
             },
@@ -59,6 +52,7 @@ export const sharedConfig = {
             compress: {
                 drop_console: true,
                 toplevel: true,
+                passes: 2,
             },
             format: {
                 comments: false,

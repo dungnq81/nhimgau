@@ -70,8 +70,8 @@ final class Recaptcha {
 			GOOGLE_RECAPTCHA_V2_SECRET_KEY
 		) {
 			// Enqueue the script
-			wp_enqueue_script( 'recaptcha', $this->get_api_url( $version, $render ), [], null, true );
-			wp_script_add_data( 'recaptcha', 'addon', [ 'async', 'defer' ] );
+			wp_enqueue_script( 'recaptcha-js', $this->get_api_url( $version, $render ), [], null, true );
+			wp_script_add_data( 'recaptcha-js', 'addon', [ 'async', 'defer' ] );
 		}
 	}
 }

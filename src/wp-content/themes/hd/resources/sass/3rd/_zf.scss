@@ -4,7 +4,7 @@
 // Global styles
 @include foundation-global-styles;
 // @include foundation-forms;
-// @include foundation-typography;
+@include foundation-typography;
 
 // Grids (choose one)
 // @include foundation-grid;
@@ -40,7 +40,7 @@
 
 // Menu-based containers
 @include foundation-menu;
-@include foundation-menu-icon;
+//@include foundation-menu-icon;
 @include foundation-accordion-menu;
 // @include foundation-drilldown-menu;
 @include foundation-dropdown-menu;

@@ -118,7 +118,7 @@ $breakpoints: (
     'medium': map.get(vars.$mq-breakpoints, md),
     'large': map.get(vars.$mq-breakpoints, lg),
     'xlarge': map.get(vars.$mq-breakpoints, xl),
-    'xxlarge': map.get(vars.$mq-breakpoints, 2xl),
+    'xxlarge': map.get(vars.$mq-breakpoints, xxl),
 );
 $breakpoints-hidpi: (
     'hidpi-1': 1,

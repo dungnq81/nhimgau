@@ -89,8 +89,8 @@ final class WooCommerce {
 	 * @return void
 	 */
 	public function enqueue_scripts(): void {
-		wp_enqueue_style( 'hdwc-style', ASSETS_URL . 'css/woocommerce.css', [ 'app-style' ], THEME_VERSION );
-		wp_enqueue_script( 'hdwc', ASSETS_URL . 'js/woocommerce2.js', [ 'app' ], THEME_VERSION, true );
+		wp_enqueue_style( 'hdwc-css', ASSETS_URL . 'css/woocommerce-css.css', [ 'index-css' ], THEME_VERSION );
+		wp_enqueue_script( 'hdwc', ASSETS_URL . 'js/woocommerce.js', [ 'index' ], THEME_VERSION, true );
 		wp_script_add_data( 'hdwc', 'extra', [ 'module', 'defer' ] );
 	}
 

@@ -88,15 +88,10 @@ final class Theme {
 			'script',
 		] );
 
-		add_theme_support( 'customize-selective-refresh-widgets' );
 		add_theme_support( 'align-wide' );
 		add_theme_support( 'wp-block-styles' );
-
-		/** This theme styles the visual editor to resemble the theme style. */
-		add_editor_style();
-
-		/** Remove Template Editor support until WP 5.9 since more Theme Blocks are going to be introduced. */
-		remove_theme_support( 'block-templates' );
+		add_theme_support( 'responsive-embeds' );
+		add_theme_support( 'editor-styles' );
 
 		/** Enable excerpt to page, page-attributes to post */
 		add_post_type_support( 'page', [ 'excerpt' ] );
@@ -185,14 +180,14 @@ final class Theme {
 		}
 
 		/** Stylesheet */
-		wp_enqueue_style( 'fonts-style', ASSETS_URL . 'css/fonts.css', [], $version );
-		wp_enqueue_style( 'app-style', ASSETS_URL . 'css/app.css', [], $version );
+		wp_enqueue_style( 'vendor-css', ASSETS_URL . 'css/_vendor.css', [], $version );
+		wp_enqueue_style( 'index-css', ASSETS_URL . 'css/index-css.css', [ 'vendor-css' ], $version );
 
 		/** Scripts */
 		wp_enqueue_script( 'modulepreload', ASSETS_URL . 'js/modulepreload-polyfill.js', [], $version, true );
-		wp_enqueue_script( 'app', ASSETS_URL . 'js/app2.js', [ 'jquery-core' ], $version, true );
+		wp_enqueue_script( 'index', ASSETS_URL . 'js/index.js', [ 'jquery-core' ], $version, true );
 		wp_script_add_data( 'modulepreload', 'module', true );
-		wp_script_add_data( 'app', 'extra', [ 'module', 'defer' ] );
+		wp_script_add_data( 'index', 'extra', [ 'module', 'defer' ] );
 
 		wp_add_inline_script( 'jquery-core', 'Object.assign(window, { $: jQuery, jQuery });', 'after' );
 
@@ -202,12 +197,12 @@ final class Theme {
 		$recaptcha_v3_site_key = $recaptcha_options['recaptcha_v3_site_key'] ?? '';
 
 		$l10n = [
-			'_ajaxUrl'     => esc_js( admin_url( 'admin-ajax.php', 'relative' ) ),
-			'_baseUrl'     => esc_js( untrailingslashit( site_url() ) . '/' ),
-			'_themeUrl'    => esc_js( THEME_URL ),
-			'_csrf_token' => wp_create_nonce( 'wp_csrf_token' ),
-			'_wpnonce'    => wp_create_nonce( 'wp_rest' ),
-			'_lang'        => esc_js( Helper::currentLanguage() ),
+			'_ajaxUrl'    => esc_js( admin_url( 'admin-ajax.php', 'relative' ) ),
+			'_baseUrl'    => esc_js( untrailingslashit( site_url() ) . '/' ),
+			'_themeUrl'   => esc_js( THEME_URL ),
+			'_csrfToken' => wp_create_nonce( 'wp_csrf_token' ),
+			'_restToken'    => wp_create_nonce( 'wp_rest' ),
+			'_lang'       => esc_js( Helper::currentLanguage() ),
 		];
 
 		if ( $recaptcha_v2_site_key ) {
@@ -288,7 +283,7 @@ final class Theme {
 	 * @return void
 	 */
 	public function login_enqueue_script(): void {
-		wp_enqueue_style( 'login-style', THEME_URL . 'assets/css/admin.css', [], THEME_VERSION );
+		wp_enqueue_style( 'login-css', THEME_URL . 'assets/css/admin-css.css', [], THEME_VERSION );
 		wp_enqueue_script( 'login', THEME_URL . 'assets/js/login.js', [ 'jquery' ], THEME_VERSION, true );
 		wp_script_add_data( 'login', 'module', true );
 
