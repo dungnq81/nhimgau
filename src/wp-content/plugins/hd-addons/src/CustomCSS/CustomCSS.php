@@ -1,10 +1,10 @@
 <?php
 
-namespace Addons\CustomCSS;
+namespace Addons\CustomCss;
 
 \defined( 'ABSPATH' ) || exit;
 
-final class CustomCSS {
+final class CustomCss {
 
 	// ------------------------------------------------------
 

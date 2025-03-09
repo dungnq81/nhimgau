@@ -32,6 +32,6 @@ class LazyLoad_Iframes extends Abstract_LazyLoad {
 	 * @return string
 	 */
 	public function add_lazyload_class( $element ): string {
-		return str_replace( '<iframe', '<iframe class="lazy"', $element );
+		return preg_replace( '/<iframe/i', '<iframe class="lazy"', $element );
 	}
 }

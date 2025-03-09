@@ -30,11 +30,13 @@ final class LazyLoad {
 			'the_content',
 			'widget_text',
 			'widget_block_content',
-			'wp_get_attachment_image',
+			//'wp_get_attachment_image',
 			'post_thumbnail_html',
 			'get_avatar',
 			'woocommerce_product_get_image',
 			'woocommerce_single_product_image_thumbnail_html',
+			'hd_picture_html_filter',
+			'hd_icon_image_filter',
 		],
 	];
 
@@ -58,7 +60,7 @@ final class LazyLoad {
 		}
 
 		// Disable the native lazy-loading.
-		add_filter( 'wp_lazy_loading_enabled', '__return_false' );
+		// add_filter( 'wp_lazy_loading_enabled', '__return_false' );
 
 		$this->lazyload_iframes = new LazyLoad_Iframes();
 		$this->lazyload_videos  = new LazyLoad_Videos();

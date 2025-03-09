@@ -42,8 +42,8 @@ export default {
         outDir: `${assets}`,
         rollupOptions: {
             input: [
-                ...sassFiles.map((file) => path.resolve(`${resources}/sass/${file}.scss`)),
-                ...jsFiles.map((file) => path.resolve(`${resources}/js/${file}.js`)),
+                ...sassFiles.map((file) => `${resources}/sass/${file}.scss`),
+                ...jsFiles.map((file) => `${resources}/js/${file}.js`),
             ],
             output: {
                 entryFileNames: `js/[name].js`,

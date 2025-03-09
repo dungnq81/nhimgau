@@ -7,7 +7,7 @@ $lazyload_mobile  = $lazyload_mobile ?? 0;
 $lazyload_exclude = $lazyload_exclude ?? '';
 
 ?>
-<div class="cell section section-checkbox">
+<div class="cell section section-checkbox !sm-12">
 	<label class="heading" for="lazyload"><?php _e( 'Lazy-Load Media', ADDONS_TEXT_DOMAIN ); ?></label>
 	<div class="desc"><?php _e( 'Speed up your web application by deferring the loading of below-the-fold images, animated SVGs, videos, and iframes until they enter the viewport.', ADDONS_TEXT_DOMAIN ) ?></div>
 	<div class="option">
@@ -17,7 +17,7 @@ $lazyload_exclude = $lazyload_exclude ?? '';
 		<div class="explain"><?php _e( 'Check to activate', ADDONS_TEXT_DOMAIN ); ?></div>
 	</div>
 </div>
-<div class="section section-checkbox">
+<div class="section section-checkbox !hidden">
 	<label class="heading" for="lazyload_mobile"><?php _e( 'Lazy-Load on Mobile', ADDONS_TEXT_DOMAIN ); ?></label>
 	<div class="option">
 		<div class="controls">
@@ -26,7 +26,7 @@ $lazyload_exclude = $lazyload_exclude ?? '';
 		<div class="explain"><?php _e( 'Check to activate', ADDONS_TEXT_DOMAIN ); ?></div>
 	</div>
 </div>
-<div class="section section-textarea !sm-1">
+<div class="section section-textarea !sm-12">
 	<label class="heading" for="lazyload_exclude"><?php _e( 'Excluded images or iframes', ADDONS_TEXT_DOMAIN ) ?></label>
 	<div class="desc">'The keywords include <b>filename</b>, <b>CSS classes</b> of images or <b>iframe</b> that will be excluded.</div>
 	<div class="option">

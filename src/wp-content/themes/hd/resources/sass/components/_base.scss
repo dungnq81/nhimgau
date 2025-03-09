@@ -1,0 +1,796 @@
+@use 'sass:map';
+@use 'sass:color';
+
+@use '../variables' as vars;
+@use '../functions' as func;
+@use '../mixins' as mixin;
+
+:root {
+    --body-color: #{vars.$body-color};
+    --body-bg: #{vars.$body-bg};
+
+    --link-color: #{vars.$link-color};
+    --link-hover-color: #{vars.$link-hover-color};
+
+    --gutter: #{map.get(vars.$spacers, 'gutter')};
+    --gutter-xs: #{map.get(vars.$spacers, 'gutter-xs')};
+    --gap: #{map.get(vars.$spacers, 'gap')};
+    --gap-xs: #{map.get(vars.$spacers, 'gap-xs')};
+
+    --line-height-header: #{vars.$line-height-header};
+    --line-height-paragraph: #{vars.$line-height-paragraph};
+
+    --Primary-01: #{vars.$Primary-01};
+    --Primary-02: #{vars.$Primary-02};
+    --Primary-03: #{vars.$Primary-03};
+    --Primary-04: #{vars.$Primary-04};
+
+    --img-path: '#{vars.$img-path}';
+    --font-path: '#{vars.$font-path}';
+}
+
+//
+// resets.
+
+@include mixin.mq-min(lg) {
+    ::-webkit-scrollbar-track {
+        background-color: vars.$gray-200;
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: vars.$gray-500;
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar {
+        @include mixin.box(vars.$scrollbar-w, vars.$scrollbar-h);
+    }
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    color: vars.$body-color;
+    background: vars.$body-bg;
+    font-size: vars.$body-size;
+    font-family: vars.$body-font;
+    font-optical-sizing: auto;
+    line-height: vars.$line-height-global;
+    /*scroll-behavior: smooth;*/
+}
+
+:is(input, select, textarea, button, main) {
+    &:focus {
+        outline: none;
+    }
+}
+
+:is(a, button, [role='button'], input, select, textarea) {
+    transition: 0.3s;
+}
+
+:is(a, area, button, [role='button'], input, label, select, summary, textarea) {
+    touch-action: manipulation;
+}
+
+:is([type='submit'], [type='reset'], [type='button']) {
+    cursor: pointer;
+}
+
+*:disabled {
+    cursor: not-allowed;
+    opacity: 0.9;
+}
+
+* > p {
+    margin-top: 0;
+
+    &:not(:last-child) {
+        margin-bottom: vars.$paragraph-margin-bottom;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+code, kbd, pre, samp {
+    font-family: vars.$monospace-font;
+    font-size: 1rem;
+}
+
+sup {
+    line-height: 1;
+    top: -4px;
+    color: vars.$alert;
+    font-size: 14px;
+    padding-left: 2px;
+}
+
+.cite-block::before, cite::before {
+    content: '';
+}
+
+:is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6) {
+    font-family: vars.$header-font;
+    font-optical-sizing: auto;
+    line-height: vars.$line-height-header;
+    margin-bottom: vars.$header-margin-bottom;
+    margin-top: 0;
+    font-weight: 600;
+
+    a {
+        text-decoration: none;
+        display: inline-block;
+        color: currentColor;
+    }
+
+    p {
+        color: currentColor;
+        line-height: inherit;
+        margin-bottom: 0;
+    }
+}
+
+.body-font {
+    font-family: vars.$body-font;
+    font-optical-sizing: auto;
+}
+
+.heading-font {
+    font-family: vars.$header-font;
+    font-optical-sizing: auto;
+}
+
+:is(span, label) > a:hover {
+    text-decoration: none !important;
+}
+
+a {
+    text-decoration: none;
+    display: inline-block;
+    color: vars.$link-color;
+
+    &:hover {
+        color: vars.$link-hover-color;
+        text-decoration: none;
+    }
+
+    :where(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6) {
+        color: currentColor;
+    }
+}
+
+img {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100%;
+    height: auto;
+    -ms-interpolation-mode: bicubic;
+
+    &:not([src]) {
+        visibility: hidden;
+    }
+
+    &:where(.aligncenter, .align-center) {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+figure {
+    max-width: 100% !important;
+
+    &:where(.wp-caption, .caption) {
+        display: block;
+
+        img {
+            display: inline-block;
+        }
+
+        &:where(.wp-caption-text, .caption-text) {
+            padding-top: 10px;
+            color: vars.$gray-700;
+        }
+
+        &:where(.aligncenter, .align-center) {
+            margin-bottom: vars.$global-margin;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+    }
+}
+
+:is(.screen-reader-text, .submenu-toggle-text, .hidden-text, .sr-only) {
+    @include mixin.hidden-text();
+}
+
+:is(.clearfix, .clear) {
+    @include mixin.clearfix();
+}
+
+[data-fa]::before {
+    content: attr(data-fa);
+    font-family: vars.$awesome-font;
+}
+
+[data-fa-after]::after {
+    content: attr(data-fa-after);
+    font-family: vars.$awesome-font;
+}
+
+//
+// show
+
+.md\:show {
+    @include mixin.mq-max(md) {
+        display: none;
+    }
+}
+
+.\!md\:show {
+    @include mixin.mq-max(md) {
+        display: none !important;
+    }
+}
+
+.lg\:show {
+    @include mixin.mq-max(lg) {
+        display: none;
+    }
+}
+
+.\!lg\:show {
+    @include mixin.mq-max(lg) {
+        display: none !important;
+    }
+}
+
+//
+// hide
+
+.hidden {
+    display: none;
+}
+
+.\!hidden {
+    display: none !important;
+}
+
+.md\:hidden {
+    @include mixin.mq-min(md) {
+        display: none;
+    }
+}
+
+.\!md\:hidden {
+    @include mixin.mq-min(md) {
+        display: none !important;
+    }
+}
+
+.lg\:hidden {
+    @include mixin.mq-min(lg) {
+        display: none;
+    }
+}
+
+.\!lg\:hidden {
+    @include mixin.mq-min(lg) {
+        display: none !important;
+    }
+}
+
+.xl\:hidden {
+    @include mixin.mq-min(xl) {
+        display: none;
+    }
+}
+
+.\!xl\:hidden {
+    @include mixin.mq-min(xl) {
+        display: none !important;
+    }
+}
+
+//
+// flex.
+
+.flex {
+    display: flex;
+}
+
+.\!flex {
+    display: flex !important;
+}
+
+.flex-x {
+    @include mixin.flex-x(false);
+
+    & > :where(.auto, .shrink) {
+        width: auto;
+    }
+
+    @include mixin.mq-min(md) {
+        & > :where(.md-auto, .md-shrink) {
+            width: auto;
+        }
+    }
+
+    @include mixin.mq-min(lg) {
+        & > :where(.lg-auto, .lg-shrink) {
+            width: auto;
+        }
+    }
+}
+
+.flex-y {
+    @include mixin.flex-y(false);
+
+    & > .cell {
+        height: auto;
+        max-height: none;
+    }
+}
+
+.flex-padding-x {
+    @include mixin.flex-padding-x(vars.$gutter-xs, vars.$gutter);
+}
+
+.flex-padding-y {
+    @include mixin.flex-padding-y(vars.$gutter-xs, vars.$gutter);
+}
+
+//
+// grid.
+
+.grid {
+    display: grid;
+}
+
+.\!grid {
+    display: grid !important;
+}
+
+//
+// other.
+
+.block {
+    display: block;
+}
+
+.\!block {
+    display: block !important;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.\!inline-block {
+    display: inline-block !important;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.gap-10 {
+    @include mixin.gap(10);
+}
+
+.gap-15 {
+    @include mixin.gap(15);
+}
+
+.gap-20 {
+    @include mixin.gap(20);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.relative {
+    position: relative;
+}
+
+//
+// layout container.
+
+.cell {
+    @include mixin.cell();
+
+    &.auto {
+        @include mixin.flex-auto();
+    }
+
+    &.stretch {
+        width: 100%;
+    }
+
+    @include mixin.mq-min(md) {
+        &.md-auto {
+            @include mixin.flex-auto();
+        }
+
+        &.md-stretch {
+            width: 100%;
+        }
+    }
+
+    @include mixin.mq-min(lg) {
+        &.lg-auto {
+            @include mixin.flex-auto();
+        }
+
+        &.lg-stretch {
+            width: 100%;
+        }
+    }
+}
+
+:is(.grid-gap, .flex-gap, .gap) {
+    @include mixin.media-gap(vars.$gap-xs, vars.$gap, false);
+}
+
+:is(.container, .flex-container, .grid-container) {
+    @include mixin.container(vars.$gutter-xs, vars.$gutter, false);
+
+    &:not(.full) {
+        &.xxl {
+            @include mixin.mq-min(xxl) {
+                max-width: map.get(vars.$container-max-widths, xxl);
+            }
+        }
+    }
+
+    &.full {
+        /*max-width: 100%;*/
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+//
+// layout.
+
+@for $i from 1 through vars.$grid-columns-max {
+    :is(.flex, .\!flex) {
+        &:not(.gap):not(.flex-gap) {
+            &.sm-up-#{$i} > .cell {
+                @include mixin.flex-self($i, 1, false);
+            }
+
+            & > .cell.sm-#{$i} {
+                @include mixin.flex-basis($i, false);
+            }
+
+            & > .cell.\!sm-#{$i} {
+                @include mixin.flex-basis($i, false, true);
+            }
+        }
+
+        &:where(.gap, .flex-gap) {
+            &.sm-up-#{$i} > .cell {
+                @include mixin.flex-self($i, 1, vars.$gap-xs);
+            }
+
+            & > .cell.sm-#{$i} {
+                @include mixin.flex-basis($i, vars.$gap-xs);
+            }
+
+            & > .cell.\!sm-#{$i} {
+                @include mixin.flex-basis($i, vars.$gap-xs, true);
+            }
+        }
+    }
+}
+
+@include mixin.mq-min(md) {
+    @for $i from 1 through vars.$grid-columns-max {
+        :is(.flex, .\!flex) {
+            &:not(.gap):not(.flex-gap) {
+                &.md-up-#{$i} > .cell {
+                    @include mixin.flex-self($i, 1, false);
+                }
+
+                & > .cell.md-#{$i} {
+                    @include mixin.flex-basis($i, false);
+                }
+
+                & > .cell.\!md-#{$i} {
+                    @include mixin.flex-basis($i, false, true);
+                }
+            }
+
+            &:where(.gap, .flex-gap) {
+                &.md-up-#{$i} > .cell {
+                    @include mixin.flex-self($i, 1, vars.$gap);
+                }
+
+                & > .cell.md-#{$i} {
+                    @include mixin.flex-basis($i, vars.$gap);
+                }
+
+                & > .cell.\!md-#{$i} {
+                    @include mixin.flex-basis($i, vars.$gap, true);
+                }
+            }
+        }
+    }
+}
+
+@include mixin.mq-min(lg) {
+    @for $i from 1 through vars.$grid-columns-max {
+        :is(.flex, .\!flex) {
+            &:not(.gap):not(.flex-gap) {
+                &.lg-up-#{$i} > .cell {
+                    @include mixin.flex-self($i, 1, false);
+                }
+
+                & > .cell.lg-#{$i} {
+                    @include mixin.flex-basis($i, false);
+                }
+
+                & > .cell.\!lg-#{$i} {
+                    @include mixin.flex-basis($i, false, true);
+                }
+            }
+
+            &:where(.gap, .flex-gap) {
+                &.lg-up-#{$i} > .cell {
+                    @include mixin.flex-self($i, 1, vars.$gap);
+                }
+
+                & > .cell.lg-#{$i} {
+                    @include mixin.flex-basis($i, vars.$gap);
+                }
+
+                & > .cell.\!lg-#{$i} {
+                    @include mixin.flex-basis($i, vars.$gap, true);
+                }
+            }
+        }
+    }
+}
+
+//
+// responsive viewport.
+
+.overlay {
+    position: relative;
+
+    :where(.bg-overlay, .link-overlay) {
+        background: transparent;
+        user-select: none;
+        @include mixin.absolute-full();
+    }
+}
+
+.cover {
+    display: block;
+    overflow: hidden;
+    position: relative;
+
+    :where(.bg-cover, .link-cover) {
+        background: transparent;
+        user-select: none;
+        @include mixin.absolute-full();
+    }
+
+    &.after-overlay {
+        &::after {
+            background: transparent;
+            content: '';
+            user-select: none;
+            z-index: 1;
+            @include mixin.absolute-full();
+        }
+
+        & > img {
+            width: 100%;
+            display: block;
+            user-select: none;
+        }
+    }
+}
+
+.res {
+    @include mixin.responsive-wrapper();
+
+    &.auto {
+        & > img {
+            height: auto !important;
+            width: auto !important;
+            object-fit: contain;
+            object-position: center;
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+
+    &.scale {
+        @include mixin.responsive-scale();
+    }
+
+    :where(iframe, embed, object, video) {
+        border: 0;
+        width: 100%;
+        height: 100%;
+        @include mixin.absolute-full();
+    }
+
+    &.after-overlay {
+        &::after {
+            background: transparent;
+            content: '';
+            user-select: none;
+            z-index: 1;
+            @include mixin.absolute-full();
+        }
+
+        & > img {
+            user-select: none;
+        }
+    }
+}
+
+//
+// aspect ratio.
+
+:is(.ar-1-1, .ar\[1-1\]) {
+    @include mixin.responsive-ratio(1, 1);
+}
+
+:is(.ar-3-2, .ar\[3-2\]) {
+    @include mixin.responsive-ratio(3, 2);
+}
+
+:is(.ar-4-3, .ar\[4-3\]) {
+    @include mixin.responsive-ratio(4, 3);
+}
+
+:is(.ar-16-9, .ar\[16-9\]) {
+    @include mixin.responsive-ratio(16, 9);
+}
+
+:is(.ar-21-9, .ar\[21-9\]) {
+    @include mixin.responsive-ratio(21, 9);
+}
+
+:is(.ar-2-1, .ar\[2-1\]) {
+    @include mixin.responsive-ratio(2, 1);
+}
+
+//
+// gutter.
+
+$count: 0;
+$count_max: 50;
+$step: 10;
+
+@while $count <= $count_max {
+    :is(.mt-#{$count}, .mt\[#{$count}px\]) {
+        margin-top: func.fs($count);
+    }
+
+    :is(.\!mt-#{$count}, .\!mt\[#{$count}px\]) {
+        margin-top: func.fs($count) !important;
+    }
+
+    :is(.mb-#{$count}, .mb\[#{$count}px\]) {
+        margin-bottom: func.fs($count);
+    }
+
+    :is(.\!mb-#{$count}, .\!mb\[#{$count}px\]) {
+        margin-bottom: func.fs($count) !important;
+    }
+
+    :is(.pt-#{$count}, .pt\[#{$count}px\]) {
+        padding-top: func.fs($count);
+    }
+
+    :is(.\!pt-#{$count}, .\!pt\[#{$count}px\]) {
+        padding-top: func.fs($count) !important;
+    }
+
+    :is(.pb-#{$count}, .pb\[#{$count}px\]) {
+        padding-bottom: func.fs($count);
+    }
+
+    :is(.\!pb-#{$count}, .\!pb\[#{$count}px\]) {
+        padding-bottom: func.fs($count) !important;
+    }
+
+    $count: $count + $step;
+}
+
+//
+// font-size.
+
+$fs: 16;
+$fs_max: 20;
+$step: 1;
+
+@while $fs <= $fs_max {
+    :is(.fs-#{$fs}, .fs\[#{$fs}px\]) {
+        font-size: func.fs($fs);
+    }
+
+    :is(.\!fs-#{$fs}, .\!fs\[#{$fs}px\]) {
+        font-size: func.fs($fs) !important;
+    }
+
+    $fs: $fs + $step;
+}
+
+//
+// font-weight.
+
+$fw: 400;
+$fw_max: 700;
+$step: 100;
+
+@while $fw <= $fw_max {
+    :is(.fw-#{$fw}, .fw\[#{$fw}\]) {
+        font-weight: $fw;
+    }
+
+    :is(.\!fw-#{$fw}, .\!fw\[#{$fw}\]) {
+        font-weight: $fw !important;
+    }
+
+    $fw: $fw + $step;
+}
+
+//
+// gallery.
+
+[id^='gallery-'] {
+    $gap: 10;
+    @include mixin.flex-x(true);
+    @include mixin.gap($gap);
+
+    & > .gallery-item {
+        @include mixin.cell();
+
+        //a {
+        //    @include responsive-wrapper();
+        //    @include responsive-ratio(4, 3);
+        //}
+    }
+
+    @for $i from 1 through 9 {
+        &.gallery-columns-#{$i} {
+            & > .gallery-item {
+                @include mixin.flex-self($i, 1, $gap);
+            }
+        }
+    }
+}

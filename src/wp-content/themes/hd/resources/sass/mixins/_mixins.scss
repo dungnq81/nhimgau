@@ -1,0 +1,742 @@
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'sass:map';
+@use 'sass:color';
+@use 'sass:string';
+
+@use '../functions' as func;
+@use '../variables' as vars;
+
+@mixin color-scheme($name) {
+    @media (prefers-color-scheme: #{$name}) {
+        @content;
+    }
+}
+
+@mixin mq-max-width($width: vars.$md) {
+    $width_value: func.fs($width);
+    @media only screen and (max-width: #{$width_value}) {
+        @content;
+    }
+}
+
+@mixin mq-min-width($width: vars.$xl) {
+    $width_value: func.fs($width);
+    @media only screen and (min-width: #{$width_value}) {
+        @content;
+    }
+}
+
+@mixin mq($breakpoint, $type: min) {
+    $breakpoint-value: func.fs(func.get-breakpoint($breakpoint, vars.$mq-breakpoints, 640px)); // Fallback
+    @if $breakpoint-value {
+        @if $type == max {
+            $breakpoint-value: #{$breakpoint-value - func.fs(0.02)};
+        }
+        @media only screen and (#{$type}-width: $breakpoint-value) {
+            @content;
+        }
+    } @else {
+        @warn 'Invalid breakpoint: `#{$breakpoint}`. Using fallback.';
+    }
+}
+
+@mixin mq-min($breakpoint: md) {
+    @include mq($breakpoint, min) {
+        @content;
+    }
+}
+
+@mixin mq-max($breakpoint: md) {
+    @include mq($breakpoint, max) {
+        @content;
+    }
+}
+
+@mixin box($width: 250, $height: $width, $border_radius: false) {
+    & {
+        width: func.fs($width);
+        height: func.fs($height);
+
+        @if $border_radius != false {
+            border-radius: func.fs($border_radius);
+        }
+    }
+}
+
+@mixin media-box($m: false, $t: false, $d: false, $border_radius: false) {
+    @if $m != false {
+        @include box($m);
+    }
+    @if $t != false {
+        @include mq-min(md) {
+            @include box($t);
+        }
+    }
+    @if $d != false {
+        @include mq-min(lg) {
+            @include box($d);
+        }
+    }
+
+    @if $border_radius != false {
+        & {
+            border-radius: func.fs($border_radius);
+        }
+    }
+}
+
+@mixin media-css($css_property: font-size, $m: vars.$body-size, $t: false, $d: false) {
+    & {
+        @if $m != false {
+            #{$css_property}: func.fs($m);
+        }
+        @if $t != false {
+            @include mq-min(md) {
+                #{$css_property}: func.fs($t);
+            }
+        }
+        @if $d != false {
+            @include mq-min(lg) {
+                #{$css_property}: func.fs($d);
+            }
+        }
+    }
+}
+
+@mixin media-fs($m: vars.$body-size, $t: false, $d: false) {
+    @include media-css(font-size, $m, $t, $d);
+}
+
+// left, right, top, bottom
+@mixin media-padding($direction: null, $m: 20, $t: false, $d: false) {
+    @if $direction == null {
+        @include media-css(padding, $m, $t, $d);
+    } @else {
+        @include media-css(padding-#{$direction}, $m, $t, $d);
+    }
+}
+
+@mixin media-pt($m: 20, $t: false, $d: false) {
+    @include media-padding(top, $m, $t, $d);
+}
+
+@mixin media-pb($m: 20, $t: false, $d: false) {
+    @include media-padding(bottom, $m, $t, $d);
+}
+
+@mixin media-pl($m: 20, $t: false, $d: false) {
+    @include media-padding(left, $m, $t, $d);
+}
+
+@mixin media-pr($m: 20, $t: false, $d: false) {
+    @include media-padding(right, $m, $t, $d);
+}
+
+// left, right, top, bottom
+@mixin media-margin($direction: null, $m: 20, $t: false, $d: false) {
+    @if $direction == null {
+        @include media-css(margin, $m, $t, $d);
+    } @else {
+        @include media-css(margin-#{$direction}, $m, $t, $d);
+    }
+}
+
+@mixin media-mt($m: 20, $t: false, $d: false) {
+    @include media-margin(top, $m, $t, $d);
+}
+
+@mixin media-mb($m: 20, $t: false, $d: false) {
+    @include media-margin(bottom, $m, $t, $d);
+}
+
+@mixin media-ml($m: 20, $t: false, $d: false) {
+    @include media-margin(left, $m, $t, $d);
+}
+
+@mixin media-mr($m: 20, $t: false, $d: false) {
+    @include media-margin(right, $m, $t, $d);
+}
+
+@mixin gap($row: 20, $col: $row) {
+    & {
+        @if $row == $col and $row != false {
+            grid-gap: func.fs($row);
+            gap: func.fs($row);
+        } @else if $row != $col and $row != false and $col != false {
+            grid-gap: func.fs($row) func.fs($col);
+            gap: func.fs($row) func.fs($col);
+        }
+    }
+}
+
+@mixin media-gap($m: 20, $t: false, $d: false) {
+    @include gap($m);
+
+    @if $t != false {
+        @include mq-min(md) {
+            @include gap($t);
+        }
+    }
+    @if $d != false {
+        @include mq-min(lg) {
+            @include gap($d);
+        }
+    }
+}
+
+@mixin fs-heading($heading: h1) {
+    & {
+        font-size: func.fs(map.get(vars.$font-sizes, $heading));
+        @include mq-min(md) {
+            font-size: func.fs(map.get(vars.$font-sizes-large, $heading));
+        }
+    }
+}
+
+@mixin responsive-wrapper($width: 100%) {
+    & {
+        position: relative;
+        display: block;
+        overflow: hidden;
+        transition: all 0.3s ease-in-out;
+
+        @if $width != false {
+            width: func.fs($width);
+        }
+
+        & > img:first-child {
+            display: block;
+            @include absolute-center;
+        }
+
+        &:not(.auto) {
+            & > img:first-child {
+                height: 100% !important;
+                width: 100%;
+                max-width: unset;
+                object-fit: cover;
+                object-position: center;
+            }
+        }
+    }
+}
+
+@mixin responsive-scale($scale: 1.06, $opacity: 1) {
+    & {
+        transform: scale(1.0001);
+        will-change: transform;
+        transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        opacity 0.3s;
+
+        &:hover {
+            transform: scale($scale);
+            opacity: $opacity;
+        }
+    }
+}
+
+@mixin reset-ratio {
+    & {
+        @supports (aspect-ratio: 1) {
+            aspect-ratio: auto;
+        }
+
+        @supports not (aspect-ratio: 1) {
+            height: auto;
+            padding-bottom: 0;
+        }
+    }
+}
+
+@mixin responsive-ratio($ratio-width: 3, $ratio-height: 2, $width_percent: 100%) {
+    $padding: func.divide($width_percent * $ratio-height, $ratio-width);
+
+    & {
+        @supports (aspect-ratio: 1) {
+            aspect-ratio: list.slash($ratio-width, $ratio-height);
+        }
+
+        @supports not (aspect-ratio: 1) {
+            height: 0;
+            padding-bottom: func.fs($padding);
+        }
+    }
+}
+
+@mixin linear-gradient($angle: 90deg, $c1: vars.$primary, $c2: vars.$secondary) {
+    & {
+        background-image: linear-gradient($angle, $c1 0%, $c2 100%);
+    }
+}
+
+@mixin gradient-text($angle: 135deg, $c1: vars.$primary, $c2: vars.$secondary) {
+    & {
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        display: inline-block;
+        @include linear-gradient($angle, $c1, $c2);
+    }
+}
+
+@mixin container($padding_m: vars.$gutter-xs, $padding: vars.$gutter, $xxl: false) {
+    & {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: map.get(vars.$container-max-widths, sm);
+
+        &:not(.full) {
+            padding-left: func.fs($padding_m);
+            padding-right: func.fs($padding_m);
+
+            // md breakpoint
+            @include mq-min(md) {
+                padding-left: func.fs($padding);
+                padding-right: func.fs($padding);
+                max-width: map.get(vars.$container-max-widths, md);
+            }
+
+            // lg breakpoint
+            @include mq-min(lg) {
+                max-width: map.get(vars.$container-max-widths, lg);
+            }
+
+            // xl breakpoint
+            @include mq-min(xl) {
+                max-width: map.get(vars.$container-max-widths, xl);
+            }
+
+            // xxl breakpoint
+            @if $xxl == true {
+                @include mq-min(xxl) {
+                    max-width: map.get(vars.$container-max-widths, xxl);
+                }
+            }
+        }
+    }
+}
+
+@mixin mx-gutter($m: vars.$gutter-xs, $t: vars.$gutter) {
+    & {
+        @if $m != false {
+            margin-left: -#{func.fs($m)};
+            margin-right: -#{func.fs($m)};
+        }
+
+        @if $t != false {
+            @include mq-min(md) {
+                @if $t == 0 {
+                    margin-left: 0;
+                    margin-right: 0;
+                } @else {
+                    margin-left: -#{func.fs($t)};
+                    margin-right: -#{func.fs($t)};
+                }
+            }
+        }
+    }
+}
+
+@mixin my-gutter($m: vars.$gutter-xs, $t: vars.$gutter) {
+    & {
+        @if $m != false {
+            margin-top: -#{func.fs($m)};
+            margin-bottom: -#{func.fs($m)};
+        }
+
+        @if $t != false {
+            @include mq-min(md) {
+                @if $t == 0 {
+                    margin-top: 0;
+                    margin-bottom: 0;
+                } @else {
+                    margin-top: -#{func.fs($t)};
+                    margin-bottom: -#{func.fs($t)};
+                }
+            }
+        }
+    }
+}
+
+@mixin px-gutter($m: vars.$gutter-xs, $t: vars.$gutter) {
+    & {
+        @if $m != false {
+            padding-left: func.fs($m);
+            padding-right: func.fs($m);
+        }
+
+        @if $t != false {
+            @include mq-min(md) {
+                padding-left: func.fs($t);
+                padding-right: func.fs($t);
+            }
+        }
+    }
+}
+
+@mixin py-gutter($m: vars.$gutter-xs, $t: vars.$gutter) {
+    & {
+        @if $m != false {
+            padding-top: func.fs($m);
+            padding-bottom: func.fs($m);
+        }
+
+        @if $t != false {
+            @include mq-min(md) {
+                padding-top: func.fs($t);
+                padding-bottom: func.fs($t);
+            }
+        }
+    }
+}
+
+@mixin line-clamp(
+    $n: 2,
+    $value_fallback: ( false, false, false ),
+    $attr_fallback: max-height
+) {
+    & {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: initial;
+
+        @supports (-webkit-line-clamp: $n) {
+            -webkit-line-clamp: $n;
+            -webkit-box-orient: vertical;
+            display: -webkit-box;
+        }
+
+        @supports not (-webkit-line-clamp: $n) {
+            $m: list.nth($value_fallback, 1);
+            $t: list.nth($value_fallback, 2);
+            $d: list.nth($value_fallback, 3);
+            @include media-css($attr_fallback, $m, $t, $d);
+        }
+    }
+}
+
+@mixin hover-color($c1: false, $c2: $c1, $text-decoration: false) {
+    & {
+        @if $c1 != false {
+            color: $c1;
+        }
+
+        &:hover {
+            @if $c2 != false {
+                color: $c2;
+            }
+            @if $text-decoration == false {
+                text-decoration: none;
+            }
+        }
+    }
+}
+
+@mixin underline($color: vars.$header-color, $height: 1px, $width: 100%, $left: 0, $bottom: 0) {
+    & {
+        position: relative;
+        display: inline-block;
+
+        &::before {
+            content: '';
+            display: inline-block;
+            position: absolute;
+            bottom: func.fs($bottom);
+            left: func.fs($left);
+            background-color: $color;
+            transform-origin: right center;
+            transform: scaleX(0);
+            transition: transform 0.2s cubic-bezier(1, 0, 0, 1);
+            @include box($width, $height);
+        }
+
+        &:hover {
+            &::before {
+                transform-origin: left center;
+                transform: scaleX(1);
+            }
+        }
+    }
+}
+
+@mixin list-reset($margin: false, $padding: false) {
+    & {
+        list-style: none;
+        @if math.is-unitless($margin) {
+            margin: func.fs($margin);
+        }
+        @if math.is-unitless($padding) {
+            padding: func.fs($padding);
+        }
+    }
+}
+
+@mixin hidden-text {
+    & {
+        border: 0;
+        clip: rect(0, 0, 0, 0);
+        clip-path: inset(50%);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+        word-wrap: normal !important;
+        white-space: nowrap;
+    }
+}
+
+/// @link http://www.sitepoint.com/centering-with-sass/
+@mixin centering-self($width: 300, $height: $width) {
+    & {
+        position: absolute;
+        top: func.subtract(50%, func.fs(func.divide($height, 2)));
+        left: func.subtract(50%, func.fs(func.divide($width, 2)));
+        @include box($width, $height);
+    }
+}
+
+@mixin fixed-center {
+    & {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@mixin vertical-center {
+    & {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+@mixin horizontal-center {
+    & {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+@mixin absolute-center {
+    & {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@mixin absolute-full {
+    & {
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+}
+
+@mixin fixed-full {
+    & {
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+    }
+}
+
+// @link https://engageinteractive.co.uk/blog/top-10-scss-mixins
+@mixin pseudo($content: '', $display: block, $pos: absolute) {
+    & {
+        content: $content;
+        display: $display;
+        position: $pos;
+    }
+}
+
+// @link https://www.developerdrive.com/10-best-sass-mixins-for-web-developers/
+@mixin arrow($direction: down, $size: 5px, $color: #0a0a0a) {
+    & {
+        width: 0;
+        height: 0;
+
+        @if $direction == left {
+            border-top: $size solid transparent;
+            border-bottom: $size solid transparent;
+            border-right: $size solid $color;
+        } @else if $direction == right {
+            border-top: $size solid transparent;
+            border-bottom: $size solid transparent;
+            border-left: $size solid $color;
+        } @else if $direction == down {
+            border-left: $size solid transparent;
+            border-right: $size solid transparent;
+            border-top: $size solid $color;
+        } @else {
+            border-left: $size solid transparent;
+            border-right: $size solid transparent;
+            border-bottom: $size solid $color;
+        }
+    }
+}
+
+// @link https://www.barrage.net/blog/technology/top-8-sass-mixins
+@mixin fluid-fs($min-width, $max-width, $min-font-size, $max-font-size) {
+    $unit1: math.unit($min-width);
+    $unit2: math.unit($max-width);
+    $unit3: math.unit($min-font-size);
+    $unit4: math.unit($max-font-size);
+
+    @if $unit1 == $unit2 and $unit1 == $unit3 and $unit1 == $unit4 {
+        & {
+            font-size: $min-font-size;
+            line-height: $min-font-size * 1.618;
+
+            @media screen and (min-width: $min-width) {
+                font-size: calc(
+                        #{$min-font-size} + #{func.strip-unit($max-font-size - $min-font-size)} *
+                        ((100vw - #{$min-width}) / #{func.strip-unit($max-width - $min-width)})
+                );
+                line-height: calc(
+                        #{$min-font-size} + #{func.strip-unit($max-font-size - $min-font-size)} * 1.618 *
+                        ((100vw - #{$min-width}) / #{func.strip-unit($max-width - $min-width)})
+                );
+            }
+
+            @media screen and (min-width: $max-width) {
+                font-size: $max-font-size;
+                line-height: $max-font-size * 1.618;
+            }
+        }
+    }
+}
+
+// @link http://nicolasgallagher.com/micro-clearfix-hack/ Micro Clearfix Hack
+// @link http://danisadesigner.com/blog/flexbox-clear-fix-pseudo-elements/ Flexbox fix
+@mixin clearfix {
+    & {
+        &::before,
+        &::after {
+            display: table;
+            content: '';
+
+            $global-flexbox: true;
+            @if $global-flexbox {
+                flex-basis: 0;
+                order: 1;
+            }
+        }
+
+        &::after {
+            clear: both;
+        }
+    }
+}
+
+@mixin hamburger($color: vars.$body-color, $color-hover: vars.$gray-900, $width: 20px, $height: 16px, $weight: 2px, $bars: 3) {
+    $shadow: ();
+    $hover-shadow: ();
+    $spacing: func.divide($height - ($weight * $bars), $bars - 1);
+
+    @if math.unit($spacing) == 'px' {
+        $spacing: math.floor($spacing);
+    }
+
+    @for $i from 2 through $bars {
+        $offset: ($weight + $spacing) * ($i - 1);
+        $shadow: list.append($shadow, 0 $offset 0 $color, comma);
+    }
+
+    & {
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        cursor: pointer;
+        @include box($width, $height);
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            background: $color;
+            box-shadow: $shadow;
+            @include box(100%, $weight);
+        }
+
+        @if $color-hover {
+            @for $i from 2 through $bars {
+                $offset: ($weight + $spacing) * ($i - 1);
+                $hover-shadow: list.append($hover-shadow, 0 $offset 0 $color-hover, comma);
+            }
+
+            &:hover::after {
+                background: $color-hover;
+                box-shadow: $hover-shadow;
+            }
+        }
+    }
+}
+
+@mixin animation-loading($size: 30px, $c1: vars.$body-color, $c2: vars.$gray-100, $border_width: 2px, $bg: rgb(0 0 0 / 5%)) {
+    & {
+        position: relative;
+
+        &::before {
+            z-index: 99998;
+            content: '';
+            background-color: $bg;
+            @include absolute-full();
+        }
+
+        &::after {
+            content: '';
+            z-index: 99999;
+            border: $border_width solid;
+            border-color: $c1 $c2 $c1 $c2; // top right bottom left
+            border-radius: 50%;
+            animation: spin 2.5s linear infinite;
+            position: absolute;
+            top: calc(50% - ($size + $border_width * 2) / 2);
+            left: calc(50% - ($size + $border_width * 2) / 2);
+            @include box($size);
+        }
+    }
+}
+
+@mixin font-face($font-family, $font-style: normal, $font-weight: 400, $file_name, $base: '../fonts') {
+    $base: string.unquote($base);
+    $version: string.unique_id();
+    @font-face {
+        font-family: string.quote($font-family);
+        font-style: $font-style;
+        font-weight: $font-weight;
+        font-display: swap;
+        src: url('#{$base}/WOFF2/#{$file_name}.woff2?v=#{$version}') format('woff2'),
+        url('#{$base}/TTF/#{$file_name}.ttf?v=#{$version}') format('truetype'),
+        url('#{$base}/OTF/#{$file_name}.otf?v=#{$version}') format('opentype');
+    }
+}
+
+/** keyframe */
+@mixin keyframes($name) {
+    @-webkit-keyframes #{$name} {
+        @content;
+    }
+    @-moz-keyframes #{$name} {
+        @content;
+    }
+    @keyframes #{$name} {
+        @content;
+    }
+}

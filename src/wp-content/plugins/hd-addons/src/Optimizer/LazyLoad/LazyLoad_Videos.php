@@ -32,6 +32,6 @@ class LazyLoad_Videos extends Abstract_LazyLoad {
 	 * @return string
 	 */
 	public function add_lazyload_class( $element ): string {
-		return str_replace( '<video', '<video class="lazy"', $element );
+		return preg_replace( '/<video/i', '<video class="lazy"', $element );
 	}
 }

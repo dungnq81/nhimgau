@@ -1,6 +1,4 @@
-import Cookies from 'js-cookie';
 
-Object.assign(window, { Cookies });
 
 jQuery(function($) {
     // wpColorPicker

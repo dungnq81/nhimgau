@@ -10,14 +10,14 @@ $limit_login_attempts   = $login_security_options['limit_login_attempts'] ?? 0;
 $illegal_users          = $login_security_options['illegal_users'] ?? '';
 
 $login_security_default = \Addons\Helper::filterSettingOptions( 'login_security', false );
-$enable_custom_login    = $login_security_default['enable_custom_login'] ?? false;
+$enable_custom_login    = $login_security_default['enable_custom_login_url'] ?? false;
 
 ?>
 <div class="container flex flex-x flex-gap sm-up-1 lg-up-2">
     <input type="hidden" name="login-security-hidden" value="1">
 
     <?php if ( $enable_custom_login ) : ?>
-    <div class="cell !lg-1 section section-text">
+    <div class="cell !lg-1 section section-text !sm-12">
         <label class="heading" for="custom_login_uri"><?php _e( 'Custom Login URL', ADDONS_TEXT_DOMAIN ); ?></label>
         <div class="desc">Attackers frequently target <b>/wp-admin</b> or <b>/wp-login.php</b> as the default login URL for WordPress. Changing it can help prevent these attacks and provide a more memorable login URL.</div>
         <div class="option">
@@ -36,7 +36,7 @@ $enable_custom_login    = $login_security_default['enable_custom_login'] ?? fals
     </div>
     <?php endif; ?>
 
-    <div class="cell section section-select">
+    <div class="cell section section-select !sm-12 !hidden">
         <label class="heading" for="login_ips_access"><?php _e( 'Allowlist IPs Login Access', ADDONS_TEXT_DOMAIN ); ?></label>
         <div class="desc">
             <p>By default, your WordPress login page is accessible from any IP address. You can use this feature to restrict login access to specific IPs or ranges of IPs to prevent brute-force attacks or malicious login attempts.</p>
@@ -59,7 +59,7 @@ $enable_custom_login    = $login_security_default['enable_custom_login'] ?? fals
         </div>
     </div>
 
-    <div class="cell section section-select">
+    <div class="cell section section-select !sm-12">
         <label class="heading" for="disable_ips_access"><?php _e( 'Blocked IPs Access', ADDONS_TEXT_DOMAIN ); ?></label>
         <div class="desc">
             <p>List of IP addresses or ranges of IPs blocked from accessing the login page.</p>

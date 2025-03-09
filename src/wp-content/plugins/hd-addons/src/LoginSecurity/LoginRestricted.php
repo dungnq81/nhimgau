@@ -13,7 +13,7 @@ final class LoginRestricted {
 
 	// --------------------------------------------------
 
-	public function __construct() {
+	public function restricted(): bool {
 		$_login_security_options = Helper::getOption( 'login_security__options' );
 		$custom_allowlist_ips    = $_login_security_options['login_ips_access'] ?? [];
 		$custom_blocked_ips      = $_login_security_options['disable_ips_access'] ?? [];
@@ -24,11 +24,7 @@ final class LoginRestricted {
 
 		$this->allowlist_ips = ! empty( $allowlist_ips_login_access ) ? array_filter( array_merge( (array) $allowlist_ips_login_access, (array) $custom_allowlist_ips ) ) : array_filter( (array) $custom_allowlist_ips );
 		$this->blocked_ips   = ! empty( $blocked_ips_login_access ) ? array_filter( array_merge( (array) $blocked_ips_login_access, (array) $custom_blocked_ips ) ) : array_filter( (array) $custom_blocked_ips );
-	}
 
-	// --------------------------------------------------
-
-	public function restricted(): bool {
 		return ! empty( $this->allowlist_ips ) || ! empty( $this->blocked_ips );
 	}
 

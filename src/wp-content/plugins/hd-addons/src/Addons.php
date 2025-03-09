@@ -40,21 +40,24 @@ final class Addons {
 			remove_action( 'admin_init', [ \Classic_Editor::class, 'register_settings' ] );
 		}
 
-		( new \Addons\GlobalSetting\GlobalSetting() );
-		( new \Addons\AspectRatio\AspectRatio() );
-		( new \Addons\Editor\Editor() );
-		( new \Addons\Optimizer\Optimizer() );
-		( new \Addons\Security\Security() );
-		( new \Addons\LoginSecurity\LoginSecurity() );
-		( new \Addons\SocialLink\SocialLink() );
-		( new \Addons\File\File() );
-		( new \Addons\BaseSlug\BaseSlug() );
-		( new \Addons\CustomSorting\CustomSorting() );
-		( new \Addons\Recaptcha\ReCaptcha() );
-		( new \Addons\Woocommerce\WooCommerce() );
-		( new \Addons\CustomScript\CustomScript() );
-		( new \Addons\CustomCSS\CustomCSS() );
-		( new \Addons\ThirdParty\Faker() );
+		// Load modules
+		$modules = \Addons\Helper::loadYaml( ADDONS_PATH . 'config.yaml' );
+		if ( ! empty( $modules ) ) {
+			foreach ( $modules as $module_slug => $value ) {
+				$className = \Addons\Helper::capitalizedSlug( $module_slug, true );
+				$classFQN     = "\\Addons\\{$className}\\{$className}";
+
+				// WooCommerce
+				if ( (string) $module_slug === 'woocommerce' && ! \Addons\Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {
+					continue;
+				}
+
+				class_exists( $classFQN ) && ( new $classFQN() );
+			}
+		}
+
+		// ThirdParty
+		class_exists( \Addons\ThirdParty\Faker::class ) && ( new \Addons\ThirdParty\Faker() );
 	}
 
 	// -------------------------------------------------------------
@@ -69,9 +72,24 @@ final class Addons {
 	public function script_loader_tag( string $tag, string $handle, string $src ): string {
 		$attributes = wp_scripts()->registered[ $handle ]->extra ?? [];
 
+		// Add `type="module"` attributes if the script is marked as a module
+		if ( ! empty( $attributes['module'] ) ) {
+			$tag = preg_replace( '#(?=></script>)#', ' type="module"', $tag, 1 );
+		}
+
+		// Handle `async` and `defer` attributes
+		foreach ( [ 'async', 'defer' ] as $attr ) {
+			if ( 'defer' === $attr ) {
+				$attr = 'defer data-wp-strategy="defer"';
+			}
+
+			if ( ! empty( $attributes[ $attr ] ) && ! preg_match( "#\s$attr(=|>|\s)#", $tag ) ) {
+				$tag = preg_replace( '#(?=></script>)#', " $attr", $tag, 1 );
+			}
+		}
+
 		// Process combined attributes (e.g., `module defer`) from `addons`
 		if ( ! empty( $attributes['addon'] ) ) {
-
 			// Convert space-separated string to array if necessary
 			$extra_attrs = is_array( $attributes['addon'] )
 				? $attributes['addon']
@@ -90,6 +108,11 @@ final class Addons {
 					$tag = preg_replace( '#(?=></script>)#', " $attr", $tag, 1 );
 				}
 			}
+		}
+
+		// Fontawesome kit
+		if ( ( 'fontawesome-kit' === $handle ) && ! preg_match( '#\scrossorigin([=>\s])#', $tag ) ) {
+			$tag = preg_replace( '#(?=></script>)#', " crossorigin='anonymous'", $tag, 1 );
 		}
 
 		return $tag;

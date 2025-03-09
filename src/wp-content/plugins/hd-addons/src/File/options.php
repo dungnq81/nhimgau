@@ -16,7 +16,7 @@ $svg_options = [
 ];
 
 ?>
-<div class="container flex flex-x flex-gap sm-up-1 lg-up-2">
+<div class="container flex flex-x flex-gap sm-up-1">
     <input type="hidden" name="file-hidden" value="1">
     <div class="cell section section-text">
         <label class="heading" for="upload_size_limit"><?php _e( 'Maximum upload file size', ADDONS_TEXT_DOMAIN ); ?></label>
@@ -30,7 +30,7 @@ $svg_options = [
             </div>
         </div>
     </div>
-    <div class="cell section section-radio !sm-1">
+    <div class="cell section section-radio">
         <span class="heading !block"><?php _e( 'SVG Images', ADDONS_TEXT_DOMAIN ); ?></span>
         <div class="desc"><b>Security notice:</b> Every SVG image is an XML file that can contain <b>malicious code</b>, potentially leading to <b>XSS</b> or <b>injection attacks</b>.</div>
         <div class="option inline-option">

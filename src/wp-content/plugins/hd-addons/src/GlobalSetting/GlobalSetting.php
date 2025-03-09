@@ -49,14 +49,16 @@ final class GlobalSetting {
 		);
 
 		// Server Info submenu
-		add_submenu_page(
-			'addon-settings',
-			__( 'Server Info', ADDONS_TEXT_DOMAIN ),
-			__( 'Server Info', ADDONS_TEXT_DOMAIN ),
-			'addon_manage_options',
-			'server-info',
-			[ $this, '_addon_server_info_callback' ]
-		);
+		if ( WP_DEBUG ) {
+			add_submenu_page(
+				'addon-settings',
+				__( 'Server Info', ADDONS_TEXT_DOMAIN ),
+				__( 'Server Info', ADDONS_TEXT_DOMAIN ),
+				'addon_manage_options',
+				'server-info',
+				[ $this, '_addon_server_info_callback' ]
+			);
+		}
 	}
 
 	// --------------------------------------------------
@@ -192,7 +194,8 @@ final class GlobalSetting {
 				//'font_combined_css' => ! empty( $data['font_combined_css'] ) ? sanitize_text_field( $data['font_combined_css'] ) : 0,
 				'font_preload'      => $font_preload,
 				'lazyload'          => ! empty( $data['lazyload'] ) ? sanitize_text_field( $data['lazyload'] ) : 0,
-				'lazyload_mobile'   => ! empty( $data['lazyload_mobile'] ) ? sanitize_text_field( $data['lazyload_mobile'] ) : 0,
+				//'lazyload_mobile'   => ! empty( $data['lazyload_mobile'] ) ? sanitize_text_field( $data['lazyload_mobile'] ) : 0,
+				'lazyload_mobile'   => ! empty( $data['lazyload'] ) ? sanitize_text_field( $data['lazyload'] ) : 0,
 				'lazyload_exclude'  => $lazyload_exclude,
 			];
 

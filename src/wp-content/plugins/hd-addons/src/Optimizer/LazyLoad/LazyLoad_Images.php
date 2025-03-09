@@ -25,7 +25,7 @@ class LazyLoad_Images extends Abstract_LazyLoad {
 	public array $replacements = [
 		'$1src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-$2="$3"',
 		'$1data-$2="$3"',
-		'$1data-$2="$3"',
+		'$1srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-$2="$3"',
 	];
 
 	// -------------------------------------------------------------
@@ -36,6 +36,6 @@ class LazyLoad_Images extends Abstract_LazyLoad {
 	 * @return string
 	 */
 	public function add_lazyload_class( $element ): string {
-		return str_replace( '<img', '<img class="lazy"', $element );
+		return preg_replace( '/<img/i', '<img class="lazy"', $element );
 	}
 }

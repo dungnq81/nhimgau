@@ -75,7 +75,7 @@ $order_taxonomy         = $custom_sorting_options['order_taxonomy'] ?? [];
 		<?php endforeach; ?>
     </div>
 
-    <div class="cell section section-checkbox !sm-1">
+    <div class="cell section section-checkbox !sm-12">
         <span class="heading !fw-700"><?php _e( 'Check to reset order', ADDONS_TEXT_DOMAIN ); ?></span>
         <div class="option mb-20">
             <label class="controls">

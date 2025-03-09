@@ -18,10 +18,10 @@ $current_slug =	$current_slug ?? 'global_setting';
 			continue;
 		}
 
-		// WooCommerce
-		if ( (string) $slug === 'woocommerce' && ! \Addons\Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {
-			continue;
-		}
+        // WooCommerce
+        if ( (string) $slug === 'woocommerce' && ! \Addons\Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {
+            continue;
+        }
     ?>
     <div class="section section-checkbox cell" id="section_<?= $slug ?>">
         <label class="heading" for="<?= $slug ?>"><?php echo $title; ?></label>

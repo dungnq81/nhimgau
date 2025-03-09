@@ -33,7 +33,6 @@ final class SocialLink {
 		$atts = shortcode_atts(
 			[
 				'class' => 'social-menu',
-				'id'    => Helper::escAttr( uniqid( 'menu-', false ) ),
 			],
 			$atts,
 			'social_menu'
@@ -49,9 +48,9 @@ final class SocialLink {
 		if ( $social_options ) {
 			foreach ( $social_options as $key => $social_option ) {
 				$data = [
-					'url'  => $social_option['url'] ?? '',
 					'name' => $social_follows_links[ $key ]['name'] ?? '',
 					'icon' => $social_follows_links[ $key ]['icon'] ?? '',
+					'url'  => $social_option['url'] ?? '',
 				];
 
 				$thumb = '';

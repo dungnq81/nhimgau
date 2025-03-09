@@ -30,7 +30,7 @@ $lazyload_exclude = implode( PHP_EOL, $lazyload_exclude );
             <div class="explain"><?php _e( 'Check to activate', ADDONS_TEXT_DOMAIN ); ?></div>
         </div>
     </div>
-    <div class="cell section section-textarea !sm-1">
+    <div class="cell section section-textarea !sm-12">
         <label class="heading" for="dns_prefetch"><?php _e( 'DNS Pre-fetch', ADDONS_TEXT_DOMAIN ) ?></label>
         <div class="desc"><?php _e( 'Enabling DNS pre-fetch for a domain will resolve it before resources are requested from it, resulting in faster loading of those resources.', ADDONS_TEXT_DOMAIN ); ?></div>
         <div class="option">
@@ -39,7 +39,7 @@ $lazyload_exclude = implode( PHP_EOL, $lazyload_exclude );
             </div>
         </div>
     </div>
-    <div class="cell section section-textarea !sm-1">
+    <div class="cell section section-textarea !sm-12">
         <label class="heading inline-heading" for="font_preload"><?php _e( 'Fonts Preloading', ADDONS_TEXT_DOMAIN ) ?></label>
         <div
             class="desc"><?php _e( 'Preload the fonts you\'re using to improve rendering speed and enhance site performance. <b>Use the full URL to the font.</b>', ADDONS_TEXT_DOMAIN ) ?></div>

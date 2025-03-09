@@ -22,9 +22,7 @@ final class LoginSecurity {
 
 	private function _login_restricted(): void {
 		$login_restricted = new LoginRestricted();
-		if ( $login_restricted->restricted() ) {
-			add_action( 'login_init', [ $login_restricted, 'restrict_login_to_ips' ], PHP_INT_MIN );
-		}
+		add_action( 'login_init', [ $login_restricted, 'restrict_login_to_ips' ], PHP_INT_MIN );
 	}
 
 	// ------------------------------------------------------

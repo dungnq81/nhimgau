@@ -10,12 +10,6 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 export const sharedConfig = {
     base: './',
-    resolve: {
-        alias: {
-            '@': path.resolve(__dirname),
-            '~': path.resolve(__dirname),
-        },
-    },
     plugins: [
         viteImagemin({
             plugins: {
@@ -28,12 +22,12 @@ export const sharedConfig = {
                 }),
                 svg: imageminSVGO(),
             },
-            // makeWebp: {
-            //     plugins: {
-            //         jpg: imageminWebp(),
-            //         png: imageminWebp(),
-            //     },
-            // },
+            makeWebp: {
+                plugins: {
+                    jpg: imageminWebp(),
+                    png: imageminWebp(),
+                },
+            },
         }),
     ],
     css: {
@@ -52,10 +46,6 @@ export const sharedConfig = {
             ],
         },
         devSourcemap: !isProduction,
-    },
-    define: {
-        $: 'jQuery',
-        jquery: 'jQuery',
     },
     build: {
         sourcemap: !isProduction,

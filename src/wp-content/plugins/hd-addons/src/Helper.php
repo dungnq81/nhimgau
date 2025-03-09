@@ -21,6 +21,27 @@ final class Helper {
 	// --------------------------------------------------
 
 	/**
+	 * @param string $tag
+	 * @param array $atts
+	 * @param string|null $content
+	 *
+	 * @return mixed
+	 */
+	public static function doShortcode( string $tag, array $atts = [], ?string $content = null ): mixed {
+		global $shortcode_tags;
+
+		// Check if the shortcode exists
+		if ( ! isset( $shortcode_tags[ $tag ] ) ) {
+			return false;
+		}
+
+		// Call the shortcode function and return its output
+		return call_user_func( $shortcode_tags[ $tag ], $atts, $content, $tag );
+	}
+
+	// --------------------------------------------------
+
+	/**
 	 * @param mixed $delimiters
 	 * @param string|null $string
 	 * @param bool $remove_empty

@@ -88,21 +88,45 @@ abstract class Abstract_LazyLoad {
 				}
 			}
 
-			// Do some checking if there are any class matches.
-			preg_match( $this->regex_classes, $item, $class_matches );
+			// Process <picture> elements containing <img>
+			if ( preg_match( '/<picture([^>]*)>(.*?)<img([^>]*)\/>(.*?)<\/picture>/is', $item, $picture_match ) ) {
+				$picture_open  = '<picture' . $picture_match[1] . '>';
+				$picture_inner = $picture_match[2];
+				$img_tag       = '<img' . $picture_match[3] . '/>';
+				$picture_close = '</picture>';
 
-			if ( ! empty( $class_matches[1] ) ) {
-				$classes = $class_matches[1];
-				$item_classes = explode( ' ', $class_matches[1] );
+				// Add "lazy" class to the <img> inside <picture>
+				if ( preg_match( '/class="([^"]*)"/i', $img_tag, $class_match ) ) {
+					$existing_classes = $class_match[1];
 
-				// Check if the item has ignored class and bail if it has.
-				if ( array_intersect( $item_classes, $excluded_all ) ) {
-					continue;
+					// Ensure "lazy" is not duplicated
+					$modified_img = ! str_contains( $existing_classes, 'lazy' ) ? str_replace( $class_match[0], 'class="' . $existing_classes . ' lazy"', $img_tag ) : $img_tag;
+
+				} else {
+					$modified_img = $this->add_lazyload_class( $img_tag );
 				}
 
-				$orig_item = str_replace( $classes, $classes . ' lazy', $item );
+				$orig_item = $picture_open . $picture_inner . $modified_img . $picture_close;
 			} else {
-				$orig_item = $this->add_lazyload_class( $item );
+
+				// Do some checking if there are any class matches.
+				preg_match( $this->regex_classes, $item, $class_matches );
+
+				if ( ! empty( $class_matches[1] ) ) {
+					$classes      = $class_matches[1];
+					$item_classes = explode( ' ', $class_matches[1] );
+
+					// Check if the item has ignored class and bail if it has.
+					if ( array_intersect( $item_classes, $excluded_all ) ) {
+						continue;
+					}
+
+					// Add lazy class to the existing classes.
+					$orig_item = ! str_contains( $classes, 'lazy' ) ? str_replace( $classes, $classes . ' lazy', $item ) : $item;
+
+				} else {
+					$orig_item = $this->add_lazyload_class( $item );
+				}
 			}
 
 			// Finally, do the search/replace and return modified content.

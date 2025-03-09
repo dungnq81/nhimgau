@@ -10,7 +10,7 @@ namespace Addons;
  * Modified by Tom Usborne for GeneratePress
  * Modified by Gaudev
  */
-final class CSS {
+final class Css {
 
 	private string $_selector = '';
 	private string $_selector_output = '';
