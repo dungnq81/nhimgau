@@ -99,30 +99,28 @@ jQuery(function($) {
                 _wp_http_referer: $this.find('input[name="_wp_http_referer"]').val(),
             },
         })
-            .done(function(data) {
-                btn_submit.prop('disabled', false).html(button_text);
-                $this.find('#_content').prepend(data);
+        .done(function(data) {
+            $this.find('#_content').prepend(data);
 
-                // auto reload tabs
-                if (!window.location.hash ||
-                    window.location.hash === '#global_setting_settings' ||
-                    window.location.hash === '#custom_css_settings' ||
-                    window.location.hash === '#custom_script_settings' ||
-                    (window.location.hash === '#custom_sorting_settings' && $data['order_reset'] !== undefined) ||
-                    (window.location.hash === '#base_slug_settings' && $data['base_slug_reset'] !== undefined)
-                ) {
-                    window.location.reload();
-                }
+            // auto reload tabs
+            if (!window.location.hash ||
+                window.location.hash === '#global_setting_settings' ||
+                window.location.hash === '#custom_css_settings' ||
+                window.location.hash === '#custom_script_settings' ||
+                (window.location.hash === '#custom_sorting_settings' && $data['order_reset'] !== undefined) ||
+                (window.location.hash === '#base_slug_settings' && $data['base_slug_reset'] !== undefined)
+            ) {
+                window.location.reload();
+            }
 
-                // dismissible auto hide
-                setTimeout(() => {
-                    $this.find('#_content')?.find('.dismissible-auto')?.fadeOutAndRemove(400);
-                }, 4000);
-            })
-            .fail(function(jqXHR, textStatus, errorThrown) {
-                btn_submit.prop('disabled', false).html(button_text);
-                console.log(errorThrown);
-            });
+            // dismissible auto hide
+            setTimeout(() => {
+                $this.find('#_content')?.find('.dismissible-auto')?.fadeOutAndRemove(400);
+            }, 4000);
+        })
+        .always(function () {
+            btn_submit.prop('disabled', false).html(button_text);
+        });
     });
 
     //---------------------------------------------------------------

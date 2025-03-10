@@ -1,5 +1,6 @@
 import * as path from 'path';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
+import postcssPurgecss from '@fullhuman/postcss-purgecss';
 import { sharedConfig } from '../../../vite.config.shared';
 
 // THEME
@@ -56,6 +57,27 @@ export default {
             targets: directoriesToCopy,
         }),
     ],
+    css: {
+        ...sharedConfig.css,
+        postcss: {
+            ...sharedConfig.css.postcss,
+            plugins: [
+                ...sharedConfig.css.postcss.plugins,
+                // postcssPurgecss({
+                //     content: [
+                //         './**/*.php',
+                //         './**/*.html',
+                //         './assets/js/**/*.js',
+                //     ],
+                //     safelist: {
+                //         standard: [ /wp-/ ],
+                //         deep: [ /is-/ ],
+                //         greedy: [ /^menu-/, /^nav-/ ],
+                //     },
+                // }),
+            ],
+        },
+    },
     build: {
         ...sharedConfig.build,
         outDir: `${assets}`,
