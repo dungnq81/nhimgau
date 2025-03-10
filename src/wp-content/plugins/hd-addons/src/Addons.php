@@ -149,7 +149,7 @@ final class Addons {
 			];
 
 			wp_enqueue_style( 'wp-codemirror' );
-			wp_localize_script( 'admin-addons', 'codemirror_settings', $codemirror_settings );
+			wp_localize_script( 'addon-js', 'codemirror_settings', $codemirror_settings );
 		}
 	}
 }

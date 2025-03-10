@@ -4,7 +4,7 @@ import '../sass/3rd/_awesome-font.scss';
 
 select2();
 
-document.addEventListener('DOMContentLoaded', () => {
+jQuery(function($) {
     $('.addon-color-field').wpColorPicker();
 
     //---------------------------------------------------------------

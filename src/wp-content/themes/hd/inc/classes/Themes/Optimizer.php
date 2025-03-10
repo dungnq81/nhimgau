@@ -481,10 +481,5 @@ final class Optimizer {
 	public function print_footer_scripts(): void { ?>
         <script>document.documentElement.classList.remove('no-js');</script>
 		<?php
-		if ( is_file( THEME_PATH . 'assets/js/skip-link-focus.js' ) ) {
-			echo '<script>';
-			include THEME_PATH . 'assets/js/skip-link-focus.js';
-			echo '</script>';
-		}
 	}
 }
