@@ -16,15 +16,17 @@ const directoriesToCopy = [
 
 // SASS
 const sassFiles = [
+    'login-css',
     'addon-css',
 ];
 
 // JS
 const jsFiles = [
-    'addon',
+    'login',
     'lazyload',
     'recaptcha',
     'sorting',
+    'addon',
 ];
 
 export default {

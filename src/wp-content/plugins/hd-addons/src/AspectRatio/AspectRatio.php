@@ -36,7 +36,7 @@ final class AspectRatio {
 		}
 
 		if ( $styles ) {
-			wp_add_inline_style( 'app-style', $styles );
+			wp_add_inline_style( 'index-css', $styles );
 		}
 	}
 

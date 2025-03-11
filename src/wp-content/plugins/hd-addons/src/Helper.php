@@ -279,7 +279,7 @@ final class Helper {
 
 		$css = preg_replace( '/<script\b[^>]*>(.*?)<\/script>/is', '', $css );
 		$css = strip_tags( $css );
-		$css = preg_replace( '/[^a-zA-Z0-9\s\.\#\:\;\,\-\_\(\)\{\}\/\*]/', '', $css );
+		$css = preg_replace( '/[^a-zA-Z0-9\s\.\#\:\;\,\-\_\(\)\{\}\/\*\!\%\@\+\>\~\=\"\'\\\\]/', '', $css );
 		$css = preg_replace( '/\/\*.*?\*\//s', '', $css );
 
 		return trim( $css );

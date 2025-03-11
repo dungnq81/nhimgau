@@ -79,9 +79,8 @@ trait Wp {
 		}
 
 		$css = preg_replace( '/<script\b[^>]*>(.*?)<\/script>/is', '', $css );
-
 		$css = strip_tags( $css );
-		$css = preg_replace( '/[^a-zA-Z0-9\s\.\#\:\;\,\-\_\(\)\{\}\/\*]/', '', $css );
+		$css = preg_replace( '/[^a-zA-Z0-9\s\.\#\:\;\,\-\_\(\)\{\}\/\*\!\%\@\+\>\~\=\"\'\\\\]/', '', $css );
 		$css = preg_replace( '/\/\*.*?\*\//s', '', $css );
 
 		return trim( $css );
@@ -1671,9 +1670,15 @@ trait Wp {
 		} // Category, Taxonomy
 		elseif ( is_category() || is_tax() ) {
 			$cat_obj       = get_queried_object();
-			$cat_code      = get_term_parents_list( $cat_obj?->term_id, $cat_obj?->taxonomy, [ 'separator' => '' ] );
-			$cat_code      = str_replace( '<a', '<li><a', $cat_code );
-			$breadcrumbs[] = str_replace( '</a>', '</a></li>', $cat_code ) . $before . single_cat_title( '', false ) . $after;
+
+			if ( $cat_obj && $cat_obj->parent ) {
+				$cat_code      = get_term_parents_list( $cat_obj?->term_id, $cat_obj->taxonomy, [ 'separator' => '' ] );
+				$cat_code      = str_replace( '<a', '<li><a', $cat_code );
+				$breadcrumbs[] = str_replace( '</a>', '</a></li>', $cat_code );
+			}
+
+			$breadcrumbs[] = $before . single_cat_title( '', false ) . $after;
+
 		} // 404 Page
 		elseif ( is_404() ) {
 			$breadcrumbs[] = $before . __( 'Not Found', TEXT_DOMAIN ) . $after;

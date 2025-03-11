@@ -15,7 +15,6 @@ use HD\Themes\Customizer;
 use HD\Themes\Optimizer;
 use HD\Themes\Shortcode;
 
-use HD\Utilities\CSS;
 use HD\Utilities\Traits\Singleton;
 
 \defined( 'ABSPATH' ) || die;
@@ -32,9 +31,6 @@ final class Theme {
 
 	private function init(): void {
 		// plugins_loaded -> after_setup_theme -> init -> rest_api_init -> widgets_init -> wp_loaded -> admin_menu -> admin_init ...
-
-		/** Login page */
-		$this->_admin_login();
 
 		add_action( 'after_setup_theme', [ $this, 'i18n' ], 10 );
 		add_action( 'after_setup_theme', [ $this, 'after_setup_theme' ], 11 );
@@ -186,7 +182,7 @@ final class Theme {
 		/** Scripts */
 		wp_enqueue_script( 'modulepreload', ASSETS_URL . 'js/modulepreload-polyfill.js', [], $version, true );
 		wp_enqueue_script( 'index', ASSETS_URL . 'js/index.js', [ 'jquery-core' ], $version, true );
-		wp_script_add_data( 'modulepreload', 'module', true );
+		wp_script_add_data( 'modulepreload', 'extra', [ 'module', 'async' ] );
 		wp_script_add_data( 'index', 'extra', [ 'module', 'defer' ] );
 
 		wp_add_inline_script( 'jquery-core', 'Object.assign(window, { $: jQuery, jQuery });', 'after' );
@@ -197,12 +193,12 @@ final class Theme {
 		$recaptcha_v3_site_key = $recaptcha_options['recaptcha_v3_site_key'] ?? '';
 
 		$l10n = [
-			'_ajaxUrl'    => esc_js( admin_url( 'admin-ajax.php', 'relative' ) ),
-			'_baseUrl'    => esc_js( untrailingslashit( site_url() ) . '/' ),
-			'_themeUrl'   => esc_js( THEME_URL ),
+			'_ajaxUrl'   => esc_js( admin_url( 'admin-ajax.php', 'relative' ) ),
+			'_baseUrl'   => esc_js( untrailingslashit( site_url() ) . '/' ),
+			'_themeUrl'  => esc_js( THEME_URL ),
 			'_csrfToken' => wp_create_nonce( 'wp_csrf_token' ),
-			'_restToken'    => wp_create_nonce( 'wp_rest' ),
-			'_lang'       => esc_js( Helper::currentLanguage() ),
+			'_restToken' => wp_create_nonce( 'wp_rest' ),
+			'_lang'      => esc_js( Helper::currentLanguage() ),
 		];
 
 		if ( $recaptcha_v2_site_key ) {
@@ -252,77 +248,6 @@ final class Theme {
 
 		Helper::createDirectory( $widgets_dir );
 		Helper::FQNLoad( $widgets_dir, false, true, $FQN, true );
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @return void
-	 */
-	private function _admin_login(): void {
-		add_action( 'login_enqueue_scripts', [ $this, 'login_enqueue_script' ], 31 );
-
-		// Changing the alt text on the logo to show your site name
-		add_filter( 'login_headertext', static function () {
-			$headertext = Helper::getThemeMod( 'login_page_headertext_setting' );
-
-			return $headertext ?: get_bloginfo( 'name' );
-		} );
-
-		// Changing the logo link from WordPress.org to your site
-		add_filter( 'login_headerurl', static function () {
-			$headerurl = Helper::getThemeMod( 'login_page_headerurl_setting' );
-
-			return $headerurl ?: Helper::home( '/' );
-		} );
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @return void
-	 */
-	public function login_enqueue_script(): void {
-		wp_enqueue_style( 'login-css', THEME_URL . 'assets/css/admin-css.css', [], THEME_VERSION );
-		wp_enqueue_script( 'login', THEME_URL . 'assets/js/login.js', [ 'jquery' ], THEME_VERSION, true );
-		wp_script_add_data( 'login', 'module', true );
-
-		$default_logo    = '';
-		$default_logo_bg = '';
-
-		// $default_logo    = THEME_URL . "storage/img/logo.png";
-		// $default_logo_bg = THEME_URL . "storage/img/login-bg.jpg";
-
-		// scripts / styles
-		$logo          = Helper::getThemeMod( 'login_page_logo_setting' ) ?: $default_logo;
-		$logo_bg       = Helper::getThemeMod( 'login_page_bgimage_setting' ) ?: $default_logo_bg;
-		$logo_bg_color = Helper::getThemeMod( 'login_page_bgcolor_setting' );
-
-		$css = CSS::get_instance();
-
-		if ( $logo_bg ) {
-			$css->set_selector( 'body.login' );
-			$css->add_property( 'background-image', 'url(' . $logo_bg . ')' );
-		}
-
-		if ( $logo_bg_color ) {
-			$css->set_selector( 'body.login' );
-			$css->add_property( 'background-color', $logo_bg_color );
-
-			$css->set_selector( 'body.login:before' );
-			$css->add_property( 'background', 'none' );
-			$css->add_property( 'opacity', 1 );
-		}
-
-		$css->set_selector( 'body.login #login h1 a' );
-		if ( $logo ) {
-			$css->add_property( 'background-image', 'url(' . $logo . ')' );
-		}
-
-		$css_output = $css->css_output();
-		if ( $css_output ) {
-			wp_add_inline_style( 'login-style', $css_output );
-		}
 	}
 
 	// --------------------------------------------------

@@ -18,6 +18,14 @@ final class Addons {
 		add_action( 'plugins_loaded', [ $this, 'plugins_loaded' ], 11 );
 
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ], 39, 1 );
+
+		//---------------------------------------------
+		// login page
+		//---------------------------------------------
+
+		add_filter( 'login_headertext', [ $this, 'login_headertext' ] ); // Changing the alt text on the logo to show your site name
+		add_filter( 'login_headerurl', [ $this, 'login_headerurl' ] ); // Changing the logo link from WordPress.org to your site
+		add_action( 'login_enqueue_scripts', [ $this, 'login_enqueue_script' ], 31 );
 	}
 
 	// -------------------------------------------------------------
@@ -36,7 +44,7 @@ final class Addons {
 		add_action( 'script_loader_tag', [ $this, 'script_loader_tag' ], 11, 3 );
 
 		// Classic Editor
-		if ( Helper::checkPluginActive( 'classic-editor/classic-editor.php' ) ) {
+		if ( \Addons\Helper::checkPluginActive( 'classic-editor/classic-editor.php' ) ) {
 			remove_action( 'admin_init', [ \Classic_Editor::class, 'register_settings' ] );
 		}
 
@@ -72,22 +80,6 @@ final class Addons {
 	public function script_loader_tag( string $tag, string $handle, string $src ): string {
 		$attributes = wp_scripts()->registered[ $handle ]->extra ?? [];
 
-		// Add `type="module"` attributes if the script is marked as a module
-		if ( ! empty( $attributes['module'] ) ) {
-			$tag = preg_replace( '#(?=></script>)#', ' type="module"', $tag, 1 );
-		}
-
-		// Handle `async` and `defer` attributes
-		foreach ( [ 'async', 'defer' ] as $attr ) {
-			if ( 'defer' === $attr ) {
-				$attr = 'defer data-wp-strategy="defer"';
-			}
-
-			if ( ! empty( $attributes[ $attr ] ) && ! preg_match( "#\s$attr(=|>|\s)#", $tag ) ) {
-				$tag = preg_replace( '#(?=></script>)#', " $attr", $tag, 1 );
-			}
-		}
-
 		// Process combined attributes (e.g., `module defer`) from `addons`
 		if ( ! empty( $attributes['addon'] ) ) {
 			// Convert space-separated string to array if necessary
@@ -108,11 +100,6 @@ final class Addons {
 					$tag = preg_replace( '#(?=></script>)#', " $attr", $tag, 1 );
 				}
 			}
-		}
-
-		// Fontawesome kit
-		if ( ( 'fontawesome-kit' === $handle ) && ! preg_match( '#\scrossorigin([=>\s])#', $tag ) ) {
-			$tag = preg_replace( '#(?=></script>)#', " crossorigin='anonymous'", $tag, 1 );
 		}
 
 		return $tag;
@@ -151,5 +138,75 @@ final class Addons {
 			wp_enqueue_style( 'wp-codemirror' );
 			wp_localize_script( 'addon-js', 'codemirror_settings', $codemirror_settings );
 		}
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @return void
+	 */
+	public function login_enqueue_script(): void {
+		wp_enqueue_style( 'login-css', ADDONS_URL . 'assets/css/login-css.css', [], ADDONS_VERSION );
+		wp_enqueue_script( 'login-js', ADDONS_URL . 'assets/js/login.js', [ 'jquery' ], ADDONS_VERSION, true );
+		wp_script_add_data( 'login-js', 'addon', [ 'module', 'async' ] );
+
+		// $default_logo    = '';
+		// $default_logo_bg = '';
+
+		$default_logo    = ADDONS_URL . "assets/img/logo.png";
+		$default_logo_bg = ADDONS_URL . "assets/img/login-bg.jpg";
+
+		// scripts / styles
+		$logo          = Helper::getThemeMod( 'login_page_logo_setting' ) ?: $default_logo;
+		$logo_bg       = Helper::getThemeMod( 'login_page_bgimage_setting' ) ?: $default_logo_bg;
+		$logo_bg_color = Helper::getThemeMod( 'login_page_bgcolor_setting' );
+
+		$css = new \Addons\Css();
+
+		if ( $logo_bg ) {
+			$css->set_selector( 'body.login' );
+			$css->add_property( 'background-image', 'url(' . $logo_bg . ')' );
+		}
+
+		if ( $logo_bg_color ) {
+			$css->set_selector( 'body.login' );
+			$css->add_property( 'background-color', $logo_bg_color );
+
+			$css->set_selector( 'body.login:before' );
+			$css->add_property( 'background', 'none' );
+			$css->add_property( 'opacity', 1 );
+		}
+
+		$css->set_selector( 'body.login #login h1 a' );
+		if ( $logo ) {
+			$css->add_property( 'background-image', 'url(' . $logo . ')' );
+		}
+
+		$css_output = $css->css_output();
+		if ( $css_output ) {
+			wp_add_inline_style( 'login-css', $css_output );
+		}
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @return mixed|string|null
+	 */
+	public function login_headertext(): mixed {
+		$headertext = \Addons\Helper::getThemeMod( 'login_page_headertext_setting' );
+
+		return $headertext ?: get_bloginfo( 'name' );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @return mixed|string|null
+	 */
+	public function login_headerurl(): mixed {
+		$headerurl = \Addons\Helper::getThemeMod( 'login_page_headerurl_setting' );
+
+		return $headerurl ?: site_url( '/' );
 	}
 }

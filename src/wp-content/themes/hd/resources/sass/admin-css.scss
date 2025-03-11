@@ -318,83 +318,6 @@ $body-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Ubuntu', Arial, sans
     height: auto;
 }
 
-/** login form */
-body.login {
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-    min-height: 100%;
-    height: auto;
-
-    &::after,
-    &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    &::before {
-        /*opacity: 0.1;
-        background: #000;*/
-    }
-
-    .language-switcher {
-        position: relative;
-        z-index: 99;
-    }
-
-    form {
-        /*padding: 25px;*/
-
-        &.shake + #nav {
-            animation: shake 0.2s cubic-bezier(0.19, 0.49, 0.38, 0.79) both;
-            animation-iteration-count: 3;
-            transform: translateX(0);
-        }
-    }
-}
-
-/** */
-#login {
-    position: relative;
-    z-index: 99;
-
-    h1 {
-        a {
-            width: auto;
-            max-width: 100%;
-            background-position: center center;
-            height: 60px;
-            background-size: contain;
-            margin-bottom: 30px;
-
-            &:focus {
-                box-shadow: none;
-            }
-        }
-    }
-
-    .privacy-policy-link {
-        color: #ec1f27;
-        text-decoration: none;
-    }
-
-    #nav {
-        margin: 0;
-        text-align: right;
-        right: 0;
-        position: relative;
-        top: -59px;
-    }
-
-    :where(#nav, .privacy-policy-link, #backtoblog) {
-        display: none;
-    }
-}
-
 /** */
 body.post-type-banner {
     .wp-list-table {
@@ -837,26 +760,6 @@ table.wp-list-table tbody td.column-handle {
 
 .acf-flexible-content .layout .acf-fc-layout-handle {
     border-bottom: 1px solid #2271b1;
-}
-
-/** pace loading */
-.pace {
-    pointer-events: none;
-    user-select: none;
-
-    .pace-progress {
-        background: #2271b1;
-        position: fixed;
-        z-index: 9999;
-        top: 0;
-        right: 100%;
-        width: 100%;
-        height: 1px;
-    }
-}
-
-.pace-inactive {
-    display: none;
 }
 
 html.wp-toolbar {

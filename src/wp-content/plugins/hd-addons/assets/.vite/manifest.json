@@ -28,6 +28,12 @@
       "__vendor.js"
     ]
   },
+  "wp-content/plugins/hd-addons/resources/js/login.js": {
+    "file": "js/login.js",
+    "name": "login",
+    "src": "wp-content/plugins/hd-addons/resources/js/login.js",
+    "isEntry": true
+  },
   "wp-content/plugins/hd-addons/resources/js/recaptcha.js": {
     "file": "js/recaptcha.js",
     "name": "recaptcha",
@@ -43,6 +49,11 @@
   "wp-content/plugins/hd-addons/resources/sass/addon-css.scss": {
     "file": "css/addon-css.css",
     "src": "wp-content/plugins/hd-addons/resources/sass/addon-css.scss",
+    "isEntry": true
+  },
+  "wp-content/plugins/hd-addons/resources/sass/login-css.scss": {
+    "file": "css/login-css.css",
+    "src": "wp-content/plugins/hd-addons/resources/sass/login-css.scss",
     "isEntry": true
   }
 }

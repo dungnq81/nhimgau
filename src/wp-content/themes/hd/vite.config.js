@@ -1,13 +1,11 @@
 import * as path from 'path';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
-import postcssPurgecss from '@fullhuman/postcss-purgecss';
+//import postcssPurgecss from '@fullhuman/postcss-purgecss';
 import { sharedConfig } from '../../../vite.config.shared';
 
 // THEME
 const directory = path.basename(path.resolve(__dirname));
 const dir = `./wp-content/themes/${directory}`;
-const node_modules = './node_modules';
-
 const resources = `${dir}/resources`;
 const assets = `${dir}/assets`;
 
@@ -32,7 +30,6 @@ const sassFiles = [
 // JS
 const jsFiles = [
     // (admin)
-    'login',
     'admin',
 
     // (components)

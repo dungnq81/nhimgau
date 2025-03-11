@@ -1,5 +1,5 @@
 import autoprefixer from 'autoprefixer';
-import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
+//import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
