@@ -3,6 +3,7 @@
 namespace HD;
 
 use HD\Utilities\Traits\Wp;
+use MatthiasMullie\Minify;
 
 \defined( 'ABSPATH' ) || die;
 
@@ -13,6 +14,121 @@ use HD\Utilities\Traits\Wp;
  */
 final class Helper {
 	use Wp;
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string $content
+	 *
+	 * @return string
+	 */
+	public static function extractJS( string $content ): string {
+		$script_pattern = '/<script\b[^>]*>(.*?)<\/script>/is';
+		preg_match_all( $script_pattern, $content, $matches );
+
+		$valid_scripts = [];
+
+		// Define patterns for detecting potentially malicious code or encoding
+		$malicious_patterns = [
+			'/eval\(/i',            // Use of eval()
+			'/document\.write\(/i', // Use of document.write()
+			'/<script.*?src=[\'"]?data:/i', // Inline scripts with data URIs
+			'/base64,/i',           // Base64 encoding
+		];
+
+		foreach ( $matches[0] as $index => $scriptTag ) {
+			$scriptContent = trim( $matches[1][ $index ] );
+			$hasSrc        = preg_match( '/\bsrc=["\'].*?["\']/', $scriptTag );
+
+			$isMalicious = false;
+			foreach ( $malicious_patterns as $pattern ) {
+				if ( preg_match( $pattern, $scriptContent ) ) {
+					$isMalicious = true;
+
+					break;
+				}
+			}
+
+			if ( ! $isMalicious && ( $scriptContent !== '' || $hasSrc ) ) {
+				$valid_scripts[] = $scriptTag;
+			}
+		}
+
+		// Replace original <script> tags in the content with the valid ones
+		return preg_replace_callback( $script_pattern, static function ( $match ) use ( $valid_scripts ) {
+			static $i = 0;
+
+			return isset( $valid_scripts[ $i ] ) ? $valid_scripts[ $i ++ ] : '';
+		}, $content );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string $css
+	 *
+	 * @return string
+	 */
+	public static function extractCss( string $css ): string {
+		if ( empty( $css ) ) {
+			return '';
+		}
+
+		$css = preg_replace( '/<script\b[^>]*>(.*?)<\/script>/is', '', $css );
+		$css = strip_tags( $css );
+		$css = preg_replace( '/[^a-zA-Z0-9\s\.\#\:\;\,\-\_\(\)\{\}\/\*\!\%\@\+\>\~\=\"\'\\\\]/', '', $css );
+		$css = preg_replace( '/\/\*.*?\*\//s', '', $css );
+
+		return trim( $css );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string|null $js
+	 * @param bool $debug_check
+	 *
+	 * @return string|null
+	 */
+	public static function JSMinify( ?string $js, bool $debug_check = true ): ?string {
+		if ( empty( $js ) ) {
+			return null;
+		}
+
+		if ( $debug_check && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			return $js;
+		}
+
+		if ( class_exists( Minify\JS::class ) ) {
+			return ( new Minify\JS() )->add( $js )->minify();
+		}
+
+		return $js;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string|null $css
+	 * @param bool $debug_check
+	 *
+	 * @return string|null
+	 */
+	public static function CSSMinify( ?string $css, bool $debug_check = true ): ?string {
+		if ( empty( $css ) ) {
+			return null;
+		}
+
+		if ( $debug_check && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			return $css;
+		}
+
+		if ( class_exists( Minify\CSS::class ) ) {
+			return ( new Minify\CSS() )->add( $css )->minify();
+		}
+
+		return $css;
+	}
 
 	// -------------------------------------------------------------
 

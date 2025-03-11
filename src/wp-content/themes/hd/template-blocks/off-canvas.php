@@ -9,13 +9,22 @@
 \defined( 'ABSPATH' ) || die;
 
 $txt_logo = \HD\Helper::getOption( 'blogname' );
-$img_logo = \HD\Helper::getThemeMod( 'alt_logo' );
+$img_logo = \HD\Helper::getThemeMod( 'custom_logo' );
 
 if ( ! $img_logo ) :
-	$html = sprintf( '<a href="%1$s" class="mobile-logo-link" rel="home" aria-label="%2$s">%3$s</a>', \HD\Helper::home(), \HD\Helper::escAttr( $txt_logo ), $txt_logo );
+	$html = sprintf(
+		'<a href="%1$s" class="mobile-logo-link" rel="home" aria-label="%2$s">%3$s</a>',
+		\HD\Helper::home(),
+		\HD\Helper::escAttr( $txt_logo ),
+		$txt_logo
+	);
 else :
-	$image = '<img src="' . $img_logo . '" alt="logo">';
-	$html  = sprintf( '<a href="%1$s" class="mobile-logo-link" rel="home">%2$s</a>', \HD\Helper::home(), $image );
+	$image = \HD\Helper::iconImage( $img_logo, 'medium' );
+	$html  = sprintf(
+		'<a href="%1$s" class="mobile-logo-link" rel="home">%2$s</a>',
+		\HD\Helper::home(),
+		$image
+	);
 endif;
 
 $position = \HD\Helper::getThemeMod( 'offcanvas_menu_setting' );

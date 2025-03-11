@@ -50,7 +50,8 @@ Thumbs.db
 *.wmv
 
 # WordPress
-#wp-content/uploads/
-#wp-content/wflogs/
+wp-content/uploads/
+wp-content/wflogs/
+wp-content/cache/
 
 # ignore these plugins

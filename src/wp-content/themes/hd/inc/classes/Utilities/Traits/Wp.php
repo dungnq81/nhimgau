@@ -6,8 +6,6 @@ use HD\Utilities\CSS;
 use HD\Utilities\Horizontal_Nav_Walker;
 use HD\Utilities\Vertical_Nav_Walker;
 
-use MatthiasMullie\Minify;
-
 \defined( 'ABSPATH' ) || die;
 
 trait Wp {
@@ -18,121 +16,6 @@ trait Wp {
 	use Url;
 	use Db;
 	use Encryption;
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @param string $content
-	 *
-	 * @return string
-	 */
-	public static function extractJS( string $content ): string {
-		$script_pattern = '/<script\b[^>]*>(.*?)<\/script>/is';
-		preg_match_all( $script_pattern, $content, $matches );
-
-		$valid_scripts = [];
-
-		// Define patterns for detecting potentially malicious code or encoding
-		$malicious_patterns = [
-			'/eval\(/i',            // Use of eval()
-			'/document\.write\(/i', // Use of document.write()
-			'/<script.*?src=[\'"]?data:/i', // Inline scripts with data URIs
-			'/base64,/i',           // Base64 encoding
-		];
-
-		foreach ( $matches[0] as $index => $scriptTag ) {
-			$scriptContent = trim( $matches[1][ $index ] );
-			$hasSrc        = preg_match( '/\bsrc=["\'].*?["\']/', $scriptTag );
-
-			$isMalicious = false;
-			foreach ( $malicious_patterns as $pattern ) {
-				if ( preg_match( $pattern, $scriptContent ) ) {
-					$isMalicious = true;
-
-					break;
-				}
-			}
-
-			if ( ! $isMalicious && ( $scriptContent !== '' || $hasSrc ) ) {
-				$valid_scripts[] = $scriptTag;
-			}
-		}
-
-		// Replace original <script> tags in the content with the valid ones
-		return preg_replace_callback( $script_pattern, static function ( $match ) use ( $valid_scripts ) {
-			static $i = 0;
-
-			return isset( $valid_scripts[ $i ] ) ? $valid_scripts[ $i ++ ] : '';
-		}, $content );
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @param string $css
-	 *
-	 * @return string
-	 */
-	public static function extractCss( string $css ): string {
-		if ( empty( $css ) ) {
-			return '';
-		}
-
-		$css = preg_replace( '/<script\b[^>]*>(.*?)<\/script>/is', '', $css );
-		$css = strip_tags( $css );
-		$css = preg_replace( '/[^a-zA-Z0-9\s\.\#\:\;\,\-\_\(\)\{\}\/\*\!\%\@\+\>\~\=\"\'\\\\]/', '', $css );
-		$css = preg_replace( '/\/\*.*?\*\//s', '', $css );
-
-		return trim( $css );
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @param string|null $js
-	 * @param bool $debug_check
-	 *
-	 * @return string|null
-	 */
-	public static function JSMinify( ?string $js, bool $debug_check = true ): ?string {
-		if ( empty( $js ) ) {
-			return null;
-		}
-
-		if ( $debug_check && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			return $js;
-		}
-
-		if ( class_exists( Minify\JS::class ) ) {
-			return ( new Minify\JS() )->add( $js )->minify();
-		}
-
-		return $js;
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @param string|null $css
-	 * @param bool $debug_check
-	 *
-	 * @return string|null
-	 */
-	public static function CSSMinify( ?string $css, bool $debug_check = true ): ?string {
-		if ( empty( $css ) ) {
-			return null;
-		}
-
-		if ( $debug_check && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			return $css;
-		}
-
-		if ( class_exists( Minify\CSS::class ) ) {
-			return ( new Minify\CSS() )->add( $css )->minify();
-		}
-
-		return $css;
-	}
 
 	// -------------------------------------------------------------
 
@@ -1509,6 +1392,106 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
+	 * @param $attachment_id
+	 * @param string $size
+	 * @param string|array $attr
+	 * @param bool $filter
+	 *
+	 * @return string
+	 */
+	public static function iconImage( $attachment_id, string $size = 'thumbnail', string|array $attr = '', bool $filter = false ): string {
+		$html  = '';
+		$image = wp_get_attachment_image_src( $attachment_id, $size, true );
+
+		if ( $image ) {
+			[ $src, $width, $height ] = $image;
+
+			$attachment = get_post( $attachment_id );
+			$hwstring   = image_hwstring( $width, $height );
+
+			$default_attr = [
+				'src'     => $src,
+				'alt'     => trim( strip_tags( get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ) ) ),
+				'loading' => 'lazy',
+			];
+
+			$context = apply_filters( 'wp_get_attachment_image_context', 'wp_get_attachment_image' );
+			$attr    = wp_parse_args( $attr, $default_attr );
+
+			$loading_attr              = $attr;
+			$loading_attr['width']     = $width;
+			$loading_attr['height']    = $height;
+			$loading_optimization_attr = wp_get_loading_optimization_attributes(
+				'img',
+				$loading_attr,
+				$context
+			);
+
+			// Add loading optimization attributes if not available.
+			$attr = array_merge( $attr, $loading_optimization_attr );
+
+			// Omit the `decoding` attribute if the value is invalid, according to the spec.
+			if ( empty( $attr['decoding'] ) || ! in_array( $attr['decoding'], [ 'async', 'sync', 'auto' ], false ) ) {
+				unset( $attr['decoding'] );
+			}
+
+			/*
+			 * If the default value of `lazy` for the `loading` attribute is overridden
+			 * to omit the attribute for this image, ensure it is not included.
+			 */
+			if ( isset( $attr['loading'] ) && ! $attr['loading'] ) {
+				unset( $attr['loading'] );
+			}
+
+			// If the `fetchpriority` attribute is overridden and set to false or an empty string.
+			if ( isset( $attr['fetchpriority'] ) && ! $attr['fetchpriority'] ) {
+				unset( $attr['fetchpriority'] );
+			}
+
+			$attr = apply_filters( 'wp_get_attachment_image_attributes', $attr, $attachment, $size );
+			$attr = array_map( 'esc_attr', $attr );
+			$html = rtrim( "<img $hwstring" );
+
+			foreach ( $attr as $name => $value ) {
+				$html .= " $name=" . '"' . $value . '"';
+			}
+
+			$html .= ' />';
+		}
+
+		return $filter ? apply_filters( 'hd_icon_image_filter', $html, $attachment_id, $size, $attr ) : $html;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string $class
+	 * @param mixed $attachment_id
+	 * @param mixed $attachment_mobile_id
+	 * @param bool $widescreen
+	 * @param bool $filter
+	 *
+	 * @return mixed
+	 */
+	public static function pictureHTML( string $class = 'img', mixed $attachment_id = false, mixed $attachment_mobile_id = false, bool $widescreen = true, bool $filter = true ): mixed {
+		$html = '';
+		if ( $attachment_id ) {
+			$html .= '<picture class="' . $class . '">';
+			if ( $widescreen ) {
+				$html .= '<source srcset="' . self::attachmentImageSrc( $attachment_id, 'widescreen' ) . '" media="(min-width: 1024px)">';
+			}
+
+			$html .= '<source srcset="' . self::attachmentImageSrc( $attachment_id, 'large' ) . '" media="(min-width: 768px)">';
+			$html .= self::iconImage( $attachment_mobile_id ?: $attachment_id, 'medium', [ 'class' => 'lazy' ], false );
+			$html .= '</picture>';
+		}
+
+		return $filter ? apply_filters( 'hd_picture_html_filter', $html, $class, $attachment_id, $attachment_mobile_id ) : $html;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
 	 * @param mixed $post_id
 	 * @param bool $force_object
 	 * @param bool $format_value
@@ -1548,7 +1531,7 @@ trait Wp {
 
 	/**
 	 * @param $term
-	 * @param null $acf_field_name
+	 * @param $acf_field_name
 	 * @param string $size
 	 * @param bool $img_wrap
 	 * @param string|array $attr
@@ -1558,6 +1541,10 @@ trait Wp {
 	public static function acfTermThumb( $term, $acf_field_name = null, string $size = 'thumbnail', bool $img_wrap = false, string|array $attr = '' ): ?string {
 		if ( ! $term ) {
 			return null;
+		}
+
+		if ( is_numeric( $term ) ) {
+			$term = self::getTerm( $term );
 		}
 
 		if ( class_exists( \ACF::class ) ) {
@@ -1669,7 +1656,7 @@ trait Wp {
 			}
 		} // Category, Taxonomy
 		elseif ( is_category() || is_tax() ) {
-			$cat_obj       = get_queried_object();
+			$cat_obj = get_queried_object();
 
 			if ( $cat_obj && $cat_obj->parent ) {
 				$cat_code      = get_term_parents_list( $cat_obj?->term_id, $cat_obj->taxonomy, [ 'separator' => '' ] );
@@ -2013,6 +2000,44 @@ trait Wp {
 		}
 
 		return $child_terms;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param $post_id
+	 * @param $taxonomy
+	 * @param int $post_count
+	 *
+	 * @return int[]|\WP_Post[]|null
+	 */
+	public static function getRelatedPosts( $post_id, $taxonomy, int $post_count = 6 ): ?array {
+		$post_terms = get_the_terms( $post_id, $taxonomy );
+		if ( ! is_array( $post_terms ) || empty( $post_terms ) ) {
+			return null;
+		}
+
+		// Extract term IDs for further processing
+		$term_ids = wp_list_pluck( $post_terms, 'term_id' );
+
+		$args = [
+			'post_type'      => get_post_type( $post_id ),
+			'posts_per_page' => $post_count,
+			'post__not_in'   => [ $post_id ],
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+			'tax_query'      => [
+				[
+					'taxonomy' => $taxonomy,
+					'field'    => 'term_id',
+					'terms'    => $term_ids,
+				],
+			],
+		];
+
+		$query = new \WP_Query( $args );
+
+		return $query->have_posts() ? $query->posts : null;
 	}
 
 	// -------------------------------------------------------------
