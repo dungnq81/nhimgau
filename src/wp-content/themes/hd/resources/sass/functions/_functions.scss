@@ -35,9 +35,14 @@
     }
 }
 
+// color.adjust()
 @function opacity-color($color: #000, $opacity: -50%) {
-    @return color.scale($color, $alpha: $opacity);
+    @if meta.type-of($opacity) == "percentage" {
+        $opacity: $opacity / 100%;
+    }
+    @return color.adjust($color, $alpha: $opacity);
 }
+
 
 // Replace `$search` with `$replace` in `$string`
 // Used on our SVG icon backgrounds for custom forms.

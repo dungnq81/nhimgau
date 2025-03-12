@@ -1,11 +1,25 @@
 import autoprefixer from 'autoprefixer';
-//import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
+import viteImagemin from '@vheemstra/vite-plugin-imagemin';
+
+import imageminMozjpeg from 'imagemin-mozjpeg';
+import imageminPngquant from 'imagemin-pngquant';
+import imageminSVGO from 'imagemin-svgo';
+import imageminGifsicle from 'imagemin-gifsicle';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
 export const sharedConfig = {
     base: './',
-    plugins: [],
+    plugins: [
+        viteImagemin({
+            plugins: {
+                jpg: imageminMozjpeg({ quality: 80 }),
+                png: imageminPngquant({ strip: true, quality: [ 0.7, 0.9 ] }),
+                svg: imageminSVGO(),
+                gif: imageminGifsicle({ optimizationLevel: 2, interlaced: true }),
+            },
+        }),
+    ],
     css: {
         preprocessorOptions: {
             scss: {
