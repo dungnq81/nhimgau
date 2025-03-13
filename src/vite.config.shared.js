@@ -14,9 +14,16 @@ export const sharedConfig = {
         viteImagemin({
             plugins: {
                 jpg: imageminMozjpeg({ quality: 80 }),
-                png: imageminPngquant({ strip: true, quality: [ 0.7, 0.9 ] }),
-                svg: imageminSVGO(),
-                gif: imageminGifsicle({ optimizationLevel: 2, interlaced: true }),
+                png: imageminPngquant({ strip: true, quality: [ 0.7, 0.9 ], dithering: 0.1 }),
+                svg: imageminSVGO({
+                    plugins: [
+                        {
+                            name: 'preset-default',
+                            params: { overrides: { removeViewBox: false, cleanupIDs: false } },
+                        },
+                    ],
+                }),
+                gif: imageminGifsicle({ optimizationLevel: 3, interlaced: true }),
             },
         }),
     ],
@@ -45,10 +52,11 @@ export const sharedConfig = {
         minify: isProduction ? 'terser' : false,
         watch: isProduction ? false : { exclude: 'node_modules/**' },
         cssCodeSplit: true,
-        emptyOutDir: true, // Clear the contents of the 'assets' directory before building.
+        emptyOutDir: true,
         terserOptions: {
             compress: {
                 drop_console: true,
+                drop_debugger: true,
                 toplevel: true,
                 passes: 2,
             },

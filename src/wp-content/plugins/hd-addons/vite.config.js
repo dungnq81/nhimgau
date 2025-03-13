@@ -50,10 +50,10 @@ export default {
                 //         './assets/js/**/*.js',
                 //     ],
                 //     safelist: {
-                //         standard: [ /wp-/ ],
-                //         deep: [ /is-/ ],
-                //         greedy: [ /^menu-/, /^nav-/ ],
-                //     },
+                //         standard: [ /wp-/, /is-/, /has-/, /align/, /screen-reader/ ],
+                //         deep: [ /is-/, /has-/ ],
+                //         greedy: [ /^menu-/, /^nav-/, /^wp-/ ],
+                //     }
                 // }),
             ],
         }

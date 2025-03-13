@@ -641,8 +641,6 @@ figure {
 
     :where(iframe, embed, object, video) {
         border: 0;
-        width: 100%;
-        height: 100%;
         @include mixin.absolute-full();
     }
 

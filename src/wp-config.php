@@ -103,7 +103,7 @@ const DISALLOW_FILE_EDIT = true;
 const DISALLOW_FILE_MODS = false;
 
 /** SSL */
-const FORCE_SSL_ADMIN = false;
+const FORCE_SSL_ADMIN = true;
 
 /** Increase post-revisions */
 const WP_POST_REVISIONS = 2;

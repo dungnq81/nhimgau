@@ -175,17 +175,26 @@ final class Theme {
 			$version = date( 'YmdHis', current_time( 'U', 0 ) );
 		}
 
-		/** Stylesheet */
+		/** Global Stylesheet */
 		wp_enqueue_style( 'vendor-css', ASSETS_URL . 'css/_vendor.css', [], $version );
 		wp_enqueue_style( 'index-css', ASSETS_URL . 'css/index-css.css', [ 'vendor-css' ], $version );
 
-		/** Scripts */
+		/** Global Scripts */
 		wp_enqueue_script( 'modulepreload', ASSETS_URL . 'js/modulepreload-polyfill.js', [], $version, true );
 		wp_enqueue_script( 'index', ASSETS_URL . 'js/index.js', [ 'jquery-core' ], $version, true );
 		wp_script_add_data( 'modulepreload', 'extra', [ 'module', 'async' ] );
 		wp_script_add_data( 'index', 'extra', [ 'module', 'defer' ] );
 
 		wp_add_inline_script( 'jquery-core', 'Object.assign(window, { $: jQuery, jQuery });', 'after' );
+
+		/** Homepage */
+		if ( Helper::isHomeOrFrontPage() ) {
+			wp_enqueue_style( 'home-css', ASSETS_URL . 'css/home-css.css', [], $version );
+			wp_enqueue_script( 'home', ASSETS_URL . 'js/home.js', [ 'jquery-core' ], $version, true );
+			wp_script_add_data( 'home', 'extra', [ 'module', 'defer' ] );
+
+			//...
+		}
 
 		/** Inline Js */
 		$recaptcha_options     = Helper::getOption( 'recaptcha__options' );

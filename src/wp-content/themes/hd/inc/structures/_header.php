@@ -57,15 +57,15 @@ function module_preload_action(): void {
 add_action( 'wp_head', 'critical_css_action', 12 );
 
 function critical_css_action(): void {
-	if ( is_front_page() || is_home() ) {
-
+	if ( \HD\Helper::isHomeOrFrontPage() ) {
 		$critical_css = get_transient( 'index_critical_css' );
+
 		if ( false === $critical_css ) {
-			$critical_css_file = THEME_PATH . 'assets/css/index_critical.min.css';
+			$critical_css_file = THEME_PATH . 'assets/css/index_critical.css';
 
 			if ( is_file( $critical_css_file ) ) {
 				$critical_css = file_get_contents( $critical_css_file );
-				set_transient( 'index_critical_css', $critical_css, 1 * HOUR_IN_SECONDS );
+				set_transient( 'index_critical_css', $critical_css, 2 * HOUR_IN_SECONDS );
 			}
 		}
 

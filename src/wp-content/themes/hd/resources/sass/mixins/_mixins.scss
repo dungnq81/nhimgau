@@ -272,13 +272,13 @@
 }
 
 @mixin gradient-text($angle: 135deg, $c1: vars.$primary, $c2: vars.$secondary) {
+    @include linear-gradient($angle, $c1, $c2);
     & {
         -webkit-text-fill-color: transparent;
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
         display: inline-block;
-        @include linear-gradient($angle, $c1, $c2);
     }
 }
 

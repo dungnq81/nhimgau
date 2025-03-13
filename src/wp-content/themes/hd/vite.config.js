@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
-//import postcssPurgecss from '@fullhuman/postcss-purgecss';
+import postcssPurgecss from '@fullhuman/postcss-purgecss';
 import { sharedConfig } from '../../../vite.config.shared';
 
 // THEME
@@ -25,6 +25,7 @@ const sassFiles = [
     'swiper-css',
     'woocommerce-css',
     'index-css',
+    'home-css',
 ];
 
 // JS
@@ -42,6 +43,7 @@ const jsFiles = [
     'swiper',
     'woocommerce',
     'index',
+    'home',
 ];
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -67,10 +69,10 @@ export default {
                 //         './assets/js/**/*.js',
                 //     ],
                 //     safelist: {
-                //         standard: [ /wp-/ ],
-                //         deep: [ /is-/ ],
-                //         greedy: [ /^menu-/, /^nav-/ ],
-                //     },
+                //         standard: [ /wp-/, /is-/, /has-/, /align/, /screen-reader/ ],
+                //         deep: [ /is-/, /has-/ ],
+                //         greedy: [ /^menu-/, /^nav-/, /^wp-/ ],
+                //     }
                 // }),
             ],
         },

@@ -23,11 +23,6 @@ if ( post_password_required() ) :
 	return;
 endif;
 
-// homepage widget
-if ( is_active_sidebar( 'home-sidebar' ) ) :
-	dynamic_sidebar( 'home-sidebar' );
-endif;
-
 // custom page
 $ACF = \HD\Helper::getFields( get_the_ID() );
 
