@@ -1,4 +1,4 @@
-//import $ from 'jquery';
+import $ from 'jquery';
 import Foundation from './3rd/_zf';
 import select2 from 'select2';
 
@@ -6,9 +6,10 @@ select2();
 
 import BackToTop from './components/back-to-top';
 import scriptLoader from './components/script-loader';
+import { initSocialShare } from './components/social-share';
 import SimpleBar from 'simplebar';
 import ResizeObserver from 'resize-observer-polyfill';
-import { Fancybox } from '@fancyapps/ui';
+//import { Fancybox } from '@fancyapps/ui';
 
 window.ResizeObserver = ResizeObserver;
 
@@ -34,12 +35,13 @@ const {
     _csrfToken: csrfToken,
     _restToken: restToken,
     _lang: lang,
-} = {...hdDefaults, ...(typeof hd !== 'undefined' ? hd : {})};
+} = { ...hdDefaults, ...(typeof hd !== 'undefined' ? hd : {}) };
 
 // Document ready
 document.addEventListener('DOMContentLoaded', () => {
     new BackToTop();
     scriptLoader(4000, 'script[data-type=\'lazy\']');
+    initSocialShare();
 
     document.querySelectorAll('a._blank, a.blank, a[target="_blank"]').forEach((el) => {
         if (!el.hasAttribute('target') || el.getAttribute('target') !== '_blank') {

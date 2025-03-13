@@ -37,7 +37,8 @@
     "dependencies": {
         "@fancyapps/ui": "^5.0.36",
         "current-device": "^0.10.2",
-        "ensemble-social-share": "github:loltgt/ensemble-social-share",
+        "@loltgt/ensemble": "github:loltgt/ensemble",
+        "@loltgt/ensemble-social-share": "github:loltgt/ensemble-social-share",
         "foundation-sites": "^6.9.0",
         "gsap": "^3.12.7",
         "jquery": "^3.7.1",

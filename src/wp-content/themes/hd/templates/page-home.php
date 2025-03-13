@@ -40,5 +40,7 @@ if ( $home_flexible_content ) {
 	\HD\Helper::BlockTemplate( 'template-blocks/static-page' );
 }
 
+get_template_part( 'template-blocks/social-share' );
+
 // footer
 get_footer( 'home' );

@@ -11,12 +11,15 @@ importers:
       '@fancyapps/ui':
         specifier: ^5.0.36
         version: 5.0.36
+      '@loltgt/ensemble':
+        specifier: github:loltgt/ensemble
+        version: ensemble@https://codeload.github.com/loltgt/ensemble/tar.gz/813cba955eb211567171e90056847ff323189a5a
+      '@loltgt/ensemble-social-share':
+        specifier: github:loltgt/ensemble-social-share
+        version: ensemble-social-share@https://codeload.github.com/loltgt/ensemble-social-share/tar.gz/4d738de14920f016c24f83e5fa8fc9bdb42b8eca
       current-device:
         specifier: ^0.10.2
         version: 0.10.2
-      ensemble-social-share:
-        specifier: github:loltgt/ensemble-social-share
-        version: https://codeload.github.com/loltgt/ensemble-social-share/tar.gz/4d738de14920f016c24f83e5fa8fc9bdb42b8eca
       foundation-sites:
         specifier: ^6.9.0
         version: 6.9.0(jquery@3.7.1)(motion-ui@2.0.8(jquery@3.7.1))(what-input@5.2.12)
@@ -640,8 +643,8 @@ packages:
     resolution: {integrity: sha512-kfzR4zzQtAE9PC7CzZsjl3aBNbXWuXiSeOCdLcPpBfGW8YuCqQHcRPFDbr/BPVmd3EEPVpuFzLyuT/cUhPr4OQ==}
     engines: {node: '>=12.20'}
 
-  caniuse-lite@1.0.30001703:
-    resolution: {integrity: sha512-kRlAGTRWgPsOj7oARC9m1okJEXdL/8fekFVcxA8Hl7GH4r/sN4OJn/i6Flde373T50KS7Y37oFbMwlE8+F42kQ==}
+  caniuse-lite@1.0.30001704:
+    resolution: {integrity: sha512-+L2IgBbV6gXB4ETf0keSvLr7JUrRVbIaB/lrQ1+z8mRcQiisG5k+lG6O4n6Y5q6f5EuNfaYXKgymucphlEXQew==}
 
   caw@2.0.1:
     resolution: {integrity: sha512-Cg8/ZSBEa8ZVY9HspcGUYaK63d/bN7rqS3CYCzEGUxuYv6UlmcjzDUz2fCFFHyTvUW5Pk0I+3hkA3iXlIj6guA==}
@@ -821,8 +824,8 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  electron-to-chromium@1.5.114:
-    resolution: {integrity: sha512-DFptFef3iktoKlFQK/afbo274/XNWD00Am0xa7M8FZUepHlHT8PEuiNBoRfFHbH1okqN58AlhbJ4QTkcnXorjA==}
+  electron-to-chromium@1.5.116:
+    resolution: {integrity: sha512-mufxTCJzLBQVvSdZzX1s5YAuXsN1M4tTyYxOOL1TcSKtIzQ9rjIrm7yFK80rN5dwGTePgdoABDSHpuVtRQh0Zw==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -835,6 +838,10 @@ packages:
 
   ensemble-social-share@https://codeload.github.com/loltgt/ensemble-social-share/tar.gz/4d738de14920f016c24f83e5fa8fc9bdb42b8eca:
     resolution: {tarball: https://codeload.github.com/loltgt/ensemble-social-share/tar.gz/4d738de14920f016c24f83e5fa8fc9bdb42b8eca}
+    version: 0.0.4
+
+  ensemble@https://codeload.github.com/loltgt/ensemble/tar.gz/813cba955eb211567171e90056847ff323189a5a:
+    resolution: {tarball: https://codeload.github.com/loltgt/ensemble/tar.gz/813cba955eb211567171e90056847ff323189a5a}
     version: 0.0.4
 
   entities@4.5.0:
@@ -2394,7 +2401,7 @@ snapshots:
   autoprefixer@10.4.21(postcss@8.5.3):
     dependencies:
       browserslist: 4.24.4
-      caniuse-lite: 1.0.30001703
+      caniuse-lite: 1.0.30001704
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.1.1
@@ -2457,8 +2464,8 @@ snapshots:
 
   browserslist@4.24.4:
     dependencies:
-      caniuse-lite: 1.0.30001703
-      electron-to-chromium: 1.5.114
+      caniuse-lite: 1.0.30001704
+      electron-to-chromium: 1.5.116
       node-releases: 2.0.19
       update-browserslist-db: 1.1.3(browserslist@4.24.4)
 
@@ -2499,7 +2506,7 @@ snapshots:
 
   callsites@4.2.0: {}
 
-  caniuse-lite@1.0.30001703: {}
+  caniuse-lite@1.0.30001704: {}
 
   caw@2.0.1:
     dependencies:
@@ -2736,7 +2743,7 @@ snapshots:
 
   eastasianwidth@0.2.0: {}
 
-  electron-to-chromium@1.5.114: {}
+  electron-to-chromium@1.5.116: {}
 
   emoji-regex@8.0.0: {}
 
@@ -2747,6 +2754,8 @@ snapshots:
       once: 1.4.0
 
   ensemble-social-share@https://codeload.github.com/loltgt/ensemble-social-share/tar.gz/4d738de14920f016c24f83e5fa8fc9bdb42b8eca: {}
+
+  ensemble@https://codeload.github.com/loltgt/ensemble/tar.gz/813cba955eb211567171e90056847ff323189a5a: {}
 
   entities@4.5.0: {}
 

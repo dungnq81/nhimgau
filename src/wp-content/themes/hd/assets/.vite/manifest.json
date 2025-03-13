@@ -38,6 +38,15 @@
     "file": "js/social-share.js",
     "name": "social-share",
     "src": "wp-content/themes/hd/resources/js/components/social-share.js",
+    "isEntry": true,
+    "imports": [
+      "__vendor.js"
+    ]
+  },
+  "wp-content/themes/hd/resources/js/home.js": {
+    "file": "js/home.js",
+    "name": "home",
+    "src": "wp-content/themes/hd/resources/js/home.js",
     "isEntry": true
   },
   "wp-content/themes/hd/resources/js/index.js": {
@@ -48,7 +57,8 @@
     "imports": [
       "__vendor.js",
       "wp-content/themes/hd/resources/js/components/back-to-top.js",
-      "wp-content/themes/hd/resources/js/components/script-loader.js"
+      "wp-content/themes/hd/resources/js/components/script-loader.js",
+      "wp-content/themes/hd/resources/js/components/social-share.js"
     ]
   },
   "wp-content/themes/hd/resources/js/swiper.js": {
@@ -74,6 +84,11 @@
   "wp-content/themes/hd/resources/sass/editor-style-css.scss": {
     "file": "css/editor-style-css.css",
     "src": "wp-content/themes/hd/resources/sass/editor-style-css.scss",
+    "isEntry": true
+  },
+  "wp-content/themes/hd/resources/sass/home-css.scss": {
+    "file": "css/woocommerce-css.css",
+    "src": "wp-content/themes/hd/resources/sass/woocommerce-css.scss",
     "isEntry": true
   },
   "wp-content/themes/hd/resources/sass/index-css.scss": {

@@ -99,7 +99,7 @@ body.ajax-loader {
 
 .share-icon {
     background: rgb(240 240 240 / 10%);
-    border: 1px solid color.adjust(vars.$body-color, $alpha: -0.6);
+    border: 1px solid color.adjust(vars.$body-color, $alpha: -0.5);
     border-radius: 50%;
     display: block;
     padding: 0;
@@ -108,69 +108,73 @@ body.ajax-loader {
 
     &::before {
         content: '';
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center;
+        font-family: vars.$awesome-font;
         margin: 0;
         font-weight: 400;
+        color: vars.$body-color;
+        @include mixin.media-fs(16, false, 17);
         @include mixin.centering-self(18);
         @include mixin.flex-center();
     }
 
     &.icon-facebook {
         &::before {
-            background-image: url('#{vars.$img-path}/svg/facebook.svg');
+            content: '\f39e';
         }
     }
 
-    &.icon-ex {
+    &.icon-ex, &.icon-x {
         &::before {
-            background-image: url('#{vars.$img-path}/svg/x.svg');
+            content: '\e61b';
         }
     }
 
     &.icon-whatsapp {
         &::before {
-            background-image: url('#{vars.$img-path}/svg/whatsapp.svg');
+            content: '\f232';
         }
     }
 
     &.icon-messenger {
         &::before {
-            background-image: url('#{vars.$img-path}/svg/messenger.svg');
+            content: '\f39f';
         }
     }
 
     &.icon-telegram {
         &::before {
-            background-image: url('#{vars.$img-path}/svg/telegram.svg');
+            content: '\f2c6';
         }
     }
 
     &.icon-linkedin {
         &::before {
-            background-image: url('#{vars.$img-path}/svg/linkedin.svg');
+            content: '\f0e1';
         }
     }
 
     &.icon-copy-link {
         &::before {
-            background-image: url('#{vars.$img-path}/svg/copy.svg');
+            content: '\f0c5';
         }
     }
 
     &.icon-send-email,
     &.icon-mail {
         &::before {
-            background-image: url('#{vars.$img-path}/svg/envelope.svg');
+            content: '\f0e0';
         }
     }
 
     &.icon-web-share,
     &.icon-share {
         &::before {
-            background-image: url('#{vars.$img-path}/svg/share.svg');
+            content: '\f1e0';
         }
+    }
+
+    &:hover {
+        color: vars.$Primary-01;
     }
 }
 
