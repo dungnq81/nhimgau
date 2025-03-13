@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Displays navigation mobile
  *
@@ -44,7 +43,7 @@ if ( ! in_array( $position, [ 'left', 'right', 'top', 'bottom' ], false ) ) {
     <div class="menu-outer">
 		<?php
 
-		echo \HD\Helper::doShortcode( 'inline_search' );
+		//echo \HD\Helper::doShortcode( 'inline_search' );
 		echo \HD\Helper::doShortcode( 'vertical_menu' );
 		?>
     </div>

@@ -32,22 +32,22 @@ final class ContactLink {
 	 *
 	 * @return mixed|string
 	 */
-    public function modify_footer_class( $default_class ): mixed {
-	    if ( Helper::getOption( 'contact_link__options' ) ) {
-            return $default_class . ' has-contact-link';
-	    }
+	public function modify_footer_class( $default_class ): mixed {
+		if ( Helper::getOption( 'contact_link__options' ) ) {
+			return $default_class . ' has-contact-link';
+		}
 
-        return $default_class;
-    }
+		return $default_class;
+	}
 
 	// ------------------------------------------------------
 
 	/**
 	 * @return void
 	 */
-    public function add_this_contact_link(): void {
-        echo Helper::doShortcode( 'contact_link' );
-    }
+	public function add_this_contact_link(): void {
+		echo Helper::doShortcode( 'contact_link' );
+	}
 
 	// ------------------------------------------------------
 
@@ -75,41 +75,44 @@ final class ContactLink {
 		if ( $contact_options ) {
 			foreach ( $contact_options as $key => $contact_option ) {
 				$value = $contact_option['value'] ?? '';
-				//$color = $contact_option['color'] ?? '';
 
 				$data = [
 					'name'        => $contact_links[ $key ]['name'] ?? '',
 					'icon'        => $contact_links[ $key ]['icon'] ?? '',
+					'placeholder' => $contact_links[ $key ]['placeholder'] ?? '',
 					'target'      => $contact_links[ $key ]['target'] ?? '',
+					'class'       => $contact_links[ $key ]['class'] ?? '',
 				];
 
 				if ( empty( $value ) ) {
 					continue;
 				}
 
-				$target = $data['target'] ? ' target="' . $data['target'] . '"' : '';
-				$thumb  = '';
+				$target  = $data['target'] ? ' target="' . $data['target'] . '"' : '';
+				$title   = $data['placeholder'] ? Helper::escAttr( $data['placeholder'] ) : Helper::escAttr( $data['name'] );
+				$classes = $data['class'] ? $key . ' ' . $data['class'] : $key;
+				$thumb   = '';
 
 				if ( Helper::isUrl( $data['icon'] ) || str_starts_with( $data['icon'], 'data:' ) ) :
 					$thumb = '<img src="' . $data['icon'] . '" alt="' . Helper::escAttr( $data['name'] ) . '">';
-				elseif ( str_starts_with( $data['icon'], '<svg' ) ) :
+                elseif ( str_starts_with( $data['icon'], '<svg' ) ) :
 					$thumb = $data['icon'];
-				elseif ( is_string( $data['icon'] ) ) :
+                elseif ( is_string( $data['icon'] ) ) :
 					$thumb = '<i class="' . $data['icon'] . '"></i>';
 				endif;
 
 				?>
-				<li>
-					<a<?= $target ?> class="<?= $key ?>" href="<?= $value ?>" title="<?= Helper::escAttr( $data['name'] ) ?>">
+                <li>
+                    <a<?= $target ?> class="<?= $classes ?>" href="<?= $value ?>" title="<?= $title ?>">
 						<?= $thumb ?>
-						<span><?= $data['name'] ?></span>
-					</a>
-				</li>
-			<?php
+                        <span><?= $data['name'] ?></span>
+                    </a>
+                </li>
+				<?php
 			}
 		}
 
-        $content = ob_get_clean();
+		$content = ob_get_clean();
 
 		return $content ? '<ul class="add-this' . $class . '">' . $content . '</ul>' : '';
 	}

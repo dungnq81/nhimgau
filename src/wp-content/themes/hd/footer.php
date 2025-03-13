@@ -18,7 +18,7 @@ do_action( 'hd_after_site_content_action' );
 do_action( 'hd_before_footer_action' );
 
 ?>
-<footer id="footer" class="site-footer" <?php echo \HD\Helper::microdata( 'footer' ); ?>>
+<footer id="footer" class="<?= apply_filters( 'hd_footer_class_filter', 'site-footer' ) ?>" <?php echo \HD\Helper::microdata( 'footer' ); ?>>
 	<?php
 
 	/**
@@ -30,6 +30,9 @@ do_action( 'hd_before_footer_action' );
 </footer><!-- #footer -->
 <?php
 
+/**
+ * @see ContactLink::add_this_contact_link - 11
+ */
 do_action( 'hd_after_footer_action' );
 
 /**

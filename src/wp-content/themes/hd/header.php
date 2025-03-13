@@ -19,7 +19,6 @@
     /**
      * @see wp_head_action - 1
      * @see other_head_action - 10
-     * @see module_preload_action - 11
      * @see critical_css_action - 12
      * @see external_fonts_action - 99
      */
@@ -37,11 +36,12 @@
 
     /**
      * @see skip_to_content_link_action - 2
+     * @see off_canvas_menu_action - 11
      */
     do_action( 'hd_before_header_action' );
 
     ?>
-    <header id="header" class="site-header" <?php echo \HD\Helper::microdata( 'header' ); ?>>
+    <header id="header" class="<?= apply_filters( 'hd_header_class_filter', 'site-header' ) ?>" <?php echo \HD\Helper::microdata( 'header' ); ?>>
 		<?php
 
 		/**

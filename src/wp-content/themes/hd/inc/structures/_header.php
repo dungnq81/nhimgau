@@ -43,17 +43,6 @@ function other_head_action(): void {
 
 // -----------------------------------------------
 
-add_action( 'wp_head', 'module_preload_action', 11 );
-
-function module_preload_action(): void {
-	?>
-    <link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/_vendor.js'; ?>">
-    <link rel="modulepreload" crossorigin href="<?php echo ASSETS_URL . 'js/lazy-loader.js'; ?>">
-	<?php
-}
-
-// -----------------------------------------------
-
 add_action( 'wp_head', 'critical_css_action', 12 );
 
 function critical_css_action(): void {
@@ -95,6 +84,14 @@ function skip_to_content_link_action(): void {
 		esc_attr__( 'Skip to content', TEXT_DOMAIN ),
 		esc_html__( 'Skip to content', TEXT_DOMAIN )
 	);
+}
+
+// -----------------------------------------------
+
+add_action( 'hd_before_header_action', 'off_canvas_menu_action', 11 );
+
+function off_canvas_menu_action(): void {
+    \HD\Helper::BlockTemplate( 'template-blocks/off-canvas' );
 }
 
 // -----------------------------------------------

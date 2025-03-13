@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The block for sharing functionality.
  *

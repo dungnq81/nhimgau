@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The template for displaying `homepage`
  * Template Name: Home
@@ -17,11 +16,12 @@ if ( have_posts() ) {
 	the_post();
 }
 
-if ( post_password_required() ) :
+if ( post_password_required() ) {
 	echo get_the_password_form();
+	get_footer( 'home' );
 
 	return;
-endif;
+}
 
 // custom page
 $ACF = \HD\Helper::getFields( get_the_ID() );
@@ -33,9 +33,11 @@ if ( $home_flexible_content ) {
 		$acf_fc_layout = $section['acf_fc_layout'] ?? '';
 
 		if ( $acf_fc_layout ) {
-			get_template_part( 'template-parts/home/' . $acf_fc_layout, null, $section );
+			\HD\Helper::BlockTemplate( 'template-parts/home/' . $acf_fc_layout, $section );
 		}
 	}
+} else {
+	\HD\Helper::BlockTemplate( 'template-blocks/static-page' );
 }
 
 // footer

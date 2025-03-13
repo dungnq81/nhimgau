@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The block for displaying a message that posts cannot be found.
  *
