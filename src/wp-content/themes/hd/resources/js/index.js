@@ -23,9 +23,9 @@ const hdDefaults = {
     _ajaxUrl: '/wp-admin/admin-ajax.php',
     _baseUrl: 'https://nhimgau.test/',
     _themeUrl: 'https://nhimgau.test/wp-content/themes/hd/',
-    _csrfToken: '',
-    _restToken: '',
-    _lang: '',
+    _csrfToken: '***',
+    _restToken: '***',
+    _lang: 'vi',
 };
 
 const {

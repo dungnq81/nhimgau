@@ -28,9 +28,9 @@ export const sharedConfig = {
         }),
     ],
     css: {
+        devSourcemap: !isProduction,
         preprocessorOptions: {
             scss: {
-                sourceMap: !isProduction,
                 api: 'modern-compiler',
                 quietDeps: true,
             },
@@ -43,7 +43,6 @@ export const sharedConfig = {
                 }),
             ],
         },
-        devSourcemap: !isProduction,
     },
     build: {
         sourcemap: !isProduction,
