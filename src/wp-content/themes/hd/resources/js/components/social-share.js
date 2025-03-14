@@ -1,22 +1,53 @@
 import { SocialShare } from '@loltgt/ensemble-social-share';
 
-function initSocialShare() {
+const DEFAULT_OPTIONS = {
+    layout: 'v',
+    intents: [
+        'facebook',
+        'x',
+        'linkedin',
+        'threads',
+        'bluesky',
+        'reddit',
+        'mastodon',
+        'quora',
+        'whatsapp',
+        'messenger',
+        'telegram',
+        'skype',
+        'viber',
+        'line',
+        'snapchat',
+        'send-email',
+        'copy-link',
+        'web-share',
+        'print',
+    ],
+    onIntent: (self, event, intent, data) => {
+        return intent === 'print' && setTimeout(window.print, 2e2);
+    },
+};
+
+function initSocialShare(customOptions = {}) {
     const elements = document.querySelectorAll('[data-social-share]');
+    const options = {
+        ...DEFAULT_OPTIONS,
+        ...customOptions,
+    };
+
     elements.forEach((element) => {
-        new SocialShare(element, {
-            displays: [
-                'facebook',
-                'x',
-                'whatsapp',
-                'messenger',
-                'telegram',
-                'linkedin',
-                'send-email',
-                'copy-link',
-                'web-share',
-            ],
-        });
+        new SocialShare(element, options);
     });
 }
 
-export { initSocialShare, SocialShare };
+const observer = new MutationObserver(() => {
+    const printButton = document.querySelector('.share-intent-print');
+    if (printButton) {
+        printButton.setAttribute('title', 'Print');
+        observer.disconnect();
+    }
+});
+
+observer.observe(document.body, { childList: true, subtree: true });
+
+export { initSocialShare };

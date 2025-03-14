@@ -42,23 +42,28 @@ body.ajax-loader {
 // .sharing-toolbox
 
 .sharing-toolbox {
-    .share-title {
-        bottom: 35px;
-        color: vars.$body-color;
-        font-size: 13px;
-        font-weight: 400;
-        position: relative;
-        transform: rotate(-90deg);
-        white-space: nowrap;
-        @include mixin.flex-align-center();
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    @include mixin.gap(20);
 
-        &::before {
+    .share-title {
+        color: vars.$body-color;
+        font-size: 14px;
+        font-weight: 500;
+        /*transform: rotate(-90deg);*/
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        line-height: 1;
+
+        /*&::before {
             background: #ccc;
             content: '';
             height: 1px;
             margin-right: 3px;
             width: 10px;
-        }
+        }*/
     }
 
     .social-share {
@@ -68,27 +73,25 @@ body.ajax-loader {
 
         ul.share-actions {
             display: flex;
-            flex-direction: column;
             list-style: none;
             margin: 0;
+            @include mixin.gap(15);
 
             & > li.share-action {
-                display: flex;
-                margin-bottom: 15px;
+                @include mixin.flex-center;
 
                 & > button.share-button {
                     cursor: pointer;
-                    opacity: 0.8;
+                    opacity: 1;
                     transition: 0.3s;
-
-                    &:hover {
-                        opacity: 1;
-                    }
                 }
+            }
+        }
 
-                &:where(.share-action-whatsapp, .share-action-telegram, .share-action-linkedin, .share-action-copy-link) {
-                    display: none !important;
-                }
+        &.share-vertical {
+            ul.share-actions {
+                flex-direction: column;
+                flex-wrap: nowrap;
             }
         }
     }
@@ -98,13 +101,9 @@ body.ajax-loader {
 // .share-icon
 
 .share-icon {
-    background: rgb(240 240 240 / 10%);
-    border: 1px solid color.adjust(vars.$body-color, $alpha: -0.5);
-    border-radius: 50%;
     display: block;
     padding: 0;
     position: relative;
-    @include mixin.box(35);
 
     &::before {
         content: '';
@@ -112,9 +111,14 @@ body.ajax-loader {
         margin: 0;
         font-weight: 400;
         color: vars.$body-color;
-        @include mixin.media-fs(16, false, 17);
-        @include mixin.centering-self(18);
+        font-size: 18px;
         @include mixin.flex-center();
+    }
+
+    &.icon-print {
+        &::before {
+            content: '\f02f';
+        }
     }
 
     &.icon-facebook {
@@ -123,7 +127,7 @@ body.ajax-loader {
         }
     }
 
-    &.icon-ex, &.icon-x {
+    &.icon-x {
         &::before {
             content: '\e61b';
         }
@@ -141,6 +145,30 @@ body.ajax-loader {
         }
     }
 
+    &.icon-snapchat {
+        &::before {
+            content: '\f2ab';
+        }
+    }
+
+    &.icon-line {
+        &::before {
+            content: '\f3c0';
+        }
+    }
+
+    &.icon-viber {
+        &::before {
+            content: '\f409';
+        }
+    }
+
+    &.icon-skype {
+        &::before {
+            content: '\f17e';
+        }
+    }
+
     &.icon-telegram {
         &::before {
             content: '\f2c6';
@@ -153,21 +181,49 @@ body.ajax-loader {
         }
     }
 
+    &.icon-quora {
+        &::before {
+            content: '\f2c4';
+        }
+    }
+
+    &.icon-mastodon {
+        &::before {
+            content: '\f4f6';
+        }
+    }
+
+    &.icon-reddit {
+        &::before {
+            content: '\f1a1';
+        }
+    }
+
+    &.icon-bluesky {
+        &::before {
+            content: '\e671';
+        }
+    }
+
+    &.icon-threads {
+        &::before {
+            content: '\e618';
+        }
+    }
+
     &.icon-copy-link {
         &::before {
             content: '\f0c5';
         }
     }
 
-    &.icon-send-email,
-    &.icon-mail {
+    &.icon-send-email {
         &::before {
             content: '\f0e0';
         }
     }
 
-    &.icon-web-share,
-    &.icon-share {
+    &.icon-web-share {
         &::before {
             content: '\f1e0';
         }

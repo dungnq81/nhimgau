@@ -41,7 +41,7 @@ const {
 document.addEventListener('DOMContentLoaded', () => {
     new BackToTop();
     scriptLoader(4000, 'script[data-type=\'lazy\']');
-    initSocialShare();
+    initSocialShare({ layout: 'v', intents: [ 'facebook', 'x', 'print', 'send-email', 'copy-link', 'web-share' ] });
 
     document.querySelectorAll('a._blank, a.blank, a[target="_blank"]').forEach((el) => {
         if (!el.hasAttribute('target') || el.getAttribute('target') !== '_blank') {
