@@ -41,10 +41,20 @@ function initSocialShare(element, customOptions = {}) {
   }
 }
 function observePrintButton() {
+  const buttons = [
+    { selector: ".share-intent-print", title: "Print" }
+  ];
   const observer = new MutationObserver(() => {
-    const printButton = document.querySelector(".share-intent-print");
-    if (printButton && (!printButton.title || printButton.title === "undefined")) {
-      printButton.setAttribute("title", "Print");
+    buttons.forEach(({ selector, title }) => {
+      const button = document.querySelector(selector);
+      if (button && (!button.title || button.title === "undefined")) {
+        button.setAttribute("title", title);
+      }
+    });
+    if (buttons.every(({ selector }) => {
+      var _a;
+      return (_a = document.querySelector(selector)) == null ? void 0 : _a.title;
+    })) {
       observer.disconnect();
     }
   });
