@@ -28,26 +28,32 @@ const DEFAULT_OPTIONS = {
     },
 };
 
-function initSocialShare(customOptions = {}) {
-    const elements = document.querySelectorAll('[data-social-share]');
+function initSocialShare(element, customOptions = {}) {
+    const ele = document.querySelector(element);
+    if (!ele) return;
+
     const options = {
         ...DEFAULT_OPTIONS,
         ...customOptions,
     };
 
-    elements.forEach((element) => {
-        new SocialShare(element, options);
-    });
+    new SocialShare(ele, options);
+
+    if (options.intents.includes('print')) {
+        observePrintButton();
+    }
 }
 
-const observer = new MutationObserver(() => {
-    const printButton = document.querySelector('.share-intent-print');
-    if (printButton) {
-        printButton.setAttribute('title', 'Print');
-        observer.disconnect();
-    }
-});
+function observePrintButton() {
+    const observer = new MutationObserver(() => {
+        const printButton = document.querySelector('.share-intent-print');
+        if (printButton && (!printButton.title || printButton.title === 'undefined')) {
+            printButton.setAttribute('title', 'Print');
+            observer.disconnect();
+        }
+    });
 
-observer.observe(document.body, { childList: true, subtree: true });
+    observer.observe(document.body, { childList: true, subtree: true });
+}
 
 export { initSocialShare };
