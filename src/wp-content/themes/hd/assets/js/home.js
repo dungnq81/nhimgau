@@ -1,1 +1,1 @@
-
+jQuery((function(n){}));
