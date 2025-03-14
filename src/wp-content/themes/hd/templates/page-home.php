@@ -23,9 +23,7 @@ if ( post_password_required() ) {
 	return;
 }
 
-// custom page
 $ACF = \HD\Helper::getFields( get_the_ID() );
-
 $home_flexible_content = ! empty( $ACF['home_flexible_content'] ) ? (array) $ACF['home_flexible_content'] : false;
 if ( $home_flexible_content ) {
 
