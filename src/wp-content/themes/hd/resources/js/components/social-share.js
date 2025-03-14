@@ -1,7 +1,7 @@
 import { SocialShare } from '@loltgt/ensemble-social-share';
 
 const DEFAULT_OPTIONS = {
-    layout: 'v',
+    layout: 'h',
     intents: [
         'facebook',
         'x',
@@ -32,9 +32,11 @@ function initSocialShare(element, customOptions = {}) {
     const ele = document.querySelector(element);
     if (!ele) return;
 
+    const layout = customOptions.layout || ele.dataset.layout || DEFAULT_OPTIONS.layout;
     const options = {
         ...DEFAULT_OPTIONS,
         ...customOptions,
+        layout,
     };
 
     new SocialShare(ele, options);

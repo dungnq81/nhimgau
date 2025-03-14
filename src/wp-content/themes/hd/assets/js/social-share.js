@@ -1,6 +1,6 @@
 import { b as SocialShare } from "./_vendor.js";
 const DEFAULT_OPTIONS = {
-  layout: "v",
+  layout: "h",
   intents: [
     "facebook",
     "x",
@@ -29,9 +29,11 @@ const DEFAULT_OPTIONS = {
 function initSocialShare(element, customOptions = {}) {
   const ele = document.querySelector(element);
   if (!ele) return;
+  const layout = customOptions.layout || ele.dataset.layout || DEFAULT_OPTIONS.layout;
   const options = {
     ...DEFAULT_OPTIONS,
-    ...customOptions
+    ...customOptions,
+    layout
   };
   new SocialShare(ele, options);
   if (options.intents.includes("print")) {
