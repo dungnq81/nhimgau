@@ -65,6 +65,7 @@ final class Addons {
 		}
 
 		// ThirdParty
+		class_exists( \Addons\ThirdParty\ACF::class ) && \Addons\Helper::isAcfActive() && ( new \Addons\ThirdParty\ACF() );
 		class_exists( \Addons\ThirdParty\Faker::class ) && ( new \Addons\ThirdParty\Faker() );
 	}
 
