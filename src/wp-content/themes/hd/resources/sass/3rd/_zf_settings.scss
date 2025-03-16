@@ -153,48 +153,6 @@ $font-family-monospace: vars.$monospace-font;
 $header-color: inherit;
 $header-lineheight: vars.$line-height-header;
 $header-margin-bottom: vars.$header-margin-bottom;
-$header-styles: (
-    small: (
-        'h1': (
-            'font-size': map.get(vars.$font-sizes, h1),
-        ),
-        'h2': (
-            'font-size': map.get(vars.$font-sizes, h2),
-        ),
-        'h3': (
-            'font-size': map.get(vars.$font-sizes, h3),
-        ),
-        'h4': (
-            'font-size': map.get(vars.$font-sizes, h4),
-        ),
-        'h5': (
-            'font-size': map.get(vars.$font-sizes, h5),
-        ),
-        'h6': (
-            'font-size': map.get(vars.$font-sizes, h6),
-        ),
-    ),
-    medium: (
-        'h1': (
-            'font-size': map.get(vars.$font-sizes-large, h1),
-        ),
-        'h2': (
-            'font-size': map.get(vars.$font-sizes-large, h2),
-        ),
-        'h3': (
-            'font-size': map.get(vars.$font-sizes-large, h3),
-        ),
-        'h4': (
-            'font-size': map.get(vars.$font-sizes-large, h4),
-        ),
-        'h5': (
-            'font-size': map.get(vars.$font-sizes-large, h5),
-        ),
-        'h6': (
-            'font-size': map.get(vars.$font-sizes-large, h6),
-        ),
-    ),
-);
 $header-text-rendering: optimizeLegibility;
 $small-font-size: 80%;
 $header-small-font-color: $medium-gray;

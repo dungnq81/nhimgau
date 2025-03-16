@@ -17,9 +17,6 @@
     --gap: #{map.get(vars.$spacers, 'gap')};
     --gap-xs: #{map.get(vars.$spacers, 'gap-xs')};
 
-    --line-height-header: #{vars.$line-height-header};
-    --line-height-paragraph: #{vars.$line-height-paragraph};
-
     --Primary-01: #{vars.$Primary-01};
     --Primary-02: #{vars.$Primary-02};
     --Primary-03: #{vars.$Primary-03};
@@ -44,7 +41,8 @@
     }
 
     ::-webkit-scrollbar {
-        @include mixin.box(vars.$scrollbar-w, vars.$scrollbar-h);
+        width: vars.$scrollbar-w;
+        height: vars.$scrollbar-h;
     }
 }
 
@@ -58,8 +56,7 @@ body {
     font-size: vars.$body-size;
     font-family: vars.$body-font;
     font-optical-sizing: auto;
-    line-height: vars.$line-height-global;
-    /*scroll-behavior: smooth;*/
+    line-height: vars.$body-line-height;
 }
 
 :is(input, select, textarea, button, main) {
@@ -87,6 +84,7 @@ body {
 
 * > p {
     margin-top: 0;
+    line-height: inherit;
 
     &:not(:last-child) {
         margin-bottom: vars.$paragraph-margin-bottom;
@@ -117,10 +115,9 @@ sup {
 :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6) {
     font-family: vars.$header-font;
     font-optical-sizing: auto;
-    line-height: vars.$line-height-header;
     margin-bottom: vars.$header-margin-bottom;
     margin-top: 0;
-    font-weight: 600;
+    font-weight: 700;
 
     a {
         text-decoration: none;
@@ -132,6 +129,12 @@ sup {
         color: currentColor;
         line-height: inherit;
         margin-bottom: 0;
+    }
+}
+
+@each $level in h1, h2, h3, h4, h5, h6 {
+    :is(#{$level}, .#{$level}) {
+        @include mixin.fs-heading($level);
     }
 }
 
@@ -208,10 +211,6 @@ figure {
 
 :is(.screen-reader-text, .submenu-toggle-text, .hidden-text, .sr-only) {
     @include mixin.hidden-text();
-}
-
-:is(.clearfix, .clear) {
-    @include mixin.clearfix();
 }
 
 [data-fa]::before {
@@ -394,6 +393,14 @@ figure {
 
 .gap-20 {
     @include mixin.gap(20);
+}
+
+.gap-25 {
+    @include mixin.gap(25);
+}
+
+.gap-30 {
+    @include mixin.gap(30);
 }
 
 .text-center {

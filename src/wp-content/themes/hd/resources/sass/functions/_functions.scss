@@ -391,3 +391,33 @@ $unit-warnings: true !default;
 
     @return $value;
 }
+
+@function clamp-font-size($min-width, $max-width, $min-font-size, $max-font-size) {
+    $min-width-rem: fs($min-width);
+    $max-width-rem: fs($max-width);
+    $min-font-size-rem: fs($min-font-size);
+    $max-font-size-rem: fs($max-font-size);
+
+    $ratio: strip-unit($max-font-size-rem - $min-font-size-rem) / strip-unit($max-width-rem - $min-width-rem);
+
+    @return clamp(
+        #{$min-font-size-rem},
+        calc(#{$min-font-size-rem} + (100vw - #{$min-width-rem}) * #{$ratio}),
+        #{$max-font-size-rem}
+    );
+}
+
+@function clamp-line-height($min-width, $max-width, $min-font-size, $max-font-size, $golden-ratio: 1.618) {
+    $min-width-rem: fs($min-width);
+    $max-width-rem: fs($max-width);
+    $min-font-size-rem: fs($min-font-size);
+    $max-font-size-rem: fs($max-font-size);
+
+    $ratio: strip-unit($max-font-size-rem - $min-font-size-rem) * $golden-ratio / strip-unit($max-width-rem - $min-width-rem);
+
+    @return clamp(
+        #{$min-font-size-rem * $golden-ratio},
+        calc(#{$min-font-size-rem * $golden-ratio} + (100vw - #{$min-width-rem}) * #{$ratio}),
+        #{$max-font-size-rem * $golden-ratio}
+    );
+}
