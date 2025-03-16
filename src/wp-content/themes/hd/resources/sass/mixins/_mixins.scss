@@ -545,7 +545,7 @@
 }
 
 // clamp(min, preferred, max);
-@mixin fs-clamp($min-width, $max-width, $min-font-size, $max-font-size, $golden-ratio: 1.618) {
+@mixin fs-clamp($min-width: vars.$sm, $max-width: vars.$xxl, $min-font-size: 15px, $max-font-size: 16px, $golden-ratio: 1.618) {
     font-size: func.clamp-font-size($min-width, $max-width, $min-font-size, $max-font-size);
     line-height: func.clamp-line-height($min-width, $max-width, $min-font-size, $max-font-size, $golden-ratio);
 }
