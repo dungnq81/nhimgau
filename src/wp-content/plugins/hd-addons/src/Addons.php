@@ -2,6 +2,11 @@
 
 namespace Addons;
 
+use Addons\ThirdParty\ACF;
+use Addons\ThirdParty\CF7;
+use Addons\ThirdParty\Faker;
+use Addons\ThirdParty\RankMath;
+
 \defined( 'ABSPATH' ) || exit;
 
 /**
@@ -15,7 +20,7 @@ final class Addons {
 
 	public function __construct() {
 		add_action( 'plugins_loaded', [ $this, 'i18n' ], 10 );
-		add_action( 'plugins_loaded', [ $this, 'plugins_loaded' ], 11 );
+		add_action( 'plugins_loaded', [ $this, 'plugins_loaded' ], 999 );
 
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ], 39, 1 );
 
@@ -44,19 +49,19 @@ final class Addons {
 		add_action( 'script_loader_tag', [ $this, 'script_loader_tag' ], 11, 3 );
 
 		// Classic Editor
-		if ( \Addons\Helper::checkPluginActive( 'classic-editor/classic-editor.php' ) ) {
+		if ( Helper::checkPluginActive( 'classic-editor/classic-editor.php' ) ) {
 			remove_action( 'admin_init', [ \Classic_Editor::class, 'register_settings' ] );
 		}
 
 		// Load modules
-		$modules = \Addons\Helper::loadYaml( ADDONS_PATH . 'config.yaml' );
+		$modules = Helper::loadYaml( ADDONS_PATH . 'config.yaml' );
 		if ( ! empty( $modules ) ) {
 			foreach ( $modules as $module_slug => $value ) {
-				$className = \Addons\Helper::capitalizedSlug( $module_slug, true );
+				$className = Helper::capitalizedSlug( $module_slug, true );
 				$classFQN  = "\\Addons\\{$className}\\{$className}";
 
 				// WooCommerce
-				if ( (string) $module_slug === 'woocommerce' && ! \Addons\Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {
+				if ( (string) $module_slug === 'woocommerce' && ! Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {
 					continue;
 				}
 
@@ -65,8 +70,10 @@ final class Addons {
 		}
 
 		// ThirdParty
-		class_exists( \Addons\ThirdParty\ACF::class ) && \Addons\Helper::isAcfActive() && ( new \Addons\ThirdParty\ACF() );
-		class_exists( \Addons\ThirdParty\Faker::class ) && ( new \Addons\ThirdParty\Faker() );
+		class_exists( RankMath::class ) && Helper::isRankMathActive() && ( new RankMath() );
+		class_exists( ACF::class ) && Helper::isAcfActive() && ( new ACF() );
+		class_exists( CF7::class ) && Helper::isCf7Active() && ( new CF7() );
+		class_exists( Faker::class ) && ( new Faker() );
 	}
 
 	// -------------------------------------------------------------
@@ -195,7 +202,7 @@ final class Addons {
 	 * @return mixed|string|null
 	 */
 	public function login_headertext(): mixed {
-		$headertext = \Addons\Helper::getThemeMod( 'login_page_headertext_setting' );
+		$headertext = Helper::getThemeMod( 'login_page_headertext_setting' );
 
 		return $headertext ?: get_bloginfo( 'name' );
 	}
@@ -206,7 +213,7 @@ final class Addons {
 	 * @return mixed|string|null
 	 */
 	public function login_headerurl(): mixed {
-		$headerurl = \Addons\Helper::getThemeMod( 'login_page_headerurl_setting' );
+		$headerurl = Helper::getThemeMod( 'login_page_headerurl_setting' );
 
 		return $headerurl ?: site_url( '/' );
 	}

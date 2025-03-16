@@ -59,9 +59,7 @@ export const sharedConfig = {
                 toplevel: true,
                 passes: 2,
             },
-            format: {
-                comments: false,
-            },
+            format: { comments: false },
         },
     },
 };

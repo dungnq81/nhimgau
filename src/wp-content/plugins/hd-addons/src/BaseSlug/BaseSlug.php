@@ -12,7 +12,7 @@ final class BaseSlug {
 	// ------------------------------------------------------
 
 	public function __construct() {
-		$base_slug_options   = \Addons\Helper::getOption( 'base_slug__options' );
+		$base_slug_options = \Addons\Helper::getOption( 'base_slug__options' );
 
 		$this->base_slug_post_type = $base_slug_options['base_slug_post_type'] ?? [];
 		$this->base_slug_taxonomy  = $base_slug_options['base_slug_taxonomy'] ?? [];
@@ -56,33 +56,39 @@ final class BaseSlug {
 
 		foreach ( $taxonomies as $custom_tax ) {
 
+			// ----------------------------------
 			// built-in
+			// ----------------------------------
 			if ( $custom_tax->_builtin && in_array( $custom_tax->name, $this->base_slug_taxonomy, false ) ) {
 
 				// ----------------------------------
 				// category
 				// ----------------------------------
 				if ( $custom_tax->name === 'category' ) {
+
 					// Redirect support from the old category base
 					$old_category_base = trim( str_replace( '%category%', '(.+)', $wp_rewrite->get_category_permastruct() ), '/' );
 
 					$categories = get_categories( [ 'hide_empty' => false ] );
-					foreach ( $categories as $category ) {
-						$category_slug = $category->slug;
+					if ( $categories ) {
 
-						if ( (int) $category->parent === (int) $category->cat_ID ) {
-							$category->parent = 0;
-						} elseif ( (int) $category->parent !== 0 ) {
-							$category_slug = get_category_parents( $category->parent, false, '/', true ) . $category_slug;
+						foreach ( $categories as $category ) {
+							$category_slug = $category->slug;
+
+							if ( (int) $category->parent === (int) $category->cat_ID ) {
+								$category->parent = 0;
+							} elseif ( (int) $category->parent !== 0 ) {
+								$category_slug = get_category_parents( $category->parent, false, '/', true ) . $category_slug;
+							}
+
+							$category_rules += [
+								'(' . $category_slug . ')/(?:feed/)?(feed|rdf|rss|rss2|atom)/?$'                => 'index.php?category_name=$matches[1]&feed=$matches[2]',
+								'(' . $category_slug . ')/' . $wp_rewrite->pagination_base . '/?([0-9]{1,})/?$' => 'index.php?category_name=$matches[1]&paged=$matches[2]',
+								'(' . $category_slug . ')/embed/?$'                                             => 'index.php?category_name=$matches[1]&embed=true',
+								'(' . $category_slug . ')/?$'                                                   => 'index.php?category_name=$matches[1]',
+								$old_category_base . '$'                                                        => 'index.php?addons_category_redirect=$matches[1]',
+							];
 						}
-
-						$category_rules += [
-							'(' . $category_slug . ')/(?:feed/)?(feed|rdf|rss|rss2|atom)/?$'                => 'index.php?category_name=$matches[1]&feed=$matches[2]',
-							'(' . $category_slug . ')/' . $wp_rewrite->pagination_base . '/?([0-9]{1,})/?$' => 'index.php?category_name=$matches[1]&paged=$matches[2]',
-							'(' . $category_slug . ')/embed/?$'                                             => 'index.php?category_name=$matches[1]&embed=true',
-							'(' . $category_slug . ')/?$'                                                   => 'index.php?category_name=$matches[1]',
-							$old_category_base . '$'                                                        => 'index.php?addons_category_redirect=$matches[1]',
-						];
 					}
 				}
 
@@ -91,16 +97,18 @@ final class BaseSlug {
 				// ----------------------------------
 				if ( $custom_tax->name === 'post_tag' ) {
 					$tags = get_tags( [ 'hide_empty' => false ] );
+					if ( $tags ) {
 
-					foreach ( $tags as $tag ) {
-						$old_base = trim( str_replace( '%post_tag%', '(.+)', $wp_rewrite->get_tag_permastruct() ), '/' );
+						foreach ( $tags as $tag ) {
+							$old_base = trim( str_replace( '%post_tag%', '(.+)', $wp_rewrite->get_tag_permastruct() ), '/' );
 
-						$tag_rules += [
-							'(' . $tag->slug . ')/(?:feed/)?(feed|rdf|rss|rss2|atom)/?$'                => 'index.php?tag=$matches[1]&feed=$matches[2]',
-							'(' . $tag->slug . ')/' . $wp_rewrite->pagination_base . '/?([0-9]{1,})/?$' => 'index.php?tag=$matches[1]&paged=$matches[2]',
-							'(' . $tag->slug . ')/?$'                                                   => 'index.php?tag=$matches[1]',
-							$old_base . '$'                                                             => 'index.php?addons_category_redirect=$matches[1]',
-						];
+							$tag_rules += [
+								'(' . $tag->slug . ')/(?:feed/)?(feed|rdf|rss|rss2|atom)/?$'                => 'index.php?tag=$matches[1]&feed=$matches[2]',
+								'(' . $tag->slug . ')/' . $wp_rewrite->pagination_base . '/?([0-9]{1,})/?$' => 'index.php?tag=$matches[1]&paged=$matches[2]',
+								'(' . $tag->slug . ')/?$'                                                   => 'index.php?tag=$matches[1]',
+								$old_base . '$'                                                             => 'index.php?addons_category_redirect=$matches[1]',
+							];
+						}
 					}
 				}
 			}

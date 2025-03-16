@@ -930,4 +930,23 @@ final class Helper {
 	}
 
 	// -------------------------------------------------------------
+
+	/**
+	 * @return bool
+	 */
+	public static function isRankMathActive(): bool {
+		return self::checkPluginActive( 'seo-by-rank-math/rank-math.php' ) ||
+		       self::checkPluginActive( 'seo-by-rank-math-pro/rank-math-pro.php' );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @return bool
+	 */
+	public static function isCf7Active(): bool {
+		return self::checkPluginActive( 'contact-form-7/wp-contact-form-7.php' );
+	}
+
+	// -------------------------------------------------------------
 }

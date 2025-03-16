@@ -5,9 +5,7 @@ namespace HD;
 use HD\Rest\Rest;
 
 use HD\Plugins\ACF\ACF;
-use HD\Plugins\CF7;
 use HD\Plugins\PLL;
-use HD\Plugins\RankMath;
 use HD\Plugins\WooCommerce\WooCommerce;
 
 use HD\Themes\Admin;
@@ -156,9 +154,7 @@ final class Theme {
 	 */
 	public function plugins_setup(): void {
 		Helper::isAcfActive() && ACF::get_instance();
-		Helper::isCf7Active() && CF7::get_instance();
 		Helper::isPolylangActive() && PLL::get_instance();
-		Helper::isRankMathActive() && ( RankMath::get_instance() );
 		Helper::isWoocommerceActive() && WooCommerce::get_instance();
 	}
 

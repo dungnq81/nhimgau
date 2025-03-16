@@ -154,32 +154,32 @@ class Recent_Posts_Widget extends Abstract_Widget {
 						if ( get_queried_object_id() === $recent_post->ID ) {
 							$aria_current = ' aria-current="page"';
 						}
-						?>
-                        <li>
-							<?php if ( $show_thumbnail && $post_thumbnail ) : ?>
-                            <a class="block cover" href="<?php the_permalink( $recent_post->ID ); ?>" aria-label="<?php echo $attr_post_title; ?>">
-                                <span class="res <?= $ratio_class ?>"><?php echo $post_thumbnail; ?></span>
-                            </a>
-							<?php endif; ?>
-                            <div class="cover-content">
-                                <a href="<?php the_permalink( $recent_post->ID ); ?>" title="<?php echo $attr_post_title; ?>"<?php echo $aria_current; ?>><?php echo $post_title; ?></a>
-								<?php if ( $show_date || $show_cat ) : ?>
-                                <div class="meta">
+                    ?>
+                    <li>
+                        <?php if ( $show_thumbnail && $post_thumbnail ) : ?>
+                        <a class="block cover" href="<?php the_permalink( $recent_post->ID ); ?>" aria-label="<?php echo $attr_post_title; ?>">
+                            <span class="res <?= $ratio_class ?>"><?php echo $post_thumbnail; ?></span>
+                        </a>
+                        <?php endif; ?>
+                        <div class="cover-content">
+                            <a href="<?php the_permalink( $recent_post->ID ); ?>" title="<?php echo $attr_post_title; ?>"<?php echo $aria_current; ?>><?php echo $post_title; ?></a>
+                            <?php if ( $show_date || $show_cat ) : ?>
+                            <div class="meta">
 
-                                    <?php if ( $show_date ) : ?>
-                                    <span class="post-date"><?php echo \HD\Helper::humanizeTime( $recent_post ); ?></span>
-                                    <?php endif;
+                                <?php if ( $show_date ) : ?>
+                                <span class="post-date"><?php echo \HD\Helper::humanizeTime( $recent_post ); ?></span>
+                                <?php endif;
 
-                                    if ( $show_cat ) { echo \HD\Helper::getPrimaryTerm( $recent_post ); }
+                                if ( $show_cat ) { echo \HD\Helper::getPrimaryTerm( $recent_post ); }
 
-                                    ?>
-                                </div>
-								<?php endif; ?>
-
-								<?php if ( $show_desc ) { echo \HD\Helper::loopExcerpt( $recent_post ); } ?>
-
+                                ?>
                             </div>
-                        </li>
+                            <?php endif; ?>
+
+                            <?php if ( $show_desc ) { echo \HD\Helper::loopExcerpt( $recent_post ); } ?>
+
+                        </div>
+                    </li>
 					<?php endforeach; ?>
                 </ul>
             </nav>

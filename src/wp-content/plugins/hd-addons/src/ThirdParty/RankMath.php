@@ -1,8 +1,6 @@
 <?php
 
-namespace HD\Plugins;
-
-use HD\Utilities\Traits\Singleton;
+namespace Addons\ThirdParty;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -12,11 +10,9 @@ use HD\Utilities\Traits\Singleton;
  * @author Gaudev
  */
 final class RankMath {
-	use Singleton;
-
 	// --------------------------------------------------
 
-	private function init(): void {
+	public function __construct() {
 		add_filter( 'rank_math/frontend/breadcrumb/args', [ $this, 'breadcrumb_args' ] );
 		add_filter( 'rank_math/frontend/show_keywords', '__return_true' );
 		//add_filter( 'rank_math/sitemap/enable_caching', '__return_false' );
@@ -33,8 +29,17 @@ final class RankMath {
 		 * Filter to add plugins to the RMS TOC.
 		 */
 
+		/** Fixed TOC */
+		if ( \Addons\Helper::checkPluginActive( 'fixed-toc/fixed-toc.php' ) ) {
+			add_filter( 'rank_math/researches/toc_plugins', static function ( $toc_plugins ) {
+				$toc_plugins['fixed-toc/fixed-toc.php'] = 'Fixed TOC';
+
+				return $toc_plugins;
+			} );
+		}
+
 		/** Tocer */
-		if ( \HD\Helper::checkPluginActive( 'tocer/tocer.php' ) ) {
+		if ( \Addons\Helper::checkPluginActive( 'tocer/tocer.php' ) ) {
 			add_filter( 'rank_math/researches/toc_plugins', static function ( $toc_plugins ) {
 				$toc_plugins['tocer/tocer.php'] = 'Tocer';
 
@@ -43,7 +48,7 @@ final class RankMath {
 		}
 
 		/** Easy Table of Contents */
-		if ( \HD\Helper::checkPluginActive( 'easy-table-of-contents/easy-table-of-contents.php' ) ) {
+		if ( \Addons\Helper::checkPluginActive( 'easy-table-of-contents/easy-table-of-contents.php' ) ) {
 			add_filter( 'rank_math/researches/toc_plugins', static function ( $toc_plugins ) {
 				$toc_plugins['easy-table-of-contents/easy-table-of-contents.php'] = 'Easy Table of Contents';
 

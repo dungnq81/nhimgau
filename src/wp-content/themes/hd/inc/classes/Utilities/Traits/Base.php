@@ -343,26 +343,7 @@ trait Base {
 	/**
 	 * @return bool
 	 */
-	public static function isCf7Active(): bool {
-		return self::checkPluginActive( 'contact-form-7/wp-contact-form-7.php' );
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @return bool
-	 */
 	public static function isWoocommerceActive(): bool {
 		return self::checkPluginActive( 'woocommerce/woocommerce.php' );
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @return bool
-	 */
-	public static function isRankMathActive(): bool {
-		return self::checkPluginActive( 'seo-by-rank-math/rank-math.php' ) ||
-		       self::checkPluginActive( 'seo-by-rank-math-pro/rank-math-pro.php' );
 	}
 }

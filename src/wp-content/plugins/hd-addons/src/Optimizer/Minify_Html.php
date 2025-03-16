@@ -13,11 +13,12 @@ namespace Addons\Optimizer;
  *
  * A test suite is available.
  *
+ * @package Minify
  * @author Stephen Clay <steve@mrclay.org>
  */
 class Minify_Html {
 	/**
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $_jsCleanComments = true;
 
@@ -30,6 +31,7 @@ class Minify_Html {
 	 * "Minify" an HTML page
 	 *
 	 * @param string $html
+	 *
 	 * @param array $options
 	 *
 	 * 'cssMinifier' : (optional) callback function to process content of STYLE
@@ -43,7 +45,7 @@ class Minify_Html {
 	 *
 	 * @return string
 	 */
-	public static function minify( $html, $options = [] ) {
+	public static function minify( $html, $options = array() ) {
 		$min = new self( $html, $options );
 
 		return $min->process();
@@ -53,6 +55,7 @@ class Minify_Html {
 	 * Create a minifier object
 	 *
 	 * @param string $html
+	 *
 	 * @param array $options
 	 *
 	 * 'cssMinifier' : (optional) callback function to process content of STYLE
@@ -66,7 +69,7 @@ class Minify_Html {
 	 * 'xhtml' : (optional boolean) should content be treated as XHTML1.0? If
 	 * unset, minify will sniff for an XHTML doctype.
 	 */
-	public function __construct( $html, $options = [] ) {
+	public function __construct( $html, $options = array() ) {
 		$this->_html = str_replace( "\r\n", "\n", trim( $html ) );
 		if ( isset( $options['xhtml'] ) ) {
 			$this->_isXhtml = (bool) $options['xhtml'];
@@ -83,7 +86,7 @@ class Minify_Html {
 	}
 
 	/**
-	 * Minify the markup given in the constructor
+	 * Minify the markeup given in the constructor
 	 *
 	 * @return string
 	 */
@@ -93,39 +96,39 @@ class Minify_Html {
 		}
 
 		$this->_replacementHash = 'MINIFYHTML' . md5( $_SERVER['REQUEST_TIME'] );
-		$this->_placeholders    = [];
+		$this->_placeholders    = array();
 
 		// replace SCRIPTs (and minify) with placeholders
 		$this->_html = preg_replace_callback(
 			'/(\\s*)<script(\\b[^>]*?>)([\\s\\S]*?)<\\/script>(\\s*)/iu',
-			[ $this, '_removeScriptCB' ],
+			array( $this, '_removeScriptCB' ),
 			$this->_html
 		);
 
 		// replace STYLEs (and minify) with placeholders
 		$this->_html = preg_replace_callback(
 			'/\\s*<style(\\b[^>]*>)([\\s\\S]*?)<\\/style>\\s*/iu',
-			[ $this, '_removeStyleCB' ],
+			array( $this, '_removeStyleCB' ),
 			$this->_html
 		);
 
 		// remove HTML comments (not containing IE conditional comments).
 		$this->_html = preg_replace_callback(
 			'/<!--([\\s\\S]*?)-->/u',
-			[ $this, '_commentCB' ],
+			array( $this, '_commentCB' ),
 			$this->_html
 		);
 
 		// replace PREs with placeholders
-		$this->_html = preg_replace_callback( '/\\s*<pre(\\b[^>]*?>[\\s\\S]*?<\\/pre>)\\s*/iu', [
+		$this->_html = preg_replace_callback( '/\\s*<pre(\\b[^>]*?>[\\s\\S]*?<\\/pre>)\\s*/iu', array(
 			$this,
-			'_removePreCB',
-		], $this->_html );
+			'_removePreCB'
+		), $this->_html );
 
 		// replace TEXTAREAs with placeholders
 		$this->_html = preg_replace_callback(
 			'/\\s*<textarea(\\b[^>]*?>[\\s\\S]*?<\\/textarea>)\\s*/iu',
-			[ $this, '_removeTextareaCB' ],
+			array( $this, '_removeTextareaCB' ),
 			$this->_html
 		);
 
@@ -180,13 +183,9 @@ class Minify_Html {
 	}
 
 	protected $_isXhtml;
-
 	protected $_replacementHash;
-
-	protected $_placeholders = [];
-
+	protected $_placeholders = array();
 	protected $_cssMinifier;
-
 	protected $_jsMinifier;
 
 	protected function _removePreCB( $m ) {
@@ -207,10 +206,8 @@ class Minify_Html {
 		$css = $this->_removeCdata( $css );
 
 		// minify
-		$minifier = $this->_cssMinifier
-			? $this->_cssMinifier
-			: 'trim';
-		$css      = call_user_func( $minifier, $css );
+		$minifier = $this->_cssMinifier ?: 'trim';
+		$css      = $minifier( $css );
 
 		return $this->_reservePlace(
 			$this->_needsCdata( $css )
@@ -236,10 +233,8 @@ class Minify_Html {
 		$js = $this->_removeCdata( $js );
 
 		// minify
-		$minifier = $this->_jsMinifier
-			? $this->_jsMinifier
-			: 'trim';
-		$js       = call_user_func( $minifier, $js );
+		$minifier = $this->_jsMinifier ?: 'trim';
+		$js       = $minifier( $js );
 
 		return $this->_reservePlace(
 			$this->_needsCdata( $js )
@@ -250,11 +245,11 @@ class Minify_Html {
 
 	protected function _removeCdata( $str ) {
 		return ( str_contains( $str, '<![CDATA[' ) )
-			? str_replace( [ '<![CDATA[', ']]>' ], '', $str )
+			? str_replace( array( '<![CDATA[', ']]>' ), '', $str )
 			: $str;
 	}
 
 	protected function _needsCdata( $str ) {
-		return $this->_isXhtml && preg_match( '/(?:[<&]|\\-\\-|\\]\\]>)/u', $str );
+		return ( $this->_isXhtml && preg_match( '/(?:[<&]|\\-\\-|\\]\\]>)/u', $str ) );
 	}
 }

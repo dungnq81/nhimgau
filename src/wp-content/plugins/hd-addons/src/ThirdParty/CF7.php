@@ -1,8 +1,6 @@
 <?php
 
-namespace HD\Plugins;
-
-use HD\Utilities\Traits\Singleton;
+namespace Addons\ThirdParty;
 
 \defined( 'ABSPATH' ) || die;
 
@@ -12,11 +10,9 @@ use HD\Utilities\Traits\Singleton;
  * @author Gaudev
  */
 final class CF7 {
-	use Singleton;
-
 	// --------------------------------------------------
 
-	private function init(): void {
+	public function __construct() {
 		add_filter( 'wpcf7_autop_or_not', '__return_false' ); // remove <p> and <br> contact-form-7 plugin
 		add_filter( 'wpcf7_verify_nonce', '__return_true' ); // form CSRF
 		add_filter( 'wpcf7_form_tag', [ $this, 'dynamic_select_terms' ], 10, 1 ); // dynamic taxonomy select
@@ -69,7 +65,8 @@ final class CF7 {
 			'hide_empty'   => false,
 			'hierarchical' => 1,
 		] );
-		$terms     = get_terms( $term_args );
+		
+		$terms = get_terms( $term_args );
 
 		// Add terms to values
 		if ( ! empty( $terms ) && ! is_wp_error( $term_args ) ) {
