@@ -788,7 +788,6 @@ nav.nav-pagination {
         & > a {
             color: #fff;
             display: block;
-            @include mixin.fs-heading(h5);
 
             & > img {
                 display: block;

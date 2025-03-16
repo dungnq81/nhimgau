@@ -73,7 +73,6 @@
 
 $global-font-size: 100%;
 $global-width: func.fs(vars.$screen-xl);
-$global-lineheight: vars.$line-height-global;
 $foundation-palette: (
     'primary': map.get(vars.$theme-colors, primary),
     'secondary': map.get(vars.$theme-colors, secondary),
@@ -151,12 +150,10 @@ $header-font-weight: $global-weight-normal;
 $header-font-style: normal;
 $font-family-monospace: vars.$monospace-font;
 $header-color: inherit;
-$header-lineheight: vars.$line-height-header;
 $header-margin-bottom: vars.$header-margin-bottom;
 $header-text-rendering: optimizeLegibility;
 $small-font-size: 80%;
 $header-small-font-color: $medium-gray;
-$paragraph-lineheight: vars.$line-height-paragraph;
 $paragraph-margin-bottom: vars.$paragraph-margin-bottom;
 $paragraph-text-rendering: optimizeLegibility;
 $enable-code-inline: true;
@@ -167,7 +164,6 @@ $anchor-text-decoration-hover: none;
 $hr-width: $global-width;
 $hr-border: 1px solid $medium-gray;
 $hr-margin: rem-calc(20) auto;
-$list-lineheight: $paragraph-lineheight;
 $list-margin-bottom: $paragraph-margin-bottom;
 $list-style-type: disc;
 $list-style-position: outside;
@@ -438,16 +434,13 @@ $input-prefix-padding: vars.$global-padding;
 $form-label-color: $black;
 $form-label-font-size: rem-calc(14);
 $form-label-font-weight: $global-weight-normal;
-$form-label-line-height: vars.$line-height-global;
 $select-background: $white;
 $select-triangle-color: $dark-gray;
 $select-radius: $global-radius;
 $input-color: $black;
 $input-placeholder-color: $medium-gray;
 $input-font-family: inherit;
-$input-font-size: func.fs(vars.$body-size);
 $input-font-weight: $global-weight-normal;
-$input-line-height: $global-lineheight;
 $input-background: $white;
 $input-background-focus: $white;
 $input-background-disabled: $light-gray;

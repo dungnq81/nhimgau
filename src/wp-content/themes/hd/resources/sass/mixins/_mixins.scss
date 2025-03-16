@@ -75,7 +75,7 @@
     }
 }
 
-@mixin media-css($css_property: font-size, $m: vars.$body-size, $t: false, $d: false) {
+@mixin media-css($css_property: font-size, $m, $t: false, $d: false) {
     & {
         @if $m != false {
             #{$css_property}: func.fs($m);
@@ -93,7 +93,7 @@
     }
 }
 
-@mixin media-fs($m: vars.$body-size, $t: false, $d: false) {
+@mixin media-fs($m, $t: false, $d: false) {
     @include media-css(font-size, $m, $t, $d);
 }
 
@@ -544,15 +544,38 @@
     }
 }
 
-// clamp(min, preferred, max);
-@mixin fs-clamp($min-width: vars.$sm, $max-width: vars.$xxl, $min-font-size: 15px, $max-font-size: 16px, $golden-ratio: 1.618) {
-    font-size: func.clamp-font-size($min-width, $max-width, $min-font-size, $max-font-size);
-    line-height: func.clamp-line-height($min-width, $max-width, $min-font-size, $max-font-size, $golden-ratio);
+@mixin clamp-font($min: 15px, $max: 16px, $min-width: vars.$sm, $max-width: vars.$xxl, $base: vars.$base-line-height) {
+    $min-width-rem: func.fs($min-width);
+    $max-width-rem: func.fs($max-width);
+    $min-rem: func.fs($min);
+    $max-rem: func.fs($max);
+
+    & {
+        font-size: $min-rem;
+        line-height: $min-rem * $base;
+
+        @if $max-rem > $min-rem {
+            @media screen and (min-width: $min-width-rem) {
+                $val: func.divide(func.strip-unit(func.subtract($max-rem, $min-rem)), func.strip-unit(func.subtract($max-width-rem, $min-width-rem)));
+
+                font-size: calc($min-rem + $val * (100vw - $min-width-rem));
+                line-height: calc($min-rem * $base + $val * $base * (100vw - $min-width-rem));
+            }
+
+            @media screen and (min-width: $max-width-rem) {
+                font-size: $max-rem;
+                line-height: $max-rem * $base;
+            }
+        }
+    }
 }
 
-@mixin fs-heading($heading: h1) {
-    font-size: func.fs(map.get(vars.$font-sizes, $heading));
-    line-height: func.fs(map.get(vars.$lines-height, $heading));;
+@mixin clamp-fs( $heading: h1, $base: vars.$base-line-height ) {
+    $font-size-heading: map.get(vars.$font-sizes, $heading);
+    $min: func.fs(list.nth($font-size-heading, 1));
+    $max: func.fs(list.nth($font-size-heading, 2));
+
+    @include clamp-font($min, $max, vars.$sm, vars.$xxl, $base);
 }
 
 @mixin hamburger($color: vars.$body-color, $color-hover: vars.$gray-900, $width: 20px, $height: 16px, $weight: 2px, $bars: 3) {
@@ -630,6 +653,7 @@
 @mixin font-face($font-family, $font-style: normal, $font-weight: 400, $file_name, $base: '../fonts') {
     $base: string.unquote($base);
     $version: string.unique_id();
+
     @font-face {
         font-family: string.quote($font-family);
         font-style: $font-style;

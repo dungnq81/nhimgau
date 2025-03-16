@@ -53,10 +53,9 @@
 body {
     color: vars.$body-color;
     background: vars.$body-bg;
-    font-size: vars.$body-size;
     font-family: vars.$body-font;
     font-optical-sizing: auto;
-    line-height: vars.$body-line-height;
+    @include mixin.clamp-fs(body, vars.$base-line-height);
 }
 
 :is(input, select, textarea, button, main) {
@@ -110,6 +109,7 @@ sup {
 
 .cite-block::before, cite::before {
     content: '';
+    font-style: normal;
 }
 
 :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6) {
@@ -134,7 +134,7 @@ sup {
 
 @each $level in h1, h2, h3, h4, h5, h6 {
     :is(#{$level}, .#{$level}) {
-        @include mixin.fs-heading($level);
+        @include mixin.clamp-fs($level, vars.$base-line-height);
     }
 }
 
