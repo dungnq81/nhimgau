@@ -21,8 +21,8 @@ import '../sass/3rd/_index.scss';
 // Global variables
 const hdDefaults = {
     _ajaxUrl: '/wp-admin/admin-ajax.php',
-    _baseUrl: 'https://nhimgau.test/',
-    _themeUrl: 'https://nhimgau.test/wp-content/themes/hd/',
+    _baseUrl: 'http://localhost:8080/',
+    _themeUrl: 'http://localhost:8080/wp-content/themes/hd/',
     _csrfToken: '***',
     _restToken: '***',
     _lang: 'vi',
