@@ -22,6 +22,12 @@ if ( post_password_required() ) {
 	return;
 }
 
+// breadcrumbs
+\HD\Helper::BlockTemplate( 'template-blocks/breadcrumbs', [
+		'title' => get_the_title( $post->ID )
+	]
+);
+
 ?>
 <section class="section section-page singular">
 	<div class="container">

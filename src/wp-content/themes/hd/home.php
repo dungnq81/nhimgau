@@ -13,6 +13,12 @@ get_header( 'home' );
 
 $object = get_queried_object();
 
+// breadcrumbs
+\HD\Helper::BlockTemplate( 'template-blocks/breadcrumbs', [
+		'title' => get_the_title( $object->ID )
+	]
+);
+
 ?>
 <section class="section section-page section-home archive">
 	<div class="container">

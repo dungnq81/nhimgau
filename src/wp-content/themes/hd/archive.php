@@ -10,7 +10,11 @@
 // header
 get_header( 'archive' );
 
-$object = get_queried_object();
+// breadcrumbs
+\HD\Helper::BlockTemplate( 'template-blocks/breadcrumbs', [
+		'title' => get_the_archive_title()
+	]
+);
 
 ?>
 <section class="section section-page archive">

@@ -196,40 +196,6 @@ final class Customizer {
 			]
 		);
 
-		// Min height control
-		$wp_customize->add_setting( 'breadcrumb_min_height_setting', [
-			'capability'        => 'edit_theme_options',
-			'sanitize_callback' => 'sanitize_text_field',
-		] );
-
-		$wp_customize->add_control(
-			'breadcrumb_min_height_control',
-			[
-				'label'       => __( 'Breadcrumb min-height', TEXT_DOMAIN ),
-				'section'     => 'breadcrumb_section',
-				'settings'    => 'breadcrumb_min_height_setting',
-				'type'        => 'number',
-				'description' => __( 'Min-height of breadcrumb section', TEXT_DOMAIN ),
-			]
-		);
-
-		// Max height control
-		$wp_customize->add_setting( 'breadcrumb_max_height_setting', [
-			'capability'        => 'edit_theme_options',
-			'sanitize_callback' => 'sanitize_text_field',
-		] );
-
-		$wp_customize->add_control(
-			'breadcrumb_max_height_control',
-			[
-				'label'       => __( 'Breadcrumb max-height', TEXT_DOMAIN ),
-				'section'     => 'breadcrumb_section',
-				'settings'    => 'breadcrumb_max_height_setting',
-				'type'        => 'number',
-				'description' => __( 'Max-height of breadcrumb section', TEXT_DOMAIN ),
-			]
-		);
-
 		// Add control
 		$wp_customize->add_setting( 'breadcrumb_bg_setting', [
 			'capability'        => 'edit_theme_options',
@@ -285,6 +251,40 @@ final class Customizer {
 					'priority' => 9,
 				]
 			)
+		);
+
+		// Min height control
+		$wp_customize->add_setting( 'breadcrumb_min_height_setting', [
+			'capability'        => 'edit_theme_options',
+			'sanitize_callback' => 'sanitize_text_field',
+		] );
+
+		$wp_customize->add_control(
+			'breadcrumb_min_height_control',
+			[
+				'label'       => __( 'Breadcrumb min-height', TEXT_DOMAIN ),
+				'section'     => 'breadcrumb_section',
+				'settings'    => 'breadcrumb_min_height_setting',
+				'type'        => 'number',
+				'description' => __( 'Min-height of breadcrumb section', TEXT_DOMAIN ),
+			]
+		);
+
+		// Max height control
+		$wp_customize->add_setting( 'breadcrumb_max_height_setting', [
+			'capability'        => 'edit_theme_options',
+			'sanitize_callback' => 'sanitize_text_field',
+		] );
+
+		$wp_customize->add_control(
+			'breadcrumb_max_height_control',
+			[
+				'label'       => __( 'Breadcrumb max-height', TEXT_DOMAIN ),
+				'section'     => 'breadcrumb_section',
+				'settings'    => 'breadcrumb_max_height_setting',
+				'type'        => 'number',
+				'description' => __( 'Max-height of breadcrumb section', TEXT_DOMAIN ),
+			]
 		);
 
 		// -------------------------------------------------------------

@@ -22,13 +22,17 @@ if ( post_password_required() ) {
 	return;
 }
 
-$ACF = \HD\Helper::getFields( get_the_ID() );
+// breadcrumbs
+\HD\Helper::BlockTemplate( 'template-blocks/breadcrumbs', [
+		'title' => \HD\Helper::primaryTerm( $post )?->name
+	]
+);
 
 ?>
 <section class="section section-page section-single singular">
-	<div class="container">
+    <div class="container">
 
-	</div>
+    </div>
 </section>
 <?php
 

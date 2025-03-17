@@ -1970,10 +1970,6 @@ trait Wp {
 			$data = 'itemprop="name"';
 		}
 
-		if ( 'breadcrumb' === $context ) {
-			$data = 'itemtype="https://schema.org/BreadcrumbList" itemscope';
-		}
-
 		if ( 'logo' === $context ) {
 			$data = 'itemprop="logo" itemtype="https://schema.org/ImageObject" itemscope';
 		}

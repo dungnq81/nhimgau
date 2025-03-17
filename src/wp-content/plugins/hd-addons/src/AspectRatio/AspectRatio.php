@@ -5,7 +5,6 @@ namespace Addons\AspectRatio;
 \defined( 'ABSPATH' ) || exit;
 
 final class AspectRatio {
-
 	// --------------------------------------------------
 
 	public function __construct() {
