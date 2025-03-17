@@ -38,9 +38,9 @@ const jsFiles = [
     'components/back-to-top',
     'components/script-loader',
     'components/social-share',
+    'components/swiper',
 
     // (site)
-    'swiper',
     'woocommerce',
     'index',
     'home',
