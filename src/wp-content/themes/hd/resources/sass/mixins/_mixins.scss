@@ -59,22 +59,6 @@
     }
 }
 
-@mixin media-box($m: false, $t: false, $d: false, $border_radius: false) {
-    @if $m != false {
-        @include box($m, $m, $border_radius);
-    }
-    @if $t != false {
-        @include mq-min(md) {
-            @include box($t, $t, $border_radius);
-        }
-    }
-    @if $d != false {
-        @include mq-min(lg) {
-            @include box($d, $d, $border_radius);
-        }
-    }
-}
-
 @mixin media-css($css_property: font-size, $m, $t: false, $d: false) {
     & {
         @if $m != false {
@@ -150,10 +134,10 @@
 @mixin gap($row: 20, $col: $row) {
     & {
         @if $row == $col and $row != false {
-            //grid-gap: func.fs($row);
+            grid-gap: func.fs($row);
             gap: func.fs($row);
         } @else if $row != $col and $row != false and $col != false {
-            //grid-gap: func.fs($row) func.fs($col);
+            grid-gap: func.fs($row) func.fs($col);
             gap: func.fs($row) func.fs($col);
         }
     }
@@ -203,8 +187,7 @@
 @mixin responsive-scale($scale: 1.06, $opacity: 1) {
     transform: scale(1.0001);
     will-change: transform;
-    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    opacity 0.3s;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s;
 
     &:hover {
         transform: scale($scale);
@@ -247,14 +230,13 @@
 }
 
 @mixin gradient-text($angle: 135deg, $c1: vars.$primary, $c2: vars.$secondary) {
-    @include linear-gradient($angle, $c1, $c2);
-
     & {
         -webkit-text-fill-color: transparent;
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
         display: inline-block;
+        background-image: linear-gradient($angle, $c1 0%, $c2 100%);
     }
 }
 
@@ -367,11 +349,7 @@
     }
 }
 
-@mixin line-clamp(
-    $n: 2,
-    $value_fallback: ( false, false, false ),
-    $attr_fallback: max-height
-) {
+@mixin line-clamp($n: 2, $value_fallback: ( false, false, false ), $attr_fallback: max-height) {
     & {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -421,7 +399,8 @@
         transform-origin: right center;
         transform: scaleX(0);
         transition: transform 0.2s cubic-bezier(1, 0, 0, 1);
-        @include box($width, $height);
+        width: $width;
+        height: $height;
     }
 
     &:hover {
@@ -462,7 +441,8 @@
         position: absolute;
         top: func.subtract(50%, func.fs(func.divide($height, 2)));
         left: func.subtract(50%, func.fs(func.divide($width, 2)));
-        @include box($width, $height);
+        width: $width;
+        height: $height;
     }
 }
 
@@ -601,7 +581,8 @@
         display: inline-block;
         vertical-align: middle;
         cursor: pointer;
-        @include box($width, $height);
+        width: $width;
+        height: $height;
 
         &::after {
             content: '';
@@ -611,7 +592,8 @@
             display: block;
             background: $color;
             box-shadow: $shadow;
-            @include box(100%, $weight);
+            width: 100%;
+            height: $weight;
         }
 
         @if $color-hover {
@@ -649,7 +631,8 @@
             position: absolute;
             top: calc(50% - ($size + $border_width * 2) / 2);
             left: calc(50% - ($size + $border_width * 2) / 2);
-            @include box($size);
+            width: $size;
+            height: $size;
         }
     }
 }
