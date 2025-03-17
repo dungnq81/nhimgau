@@ -134,7 +134,7 @@ sup {
 
 @each $level in h1, h2, h3, h4, h5, h6 {
     :is(#{$level}, .#{$level}) {
-        @include mixin.clamp-fs($level, 1.5);
+        @include mixin.clamp-fs($level, 1.3);
     }
 }
 

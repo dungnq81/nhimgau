@@ -38,7 +38,9 @@ if ( $home_flexible_content ) {
 	\HD\Helper::BlockTemplate( 'template-blocks/static-page' );
 }
 
-get_template_part( 'template-blocks/social-share' );
+?>
+<h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h1>
+<?php
 
 // footer
 get_footer( 'home' );
