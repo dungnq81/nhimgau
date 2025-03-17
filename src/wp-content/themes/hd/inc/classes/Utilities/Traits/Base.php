@@ -346,4 +346,13 @@ trait Base {
 	public static function isWoocommerceActive(): bool {
 		return self::checkPluginActive( 'woocommerce/woocommerce.php' );
 	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @return bool
+	 */
+	public static function isCf7Active(): bool {
+		return self::checkPluginActive( 'contact-form-7/wp-contact-form-7.php' );
+	}
 }

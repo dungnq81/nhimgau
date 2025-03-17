@@ -544,7 +544,7 @@
     }
 }
 
-@mixin clamp-font($min: 15px, $max: 16px, $min-width: vars.$sm, $max-width: vars.$xxl, $base: vars.$base-line-height) {
+@mixin clamp-font($min: 15px, $max: 16px, $min-width: vars.$sm, $max-width: vars.$xxl, $base: 1.618) {
     $min-width-rem: func.fs($min-width);
     $max-width-rem: func.fs($max-width);
     $min-rem: func.fs($min);
@@ -556,7 +556,10 @@
 
         @if $max-rem > $min-rem {
             @media screen and (min-width: $min-width-rem) {
-                $val: func.divide(func.strip-unit(func.subtract($max-rem, $min-rem)), func.strip-unit(func.subtract($max-width-rem, $min-width-rem)));
+                $val: func.divide(
+                        func.strip-unit(func.subtract($max-rem, $min-rem)),
+                        func.strip-unit(func.subtract($max-width-rem, $min-width-rem))
+                );
 
                 font-size: calc($min-rem + $val * (100vw - $min-width-rem));
                 line-height: calc($min-rem * $base + $val * $base * (100vw - $min-width-rem));
@@ -570,7 +573,7 @@
     }
 }
 
-@mixin clamp-fs( $heading: h1, $base: vars.$base-line-height ) {
+@mixin clamp-fs( $heading: h1, $base: 1.618 ) {
     $font-size-heading: map.get(vars.$font-sizes, $heading);
     $min: func.fs(list.nth($font-size-heading, 1));
     $max: func.fs(list.nth($font-size-heading, 2));
