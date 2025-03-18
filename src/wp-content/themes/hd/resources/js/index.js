@@ -5,6 +5,7 @@ import Foundation from './3rd/_zf';
 //select2();
 
 import BackToTop from './components/back-to-top';
+import { initMenu } from './components/menu.js';
 import scriptLoader from './components/script-loader';
 import { initSocialShare } from './components/social-share';
 //import SimpleBar from 'simplebar';
@@ -40,6 +41,7 @@ const {
 // DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
     new BackToTop();
+    initMenu('nav.nav', '.main-nav');
     scriptLoader(4000, 'script[data-type=\'lazy\']');
     initSocialShare('[data-social-share]', { intents: [ 'facebook', 'x', 'print', 'send-email', 'copy-link', 'web-share' ] });
 
