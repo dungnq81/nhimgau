@@ -37,7 +37,7 @@ $alternative_title = \HD\Helper::getField( 'alternative_title', $post->ID );
 
 ?>
 <section class="section section-page section-single singular">
-    <div class="container">
+    <div class="container flex flex-x">
 
         <?php \HD\Helper::BlockTemplate( 'template-blocks/social-share'); ?>
 
@@ -48,6 +48,11 @@ $alternative_title = \HD\Helper::getField( 'alternative_title', $post->ID );
 		        <?php echo \HD\Helper::postExcerpt( $post, 'excerpt', false );?>
 
             </header>
+            <article <?= \HD\Helper::microdata( 'article' ) ?>>
+
+                <?php the_content(); ?>
+
+            </article>
         </div>
         <aside class="sidebar">
 
