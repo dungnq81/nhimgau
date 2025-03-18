@@ -43,7 +43,7 @@ $alternative_title = \HD\Helper::getField( 'alternative_title', $post->ID );
 
         <div class="content">
             <header>
-                <h1 class="heading-title"><?= $alternative_title ?: get_the_title( $post ) ?></h1>
+                <h1 class="heading-title"><?= $alternative_title ?: get_the_title() ?></h1>
 
 		        <?php echo \HD\Helper::postExcerpt( $post, 'excerpt', false );?>
 

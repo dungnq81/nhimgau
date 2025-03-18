@@ -39,7 +39,13 @@ if ( $home_flexible_content ) {
 }
 
 ?>
-<h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h1>
+<h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h1>
+<h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h2>
+<h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h3>
+<h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h4>
+<h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h5>
+<h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h6>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
 <?php
 
 // footer

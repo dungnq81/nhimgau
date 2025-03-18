@@ -87,7 +87,7 @@ const initializeSwipers = () => {
             if (options.gap) {
                 swiperOptions.spaceBetween = 20;
                 swiperOptions.breakpoints = {
-                    768: { spaceBetween: 30 },
+                    768: { spaceBetween: 28 },
                 };
             }
         } else {
