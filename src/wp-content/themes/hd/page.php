@@ -28,6 +28,11 @@ if ( post_password_required() ) {
 	]
 );
 
+/**
+ * HOOK: hd_page_before_action
+ */
+do_action( 'hd_page_before_action' );
+
 ?>
 <section class="section section-page singular">
 	<div class="container">
@@ -35,6 +40,11 @@ if ( post_password_required() ) {
 	</div>
 </section>
 <?php
+
+/**
+ * HOOK: hd_single_after_action
+ */
+do_action( 'hd_single_after_action' );
 
 // footer
 get_footer( 'page' );

@@ -19,6 +19,11 @@ $object = get_queried_object();
 	]
 );
 
+/**
+ * HOOK: hd_home_before_action
+ */
+do_action( 'hd_home_before_action' );
+
 ?>
 <section class="section section-page section-home archive">
 	<div class="container">
@@ -26,6 +31,11 @@ $object = get_queried_object();
 	</div>
 </section>
 <?php
+
+/**
+ * HOOK: hd_home_after_action
+ */
+do_action( 'hd_home_after_action' );
 
 // footer
 get_footer( 'home' );

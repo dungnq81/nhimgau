@@ -16,6 +16,11 @@ get_header( 'archive' );
 	]
 );
 
+/**
+ * HOOK: hd_archive_before_action
+ */
+do_action( 'hd_archive_before_action' );
+
 ?>
 <section class="section section-page archive">
 	<div class="container">
@@ -23,6 +28,11 @@ get_header( 'archive' );
 	</div>
 </section>
 <?php
+
+/**
+ * HOOK: hd_archive_after_action
+ */
+do_action( 'hd_archive_after_action' );
 
 // footer
 get_footer( 'archive' );

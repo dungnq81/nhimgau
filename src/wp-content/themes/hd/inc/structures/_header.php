@@ -73,10 +73,10 @@ function external_fonts_action(): void {
 }
 
 // -----------------------------------------------
-// hd_before_header_action
+// hd_header_before_action
 // -----------------------------------------------
 
-add_action( 'hd_before_header_action', 'skip_to_content_link_action', 2 );
+add_action( 'hd_header_before_action', 'skip_to_content_link_action', 2 );
 
 function skip_to_content_link_action(): void {
 	printf(
@@ -88,7 +88,7 @@ function skip_to_content_link_action(): void {
 
 // -----------------------------------------------
 
-add_action( 'hd_before_header_action', 'off_canvas_menu_action', 11 );
+add_action( 'hd_header_before_action', 'off_canvas_menu_action', 11 );
 
 function off_canvas_menu_action(): void {
     \HD\Helper::BlockTemplate( 'template-blocks/off-canvas' );
@@ -156,9 +156,9 @@ function _masthead_custom(): void {
 }
 
 // -----------------------------------------------
-// hd_after_header_action
+// hd_header_after_action
 // -----------------------------------------------
 
 // -----------------------------------------------
-// hd_before_site_content_action
+// hd_site_content_before_action
 // -----------------------------------------------

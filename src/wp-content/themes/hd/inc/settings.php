@@ -36,24 +36,36 @@ function register_sidebar_callback(): void {
 	// Homepage
 	//----------------------------------------------------------
 
+//	register_sidebar(
+//		[
+//			'container'     => false,
+//			'id'            => 'home-sidebar',
+//			'name'          => __( 'Homepage', TEXT_DOMAIN ),
+//			'description'   => __( 'Widgets added here will appear in homepage.', TEXT_DOMAIN ),
+//			'before_widget' => '<div class="%2$s">',
+//			'after_widget'  => '</div>',
+//			'before_title'  => '<span>',
+//			'after_title'   => '</span>',
+//		]
+//	);
+
+	//----------------------------------------------------------
+	// Other...
+	//----------------------------------------------------------
+
+	// News sidebar
 	register_sidebar(
 		[
 			'container'     => false,
-			'id'            => 'home-sidebar',
-			'name'          => __( 'Homepage', TEXT_DOMAIN ),
-			'description'   => __( 'Widgets added here will appear in homepage.', TEXT_DOMAIN ),
+			'id'            => 'news-sidebar',
+			'name'          => __( 'News Sidebar', TEXT_DOMAIN ),
+			'description'   => __( 'Widgets added here will appear in news sidebar.', TEXT_DOMAIN ),
 			'before_widget' => '<div class="%2$s">',
 			'after_widget'  => '</div>',
 			'before_title'  => '<span>',
 			'after_title'   => '</span>',
 		]
 	);
-
-	//----------------------------------------------------------
-	// Other...
-	//----------------------------------------------------------
-
-	//...
 }
 
 // --------------------------------------------------
@@ -91,9 +103,10 @@ function body_class_callback( array $classes ): array {
 		if (
 			str_contains( $class, 'wp-custom-logo' ) ||
 			str_contains( $class, 'page-template-templates' ) ||
-			str_contains( $class, 'page-template-default' ) ||
-			str_contains( $class, 'no-customize-support' ) ||
-			str_contains( $class, 'page-id-' )
+			str_contains( $class, 'page-id-' ) ||
+			str_contains( $class, 'postid-' ) ||
+			str_contains( $class, 'single-format-standard' ) ||
+			str_contains( $class, 'no-customize-support' )
 		) {
 			$classes = array_diff( $classes, [ $class ] );
 		}

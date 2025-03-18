@@ -30,7 +30,7 @@ function wp_footer_action(): void {
 }
 
 // -----------------------------------------------
-// hd_after_footer_action
+// hd_footer_after_action
 // -----------------------------------------------
 
 // -----------------------------------------------
@@ -96,9 +96,9 @@ function _construct_footer_custom(): void {
 }
 
 // -----------------------------------------------
-// hd_before_footer_action
+// hd_footer_before_action
 // -----------------------------------------------
 
 // -----------------------------------------------
-// hd_after_site_content_action
+// hd_site_content_after_action
 // -----------------------------------------------

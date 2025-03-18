@@ -21,7 +21,7 @@ final class ContactLink {
 			add_shortcode( $shortcode, $function );
 		}
 
-		add_action( 'hd_after_footer_action', [ $this, 'add_this_contact_link' ], 11 );
+		add_action( 'hd_footer_after_action', [ $this, 'add_this_contact_link' ], 11 );
 		add_filter( 'hd_footer_class_filter', [ $this, 'modify_footer_class' ] );
 	}
 

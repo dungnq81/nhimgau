@@ -9,19 +9,27 @@
 
 \defined( 'ABSPATH' ) || die;
 
-do_action( 'hd_after_site_content_action' );
+/**
+ * HOOK: hd_site_content_after_action
+ */
+do_action( 'hd_site_content_after_action' );
 
 ?>
 </div><!-- #site-content -->
 <?php
 
-do_action( 'hd_before_footer_action' );
+/**
+ * HOOK: hd_footer_before_action
+ */
+do_action( 'hd_footer_before_action' );
 
 ?>
 <footer id="footer" class="<?= apply_filters( 'hd_footer_class_filter', 'site-footer' ) ?>" <?php echo \HD\Helper::microdata( 'footer' ); ?>>
 	<?php
 
 	/**
+     * HOOK: hd_footer_action
+     *
 	 * @see construct_footer_action - 10
 	 */
 	do_action( 'hd_footer_action' );
@@ -31,11 +39,15 @@ do_action( 'hd_before_footer_action' );
 <?php
 
 /**
+ * HOOK: hd_footer_after_action
+ *
  * @see ContactLink::add_this_contact_link - 11
  */
-do_action( 'hd_after_footer_action' );
+do_action( 'hd_footer_after_action' );
 
 /**
+ * HOOK: wp_footer
+ *
  * @see wp_footer_action - 98
  */
 wp_footer();
