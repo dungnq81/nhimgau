@@ -31,11 +31,11 @@ if ( $home_flexible_content ) {
 		$acf_fc_layout = $section['acf_fc_layout'] ?? '';
 
 		if ( $acf_fc_layout ) {
-			\HD\Helper::BlockTemplate( 'template-parts/home/' . $acf_fc_layout, $section );
+			\HD\Helper::blockTemplate( 'template-parts/home/' . $acf_fc_layout, $section );
 		}
 	}
 } else {
-	\HD\Helper::BlockTemplate( 'template-blocks/static-page' );
+	\HD\Helper::blockTemplate( 'template-blocks/static-page' );
 }
 
 ?>

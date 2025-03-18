@@ -26,7 +26,7 @@ trait Wp {
 	 *
 	 * @return void
 	 */
-	public static function BlockTemplate( $slug, array $args = [], int $cache_in_hours = 2 ): void {
+	public static function blockTemplate( $slug, array $args = [], int $cache_in_hours = 2 ): void {
 		$cache_key   = 'block_cache_' . md5( $slug . serialize( $args ) );
 		$cache_group = 'blocks_cache';
 		$cache_time  = $cache_in_hours * HOUR_IN_SECONDS;

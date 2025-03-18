@@ -91,7 +91,7 @@ function skip_to_content_link_action(): void {
 add_action( 'hd_header_before_action', 'off_canvas_menu_action', 11 );
 
 function off_canvas_menu_action(): void {
-    \HD\Helper::BlockTemplate( 'template-blocks/off-canvas' );
+    \HD\Helper::blockTemplate( 'template-blocks/off-canvas' );
 }
 
 // -----------------------------------------------

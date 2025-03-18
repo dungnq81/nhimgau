@@ -11,7 +11,7 @@
 get_header( 'archive' );
 
 // breadcrumbs
-\HD\Helper::BlockTemplate( 'template-blocks/breadcrumbs', [
+\HD\Helper::blockTemplate( 'template-blocks/breadcrumbs', [
 		'title' => get_the_archive_title()
 	]
 );

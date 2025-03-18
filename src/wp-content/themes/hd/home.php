@@ -14,7 +14,7 @@ get_header( 'home' );
 $object = get_queried_object();
 
 // breadcrumbs
-\HD\Helper::BlockTemplate( 'template-blocks/breadcrumbs', [
+\HD\Helper::blockTemplate( 'template-blocks/breadcrumbs', [
 		'title' => get_the_title( $object->ID )
 	]
 );

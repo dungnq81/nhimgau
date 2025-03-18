@@ -23,7 +23,7 @@ if ( post_password_required() ) {
 }
 
 // breadcrumbs
-\HD\Helper::BlockTemplate( 'template-blocks/breadcrumbs', [
+\HD\Helper::blockTemplate( 'template-blocks/breadcrumbs', [
 		'title' => \HD\Helper::primaryTerm( $post )?->name
 	]
 );
@@ -39,7 +39,7 @@ $alternative_title = \HD\Helper::getField( 'alternative_title', $post->ID );
 <section class="section section-page section-single singular">
     <div class="container flex flex-x">
 
-        <?php \HD\Helper::BlockTemplate( 'template-blocks/social-share'); ?>
+        <?php \HD\Helper::blockTemplate( 'template-blocks/social-share'); ?>
 
         <div class="content">
             <header>
