@@ -88,7 +88,7 @@ $container-max-widths: (
 // font-size, line-height, gutter, spacers and more.
 
 $font-sizes: (
-    body: ( 16px, 16px ),
+    body: ( 16px, 18px ),
     h1: ( 24px, 48px ),
     h2: ( 20px, 40px ),
     h3: ( 19px, 31px ),
@@ -120,8 +120,8 @@ $spacers: (
 //
 // Settings for the `<body>` element.
 
-$header-color: #161A47 !default;
-$body-color: #161A47 !default;
+$header-color: #000000 !default;
+$body-color: #000000 !default;
 $body-bg: #ffffff !default;
 
 //
@@ -146,7 +146,7 @@ $font-weight-bolder: bolder !default;
 //
 // Style anchor elements.
 
-$link-color: #161A47 !default;
+$link-color: #000000 !default;
 $link-decoration: underline !default;
 $link-hover-color: func.shift-color($link-color, 20%) !default;
 $link-hover-decoration: null !default;
@@ -157,8 +157,8 @@ $link-hover-decoration: null !default;
 $scrollbar-w: 10px !default;
 $scrollbar-h: 5px !default;
 
-$header-font: 'Playfair Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Ubuntu', Arial, cursive, serif !default;
-$body-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Ubuntu', Arial, cursive, sans-serif !default;
+$header-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Ubuntu', Arial, cursive, serif !default;
+$body-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Ubuntu', Arial, cursive, sans-serif !default;
 $awesome-font: 'Font Awesome 6 Pro', 'Font Awesome 6 Brands', 'Font Awesome 6 Free', sans-serif;
 $monospace-font: Consolas, 'Liberation Mono', Courier, monospace;
 
