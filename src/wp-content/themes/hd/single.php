@@ -38,25 +38,21 @@ $alternative_title = \HD\Helper::getField( 'alternative_title', $post->ID );
 ?>
 <section class="section section-page section-single singular">
     <div class="container flex flex-x">
-
-        <?php \HD\Helper::blockTemplate( 'template-blocks/social-share'); ?>
-
+        <?php \HD\Helper::blockTemplate( 'template-blocks/social-share' ); ?>
         <div class="content">
             <header>
                 <h1 class="heading-title"><?= $alternative_title ?: get_the_title() ?></h1>
-
-		        <?php echo \HD\Helper::postExcerpt( $post, 'excerpt', false );?>
-
+                <?php echo \HD\Helper::postExcerpt( $post, 'excerpt', false ); ?>
             </header>
             <article <?= \HD\Helper::microdata( 'article' ) ?>>
-
                 <?php the_content(); ?>
-
             </article>
         </div>
+        <?php if ( is_active_sidebar( 'news-sidebar' ) ) : ?>
         <aside class="sidebar">
-
+            <?php dynamic_sidebar( 'news-sidebar' ); ?>
         </aside>
+        <?php endif; ?>
     </div>
 </section>
 <?php
