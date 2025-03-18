@@ -45,7 +45,15 @@ $alternative_title = \HD\Helper::getField( 'alternative_title', $post->ID );
                 <?php echo \HD\Helper::postExcerpt( $post, 'excerpt', false ); ?>
             </header>
             <article <?= \HD\Helper::microdata( 'article' ) ?>>
-                <?php the_content(); ?>
+                <?php
+                the_content();
+
+                \HD\Helper::hashTags();
+                \HD\Helper::blockTemplate( 'template-blocks/suggestion-posts' );
+
+                // If comments are open, or we have at least one comment, load up the comment template.
+                comments_template();
+                ?>
             </article>
         </div>
         <?php if ( is_active_sidebar( 'news-sidebar' ) ) : ?>
