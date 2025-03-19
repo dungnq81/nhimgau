@@ -2,12 +2,12 @@
 
 \defined( 'ABSPATH' ) || die;
 
-$post_id = $args['post_id'] ?? 0;
-$term    = $args['term'] ?? 'category';
-$title   = $args['title'] ?? '';
-$max     = $args['max'] ?? '12';
+$post_id  = $args['post_id'] ?? 0;
+$taxonomy = $args['taxonomy'] ?? 'category';
+$title    = $args['title'] ?? '';
+$max      = $args['max'] ?? '12';
 
-$posts = \HD\Helper::getRelatedPosts( $post_id, $term, $max );
+$posts = \HD\Helper::getRelatedPosts( $post_id, $taxonomy, $max );
 if ( ! $posts ) {
 	return;
 }
@@ -17,6 +17,47 @@ if ( ! $posts ) {
     <div class="container">
         <div class="items">
 			<?php echo $title ? '<p class="related-title">' . $title . '</p>' : ''; ?>
+            <div class="posts-list archive-list items-list">
+	            <?php
+	            $_data = [
+		            'loop'       => true,
+		            'navigation' => true,
+		            'pagination' => 'bullets',
+		            'autoplay'   => true,
+		            '_gap'        => true,
+	            ];
+	            try {
+		            $swiper_data = json_encode( $_data, JSON_THROW_ON_ERROR | JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE );
+	            } catch ( \JsonException $e ) {}
+
+	            if ( $swiper_data ) :
+	            ?>
+                <div class="swiper-container">
+                    <div class="w-swiper swiper" data-options='<?= $swiper_data ?>'>
+                        <div class="swiper-wrapper">
+                            <?php
+                            $i = 0;
+
+                            foreach ( $posts as $post ) :
+	                            $i++;
+	                            if ( $i > $max ) {
+		                            break;
+	                            }
+
+	                            $post_title     = get_the_title( $post->ID );
+	                            $post_title     = ( ! empty( $post_title ) ) ? $post_title : __( '(no title)', TEXT_DOMAIN );
+	                            $ratio_class    = \HD\Helper::aspectRatioClass( get_post_type( $post_id ) );
+	                            $post_thumbnail = get_the_post_thumbnail( $post, 'medium', [ 'alt' => \HD\Helper::escAttr( $post_title ) ] );
+                            ?>
+                            <div class="swiper-slide">
+
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 </section>

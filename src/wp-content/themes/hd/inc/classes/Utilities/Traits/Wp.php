@@ -1282,12 +1282,19 @@ trait Wp {
 
 		// Support for Yoast SEO plugin
 		if ( class_exists( '\WPSEO_Primary_Term' ) ) {
-			$primary_term_id = ( new \WPSEO_Primary_Term( $taxonomy, $post ) )?->get_primary_term();
-			if ( $primary_term_id && in_array( $primary_term_id, $term_ids, false ) ) {
-				$term = get_term( $primary_term_id, $taxonomy );
-				if ( $term ) {
-					return $term;
+			try {
+				$yoast_primary_term = new \WPSEO_Primary_Term( $taxonomy, $post );
+				if ( method_exists( $yoast_primary_term, 'get_primary_term' ) ) {
+					$primary_term_id = $yoast_primary_term->get_primary_term();
+					if ( $primary_term_id && in_array( $primary_term_id, $term_ids, false ) ) {
+						$term = get_term( $primary_term_id, $taxonomy );
+						if ( $term && ! is_wp_error( $term ) ) {
+							return $term;
+						}
+					}
 				}
+			} catch ( \Exception $e ) {
+				self::errorLog( 'Error getting Yoast primary term: ' . $e->getMessage() );
 			}
 		}
 
@@ -1958,8 +1965,8 @@ trait Wp {
 			$data = 'itemtype="https://schema.org/WPFooter" itemscope';
 		}
 
-		if ( 'text' === $context ) {
-			$data = 'itemprop="text"';
+		if ( 'headline' === $context ) {
+			$data = 'itemprop="headline"';
 		}
 
 		if ( 'url' === $context ) {
@@ -1970,20 +1977,8 @@ trait Wp {
 			$data = 'itemprop="name"';
 		}
 
-		if ( 'logo' === $context ) {
-			$data = 'itemprop="logo" itemtype="https://schema.org/ImageObject" itemscope';
-		}
-
 		if ( 'review' === $context ) {
 			$data = 'itemtype="https://schema.org/Review" itemscope';
-		}
-
-		if ( 'image' === $context ) {
-			$data = 'itemprop="image" itemtype="https://schema.org/ImageObject" itemscope';
-		}
-
-		if ( 'video' === $context ) {
-			$data = 'itemprop="video" itemtype="https://schema.org/VideoObject" itemscope';
 		}
 
 		if ( 'publisher' === $context ) {
