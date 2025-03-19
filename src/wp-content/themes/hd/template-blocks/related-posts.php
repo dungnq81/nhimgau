@@ -5,10 +5,10 @@
 $post_id  = $args['post_id'] ?? 0;
 $taxonomy = $args['taxonomy'] ?? 'category';
 $title    = $args['title'] ?? '';
-$max      = $args['max'] ?? '12';
+$max      = $args['max'] ?? 12;
 
 $posts = \HD\Helper::getRelatedPosts( $post_id, $taxonomy, $max );
-if ( ! $posts ) {
+if ( ! $post_id || ! $posts ) {
 	return;
 }
 
@@ -24,7 +24,7 @@ if ( ! $posts ) {
 		            'navigation' => true,
 		            'pagination' => 'bullets',
 		            'autoplay'   => true,
-		            '_gap'        => true,
+		            '_gap'       => true,
 	            ];
 	            try {
 		            $swiper_data = json_encode( $_data, JSON_THROW_ON_ERROR | JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE );
@@ -37,22 +37,31 @@ if ( ! $posts ) {
                         <div class="swiper-wrapper">
                             <?php
                             $i = 0;
-
                             foreach ( $posts as $post ) :
+
 	                            $i++;
 	                            if ( $i > $max ) {
 		                            break;
 	                            }
+	                            setup_postdata( $post );
 
 	                            $post_title     = get_the_title( $post->ID );
-	                            $post_title     = ( ! empty( $post_title ) ) ? $post_title : __( '(no title)', TEXT_DOMAIN );
-	                            $ratio_class    = \HD\Helper::aspectRatioClass( get_post_type( $post_id ) );
-	                            $post_thumbnail = get_the_post_thumbnail( $post, 'medium', [ 'alt' => \HD\Helper::escAttr( $post_title ) ] );
+	                            $post_title     = ! empty( $post_title ) ? $post_title : __( '(no title)', TEXT_DOMAIN );
+
+	                            $_args = [
+		                            'title_tag' => 'p',
+		                            'title'     => $post_title,
+		                            'ratio'     => \HD\Helper::aspectRatioClass( get_post_type( $post->ID ) ),
+		                            'thumbnail' => get_the_post_thumbnail( $post->ID, 'medium', [ 'alt' => \HD\Helper::escAttr( $post_title ) ] ),
+	                            ];
                             ?>
                             <div class="swiper-slide">
-
+                                <?php get_template_part( 'template-parts/posts/loop', null, $_args ); ?>
                             </div>
-                            <?php endforeach; ?>
+                            <?php
+                            endforeach;
+                            wp_reset_postdata();
+                            ?>
                         </div>
                     </div>
                 </div>
