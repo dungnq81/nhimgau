@@ -36,6 +36,7 @@ do_action( 'hd_blog_before_action' );
 
 	            // Start the Loop.
 	            while ( have_posts() ) : the_post();
+
 		            echo "<div class=\"cell\">";
 		            get_template_part( 'template-parts/posts/loop', null, [ 'title_tag' => 'h2' ] );
 		            echo "</div>";
