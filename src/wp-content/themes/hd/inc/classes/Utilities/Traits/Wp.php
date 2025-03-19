@@ -1209,7 +1209,7 @@ trait Wp {
 	 *
 	 * @return string|null
 	 */
-	public static function termExcerpt( ?int $term = 0, ?string $class = 'excerpt', ?string $default_tag = 'p' ): ?string {
+	public static function termExcerpt( ?int $term = 0, ?string $class = 'excerpt', ?string $default_tag = 'div' ): ?string {
 		$description = term_description( $term );
 		if ( ! self::stripSpace( $description ) ) {
 			return null;
@@ -1600,16 +1600,14 @@ trait Wp {
 			$term = self::getTerm( $term );
 		}
 
-		if ( class_exists( \ACF::class ) ) {
-			$attach_id = self::getField( $acf_field_name, $term );
-			if ( $attach_id ) {
-				$img_src = wp_get_attachment_image_url( $attach_id, $size );
-				if ( $img_wrap ) {
-					$img_src = wp_get_attachment_image( $attach_id, $size, false, $attr );
-				}
-
-				return $img_src;
+		$attach_id = self::getField( $acf_field_name, $term );
+		if ( $attach_id ) {
+			$img_src = wp_get_attachment_image_url( $attach_id, $size );
+			if ( $img_wrap ) {
+				$img_src = wp_get_attachment_image( $attach_id, $size, false, $attr );
 			}
+
+			return $img_src;
 		}
 
 		return null;
@@ -2199,6 +2197,89 @@ trait Wp {
 		}
 
 		return $options;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param null $query
+	 * @param bool $get
+	 *
+	 * @return void
+	 */
+	public static function paginateLinks( $query = null, bool $get = false ): void {
+		if ( ! $query ) {
+			global $wp_query;
+		} else {
+			$wp_query = $query;
+		}
+
+		if ( $wp_query->max_num_pages > 1 ) {
+
+			// Setting up default values based on the current URL.
+			$pagenum_link = html_entity_decode( get_pagenum_link() );
+			$url_parts    = explode( '?', $pagenum_link, 2 );
+
+			// Append the format placeholder to the base URL.
+			$pagenum_link = trailingslashit( $url_parts[0] ) . '%_%';
+
+			$current = max( 1, get_query_var( 'paged' ) );
+			$base    = $pagenum_link;
+
+			if ( $get ) {
+				$base = add_query_arg( 'page', '%#%' );
+			}
+
+			if ( ! empty( $_GET['page'] ) && $get ) {
+				$current = (int) $_GET['page'];
+			}
+
+			// For more options and info view the docs for paginate_links()
+			// http://codex.wordpress.org/Function_Reference/paginate_links
+			$paginate_links = paginate_links(
+				apply_filters(
+					'wp_pagination_args',
+					[
+						'base'      => $base,
+						'current'   => $current,
+						'total'     => $wp_query->max_num_pages,
+						'end_size'  => 1,
+						'mid_size'  => 2,
+						'prev_next' => true,
+						'prev_text' => '<i data-fa=""></i>',
+						'next_text' => '<i data-fa=""></i>',
+						'type'      => 'list',
+					]
+				)
+			);
+
+			$paginate_links = str_replace(
+				[
+					"<ul class='page-numbers'>",
+					'<li><span class="page-numbers dots">&hellip;</span></li>',
+					'<li><span aria-current="page" class="page-numbers current">',
+					'</span></li>',
+				],
+				[
+					'<ul class="pagination page-numbers">',
+					'<li class="ellipsis"></li>',
+					'<li class="current"><span aria-current="page" class="sr-only">You\'re on page </span>',
+					'</li>',
+				],
+				$paginate_links
+			);
+
+			$paginate_links = preg_replace( [ '/page-numbers\s*/', '/\s*class=""/' ], '', $paginate_links );
+
+			// Display the pagination if more than one page is found.
+			if ( $paginate_links ) {
+				$paginate_links = '<nav class="nav-pagination" aria-label="Pagination">' . $paginate_links . '</nav>';
+
+				echo $paginate_links;
+			}
+		}
+
+		echo null;
 	}
 
 	// -------------------------------------------------------------

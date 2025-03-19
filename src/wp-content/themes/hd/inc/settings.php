@@ -81,13 +81,13 @@ function register_sidebar_callback(): void {
 		]
 	);
 
-	// Blogs page sidebar
+	// Archive sidebar
 	register_sidebar(
 		[
 			'container'     => false,
-			'id'            => 'blogs-sidebar',
-			'name'          => __( 'Blogs Sidebar', TEXT_DOMAIN ),
-			'description'   => __( 'Widgets added here will appear in blogs sidebar.', TEXT_DOMAIN ),
+			'id'            => 'archive-sidebar',
+			'name'          => __( 'Archive Sidebar', TEXT_DOMAIN ),
+			'description'   => __( 'Widgets added here will appear in archive sidebar.', TEXT_DOMAIN ),
 			'before_widget' => '<div class="%2$s">',
 			'after_widget'  => '</div>',
 			'before_title'  => '<span>',

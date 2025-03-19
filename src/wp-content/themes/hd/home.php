@@ -45,11 +45,17 @@ do_action( 'hd_blog_before_action' );
 	            endwhile;
 	            ?>
             </div>
-            <?php endif; ?>
+            <?php
+	            // Previous/next page navigation.
+	            \HD\Helper::paginateLinks();
+            else :
+	            \HD\Helper::blockTemplate( 'template-blocks/no-results' );
+            endif;
+            ?>
         </div>
-	    <?php if ( is_active_sidebar( 'blogs-sidebar' ) ) : ?>
+	    <?php if ( is_active_sidebar( 'archive-sidebar' ) ) : ?>
         <aside class="sidebar" <?= \HD\Helper::microdata( 'sidebar' ) ?>>
-            <?php dynamic_sidebar( 'blogs-sidebar' ); ?>
+            <?php dynamic_sidebar( 'archive-sidebar' ); ?>
         </aside>
 	    <?php endif;
 
