@@ -66,6 +66,34 @@ function register_sidebar_callback(): void {
 			'after_title'   => '</span>',
 		]
 	);
+
+	// Page sidebar
+	register_sidebar(
+		[
+			'container'     => false,
+			'id'            => 'page-sidebar',
+			'name'          => __( 'Page Sidebar', TEXT_DOMAIN ),
+			'description'   => __( 'Widgets added here will appear in page sidebar.', TEXT_DOMAIN ),
+			'before_widget' => '<div class="%2$s">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<span>',
+			'after_title'   => '</span>',
+		]
+	);
+
+	// Blogs page sidebar
+	register_sidebar(
+		[
+			'container'     => false,
+			'id'            => 'blogs-sidebar',
+			'name'          => __( 'Blogs Sidebar', TEXT_DOMAIN ),
+			'description'   => __( 'Widgets added here will appear in blogs sidebar.', TEXT_DOMAIN ),
+			'before_widget' => '<div class="%2$s">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<span>',
+			'after_title'   => '</span>',
+		]
+	);
 }
 
 // --------------------------------------------------

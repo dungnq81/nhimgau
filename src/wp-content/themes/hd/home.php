@@ -9,7 +9,7 @@
 \defined( 'ABSPATH' ) || die;
 
 // header
-get_header( 'home' );
+get_header( 'blog' );
 
 $object = get_queried_object();
 
@@ -20,22 +20,51 @@ $object = get_queried_object();
 );
 
 /**
- * HOOK: hd_home_before_action
+ * HOOK: hd_blog_before_action
  */
-do_action( 'hd_home_before_action' );
+do_action( 'hd_blog_before_action' );
 
 ?>
-<section class="section section-page section-home archive">
-	<div class="container">
+<section class="section section-page section-blog archive">
+    <div class="container flex flex-x">
+        <div class="content">
+            <h1 class="heading-title" <?= \HD\Helper::microdata( 'headline' ) ?>><?= get_the_title( $object->ID ) ?></h1>
+            <?= \HD\Helper::postExcerpt( $object, 'excerpt', null, null ) ?>
+            <?php if ( have_posts() ) : ?>
+            <div class="posts-list archive-list items-list flex flex-x">
+	            <?php
 
+	            // Start the Loop.
+	            while ( have_posts() ) : the_post();
+		            echo "<div class=\"cell\">";
+		            get_template_part( 'template-parts/posts/loop', null, [ 'title_tag' => 'h2' ] );
+		            echo "</div>";
+
+		            // End the loop.
+	            endwhile;
+	            ?>
+            </div>
+            <?php endif; ?>
+        </div>
+	    <?php if ( is_active_sidebar( 'blogs-sidebar' ) ) : ?>
+        <aside class="sidebar" <?= \HD\Helper::microdata( 'sidebar' ) ?>>
+            <?php dynamic_sidebar( 'blogs-sidebar' ); ?>
+        </aside>
+	    <?php endif;
+
+	    /**
+	     * HOOK: hd_archive_sidebar_action
+	     */
+	    do_action( 'hd_archive_sidebar_action' );
+	    ?>
 	</div>
 </section>
 <?php
 
 /**
- * HOOK: hd_home_after_action
+ * HOOK: hd_blog_after_action
  */
-do_action( 'hd_home_after_action' );
+do_action( 'hd_blog_after_action' );
 
 // footer
-get_footer( 'home' );
+get_footer( 'blog' );
