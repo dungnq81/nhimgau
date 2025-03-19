@@ -18,8 +18,8 @@ if ( ! $suggestion_list ) {
 		$title = ! empty( $post_title ) ? $post_title : __( '(no title)', TEXT_DOMAIN );
     ?>
     <li>
-        <a title="<?= \HD\Helper::escAttr( $title ) ?>" class="post-title" href="<?php the_permalink( $id ); ?>"><?php echo $title; ?></a>
-        <span class="post-date"><?php echo \HD\Helper::humanizeTime( $id ); ?></span>
+        <a title="<?= \HD\Helper::escAttr( $title ) ?>" class="title" href="<?php the_permalink( $id ); ?>"><?php echo $title; ?></a>
+        <span class="date"><?php echo \HD\Helper::humanizeTime( $id ); ?></span>
     </li>
 	<?php endforeach; ?>
 </ul>

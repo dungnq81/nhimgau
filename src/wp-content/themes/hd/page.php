@@ -42,7 +42,13 @@ $alternative_title = \HD\Helper::getField( 'alternative_title', $post->ID );
             <h1 class="heading-title" <?= \HD\Helper::microdata( 'headline' ) ?>><?= $alternative_title ?: get_the_title() ?></h1>
 	        <?php echo \HD\Helper::postExcerpt( $post, 'excerpt', false ); ?>
             <article <?= \HD\Helper::microdata( 'article' ) ?>>
-	            <?php the_content(); ?>
+	            <?php
+
+                the_content();
+
+	            \HD\Helper::blockTemplate( 'template-blocks/suggestion-posts' );
+
+                ?>
             </article>
         </div>
 	    <?php if ( is_active_sidebar( 'page-sidebar' ) ) : ?>
