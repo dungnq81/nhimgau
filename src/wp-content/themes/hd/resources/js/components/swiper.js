@@ -35,8 +35,6 @@ const getDefaultOptions = () => ({
     grabCursor: !0,
     allowTouchMove: !0,
     threshold: 5,
-    observer: !0,
-    observeParents: !0,
     autoHeight: !1,
     loop: !1,
     hashNavigation: !1,
@@ -80,9 +78,12 @@ const initializeSwipers = () => {
         if (options.direction) swiperOptions.direction = toString(options.direction);
         if (options.freeMode) swiperOptions.freeMode = !0;
         if (options.cssMode) swiperOptions.cssMode = !0;
+        if (options.mousewheel) swiperOptions.mousewheel = !0;
+        if (options.parallax) swiperOptions.parallax = !0;
         if (options.slidesPerView) swiperOptions.slidesPerView = options.slidesPerView;
         if (options.spaceBetween) swiperOptions.spaceBetween = parseInt(options.spaceBetween);
-        if (options.speed) swiperOptions.speed = parseInt(options.speed);
+
+        swiperOptions.speed = parseInt(options.speed) || 300;
 
         // grid
         if (options.grid) {
@@ -170,6 +171,13 @@ const initializeSwipers = () => {
                 hide: !0,
                 draggable: !0,
             };
+        }
+
+        // observer
+        if (options._observer) {
+            swiperOptions.observer = !0;
+            swiperOptions.observeParents = !0;
+            swiperOptions.observeSlideChildren = !0;
         }
 
         // centeredSlides
