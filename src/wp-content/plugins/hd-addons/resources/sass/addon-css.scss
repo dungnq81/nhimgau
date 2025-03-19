@@ -549,39 +549,3 @@ input.input-icon {
         max-height: 43px;
     }
 }
-
-/** */
-.mce-wordcount, .mce-charcount {
-    display: none !important;
-}
-
-.acf-editor-wrap .mce-wordcount,
-.acf-editor-wrap .mce-charcount {
-    display: inline-block !important;
-    font-size: inherit;
-    text-transform: capitalize !important;
-    padding: 8px 0;
-    position: relative;
-}
-
-.acf-editor-wrap .mce-charcount:after {
-    content: "|";
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-.mce-statusbar > .mce-container-body .mce-path {
-    padding-top: 8px;
-}
-
-.wp-picker-container .wp-color-result.button {
-    margin-bottom: 0;
-}
-
-.addon-color-field.wp-color-picker {
-    padding: 0 5px !important;
-}
-
-.button.button-small.wp-picker-clear {
-    padding: 0 8px !important;
-}
