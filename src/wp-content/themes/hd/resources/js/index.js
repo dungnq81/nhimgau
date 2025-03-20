@@ -57,4 +57,17 @@ document.addEventListener('DOMContentLoaded', () => {
             el.setAttribute('rel', newRelValue);
         }
     });
+
+    // MutationObserver
+    const observer = new MutationObserver(() => {
+        document.querySelectorAll('ul.sub-menu[role="menubar"]').forEach(menu => {
+            menu.setAttribute('role', 'menu');
+        });
+
+        document.querySelectorAll('[aria-hidden="true"] a, [aria-hidden="true"] button').forEach(el => {
+            el.setAttribute('tabindex', '-1');
+        });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
 });

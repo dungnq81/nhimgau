@@ -119,7 +119,7 @@ jQuery(function($) {
                 $this.find('#_content')?.find('.dismissible-auto')?.fadeOutAndRemove(400);
             }, 4000);
         })
-        .always(function () {
+        .always(function() {
             btn_submit.prop('disabled', false).html(button_text);
         });
     });

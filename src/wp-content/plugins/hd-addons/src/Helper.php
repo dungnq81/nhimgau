@@ -227,41 +227,42 @@ final class Helper {
 	 */
 	public static function extractJS( string $content ): string {
 		$script_pattern = '/<script\b[^>]*>(.*?)<\/script>/is';
-		preg_match_all( $script_pattern, $content, $matches );
+		preg_match_all( $script_pattern, $content, $matches, PREG_SET_ORDER );
 
 		$valid_scripts = [];
 
-		// Define patterns for detecting potentially malicious code or encoding
+		// Patterns for detecting potentially malicious code
 		$malicious_patterns = [
-			'/eval\(/i',            // Use of eval()
-			'/document\.write\(/i', // Use of document.write()
-			'/<script.*?src=[\'"]?data:/i', // Inline scripts with data URIs
-			'/base64,/i',           // Base64 encoding
+			'/eval\(/i',
+			'/document\.write\(/i',
+			//'/<script.*?src=[\'"]?data:/i',
+			'/base64,/i',
 		];
 
-		foreach ( $matches[0] as $index => $scriptTag ) {
-			$scriptContent = trim( $matches[1][ $index ] );
-			$hasSrc        = preg_match( '/\bsrc=["\'].*?["\']/', $scriptTag );
+		foreach ( $matches as $match ) {
+			$scriptTag    = $match[0]; // Full <script> tag
+			$scriptContent = trim( $match[1] ?? '' ); // Script content inside <script>...</script>
+			$hasSrc        = preg_match( '/\bsrc=["\'][^"\']+["\']/i', $scriptTag );
 
 			$isMalicious = false;
-			foreach ( $malicious_patterns as $pattern ) {
-				if ( preg_match( $pattern, $scriptContent ) ) {
-					$isMalicious = true;
-
-					break;
+			if ( ! $hasSrc && $scriptContent !== '' ) {
+				foreach ( $malicious_patterns as $pattern ) {
+					if ( preg_match( $pattern, $scriptContent ) ) {
+						$isMalicious = true;
+						break;
+					}
 				}
 			}
 
-			if ( ! $isMalicious && ( $scriptContent !== '' || $hasSrc ) ) {
+			// Retain scripts that have valid src or are clean inline scripts
+			if ( ! $isMalicious || $hasSrc ) {
 				$valid_scripts[] = $scriptTag;
 			}
 		}
 
-		// Replace original <script> tags in the content with the valid ones
-		return preg_replace_callback( $script_pattern, static function ( $match ) use ( $valid_scripts ) {
-			static $i = 0;
-
-			return isset( $valid_scripts[ $i ] ) ? $valid_scripts[ $i ++ ] : '';
+		// Reconstruct content with valid <script> tags
+		return preg_replace_callback( $script_pattern, static function () use (&$valid_scripts) {
+			return array_shift( $valid_scripts ) ?? '';
 		}, $content );
 	}
 

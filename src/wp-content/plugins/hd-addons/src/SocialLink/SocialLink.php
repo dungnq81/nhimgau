@@ -55,7 +55,7 @@ final class SocialLink {
 
 				$thumb = '';
 				if ( Helper::isUrl( $data['icon'] ) || str_starts_with( $data['icon'], 'data:' ) ) :
-					$thumb = '<img src="' . $data['icon'] . '" alt="' . Helper::escAttr( $data['name'] ) . '">';
+					$thumb = '<img width="24" height="24" src="' . $data['icon'] . '" alt="' . Helper::escAttr( $data['name'] ) . '-alt">';
                 elseif ( str_starts_with( $data['icon'], '<svg' ) ) :
 					$thumb = $data['icon'];
                 elseif ( is_string( $data['icon'] ) ) :

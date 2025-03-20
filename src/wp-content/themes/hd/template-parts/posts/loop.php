@@ -19,16 +19,16 @@ $title_tag = $args['title_tag'] ?? 'p';
 <div class="item">
     <span class="cover">
         <span class="scale res <?= $ratio ?>">
-            <?= $thumbnail ?>
+            <?php echo $thumbnail; ?>
             <a class="link-cover" href="<?= get_permalink( $post->ID ) ?>" aria-label="<?= \HD\Helper::escAttr( $title ) ?>"></a>
         </span>
     </span>
     <div class="content">
         <div class="meta">
-	        <?= \HD\Helper::getPrimaryTerm( $post ) ?>
+	        <?php echo \HD\Helper::getPrimaryTerm( $post ); ?>
             <span class="date"><?= \HD\Helper::humanizeTime( $post->ID ) ?></span>
         </div>
-        <?= '<' . $title_tag . ' class="title"><a href="' . get_permalink( $post->ID ) . '" title="' . \HD\Helper::escAttr( $title ) . '">' . $title . '</a></' . $title_tag . '>' ?>
-	    <?= \HD\Helper::loopExcerpt( $post ) ?>
+        <?php echo '<' . $title_tag . ' class="title"><a href="' . get_permalink( $post->ID ) . '" title="' . \HD\Helper::escAttr( $title ) . '">' . $title . '</a></' . $title_tag . '>'; ?>
+	    <?php echo \HD\Helper::loopExcerpt( $post ); ?>
     </div>
 </div>

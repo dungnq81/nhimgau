@@ -34,6 +34,7 @@ if ( post_password_required() ) {
 do_action( 'hd_single_before_action' );
 
 $alternative_title = \HD\Helper::getField( 'alternative_title', $post->ID );
+$featured_banner   = \HD\Helper::getField( 'featured_banner', $post->ID );
 
 ?>
 <section class="section section-page section-single singular">
@@ -41,13 +42,21 @@ $alternative_title = \HD\Helper::getField( 'alternative_title', $post->ID );
         <?php \HD\Helper::blockTemplate( 'template-blocks/social-share' ); ?>
         <div class="content">
             <h1 class="heading-title" <?= \HD\Helper::microdata( 'headline' ) ?>><?= $alternative_title ?: get_the_title() ?></h1>
+            <div class="meta">
+	            <?php echo \HD\Helper::getPrimaryTerm( $post ); ?>
+                <span class="date" <?= \HD\Helper::microdata( 'date-published' ) ?>><?= \HD\Helper::humanizeTime( $post->ID ) ?></span>
+            </div>
+
+            <?php echo $featured_banner ? \HD\Helper::pictureHTML( 'featured-img img', $featured_banner ) : ''; ?>
             <?php echo \HD\Helper::postExcerpt( $post, 'excerpt', false ); ?>
+
             <article <?= \HD\Helper::microdata( 'article' ) ?>>
                 <?php
                 the_content();
 
                 \HD\Helper::hashTags();
                 \HD\Helper::blockTemplate( 'template-blocks/suggestion-posts' );
+                \HD\Helper::blockTemplate( 'template-blocks/author' );
 
                 // If comments are open, or we have at least one comment, load up the comment template.
                 comments_template();

@@ -35,11 +35,10 @@ trait DateTime {
 	 * @return string The human-readable time difference.
 	 */
 	public static function humanizeTime( mixed $post = null, false|int|string $from = false, false|int|string $to = false ): string {
-		$_ago = __( 'ago', TEXT_DOMAIN );
-
 		if ( empty( $to ) ) {
 			$to = current_time( 'U', 0 );
 		}
+
 		if ( empty( $from ) && $post ) {
 			$from = get_the_time( 'U', $post );
 		}
@@ -50,10 +49,7 @@ trait DateTime {
 		}
 
 		//$diff  = (int) abs( $to - $from );
-		$since = human_time_diff( $from, $to );
-		$since .= ' ' . $_ago;
-
-		return $since;
+		return sprintf( __( '%s ago', TEXT_DOMAIN ), human_time_diff( $from, $to ) );
 	}
 
 	// --------------------------------------------------
@@ -217,6 +213,7 @@ trait DateTime {
 	 * @param string $date_string Date string in 'Y-m-d\TH:i:s' format.
 	 *
 	 * @return array Array with time difference in days, hours, minutes, and seconds.
+	 * @throws \DateMalformedStringException
 	 */
 	public static function timeDifference( string $date_string ): array {
 		// Parse target time in the site's timezone

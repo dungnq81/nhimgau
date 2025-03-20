@@ -30,7 +30,7 @@ final class LazyLoad {
 			'the_content',
 			'widget_text',
 			'widget_block_content',
-			//'wp_get_attachment_image',
+			'wp_get_attachment_image',
 			'post_thumbnail_html',
 			'get_avatar',
 			'woocommerce_product_get_image',

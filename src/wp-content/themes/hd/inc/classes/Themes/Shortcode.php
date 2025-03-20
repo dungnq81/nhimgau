@@ -346,12 +346,11 @@ final class Shortcode {
 		?>
         <form action="<?= Helper::home() ?>" class="frm-search" method="get" accept-charset="UTF-8" data-abide novalidate>
             <label for="<?= $id ?>" class="screen-reader-text"><?= $title_for ?></label>
-            <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" autocomplete="off" name="s"
-                   value="<?= get_search_query() ?>" placeholder="<?= $placeholder_title; ?>">
-            <button type="submit" data-fa=""><span><?= $title ?></span></button>
+            <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" autocomplete="off" name="s" value="<?= get_search_query() ?>" placeholder="<?= $placeholder_title; ?>">
+            <button type="submit" data-fa="" aria-label="Search"><span><?= $title ?></span></button>
 			<?php
 			if ( Helper::isWoocommerceActive() ) : ?>
-                <input type="hidden" name="post_type" value="product">
+            <input type="hidden" name="post_type" value="product">
 			<?php
 			endif; ?>
         </form>
@@ -393,10 +392,9 @@ final class Shortcode {
             <form action="<?= Helper::home() ?>" class="frm-search" method="get" accept-charset="UTF-8" data-abide novalidate>
                 <div class="frm-container">
                     <label for="<?= $id ?>" class="screen-reader-text"><?= $title_for ?></label>
-                    <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" name="s" value="<?= get_search_query() ?>"
-                           placeholder="<?= $placeholder_title ?>">
-                    <button class="btn-s" type="submit" data-fa=""><span><?= $title ?></span></button>
-                    <button class="trigger-s-close" type="button" data-fa=""><span><?= $close_title ?></span></button>
+                    <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" name="s" value="<?= get_search_query() ?>" placeholder="<?= $placeholder_title ?>">
+                    <button class="btn-s" type="submit" data-fa="" aria-label="Search"><span><?= $title ?></span></button>
+                    <button class="trigger-s-close" type="button" data-fa="" aria-label="Close"><span><?= $close_title ?></span></button>
                 </div>
 				<?php
 				if ( Helper::isWoocommerceActive() ) : ?>

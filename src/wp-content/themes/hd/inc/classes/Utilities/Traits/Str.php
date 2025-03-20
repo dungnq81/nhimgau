@@ -147,19 +147,18 @@ trait Str {
 		}
 
 		// Remove <script> tags and their content
-		$content = preg_replace( '/<script\b[^>]*>(.*?)<\/script>/is', '', $content );
-
-		// Remove JavaScript event handlers (on* attributes)
-		$content = preg_replace( '/\s*on\w+="[^"]*"/i', '', $content );
-		$content = preg_replace( "/\s*on\w+='[^']*'/i", '', $content );
-
-		// Remove <style> tags and their content
-		$content = preg_replace( '/<style\b[^>]*>(.*?)<\/style>/is', '', $content );
-
-		// Remove inline style attributes
-		$content = preg_replace( '/\s*style=["\'][^"\']*["\']/i', '', $content );
-
-		return $content;
+		// Remove JavaScript event handlers (on* attributes) and inline style attributes
+		return preg_replace(
+			[
+				'/<script\b[^>]*>(.*?)<\/script>/is',
+				'/\s*on\w+="[^"]*"/i',
+				"/\s*on\w+='[^']*'/i",
+				'/<style\b[^>]*>(.*?)<\/style>/is',
+				'/\s*style=["\'][^"\']*["\']/i',
+			],
+			'',
+			$content
+		);
 	}
 
 	// --------------------------------------------------
@@ -210,7 +209,7 @@ trait Str {
 	 * @return string
 	 */
 	public static function random( int $length = 8 ): string {
-		$text = base64_encode( wp_generate_password( $length, false, false ) );
+		$text = base64_encode( wp_generate_password( $length, false ) );
 
 		return substr( str_replace( [ '/', '+', '=' ], '', $text ), 0, $length );
 	}
@@ -543,7 +542,7 @@ trait Str {
 	 * @return int
 	 */
 	protected static function excerptSplit( string $text, int $limit ): int {
-		if ( str_word_count( $text, 0 ) > $limit ) {
+		if ( str_word_count( $text ) > $limit ) {
 			$words = array_keys( str_word_count( $text, 2 ) );
 
 			return $words[ $limit ];
