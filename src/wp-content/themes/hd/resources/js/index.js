@@ -1,11 +1,21 @@
 import $ from 'jquery';
-import Foundation from './3rd/_zf';
-import './components/lighthouse.js';
+import Foundation from './3rd/_zf.js';
 
-import BackToTop from './components/back-to-top';
+const hd = typeof hd === 'object' && hd !== null ? hd : {};
+const hdObject = {
+    _ajaxUrl: hd._ajaxUrl ?? '/wp-admin/admin-ajax.php',
+    _baseUrl: hd._baseUrl ?? window.location.origin + '/',
+    _themeUrl: hd._themeUrl ?? '',
+    _csrfToken: hd._csrfToken ?? '',
+    _restToken: hd._restToken ?? '',
+    _lang: hd._lang ?? 'vi',
+};
+
+import './components/lighthouse.js';
+import './components/back-to-top.js';
+import './components/script-loader.js';
 import { initMenu } from './components/menu.js';
-import scriptLoader from './components/script-loader';
-import { initSocialShare } from './components/social-share';
+import { initSocialShare } from './components/social-share.js';
 //import SimpleBar from 'simplebar';
 //import ResizeObserver from 'resize-observer-polyfill';
 //import { Fancybox } from '@fancyapps/ui';
@@ -19,33 +29,12 @@ import '../sass/3rd/_index.scss';
 //import 'simplebar/dist/simplebar.css';
 //import '@fancyapps/ui/dist/fancybox/fancybox.css';
 
-// Global variables
-const hdDefaults = {
-    _ajaxUrl: '/wp-admin/admin-ajax.php',
-    _baseUrl: 'http://localhost:8080/',
-    _themeUrl: 'http://localhost:8080/wp-content/themes/hd/',
-    _csrfToken: '***',
-    _restToken: '***',
-    _lang: 'vi',
-};
-
-const {
-    _ajaxUrl: ajaxUrl,
-    _baseUrl: baseUrl,
-    _themeUrl: themeUrl,
-    _csrfToken: csrfToken,
-    _restToken: restToken,
-    _lang: lang,
-} = { ...hdDefaults, ...(typeof hd !== 'undefined' ? hd : {}) };
-
 // DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
-    new BackToTop();
     initMenu('nav.nav', '.main-nav');
-    scriptLoader(4000, 'script[data-type=\'lazy\']');
     initSocialShare('[data-social-share]', { intents: [ 'facebook', 'x', 'print', 'send-email', 'copy-link', 'web-share' ] });
 
-    // auto rel
+    // update rel
     document.querySelectorAll('a._blank, a.blank, a[target="_blank"]').forEach((el) => {
         if (!el.hasAttribute('target') || el.getAttribute('target') !== '_blank') {
             el.setAttribute('target', '_blank');

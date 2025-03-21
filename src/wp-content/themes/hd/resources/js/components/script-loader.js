@@ -1,4 +1,4 @@
-const scriptLoader = (timeout = 4000, scriptSelector = 'script[data-type=\'lazy\']') => {
+const scriptLoader = (timeout = 3000, scriptSelector = 'script[data-type="lazy"]') => {
     const userInteractionEvents = [ 'mouseover', 'keydown', 'touchstart', 'touchmove', 'wheel' ];
     const loadScriptsTimer = setTimeout(loadScripts, timeout);
 
@@ -23,5 +23,7 @@ const scriptLoader = (timeout = 4000, scriptSelector = 'script[data-type=\'lazy\
         });
     }
 };
+
+scriptLoader();
 
 export default scriptLoader;

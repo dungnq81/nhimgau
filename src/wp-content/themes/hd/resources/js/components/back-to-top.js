@@ -1,4 +1,4 @@
-export default class BackToTop {
+class BackToTop {
     constructor(selector = '.back-to-top', smoothScrollEnabled = true, defaultScrollSpeed = 400) {
         this.buttonSelector = selector;
         this.smoothScrollEnabled = smoothScrollEnabled;
@@ -73,3 +73,9 @@ export default class BackToTop {
         return (-c / 2) * (t * (t - 2) - 1) + b;
     }
 }
+
+setTimeout(() => {
+    new BackToTop();
+}, 100);
+
+export default BackToTop;

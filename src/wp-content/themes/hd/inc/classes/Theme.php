@@ -198,21 +198,16 @@ final class Theme {
 		$recaptcha_v3_site_key = $recaptcha_options['recaptcha_v3_site_key'] ?? '';
 
 		$l10n = [
-			'_ajaxUrl'   => esc_js( admin_url( 'admin-ajax.php', 'relative' ) ),
-			'_baseUrl'   => esc_js( untrailingslashit( site_url() ) . '/' ),
-			'_themeUrl'  => esc_js( THEME_URL ),
+			'_ajaxUrl'   => admin_url( 'admin-ajax.php', 'relative' ),
+			'_baseUrl'   => untrailingslashit( site_url() ) . '/',
+			'_themeUrl'  => THEME_URL,
 			'_csrfToken' => wp_create_nonce( 'wp_csrf_token' ),
 			'_restToken' => wp_create_nonce( 'wp_rest' ),
-			'_lang'      => esc_js( Helper::currentLanguage() ),
+			'_lang'      => Helper::currentLanguage(),
 		];
 
-		if ( $recaptcha_v2_site_key ) {
-			$l10n['recaptcha_v2_site_key'] = esc_js( $recaptcha_v2_site_key );
-		}
-
-		if ( $recaptcha_v3_site_key ) {
-			$l10n['recaptcha_v3_site_key'] = esc_js( $recaptcha_v3_site_key );
-		}
+		$recaptcha_v2_site_key && $l10n['recaptcha_v2_site_key'] = $recaptcha_v2_site_key;
+		$recaptcha_v3_site_key && $l10n['recaptcha_v3_site_key'] = $recaptcha_v3_site_key;
 
 		wp_localize_script( 'jquery-core', Helper::snakeCase( TEXT_DOMAIN ), $l10n );
 

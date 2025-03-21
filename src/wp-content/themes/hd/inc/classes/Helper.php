@@ -186,7 +186,7 @@ final class Helper {
 	/**
 	 * @return bool
 	 */
-	public static function Lighthouse(): bool {
+	public static function lightHouse(): bool {
 		if ( empty( $_SERVER['HTTP_USER_AGENT'] ) ) {
 			return false;
 		}

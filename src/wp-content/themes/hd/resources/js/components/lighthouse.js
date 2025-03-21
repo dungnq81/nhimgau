@@ -1,13 +1,22 @@
 (async function detectLighthouse() {
-    function isLighthouse() {
-        const userAgentCheck = navigator.userAgent.includes('Lighthouse');
-        const webdriverCheck = navigator.webdriver;
+    let lighthouseDetected = false;
+    if (navigator.userAgent.includes('Lighthouse') || navigator.webdriver) {
+        lighthouseDetected = true;
+    }
 
-        if (userAgentCheck || webdriverCheck) {
-            return true;
+    if (!lighthouseDetected && typeof hdObject !== 'undefined') {
+        try {
+            const response = await fetch(hdObject._ajaxUrl + '?action=check_lighthouse');
+            const data = await response.json();
+            if (data.success && data.data.lighthouse) {
+                lighthouseDetected = true;
+            }
+        } catch (error) {
         }
+    }
 
-        return new Promise(resolve => {
+    if (!lighthouseDetected) {
+        lighthouseDetected = await new Promise(resolve => {
             window.addEventListener('load', async function() {
                 const start = performance.now();
                 await new Promise(r => setTimeout(r, 100));
@@ -18,7 +27,7 @@
         });
     }
 
-    if (await isLighthouse()) {
+    if (lighthouseDetected) {
         document.documentElement.classList.add('is-lighthouse');
     }
 })();

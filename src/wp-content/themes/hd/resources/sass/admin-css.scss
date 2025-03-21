@@ -1025,3 +1025,8 @@ body:not(.acf-admin-page) {
 .button.button-small.wp-picker-clear {
     padding: 0 8px !important;
 }
+
+/** */
+body.toplevel_page_flying-press a[href="#/settings"] {
+    display: none !important;
+}

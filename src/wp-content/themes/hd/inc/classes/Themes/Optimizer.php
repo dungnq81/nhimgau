@@ -478,8 +478,7 @@ final class Optimizer {
 	/**
 	 * @return void
 	 */
-	public function print_footer_scripts(): void { ?>
-        <script>document.documentElement.classList.remove('no-js');</script>
-		<?php
+	public function print_footer_scripts(): void {
+        echo '<script>document.documentElement.classList.remove(\'no-js\');</script>';
 	}
 }
