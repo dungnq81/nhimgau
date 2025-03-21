@@ -256,7 +256,7 @@ trait Url {
 		// Replace basedir with baseurl and ABSPATH with home URL
 		return str_replace(
 			[ $dirs['basedir'], ABSPATH ],
-			[ $dirs['baseurl'], self::home() ],
+			[ $dirs['baseurl'], self::siteURL() ],
 			$dir
 		);
 	}
@@ -265,11 +265,24 @@ trait Url {
 
 	/**
 	 * @param string $path
+	 * @param $scheme
 	 *
 	 * @return string
 	 */
-	public static function home( string $path = '' ): string {
-		return apply_filters( 'hd_home_url_filter', esc_url( home_url( $path ) ), $path );
+	public static function home( string $path = '', $scheme = null ): string {
+		return apply_filters( 'hd_home_url_filter', esc_url( home_url( $path, $scheme ) ), $path );
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string $path
+	 * @param $scheme
+	 *
+	 * @return string
+	 */
+	public static function siteURL( string $path = '', $scheme = null ): string {
+		return apply_filters( 'hd_site_url_filter', esc_url( site_url( $path, $scheme ) ), $path );
 	}
 
 	// --------------------------------------------------
@@ -300,7 +313,7 @@ trait Url {
 	public static function current( bool $nopaging = true, bool $get_vars = true ): string {
 		global $wp;
 
-		$current_url = self::home( $wp->request );
+		$current_url = self::siteURL( $wp->request );
 
 		// get the position where '/page. ' text start.
 		$pos = strpos( $current_url, '/page' );

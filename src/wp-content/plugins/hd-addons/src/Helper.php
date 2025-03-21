@@ -209,13 +209,13 @@ final class Helper {
 	// --------------------------------------------------
 
 	public static function Lighthouse(): bool {
-		if ( ! isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
+		if ( empty( $_SERVER['HTTP_USER_AGENT'] ) ) {
 			return false;
 		}
 
-		$header = $_SERVER['HTTP_USER_AGENT'];
+		$userAgent = strtolower( trim( $_SERVER['HTTP_USER_AGENT'] ) );
 
-		return stripos( $header, 'Lighthouse' ) !== false;
+		return str_contains( $userAgent, 'lighthouse' );
 	}
 
 	// --------------------------------------------------
@@ -240,7 +240,7 @@ final class Helper {
 		];
 
 		foreach ( $matches as $match ) {
-			$scriptTag    = $match[0]; // Full <script> tag
+			$scriptTag     = $match[0]; // Full <script> tag
 			$scriptContent = trim( $match[1] ?? '' ); // Script content inside <script>...</script>
 			$hasSrc        = preg_match( '/\bsrc=["\'][^"\']+["\']/i', $scriptTag );
 
@@ -261,7 +261,7 @@ final class Helper {
 		}
 
 		// Reconstruct content with valid <script> tags
-		return preg_replace_callback( $script_pattern, static function () use (&$valid_scripts) {
+		return preg_replace_callback( $script_pattern, static function () use ( &$valid_scripts ) {
 			return array_shift( $valid_scripts ) ?? '';
 		}, $content );
 	}
@@ -278,10 +278,15 @@ final class Helper {
 			return '';
 		}
 
-		$css = preg_replace( '/<script\b[^>]*>(.*?)<\/script>/is', '', $css );
-		$css = strip_tags( $css );
-		$css = preg_replace( '/[^a-zA-Z0-9\s\.\#\:\;\,\-\_\(\)\{\}\/\*\!\%\@\+\>\~\=\"\'\\\\]/', '', $css );
-		$css = preg_replace( '/\/\*.*?\*\//s', '', $css );
+		$css = strip_tags( preg_replace( '/<script\b[^>]*>(.*?)<\/script>/is', '', $css ) );
+		$css = preg_replace(
+			[
+				'/[^a-zA-Z0-9\s\.\#\:\;\,\-\_\(\)\{\}\/\*\!\%\@\+\>\~\=\"\'\\\\]/',
+				'/\/\*.*?\*\//s'
+			],
+			'',
+			$css
+		);
 
 		return trim( $css );
 	}
@@ -594,6 +599,23 @@ final class Helper {
 			// Clear Jetpack Photon cache locally
 			if ( class_exists( \Jetpack_Photon::class ) ) {
 				\Jetpack_Photon::instance()->purge_cache();
+			}
+		}
+
+		// Clear FlyingPress cache
+		if ( self::checkPluginActive( 'flying-press/flying-press.php' ) ) {
+			$url      = esc_url_raw( rest_url( 'flying-press/purge-everything-and-preload' ) );
+			$response = wp_remote_post( $url, [
+				'method'  => 'POST',
+				'headers' => [
+					'Content-Type' => 'application/json',
+				],
+				'body'    => json_encode( [], JSON_THROW_ON_ERROR ),
+				'timeout' => 10,
+			] );
+
+			if ( is_wp_error( $response ) ) {
+				self::errorLog( 'Failed to clear FlyingPress cache: ' . $response->get_error_message() );
 			}
 		}
 

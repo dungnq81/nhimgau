@@ -1971,7 +1971,7 @@ trait Wp {
 			$data = 'itemprop="url"';
 		}
 
-		if ( 'author-name' === $context ) {
+		if ( 'name' === $context ) {
 			$data = 'itemprop="name"';
 		}
 

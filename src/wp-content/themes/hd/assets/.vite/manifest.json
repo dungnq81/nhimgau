@@ -22,6 +22,12 @@
     "src": "wp-content/themes/hd/resources/js/components/back-to-top.js",
     "isEntry": true
   },
+  "wp-content/themes/hd/resources/js/components/lighthouse.js": {
+    "file": "js/lighthouse.js",
+    "name": "lighthouse",
+    "src": "wp-content/themes/hd/resources/js/components/lighthouse.js",
+    "isEntry": true
+  },
   "wp-content/themes/hd/resources/js/components/menu.js": {
     "file": "js/menu.js",
     "name": "menu",
@@ -71,6 +77,7 @@
     "isEntry": true,
     "imports": [
       "__vendor.js",
+      "wp-content/themes/hd/resources/js/components/lighthouse.js",
       "wp-content/themes/hd/resources/js/components/back-to-top.js",
       "wp-content/themes/hd/resources/js/components/menu.js",
       "wp-content/themes/hd/resources/js/components/script-loader.js",

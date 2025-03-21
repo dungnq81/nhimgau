@@ -1,8 +1,6 @@
 import $ from 'jquery';
 import Foundation from './3rd/_zf';
-//import select2 from 'select2';
-
-//select2();
+import './components/lighthouse.js';
 
 import BackToTop from './components/back-to-top';
 import { initMenu } from './components/menu.js';
@@ -11,8 +9,10 @@ import { initSocialShare } from './components/social-share';
 //import SimpleBar from 'simplebar';
 //import ResizeObserver from 'resize-observer-polyfill';
 //import { Fancybox } from '@fancyapps/ui';
+//import select2 from 'select2';
 
 //window.ResizeObserver = ResizeObserver;
+//select2();
 
 // Styles
 import '../sass/3rd/_index.scss';

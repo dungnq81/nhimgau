@@ -1,0 +1,1 @@
+!async function(){await function(){const n=navigator.userAgent.includes("Lighthouse"),e=navigator.webdriver;return!(!n&&!e)||new Promise((n=>{window.addEventListener("load",(async function(){const e=performance.now();await new Promise((n=>setTimeout(n,100)));const t=performance.now()-e;n(t>90)}))}))}()&&document.documentElement.classList.add("is-lighthouse")}();

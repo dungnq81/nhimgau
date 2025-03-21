@@ -40,6 +40,7 @@ const jsFiles = [
     'components/script-loader',
     'components/social-share',
     'components/swiper',
+    'components/lighthouse',
 
     // (site)
     'woocommerce',

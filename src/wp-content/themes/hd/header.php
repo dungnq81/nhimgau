@@ -20,7 +20,6 @@
      *
      * @see wp_head_action - 1
      * @see other_head_action - 10
-     * @see critical_css_action - 12
      * @see external_fonts_action - 99
      */
     wp_head();

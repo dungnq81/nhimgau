@@ -5,7 +5,7 @@
 $post_id  = $args['post_id'] ?? 0;
 $taxonomy = $args['taxonomy'] ?? 'category';
 $title    = $args['title'] ?? '';
-$max      = $args['max'] ?? 12;
+$max      = $args['max'] ?? 6;
 
 $posts = \HD\Helper::getRelatedPosts( $post_id, $taxonomy, $max );
 if ( ! $post_id || ! $posts ) {
