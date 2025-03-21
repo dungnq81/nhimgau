@@ -1,15 +1,6 @@
 import $ from 'jquery';
 import Foundation from './3rd/_zf.js';
-
-const hd = typeof hd === 'object' && hd !== null ? hd : {};
-const hdObject = {
-    _ajaxUrl: hd._ajaxUrl ?? '/wp-admin/admin-ajax.php',
-    _baseUrl: hd._baseUrl ?? window.location.origin + '/',
-    _themeUrl: hd._themeUrl ?? '',
-    _csrfToken: hd._csrfToken ?? '',
-    _restToken: hd._restToken ?? '',
-    _lang: hd._lang ?? 'vi',
-};
+import { hdConfig } from './components/config.js';
 
 import './components/lighthouse.js';
 import './components/back-to-top.js';

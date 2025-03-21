@@ -34,6 +34,7 @@ const jsFiles = [
     'admin',
 
     // (components)
+    'components/config',
     'components/modulepreload-polyfill',
     'components/back-to-top',
     'components/menu',

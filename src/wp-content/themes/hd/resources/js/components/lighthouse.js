@@ -1,30 +1,25 @@
+import { hdConfig } from './config.js';
+
 (async function detectLighthouse() {
     let lighthouseDetected = false;
     if (navigator.userAgent.includes('Lighthouse') || navigator.webdriver) {
         lighthouseDetected = true;
     }
 
-    if (!lighthouseDetected && typeof hdObject !== 'undefined') {
+    if (!lighthouseDetected && typeof hdConfig !== 'undefined') {
         try {
-            const response = await fetch(hdObject._ajaxUrl + '?action=check_lighthouse');
+            const response = await fetch(hdConfig._ajaxUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ action: 'check_lighthouse', _wpnonce: hdConfig._csrfToken }),
+            });
+
             const data = await response.json();
             if (data.success && data.data.lighthouse) {
                 lighthouseDetected = true;
             }
         } catch (error) {
         }
-    }
-
-    if (!lighthouseDetected) {
-        lighthouseDetected = await new Promise(resolve => {
-            window.addEventListener('load', async function() {
-                const start = performance.now();
-                await new Promise(r => setTimeout(r, 100));
-                const duration = performance.now() - start;
-
-                resolve(duration > 90);
-            });
-        });
     }
 
     if (lighthouseDetected) {

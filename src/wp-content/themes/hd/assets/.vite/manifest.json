@@ -22,11 +22,20 @@
     "src": "wp-content/themes/hd/resources/js/components/back-to-top.js",
     "isEntry": true
   },
+  "wp-content/themes/hd/resources/js/components/config.js": {
+    "file": "js/config.js",
+    "name": "config",
+    "src": "wp-content/themes/hd/resources/js/components/config.js",
+    "isEntry": true
+  },
   "wp-content/themes/hd/resources/js/components/lighthouse.js": {
     "file": "js/lighthouse.js",
     "name": "lighthouse",
     "src": "wp-content/themes/hd/resources/js/components/lighthouse.js",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "wp-content/themes/hd/resources/js/components/config.js"
+    ]
   },
   "wp-content/themes/hd/resources/js/components/menu.js": {
     "file": "js/menu.js",
@@ -77,6 +86,7 @@
     "isEntry": true,
     "imports": [
       "__vendor.js",
+      "wp-content/themes/hd/resources/js/components/config.js",
       "wp-content/themes/hd/resources/js/components/lighthouse.js",
       "wp-content/themes/hd/resources/js/components/back-to-top.js",
       "wp-content/themes/hd/resources/js/components/script-loader.js",
