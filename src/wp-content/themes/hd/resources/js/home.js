@@ -1,1 +1,1 @@
-jQuery(function($) {});
+document.addEventListener('DOMContentLoaded', () => {});

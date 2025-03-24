@@ -54,6 +54,8 @@ function custom_css_action(): void {
 	//...
 
 	//$inline_css = ob_get_clean();
-	//$inline_css = \HD\Helper::CSSMinify( $inline_css, true );
-	//wp_add_inline_style( 'index-css', $inline_css );
+	//if ( $inline_css ) {
+		//$inline_css = \HD\Helper::CSSMinify( $inline_css, true );
+		//wp_add_inline_style( 'index-css', $inline_css );
+	//}
 }

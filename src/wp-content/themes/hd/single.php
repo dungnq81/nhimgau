@@ -63,10 +63,14 @@ $featured_banner   = \HD\Helper::getField( 'featured_banner', $post->ID );
                 \HD\Helper::blockTemplate( 'template-blocks/suggestion-posts' );
                 \HD\Helper::blockTemplate( 'template-blocks/author' );
 
-                // If comments are open, or we have at least one comment, load up the comment template.
-                comments_template();
                 ?>
             </article>
+            <?php
+
+            // If comments are open, or we have at least one comment, load up the comment template.
+            comments_template();
+
+            ?>
         </div>
         <?php if ( is_active_sidebar( 'news-sidebar' ) ) : ?>
         <aside class="sidebar" <?= \HD\Helper::microdata( 'sidebar' ) ?>>
@@ -78,6 +82,7 @@ $featured_banner   = \HD\Helper::getField( 'featured_banner', $post->ID );
          * HOOK: hd_singular_sidebar_action
          */
         do_action( 'hd_singular_sidebar_action' );
+
         ?>
     </div>
 </section>

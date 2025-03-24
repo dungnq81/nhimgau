@@ -19,7 +19,10 @@ add_action( 'wp_footer', 'custom_js_action', 999 );
 function custom_js_action(): void {
 	ob_start();
 
+	//-------------------------------------------------
 	// single page
+	//-------------------------------------------------
+
 	if ( is_single() && $ID = get_the_ID() ) :
     ?>
     <script>
@@ -44,5 +47,7 @@ function custom_js_action(): void {
 	<?php endif;
 
 	$content = ob_get_clean();
-	echo \HD\Helper::JSMinify( $content, true );
+    if ( $content ) {
+        echo \HD\Helper::JSMinify( $content, true );
+    }
 }
