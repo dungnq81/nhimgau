@@ -44,7 +44,12 @@ $featured_banner   = \HD\Helper::getField( 'featured_banner', $post->ID );
             <h1 class="heading-title" <?= \HD\Helper::microdata( 'headline' ) ?>><?= $alternative_title ?: get_the_title() ?></h1>
             <div class="meta">
 	            <?php echo \HD\Helper::getPrimaryTerm( $post ); ?>
-                <span class="date" <?= \HD\Helper::microdata( 'date-published' ) ?>><?= \HD\Helper::humanizeTime( $post->ID ) ?></span>
+                <span class="date" <?= \HD\Helper::microdata( 'date-published' ) ?> data-fa=""><?= \HD\Helper::humanizeTime( $post->ID ) ?></span>
+                <?php
+                $views = get_post_meta( $post->ID, '_post_views', true );
+                $views = $views ? (int) $views : 0;
+                ?>
+                <span class="views" data-fa=""><?= number_format_i18n( $views ) ?></span>
             </div>
 
             <?php echo $featured_banner ? \HD\Helper::pictureHTML( 'featured-img img', $featured_banner ) : ''; ?>
