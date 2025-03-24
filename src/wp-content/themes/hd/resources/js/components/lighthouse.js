@@ -8,18 +8,20 @@ import { hdConfig } from './config.js';
 
     if (!lighthouseDetected && typeof hdConfig !== 'undefined') {
         try {
-            const response = await fetch(hdConfig._ajaxUrl, {
+            let response = await fetch(hdConfig._ajaxUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({ action: 'check_lighthouse', _wpnonce: hdConfig._csrfToken }),
+                body: new URLSearchParams({
+                    action: 'check_lighthouse',
+                    _wpnonce: hdConfig._csrfToken
+                }),
             });
 
-            const data = await response.json();
-            if (data.success && data.data.lighthouse) {
+            let data = await response.json();
+            if (data.success && data.data.detected) {
                 lighthouseDetected = true;
             }
-        } catch (error) {
-        }
+        } catch (error) {}
     }
 
     if (lighthouseDetected) {

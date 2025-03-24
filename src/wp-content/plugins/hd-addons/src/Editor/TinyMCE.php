@@ -10,7 +10,6 @@ namespace Addons\Editor;
  * @author Gaudev
  */
 class TinyMCE {
-
 	// --------------------------------------------------
 
 	public function __construct() {
@@ -26,15 +25,34 @@ class TinyMCE {
 	 * @return mixed
 	 */
 	public function mce_buttons( $buttons ): mixed {
-		array_push( $buttons, 'separator', 'unlink' );
-		array_push( $buttons, 'separator', 'alignjustify' );
-		array_push( $buttons, 'separator', 'table' );
-		array_push( $buttons, 'separator', 'charmap' );
-		array_push( $buttons, 'separator', 'backcolor' );
-		array_push( $buttons, 'separator', 'superscript' );
-		array_push( $buttons, 'separator', 'subscript' );
-		array_push( $buttons, 'separator', 'codesample' );
-		array_push( $buttons, 'separator', 'toc' );
+		$extra_buttons = [
+			'table',
+			'charmap',
+			'backcolor',
+			'superscript',
+			'subscript',
+			'codesample',
+			'toc'
+		];
+
+		$insertions = [
+			'italic'     => 'underline',
+			'alignright' => 'alignjustify',
+			'link'       => 'unlink',
+		];
+
+		foreach ( $extra_buttons as $btn ) {
+			array_push( $buttons, 'separator', $btn );
+		}
+
+		foreach ( $insertions as $after => $button ) {
+			$pos = array_search( $after, $buttons, true );
+			if ( $pos !== false ) {
+				array_splice( $buttons, $pos + 1, 0, [ 'separator', $button ] );
+			} else {
+				array_push( $buttons, 'separator', $button );
+			}
+		}
 
 		return $buttons;
 	}
@@ -47,11 +65,17 @@ class TinyMCE {
 	 * @return mixed
 	 */
 	public function mce_external_plugins( $plugins ): mixed {
-		$plugins['table']      = ADDONS_URL . 'src/Editor/tinymce/table/plugin.min.js';
-		$plugins['codesample'] = ADDONS_URL . 'src/Editor/tinymce/codesample/plugin.min.js';
-		$plugins['toc']        = ADDONS_URL . 'src/Editor/tinymce/toc/plugin.min.js';
-		$plugins['wordcount']  = ADDONS_URL . 'src/Editor/tinymce/wordcount/plugin.min.js';
-		$plugins['charcount']  = ADDONS_URL . 'src/Editor/tinymce/charcount/plugin.min.js';
+		$plugin_files = [
+			'table'      => 'table/plugin.min.js',
+			'codesample' => 'codesample/plugin.min.js',
+			'toc'        => 'toc/plugin.min.js',
+			'wordcount'  => 'wordcount/plugin.min.js',
+			'charcount'  => 'charcount/plugin.min.js',
+		];
+
+		foreach ( $plugin_files as $key => $file ) {
+			$plugins[ $key ] = ADDONS_URL . "src/Editor/tinymce/{$file}";
+		}
 
 		return $plugins;
 	}

@@ -1,1 +1,1 @@
-var n,o,d,l,i,a;const w={_ajaxUrl:(null==(n=window.hd)?void 0:n._ajaxUrl)??"/wp-admin/admin-ajax.php",_baseUrl:(null==(o=window.hd)?void 0:o._baseUrl)??window.location.origin+"/",_themeUrl:(null==(d=window.hd)?void 0:d._themeUrl)??"",_csrfToken:(null==(l=window.hd)?void 0:l._csrfToken)??"",_restToken:(null==(i=window.hd)?void 0:i._restToken)??"",_lang:(null==(a=window.hd)?void 0:a._lang)??"vi"};export{w as h};
+const n=window.hdConfig??{_ajaxUrl:"/wp-admin/admin-ajax.php",_baseUrl:window.location.origin+"/",_themeUrl:"",_csrfToken:"",_restToken:"",_lang:"vi"};export{n as h};

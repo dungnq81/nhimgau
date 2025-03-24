@@ -86,12 +86,12 @@
     "isEntry": true,
     "imports": [
       "__vendor.js",
-      "wp-content/themes/hd/resources/js/components/config.js",
       "wp-content/themes/hd/resources/js/components/lighthouse.js",
       "wp-content/themes/hd/resources/js/components/back-to-top.js",
       "wp-content/themes/hd/resources/js/components/script-loader.js",
       "wp-content/themes/hd/resources/js/components/menu.js",
-      "wp-content/themes/hd/resources/js/components/social-share.js"
+      "wp-content/themes/hd/resources/js/components/social-share.js",
+      "wp-content/themes/hd/resources/js/components/config.js"
     ]
   },
   "wp-content/themes/hd/resources/js/woocommerce.js": {

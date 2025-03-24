@@ -199,7 +199,7 @@ final class Theme {
 
 		$l10n = [
 			'_ajaxUrl'   => admin_url( 'admin-ajax.php', 'relative' ),
-			'_baseUrl'   => untrailingslashit( site_url() ) . '/',
+			'_baseUrl'   => Helper::siteURL( '/' ),
 			'_themeUrl'  => THEME_URL,
 			'_csrfToken' => wp_create_nonce( 'wp_csrf_token' ),
 			'_restToken' => wp_create_nonce( 'wp_rest' ),
@@ -209,7 +209,7 @@ final class Theme {
 		$recaptcha_v2_site_key && $l10n['recaptcha_v2_site_key'] = $recaptcha_v2_site_key;
 		$recaptcha_v3_site_key && $l10n['recaptcha_v3_site_key'] = $recaptcha_v3_site_key;
 
-		wp_localize_script( 'jquery-core', Helper::snakeCase( TEXT_DOMAIN ), $l10n );
+		wp_localize_script( 'jquery-core', 'hdConfig', $l10n );
 
 		/** Comments */
 		if ( is_singular() && comments_open() && Helper::getOption( 'thread_comments' ) ) {

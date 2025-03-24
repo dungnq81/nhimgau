@@ -82,14 +82,6 @@ const WP_DEBUG_DISPLAY = false;
  * Allow WordPress to detect HTTPS when used behind a reverse proxy or a load balancer
  * See https://codex.wordpress.org/Function_Reference/is_ssl#Notes
  */
-if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https' ) {
-	$_SERVER['HTTPS'] = 'on';
-}
-
-if ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ) {
-	@ini_set( 'session.cookie_secure', '1' );
-}
-
 if ( ! defined( 'FS_METHOD' ) ) {
 	define( 'FS_METHOD', 'direct' );
 }
