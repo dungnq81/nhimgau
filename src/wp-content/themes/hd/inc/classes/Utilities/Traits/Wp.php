@@ -46,8 +46,6 @@ trait Wp {
 
 		if ( ! empty( $output ) ) {
 			wp_cache_set( $cache_key, $output, $cache_group, $cache_time );
-		} else {
-			self::errorLog( "BlockTemplate: Template '{$slug}' not found." );
 		}
 
 		echo $output;
