@@ -20,21 +20,11 @@ if ( $image_for_breadcrumb ) {
 	$breadcrumb_bg    = $image_for_breadcrumb;
 }
 
-$breadcrumb_max_height_setting = \HD\Helper::getThemeMod( 'breadcrumb_max_height_setting', 0 );
-$breadcrumb_min_height_setting = \HD\Helper::getThemeMod( 'breadcrumb_min_height_setting', 0 );
-if ( $breadcrumb_max_height_setting > 0 || $breadcrumb_min_height_setting > 0 ) {
+$breadcrumb_max = \HD\Helper::getThemeMod( 'breadcrumb_max_height_setting', 0 );
+$breadcrumb_min = \HD\Helper::getThemeMod( 'breadcrumb_min_height_setting', 0 );
+if ( $breadcrumb_max > 0 || $breadcrumb_min > 0 ) {
 	$breadcrumb_class .= ' has-sizes';
-
-	echo $breadcrumb_max_height_setting ? '<style>.section.section-breadcrumb{max-height:' . $breadcrumb_max_height_setting . 'px !important;}</style>' : '';
-	echo $breadcrumb_min_height_setting ? '<style>.section.section-breadcrumb{min-height:' . $breadcrumb_min_height_setting . 'px !important;}</style>' : '';
 }
-
-$breadcrumb_bgcolor     = \HD\Helper::getThemeMod( 'breadcrumb_bgcolor_setting' );
-$breadcrumb_title_color = \HD\Helper::getField( 'breadcrumb_title_color', $object );
-$breadcrumb_title_color = $breadcrumb_title_color ?: \HD\Helper::getThemeMod( 'breadcrumb_color_setting' );
-
-echo $breadcrumb_bgcolor ? '<style>.section.section-breadcrumb{background-color:' . $breadcrumb_bgcolor . ' !important;}</style>' : '';
-echo $breadcrumb_title_color ? '<style>.section.section-breadcrumb .breadcrumb-title{color:' . $breadcrumb_title_color . ' !important;}</style>' : '';
 
 $title = '';
 if ( is_search() ) {

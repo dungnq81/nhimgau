@@ -108,9 +108,9 @@ final class Admin {
 			$version = date( 'YmdHis', current_time( 'U', 0 ) );
 		}
 
-		wp_enqueue_style( 'admin-style', ASSETS_URL . 'css/admin-css.css', [], $version );
-		wp_enqueue_script( 'admin', ASSETS_URL . 'js/admin.js', [ 'jquery' ], $version, true );
-		wp_script_add_data( 'admin', 'extra', [ 'module', 'defer' ] );
+		wp_enqueue_style( 'admin-css', ASSETS_URL . 'css/admin-css.css', [], $version );
+		wp_enqueue_script( 'admin-js', ASSETS_URL . 'js/admin.js', [ 'jquery' ], $version, true );
+		wp_script_add_data( 'admin-js', 'extra', [ 'module', 'defer' ] );
 	}
 
 	// --------------------------------------------------

@@ -76,15 +76,21 @@ const WP_DEBUG         = true;
 const WP_DEBUG_LOG     = true;
 const WP_DEBUG_DISPLAY = false;
 
+ini_set( 'log_errors', 0 );
+
 /* Add any custom values between this line and the "stop editing" line. */
 
 /**
  * Allow WordPress to detect HTTPS when used behind a reverse proxy or a load balancer
  * See https://codex.wordpress.org/Function_Reference/is_ssl#Notes
  */
-if ( ! defined( 'FS_METHOD' ) ) {
-	define( 'FS_METHOD', 'direct' );
+if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https' ) {
+	$_SERVER['HTTPS'] = 'on';
 }
+
+//if ( ! defined( 'FS_METHOD' ) ) {
+//	define( 'FS_METHOD', 'direct' );
+//}
 
 /** PHP Memory */
 const WP_MEMORY_LIMIT     = '512M';

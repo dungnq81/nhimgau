@@ -176,18 +176,18 @@ final class Theme {
 		wp_enqueue_style( 'index-css', ASSETS_URL . 'css/index-css.css', [ 'vendor-css' ], $version );
 
 		/** Global Scripts */
-		wp_enqueue_script( 'modulepreload', ASSETS_URL . 'js/modulepreload-polyfill.js', [], $version, true );
-		wp_enqueue_script( 'index', ASSETS_URL . 'js/index.js', [ 'jquery-core' ], $version, true );
-		wp_script_add_data( 'modulepreload', 'extra', [ 'module', 'async' ] );
-		wp_script_add_data( 'index', 'extra', [ 'module', 'defer' ] );
+		wp_enqueue_script( 'modulepreload-js', ASSETS_URL . 'js/modulepreload-polyfill.js', [], $version, true );
+		wp_script_add_data( 'modulepreload-js', 'extra', [ 'module', 'async' ] );
+		wp_enqueue_script( 'index-js', ASSETS_URL . 'js/index.js', [ 'jquery-core' ], $version, true );
+		wp_script_add_data( 'index-js', 'extra', [ 'module', 'defer' ] );
 
 		wp_add_inline_script( 'jquery-core', 'Object.assign(window, { $: jQuery, jQuery });', 'after' );
 
 		/** Homepage */
 		if ( Helper::isHomeOrFrontPage() ) {
 			wp_enqueue_style( 'home-css', ASSETS_URL . 'css/home-css.css', [], $version );
-			wp_enqueue_script( 'home', ASSETS_URL . 'js/home.js', [ 'jquery-core' ], $version, true );
-			wp_script_add_data( 'home', 'extra', [ 'module', 'defer' ] );
+			wp_enqueue_script( 'home-js', ASSETS_URL . 'js/home.js', [ 'jquery-core' ], $version, true );
+			wp_script_add_data( 'home-js', 'extra', [ 'module', 'defer' ] );
 
 			//...
 		}
