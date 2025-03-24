@@ -15,14 +15,7 @@ export const sharedConfig = {
             plugins: {
                 jpg: imageminMozjpeg({ quality: 80 }),
                 png: imageminPngquant({ strip: true, quality: [ 0.7, 0.9 ], dithering: 0.1 }),
-                svg: imageminSVGO({
-                    plugins: [
-                        {
-                            name: 'preset-default',
-                            params: { overrides: { removeViewBox: false, cleanupIDs: false } },
-                        },
-                    ],
-                }),
+                svg: imageminSVGO(),
                 gif: imageminGifsicle({ optimizationLevel: 3, interlaced: true }),
             },
         }),

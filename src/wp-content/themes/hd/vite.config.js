@@ -34,19 +34,20 @@ const jsFiles = [
     'admin',
 
     // (components)
-    'components/config',
-    'components/modulepreload-polyfill',
     'components/back-to-top',
+    'components/config',
+    'components/global',
+    'components/lighthouse',
     'components/menu',
+    'components/modulepreload-polyfill',
     'components/script-loader',
     'components/social-share',
     'components/swiper',
-    'components/lighthouse',
 
     // (site)
-    'woocommerce',
-    'index',
     'home',
+    'index',
+    'woocommerce',
 ];
 
 const isProduction = process.env.NODE_ENV === 'production';
