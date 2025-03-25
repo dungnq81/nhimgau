@@ -17,7 +17,7 @@ add_action( 'acf/include_fields', static function () {
 					'param'    => 'taxonomy',
 					'operator' => '==',
 					'value'    => \HD\Helper::toString( $term_column ),
-				]
+				],
 			];
 		}
 	}

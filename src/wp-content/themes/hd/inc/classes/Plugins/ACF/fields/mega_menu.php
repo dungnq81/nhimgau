@@ -17,7 +17,7 @@ add_action( 'acf/include_fields', static function () {
 					'param'    => 'nav_menu_item',
 					'operator' => '==',
 					'value'    => 'location/' . \HD\Helper::toString( $menu_item ),
-				]
+				],
 			];
 		}
 	}

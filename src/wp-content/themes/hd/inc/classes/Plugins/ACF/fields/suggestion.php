@@ -7,11 +7,11 @@ add_action( 'acf/include_fields', static function () {
 		return;
 	}
 
-	acf_add_local_field_group( array(
+	acf_add_local_field_group( [
 		'key'                   => 'group_67e118863f563',
 		'title'                 => 'Suggestion',
-		'fields'                => array(
-			array(
+		'fields'                => [
+			[
 				'key'                  => 'field_67e118864e813',
 				'label'                => 'Suggestion',
 				'name'                 => 'suggestion',
@@ -20,17 +20,17 @@ add_action( 'acf/include_fields', static function () {
 				'instructions'         => '',
 				'required'             => 0,
 				'conditional_logic'    => 0,
-				'wrapper'              => array(
+				'wrapper'              => [
 					'width' => '',
 					'class' => '',
 					'id'    => '',
-				),
-				'post_type'            => array(
+				],
+				'post_type'            => [
 					0 => 'post',
-				),
-				'post_status'          => array(
+				],
+				'post_status'          => [
 					0 => 'publish',
-				),
+				],
 				'taxonomy'             => '',
 				'return_format'        => 'id',
 				'multiple'             => 1,
@@ -38,18 +38,18 @@ add_action( 'acf/include_fields', static function () {
 				'allow_in_bindings'    => 0,
 				'bidirectional'        => 0,
 				'ui'                   => 1,
-				'bidirectional_target' => array(),
-			),
-		),
-		'location'              => array(
-			array(
-				array(
+				'bidirectional_target' => [],
+			],
+		],
+		'location'              => [
+			[
+				[
 					'param'    => 'post_type',
 					'operator' => '==',
 					'value'    => 'post',
-				),
-			),
-		),
+				],
+			],
+		],
 		'menu_order'            => 0,
 		'position'              => 'normal',
 		'style'                 => 'default',
@@ -59,6 +59,6 @@ add_action( 'acf/include_fields', static function () {
 		'active'                => true,
 		'description'           => '',
 		'show_in_rest'          => 0,
-	) );
+	] );
 } );
 
