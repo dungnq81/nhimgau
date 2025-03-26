@@ -30,8 +30,8 @@ trait Wp {
 	 * @return void
 	 */
 	public static function blockTemplate( $slug, array $args = [], int $cache_in_hours = 2 ): void {
-		$cache_key   = 'block_cache_' . md5( $slug . serialize( $args ) );
-		$cache_group = 'blocks_cache';
+		$cache_key   = 'hd_block_cache_' . md5( $slug . serialize( $args ) );
+		$cache_group = 'hd_blocks_cache';
 		$cache_time  = $cache_in_hours * HOUR_IN_SECONDS;
 
 		// Check if cache available
@@ -604,7 +604,7 @@ trait Wp {
 		$cache_time = $cache_in_hours * HOUR_IN_SECONDS;
 
 		$site_id   = is_multisite() ? get_current_blog_id() : null;
-		$cache_key = $site_id ? "site_option_{$site_id}_{$option}" : "option_{$option}";
+		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
 
 		// Update the option in the appropriate context (multisite or not)
 		$updated = is_multisite()
@@ -612,8 +612,8 @@ trait Wp {
 			: update_option( $option, $new_value, $autoload );
 
 		if ( $updated ) {
-			wp_cache_delete( $cache_key, 'options' );
-			wp_cache_set( $cache_key, $new_value, 'options', $cache_time );
+			wp_cache_delete( $cache_key, 'hd_options' );
+			wp_cache_set( $cache_key, $new_value, 'hd_options', $cache_time );
 		}
 
 		return $updated;
@@ -669,8 +669,8 @@ trait Wp {
 		$mod_name_lower = strtolower( $mod_name );
 
 		set_theme_mod( $mod_name, $value );
-		$cache_key = "theme_mod_{$mod_name_lower}";
-		wp_cache_set( $cache_key, $value, 'theme_mods', $cache_time );
+		$cache_key = "hd_theme_mod_{$mod_name_lower}";
+		wp_cache_set( $cache_key, $value, 'hd_theme_mods', $cache_time );
 
 		return true;
 	}
@@ -1299,43 +1299,113 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param mixed $post
-	 * @param string $taxonomy
+	 * Retrieves the appropriate taxonomy for a given post.
 	 *
-	 * @return mixed
+	 * @param \WP_Post|int|null $post Optional. Post object or ID. Defaults to current post.
+	 * @param string|null $taxonomy Optional. Specific taxonomy to use.
+	 *
+	 * @return string|null The taxonomy name or null if no valid taxonomy found.
 	 */
-	public static function primaryTerm( mixed $post, string $taxonomy = '' ): mixed {
+	public static function getTaxonomy( mixed $post, ?string $taxonomy = null ): ?string {
 		// Ensure $post is a valid post object
 		$post = get_post( $post );
-		if ( ! $post ) {
+		if ( ! $post || is_wp_error( $post ) ) {
 			return null;
 		}
 
-		$post_id = $post->ID;
+		$post_type = get_post_type( $post );
+		if ( ! $post_type ) {
+			return null;
+		}
 
 		// Determine the taxonomy if not explicitly provided
-		if ( ! $taxonomy ) {
-			$post_type = get_post_type( $post );
+		if ( empty( $taxonomy ) ) {
 
 			// The default taxonomy for 'post' is 'category'
 			if ( 'post' === $post_type ) {
 				$taxonomy = 'category';
+			} else {
+
+				// Use custom filter to retrieve taxonomy mapping for the post-type
+				$post_type_terms = self::filterSettingOptions( 'post_type_terms', [] );
+				$taxonomy        = $post_type_terms[ $post_type ] ?? null;
 			}
 
-			// Use custom filter to retrieve taxonomy mapping for the post-type
-			foreach ( self::filterSettingOptions( 'post_type_terms', [] ) as $post_type_terms ) {
-				foreach ( $post_type_terms as $_post_type => $_taxonomy ) {
-					if ( $_post_type === $post_type ) {
-						$taxonomy = $_taxonomy;
-						break;
-					}
-				}
+			// Additional check: try "{$post_type}_cat" format
+			$taxonomy = $taxonomy ?: "{$post_type}_cat";
+		}
+
+		// Validate taxonomy
+		return taxonomy_exists( $taxonomy ) ? $taxonomy : null;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param mixed $post
+	 * @param string|null $taxonomy
+	 * @param string|null $wrapper_open
+	 * @param string|null $wrapper_close
+	 *
+	 * @return string|null
+	 */
+	public static function postTerms( mixed $post, ?string $taxonomy = '', ?string $wrapper_open = '<div class="terms">', ?string $wrapper_close = '</div>' ): ?string {
+		// Ensure $post is a valid post object
+		$post = get_post( $post );
+		if ( ! $post || is_wp_error( $post ) ) {
+			return null;
+		}
+
+		// Determine the taxonomy if not explicitly provided
+		$taxonomy = self::getTaxonomy( $post, $taxonomy );
+		if (! $taxonomy ) {
+            return null;
+        }
+
+		// Get all terms associated with the post for the specified taxonomy
+		$post_terms = get_the_terms( $post, $taxonomy );
+		if ( ! is_array( $post_terms ) || empty( $post_terms ) || is_wp_error( $post_terms ) ) {
+			return null;
+		}
+
+		$link = '';
+		foreach ( $post_terms as $term ) {
+			if ( $term->slug ) {
+				$link .= '<a href="' . esc_url( get_term_link( $term ) ) . '" title="' . esc_attr( $term->name ) . '">' . $term->name . '</a>';
 			}
+		}
+
+		if ( $wrapper_open && $wrapper_close ) {
+			$link = $wrapper_open . $link . $wrapper_close;
+		}
+
+		return $link;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param mixed $post
+	 * @param string|null $taxonomy
+	 *
+	 * @return mixed
+	 */
+	public static function primaryTerm( mixed $post, ?string $taxonomy = '' ): mixed {
+		// Ensure $post is a valid post object
+		$post = get_post( $post );
+		if ( ! $post || is_wp_error( $post ) ) {
+			return null;
+		}
+
+		// Determine the taxonomy if not explicitly provided
+		$taxonomy = self::getTaxonomy( $post, $taxonomy );
+		if (! $taxonomy ) {
+			return null;
 		}
 
 		// Get all terms associated with the post for the specified taxonomy
 		$post_terms = get_the_terms( $post, $taxonomy );
-		if ( ! is_array( $post_terms ) || empty( $post_terms ) ) {
+		if ( ! is_array( $post_terms ) || empty( $post_terms ) || is_wp_error( $post_terms ) ) {
 			return null;
 		}
 
@@ -1343,10 +1413,10 @@ trait Wp {
 		$term_ids = wp_list_pluck( $post_terms, 'term_id' );
 
 		// Support for Rank Math SEO plugin
-		$primary_term_id = get_post_meta( $post_id, 'rank_math_primary_' . $taxonomy, true );
+		$primary_term_id = get_post_meta( $post->ID, 'rank_math_primary_' . $taxonomy, true );
 		if ( $primary_term_id && in_array( $primary_term_id, $term_ids, false ) ) {
 			$term = get_term( $primary_term_id, $taxonomy );
-			if ( $term ) {
+			if ( $term && ! is_wp_error( $term ) ) {
 				return $term;
 			}
 		}
@@ -1366,15 +1436,17 @@ trait Wp {
 				}
 			} catch ( \Exception $e ) {
 				self::errorLog( 'Error getting Yoast primary term: ' . $e->getMessage() );
+			} catch ( \Error $e ) {
+				self::errorLog( 'PHP Error in Yoast primary term: ' . $e->getMessage() );
 			}
 		}
 
 		// Support for the All-in-one SEO plugin
 		if ( function_exists( 'aioseo' ) ) {
-			$aioseo_primary_term_id = get_post_meta( $post_id, '_aioseo_primary_' . $taxonomy, true );
+			$aioseo_primary_term_id = get_post_meta( $post->ID, '_aioseo_primary_' . $taxonomy, true );
 			if ( $aioseo_primary_term_id && in_array( $aioseo_primary_term_id, $term_ids, false ) ) {
 				$term = get_term( $aioseo_primary_term_id, $taxonomy );
-				if ( $term ) {
+				if ( $term && ! is_wp_error( $term ) ) {
 					return $term;
 				}
 			}
@@ -1401,54 +1473,6 @@ trait Wp {
 		}
 
 		$link = '<a href="' . esc_url( get_term_link( $term, $taxonomy ) ) . '" title="' . esc_attr( $term->name ) . '">' . $term->name . '</a>';
-		if ( $wrapper_open && $wrapper_close ) {
-			$link = $wrapper_open . $link . $wrapper_close;
-		}
-
-		return $link;
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @param mixed $post
-	 * @param string|null $taxonomy
-	 * @param string|null $wrapper_open
-	 * @param string|null $wrapper_close
-	 *
-	 * @return string|null
-	 */
-	public static function postTerms( mixed $post, ?string $taxonomy = 'category', ?string $wrapper_open = '<div class="terms">', ?string $wrapper_close = '</div>' ): ?string {
-		if ( ! $taxonomy ) {
-			$post_type = get_post_type( $post );
-			$taxonomy  = $post_type . '_cat';
-
-			if ( 'post' === $post_type ) {
-				$taxonomy = 'category';
-			}
-
-			$post_type_terms_arr = self::filterSettingOptions( 'post_type_terms', [] );
-			if ( ! empty( $post_type_terms_arr ) ) {
-				foreach ( $post_type_terms_arr as $_post_type => $_taxonomy ) {
-					if ( $_post_type === $post_type ) {
-						$taxonomy = $_taxonomy;
-					}
-				}
-			}
-		}
-
-		$link       = '';
-		$post_terms = get_the_terms( $post, $taxonomy );
-		if ( empty( $post_terms ) ) {
-			return null;
-		}
-
-		foreach ( $post_terms as $term ) {
-			if ( $term->slug ) {
-				$link .= '<a href="' . esc_url( get_term_link( $term ) ) . '" title="' . esc_attr( $term->name ) . '">' . $term->name . '</a>';
-			}
-		}
-
 		if ( $wrapper_open && $wrapper_close ) {
 			$link = $wrapper_open . $link . $wrapper_close;
 		}
