@@ -31,6 +31,7 @@ Options -Indexes
 </IfModule>
 
 <IfModule mod_headers.c>
+    Header always set Content-Security-Policy "upgrade-insecure-requests;"
     Header always set X-Content-Type-Options "nosniff"
     Header set X-XSS-Protection "1; mode=block"
     Header set X-Frame-Options "SAMEORIGIN"

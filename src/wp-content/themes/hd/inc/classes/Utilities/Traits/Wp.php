@@ -17,6 +17,9 @@ trait Wp {
 	use Db;
 	use Encryption;
 
+	private static int $post_limit = - 1;
+	private static array $target_post_types = [];
+
 	// -------------------------------------------------------------
 
 	/**
@@ -113,7 +116,14 @@ trait Wp {
 			// Skip unreadable files
 			if ( ! is_readable( $file_path ) ) {
 				self::errorLog( "Unreadable file skipped: $file_path" );
+				continue;
+			}
 
+			// Extra check for PHP files
+
+			// Check if the file is a malicious PHP script
+			if ( self::_isMaliciousFile( $file_path ) ) {
+				self::errorLog( "Skipped potentially malicious file: $file_path" );
 				continue;
 			}
 
@@ -143,6 +153,35 @@ trait Wp {
 			}
 		}
 	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string $file_path
+	 *
+	 * @return bool
+	 */
+	private static function _isMaliciousFile( string $file_path ): bool {
+		$content = file_get_contents( $file_path );
+
+		$patterns = [
+			'/base64_decode\s*\(/i', // base64 decode
+			'/eval\s*\(/i', // evaluate
+			'/gzinflate\s*\(/i', //
+			'/str_rot13\s*\(/i', //
+			'/hex2bin\s*\(/i', //
+			'/\$\w+\s*=\s*\$\w+\s*\.\s*".*?"/i', //
+		];
+
+		foreach ( $patterns as $pattern ) {
+			if ( preg_match( $pattern, $content ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 
 	// -------------------------------------------------------------
 
@@ -599,14 +638,14 @@ trait Wp {
 		$cache_time = $cache_in_hours * HOUR_IN_SECONDS;
 
 		$site_id      = is_multisite() ? get_current_blog_id() : null;
-		$cache_key    = $site_id ? "site_option_{$site_id}_{$option}" : "option_{$option}";
-		$cached_value = wp_cache_get( $cache_key, 'options' );
+		$cache_key    = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
+		$cached_value = wp_cache_get( $cache_key, 'hd_options' );
 		if ( $cached_value !== false ) {
 			return $cached_value;
 		}
 
 		$option_value = is_multisite() ? get_site_option( $option, $default ) : get_option( $option, $default );
-		wp_cache_set( $cache_key, $option_value, 'options', $cache_time );
+		wp_cache_set( $cache_key, $option_value, 'hd_options', $cache_time );
 
 		// Retrieve the option value
 		return $option_value;
@@ -653,8 +692,8 @@ trait Wp {
 		$cache_time     = $cache_in_hours * HOUR_IN_SECONDS;
 		$mod_name_lower = strtolower( $mod_name );
 
-		$cache_key    = "theme_mod_{$mod_name_lower}";
-		$cached_value = wp_cache_get( $cache_key, 'theme_mods' );
+		$cache_key    = "hd_theme_mod_{$mod_name_lower}";
+		$cached_value = wp_cache_get( $cache_key, 'hd_theme_mods' );
 		if ( $cached_value !== false ) {
 			return $cached_value;
 		}
@@ -662,7 +701,7 @@ trait Wp {
 		$_mod      = get_theme_mod( $mod_name, $default );
 		$mod_value = is_ssl() ? str_replace( 'http://', 'https://', $_mod ) : $_mod;
 
-		wp_cache_set( $cache_key, $mod_value, 'theme_mods', $cache_time );
+		wp_cache_set( $cache_key, $mod_value, 'hd_theme_mods', $cache_time );
 
 		return $mod_value;
 	}
@@ -692,24 +731,63 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * Set the number of posts per page for non-admin pages.
+	 * Set custom posts per page limit for specific post-types
 	 *
-	 * @param int $post_limit The maximum number of posts to display per page. Default is -1.
+	 * @param int $post_limit Number of posts to display per page
+	 * @param array $target_post_types Post types to apply the limit
 	 *
 	 * @return void
 	 */
-	public static function setPostsPerPage( int $post_limit = - 1 ): void {
-		// Check if we are not in the admin area and the main query is not being processed
-		if ( ! is_admin() && ! is_main_query() ) {
-			$limit_default = self::getOption( 'posts_per_page' );
+	public static function setPostsPerPage( int $post_limit = - 1, array $target_post_types = [] ): void {
+		if ( is_admin() || wp_doing_ajax() ) {
+			return;
+		}
 
-			// Only modify the query if the new limit exceeds the default
-			if ( $post_limit > (int) $limit_default ) {
-				add_action( 'pre_get_posts', static function ( $query ) use ( $post_limit ) {
-					$query->set( 'posts_per_page', $post_limit );
-				}, 9999 );
+		// Get default posts per page from WordPress settings
+		$limit_default = (int) get_option( 'posts_per_page' );
+
+		// Only proceed if the new limit is greater than default
+		if ( $post_limit <= $limit_default ) {
+			return;
+		}
+
+		// Store limit and target post types
+		self::$post_limit        = $post_limit;
+		self::$target_post_types = $target_post_types;
+
+		// Add a hook with high priority to modify a query
+		add_action( 'pre_get_posts', [ __CLASS__, 'modifyPostsPerPage' ], 9999 );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * Modify posts per page for custom queries
+	 *
+	 * @param \WP_Query $query Current WordPress query
+	 *
+	 * @return void
+	 */
+	public static function modifyPostsPerPage( \WP_Query $query ): void {
+		if ( is_admin() || $query->is_main_query() ) {
+			return;
+		}
+
+		// Check if specific post-types are targeted
+		if ( ! empty( self::$target_post_types ) ) {
+			$query_post_type = (array) $query->get( 'post_type' );
+
+			// Skip if no matching post-types
+			if ( empty( array_intersect( $query_post_type, self::$target_post_types ) ) ) {
+				return;
 			}
 		}
+
+		// Set custom posts per page limit
+		$query->set( 'posts_per_page', self::$post_limit );
+
+		// Remove the hook immediately after execution to prevent affecting other queries
+		remove_action( 'pre_get_posts', [ __CLASS__, 'modifyPostsPerPage' ], 9999 );
 	}
 
 	// -------------------------------------------------------------
@@ -734,7 +812,6 @@ trait Wp {
 		?array $meta_query = null,
 		bool|string $strtotime_recent = false
 	): \WP_Query|bool {
-
 		if ( ! $term ) {
 			return false;
 		}
@@ -838,7 +915,6 @@ trait Wp {
 		?array $meta_query = null,
 		bool|string $strtotime_str = false,
 	): \WP_Query|false {
-
 		$posts_per_page = max( $posts_per_page, - 1 );
 
 		$_args = [
@@ -2120,7 +2196,7 @@ trait Wp {
 			// Append options from the term and its children using the spread operator
 			$options = [
 				...$options,
-				...self::_buildTreeTerms( $term, $hide_empty, 0, $selected_request, $disabled_parent, $only_parent )
+				...self::_buildTreeTerms( $term, $hide_empty, 0, $selected_request, $disabled_parent, $only_parent ),
 			];
 		}
 
@@ -2187,7 +2263,7 @@ trait Wp {
 						// Append child options directly to the array
 						$options = [
 							...$options,
-							...self::_buildTreeTerms( $child_term, $hide_empty, $depth + 1, $selected_request, $disabled_parent )
+							...self::_buildTreeTerms( $child_term, $hide_empty, $depth + 1, $selected_request, $disabled_parent ),
 						];
 					}
 				}
