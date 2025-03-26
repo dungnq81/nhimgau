@@ -739,12 +739,12 @@ trait Wp {
 	 * @return void
 	 */
 	public static function setPostsPerPage( int $post_limit = - 1, array $target_post_types = [] ): void {
-		if ( is_admin() || wp_doing_ajax() ) {
+		if ( self::isAdmin() || wp_doing_ajax() ) {
 			return;
 		}
 
 		// Get default posts per page from WordPress settings
-		$limit_default = (int) get_option( 'posts_per_page' );
+		$limit_default = (int) self::getOption( 'posts_per_page' );
 
 		// Only proceed if the new limit is greater than default
 		if ( $post_limit <= $limit_default ) {
@@ -769,7 +769,7 @@ trait Wp {
 	 * @return void
 	 */
 	public static function modifyPostsPerPage( \WP_Query $query ): void {
-		if ( is_admin() || $query->is_main_query() ) {
+		if ( self::isAdmin() || $query->is_main_query() ) {
 			return;
 		}
 
@@ -829,7 +829,7 @@ trait Wp {
 			'tax_query'              => [ 'relation' => 'AND' ],
 		];
 
-		// Convert term to object if it is not already
+		// Convert a term to object if it is not already
 		if ( ! is_object( $term ) ) {
 			$term = self::toObject( $term );
 		}
@@ -984,10 +984,7 @@ trait Wp {
 			];
 		}
 
-		// Set custom posts_per_page
 		self::setPostsPerPage( $posts_per_page );
-
-		// Query posts
 		$query_result = new \WP_Query( $_args );
 
 		return $query_result->have_posts() ? $query_result : false;
@@ -1372,7 +1369,7 @@ trait Wp {
 			}
 		}
 
-		// Support for All in One SEO plugin
+		// Support for the All-in-one SEO plugin
 		if ( function_exists( 'aioseo' ) ) {
 			$aioseo_primary_term_id = get_post_meta( $post_id, '_aioseo_primary_' . $taxonomy, true );
 			if ( $aioseo_primary_term_id && in_array( $aioseo_primary_term_id, $term_ids, false ) ) {
