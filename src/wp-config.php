@@ -76,7 +76,7 @@ const WP_DEBUG         = true;
 const WP_DEBUG_LOG     = true;
 const WP_DEBUG_DISPLAY = false;
 
-ini_set( 'log_errors', 0 );
+ini_set( 'log_errors', 1 );
 
 /* Add any custom values between this line and the "stop editing" line. */
 
@@ -114,6 +114,7 @@ const DISALLOW_INDEXING = true;
 /** Disable plugins */
 const DISABLED_PLUGINS = [
 	//'wp-rocket/wp-rocket.php',
+	//'flying-press/flying-press.php',
 ];
 
 const WP_SITEURL = 'https://nhimgau.test';

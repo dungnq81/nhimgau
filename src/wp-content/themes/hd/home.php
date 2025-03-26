@@ -15,7 +15,7 @@ $object = get_queried_object();
 
 // breadcrumbs
 \HD\Helper::blockTemplate( 'template-blocks/breadcrumbs', [
-		'title' => get_the_title( $object->ID )
+		'title' => get_the_title( $object )
 	]
 );
 
@@ -28,7 +28,7 @@ do_action( 'hd_blog_before_action' );
 <section class="section section-page section-blog archive">
     <div class="container flex flex-x">
         <div class="content">
-            <h1 class="heading-title" <?= \HD\Helper::microdata( 'headline' ) ?>><?= get_the_title( $object->ID ) ?></h1>
+            <h1 class="heading-title" <?= \HD\Helper::microdata( 'headline' ) ?>><?= get_the_title( $object ) ?></h1>
             <?= \HD\Helper::postExcerpt( $object, 'excerpt', null, null ) ?>
             <?php if ( have_posts() ) : ?>
             <div class="posts-list archive-list items-list flex flex-x">
