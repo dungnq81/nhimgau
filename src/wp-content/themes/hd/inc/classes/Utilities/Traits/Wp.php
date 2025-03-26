@@ -1358,9 +1358,9 @@ trait Wp {
 
 		// Determine the taxonomy if not explicitly provided
 		$taxonomy = self::getTaxonomy( $post, $taxonomy );
-		if (! $taxonomy ) {
-            return null;
-        }
+		if ( ! $taxonomy ) {
+			return null;
+		}
 
 		// Get all terms associated with the post for the specified taxonomy
 		$post_terms = get_the_terms( $post, $taxonomy );
@@ -1399,7 +1399,7 @@ trait Wp {
 
 		// Determine the taxonomy if not explicitly provided
 		$taxonomy = self::getTaxonomy( $post, $taxonomy );
-		if (! $taxonomy ) {
+		if ( ! $taxonomy ) {
 			return null;
 		}
 

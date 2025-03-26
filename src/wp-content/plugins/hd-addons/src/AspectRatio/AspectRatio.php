@@ -65,7 +65,7 @@ final class AspectRatio {
 		$ratio_class = 'ar-' . $ratio_x . '-' . $ratio_y;
 
 		$aspect_ratio_settings   = \Addons\Helper::filterSettingOptions( 'aspect_ratio', [] );
-		$ar_aspect_ratio_default = $aspect_ratio_settings['ratio_default'] ?? [];
+		$ar_aspect_ratio_default = $aspect_ratio_settings['aspect_ratio_default'] ?? [];
 
 		if (
 			is_array( $ar_aspect_ratio_default ) &&

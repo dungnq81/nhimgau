@@ -208,7 +208,7 @@ final class Helper {
 
 	// --------------------------------------------------
 
-	public static function Lighthouse(): bool {
+	public static function lightHouse(): bool {
 		if ( empty( $_SERVER['HTTP_USER_AGENT'] ) ) {
 			return false;
 		}
@@ -568,6 +568,10 @@ final class Helper {
 
 	// --------------------------------------------------
 
+	/**
+	 * @return void
+	 * @throws \JsonException
+	 */
 	public static function clearAllCache(): void {
 		global $wpdb;
 
@@ -613,10 +617,6 @@ final class Helper {
 				'body'    => json_encode( [], JSON_THROW_ON_ERROR ),
 				'timeout' => 10,
 			] );
-
-			if ( is_wp_error( $response ) ) {
-				self::errorLog( 'Failed to clear FlyingPress cache: ' . $response->get_error_message() );
-			}
 		}
 
 		// Clear all WordPress transients

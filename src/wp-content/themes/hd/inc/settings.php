@@ -289,8 +289,8 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 	static $setting_filter_cache = [];
 
 	// Return a cached value if static caching is enabled and the value is already cached
-	if ( ! empty( $setting_filter_cache['theme_setting'] ) ) {
-		return $setting_filter_cache['theme_setting'];
+	if ( ! empty( $setting_filter_cache['hd_theme_setting'] ) ) {
+		return $setting_filter_cache['hd_theme_setting'];
 	}
 
 	$arr_new = [
@@ -302,6 +302,7 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 			'term_row_actions'                => [
 				'category',
 				'post_tag',
+				//
 			],
 
 			// Add ID to the admin post-page.
@@ -314,28 +315,41 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 			// Terms thumbnail (term_thumb).
 			'term_thumb_columns'              => [
 				'category',
-				'post_tag',
+				//'post_tag',
+				//
 			],
 
 			// Exclude thumb post_type columns.
-			'post_type_exclude_thumb_columns' => [],
+			'post_type_exclude_thumb_columns' => [
+				'page',
+				//
+			],
+		],
+
+		//
+		// Custom post-type and taxonomy.
+		//
+		'post_type_terms'                     => [
+			'post' => 'category',
+			//
 		],
 
 		//
 		// Aspect Ratio.
 		//
 		'aspect_ratio'                        => [
-			'post_type_term' => [
+			'post_type_term'       => [
 				'post',
+				//
 			],
-			'ratio_default'  => [
+			'aspect_ratio_default' => [
 				'1-1',
 				'2-1',
 				'3-2',
 				'4-3',
 				'16-9',
 				'21-9',
-			]
+			],
 		],
 
 		//
@@ -394,23 +408,17 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 
 		//
 		// LazyLoad
+		//
 		'lazyload_exclude'                    => [
 			'no-lazy',
 			'skip-lazy',
 		],
 
 		//
-		// Custom post-type and taxonomy.
-		//
-		'post_type_terms'                     => [],
-
-		//
 		// Custom Email list (mailto).
 		//
 		'custom_emails'                       => [
 //			'contact'     => __( 'Contacts', TEXT_DOMAIN ),
-//			'alert'       => __( 'Alerts', TEXT_DOMAIN ),
-//			'application' => __( 'Applications', TEXT_DOMAIN ),
 		],
 
 		//
@@ -426,17 +434,17 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 		//
 		// Login security
 		//
-		'login_security'                      => [
+		'login_security' => [
 			// Allows customization of the Login URL in the admin options.
-			'enable_custom_login'        => false,
+			'enable_custom_login_url' => false,
 
 			// Allowlist IPs Login Access
 			'allowlist_ips_login_access' => [
-				'127.0.0.1',
+				//'127.0.0.1',
 			],
 
 			// Blocked IPs Access
-			'blocked_ips_login_access'   => [],
+			'blocked_ips_login_access' => [],
 		],
 
 		//
@@ -546,7 +554,7 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 				'target'      => '_blank',
 				'class'       => 'contact-link',
 			],
-		]
+		],
 	];
 
 	// --------------------------------------------------
@@ -569,7 +577,7 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 	$arr_new = array_merge( $arr, $arr_new );
 
 	// Add to static cache
-	$setting_filter_cache['theme_setting'] = $arr_new;
+	$setting_filter_cache['hd_theme_setting'] = $arr_new;
 
 	return $arr_new;
 }
