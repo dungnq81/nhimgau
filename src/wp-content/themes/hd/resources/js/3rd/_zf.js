@@ -46,17 +46,17 @@ import { Dropdown } from 'foundation-sites/js/foundation.dropdown';
 import { DropdownMenu } from 'foundation-sites/js/foundation.dropdownMenu';
 import { Accordion } from 'foundation-sites/js/foundation.accordion';
 import { AccordionMenu } from 'foundation-sites/js/foundation.accordionMenu';
-import { ResponsiveMenu } from 'foundation-sites/js/foundation.responsiveMenu';
-import { ResponsiveToggle } from 'foundation-sites/js/foundation.responsiveToggle';
+//import { ResponsiveMenu } from 'foundation-sites/js/foundation.responsiveMenu';
+//import { ResponsiveToggle } from 'foundation-sites/js/foundation.responsiveToggle';
 import { OffCanvas } from 'foundation-sites/js/foundation.offcanvas';
-import { Reveal } from 'foundation-sites/js/foundation.reveal';
+//import { Reveal } from 'foundation-sites/js/foundation.reveal';
 import { Tooltip } from 'foundation-sites/js/foundation.tooltip';
 import { SmoothScroll } from 'foundation-sites/js/foundation.smoothScroll';
-import { Magellan } from 'foundation-sites/js/foundation.magellan';
+//import { Magellan } from 'foundation-sites/js/foundation.magellan';
 import { Sticky } from 'foundation-sites/js/foundation.sticky';
 import { Toggler } from 'foundation-sites/js/foundation.toggler';
 import { Equalizer } from 'foundation-sites/js/foundation.equalizer';
-import { Interchange } from 'foundation-sites/js/foundation.interchange';
+//import { Interchange } from 'foundation-sites/js/foundation.interchange';
 import { Abide } from 'foundation-sites/js/foundation.abide';
 
 const plugins = [
@@ -64,17 +64,17 @@ const plugins = [
     { plugin: DropdownMenu, name: 'DropdownMenu' },
     { plugin: Accordion, name: 'Accordion' },
     { plugin: AccordionMenu, name: 'AccordionMenu' },
-    { plugin: ResponsiveMenu, name: 'ResponsiveMenu' },
-    { plugin: ResponsiveToggle, name: 'ResponsiveToggle' },
+    //{ plugin: ResponsiveMenu, name: 'ResponsiveMenu' },
+    //{ plugin: ResponsiveToggle, name: 'ResponsiveToggle' },
     { plugin: OffCanvas, name: 'OffCanvas' },
-    { plugin: Reveal, name: 'Reveal' },
+    //{ plugin: Reveal, name: 'Reveal' },
     { plugin: Tooltip, name: 'Tooltip' },
     { plugin: SmoothScroll, name: 'SmoothScroll' },
-    { plugin: Magellan, name: 'Magellan' },
+    //{ plugin: Magellan, name: 'Magellan' },
     { plugin: Sticky, name: 'Sticky' },
     { plugin: Toggler, name: 'Toggler' },
     { plugin: Equalizer, name: 'Equalizer' },
-    { plugin: Interchange, name: 'Interchange' },
+    //{ plugin: Interchange, name: 'Interchange' },
     { plugin: Abide, name: 'Abide' },
 ];
 

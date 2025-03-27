@@ -700,7 +700,7 @@ $count: 0;
 $count_max: 50;
 $step: 10;
 
-@while $count <= $count_max {
+/*@while $count <= $count_max {
     :is(.mt-#{$count}, .mt\[#{$count}px\]) {
         margin-top: func.fs($count);
     }
@@ -734,7 +734,7 @@ $step: 10;
     }
 
     $count: $count + $step;
-}
+}*/
 
 //
 // font-size.
