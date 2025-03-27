@@ -439,9 +439,7 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 			'enable_custom_login_url' => false,
 
 			// Allowlist IPs Login Access
-			'allowlist_ips_login_access' => [
-				//'127.0.0.1',
-			],
+			'allowlist_ips_login_access' => [],
 
 			// Blocked IPs Access
 			'blocked_ips_login_access' => [],

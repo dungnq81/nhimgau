@@ -50,12 +50,12 @@ final class Optimizer {
 			Helper::updateOption( '_theme_image_sizes_updated', true );
 
 			/** Default thumb */
-			update_option( 'thumbnail_size_w', 320 );
+			update_option( 'thumbnail_size_w', 540 );
 			update_option( 'thumbnail_size_h', 0 );
 			update_option( 'thumbnail_crop', 0 );
 
 			/** Medium thumb */
-			update_option( 'medium_size_w', 640 );
+			update_option( 'medium_size_w', 768 );
 			update_option( 'medium_size_h', 0 );
 
 			/** Large thumb */
@@ -79,7 +79,7 @@ final class Optimizer {
 		} );
 
 		/** Disable scaled */
-		//add_filter( 'big_image_size_threshold', '__return_false' );
+		add_filter( 'big_image_size_threshold', '__return_false' );
 
 		/** Disable other sizes */
 		add_action( 'init', static function () {

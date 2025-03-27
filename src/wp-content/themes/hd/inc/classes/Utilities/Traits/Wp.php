@@ -2208,7 +2208,6 @@ trait Wp {
 		?int $disabled_parent = null,
 		bool $only_parent = false
 	): ?array {
-
 		if ( $taxonomy === null || ! taxonomy_exists( $taxonomy ) ) {
 			return null;
 		}
@@ -2263,7 +2262,6 @@ trait Wp {
 		?int $disabled_parent = null,
 		bool $only_parent = false
 	): array {
-
 		$options = [];
 
 		if ( $term?->term_id ) {
