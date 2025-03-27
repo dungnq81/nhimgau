@@ -202,8 +202,8 @@
 
                         & > svg {
                             width: auto;
-                            height: 20px;
-                            min-width: 20px;
+                            height: 22px;
+                            min-width: 22px;
                             filter: grayscale(1);
                             fill: #5d5d5d;
                             object-fit: contain;
@@ -211,16 +211,16 @@
 
                         & > img {
                             width: auto;
-                            height: 20px;
-                            min-width: 20px;
+                            height: 22px;
+                            min-width: 22px;
                             object-fit: contain;
                         }
 
                         & > i {
                             width: auto;
-                            height: 20px;
-                            min-width: 20px;
-                            font-size: 20px;
+                            height: 22px;
+                            min-width: 22px;
+                            font-size: 22px;
                             color: #5d5d5d;
                         }
                     }
@@ -245,7 +245,7 @@
                     color: #888888;
                     font-size: 13px;
                     margin-bottom: 20px;
-                    margin-top: -10px;
+                    margin-top: -5px;
                 }
             }
 
@@ -306,7 +306,7 @@
 
             .option {
                 & ~ .desc {
-                    margin-top: -4px;
+                    margin-top: 15px;
                     margin-bottom: 0;
                 }
             }
@@ -385,14 +385,19 @@
 
             /** */
             &.section-radio {
-                .heading {
-                }
+                .heading {}
 
                 & > .desc {
                     color: #888888;
                     font-size: 13px;
                     margin-bottom: 20px;
                     margin-top: -10px;
+                }
+
+                & > .option {
+                    & ~ .desc {
+                        margin-top: 15px;
+                    }
                 }
 
                 .controls {

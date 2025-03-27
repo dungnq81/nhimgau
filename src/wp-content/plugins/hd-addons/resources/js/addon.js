@@ -1,9 +1,5 @@
-import select2 from 'select2';
-
 import 'select2/dist/css/select2.min.css';
 import '../sass/3rd/_awesome-font.scss';
-
-select2();
 
 jQuery(function($) {
     $('.addon-color-field').wpColorPicker();

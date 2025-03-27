@@ -29,7 +29,6 @@ $no_data_message       = __( 'No data available or configuration for this featur
 	?>
     <div class="section section-text cell">
         <span class="heading"><?php echo $title . ' ( ' . $ar . ' )' ?></span>
-        <div class="desc"><?php echo mb_ucfirst( $ar ) ?> images will be viewed at a custom aspect ratio.</div>
         <div class="option inline-option">
             <div class="controls">
                 <div class="inline-group">
@@ -45,6 +44,7 @@ $no_data_message       = __( 'No data available or configuration for this featur
                 </div>
             </div>
         </div>
+        <div class="desc"><?php echo mb_ucfirst( $ar ) ?> images will be viewed at a custom aspect ratio.</div>
     </div>
 	<?php endforeach; ?>
 </div>

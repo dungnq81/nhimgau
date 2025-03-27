@@ -32,7 +32,6 @@ $svg_options = [
     </div>
     <div class="cell section section-radio">
         <span class="heading !block"><?php _e( 'SVG Images', ADDONS_TEXT_DOMAIN ); ?></span>
-        <div class="desc"><b>Security notice:</b> Every SVG image is an XML file that can contain <b>malicious code</b>, potentially leading to <b>XSS</b> or <b>injection attacks</b>.</div>
         <div class="option inline-option">
             <div class="controls">
                 <div class="inline-group">
@@ -45,5 +44,6 @@ $svg_options = [
                 </div>
             </div>
         </div>
+        <div class="desc"><b>Security notice:</b> Every SVG image is an XML file that can contain <b>malicious code</b>, potentially leading to <b>XSS</b> or <b>injection attacks</b>.</div>
     </div>
 </div>

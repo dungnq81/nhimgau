@@ -36,12 +36,8 @@ $enable_custom_login    = $login_security_default['enable_custom_login_url'] ?? 
     </div>
     <?php endif; ?>
 
-    <div class="cell section section-select !sm-12 !hidden">
+    <div class="cell section section-select">
         <label class="heading" for="login_ips_access"><?php _e( 'Allowlist IPs Login Access', ADDONS_TEXT_DOMAIN ); ?></label>
-        <div class="desc">
-            <p>By default, your WordPress login page is accessible from any IP address. You can use this feature to restrict login access to specific IPs or ranges of IPs to prevent brute-force attacks or malicious login attempts.</p>
-            <b>Ex:</b> 192.168.0.1, 192.168.0.1-100, 192.168.0.1/4
-        </div>
         <div class="option">
             <div class="controls">
                 <div class="select_wrapper">
@@ -57,14 +53,14 @@ $enable_custom_login    = $login_security_default['enable_custom_login_url'] ?? 
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="cell section section-select !sm-12">
-        <label class="heading" for="disable_ips_access"><?php _e( 'Blocked IPs Access', ADDONS_TEXT_DOMAIN ); ?></label>
         <div class="desc">
-            <p>List of IP addresses or ranges of IPs blocked from accessing the login page.</p>
+            <p>By default, your WordPress login page is accessible from any IP address. You can use this feature to restrict login access to specific IPs or ranges of IPs to prevent brute-force attacks or malicious login attempts.</p>
             <b>Ex:</b> 192.168.0.1, 192.168.0.1-100, 192.168.0.1/4
         </div>
+    </div>
+
+    <div class="cell section section-select">
+        <label class="heading" for="disable_ips_access"><?php _e( 'Blocked IPs Access', ADDONS_TEXT_DOMAIN ); ?></label>
         <div class="option">
             <div class="controls">
                 <div class="select_wrapper">
@@ -80,22 +76,25 @@ $enable_custom_login    = $login_security_default['enable_custom_login_url'] ?? 
                 </div>
             </div>
         </div>
+        <div class="desc">
+            <p>List of IP addresses or ranges of IPs blocked from accessing the login page.</p>
+            <b>Ex:</b> 192.168.0.1, 192.168.0.1-100, 192.168.0.1/4
+        </div>
     </div>
 
     <div class="cell section section-checkbox">
         <label class="heading" for="illegal_users"><?php _e( 'Disable Common Usernames', ADDONS_TEXT_DOMAIN ); ?></label>
-        <div class="desc">Using common usernames like <b>'admin'</b> is a security threat that often results in unauthorized access. By enabling this option we will disable the creation of common usernames and if you already have one or more users with a weak username, we'll ask you to provide new one(s).</div>
         <div class="option">
             <div class="controls">
                 <input type="checkbox" class="checkbox" name="illegal_users" id="illegal_users" <?php checked( $illegal_users, 1 ); ?> value="1">
             </div>
             <div class="explain"><?php _e( 'Check to activate', ADDONS_TEXT_DOMAIN ); ?></div>
         </div>
+        <div class="desc">Using common usernames like <b>'admin'</b> is a security threat that often results in unauthorized access. By enabling this option we will disable the creation of common usernames and if you already have one or more users with a weak username, we'll ask you to provide new one(s).</div>
     </div>
 
     <div class="cell section section-select">
         <label class="heading" for="limit_login_attempts"><?php _e( 'Limit Login Attempts', ADDONS_TEXT_DOMAIN ); ?></label>
-        <div class="desc">Limit the number of times a given user can attempt to log in to your wp-admin with incorrect credentials. Once the login attempt limit is reached, the IP from which the attempts have originated will be blocked first for 1 hour. If the attempts continue after the first hour, the limit will then be triggered for 24 hours and then for 7 days.</div>
         <div class="option">
             <div class="controls">
                 <div class="select_wrapper">
@@ -107,5 +106,6 @@ $enable_custom_login    = $login_security_default['enable_custom_login_url'] ?? 
                 </div>
             </div>
         </div>
+        <div class="desc">Limit the number of times a given user can attempt to log in to your wp-admin with incorrect credentials. Once the login attempt limit is reached, the IP from which the attempts have originated will be blocked first for 1 hour. If the attempts continue after the first hour, the limit will then be triggered for 24 hours and then for 7 days.</div>
     </div>
 </div>
