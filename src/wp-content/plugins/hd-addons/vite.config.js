@@ -58,7 +58,7 @@ export default {
                 //     }
                 // }),
             ],
-        }
+        },
     },
     build: {
         ...sharedConfig.build,
