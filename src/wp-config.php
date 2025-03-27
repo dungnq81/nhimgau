@@ -22,8 +22,8 @@
 
 // ** Database settings - You can get this info from your web host ** //
 const DB_NAME     = 'nhimgau';
-const DB_USER     = 'dbuser';
-const DB_PASSWORD = 'dbuser';
+const DB_USER     = 'root';
+const DB_PASSWORD = 'root';
 
 const DB_HOST    = 'localhost';
 const DB_CHARSET = 'utf8mb4';
@@ -101,7 +101,7 @@ const DISALLOW_FILE_EDIT = true;
 const DISALLOW_FILE_MODS = false;
 
 /** SSL */
-const FORCE_SSL_ADMIN = true;
+const FORCE_SSL_ADMIN = false;
 
 /** Increase post-revisions */
 const WP_POST_REVISIONS = 2;
@@ -117,8 +117,8 @@ const DISABLED_PLUGINS = [
 	//'flying-press/flying-press.php',
 ];
 
-const WP_SITEURL = 'https://nhimgau.test';
-const WP_HOME    = 'https://nhimgau.test';
+const WP_SITEURL = 'http://192.168.56.10';
+const WP_HOME    = 'http://192.168.56.10';
 
 /** WordPress core auto-update, */
 const AUTOMATIC_UPDATER_DISABLED = true;
