@@ -9,7 +9,7 @@ Vagrant.configure("2") do |config|
     config.vm.network "private_network", ip: "192.168.56.10"
 
     # Sync folder between host and guest (if needed)
-    config.vm.synced_folder "./src", "/var/www/html", type: "virtualbox"
+    config.vm.synced_folder "./src", "/var/www/html", type: "virtualbox", create: true
     config.vm.synced_folder "./config", "/home/vagrant/config", type: "virtualbox"
 
     # Configure VM resources
@@ -53,6 +53,7 @@ Vagrant.configure("2") do |config|
             -o Dpkg::Options::="--force-confold"
 
         # Clean up package lists
+        update-alternatives --set php /usr/bin/php8.2
         apt-get clean
 
         # Install MySQL
@@ -60,26 +61,28 @@ Vagrant.configure("2") do |config|
         systemctl enable mysql
         systemctl start mysql
 
-        # Set root password for MySQL (disable default authentication plugin)
+        # Set root password for MySQL and enable native authentication
         mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';"
         mysql -e "FLUSH PRIVILEGES;"
 
-        # phpMyAdmin
-        apt-get install -y phpmyadmin
-        ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
+        # Configure MySQL to allow remote connections
+        sed -i "s/bind-address\s*=.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
 
-        # Create a test PHP file
-        #echo "<?php phpinfo();" > /var/www/html/info.php
+        # Grant remote access to MySQL root user
+        mysql -u root -proot -e "ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root';"
+        mysql -u root -proot -e "FLUSH PRIVILEGES;"
+
+        # Restart MySQL to apply changes
+        systemctl restart mysql
 
         # Adjust permissions for the web directory
         chown -R www-data:www-data /var/www/html
         chmod -R 755 /var/www/html
 
-        # Enable Apache modules
-        a2enmod rewrite proxy proxy_http
-
 		# Copy custom PHP configuration
-		cp /home/vagrant/config/php.ini /etc/php/8.2/apache2/conf.d/99-custom.ini
+		if [ -f /home/vagrant/config/php.ini ]; then
+            cp /home/vagrant/config/php.ini /etc/php/8.2/apache2/conf.d/99-custom.ini
+        fi
 
         # Restart Apache to apply changes
         systemctl restart apache2

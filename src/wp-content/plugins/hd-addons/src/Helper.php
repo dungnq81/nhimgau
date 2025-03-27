@@ -638,7 +638,7 @@ final class Helper {
 		}
 
 		$site_id   = is_multisite() ? get_current_blog_id() : null;
-		$cache_key = $site_id ? "site_option_{$site_id}_{$option}" : "option_{$option}";
+		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
 
 		// Remove the option from the appropriate context (multisite or not)
 		$removed = is_multisite()
@@ -646,7 +646,7 @@ final class Helper {
 			: delete_option( $option );
 
 		if ( $removed ) {
-			wp_cache_delete( $cache_key, 'options' );
+			wp_cache_delete( $cache_key, 'hd_options' );
 		}
 
 		return $removed;
@@ -669,7 +669,7 @@ final class Helper {
 		}
 
 		$site_id   = is_multisite() ? get_current_blog_id() : null;
-		$cache_key = $site_id ? "site_option_{$site_id}_{$option}" : "option_{$option}";
+		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
 
 		// Update the option in the appropriate context (multisite or not)
 		$updated = is_multisite()
@@ -677,8 +677,8 @@ final class Helper {
 			: update_option( $option, $new_value, $autoload );
 
 		if ( $updated ) {
-			wp_cache_delete( $cache_key, 'options' );
-			wp_cache_set( $cache_key, $new_value, 'options', $expire_cache );
+			wp_cache_delete( $cache_key, 'hd_options' );
+			wp_cache_set( $cache_key, $new_value, 'hd_options', $expire_cache );
 		}
 
 		return $updated;
@@ -701,14 +701,14 @@ final class Helper {
 		}
 
 		$site_id      = is_multisite() ? get_current_blog_id() : null;
-		$cache_key    = $site_id ? "site_option_{$site_id}_{$option}" : "option_{$option}";
-		$cached_value = wp_cache_get( $cache_key, 'options' );
+		$cache_key    = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
+		$cached_value = wp_cache_get( $cache_key, 'hd_options' );
 		if ( $cached_value !== false ) {
 			return $cached_value;
 		}
 
 		$option_value = is_multisite() ? get_site_option( $option, $default ) : get_option( $option, $default );
-		wp_cache_set( $cache_key, $option_value, 'options', $expire_cache );
+		wp_cache_set( $cache_key, $option_value, 'hd_options', $expire_cache );
 
 		// Retrieve the option value
 		return $option_value;
@@ -731,8 +731,8 @@ final class Helper {
 		$mod_name_lower = strtolower( $mod_name );
 
 		set_theme_mod( $mod_name, $value );
-		$cache_key = "theme_mod_{$mod_name_lower}";
-		wp_cache_set( $cache_key, $value, 'theme_mods', $expire_cache );
+		$cache_key = "hd_theme_mod_{$mod_name_lower}";
+		wp_cache_set( $cache_key, $value, 'hd_theme_mods', $expire_cache );
 
 		return true;
 	}
@@ -753,8 +753,8 @@ final class Helper {
 
 		$mod_name_lower = strtolower( $mod_name );
 
-		$cache_key    = "theme_mod_{$mod_name_lower}";
-		$cached_value = wp_cache_get( $cache_key, 'theme_mods' );
+		$cache_key    = "hd_theme_mod_{$mod_name_lower}";
+		$cached_value = wp_cache_get( $cache_key, 'hd_theme_mods' );
 		if ( $cached_value !== false ) {
 			return $cached_value;
 		}
@@ -762,7 +762,7 @@ final class Helper {
 		$_mod      = get_theme_mod( $mod_name, $default );
 		$mod_value = is_ssl() ? str_replace( 'http://', 'https://', $_mod ) : $_mod;
 
-		wp_cache_set( $cache_key, $mod_value, 'theme_mods', $expire_cache );
+		wp_cache_set( $cache_key, $mod_value, 'hd_theme_mods', $expire_cache );
 
 		return $mod_value;
 	}
@@ -877,7 +877,7 @@ final class Helper {
 				return $_SERVER['HTTP_CLIENT_IP'];
 			}
 
-			// Fallback to remote address
+			// Fallback to a remote address
 			if ( isset( $_SERVER['REMOTE_ADDR'] ) && filter_var( $_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP ) ) {
 				return $_SERVER['REMOTE_ADDR'];
 			}

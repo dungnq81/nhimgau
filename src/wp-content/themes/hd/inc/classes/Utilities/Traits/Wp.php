@@ -715,7 +715,7 @@ trait Wp {
 	 * @return \WP_Term|\WP_Error|bool|null
 	 */
 	public static function getTerm( mixed $term_id, string $taxonomy = 'category' ): \WP_Term|\WP_Error|bool|null {
-		// Check if the term ID is numeric and retrieve term by ID
+		// Check if the term ID is numeric and retrieve the term by ID
 		if ( is_numeric( $term_id ) ) {
 			$term_id = (int) $term_id;
 			$term    = get_term( $term_id, $taxonomy );
@@ -1299,6 +1299,34 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
+	 * @param string|null $post_type
+	 *
+	 * @return string|null
+	 */
+	public static function getTaxonomyByPostType( ?string $post_type ): ?string {
+		if ( empty( $post_type ) ) {
+			return null;
+		}
+
+		// The default taxonomy for 'post' is 'category'
+		if ( 'post' === $post_type ) {
+			return 'category';
+		}
+
+		// 'product' is 'product_cat'
+		if ( 'product' === $post_type && self::isWoocommerceActive() ) {
+			return 'product_cat';
+		}
+
+		// Use custom filter to retrieve taxonomy mapping for the post-type
+		$post_type_terms = self::filterSettingOptions( 'post_type_terms', [] );
+
+		return $post_type_terms[ $post_type ] ?? null;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
 	 * Retrieves the appropriate taxonomy for a given post.
 	 *
 	 * @param \WP_Post|int|null $post Optional. Post object or ID. Defaults to current post.
@@ -1321,18 +1349,8 @@ trait Wp {
 		// Determine the taxonomy if not explicitly provided
 		if ( empty( $taxonomy ) ) {
 
-			// The default taxonomy for 'post' is 'category'
-			if ( 'post' === $post_type ) {
-				$taxonomy = 'category';
-			} else {
-
-				// Use custom filter to retrieve taxonomy mapping for the post-type
-				$post_type_terms = self::filterSettingOptions( 'post_type_terms', [] );
-				$taxonomy        = $post_type_terms[ $post_type ] ?? null;
-			}
-
 			// Additional check: try "{$post_type}_cat" format
-			$taxonomy = $taxonomy ?: "{$post_type}_cat";
+			$taxonomy = self::getTaxonomyByPostType( $post_type ) ?: "{$post_type}_cat";
 		}
 
 		// Validate taxonomy
