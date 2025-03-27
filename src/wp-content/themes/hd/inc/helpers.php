@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Helper functions
  *
@@ -49,10 +48,10 @@ if ( ! function_exists( '_sanitize_image' ) ) {
 			'svg'          => 'image/svg+xml',
 		];
 
-		// check a file type from file name
+		// check a file type from the file name
 		$file_ext = wp_check_filetype( $file, $mimes );
 
-		// if a file has a valid mime type return it, otherwise return default
+		// if a file has a valid mime type, return it, otherwise return default
 		return ( $file_ext['ext'] ? $file : '' );
 	}
 }

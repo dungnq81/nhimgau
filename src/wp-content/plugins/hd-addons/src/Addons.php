@@ -169,7 +169,7 @@ final class Addons {
 		$logo_bg       = Helper::getThemeMod( 'login_page_bgimage_setting' ) ?: $default_logo_bg;
 		$logo_bg_color = Helper::getThemeMod( 'login_page_bgcolor_setting' );
 
-		$css = new \Addons\Css();
+		$css = new \Addons\CSS();
 
 		if ( $logo_bg ) {
 			$css->set_selector( 'body.login' );

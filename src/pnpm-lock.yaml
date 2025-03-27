@@ -62,7 +62,7 @@ importers:
         version: 7.0.2(postcss@8.5.3)
       '@vheemstra/vite-plugin-imagemin':
         specifier: ^2.0.0
-        version: 2.0.0(vite@6.2.3(@types/node@22.13.13)(sass-embedded@1.86.0)(sass@1.86.0)(terser@5.39.0))
+        version: 2.0.0(vite@6.2.3(@types/node@22.13.14)(sass-embedded@1.86.0)(sass@1.86.0)(terser@5.39.0))
       '@wordpress/browserslist-config':
         specifier: ^6.20.0
         version: 6.20.0
@@ -98,10 +98,10 @@ importers:
         version: 5.39.0
       vite:
         specifier: ^6.2.3
-        version: 6.2.3(@types/node@22.13.13)(sass-embedded@1.86.0)(sass@1.86.0)(terser@5.39.0)
+        version: 6.2.3(@types/node@22.13.14)(sass-embedded@1.86.0)(sass@1.86.0)(terser@5.39.0)
       vite-plugin-static-copy:
         specifier: ^2.3.0
-        version: 2.3.0(vite@6.2.3(@types/node@22.13.13)(sass-embedded@1.86.0)(sass@1.86.0)(terser@5.39.0))
+        version: 2.3.0(vite@6.2.3(@types/node@22.13.14)(sass-embedded@1.86.0)(sass@1.86.0)(terser@5.39.0))
 
 packages:
 
@@ -506,8 +506,8 @@ packages:
   '@types/keyv@3.1.4':
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
 
-  '@types/node@22.13.13':
-    resolution: {integrity: sha512-ClsL5nMwKaBRwPcCvH8E7+nU4GxHVx1axNvMZTFHMEfNI7oahimt26P5zjVCRrjiIWj6YFXfE1v3dEp94wLcGQ==}
+  '@types/node@22.13.14':
+    resolution: {integrity: sha512-Zs/Ollc1SJ8nKUAgc7ivOEdIBM8JAKgrqqUYi2J997JuKO7/tpQC+WCetQ1sypiKCQWHdvdg9wBNpUPEWZae7w==}
 
   '@types/responselike@1.0.3':
     resolution: {integrity: sha512-H/+L+UkTV33uf49PH5pCAUBVPNj2nDBXTN+qS1dOwyyg24l3CcicicCA7ca+HMvJBZcFgl5r8e+RR6elsb4Lyw==}
@@ -829,8 +829,8 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  electron-to-chromium@1.5.123:
-    resolution: {integrity: sha512-refir3NlutEZqlKaBLK0tzlVLe5P2wDKS7UQt/3SpibizgsRAPOsqQC3ffw1nlv3ze5gjRQZYHoPymgVZkplFA==}
+  electron-to-chromium@1.5.126:
+    resolution: {integrity: sha512-AtH1uLcTC72LA4vfYcEJJkrMk/MY/X0ub8Hv7QGAePW2JkeUFHEL/QfS4J77R6M87Sss8O0OcqReSaN1bpyA+Q==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -1122,8 +1122,8 @@ packages:
     resolution: {integrity: sha512-Q/QaPi+5HuwbZNtQRqUVk6hKacI6z9iWiCSQBisAv7uBynZwO7t1svkryKl7+iSQbkU/6t9DWnHz04cFs2WY7w==}
     engines: {node: '>=12'}
 
-  immutable@5.0.3:
-    resolution: {integrity: sha512-P8IdPQHq3lA1xVeBRi5VPqUm5HDgKnx0Ru51wZz5mjxHr5n3RWhjIpOFU7ybkUxfB+5IToy+OLaHYDBIWsv+uw==}
+  immutable@5.1.1:
+    resolution: {integrity: sha512-3jatXi9ObIsPGr3N5hGw/vWWcTkq6hUYhpQz4k0wLC+owqWi/LiugIw9x0EdNZ2yGedKN/HzePiBvaJRXa0Ujg==}
 
   import-lazy@3.1.0:
     resolution: {integrity: sha512-8/gvXvX2JMn0F+CDlSC4l6kOmVaLOO3XLkksI7CI3Ud95KDYJuYur2b9P/PUt/i/pDAMd/DulQsNbbbmRRsDIQ==}
@@ -2356,24 +2356,24 @@ snapshots:
 
   '@types/keyv@3.1.4':
     dependencies:
-      '@types/node': 22.13.13
+      '@types/node': 22.13.14
 
-  '@types/node@22.13.13':
+  '@types/node@22.13.14':
     dependencies:
       undici-types: 6.20.0
 
   '@types/responselike@1.0.3':
     dependencies:
-      '@types/node': 22.13.13
+      '@types/node': 22.13.14
 
-  '@vheemstra/vite-plugin-imagemin@2.0.0(vite@6.2.3(@types/node@22.13.13)(sass-embedded@1.86.0)(sass@1.86.0)(terser@5.39.0))':
+  '@vheemstra/vite-plugin-imagemin@2.0.0(vite@6.2.3(@types/node@22.13.14)(sass-embedded@1.86.0)(sass@1.86.0)(terser@5.39.0))':
     dependencies:
       chalk: 5.4.1
       fast-glob: 3.3.3
       fs-extra: 11.3.0
       imagemin: 8.0.1
       is-apng: 1.2.0
-      vite: 6.2.3(@types/node@22.13.13)(sass-embedded@1.86.0)(sass@1.86.0)(terser@5.39.0)
+      vite: 6.2.3(@types/node@22.13.14)(sass-embedded@1.86.0)(sass@1.86.0)(terser@5.39.0)
 
   '@wordpress/browserslist-config@6.20.0': {}
 
@@ -2473,7 +2473,7 @@ snapshots:
   browserslist@4.24.4:
     dependencies:
       caniuse-lite: 1.0.30001707
-      electron-to-chromium: 1.5.123
+      electron-to-chromium: 1.5.126
       node-releases: 2.0.19
       update-browserslist-db: 1.1.3(browserslist@4.24.4)
 
@@ -2751,7 +2751,7 @@ snapshots:
 
   eastasianwidth@0.2.0: {}
 
-  electron-to-chromium@1.5.123: {}
+  electron-to-chromium@1.5.126: {}
 
   emoji-regex@8.0.0: {}
 
@@ -3115,7 +3115,7 @@ snapshots:
       replace-ext: 2.0.0
       slash: 3.0.0
 
-  immutable@5.0.3: {}
+  immutable@5.1.1: {}
 
   import-lazy@3.1.0: {}
 
@@ -3596,7 +3596,7 @@ snapshots:
       '@bufbuild/protobuf': 2.2.5
       buffer-builder: 0.2.0
       colorjs.io: 0.5.2
-      immutable: 5.0.3
+      immutable: 5.1.1
       rxjs: 7.8.2
       supports-color: 8.1.1
       sync-child-process: 1.0.2
@@ -3626,7 +3626,7 @@ snapshots:
   sass@1.86.0:
     dependencies:
       chokidar: 4.0.3
-      immutable: 5.0.3
+      immutable: 5.1.1
       source-map-js: 1.2.1
     optionalDependencies:
       '@parcel/watcher': 2.5.1
@@ -3870,22 +3870,22 @@ snapshots:
 
   varint@6.0.0: {}
 
-  vite-plugin-static-copy@2.3.0(vite@6.2.3(@types/node@22.13.13)(sass-embedded@1.86.0)(sass@1.86.0)(terser@5.39.0)):
+  vite-plugin-static-copy@2.3.0(vite@6.2.3(@types/node@22.13.14)(sass-embedded@1.86.0)(sass@1.86.0)(terser@5.39.0)):
     dependencies:
       chokidar: 3.6.0
       fast-glob: 3.3.3
       fs-extra: 11.3.0
       p-map: 7.0.3
       picocolors: 1.1.1
-      vite: 6.2.3(@types/node@22.13.13)(sass-embedded@1.86.0)(sass@1.86.0)(terser@5.39.0)
+      vite: 6.2.3(@types/node@22.13.14)(sass-embedded@1.86.0)(sass@1.86.0)(terser@5.39.0)
 
-  vite@6.2.3(@types/node@22.13.13)(sass-embedded@1.86.0)(sass@1.86.0)(terser@5.39.0):
+  vite@6.2.3(@types/node@22.13.14)(sass-embedded@1.86.0)(sass@1.86.0)(terser@5.39.0):
     dependencies:
       esbuild: 0.25.1
       postcss: 8.5.3
       rollup: 4.37.0
     optionalDependencies:
-      '@types/node': 22.13.13
+      '@types/node': 22.13.14
       fsevents: 2.3.3
       sass: 1.86.0
       sass-embedded: 1.86.0

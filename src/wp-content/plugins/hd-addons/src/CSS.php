@@ -2,6 +2,8 @@
 
 namespace Addons;
 
+\defined( 'ABSPATH' ) || exit;
+
 /**
  * Creates minified CSS via PHP.
  *
@@ -10,8 +12,7 @@ namespace Addons;
  * Modified by Tom Usborne for GeneratePress
  * Modified by Gaudev
  */
-final class Css {
-
+final class CSS {
 	private string $_selector = '';
 	private string $_selector_output = '';
 	private string $_css = '';
@@ -26,7 +27,7 @@ final class Css {
 	 */
 	public function set_selector( string $selector = '' ) {
 		// Render the CSS in the output string everytime the selector changes.
-		if ( '' !== $this->_selector ) {
+		if ( $this->_selector !== '' ) {
 			$this->add_selector_rules_to_output();
 		}
 

@@ -669,8 +669,12 @@ figure {
 //
 // aspect ratio.
 
-:is(.ar-1-1, .ar\[1-1\]) {
+:is(.ar-1, .ar-1-1, .ar\[1-1\]) {
     @include mixin.responsive-ratio(1, 1);
+}
+
+:is(.ar-2-1, .ar\[2-1\]) {
+    @include mixin.responsive-ratio(2, 1);
 }
 
 :is(.ar-3-2, .ar\[3-2\]) {
@@ -687,10 +691,6 @@ figure {
 
 :is(.ar-21-9, .ar\[21-9\]) {
     @include mixin.responsive-ratio(21, 9);
-}
-
-:is(.ar-2-1, .ar\[2-1\]) {
-    @include mixin.responsive-ratio(2, 1);
 }
 
 //
