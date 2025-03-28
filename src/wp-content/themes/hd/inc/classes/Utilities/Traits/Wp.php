@@ -1555,7 +1555,7 @@ trait Wp {
 	public static function postImage( ?int $post_id, string $size = 'post-thumbnail', string|array $attr = '', bool $filter = false ): string {
 		$html = get_the_post_thumbnail( $post_id, $size, $attr );
 
-		return $filter ? apply_filters( 'hd_post_image_filter', $html, $post_id, $size, $attr ) : $html;
+		return $filter ? apply_filters( 'hd_post_image_html_filter', $html, $post_id, $size, $attr ) : $html;
 	}
 
 	// -------------------------------------------------------------
@@ -1584,7 +1584,7 @@ trait Wp {
 	public static function attachmentImage( ?int $attachment_id, string $size = 'thumbnail', string|array $attr = '', bool $filter = false ): string {
 		$html = wp_get_attachment_image( $attachment_id, $size, false, $attr );
 
-		return $filter ? apply_filters( 'hd_attachment_image_filter', $html, $attachment_id, $size, $attr ) : $html;
+		return $filter ? apply_filters( 'hd_attachment_image_html_filter', $html, $attachment_id, $size, $attr ) : $html;
 	}
 
 	// -------------------------------------------------------------
@@ -1657,7 +1657,7 @@ trait Wp {
 			$html .= ' />';
 		}
 
-		return $filter ? apply_filters( 'hd_icon_image_filter', $html, $attachment_id, $size, $attr ) : $html;
+		return $filter ? apply_filters( 'hd_icon_image_html_filter', $html, $attachment_id, $size, $attr ) : $html;
 	}
 
 	// -------------------------------------------------------------

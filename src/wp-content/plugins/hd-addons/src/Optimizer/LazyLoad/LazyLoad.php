@@ -36,7 +36,9 @@ final class LazyLoad {
 			'woocommerce_product_get_image',
 			'woocommerce_single_product_image_thumbnail_html',
 			'hd_picture_html_filter',
-			'hd_icon_image_filter',
+			'hd_icon_image_html_filter',
+			'hd_attachment_image_html_filter',
+			'hd_post_image_html_filter',
 		],
 	];
 
