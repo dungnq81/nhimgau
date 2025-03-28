@@ -47,7 +47,7 @@ $featured_banner   = \HD\Helper::getField( 'featured_banner', $post->ID );
                 <span class="date" <?= \HD\Helper::microdata( 'date-published' ) ?> data-fa=""><?= \HD\Helper::humanizeTime( $post->ID ) ?></span>
                 <?php
                 $views = get_post_meta( $post->ID, '_post_views', true );
-                $views = $views ? (int) $views : 0;
+                $views = $views ? (int) $views : 1;
                 ?>
                 <span class="views" data-fa=""><?= number_format_i18n( $views ) ?></span>
             </div>

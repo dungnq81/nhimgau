@@ -28,7 +28,10 @@ function custom_js_action(): void {
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
             let postID = <?= $ID ?>;
-            if ( typeof window.hdConfig !== 'undefined' ) {
+            let dateElement = document.querySelector('section.singular .meta > .date');
+            let viewsElement = document.querySelector('section.singular .meta > .views');
+
+            if (typeof window.hdConfig !== 'undefined') {
                 try {
                     let response = await fetch(window.hdConfig._ajaxUrl, {
                         method: 'POST',
@@ -40,6 +43,10 @@ function custom_js_action(): void {
                         }),
                     });
                     let data = await response.json();
+                    if (data.success) {
+                        if (dateElement) dateElement.textContent = data.data.date;
+                        if (viewsElement) viewsElement.textContent = data.data.views;
+                    }
                 } catch (error) {}
             }
         });
@@ -47,7 +54,7 @@ function custom_js_action(): void {
 	<?php endif;
 
 	$content = ob_get_clean();
-    if ( $content ) {
-        echo \HD\Helper::JSMinify( $content, true );
-    }
+	if ( $content ) {
+		echo \HD\Helper::JSMinify( $content, true );
+	}
 }

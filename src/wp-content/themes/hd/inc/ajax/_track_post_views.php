@@ -19,15 +19,15 @@ function ajax_track_post_views(): void {
 	$current_time   = current_time( 'U', 0 );
 	$views          = get_post_meta( $post_id, '_post_views', true );
 
-	if ( ! $last_view_time || ( $current_time - (int) $last_view_time ) > 300 ) { // step 300s
+	if ( ! $last_view_time || ( $current_time - (int) $last_view_time ) > 300 ) { // 300 s
 		$views = $views ? (int) $views + 1 : 1;
 
 		update_post_meta( $post_id, '_post_views', $views );
 		update_post_meta( $post_id, '_last_view_time', $current_time );
 
-		wp_send_json_success( [ 'time' => $current_time, 'views' => $views ] );
+		wp_send_json_success( [ 'time' => $current_time, 'views' => $views, 'date' => \HD\Helper::humanizeTime( $post_id ) ] );
 	}
 
-	wp_send_json_success( [ 'time' => $last_view_time, 'views' => (int) $views ] );
+	wp_send_json_success( [ 'time' => $last_view_time, 'views' => (int) $views, 'date' => \HD\Helper::humanizeTime( $post_id ) ] );
 	die();
 }
