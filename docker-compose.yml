@@ -26,7 +26,7 @@ services:
             MYSQL_USER: dbuser
             MYSQL_PASSWORD: dbuser
         volumes:
-            - ./config/mysql:/var/lib/mysql
+            - ./database/mysql:/var/lib/mysql
         ports:
             - "3307:3306"
         networks:
