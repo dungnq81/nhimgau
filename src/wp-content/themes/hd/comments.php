@@ -54,11 +54,12 @@ if ( ! have_comments() && ! comments_open() ) {
 
         <ol class="comment-list">
 			<?php
-			wp_list_comments(
+			echo wp_list_comments(
 				[
 					'style'       => 'ol',
 					'short_ping'  => true,
 					'avatar_size' => 42,
+					'echo'        => false,
 				]
 			);
 			?>

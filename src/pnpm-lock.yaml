@@ -64,8 +64,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(vite@6.2.3(@types/node@22.13.14)(sass-embedded@1.86.0)(sass@1.86.0)(terser@5.39.0))
       '@wordpress/browserslist-config':
-        specifier: ^6.20.0
-        version: 6.20.0
+        specifier: ^6.21.0
+        version: 6.21.0
       autoprefixer:
         specifier: ^10.4.21
         version: 10.4.21(postcss@8.5.3)
@@ -518,8 +518,8 @@ packages:
     peerDependencies:
       vite: ^3.0.0 || ^4.0.0 || ^4.3.9 || ^5.0.0
 
-  '@wordpress/browserslist-config@6.20.0':
-    resolution: {integrity: sha512-n9Q1UN3QL4DuZLySZpbJoZbQvBTjMjRV5yaxnmQaEpOyqablX4GnYq39fwTY72hBN/c1b0oyOFcsbhsrx0wqzg==}
+  '@wordpress/browserslist-config@6.21.0':
+    resolution: {integrity: sha512-8NTmCQMtL852d5+scnuayiHeIDzlWnNCrupJiyyIyAUZpk05E8PLOswQvvTpsiCgwKAKXlRTLuNGKkAXAX1nPA==}
     engines: {node: '>=18.12.0', npm: '>=8.19.2'}
 
   abort-controller@3.0.0:
@@ -829,8 +829,8 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  electron-to-chromium@1.5.126:
-    resolution: {integrity: sha512-AtH1uLcTC72LA4vfYcEJJkrMk/MY/X0ub8Hv7QGAePW2JkeUFHEL/QfS4J77R6M87Sss8O0OcqReSaN1bpyA+Q==}
+  electron-to-chromium@1.5.127:
+    resolution: {integrity: sha512-Ke5OggqOtEqzCzcUyV+9jgO6L6sv1gQVKGtSExXHjD/FK0p4qzPZbrDsrCdy0DptcQprD0V80RCBYSWLMhTTgQ==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -2375,7 +2375,7 @@ snapshots:
       is-apng: 1.2.0
       vite: 6.2.3(@types/node@22.13.14)(sass-embedded@1.86.0)(sass@1.86.0)(terser@5.39.0)
 
-  '@wordpress/browserslist-config@6.20.0': {}
+  '@wordpress/browserslist-config@6.21.0': {}
 
   abort-controller@3.0.0:
     dependencies:
@@ -2473,7 +2473,7 @@ snapshots:
   browserslist@4.24.4:
     dependencies:
       caniuse-lite: 1.0.30001707
-      electron-to-chromium: 1.5.126
+      electron-to-chromium: 1.5.127
       node-releases: 2.0.19
       update-browserslist-db: 1.1.3(browserslist@4.24.4)
 
@@ -2751,7 +2751,7 @@ snapshots:
 
   eastasianwidth@0.2.0: {}
 
-  electron-to-chromium@1.5.126: {}
+  electron-to-chromium@1.5.127: {}
 
   emoji-regex@8.0.0: {}
 

@@ -549,9 +549,9 @@ final class GlobalSetting {
                             <li><?php echo sprintf( '<span>Server IP:</span> %s', Helper::serverIpAddress() ); ?></li>
 							<?php
 
-							$cpu_info = file_get_contents( '/proc/cpuinfo' );
-							preg_match( '/^model name\s*:\s*(.+)$/m', $cpu_info, $matches );
-							$cpu_model = isset( $matches[1] ) ? trim( $matches[1] ) : 'Unknown';
+							$cpuInfo = ( is_readable( '/proc/cpuinfo' ) ) ? file_get_contents( '/proc/cpuinfo' ) : 'N/A';
+							preg_match( '/^model name\s*:\s*(.+)$/m', $cpuInfo, $matches );
+							$cpu_model = isset( $matches[1] ) ? trim( $matches[1] ) : 'N/A';
 
 							?>
                             <li><?php echo sprintf( '<span>CPU Info:</span> %s', $cpu_model ); ?></li>

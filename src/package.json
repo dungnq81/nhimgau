@@ -20,7 +20,7 @@
     "devDependencies": {
         "@fullhuman/postcss-purgecss": "^7.0.2",
         "@vheemstra/vite-plugin-imagemin": "^2.0.0",
-        "@wordpress/browserslist-config": "^6.20.0",
+        "@wordpress/browserslist-config": "^6.21.0",
         "autoprefixer": "^10.4.21",
         "concurrently": "^9.1.2",
         "cross-env": "^7.0.3",

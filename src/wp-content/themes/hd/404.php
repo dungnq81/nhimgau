@@ -24,6 +24,7 @@ get_header( '404' );
 		</div>
 
         <!-- Featured News -->
+        <!-- //... -->
 	</div>
 </section>
 <?php
