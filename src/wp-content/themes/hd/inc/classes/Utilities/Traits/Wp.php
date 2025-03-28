@@ -1552,7 +1552,7 @@ trait Wp {
 	 *
 	 * @return string
 	 */
-	public static function postImage( ?int $post_id, string $size = 'post-thumbnail', string|array $attr = '', bool $filter = false ): string {
+	public static function postImageHTML( ?int $post_id, string $size = 'post-thumbnail', string|array $attr = '', bool $filter = false ): string {
 		$html = get_the_post_thumbnail( $post_id, $size, $attr );
 
 		return $filter ? apply_filters( 'hd_post_image_html_filter', $html, $post_id, $size, $attr ) : $html;
@@ -1581,7 +1581,7 @@ trait Wp {
 	 *
 	 * @return string
 	 */
-	public static function attachmentImage( ?int $attachment_id, string $size = 'thumbnail', string|array $attr = '', bool $filter = false ): string {
+	public static function attachmentImageHTML( ?int $attachment_id, string $size = 'thumbnail', string|array $attr = '', bool $filter = false ): string {
 		$html = wp_get_attachment_image( $attachment_id, $size, false, $attr );
 
 		return $filter ? apply_filters( 'hd_attachment_image_html_filter', $html, $attachment_id, $size, $attr ) : $html;
@@ -1597,7 +1597,7 @@ trait Wp {
 	 *
 	 * @return string
 	 */
-	public static function iconImage( ?int $attachment_id, string $size = 'thumbnail', string|array $attr = '', bool $filter = false ): string {
+	public static function iconImageHTML( ?int $attachment_id, string $size = 'thumbnail', string|array $attr = '', bool $filter = false ): string {
 		$html  = '';
 		$image = wp_get_attachment_image_src( $attachment_id, $size, true );
 
@@ -1680,7 +1680,7 @@ trait Wp {
 			}
 
 			$html .= '<source srcset="' . self::attachmentImageSrc( $attachment_id, 'large' ) . '" media="(min-width: 768px)">';
-			$html .= self::iconImage( $attachment_mobile_id ?: $attachment_id, 'medium', [ 'class' => 'lazy' ], false );
+			$html .= self::iconImageHTML( $attachment_mobile_id ?: $attachment_id, 'medium', [ 'class' => 'lazy' ], false );
 			$html .= '</picture>';
 		}
 
@@ -1749,7 +1749,7 @@ trait Wp {
 		if ( $attach_id ) {
 			$img_src = self::attachmentImageSrc( $attach_id, $size );
 			if ( $img_wrap ) {
-				$img_src = self::attachmentImage( $attach_id, $size, $attr );
+				$img_src = self::attachmentImageHTML( $attach_id, $size, $attr );
 			}
 
 			return $img_src;

@@ -12,7 +12,7 @@ global $post;
 
 $title     = $args['title'] ?? get_the_title( $post->ID );
 $ratio     = $args['ratio'] ?? \HD\Helper::aspectRatioClass( get_post_type( $post->ID ) );
-$thumbnail = $args['thumbnail'] ?? \HD\Helper::postImage( $post->ID, 'medium', [ 'alt' => \HD\Helper::escAttr( $title ) ] );
+$thumbnail = $args['thumbnail'] ?? \HD\Helper::postImageHTML( $post->ID, 'medium', [ 'alt' => \HD\Helper::escAttr( $title ) ] );
 $title_tag = $args['title_tag'] ?? 'p';
 
 ?>
