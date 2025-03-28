@@ -1,6 +1,7 @@
 Vagrant.configure("2") do |config|
-    # Use Ubuntu 22.04 box
+    # Use Ubuntu 22.04 LTS
     config.vm.box = "ubuntu/jammy64"
+    config.vm.box_version = "20241002.0.0"
 
     # Set hostname for the virtual machine
     config.vm.hostname = "ubuntu-wamp"
@@ -14,7 +15,7 @@ Vagrant.configure("2") do |config|
 
     # Configure VM resources
     config.vm.provider "virtualbox" do |vb|
-        vb.name = "Ubuntu_22.04_WAMP"
+        vb.name = "Ubuntu_Jammy_WAMP"
         vb.memory = "4096"
         vb.cpus = 4
     end
@@ -22,14 +23,14 @@ Vagrant.configure("2") do |config|
     # Install Apache, PHP 8.2, and MySQL
     config.vm.provision "shell", inline: <<-SHELL
         # Update system
-        apt-get update -y && apt-get upgrade -y
+        sudo apt-get update -y && sudo apt-get upgrade -y
 
         # Install required dependencies
         apt-get install -y software-properties-common tzdata debconf-utils
 
         # Add Ondrej's PPA repository for PHP 8.2
         add-apt-repository ppa:ondrej/php -y
-        apt-get update -y
+        sudo apt-get update -y
 
         # Install Apache
         apt-get install -y apache2
@@ -76,7 +77,7 @@ Vagrant.configure("2") do |config|
         sudo sed -i "s/^bind-address\s*=.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
 
         # Restart MySQL to apply changes
-        systemctl restart mysql
+        sudo systemctl restart mysql
 
         # Adjust permissions for the web directory
         chown -R www-data:www-data /var/www/html
@@ -89,9 +90,9 @@ Vagrant.configure("2") do |config|
         fi
 
         # Restart Apache to apply changes
-        systemctl restart apache2
+        sudo systemctl restart apache2
 
         # Clean up package lists
-        apt-get clean
+        sudo apt-get clean
     SHELL
 end
