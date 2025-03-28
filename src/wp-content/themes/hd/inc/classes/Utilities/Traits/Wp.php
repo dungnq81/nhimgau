@@ -1533,39 +1533,71 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param mixed|null $post
+	 * @param int|null $post_id
 	 * @param string $size
 	 *
-	 * @return string|null
+	 * @return string|false
 	 */
-	public static function postImageSrc( mixed $post = null, string $size = 'thumbnail' ): ?string {
-		return get_the_post_thumbnail_url( $post, $size );
+	public static function postImageSrc( ?int $post_id, string $size = 'thumbnail' ): string|false {
+		return get_the_post_thumbnail_url( $post_id, $size );
 	}
 
 	// -------------------------------------------------------------
 
 	/**
-	 *
-	 * @param int $attachment_id
-	 * @param string $size
-	 *
-	 * @return string|null
-	 */
-	public static function attachmentImageSrc( int $attachment_id, string $size = 'thumbnail' ): ?string {
-		return wp_get_attachment_image_url( $attachment_id, $size );
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @param $attachment_id
+	 * @param int|null $post_id
 	 * @param string $size
 	 * @param string|array $attr
 	 * @param bool $filter
 	 *
 	 * @return string
 	 */
-	public static function iconImage( $attachment_id, string $size = 'thumbnail', string|array $attr = '', bool $filter = false ): string {
+	public static function postImage( ?int $post_id, string $size = 'post-thumbnail', string|array $attr = '', bool $filter = false ): string {
+		$html = get_the_post_thumbnail( $post_id, $size, $attr );
+
+		return $filter ? apply_filters( 'hd_post_image_filter', $html, $post_id, $size, $attr ) : $html;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 *
+	 * @param int|null $attachment_id
+	 * @param string $size
+	 *
+	 * @return string|false
+	 */
+	public static function attachmentImageSrc( ?int $attachment_id, string $size = 'thumbnail' ): string|false {
+		return wp_get_attachment_image_url( $attachment_id, $size, false );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param int|null $attachment_id
+	 * @param string $size
+	 * @param string|array $attr
+	 * @param bool $filter
+	 *
+	 * @return string
+	 */
+	public static function attachmentImage( ?int $attachment_id, string $size = 'thumbnail', string|array $attr = '', bool $filter = false ): string {
+		$html = wp_get_attachment_image( $attachment_id, $size, false, $attr );
+
+		return $filter ? apply_filters( 'hd_attachment_image_filter', $html, $attachment_id, $size, $attr ) : $html;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param int|null $attachment_id
+	 * @param string $size
+	 * @param string|array $attr
+	 * @param bool $filter
+	 *
+	 * @return string
+	 */
+	public static function iconImage( ?int $attachment_id, string $size = 'thumbnail', string|array $attr = '', bool $filter = false ): string {
 		$html  = '';
 		$image = wp_get_attachment_image_src( $attachment_id, $size, true );
 
@@ -1637,9 +1669,9 @@ trait Wp {
 	 * @param bool $widescreen
 	 * @param bool $filter
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	public static function pictureHTML( string $class = 'img', mixed $attachment_id = false, mixed $attachment_mobile_id = false, bool $widescreen = true, bool $filter = true ): mixed {
+	public static function pictureHTML( string $class = 'img', mixed $attachment_id = false, mixed $attachment_mobile_id = false, bool $widescreen = true, bool $filter = true ): string {
 		$html = '';
 		if ( $attachment_id ) {
 			$html .= '<picture class="' . $class . '">';
@@ -1715,9 +1747,9 @@ trait Wp {
 
 		$attach_id = self::getField( $acf_field_name, $term );
 		if ( $attach_id ) {
-			$img_src = wp_get_attachment_image_url( $attach_id, $size );
+			$img_src = self::attachmentImageSrc( $attach_id, $size );
 			if ( $img_wrap ) {
-				$img_src = wp_get_attachment_image( $attach_id, $size, false, $attr );
+				$img_src = self::attachmentImage( $attach_id, $size, $attr );
 			}
 
 			return $img_src;
@@ -1922,7 +1954,7 @@ trait Wp {
 			$user_id = (int) get_the_author_meta( 'ID' );
 		}
 
-		return get_author_posts_url( $user_id );
+		return esc_url( get_author_posts_url( $user_id ) );
 	}
 
 	// -------------------------------------------------------------

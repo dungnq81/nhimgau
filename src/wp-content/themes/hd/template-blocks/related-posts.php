@@ -50,7 +50,7 @@ if ( ! $post_id || ! $posts ) {
                                 'title_tag' => 'p',
                                 'title'     => $post_title,
                                 'ratio'     => \HD\Helper::aspectRatioClass( get_post_type( $post->ID ) ),
-                                'thumbnail' => get_the_post_thumbnail( $post->ID, 'medium', [ 'alt' => \HD\Helper::escAttr( $post_title ) ] ),
+                                'thumbnail' => \HD\Helper::postImage( $post->ID, 'medium', [ 'alt' => \HD\Helper::escAttr( $post_title ) ] ),
                             ];
                         ?>
                         <div class="swiper-slide">

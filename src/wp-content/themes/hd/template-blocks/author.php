@@ -20,7 +20,7 @@ $avatar_url   = ! empty( $ACF['author_alt_profile_picture'] ) ? \HD\Helper::atta
     <div class="author-info">
         <h2 class="author-name" <?= \HD\Helper::microdata( 'name' ) ?>><?= esc_html( $display_name ) ?></h2>
         <div class="author-bio"><?= $bio_info ?></div>
-        <a class="author-link" href="<?php echo esc_url( get_author_posts_url( $current_user->ID ) );?>" title="<?= esc_attr( $display_name ) ?>" <?= \HD\Helper::microdata( 'url' ) ?>>
+        <a class="author-link" href="<?php echo \HD\Helper::getUserLink( $current_user->ID );?>" title="<?= esc_attr( $display_name ) ?>" <?= \HD\Helper::microdata( 'url' ) ?>>
             <?= sprintf( __( 'View all posts by %s', TEXT_DOMAIN ), esc_html( $display_name ) ) ?>
         </a>
     </div>
