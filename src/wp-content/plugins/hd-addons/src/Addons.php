@@ -28,7 +28,7 @@ final class Addons {
 		//---------------------------------------------
 
 		add_filter( 'login_headertext', [ $this, 'login_headertext' ] ); // Changing the alt text on the logo to show your site name
-		add_filter( 'login_headerurl', [ $this, 'login_headerurl' ] ); // Changing the logo link from WordPress.org to your site
+		add_filter( 'login_headerurl', [ $this, 'login_headerurl' ] );   // Changing the logo link from WordPress.org to your site
 		add_action( 'login_enqueue_scripts', [ $this, 'login_enqueue_script' ], 31 );
 	}
 

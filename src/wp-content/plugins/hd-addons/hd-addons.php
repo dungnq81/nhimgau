@@ -25,8 +25,8 @@ $default_headers = [
 $plugin_data = get_file_data( __FILE__, $default_headers, 'plugin' );
 
 define( 'ADDONS_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) . DIRECTORY_SEPARATOR ); // **/wp-content/plugins/**/
-define( 'ADDONS_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) . '/' );                  // http(s)://**/wp-content/plugins/**/
-define( 'ADDONS_BASENAME', plugin_basename( __FILE__ ) );                                      // **/**.php
+define( 'ADDONS_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) . '/' );                   // http(s)://**/wp-content/plugins/**/
+define( 'ADDONS_BASENAME', plugin_basename( __FILE__ ) );                                        // **/**.php
 
 define( 'ADDONS_VERSION', $plugin_data['Version'] );
 define( 'ADDONS_TEXT_DOMAIN', $plugin_data['TextDomain'] );

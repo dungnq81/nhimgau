@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
         sudo apt-get update -y && sudo apt-get upgrade -y
 
         # Install required dependencies
-        apt-get install -y software-properties-common tzdata debconf-utils
+        sudo apt-get install -y software-properties-common tzdata debconf-utils
 
         # Add Ondrej's PPA repository for PHP 8.2
         add-apt-repository ppa:ondrej/php -y
