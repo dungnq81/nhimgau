@@ -62,7 +62,6 @@ function acf_requirement_notice(): void {
 
 // Global function holder.
 function plugins_loaded_addons(): void {
-	//require_once ADDONS_SRC_PATH . 'Addons.php';
 	( new \Addons\Addons() );
 }
 

@@ -5,13 +5,13 @@ namespace Addons\ThirdParty;
 \defined( 'ABSPATH' ) || exit;
 
 final class Faker {
-
 	// -------------------------------------------------------------
 
 	public function __construct() {
 		add_filter( 'pre_http_request', [ $this, 'acf_license_request' ], 10, 3 ); // ACF pro
-		add_action( 'wp_loaded', [ $this, 'cf7_gsc_pro' ], 99 ); // CF7 Google Sheet Connector Pro
-		add_action( 'wp_loaded', [ $this, 'woocommerce_gsc_pro' ], 99 ); // WooCommerce GSheetConnector PRO
+		add_action( 'wp_loaded', [ $this, 'wordfence_pre' ], 99 );                 // Wordfence Security
+		add_action( 'wp_loaded', [ $this, 'cf7_gsc_pro' ], 99 );                   // CF7 Google Sheet Connector Pro
+		add_action( 'wp_loaded', [ $this, 'woocommerce_gsc_pro' ], 99 );           // WooCommerce GSheetConnector PRO
 	}
 
 	// -------------------------------------------------------------
@@ -145,4 +145,78 @@ final class Faker {
 	}
 
 	// -------------------------------------------------------------
+
+	/**
+	 * @return void
+	 * @throws \DateMalformedStringException
+	 */
+	public function wordfence_pre(): void {
+		if ( ! \Addons\Helper::checkPluginActive( 'wordfence/wordfence.php' ) ) {
+			return;
+		}
+
+		global $wpdb;
+
+		$RemainingDays = 365;
+		$table_name    = $wpdb->prefix . 'wfconfig';
+
+		$data = [
+			'name'     => 'scan_exclude',
+			'val'      => '/hd-addons/*',
+			'autoload' => 'yes',
+		];
+
+		$existing_entry = $wpdb->get_var( $wpdb->prepare(
+			"SELECT COUNT(*) FROM $table_name WHERE name = %s",
+			$data['name']
+		) );
+
+		if ( $existing_entry === 0 ) {
+			// Insert the new record if no entry exists
+			$wpdb->insert( $table_name, $data, [ '%s', '%s', '%s' ] );
+		} else {
+			$existing_val = $wpdb->get_var( $wpdb->prepare(
+				"SELECT val FROM $table_name WHERE name = %s",
+				$data['name']
+			) );
+
+			if ( empty( $existing_val ) ) {
+				// Insert the new value
+				$wpdb->update( $table_name, [ 'val' => $data['val'] ], [ 'name' => $data['name'] ], [ '%s' ], [ '%s' ] );
+			} elseif ( ! str_contains( $existing_val, $data['val'] ) ) {
+				// Append the new value to the existing value
+				$wpdb->update( $table_name, [ 'val' => $existing_val . ',' . $data['val'] ], [ 'name' => $data['name'] ], [ '%s' ], [ '%s' ] );
+			}
+		}
+
+		// wfLicense
+		if ( class_exists( 'wfLicense' ) ) {
+			$date = new \DateTime();
+			$date->modify( "+{$RemainingDays} days" );
+
+			try {
+				\wfOnboardingController::_markAttempt1Shown();
+				\wfConfig::set( 'onboardingAttempt3', \wfOnboardingController::ONBOARDING_LICENSE );
+				if ( empty( \wfConfig::get( 'apiKey' ) ) ) {
+					\wordfence::ajax_downgradeLicense_callback();
+				}
+				\wfConfig::set( 'isPaid', true );
+				\wfConfig::set( 'keyType', \wfLicense::KEY_TYPE_PAID_CURRENT );
+				\wfConfig::set( 'premiumNextRenew', $date->getTimestamp() );
+				\wfWAF::getInstance()->getStorageEngine()->setConfig( 'wafStatus', \wfFirewall::FIREWALL_MODE_ENABLED );
+
+				$wfLicense = \wfLicense::current();
+				if ( $wfLicense ) {
+					$wfLicense->setType( \wfLicense::TYPE_RESPONSE );
+					$wfLicense->setPaid( true );
+					$wfLicense->setRemainingDays( $RemainingDays );
+					$wfLicense->setConflicting( false );
+					$wfLicense->setDeleted( false );
+					$wfLicense->getKeyType();
+				}
+			} catch ( \Exception $exception ) {
+				// Handle the exception if needed
+			}
+		}
+	}
 }

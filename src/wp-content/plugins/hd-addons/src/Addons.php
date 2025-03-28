@@ -15,7 +15,6 @@ use Addons\ThirdParty\RankMath;
  * @author Gaudev
  */
 final class Addons {
-
 	// -------------------------------------------------------------
 
 	public function __construct() {
