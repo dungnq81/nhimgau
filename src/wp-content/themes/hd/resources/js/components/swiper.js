@@ -1,22 +1,34 @@
 import { nanoid } from 'nanoid';
 import Swiper from 'swiper/bundle';
 
-// Initialize Swiper instances
-const initializeSwiper = (el, swiper_class, options) => {
+/**
+ * Initialize a Swiper instance for a given element.
+ * @param el
+ * @param swiperClass
+ * @param options
+ */
+const initializeSwiper = (el, swiperClass, options) => {
     if (!(el instanceof Element)) {
-        console.error('Error: The provided element is not a DOM element.');
+        console.error('Error: The provided element is not a valid DOM element.');
         return;
     }
 
-    const swiper = new Swiper(swiper_class, options);
+    if (el.classList.contains('swiper-initialized') || el.dataset.swiperInitialized) return; // Prevent re-initialization
+    el.dataset.swiperInitialized = 'true';
 
+    const swiper = new Swiper(swiperClass, options);
+
+    // Pause autoplay on hover, resume on mouse out
     el.addEventListener('mouseover', () => swiper.autoplay?.stop());
     el.addEventListener('mouseout', () => options.autoplay && swiper.autoplay?.start());
 
     return swiper;
 };
 
-// Generate unique class names
+/**
+ * Generate unique class names for Swiper instance.
+ * @returns {Object} - Object containing unique class names.
+ */
 const generateClasses = () => {
     const rand = nanoid(10);
     return {
@@ -29,29 +41,50 @@ const generateClasses = () => {
     };
 };
 
-// Default Swiper options
+/**
+ * Default Swiper options.
+ * @returns {Object} - Default Swiper configuration.
+ */
 const getDefaultOptions = () => ({
-    grabCursor: !0,
-    allowTouchMove: !0,
+    grabCursor: true,
+    allowTouchMove: true,
     threshold: 5,
-    autoHeight: !1,
-    loop: !1,
-    hashNavigation: !1,
+    autoHeight: false,
+    loop: false,
+    hashNavigation: false,
     direction: 'horizontal',
-    freeMode: !1,
-    cssMode: !1,
-    centeredSlides: !1,
+    freeMode: false,
+    cssMode: false,
+    centeredSlides: false,
     slidesPerView: 'auto',
 });
 
+/**
+ * Parse options safely
+ * @param el
+ * @returns {{}|any|{}}
+ */
+const parseOptions = (el) => {
+    try {
+        return JSON.parse(el.dataset.options) || {};
+    } catch (e) {
+        console.error('Invalid JSON in data-options', e);
+        return {};
+    }
+};
+
+// Initialize Swipers
 const initializeSwipers = () => {
     const swiperElements = document.querySelectorAll('.w-swiper');
     swiperElements.forEach((el) => {
+        if (el.classList.contains('swiper-initialized')) return; // Prevent re-initialization
+
         const classes = generateClasses();
         el.classList.add(classes.swiperClass);
 
         const container = el.closest('.swiper-container');
 
+        // Create or get control container
         let controls = container?.querySelector('.swiper-controls');
         if (!controls) {
             controls = document.createElement('div');
@@ -59,70 +92,67 @@ const initializeSwipers = () => {
             el.after(controls);
         }
 
-        let options = {};
-        try {
-            options = JSON.parse(el.dataset.options) || {};
-        } catch (e) {
-            console.error('Invalid JSON in data-options', e);
-        }
-
+        let options = parseOptions(el);
         let swiperOptions = { ...getDefaultOptions() };
 
-        if (options.wrapperClass) swiperOptions.wrapperClass = options.wrapperClass; // swiper-wrapper
-        if (options.slideClass) swiperOptions.slideClass = options.slideClass; // swiper-slide
-        if (options.slideActiveClass) swiperOptions.slideActiveClass = options.slideActiveClass; // swiper-slide-active
+        // Parse specific options
+        [
+            'autoHeight',
+            'loop',
+            'freeMode',
+            'cssMode',
+            'mousewheel',
+            'parallax',
+            'hashNavigation',
+        ].forEach(key => options[key] && (swiperOptions[key] = true));
 
-        if (options.autoHeight) swiperOptions.autoHeight = !0;
-        if (options.loop) swiperOptions.loop = !0;
-        if (options.direction) swiperOptions.direction = String(options.direction);
-        if (options.freeMode) swiperOptions.freeMode = !0;
-        if (options.cssMode) swiperOptions.cssMode = !0;
-        if (options.mousewheel) swiperOptions.mousewheel = !0;
-        if (options.parallax) swiperOptions.parallax = !0;
-        if (options.slidesPerView) swiperOptions.slidesPerView = options.slidesPerView;
-        if (options.spaceBetween) swiperOptions.spaceBetween = parseInt(options.spaceBetween);
+        swiperOptions.wrapperClass = String(options.wrapperClass || 'swiper-wrapper');
+        swiperOptions.slideClass = String(options.slideClass || 'swiper-slide');
+        swiperOptions.slideActiveClass = String(options.slideActiveClass || 'swiper-slide-active');
 
-        swiperOptions.speed = parseInt(options.speed) || 300;
+        swiperOptions.direction = String(options.direction || 'horizontal');
+        swiperOptions.slidesPerView = options.slidesPerView || 'auto';
+        swiperOptions.spaceBetween = parseInt(options.spaceBetween, 10) || 0;
+        swiperOptions.speed = parseInt(options.speed, 10) || 300;
 
-        // grid
+        // Grid settings
         if (options.grid) {
             swiperOptions.grid = {
                 rows: Math.max(parseInt(options.grid?.rows) || 1, 1),
                 fill: options.grid?.fill || 'row',
             };
-
-            if (options.loop) {
-                swiperOptions.loopAddBlankSlides = !0;
-            }
+            if (options.loop) swiperOptions.loopAddBlankSlides = true;
         }
 
-        // autoplay
+        // Autoplay settings
         if (options.autoplay) {
             swiperOptions.autoplay = {
                 delay: parseInt(options.autoplay?.delay) || 3000,
-                disableOnInteraction: options.autoplay?.disableOnInteraction || !0,
-                reverseDirection: options.autoplay?.reverseDirection || !1,
+                disableOnInteraction: options.autoplay?.disableOnInteraction || true,
+                reverseDirection: options.autoplay?.reverseDirection || false,
             };
         }
 
-        // navigation
+        // Navigation controls
         if (options.navigation) {
             let btnPrev = container?.querySelector('.swiper-button-prev');
             let btnNext = container?.querySelector('.swiper-button-next');
 
-            if (btnPrev && btnNext) {
-                btnPrev.classList.add(classes.prevClass);
-                btnNext.classList.add(classes.nextClass);
-            } else {
+            if (!btnPrev) {
                 btnPrev = document.createElement('div');
-                btnNext = document.createElement('div');
-                btnPrev.classList.add('swiper-button', 'swiper-button-prev', classes.prevClass);
-                btnNext.classList.add('swiper-button', 'swiper-button-next', classes.nextClass);
-                controls.append(btnPrev, btnNext);
-
+                btnPrev.classList.add('swiper-button', 'swiper-button-prev');
                 btnPrev.setAttribute('data-fa', '');
-                btnNext.setAttribute('data-fa', '');
+                controls.append(btnPrev);
             }
+            if (!btnNext) {
+                btnNext = document.createElement('div');
+                btnNext.classList.add('swiper-button', 'swiper-button-next');
+                btnNext.setAttribute('data-fa', '');
+                controls.append(btnNext);
+            }
+
+            btnPrev.classList.add(classes.prevClass);
+            btnNext.classList.add(classes.nextClass);
 
             swiperOptions.navigation = {
                 nextEl: `.${classes.nextClass}`,
@@ -130,16 +160,16 @@ const initializeSwipers = () => {
             };
         }
 
-        // pagination
+        // Pagination controls
         if (options.pagination) {
             let pagination = container?.querySelector('.swiper-pagination');
-            if (pagination) {
-                pagination.classList.add(classes.paginationClass);
-            } else {
+            if (!pagination) {
                 pagination = document.createElement('div');
-                pagination.classList.add('swiper-pagination', classes.paginationClass);
+                pagination.classList.add('swiper-pagination');
                 controls.appendChild(pagination);
             }
+
+            pagination.classList.add(classes.paginationClass);
 
             const paginationType = String(options.pagination);
             swiperOptions.pagination = {
@@ -154,21 +184,21 @@ const initializeSwipers = () => {
             };
         }
 
-        // scrollbar
+        // Scrollbar controls
         if (options.scrollbar) {
             let scrollbar = container?.querySelector('.swiper-scrollbar');
-            if (scrollbar) {
-                scrollbar.classList.add(classes.scrollbarClass);
-            } else {
+            if (!scrollbar) {
                 scrollbar = document.createElement('div');
-                scrollbar.classList.add('swiper-scrollbar', classes.scrollbarClass);
+                scrollbar.classList.add('swiper-scrollbar');
                 controls.appendChild(scrollbar);
             }
 
+            scrollbar.classList.add(classes.scrollbarClass);
+
             swiperOptions.scrollbar = {
                 el: `.${classes.scrollbarClass}`,
-                hide: !0,
-                draggable: !0,
+                hide: true,
+                draggable: true,
             };
         }
 
@@ -206,7 +236,7 @@ const initializeSwipers = () => {
         }
 
         // breakpoints
-        if (options.breakpoints) {
+        if (options._breakpoints) {
             swiperOptions.breakpoints = {
                 0: options?._mobile || {},
                 768: options?._tablet || {},
