@@ -1,5 +1,4 @@
 import { nanoid } from 'nanoid';
-import { toString } from 'ramda';
 import Swiper from 'swiper/bundle';
 
 // Initialize Swiper instances
@@ -75,7 +74,7 @@ const initializeSwipers = () => {
 
         if (options.autoHeight) swiperOptions.autoHeight = !0;
         if (options.loop) swiperOptions.loop = !0;
-        if (options.direction) swiperOptions.direction = toString(options.direction);
+        if (options.direction) swiperOptions.direction = String(options.direction);
         if (options.freeMode) swiperOptions.freeMode = !0;
         if (options.cssMode) swiperOptions.cssMode = !0;
         if (options.mousewheel) swiperOptions.mousewheel = !0;
@@ -142,7 +141,7 @@ const initializeSwipers = () => {
                 controls.appendChild(pagination);
             }
 
-            const paginationType = toString(options.pagination);
+            const paginationType = String(options.pagination);
             swiperOptions.pagination = {
                 el: `.${classes.paginationClass}`,
                 clickable: true,

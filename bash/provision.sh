@@ -101,3 +101,5 @@ sudo systemctl restart apache2
 
 # Clean up package lists
 sudo apt-get clean
+
+echo "Provisioning complete! Visit: http://localhost:8080"

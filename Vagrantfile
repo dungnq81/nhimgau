@@ -6,8 +6,11 @@ Vagrant.configure("2") do |config|
     # Set hostname for the virtual machine
     config.vm.hostname = "ubuntu-wamp"
 
-    # Forward port 8080 on host to port 80 on guest
+    # Forward ports:
+    # - Apache (Guest 80 → Host 8080)
+    # - MySQL (Guest 3306 → Host 3307)
     config.vm.network "forwarded_port", guest: 80, host: 8080, auto_correct: true
+    config.vm.network "forwarded_port", guest: 3306, host: 3307, auto_correct: true
 
     # Sync folders between host and guest
     config.vm.synced_folder "./src", "/var/www/html", type: "virtualbox", create: true
