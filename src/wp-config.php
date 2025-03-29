@@ -117,8 +117,8 @@ const DISABLED_PLUGINS = [
 	//'flying-press/flying-press.php',
 ];
 
-//const WP_SITEURL = 'http://192.168.56.10';
-//const WP_HOME    = 'http://192.168.56.10';
+const WP_SITEURL = 'http://localhost:8080';
+const WP_HOME    = 'http://localhost:8080';
 
 /** WordPress core auto-update, */
 const AUTOMATIC_UPDATER_DISABLED = true;
