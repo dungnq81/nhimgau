@@ -77,6 +77,15 @@ mysql -uroot -proot -e "
     FLUSH PRIVILEGES;
 "
 
+# Create the 'nhimgau' database with utf8mb4 charset and utf8mb4_unicode_520_ci collation
+mysql -uroot -proot -e "
+    CREATE DATABASE IF NOT EXISTS nhimgau
+    CHARACTER SET utf8mb4
+    COLLATE utf8mb4_unicode_520_ci;
+"
+echo "Database 'nhimgau' has been created (or already exists) with utf8mb4 charset and utf8mb4_unicode_520_ci collation."
+
+
 # Adjust permissions for the web directory
 chown -R www-data:www-data /var/www/html
 chmod -R 755 /var/www/html
