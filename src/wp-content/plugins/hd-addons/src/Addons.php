@@ -126,9 +126,12 @@ final class Addons {
 		}
 
 		// addon page settings
-		$allowed_pages = 'toplevel_page_addon-settings';
-		if ( $allowed_pages === $hook ) {
+		$allowed_pages = [
+			'toplevel_page_addon-settings',
+			'addons_page_server-info',
+		];
 
+		if ( in_array( $hook, $allowed_pages, true ) ) {
 			wp_enqueue_style( 'wp-color-picker' );
 			wp_enqueue_script( 'wp-color-picker' );
 

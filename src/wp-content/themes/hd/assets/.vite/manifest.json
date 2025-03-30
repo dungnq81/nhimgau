@@ -92,8 +92,8 @@
     "isEntry": true,
     "imports": [
       "__vendor.js",
-      "wp-content/themes/hd/resources/js/components/global.js",
       "wp-content/themes/hd/resources/js/components/lighthouse.js",
+      "wp-content/themes/hd/resources/js/components/global.js",
       "wp-content/themes/hd/resources/js/components/back-to-top.js",
       "wp-content/themes/hd/resources/js/components/script-loader.js",
       "wp-content/themes/hd/resources/js/components/menu.js",
