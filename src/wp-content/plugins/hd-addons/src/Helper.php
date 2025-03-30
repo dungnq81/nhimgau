@@ -17,6 +17,21 @@ use MatthiasMullie\Minify;
  * @author Gaudev
  */
 final class Helper {
+	// --------------------------------------------------
+
+	/**
+	 * @param string $message
+	 * @param int $message_type
+	 * @param string|null $destination
+	 * @param string|null $additional_headers
+	 *
+	 * @return void
+	 */
+	public static function errorLog( string $message, int $message_type = 0, ?string $destination = null, ?string $additional_headers = null ): void {
+		if ( WP_DEBUG ) {
+			error_log( $message, $message_type, $destination, $additional_headers );
+		}
+	}
 
 	// --------------------------------------------------
 
@@ -163,7 +178,7 @@ final class Helper {
 		$unitMultipliers = [
 			'M' => 1,              // Megabyte
 			'G' => 1024,           // Gigabyte
-			'T' => 1024 * 1024     // Terabyte
+			'T' => 1024 * 1024,     // Terabyte
 		];
 
 		// Extract the numeric part and the unit from the input string
@@ -193,7 +208,7 @@ final class Helper {
 			return false;
 		}
 
-		// Ensure URL has a valid scheme (http or https)
+		// Ensure the URL has a valid scheme (http or https)
 		$valid_schemes = [ 'http', 'https' ];
 		$scheme        = parse_url( $url, PHP_URL_SCHEME );
 		if ( ! in_array( $scheme, $valid_schemes, true ) ) {
@@ -278,15 +293,28 @@ final class Helper {
 			return '';
 		}
 
-		$css = strip_tags( preg_replace( '/<script\b[^>]*>(.*?)<\/script>/is', '', $css ) );
-		$css = preg_replace(
-			[
-				'/[^a-zA-Z0-9\s\.\#\:\;\,\-\_\(\)\{\}\/\*\!\%\@\+\>\~\=\"\'\\\\]/',
-				'/\/\*.*?\*\//s'
-			],
-			'',
-			$css
-		);
+		// Convert encoding to UTF-8 if needed
+		if ( mb_detect_encoding( $css, 'UTF-8', true ) !== 'UTF-8' ) {
+			$css = mb_convert_encoding( $css, 'UTF-8', 'auto' );
+		}
+
+		// Log if dangerous content is detected
+		if ( preg_match( '/<script\b[^>]*>/i', $css ) ) {
+			self::errorLog( 'Warning: Detected `<script>` tag in CSS.' );
+		}
+
+		// Remove <script> tags entirely
+		// Remove <style> tags but keep the CSS content inside
+		// Remove dangerous expressions
+		// Normalize whitespace
+		$css = preg_replace( [
+			'/<script\b[^>]*>.*?(?:<\/script>|$)/is',
+			'/<style\b[^>]*>(.*?)<\/style>/is',
+			'/[\x00-\x1F\x7F]/u',
+			'/\bexpression\s*\([^)]*\)/i',
+			'/url\s*\(\s*[\'"]?\s*javascript:[^)]*\)/i',
+			'/\s+/',
+		], [ '', '$1', '', '', '', ' ' ], $css );
 
 		return trim( $css );
 	}
@@ -372,7 +400,7 @@ final class Helper {
 		$post_data = [
 			'post_type'    => $post_type,
 			'post_status'  => 'publish',
-			'post_content' => $mixed
+			'post_content' => $mixed,
 		];
 
 		// Update `post` if it already exists, otherwise create a new one.
@@ -800,7 +828,7 @@ final class Helper {
 	public static function loadYaml( $configFile ): array {
 		// Check if the YAML class exists
 		if ( ! class_exists( Yaml::class ) ) {
-			error_log( 'Symfony Yaml class does not exist' );
+			self::errorLog( 'Symfony Yaml class does not exist' );
 
 			return [];
 		}
@@ -809,7 +837,7 @@ final class Helper {
 			// Return the translated configuration array
 			return Yaml::parseFile( $configFile );
 		} catch ( ParseException $e ) {
-			error_log( 'YAML Parse error in file ' . $configFile . ': ' . $e->getMessage() );
+			self::errorLog( 'YAML Parse error in file ' . $configFile . ': ' . $e->getMessage() );
 
 			return [];
 		}

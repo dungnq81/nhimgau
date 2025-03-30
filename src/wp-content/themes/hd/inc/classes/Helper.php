@@ -75,15 +75,28 @@ final class Helper {
 			return '';
 		}
 
-		$css = strip_tags( preg_replace( '/<script\b[^>]*>(.*?)<\/script>/is', '', $css ) );
-		$css = preg_replace(
-			[
-				'/[^a-zA-Z0-9\s\.\#\:\;\,\-\_\(\)\{\}\/\*\!\%\@\+\>\~\=\"\'\\\\]/',
-				'/\/\*.*?\*\//s'
-			],
-			'',
-			$css
-		);
+		// Convert encoding to UTF-8 if needed
+		if ( mb_detect_encoding( $css, 'UTF-8', true ) !== 'UTF-8' ) {
+			$css = mb_convert_encoding( $css, 'UTF-8', 'auto' );
+		}
+
+		// Log if dangerous content is detected
+		if ( preg_match( '/<script\b[^>]*>/i', $css ) ) {
+			self::errorLog( 'Warning: Detected `<script>` tag in CSS.' );
+		}
+
+		// Remove <script> tags entirely
+		// Remove <style> tags but keep the CSS content inside
+		// Remove dangerous expressions
+		// Normalize whitespace
+		$css = preg_replace( [
+			'/<script\b[^>]*>.*?(?:<\/script>|$)/is',
+			'/<style\b[^>]*>(.*?)<\/style>/is',
+			'/[\x00-\x1F\x7F]/u',
+			'/\bexpression\s*\([^)]*\)/i',
+			'/url\s*\(\s*[\'"]?\s*javascript:[^)]*\)/i',
+			'/\s+/',
+		], [ '', '$1', '', '', '', ' ' ], $css );
 
 		return trim( $css );
 	}
