@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the WordPress - 6.7.x - Development - Administration package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-02-12 08:37:56+0000\n"
+"PO-Revision-Date: 2025-03-14 03:58:28+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -92,7 +92,7 @@ msgstr "Tự động đóng bình luận trên các bài viết cũ"
 
 #: wp-admin/nav-menus.php:601
 msgid "Menu order updated"
-msgstr "Đã cập nhật thứ tự thực đơn"
+msgstr "Đã cập nhật thứ tự menu"
 
 #: wp-admin/nav-menus.php:600
 msgid "Menu parent updated"
@@ -125,11 +125,11 @@ msgstr "Tải lên tệp đồng thời tối đa"
 
 #: wp-admin/includes/class-walker-nav-menu-edit.php:261
 msgid "Menu Order"
-msgstr "Thực đơn Đặt hàng"
+msgstr "Thứ tự Menu"
 
 #: wp-admin/includes/class-walker-nav-menu-edit.php:254
 msgid "Menu Parent"
-msgstr "Thực đơn Cha"
+msgstr "Menu Cha"
 
 #: wp-admin/edit-form-advanced.php:549
 msgid "Skip to Editor"
@@ -155,7 +155,7 @@ msgstr "WordPress 6.7 cung cấp các bản cập nhật hiệu suất quan tr�
 
 #: wp-admin/about.php:184
 msgid "Create, edit, remove, and apply font size presets with the next addition to the Styles interface. Override theme defaults or create your own custom font size, complete with fluid typography for responsive font scaling. Get into the details!"
-msgstr "Tạo, chỉnh sửa, xóa và áp dụng cài đặt trước kích thước phông chữ với phần bổ sung tiếp theo vào giao diện Styles. Ghi đè mặc định của chủ đề hoặc tạo kích thước phông chữ tùy chỉnh của riêng bạn, hoàn chỉnh với kiểu chữ linh hoạt để thay đổi kích thước phông chữ phản hồi. Đi vào chi tiết!"
+msgstr "Tạo, chỉnh sửa, xóa và áp dụng cài đặt trước kích thước phông chữ với phần bổ sung tiếp theo vào giao diện Styles. Ghi đè mặc định của giao diện hoặc tạo kích thước phông chữ tùy chỉnh của riêng bạn, hoàn chỉnh với kiểu chữ linh hoạt để thay đổi kích thước phông chữ phản hồi. Đi vào chi tiết!"
 
 #: wp-admin/about.php:183
 msgid "New style section, new possibilities"
@@ -191,7 +191,7 @@ msgstr "Nắm bắt toàn cảnh với tính năng Thu nhỏ"
 
 #: wp-admin/about.php:134
 msgid "Twenty Twenty-Five offers a flexible, design-focused theme that lets you build stunning sites with ease. Tailor your aesthetic with an array of style options, block patterns, and color palettes. Pared down to the essentials, this is a theme that can truly grow with you."
-msgstr "Twenty Twenty-Five cung cấp một chủ đề linh hoạt, tập trung vào thiết kế cho phép bạn dễ dàng xây dựng các trang web tuyệt đẹp. Điều chỉnh thẩm mỹ của bạn với một loạt các tùy chọn kiểu dáng, mẫu khối và bảng màu. Được tinh giản đến mức cần thiết, đây là một chủ đề thực sự có thể phát triển cùng bạn."
+msgstr "Twenty Twenty-Five cung cấp một giao diện linh hoạt, tập trung vào thiết kế cho phép bạn dễ dàng xây dựng các trang web tuyệt đẹp. Điều chỉnh thẩm mỹ của bạn với một loạt các tùy chọn kiểu dáng, mẫu khối và bảng màu. Được tinh giản đến mức cần thiết, đây là một chủ đề thực sự có thể phát triển cùng bạn."
 
 #: wp-admin/about.php:133
 msgid "Endless possibility without complexity"
@@ -303,7 +303,7 @@ msgstr "Tùy chọn tự động tải được chấp nhận"
 
 #: wp-admin/includes/class-wp-site-health.php:2622
 msgid "Autoloaded options are configuration settings for plugins and themes that are automatically loaded with every page load in WordPress. Having too many autoloaded options can slow down your site."
-msgstr "Tùy chọn tự động tải là cài đặt cấu hình cho plugin và chủ đề được tải tự động với mỗi lần tải trang trong WordPress. Có quá nhiều tùy chọn tải tự động có thể làm chậm trang web của bạn."
+msgstr "Tùy chọn tự động tải là cài đặt cấu hình cho plugin và giao diện được tải tự động với mỗi lần tải trang trong WordPress. Có quá nhiều tùy chọn tải tự động có thể làm chậm trang web của bạn."
 
 #. translators: Localized Support reference.
 #: wp-admin/includes/class-wp-site-health.php:2510
@@ -475,13 +475,13 @@ msgstr "ID trang"
 #. theme version.
 #: wp-admin/includes/class-theme-upgrader.php:465
 msgid "The PHP version on your server is %1$s, however the new theme version requires %2$s."
-msgstr "Phiên bản PHP trên máy chủ của bạn là %1$s, tuy nhiên phiên bản mới của chủ đề yêu cầu %2$s."
+msgstr "Phiên bản PHP trên máy chủ của bạn là %1$s, tuy nhiên phiên bản mới của giao diện yêu cầu %2$s."
 
 #. translators: 1: Current WordPress version, 2: WordPress version required by
 #. the new theme version.
 #: wp-admin/includes/class-theme-upgrader.php:451
 msgid "Your WordPress version is %1$s, however the new theme version requires %2$s."
-msgstr "Phiên bản WordPress của bạn là %1$s, tuy nhiên phiên bản mới của chủ đề yêu cầu %2$s."
+msgstr "Phiên bản WordPress của bạn là %1$s, tuy nhiên phiên bản mới của giao diện yêu cầu %2$s."
 
 #: wp-admin/includes/class-plugin-installer-skin.php:130
 #: wp-admin/includes/class-wp-plugins-list-table.php:611
@@ -629,11 +629,11 @@ msgstr "Khôi phục Plugin hoặc Giao diện"
 
 #: wp-admin/update-core.php:1038
 msgid "On systems with fewer resources, this may lead to server timeouts or resource limits being reached. If you encounter an issue during the update process, please create a support forum topic and reference <strong>Rollback</strong> in the issue title."
-msgstr "Trên hệ thống còn ít tài nguyên, điều này có thể dẫn đến thời gian chờ của máy chủ hết hạn hoặc đạt đến giới hạn tài nguyên. Nếu bạn gặp vấn đề trong quá trình cập nhật, vui lòng tạo một chủ đề hỗ trợ trên diễn đàn và tham khảo <strong>Quay lại phiên bản trước</strong> trong tiêu đề vấn đề."
+msgstr "Trên hệ thống còn ít tài nguyên, điều này có thể dẫn đến thời gian chờ của máy chủ hết hạn hoặc đạt đến giới hạn tài nguyên. Nếu bạn gặp vấn đề trong quá trình cập nhật, vui lòng tạo một giao diện hỗ trợ trên diễn đàn và tham khảo <strong>Quay lại phiên bản trước</strong> trong tiêu đề vấn đề."
 
 #: wp-admin/update-core.php:1036
 msgid "This feature will create a temporary backup of a plugin or theme before it is upgraded. This backup is used to restore the plugin or theme back to its previous state if there is an error during the update process."
-msgstr "Tính năng này sẽ tạo một bản sao lưu tạm thời của một plugin hoặc chủ đề trước khi nó được nâng cấp. Bản sao lưu này được sử dụng để khôi phục plugin hoặc chủ đề về trạng thái trước đó nếu xảy ra lỗi trong quá trình cập nhật."
+msgstr "Tính năng này sẽ tạo một bản sao lưu tạm thời của một plugin hoặc giao diện trước khi nó được nâng cấp. Bản sao lưu này được sử dụng để khôi phục plugin hoặc giao diện về trạng thái trước đó nếu xảy ra lỗi trong quá trình cập nhật."
 
 #: wp-admin/site-editor.php:196
 msgid "The site editor requires JavaScript. Please enable JavaScript in your browser settings."
@@ -759,12 +759,12 @@ msgstr "Dung lượng đĩa sẵn có"
 
 #: wp-admin/includes/class-wp-site-health.php:2767
 msgid "Plugin and theme temporary backup directory access"
-msgstr "Truy cập thư mục sao lưu tạm thời của plugin và chủ đề"
+msgstr "Truy cập thư mục sao lưu tạm thời của plugin và giao diện"
 
 #. translators: 1: wp-content/upgrade, 2: wp-content.
 #: wp-admin/includes/class-wp-site-health.php:1987
 msgid "The %1$s directory does not exist, and the server does not have write permissions in %2$s to create it. This directory is used for plugin and theme updates. Please make sure the server has write permissions in %2$s."
-msgstr "Thư mục %1$s không tồn tại, và máy chủ không có quyền ghi vào %2$s để tạo nó. Thư mục này được sử dụng cho cập nhật plugin và chủ đề. Vui lòng đảm bảo máy chủ có quyền ghi vào %2$s."
+msgstr "Thư mục %1$s không tồn tại, và máy chủ không có quyền ghi vào %2$s để tạo nó. Thư mục này được sử dụng cho cập nhật plugin và giao diện. Vui lòng đảm bảo máy chủ có quyền ghi vào %2$s."
 
 #: wp-admin/includes/class-wp-site-health.php:1984
 msgid "The upgrade directory cannot be created"
@@ -773,7 +773,7 @@ msgstr "Không thể tạo thư mục nâng cấp."
 #. translators: %s: wp-content/upgrade
 #: wp-admin/includes/class-wp-site-health.php:1976
 msgid "The %s directory exists but is not writable. This directory is used for plugin and theme updates. Please make sure the server has write permissions to this directory."
-msgstr "Thư mục %s đã tồn tại nhưng không thể ghi dữ liệu vào đó. Thư mục này được sử dụng cho việc cập nhật plugin và chủ đề. Vui lòng đảm bảo máy chủ có quyền ghi vào thư mục này."
+msgstr "Thư mục %s đã tồn tại nhưng không thể ghi dữ liệu vào đó. Thư mục này được sử dụng cho việc cập nhật plugin và giao diện. Vui lòng đảm bảo máy chủ có quyền ghi vào thư mục này."
 
 #: wp-admin/includes/class-wp-site-health.php:1973
 msgid "The upgrade directory exists but is not writable"
@@ -782,7 +782,7 @@ msgstr "Thư mục nâng cấp tồn tại nhưng không thể ghi dữ liệu v
 #. translators: %s: wp-content/upgrade-temp-backup
 #: wp-admin/includes/class-wp-site-health.php:1965
 msgid "The %s directory exists but is not writable. This directory is used to improve the stability of plugin and theme updates. Please make sure the server has write permissions to this directory."
-msgstr "Thư mục %s tồn tại nhưng không thể ghi. Thư mục này được sử dụng để cải thiện tính ổn định của các bản cập nhật plugin và chủ đề. Vui lòng đảm bảo rằng máy chủ có quyền ghi vào thư mục này."
+msgstr "Thư mục %s tồn tại nhưng không thể ghi. Thư mục này được sử dụng để cải thiện tính ổn định của các bản cập nhật plugin và giao diện. Vui lòng đảm bảo rằng máy chủ có quyền ghi vào thư mục này."
 
 #: wp-admin/includes/class-wp-site-health.php:1962
 msgid "The temporary backup directory exists but is not writable"
@@ -795,7 +795,7 @@ msgstr "Thư mục %s tồn tại nhưng không thể ghi. Thư mục này đư�
 
 #: wp-admin/includes/class-wp-site-health.php:1951
 msgid "Theme temporary backup directory exists but is not writable"
-msgstr "Thư mục sao lưu tạm thời của chủ đề tồn tại nhưng không thể ghi"
+msgstr "Thư mục sao lưu tạm thời của giao diện tồn tại nhưng không thể ghi"
 
 #. translators: %s: wp-content/upgrade-temp-backup/plugins
 #: wp-admin/includes/class-wp-site-health.php:1943
@@ -814,7 +814,7 @@ msgstr "Cả hai thư mục %1$s và %2$s tồn tại nhưng không thể ghi. C
 
 #: wp-admin/includes/class-wp-site-health.php:1928
 msgid "Plugin and theme temporary backup directories exist but are not writable"
-msgstr "Thư mục sao lưu tạm thời của plugin và chủ đề đã tồn tại nhưng không thể ghi dữ liệu vào được."
+msgstr "Thư mục sao lưu tạm thời của plugin và giao diện đã tồn tại nhưng không thể ghi dữ liệu vào được."
 
 #. translators: %s: wp-content
 #: wp-admin/includes/class-wp-site-health.php:1910
@@ -824,11 +824,11 @@ msgstr "Không thể định vị thư mục %s."
 #. translators: %s: wp-content/upgrade-temp-backup
 #: wp-admin/includes/class-wp-site-health.php:1881
 msgid "The %s directory used to improve the stability of plugin and theme updates is writable."
-msgstr "Thư mục %s được sử dụng để cải thiện tính ổn định của việc cập nhật plugin và chủ đề và có thể ghi dữ liệu vào được."
+msgstr "Thư mục %s được sử dụng để cải thiện tính ổn định của việc cập nhật plugin và giao diện và có thể ghi dữ liệu vào được."
 
 #: wp-admin/includes/class-wp-site-health.php:1873
 msgid "Plugin and theme temporary backup directory is writable"
-msgstr "Thư mục sao lưu tạm thời của plugin và chủ đề có thể ghi dữ liệu vào được."
+msgstr "Thư mục sao lưu tạm thời của plugin và giao diện có thể ghi dữ liệu vào được."
 
 #: wp-admin/includes/class-wp-site-health.php:1839
 msgid "Could not determine available disk space for updates."
@@ -1080,7 +1080,7 @@ msgstr "Hãy là tương lai của WordPress"
 #. translators: 1: Learn WordPress link, 2: Workshops link.
 #: wp-admin/about.php:255
 msgid "<a href=\"%1$s\">Learn WordPress</a> is a free resource for new and experienced WordPress users. Learn is stocked with how-to videos on using various features in WordPress, <a href=\"%2$s\">interactive workshops</a> for exploring topics in-depth, and lesson plans for diving deep into specific areas of WordPress."
-msgstr "<a href=\"%1$s\">Học WordPress</a> là một nguồn tài nguyên miễn phí dành cho người dùng WordPress mới và có kinh nghiệm. Learn cung cấp các video hướng dẫn về cách sử dụng các tính năng khác nhau trong WordPress, <a href=\"%2$s\">các workshop tương tác</a> để khám phá các chủ đề chi tiết, và kế hoạch học tập để tìm hiểu sâu vào các lĩnh vực cụ thể của WordPress."
+msgstr "<a href=\"%1$s\">Học WordPress</a> là một nguồn tài nguyên miễn phí dành cho người dùng WordPress mới và có kinh nghiệm. Learn cung cấp các video hướng dẫn về cách sử dụng các tính năng khác nhau trong WordPress, <a href=\"%2$s\">các workshop tương tác</a> để khám phá các giao diện chi tiết, và kế hoạch học tập để tìm hiểu sâu vào các lĩnh vực cụ thể của WordPress."
 
 #: wp-admin/comment.php:73 wp-admin/edit-comments.php:232
 #: wp-admin/edit-form-advanced.php:320 wp-admin/edit-form-advanced.php:338
@@ -1283,7 +1283,7 @@ msgstr "Với một giao diện khối, bạn có thể đặt và chỉnh sửa
 
 #: wp-admin/theme-install.php:142
 msgid "A block theme is a theme that uses blocks for all parts of a site including navigation menus, header, content, and site footer. These themes are built for the features that allow you to edit and customize all parts of your site."
-msgstr "Một giao diện khối là một giao diện sử dụng các khối cho tất cả các phần của một trang web bao gồm menu điều hướng, tiêu đề, nội dung và chân trang trang web. Những chủ đề này được xây dựng cho các tính năng cho phép bạn chỉnh sửa và tùy chỉnh tất cả các phần của trang web của bạn."
+msgstr "Một giao diện khối là một giao diện sử dụng các khối cho tất cả các phần của một trang web bao gồm menu điều hướng, tiêu đề, nội dung và chân trang trang web. Những giao diện này được xây dựng cho các tính năng cho phép bạn chỉnh sửa và tùy chỉnh tất cả các phần của trang web của bạn."
 
 #: wp-admin/site-health.php:277
 msgid "Recommended items are considered beneficial to your site, although not as important to prioritize as a critical issue, they may include improvements to things such as; Performance, user experience, and more."
@@ -1510,7 +1510,7 @@ msgstr "PHP là một trong những ngôn ngữ lập trình được sử dụn
 
 #: wp-admin/includes/class-wp-site-health.php:609
 msgid "Your site does not have any installed themes."
-msgstr "Trang web của bạn không có bất kỳ chủ đề đã cài đặt."
+msgstr "Trang web của bạn không có bất kỳ giao diện đã cài đặt."
 
 #: wp-admin/includes/class-wp-site-health.php:441
 msgid "Your site does not have any active plugins."
@@ -1791,7 +1791,7 @@ msgstr "Thiết kế tất cả mọi thứ trên trang web của bạn - từ �
 
 #: wp-admin/includes/dashboard.php:2097
 msgid "Customize your entire site with block themes"
-msgstr "Tùy chỉnh toàn bộ trang với chủ đề khối"
+msgstr "Tùy chỉnh toàn bộ trang với giao diện khối"
 
 #: wp-admin/includes/dashboard.php:2087
 msgid "Add a new page"
@@ -2496,7 +2496,7 @@ msgstr "Tới Công cụ nhập"
 
 #: wp-admin/includes/class-theme-installer-skin.php:164
 msgid "Go to Theme Installer"
-msgstr "Tới Cài đặt theme"
+msgstr "Đến cài đặt giao diện"
 
 #: wp-admin/includes/privacy-tools.php:294
 msgid "Go to top"
@@ -3848,7 +3848,7 @@ msgstr "<a href=\"https://developer.wordpress.org/plugins/\">Tài liệu về ph
 
 #: wp-admin/theme-editor.php:55
 msgid "<a href=\"https://developer.wordpress.org/themes/basics/template-tags/\">Documentation on Template Tags</a>"
-msgstr "<a href=\"https://developer.wordpress.org/themes/basics/template-tags/\">Tài liệu về các tag trong template</a>"
+msgstr "<a href=\"https://developer.wordpress.org/themes/basics/template-tags/\">Tài liệu về Thẻ Mẫu</a>"
 
 #: wp-admin/themes.php:207
 msgid "<a href=\"https://wordpress.org/documentation/article/work-with-themes/\">Documentation on Using Themes</a>"
@@ -5091,11 +5091,11 @@ msgstr "Phiên bản cURL"
 
 #: wp-admin/includes/class-wp-debug-data.php:436
 msgid "PHP post max size"
-msgstr "PHP post max size"
+msgstr "Kích thước tối đa của bài đăng PHP"
 
 #: wp-admin/includes/class-wp-debug-data.php:432
 msgid "Upload max filesize"
-msgstr "Upload max filesize"
+msgstr "Tải lên kích thước tệp tối đa"
 
 #: wp-admin/includes/class-wp-debug-data.php:428
 msgid "Max input time"
@@ -5223,15 +5223,15 @@ msgstr "Kích thước thư mục giao diện"
 #: wp-admin/includes/class-wp-debug-data.php:1101
 #: wp-admin/includes/class-wp-debug-data.php:1212
 msgid "Theme directory location"
-msgstr "Vị trí thư mục giao diện (themes)"
+msgstr "Vị trí thư mục giao diện"
 
 #: wp-admin/includes/class-wp-debug-data.php:805
 msgid "Uploads directory size"
-msgstr "Kích thước thư mục tải lên (uploads)"
+msgstr "Kích thước thư mục tải lên"
 
 #: wp-admin/includes/class-wp-debug-data.php:801
 msgid "Uploads directory location"
-msgstr "Vị trí thư mục tải lên (uploads)"
+msgstr "Vị trí thư mục tải lên"
 
 #. translators: 1: The IP address WordPress.org resolves to. 2: The error
 #. returned by the lookup.
@@ -5263,7 +5263,7 @@ msgstr "Số lượng người dùng"
 
 #: wp-admin/includes/class-wp-debug-data.php:1678
 msgid "The themes directory"
-msgstr "Thư mục giao diện (themes)"
+msgstr "Thư mục giao diện"
 
 #: wp-admin/includes/class-wp-debug-data.php:1673
 msgid "The plugins directory"
@@ -5271,7 +5271,7 @@ msgstr "Thư mục plugin"
 
 #: wp-admin/includes/class-wp-debug-data.php:1668
 msgid "The uploads directory"
-msgstr "Thư mục tải lên (uploads)"
+msgstr "Thư mục tải lên"
 
 #: wp-admin/includes/class-wp-debug-data.php:1663
 msgid "The wp-content directory"
@@ -5816,7 +5816,7 @@ msgstr "Không có trang nào cả."
 #. Accessibility text.
 #: wp-admin/options-privacy.php:239
 msgid "Need help putting together your new Privacy Policy page? <a href=\"%1$s\" %2$s>Check out our privacy policy guide%3$s</a> for recommendations on what content to include, along with policies suggested by your plugins and theme."
-msgstr "Cần trợ giúp để tập hợp trang Chính sách quyền riêng tư mới của bạn? <a href=\"%1$s\" %2$s>Xem hướng dẫn chính sách bảo mật của chúng tôi%3$s</a> để biết các đề xuất về nội dung nên đưa vào, cùng với các chính sách do plugin và chủ đề của bạn đề xuất."
+msgstr "Cần trợ giúp để tập hợp trang Chính sách quyền riêng tư mới của bạn? <a href=\"%1$s\" %2$s>Xem hướng dẫn chính sách bảo mật của chúng tôi%3$s</a> để biết các đề xuất về nội dung nên đưa vào, cùng với các chính sách do plugin và giao diện của bạn đề xuất."
 
 #: wp-admin/privacy-policy-guide.php:21 wp-admin/privacy-policy-guide.php:74
 #: wp-admin/privacy-policy-guide.php:83
@@ -5854,7 +5854,7 @@ msgstr "Văn bản được đề xuất:"
 
 #: wp-admin/privacy-policy-guide.php:77
 msgid "The template contains a suggestion of sections you most likely will need. Under each section heading, you will find a short summary of what information you should provide, which will help you to get started. Some sections include suggested policy content, others will have to be completed with information from your theme and plugins."
-msgstr "Mẫu chứa gợi ý về các phần mà bạn có thể sẽ cần. Dưới mỗi tiêu đề của phần, bạn sẽ tìm thấy một bản tóm tắt ngắn gọn về những thông tin bạn nên cung cấp, thông tin này sẽ giúp bạn bắt đầu. Một số phần bao gồm nội dung chính sách được đề xuất, những phần khác sẽ phải được hoàn thành với thông tin từ chủ đề và plugin của bạn."
+msgstr "Mẫu chứa gợi ý về các phần mà bạn có thể sẽ cần. Dưới mỗi tiêu đề của phần, bạn sẽ tìm thấy một bản tóm tắt ngắn gọn về những thông tin bạn nên cung cấp, thông tin này sẽ giúp bạn bắt đầu. Một số phần bao gồm nội dung chính sách được đề xuất, những phần khác sẽ phải được hoàn thành với thông tin từ giao diện và plugin của bạn."
 
 #. translators: %s: Date of privacy policy text update.
 #: wp-admin/includes/class-wp-privacy-policy-content.php:408
@@ -6714,7 +6714,7 @@ msgstr "Trang chủ: %s"
 
 #: wp-admin/options-permalink.php:386
 msgid "Available tags:"
-msgstr "Tag sẵn có:"
+msgstr "Các thẻ có sẵn:"
 
 #. translators: %s: Permalink structure tag.
 #: wp-admin/options-permalink.php:315
@@ -8650,7 +8650,7 @@ msgstr "ví dụ: www.wordpress.org"
 
 #: wp-admin/themes.php:138
 msgid "The search for installed themes will search for terms in their name, description, author, or tag."
-msgstr "Tìm kiếm những giao diện đã được cài đặt theo tên, mô tả, tác giả, hay tag."
+msgstr "Việc tìm kiếm chủ đề đã cài đặt sẽ tìm kiếm theo tên, mô tả, tác giả hoặc thẻ của chủ đề đó."
 
 #: wp-admin/theme-install.php:113
 msgid "Alternately, you can browse the themes that are Popular or Latest. When you find a theme you like, you can preview it or install it."
@@ -8658,7 +8658,7 @@ msgstr "Ngoài ra, bạn có thể duyệt các giao diện trong mục Nổi b�
 
 #: wp-admin/theme-install.php:112
 msgid "You can Search for themes by keyword, author, or tag, or can get more specific and search by criteria listed in the feature filter."
-msgstr "Bạn có thể tìm kiếm giao diện bằng từ khóa, tác giả, hay tag, hoặc cụ thể hơn bằng các điều kiện trong bộ lọc theo đặc điểm."
+msgstr "Bạn có thể Tìm kiếm chủ đề theo từ khóa, tác giả hoặc thẻ hoặc có thể tìm kiếm cụ thể hơn theo các tiêu chí được liệt kê trong bộ lọc tính năng."
 
 #. translators: %d: Number of themes.
 #: wp-admin/theme-install.php:68 wp-admin/themes.php:237
@@ -9333,7 +9333,7 @@ msgstr "<strong>WordPress</strong> &mdash; Nâng cấp WordPress chỉ với m�
 
 #: wp-admin/update-core.php:991
 msgid "If an update is available, you&#8127;ll see a notification appear in the Toolbar and navigation menu."
-msgstr "Khi có cập nhật mới, bạn sẽ nhìn thấy thông báo hiển thị ngay trên thanh công cụ và thực đơn điều hướng."
+msgstr "Nếu có bản cập nhật, bạn sẽ thấy thông báo xuất hiện trong Thanh công cụ và menu điều hướng."
 
 #: wp-admin/update-core.php:1002
 msgid "<strong>Themes and Plugins</strong> &mdash; To update individual themes or plugins from this screen, use the checkboxes to make your selection, then <strong>click on the appropriate &#8220;Update&#8221; button</strong>. To update all of your themes or plugins at once, you can check the box at the top of the section to select all before clicking the update button."
@@ -9412,7 +9412,7 @@ msgstr "Nhấn hoặc di chuột vào bất kỳ giao diện nào, sau đó nh�
 
 #: wp-admin/themes.php:137
 msgid "The active theme is displayed highlighted as the first theme."
-msgstr "Chủ đề đang hoạt động được hiển thị nổi bật là chủ đề đầu tiên."
+msgstr "Giao diện đang hoạt động được hiển thị nổi bật là giao diện đầu tiên."
 
 #: wp-admin/themes.php:136
 msgid "Click Customize for the active theme or Live Preview for any other theme to see a live preview"
@@ -9777,7 +9777,7 @@ msgstr "Bình luận cần được phê duyệt thủ công"
 
 #: wp-admin/nav-menus.php:741
 msgid "<strong>Clicking the arrow to the right of any menu item</strong> in the editor will reveal a standard group of settings. Additional settings such as link target, CSS classes, link relationships, and link descriptions can be enabled and disabled via the Screen Options tab."
-msgstr "<strong>Bấm vào biểu tượng mũi tên ở bên phải mỗi chỉ mục thực đơn</strong> trong công cụ chỉnh sửa sẽ hiển thị các cài đặt tiêu chuẩn. Các cài đặt nâng cao như mục tiêu liên kết, các lớp CSS, các quan hệ liên kết, và mô tả liên kết có thể được bật / tắt tại khung tùy chọn màn hình."
+msgstr "<strong>Nhấp vào mũi tên bên phải của bất kỳ mục menu nào</strong> trong trình chỉnh sửa sẽ hiển thị một nhóm cài đặt tiêu chuẩn. Các cài đặt bổ sung như mục tiêu liên kết, lớp CSS, quan hệ liên kết và mô tả liên kết có thể được bật và tắt thông qua tab Tùy chọn màn hình."
 
 #. translators: 1: URL to Widgets screen, 2 and 3: The names of the default
 #. themes.
@@ -10153,7 +10153,7 @@ msgstr "Để chỉ định menu cho một hoặc nhiều vị trí chủ đề,
 
 #: wp-admin/nav-menus.php:755
 msgid "This screen is used for globally assigning menus to locations defined by your theme."
-msgstr "Đây là màn hình để chỉ định hiển thị thực đơn trong các vị trí được giao diện của bạn hỗ trợ."
+msgstr "Màn hình này được sử dụng để gán menu trên toàn cầu cho các vị trí được xác định bởi chủ đề của bạn."
 
 #: wp-admin/nav-menus.php:750
 msgid "Editing Menus"
@@ -10161,11 +10161,11 @@ msgstr "Menu đang sửa"
 
 #: wp-admin/nav-menus.php:745
 msgid "Delete a menu item by <strong>expanding it and clicking the Remove link</strong>"
-msgstr "Xóa một chỉ mục thực đơn bằng cách <strong>mở rộng chỉ mục đó và bấm vào liên kết Xóa</strong>"
+msgstr "Xóa một mục menu bằng cách <strong>mở rộng nó và nhấp vào liên kết Xóa</strong>"
 
 #: wp-admin/nav-menus.php:744
 msgid "To reorganize menu items, <strong>drag and drop items with your mouse or use your keyboard</strong>. Drag or move a menu item a little to the right to make it a submenu"
-msgstr "Để sắp xếp lại các chỉ mục thực đơn, <strong>hãy sử dụng chuột để kéo và thả hoặc sử dụng bàn phím</strong>. Kéo hoặc di chuyển một chỉ mục lệch về bên phải để biến nó thành thực đơn con."
+msgstr "Để sắp xếp lại các mục menu, <strong>kéo và thả các mục bằng chuột hoặc sử dụng bàn phím của bạn</strong>. Kéo hoặc di chuyển một mục menu sang phải một chút để biến nó thành menu con"
 
 #: wp-admin/nav-menus.php:742
 msgid "Add one or several items at once by <strong>selecting the checkbox next to each item and clicking Add to Menu</strong>"
@@ -10189,15 +10189,15 @@ msgstr "Để chỉnh sửa menu hiện có, <strong>chọn menu từ menu thả
 
 #: wp-admin/nav-menus.php:727
 msgid "The menu management box at the top of the screen is used to control which menu is opened in the editor below."
-msgstr "Hộp quản lý thực đơn ở phần trên của màn hình dùng để kiểm soát thực đơn nào đang được chỉnh sửa bằng mẫu phía dưới."
+msgstr "Hộp quản lý menu ở đầu màn hình được sử dụng để kiểm soát menu nào được mở trong trình chỉnh sửa bên dưới."
 
 #: wp-admin/nav-menus.php:717
 msgid "Add, organize, and modify individual menu items"
-msgstr "Tạo mới, sắp xếp, và chỉnh sửa các chỉ mục thực đơn"
+msgstr "Thêm, sắp xếp và sửa đổi các mục menu riêng lẻ"
 
 #: wp-admin/nav-menus.php:716
 msgid "Create, edit, and delete menus"
-msgstr "Tạo mới, chỉnh sửa, và xóa thực đơn"
+msgstr "Tạo, chỉnh sửa và xóa menu"
 
 #: wp-admin/nav-menus.php:715 wp-admin/themes.php:133
 msgid "From this screen you can:"
@@ -10587,7 +10587,7 @@ msgstr "Thẻ có thể chuyển đổi thành nhóm phân loại nội dung b�
 
 #: wp-admin/edit-tags.php:263
 msgid "You can delete Link Categories in the Bulk Action pull-down, but that action does not delete the links within the category. Instead, it moves them to the default Link Category."
-msgstr "Bạn có thể xóa nhiều Nhóm Phân Loại Liên Kết với thực đơn xổ xuống Hành Động Gộp, tuy nhiên thao tác này không xóa liên kết trong nhóm. Mặt khác, thao tác này chuyển liên kết tới Nhóm Phân Loại Liên Kết mặc định."
+msgstr "Bạn có thể xóa Danh mục liên kết trong menu kéo xuống Hành động hàng loạt, nhưng hành động đó không xóa các liên kết trong danh mục. Thay vào đó, nó di chuyển chúng đến Danh mục liên kết mặc định."
 
 #: wp-admin/edit-form-advanced.php:324
 msgid "Creating a Page is very similar to creating a Post, and the screens can be customized in the same way using drag and drop, the Screen Options tab, and expanding/collapsing boxes as you choose. This screen also has the distraction-free writing space, available in both the Visual and Text modes via the Fullscreen buttons. The Page editor mostly works the same as the Post editor, but there are some Page-specific features in the Page Attributes box."
@@ -11454,7 +11454,7 @@ msgstr "Tất cả các tệp bạn đã tải lên đều được liệt kê t
 
 #: wp-admin/edit.php:320
 msgid "You can also perform the same types of actions, including narrowing the list by using the filters, acting on a page using the action links that appear when you hover over a row, or using the Bulk actions menu to edit the metadata for multiple pages at once."
-msgstr "Bạn cũng có thể thực hiện các thao tác như với bài viết, bao gồm lọc danh sách, thao tác với một trang tĩnh sử dụng các liên kết hiển thị khi di chuột lên, hoặc sử dụng thực đơn Thao Tác Nhóm để chỉnh sửa siêu dữ liệu cho nhiều trang tĩnh cùng lúc."
+msgstr "Bạn cũng có thể thực hiện các loại hành động tương tự, bao gồm thu hẹp danh sách bằng cách sử dụng bộ lọc, thực hiện hành động trên một trang bằng cách sử dụng các liên kết hành động xuất hiện khi bạn di chuột qua một hàng hoặc sử dụng menu Hành động hàng loạt để chỉnh sửa siêu dữ liệu cho nhiều trang cùng một lúc."
 
 #: wp-admin/edit.php:319
 msgid "Managing pages is very similar to managing posts, and the screens can be customized in the same way."
@@ -11670,7 +11670,7 @@ msgstr "Bạn có thể sử dụng những tùy chỉnh sau để sắp xếp m
 
 #: wp-admin/index.php:51
 msgid "The left-hand navigation menu provides links to all of the WordPress administration screens, with submenu items displayed on hover. You can minimize this menu to a narrow icon strip by clicking on the Collapse Menu arrow at the bottom."
-msgstr "Menu điều hướng bên trái cung cấp liên kết tới tất cả màn hình quản trị của WordPress, các chỉ mục con sẽ hiển thị khi di chuột lên. Bạn có thể thu nhỏ thực đơn này thành một biểu tượng bằng cách bấm vào mũi tên thu gọn menu ở phía dưới."
+msgstr "Menu điều hướng bên trái cung cấp các liên kết đến tất cả các màn hình quản trị WordPress, với các mục menu con được hiển thị khi di chuột. Bạn có thể thu nhỏ menu này thành một dải biểu tượng hẹp bằng cách nhấp vào mũi tên Thu gọn Menu ở phía dưới."
 
 #: wp-admin/comment.php:63 wp-admin/edit-comments.php:208
 #: wp-admin/edit-form-advanced.php:344 wp-admin/edit-link-form.php:66
@@ -12309,7 +12309,7 @@ msgstr "Email hoặc Tên người dùng"
 #: wp-admin/themes.php:235 wp-admin/network/site-themes.php:240
 #: wp-admin/network/themes.php:463
 msgid "Search installed themes"
-msgstr "Tìm kiếm các chủ đề đã cài đặt"
+msgstr "Tìm kiếm giao diện đã cài đặt"
 
 #. translators: %s: Link to documentation on child themes.
 #: wp-admin/update-core.php:665
@@ -12462,7 +12462,7 @@ msgstr "Cắt và xuất bản"
 
 #: wp-admin/edit-link-form.php:70
 msgid "XFN stands for <a href=\"https://gmpg.org/xfn/\">XHTML Friends Network</a>, which is optional. WordPress allows the generation of XFN attributes to show how you are related to the authors/owners of the site to which you are linking."
-msgstr "XFN, viết tắt tiếng Anh của <a href=\"https://gmpg.org/xfn/\">Mạng người dùng chuẩn XHTML</a>, là không bắt buộc. WordPress cho phép tạo thuộc tính XFN để hiển thị mối liên hệ của bạn với tác giả / người sở hữu website mà bạn liên kết tới."
+msgstr "XFN là viết tắt của <a href=\"https://gmpg.org/xfn/\">XHTML Friends Network</a>, tùy chọn. WordPress cho phép tạo thuộc tính XFN để hiển thị mối quan hệ của bạn với tác giả/chủ sở hữu của trang web mà bạn đang liên kết."
 
 #: wp-admin/includes/file.php:2552
 msgid "FTP Password"
@@ -12717,7 +12717,7 @@ msgstr "Sau khi chỉnh sửa, bấm vào Cập Nhật Tập Tin."
 
 #: wp-admin/theme-editor.php:31
 msgid "Begin by choosing a theme to edit from the dropdown menu and clicking the Select button. A list then appears of the theme&#8217;s template files. Clicking once on any file name causes the file to appear in the large Editor box."
-msgstr "Bắt đầu bằng việc chọn một giao diện để biên tập từ thực đơn xổ xuống và bấm vào Chọn. Một danh sách các tập tin mẫu sẽ được hiển thị. Bấm vào bất kỳ tên tập tin nào sẽ tải tập tin đó trong hộp Biên Tập."
+msgstr "Bắt đầu bằng cách chọn một chủ đề để chỉnh sửa từ menu thả xuống và nhấp vào nút Chọn. Sau đó, một danh sách các tệp mẫu của chủ đề sẽ xuất hiện. Nhấp một lần vào bất kỳ tên tệp nào sẽ khiến tệp xuất hiện trong hộp Trình chỉnh sửa lớn."
 
 #: wp-admin/theme-editor.php:30
 msgid "You can use the theme file editor to edit the individual CSS and PHP files which make up your theme."
@@ -12828,7 +12828,7 @@ msgstr "<strong>Thảo Luận</strong> - Bạn có thể cho phép bình luận 
 #. translators: %s: Featured image.
 #: wp-admin/edit-form-advanced.php:386
 msgid "<strong>%s</strong> &mdash; This allows you to associate an image with your post without inserting it. This is usually useful only if your theme makes use of the image as a post thumbnail on the home page, a custom header, etc."
-msgstr "<strong>%s</strong> - Cho phép bạn kết hợp một hình ảnh với bài viết mà không cần chèn nó. Cách này chỉ hữu dụng nếu chủ đề của bạn hỗ trợ sử dụng ảnh nhấn mạnh như ảnh đại diện của bài viết trên trang chủ, phần đầu tùy chỉnh, v.v."
+msgstr "<strong>%s</strong> - Cho phép bạn kết hợp một hình ảnh với bài viết mà không cần chèn nó. Cách này chỉ hữu dụng nếu giao diện của bạn hỗ trợ sử dụng ảnh nhấn mạnh như ảnh đại diện của bài viết trên trang chủ, phần đầu tùy chỉnh, v.v."
 
 #: wp-admin/edit-form-advanced.php:292
 msgid "<strong>Title</strong> &mdash; Enter a title for your post. After you enter a title, you&#8217;ll see the permalink below, which you can edit."
@@ -12840,7 +12840,7 @@ msgstr "Di chuột lên một dòng trong danh sách bài viết sẽ hiển th�
 
 #: wp-admin/edit.php:267
 msgid "You can refine the list to show only posts in a specific category or from a specific month by using the dropdown menus above the posts list. Click the Filter button after making your selection. You also can refine the list by clicking on the post author, category or tag in the posts list."
-msgstr "Bạn có thể lọc danh sách để chỉ hiển thị bài viết thuộc một nhóm phân loại nhất định hoặc trong một tháng nào đó với các thực đơn xổ xuống phía trên danh sách bài viết. Bấm vào nút Lọc sau khi bạn hoàn tất lựa chọn. Bạn cũng có thể lọc danh sách bằng cách bấm vào tác giả bài viết, nhóm phân loại hoặc thẻ đánh dấu trong danh sách bài viết."
+msgstr "Bạn có thể tinh chỉnh danh sách để chỉ hiển thị các bài đăng trong một danh mục cụ thể hoặc từ một tháng cụ thể bằng cách sử dụng các menu thả xuống phía trên danh sách bài đăng. Nhấp vào nút Lọc sau khi lựa chọn. Bạn cũng có thể tinh chỉnh danh sách bằng cách nhấp vào tác giả bài đăng, danh mục hoặc thẻ trong danh sách bài đăng."
 
 #: wp-admin/edit.php:264
 msgid "You can hide/display columns based on your needs and decide how many posts to list per screen using the Screen Options tab."
@@ -12866,7 +12866,7 @@ msgstr ""
 
 #: wp-admin/includes/import.php:193 wp-admin/tools.php:48 wp-admin/tools.php:73
 msgid "Categories and Tags Converter"
-msgstr "Trình chuyển đổi danh mục và thẻ"
+msgstr "Bộ chuyển đổi danh mục và thẻ"
 
 #: wp-admin/includes/nav-menu.php:583 wp-admin/includes/nav-menu.php:606
 msgid "Most Recent"
@@ -12909,7 +12909,7 @@ msgstr "Bình luận về &#8220;%s&#8221;"
 
 #: wp-admin/includes/nav-menu.php:1334
 msgid "Show advanced menu properties"
-msgstr "Hiển thị thuộc tính nâng cao của thực đơn"
+msgstr "Hiển thị các thuộc tính menu nâng cao"
 
 #. translators: 1: Plugin version, 2: New version.
 #. translators: 1: Theme version, 2: New version.
@@ -13001,7 +13001,7 @@ msgstr "Công cụ cài đặt đã thử liên hệ với một tên miền ph�
 
 #: wp-admin/nav-menus.php:285
 msgid "The menu item has been successfully deleted."
-msgstr "Đã xóa thành công chỉ mục thực đơn."
+msgstr "Mục menu đã được xóa thành công."
 
 #: wp-admin/includes/ajax-actions.php:1689
 msgid "Please provide a custom field name."
@@ -13104,7 +13104,7 @@ msgstr "Điều này sẽ loại bỏ hình nền. Bạn sẽ không thể khôi
 #. translators: %s: Network title.
 #: wp-admin/includes/class-wp-themes-list-table.php:131
 msgid "Only the active theme is available to you. Contact the %s administrator for information about accessing additional themes."
-msgstr "Chỉ có chủ đề đang hoạt động mới có sẵn cho bạn. Liên hệ với quản trị viên %s để biết thông tin về cách truy cập các chủ đề bổ sung."
+msgstr "Chỉ có chủ đề đang hoạt động mới có sẵn cho bạn. Liên hệ với quản trị viên %s để biết thông tin về cách truy cập các giao diện bổ sung."
 
 #: wp-admin/includes/file.php:31
 msgid "Tag Template"
@@ -13167,7 +13167,7 @@ msgstr "mục"
 
 #: wp-admin/nav-menus.php:322
 msgid "The menu has been successfully deleted."
-msgstr "Đã xóa thành công thực đơn được chỉ định."
+msgstr "Menu đã được xóa thành công."
 
 #. translators: Hidden accessibility text.
 #: wp-admin/install.php:184 wp-admin/install.php:191
@@ -14800,7 +14800,7 @@ msgstr "Tìm plugin"
 
 #: wp-admin/includes/plugin-install.php:270
 msgid "You may also browse based on the most popular tags in the Plugin Directory:"
-msgstr "Bạn còn có thể duyệt dựa trên những Tag được sử dụng nhiều từ Thư mục Plugin:"
+msgstr "Bạn cũng có thể duyệt dựa trên các thẻ phổ biến nhất trong Thư mục Plugin:"
 
 #: wp-admin/includes/plugin-install.php:269
 msgid "Popular tags"
@@ -15562,7 +15562,7 @@ msgstr "Chọn một tập tin"
 
 #: wp-admin/includes/class-file-upload-upgrader.php:89
 msgid "Return to the Theme Installer"
-msgstr "Quay lại Trình cài đặt chủ đề"
+msgstr "Quay lại cài đặt giao diện"
 
 #. translators: %s: Post title.
 #. translators: %s: Theme name.
@@ -15604,7 +15604,7 @@ msgstr "Cài đặt giao diện thành công."
 
 #: wp-admin/includes/class-theme-upgrader.php:77
 msgid "Installing the theme&#8230;"
-msgstr "Đang cài đặt chủ đề&#8230;"
+msgstr "Đang cài đặt giao diện&#8230;"
 
 #: wp-admin/includes/class-theme-upgrader.php:62
 #: wp-admin/includes/class-theme-upgrader.php:79
@@ -16018,7 +16018,7 @@ msgstr "Không duyệt"
 
 #: wp-admin/edit.php:288 wp-admin/includes/class-wp-list-table.php:607
 msgid "Bulk actions"
-msgstr "Hành động"
+msgstr "Hành động hàng loạt"
 
 #. translators: 1: Starting number of users on the current page, 2: Ending
 #. number of users, 3: Total number of users.

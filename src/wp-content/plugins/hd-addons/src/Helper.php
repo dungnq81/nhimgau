@@ -303,17 +303,13 @@ final class Helper {
 			self::errorLog( 'Warning: Detected `<script>` tag in CSS.' );
 		}
 
-		// Remove <script> tags entirely
-		// Remove <style> tags but keep the CSS content inside
-		// Remove dangerous expressions
-		// Normalize whitespace
 		$css = preg_replace( [
-			'/<script\b[^>]*>.*?(?:<\/script>|$)/is',
-			'/<style\b[^>]*>(.*?)<\/style>/is',
-			'/[\x00-\x1F\x7F]/u',
+			'/<script\b[^>]*>.*?(?:<\/script>|$)/is', // Remove <script> tags entirely
+			'/<style\b[^>]*>(.*?)<\/style>/is', // Remove <style> tags but keep the CSS content inside
+			'/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', // // Remove unwanted control characters but keep line breaks and tabs
 			'/\bexpression\s*\([^)]*\)/i',
 			'/url\s*\(\s*[\'"]?\s*javascript:[^)]*\)/i',
-			'/\s+/',
+			'/[^\S\r\n\t]+/', // Normalize whitespace
 		], [ '', '$1', '', '', '', ' ' ], $css );
 
 		return trim( $css );
@@ -378,9 +374,6 @@ final class Helper {
 	 * @return \WP_Error|int|array|\WP_Post|null
 	 */
 	public static function updateCustomPostOption( string $mixed, string $post_type, string $code_type, bool $encode = false ): \WP_Error|int|array|\WP_Post|null {
-		// $post_type = $post_type ?: 'addon_css';
-		// $code_type = $code_type ?: 'text/css';
-
 		if ( empty( $post_type ) || empty( $code_type ) ) {
 			return false;
 		}
@@ -415,12 +408,6 @@ final class Helper {
 
 			if ( ! is_wp_error( $r ) ) {
 				self::setThemeMod( $post_type . '_option_id', $r );
-
-				// Trigger creation of a revision. This should be removed once #30854 is resolved.
-				$revisions = wp_get_latest_revision_id_and_total_count( $r );
-				if ( ! is_wp_error( $revisions ) && 0 === $revisions['count'] ) {
-					wp_save_post_revision( $r );
-				}
 			}
 		}
 

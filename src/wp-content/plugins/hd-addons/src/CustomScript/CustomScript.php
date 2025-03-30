@@ -24,8 +24,8 @@ final class CustomScript {
 	 * Header scripts
 	 */
 	public function header_scripts__hook(): void {
-		$html_header = Helper::extractJS( Helper::getCustomPostContent( 'html_header', true ) );
-		if ( $html_header && ! Helper::Lighthouse() ) {
+		$html_header = Helper::getCustomPostContent( 'html_header', true );
+		if ( $html_header && ! Helper::lightHouse() ) {
 			echo Helper::JSMinify( $html_header, true );
 		}
 	}
@@ -36,8 +36,8 @@ final class CustomScript {
 	 * Body scripts - TOP
 	 */
 	public function body_scripts_top__hook(): void {
-		$html_body_top = Helper::extractJS( Helper::getCustomPostContent( 'html_body_top', true ) );
-		if ( $html_body_top && ! Helper::Lighthouse() ) {
+		$html_body_top = Helper::getCustomPostContent( 'html_body_top', true );
+		if ( $html_body_top && ! Helper::lightHouse() ) {
 			echo Helper::JSMinify( $html_body_top, true );
 		}
 	}
@@ -48,8 +48,8 @@ final class CustomScript {
 	 * Footer scripts
 	 */
 	public function footer_scripts__hook(): void {
-		$html_footer = Helper::extractJS( Helper::getCustomPostContent( 'html_footer', true ) );
-		if ( $html_footer && ! Helper::Lighthouse() ) {
+		$html_footer = Helper::getCustomPostContent( 'html_footer', true );
+		if ( $html_footer && ! Helper::lightHouse() ) {
 			echo Helper::JSMinify( $html_footer, true );
 		}
 	}
@@ -60,8 +60,8 @@ final class CustomScript {
 	 * Body scripts - BOTTOM
 	 */
 	public function body_scripts_bottom__hook(): void {
-		$html_body_bottom = Helper::extractJS( Helper::getCustomPostContent( 'html_body_bottom', true ) );
-		if ( $html_body_bottom && ! Helper::Lighthouse() ) {
+		$html_body_bottom = Helper::getCustomPostContent( 'html_body_bottom', true );
+		if ( $html_body_bottom && ! Helper::lightHouse() ) {
 			echo Helper::JSMinify( $html_body_bottom, true );
 		}
 	}

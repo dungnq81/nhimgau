@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the WordPress - 6.7.x - Development package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-02-12 00:52:07+0000\n"
+"PO-Revision-Date: 2025-03-23 02:18:04+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1982,10 +1982,6 @@ msgstr "Hiển thị lưu trữ thẻ bài viết. Mẫu này sẽ phục vụ n
 msgid "Displays a static page unless a custom template has been applied to that page or a dedicated template exists."
 msgstr "Hiển thị một trang tĩnh trừ khi một mẫu tùy chỉnh đã được áp dụng cho trang đó hoặc một mẫu chuyên dụng tồn tại."
 
-#: wp-includes/block-template-utils.php:177
-msgid "Displays a post category archive. This template will serve as a fallback when a more specific template (e.g. Category: Recipes) cannot be found."
-msgstr "Hiển thị lưu trữ danh mục bài viết. Mẫu này sẽ phục vụ như một mẫu dự phòng khi không thể tìm thấy mẫu cụ thể hơn (ví dụ: Danh mục: công thức)."
-
 #: wp-includes/block-template-utils.php:173
 msgid "Displays a single author's post archive. This template will serve as a fallback when a more specific template (e.g. Author: Admin) cannot be found."
 msgstr "Hiển thị lưu trữ bài viết của một tác giả duy nhất. Mẫu này sẽ phục vụ như một mẫu dự phòng khi không thể tìm thấy mẫu cụ thể hơn (ví dụ: Tác giả: Admin)."
@@ -1997,6 +1993,10 @@ msgstr "Hiển thị bất kỳ lưu trữ nào, bao gồm bài viết của m�
 #: wp-includes/block-template-utils.php:161
 msgid "Displays a single post on your website unless a custom template has been applied to that post or a dedicated template exists."
 msgstr "Hiển thị một bài viết duy nhất trên trang web của bạn trừ khi một mẫu tùy chỉnh đã được áp dụng cho bài viết đó hoặc một mẫu chuyên dụng tồn tại."
+
+#: wp-includes/block-template-utils.php:177
+msgid "Displays a post category archive. This template will serve as a fallback when a more specific template (e.g. Category: Recipes) cannot be found."
+msgstr "Hiển thị kho lưu trữ danh mục bài đăng. Mẫu này sẽ đóng vai trò dự phòng khi không tìm thấy mẫu cụ thể hơn (ví dụ: Danh mục: Công thức nấu ăn)."
 
 #: wp-includes/block-template-utils.php:145
 msgid "Used as a fallback template for all pages when a more specific template is not defined."
@@ -2844,10 +2844,6 @@ msgstr "Không thể truyền %s nếu không sử dụng nhiều trang web"
 msgid "User URL may not be longer than 100 characters."
 msgstr "URL người dùng có thể không dài hơn 100 ký tự"
 
-#: wp-includes/deprecated.php:5565
-msgid "Webfont font family must be a non-empty string."
-msgstr "Webfont font family phải là một chuỗi không rỗng."
-
 #: wp-includes/deprecated.php:5572
 msgid "Webfont src must be a non-empty string or an array of strings."
 msgstr "Nguồn webfont phải là một chuỗi không rỗng hoặc một mảng các chuỗi."
@@ -2859,6 +2855,10 @@ msgstr "Mỗi nguồn webfont phải là một chuỗi không-rỗng."
 #: wp-includes/deprecated.php:5588
 msgid "Webfont font weight must be a properly formatted string or integer."
 msgstr "Độ đậm phông chữ Webfont phải là một chuỗi hoặc số nguyên được định dạng đúng."
+
+#: wp-includes/deprecated.php:5565
+msgid "Webfont font family must be a non-empty string."
+msgstr "Phông chữ Webfont phải là một chuỗi không rỗng."
 
 #: wp-includes/rest-api/endpoints/class-wp-rest-pattern-directory-controller.php:327
 msgid "Limit results to those matching a pattern (slug)."
@@ -4411,11 +4411,6 @@ msgctxt "block title"
 msgid "Post Template"
 msgstr "Bài viết mẫu"
 
-#: wp-includes/blocks/post-featured-image/block.json
-msgctxt "block description"
-msgid "Display a post's featured image."
-msgstr "Hiển thị hình đại diện của một bài viết."
-
 #: wp-includes/blocks/post-terms/block.json
 msgctxt "block description"
 msgid "Post terms."
@@ -4453,11 +4448,6 @@ msgctxt "block description"
 msgid "Displays the title of a post, page, or any other content-type."
 msgstr "Hiển thị tiêu đề của bài viết, trang hoặc bất kỳ post type nào."
 
-#: wp-includes/blocks/post-featured-image/block.json
-msgctxt "block title"
-msgid "Featured Image"
-msgstr "Hình ảnh nổi bật"
-
 #: wp-includes/blocks/query-pagination-numbers/block.json
 msgctxt "block description"
 msgid "Displays a list of page numbers for pagination."
@@ -4491,7 +4481,17 @@ msgstr "Hiển thị nội dung của bài viết hoặc trang."
 #: wp-includes/blocks/post-template/block.json
 msgctxt "block description"
 msgid "Contains the block elements used to render a post, like the title, date, featured image, content or excerpt, and more."
-msgstr "Bao gồm các thành phần khối được sử dụng để hiển thị bài viết, như tiêu đề, ngày, hình ảnh đại diện, nội dung hoặc tóm tắt, v.v."
+msgstr "Bao gồm các thành phần khối được sử dụng để hiển thị bài viết, như tiêu đề, ngày, ảnh đại diện, nội dung hoặc tóm tắt, v.v."
+
+#: wp-includes/blocks/post-featured-image/block.json
+msgctxt "block description"
+msgid "Display a post's featured image."
+msgstr "Hiển thị ảnh đại diện của một bài viết."
+
+#: wp-includes/blocks/post-featured-image/block.json
+msgctxt "block title"
+msgid "Featured Image"
+msgstr "Ảnh đại diện"
 
 #: wp-includes/blocks/loginout/block.json
 msgctxt "block keyword"
@@ -4624,11 +4624,6 @@ msgstr "Bo tròn"
 
 #: wp-includes/blocks/group/block.json
 msgctxt "block keyword"
-msgid "wrapper"
-msgstr "wrapper"
-
-#: wp-includes/blocks/group/block.json
-msgctxt "block keyword"
 msgid "container"
 msgstr "container"
 
@@ -4691,6 +4686,11 @@ msgstr "Hiển thị nhiều ảnh dạng thư viện ảnh."
 msgctxt "block title"
 msgid "Login/out"
 msgstr "Đăng nhập/đăng xuất"
+
+#: wp-includes/blocks/group/block.json
+msgctxt "block keyword"
+msgid "wrapper"
+msgstr "lớp bao bọc"
 
 #: wp-includes/blocks/calendar/block.json
 msgctxt "block keyword"
@@ -4775,6 +4775,15 @@ msgstr "Trên trang nhất"
 msgid "Show on front"
 msgstr "Hiển thị trên trang nhất"
 
+#: wp-includes/js/dist/block-editor.js:35980
+#: wp-includes/js/dist/edit-site.js:11296
+#: wp-includes/js/dist/edit-site.js:21895
+#: wp-includes/js/dist/edit-site.js:32853
+#: wp-admin/includes/class-wp-screen.php:1209 wp-admin/includes/theme.php:351
+#: wp-admin/includes/theme.php:387 wp-admin/index.php:70
+msgid "Layout"
+msgstr "Bố cục"
+
 #. translators: %s: taxonomy's singular name
 #. translators: Hidden accessibility text. %s: Link name.
 #. translators: Hidden accessibility text. %s: Attachment title.
@@ -4801,15 +4810,6 @@ msgstr "Hiển thị trên trang nhất"
 #: wp-admin/includes/class-wp-ms-users-list-table.php:243
 msgid "Select %s"
 msgstr "Chọn %s"
-
-#: wp-includes/js/dist/block-editor.js:35980
-#: wp-includes/js/dist/edit-site.js:11296
-#: wp-includes/js/dist/edit-site.js:21895
-#: wp-includes/js/dist/edit-site.js:32853
-#: wp-admin/includes/class-wp-screen.php:1209 wp-admin/includes/theme.php:351
-#: wp-admin/includes/theme.php:387 wp-admin/index.php:70
-msgid "Layout"
-msgstr "Bố cục"
 
 #: wp-includes/post.php:299 wp-includes/js/dist/block-editor.js:55056
 #: wp-includes/js/dist/block-editor.js:63159
@@ -5800,19 +5800,15 @@ msgstr "Dấu thời gian sự kiện phải là dấu thời gian Unix hợp l�
 
 #: wp-includes/rest-api/endpoints/class-wp-rest-attachments-controller.php:1532
 msgid "As a percentage of the image, the height to crop the image to. DEPRECATED: Use `modifiers` instead."
-msgstr "As a percentage of the image, the height to crop the image to. DEPRECATED: Use `modifiers` instead."
+msgstr "Tính theo phần trăm của hình ảnh, chiều cao để cắt hình ảnh. ĐÃ BỎ QUA: Thay vào đó, hãy sử dụng `modifiers`."
 
 #: wp-includes/rest-api/endpoints/class-wp-rest-attachments-controller.php:1526
 msgid "As a percentage of the image, the width to crop the image to. DEPRECATED: Use `modifiers` instead."
-msgstr "As a percentage of the image, the width to crop the image to. DEPRECATED: Use `modifiers` instead."
+msgstr "Tính theo phần trăm của hình ảnh, chiều rộng để cắt hình ảnh. ĐÃ BỎ QUA: Thay vào đó, hãy sử dụng `modifiers`."
 
 #: wp-includes/rest-api/endpoints/class-wp-rest-attachments-controller.php:1520
 msgid "As a percentage of the image, the y position to start the crop from. DEPRECATED: Use `modifiers` instead."
-msgstr "As a percentage of the image, the y position to start the crop from. DEPRECATED: Use `modifiers` instead."
-
-#: wp-includes/rest-api/endpoints/class-wp-rest-attachments-controller.php:1514
-msgid "As a percentage of the image, the x position to start the crop from. DEPRECATED: Use `modifiers` instead."
-msgstr "As a percentage of the image, the x position to start the crop from. DEPRECATED: Use `modifiers` instead."
+msgstr "Tính theo phần trăm của hình ảnh, vị trí y để bắt đầu cắt xén. ĐÃ BỎ QUA: Thay vào đó, hãy sử dụng `modifiers`."
 
 #: wp-includes/rest-api/endpoints/class-wp-rest-attachments-controller.php:1506
 msgid "The amount to rotate the image clockwise in degrees. DEPRECATED: Use `modifiers` instead."
@@ -5829,6 +5825,10 @@ msgstr "Chiều rộng của vùng cắt theo tỷ lệ phần trăm của chi�
 #: wp-includes/rest-api/endpoints/class-wp-rest-attachments-controller.php:1487
 msgid "Vertical position from the top to begin the crop as a percentage of the image height."
 msgstr "Vị trí dọc từ trên xuống để bắt đầu cắt theo tỷ lệ phần trăm của chiều cao hình ảnh."
+
+#: wp-includes/rest-api/endpoints/class-wp-rest-attachments-controller.php:1514
+msgid "As a percentage of the image, the x position to start the crop from. DEPRECATED: Use `modifiers` instead."
+msgstr "Tính theo phần trăm của hình ảnh, vị trí x để bắt đầu cắt xén. ĐÃ BỎ QUA: Thay vào đó, hãy sử dụng `modifiers`."
 
 #: wp-includes/rest-api/endpoints/class-wp-rest-attachments-controller.php:1483
 msgid "Horizontal position from the left to begin the crop as a percentage of the image width."
@@ -5935,16 +5935,6 @@ msgstr "Limit response to posts modified before a given ISO8601 compliant date."
 msgid "Limit response to posts modified after a given ISO8601 compliant date."
 msgstr "Limit response to posts modified after a given ISO8601 compliant date."
 
-#: wp-includes/rest-api/endpoints/class-wp-rest-themes-controller.php:619
-msgid "A named status for the theme."
-msgstr "A named status for the theme."
-
-#: wp-includes/rest-api/endpoints/class-wp-rest-global-styles-controller.php:562
-#: wp-includes/rest-api/endpoints/class-wp-rest-global-styles-controller.php:631
-#: wp-includes/rest-api/endpoints/class-wp-rest-themes-controller.php:180
-msgid "Theme not found."
-msgstr "Theme not found."
-
 #: wp-includes/rest-api/endpoints/class-wp-rest-themes-controller.php:162
 msgid "Sorry, you are not allowed to view the active theme."
 msgstr "Rất tiếc, bạn không có quyền xem giao diện này."
@@ -5967,6 +5957,16 @@ msgstr "Nhập mật khẩu mới của bạn bên dưới hoặc tạo một m�
 #: wp-includes/blocks/template-part.php:131
 msgid "[block rendering halted]"
 msgstr "[quá trình hiển thị khối bị dừng]"
+
+#: wp-includes/rest-api/endpoints/class-wp-rest-global-styles-controller.php:562
+#: wp-includes/rest-api/endpoints/class-wp-rest-global-styles-controller.php:631
+#: wp-includes/rest-api/endpoints/class-wp-rest-themes-controller.php:180
+msgid "Theme not found."
+msgstr "Không tìm thấy giao diện."
+
+#: wp-includes/rest-api/endpoints/class-wp-rest-themes-controller.php:619
+msgid "A named status for the theme."
+msgstr "Trạng thái được đặt tên cho giao diện."
 
 #: wp-includes/class-wp-feed-cache.php:15
 msgid "This file is only loaded for backward compatibility with SimplePie 1.2.x. Please consider switching to a recent SimplePie version."
@@ -6575,6 +6575,11 @@ msgstr "Sai mã màu hex."
 msgid "%s is not a valid UUID."
 msgstr "%s không phải là UUID hợp lệ."
 
+#. translators: %s: Name of the script or stylesheet.
+#: wp-includes/functions.wp-scripts.php:59
+msgid "This notice was triggered by the %s handle."
+msgstr "Thông báo này được tạo bởi %s."
+
 #. translators: Custom template title in the Site Editor. 1: Template title, 2:
 #. Post type slug.
 #. translators: Custom template title in the Site Editor. 1: Template title, 2:
@@ -6596,11 +6601,6 @@ msgstr "%s không phải là UUID hợp lệ."
 #: wp-admin/includes/class-wp-debug-data.php:1378
 msgid "%1$s (%2$s)"
 msgstr "%1$s (%2$s)"
-
-#. translators: %s: Name of the script or stylesheet.
-#: wp-includes/functions.wp-scripts.php:59
-msgid "This notice was triggered by the %s handle."
-msgstr "Thông báo này được tạo bởi %s."
 
 #. translators: 1: Parameter, 2: Pattern.
 #: wp-includes/rest-api.php:2708
@@ -6919,10 +6919,6 @@ msgstr "Text domain của giao diện."
 msgid "The theme tags, transformed for display."
 msgstr "Các thẻ tìm kiếm của giao diện, dùng để hiển thị."
 
-#: wp-includes/rest-api/endpoints/class-wp-rest-themes-controller.php:568
-msgid "Tags indicating styles and features of the theme."
-msgstr "Tag mô tả kiểu style và chức năng của giao diện."
-
 #: wp-includes/rest-api/endpoints/class-wp-rest-themes-controller.php:562
 msgid "The theme's screenshot URL."
 msgstr "URL ảnh chụp giao diện."
@@ -6978,6 +6974,10 @@ msgstr "Tên tác giả giao diện, được tìm thấy trong thông tin giao 
 #: wp-includes/rest-api/endpoints/class-wp-rest-themes-controller.php:474
 msgid "The theme's template. If this is a child theme, this refers to the parent theme, otherwise this is the same as the theme's stylesheet."
 msgstr "Mẫu của giao diện này. Nếu đây là giao diện con, nó dẫn tới giao diện cha, còn không thì là tương tự như là kiểu của giao diện."
+
+#: wp-includes/rest-api/endpoints/class-wp-rest-themes-controller.php:568
+msgid "Tags indicating styles and features of the theme."
+msgstr "Thẻ chủ đề được tìm thấy trong tiêu đề chủ đề."
 
 #: wp-includes/rest-api/endpoints/class-wp-rest-block-types-controller.php:415
 msgid "The attributes of the inner block."
@@ -7401,10 +7401,6 @@ msgstr "Giới hạn kết quả dựa trên mối quan hệ giữa nhiều nguy
 msgid "The \"%1$s\" taxonomy \"%2$s\" property (%3$s) conflicts with an existing property on the REST API Posts Controller. Specify a custom \"rest_base\" when registering the taxonomy to avoid this error."
 msgstr "Taxonomy \"%1$s\" với thuộc tính \"%2$s\" có giá trị (%3$s) bị xung đột với một thuộc tính hiện có trên REST API Posts Controller. Chỉ định một tùy chỉnh \"rest_base\" khi đăng ký taxonomy để tránh lỗi này."
 
-#: wp-includes/theme.php:4334
-msgid "Whether the theme can manage the document title tag."
-msgstr "Liệu giao diện có thể quản lý tag tiêu đề tài liệu / bài viết."
-
 #: wp-includes/theme.php:4267
 msgid "Allows use of HTML5 markup for search forms, comment forms, comment lists, gallery, and caption."
 msgstr "Cho phép sử dụng mã HTML5 cho các form tìm kiếm, form bình luận, danh sách bình luận, thư viện hình ảnh và chú thích."
@@ -7412,6 +7408,10 @@ msgstr "Cho phép sử dụng mã HTML5 cho các form tìm kiếm, form bình lu
 #: wp-includes/theme.php:4341
 msgid "Whether theme opts in to default WordPress block styles for viewing."
 msgstr "Tuỳ chọn giao diện phù hợp với khối mặc định của WordPress."
+
+#: wp-includes/theme.php:4334
+msgid "Whether the theme can manage the document title tag."
+msgstr "Liệu chủ đề có thể quản lý thẻ tiêu đề tài liệu hay không."
 
 #: wp-includes/theme.php:4131
 msgid "Whether the theme disables custom colors."
@@ -7437,10 +7437,6 @@ msgstr "Tùy chỉnh header nếu được xác định bởi giao diện."
 msgid "Whether posts and comments RSS feed links are added to head."
 msgstr "Liệu bài viết bà bình luận RSS link đã được thêm vào đầu trang."
 
-#: wp-includes/theme.php:4259
-msgid "Whether theme opts in to the editor styles CSS wrapper."
-msgstr "Liệu giao diện có phù hợp với khả năng sửa CSS hay không."
-
 #: wp-includes/theme.php:4124
 msgid "Whether theme opts in to the dark editor style UI."
 msgstr "Liệu giao diện có phù hợp với kiểu màu tối."
@@ -7464,6 +7460,10 @@ msgstr "Thiết lập sẵn của màu gradient tùy chỉnh nếu được xác
 #: wp-includes/theme.php:4145
 msgid "Whether the theme disables custom gradients."
 msgstr "Tắt tuỳ chọn màu gradient của giao diện"
+
+#: wp-includes/theme.php:4259
+msgid "Whether theme opts in to the editor styles CSS wrapper."
+msgstr "Cho dù giao diện có lựa chọn sử dụng lớp bao bọc CSS theo kiểu trình chỉnh sửa hay không."
 
 #: wp-includes/theme.php:3941
 msgid "Whether theme opts in to wide alignment CSS class."
@@ -8187,7 +8187,7 @@ msgstr "Giữ cài đặt tiện ích và di chuyển sang phần tiện ích kh
 #: wp-includes/widgets/class-wp-widget-media-image.php:392
 #: wp-includes/js/dist/editor.js:15277
 msgid "The current image has no alternative text. The file name is: %s"
-msgstr "Hình ảnh hiện tại không có chữ thay thế (Alt). Tên tệp tin là: %s"
+msgstr "Hình ảnh hiện tại không có văn bản thay thế. Tên tệp là: %s"
 
 #: wp-includes/functions.php:8537
 msgid "Update PHP"
@@ -8524,10 +8524,6 @@ msgstr "(mở trong cửa sổ mới)"
 msgid "M j, Y g:i a"
 msgstr "M j, Y g:i a"
 
-#: wp-includes/rest-api/endpoints/class-wp-rest-block-renderer-controller.php:91
-msgid "ID of the post context."
-msgstr "ID của post context."
-
 #: wp-includes/rest-api/endpoints/class-wp-rest-block-renderer-controller.php:214
 msgid "The rendered block."
 msgstr "Khối đã được tạo ra."
@@ -8552,15 +8548,13 @@ msgstr "Các thuộc tính cho khối."
 msgid "Unique registered name for the block."
 msgstr "Tên đăng kí duy nhất cho khối."
 
+#: wp-includes/rest-api/endpoints/class-wp-rest-block-renderer-controller.php:91
+msgid "ID of the post context."
+msgstr "ID của ngữ cảnh bài đăng."
+
 #: wp-includes/theme.php:4327
 msgid "Whether the theme supports responsive embedded content."
 msgstr "Giiao diện hỗ trợ nội dung nhúng tương thích đa thiết bị hay không."
-
-#. translators: %s: human-readable time difference.
-#. translators: %s: Duration.
-#: wp-includes/blocks/post-date.php:29 wp-includes/script-loader.php:434
-msgid "%s from now"
-msgstr "từ giờ %s"
 
 #: wp-includes/rest-api/endpoints/class-wp-rest-search-controller.php:401
 msgid "Invalid type parameter."
@@ -8630,6 +8624,12 @@ msgstr "Phiên bản định dạng của nội dung khối được sử dụng
 #: wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php:2410
 msgid "Permalink template for the post."
 msgstr "Đường dẫn cố định mẫu cho bài viết."
+
+#. translators: %s: human-readable time difference.
+#. translators: %s: Duration.
+#: wp-includes/blocks/post-date.php:29 wp-includes/script-loader.php:434
+msgid "%s from now"
+msgstr "%s từ bây giờ"
 
 #: wp-includes/blocks/latest-comments.php:144
 msgid "No comments to show."
@@ -14029,7 +14029,7 @@ msgstr[0] "Giao diện của bạn có %s vị trí trình đơn. Chọn trình 
 
 #: wp-includes/class-wp-customize-nav-menus.php:655
 msgid "This panel is used for managing navigation menus for content you have already published on your site. You can create menus and add items for existing content such as pages, posts, categories, tags, formats, or custom links."
-msgstr "Bảng điều khiển này được sử dụng để quản lý các menu cho nội dung mà bạn đã Xuất bản trên trang web. Bạn có thể tạo các menu và thêm các mục cho nội dung hiện có như các trang, bài viết, danh mục, tag, định dạng, hoặc liên kết riêng."
+msgstr "Bảng điều khiển này được sử dụng để quản lý menu điều hướng cho nội dung bạn đã xuất bản trên trang web của mình. Bạn có thể tạo menu và thêm các mục cho nội dung hiện có như trang, bài đăng, danh mục, thẻ, định dạng hoặc liên kết tùy chỉnh."
 
 #. translators: %s: Previous item name.
 #: wp-includes/class-wp-customize-nav-menus.php:564 wp-admin/nav-menus.php:582
@@ -19916,6 +19916,10 @@ msgstr "Cài đặt"
 msgid "Height"
 msgstr "Cao"
 
+#: wp-includes/embed.php:1193 wp-includes/js/dist/block-library.js:24538
+msgid "HTML"
+msgstr "HTML"
+
 #: wp-includes/class-wp-customize-manager.php:5251
 #: wp-includes/customize/class-wp-customize-color-control.php:54
 #: wp-includes/customize/class-wp-customize-media-control.php:229
@@ -19939,10 +19943,6 @@ msgstr "Cao"
 #: wp-includes/js/dist/edit-site.js:21944 wp-admin/js/color-picker.js:149
 msgid "Default"
 msgstr "Mặc định"
-
-#: wp-includes/embed.php:1193 wp-includes/js/dist/block-library.js:24538
-msgid "HTML"
-msgstr "HTML"
 
 #: wp-includes/widgets/class-wp-nav-menu-widget.php:185
 #: wp-includes/widgets/class-wp-widget-archives.php:218
@@ -20507,10 +20507,6 @@ msgstr "Mật khẩu"
 #: wp-admin/includes/image-edit.php:64 wp-admin/includes/image-edit.php:161
 msgid "Scale"
 msgstr "Phóng to/Thu nhỏ"
-
-#: wp-includes/deprecated.php:3209
-msgid "The GD image library is not installed."
-msgstr "Thư viện ảnh GD chưa được cài đặt."
 
 #: wp-includes/media-template.php:436 wp-includes/media-template.php:669
 #: wp-admin/includes/media.php:966
@@ -21231,6 +21227,10 @@ msgstr "RSS"
 #: wp-includes/deprecated.php:3205
 msgid "File &#8220;%s&#8221; does not exist?"
 msgstr "Tệp &#8220;%s&#8221; không tồn tại?"
+
+#: wp-includes/deprecated.php:3209
+msgid "The GD image library is not installed."
+msgstr "Thư viện hình ảnh GD chưa được cài đặt."
 
 #. translators: %s: File name.
 #: wp-includes/deprecated.php:3218

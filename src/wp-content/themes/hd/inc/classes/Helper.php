@@ -85,17 +85,13 @@ final class Helper {
 			self::errorLog( 'Warning: Detected `<script>` tag in CSS.' );
 		}
 
-		// Remove <script> tags entirely
-		// Remove <style> tags but keep the CSS content inside
-		// Remove dangerous expressions
-		// Normalize whitespace
 		$css = preg_replace( [
-			'/<script\b[^>]*>.*?(?:<\/script>|$)/is',
-			'/<style\b[^>]*>(.*?)<\/style>/is',
-			'/[\x00-\x1F\x7F]/u',
+			'/<script\b[^>]*>.*?(?:<\/script>|$)/is', // Remove <script> tags entirely
+			'/<style\b[^>]*>(.*?)<\/style>/is', // Remove <style> tags but keep the CSS content inside
+			'/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', // // Remove unwanted control characters but keep line breaks and tabs
 			'/\bexpression\s*\([^)]*\)/i',
 			'/url\s*\(\s*[\'"]?\s*javascript:[^)]*\)/i',
-			'/\s+/',
+			'/[^\S\r\n\t]+/', // Normalize whitespace
 		], [ '', '$1', '', '', '', ' ' ], $css );
 
 		return trim( $css );

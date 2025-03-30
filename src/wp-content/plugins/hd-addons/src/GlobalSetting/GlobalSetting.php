@@ -101,6 +101,7 @@ final class GlobalSetting {
 
 	/**
 	 * @return false|void
+	 * @throws \JsonException
 	 */
 	public function ajax_submit_settings() {
 		if ( ! wp_doing_ajax() ) {
@@ -493,7 +494,7 @@ final class GlobalSetting {
 
 		/** Custom CSS */
         if ( isset( $data['html_custom_css'] ) ) {
-            Helper::updateCustomPostOption( $data['html_custom_css'], 'addon_css', 'text/css' );
+            Helper::updateCustomPostOption( $data['html_custom_css'], 'addon_css', 'text/css', false );
         }
 
 		/** ---------------------------------------- */
