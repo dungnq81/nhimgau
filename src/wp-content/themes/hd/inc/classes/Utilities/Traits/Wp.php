@@ -146,7 +146,6 @@ trait Wp {
 						new $filenameFQN();
 					}
 				} catch ( \Exception $e ) {
-
 					// Log any error that occurs during class initialization
 					self::errorLog( "Error initializing class $filenameFQN: " . $e->getMessage() );
 				}
@@ -162,22 +161,40 @@ trait Wp {
 	 * @return bool
 	 */
 	private static function _isMaliciousFile( string $file_path ): bool {
-		$content = file_get_contents( $file_path );
+		$handle = fopen( $file_path, 'rb' );
+		if ( ! $handle ) {
+			return false;
+		}
+
+		$chunk_size = 4096;
+		$max_checks = 5;
+		$counter    = 0;
 
 		$patterns = [
-			'/base64_decode\s*\(/i', // base64 decode
-			'/eval\s*\(/i', // evaluate
-			'/gzinflate\s*\(/i', //
-			'/str_rot13\s*\(/i', //
-			'/hex2bin\s*\(/i', //
-			'/\$\w+\s*=\s*\$\w+\s*\.\s*".*?"/i', //
+			'/base64_decode\s*\(/i',
+			'/eval\s*\(/i',
+			'/gzinflate\s*\(/i',
+			'/str_rot13\s*\(/i',
+			'/hex2bin\s*\(/i',
+			'/\$\w+\s*=\s*\$\w+\s*\.\s*".*?"/i',
 		];
 
-		foreach ( $patterns as $pattern ) {
-			if ( preg_match( $pattern, $content ) ) {
-				return true;
+		while ( ( $content_part = fread( $handle, $chunk_size ) ) !== false && ! feof( $handle ) ) {
+			foreach ( $patterns as $pattern ) {
+				if ( preg_match( $pattern, $content_part ) ) {
+					fclose( $handle );
+
+					return true;
+				}
+			}
+
+			$counter ++;
+			if ( $counter >= $max_checks ) {
+				break;
 			}
 		}
+
+		fclose( $handle );
 
 		return false;
 	}

@@ -184,11 +184,7 @@ trait Base {
 	 */
 	public static function isMobile(): bool {
 		if ( class_exists( MobileDetect::class ) ) {
-			try {
-				return ( new MobileDetect() )->isMobile();
-			} catch ( \Exception $e ) {
-				throw new MobileDetectException( 'Error detecting mobile device', 0, $e );
-			}
+			return ( new MobileDetect() )->isMobile();
 		}
 
 		// Fallback to WordPress function

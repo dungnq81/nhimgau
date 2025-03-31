@@ -11,6 +11,7 @@ Vagrant.configure("2") do |config|
     # - MySQL (Guest 3306 → Host 3307)
     config.vm.network "forwarded_port", guest: 80, host: 8080, auto_correct: true
     config.vm.network "forwarded_port", guest: 3306, host: 3307, auto_correct: true
+    config.vm.network "forwarded_port", guest: 8081, host: 8081, auto_correct: true
 
     # Sync folders between host and guest
     config.vm.synced_folder "./src", "/var/www/html", type: "virtualbox", create: true

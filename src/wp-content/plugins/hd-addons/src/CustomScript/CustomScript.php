@@ -7,7 +7,6 @@ use Addons\Helper;
 \defined( 'ABSPATH' ) || exit;
 
 final class CustomScript {
-
 	// ------------------------------------------------------
 
 	public function __construct() {

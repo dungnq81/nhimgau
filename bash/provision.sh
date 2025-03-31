@@ -85,12 +85,11 @@ mysql -uroot -proot -e "
 "
 echo "Database 'nhimgau' has been created (or already exists) with utf8mb4 charset and utf8mb4_unicode_520_ci collation."
 
-
 # Adjust permissions for the web directory
 chown -R www-data:www-data /var/www/html
 chmod -R 755 /var/www/html
 
-# Copy custom PHP configuration if exists
+# Copy custom configuration if exists
 if [ -f /home/vagrant/config/php.ini ]; then
     cp /home/vagrant/config/php.ini /etc/php/8.2/apache2/conf.d/99-custom.ini
     chmod 644 /etc/php/8.2/apache2/conf.d/99-custom.ini

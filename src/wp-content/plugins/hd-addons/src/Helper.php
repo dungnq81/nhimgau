@@ -363,6 +363,197 @@ final class Helper {
 		return $css;
 	}
 
+	// --------------------------------------------------
+
+	/**
+	 * @param string $option
+	 *
+	 * @return bool
+	 */
+	public static function removeOption( string $option ): bool {
+		$option = strtolower( trim( $option ) );
+		if ( empty( $option ) ) {
+			return false;
+		}
+
+		$site_id   = is_multisite() ? get_current_blog_id() : null;
+		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
+
+		// Remove the option from the appropriate context (multisite or not)
+		$removed = is_multisite() ? delete_site_option( $option ) : delete_option( $option );
+
+		if ( $removed ) {
+			wp_cache_delete( $cache_key, 'hd_options' );
+		}
+
+		return $removed;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string $option
+	 * @param mixed $new_value
+	 * @param int $expire_cache
+	 * @param bool|null $autoload
+	 *
+	 * @return bool
+	 */
+	public static function updateOption( string $option, mixed $new_value, int $expire_cache = 21600, ?bool $autoload = null ): bool {
+		$option = strtolower( trim( $option ) );
+		if ( empty( $option ) ) {
+			return false;
+		}
+
+		$site_id   = is_multisite() ? get_current_blog_id() : null;
+		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
+
+		// Update the option in the appropriate context (multisite or not)
+		$updated = is_multisite() ? update_site_option( $option, $new_value ) : update_option( $option, $new_value, $autoload );
+
+		if ( $updated ) {
+			wp_cache_delete( $cache_key, 'hd_options' );
+			wp_cache_set( $cache_key, $new_value, 'hd_options', $expire_cache );
+		}
+
+		return $updated;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string $option
+	 * @param mixed $default
+	 * @param int $expire_cache
+	 *
+	 * @return mixed
+	 */
+	public static function getOption( string $option, mixed $default = false, int $expire_cache = 21600 ): mixed {
+		// Validate the option key
+		$option = strtolower( trim( $option ) );
+		if ( empty( $option ) ) {
+			return $default;
+		}
+
+		$site_id      = is_multisite() ? get_current_blog_id() : null;
+		$cache_key    = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
+		$cached_value = wp_cache_get( $cache_key, 'hd_options' );
+		if ( $cached_value !== false ) {
+			return $cached_value;
+		}
+
+		$option_value = is_multisite() ? get_site_option( $option, $default ) : get_option( $option, $default );
+		wp_cache_set( $cache_key, $option_value, 'hd_options', $expire_cache );
+
+		// Retrieve the option value
+		return $option_value;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string $mod_name
+	 * @param mixed $value
+	 * @param int $expire_cache
+	 *
+	 * @return bool
+	 */
+	public static function setThemeMod( string $mod_name, mixed $value, int $expire_cache = 21600 ): bool {
+		if ( empty( $mod_name ) ) {
+			return false;
+		}
+
+		$mod_name_lower = strtolower( $mod_name );
+
+		set_theme_mod( $mod_name, $value );
+		$cache_key = "hd_theme_mod_{$mod_name_lower}";
+		wp_cache_delete( $cache_key, 'hd_theme_mods' );
+		wp_cache_set( $cache_key, $value, 'hd_theme_mods', $expire_cache );
+
+		return true;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string|null $mod_name
+	 * @param mixed $default
+	 * @param int $expire_cache
+	 *
+	 * @return mixed
+	 */
+	public static function getThemeMod( ?string $mod_name, mixed $default = false, int $expire_cache = 21600 ): mixed {
+		if ( empty( $mod_name ) ) {
+			return $default;
+		}
+
+		$mod_name_lower = strtolower( $mod_name );
+
+		$cache_key    = "hd_theme_mod_{$mod_name_lower}";
+		$cached_value = wp_cache_get( $cache_key, 'hd_theme_mods' );
+		if ( $cached_value !== false ) {
+			return $cached_value;
+		}
+
+		$_mod      = get_theme_mod( $mod_name, $default );
+		$mod_value = is_ssl() ? str_replace( 'http://', 'https://', $_mod ) : $_mod;
+
+		wp_cache_set( $cache_key, $mod_value, 'hd_theme_mods', $expire_cache );
+
+		return $mod_value;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string $post_type
+	 * @param int $expire_cache
+	 *
+	 * @return array|\WP_Post|null
+	 */
+	public static function getCustomPostOption( string $post_type, int $expire_cache = 21600 ): array|\WP_Post|null {
+		if ( empty( $post_type ) ) {
+			return null;
+		}
+
+		$cache_key = "hd_custom_post_{$post_type}";
+		$post      = wp_cache_get( $cache_key, 'hd_custom_post_options' );
+
+		if ( false !== $post ) {
+			return $post;
+		}
+
+		$post    = null;
+		$post_id = self::getThemeMod( $post_type . '_option_id' );
+
+		if ( (int) $post_id > 0 ) {
+			$post = get_post( $post_id );
+		}
+
+		// `-1` indicates no post exists; no query necessary.
+		if ( ! $post && - 1 !== $post_id ) {
+			$custom_query_vars = [
+				'post_type'              => $post_type,
+				'post_status'            => get_post_stati(),
+				'posts_per_page'         => 1,
+				'no_found_rows'          => true,
+				'cache_results'          => true,
+				'update_post_meta_cache' => false,
+				'update_post_term_cache' => false,
+				'lazy_load_term_meta'    => false,
+			];
+
+			$post = ( new \WP_Query( $custom_query_vars ) )?->post;
+			self::setThemeMod( $post_type . '_option_id', $post?->ID ?? - 1 );
+		}
+
+		if ( $post ) {
+			wp_cache_set( $cache_key, $post, 'hd_custom_post_options', $expire_cache ); // 6h
+		}
+
+		return $post;
+	}
+
 	// -------------------------------------------------------------
 
 	/**
@@ -370,10 +561,11 @@ final class Helper {
 	 * @param string $post_type
 	 * @param string $code_type
 	 * @param bool $encode
+	 * @param int $expire_cache
 	 *
 	 * @return \WP_Error|int|array|\WP_Post|null
 	 */
-	public static function updateCustomPostOption( string $mixed, string $post_type, string $code_type, bool $encode = false ): \WP_Error|int|array|\WP_Post|null {
+	public static function updateCustomPostOption( string $mixed, string $post_type, string $code_type, bool $encode = false, int $expire_cache = 21600 ): \WP_Error|int|array|\WP_Post|null {
 		if ( empty( $post_type ) || empty( $code_type ) ) {
 			return false;
 		}
@@ -415,73 +607,33 @@ final class Helper {
 			return $r;
 		}
 
+		$updated_post = get_post( $r );
+		$cache_key    = "hd_custom_post_{$post_type}";
+		wp_cache_delete( $cache_key, 'hd_custom_post_options' );
+		wp_cache_set( $cache_key, $updated_post, 'hd_custom_post_options', $expire_cache );
+
 		return get_post( $r );
 	}
 
 	// -------------------------------------------------------------
 
 	/**
-	 * @param string $post_type
+	 * @param string|null $post_type
 	 * @param bool $encode
 	 *
 	 * @return array|string
 	 */
-	public static function getCustomPostContent( string $post_type, bool $encode = false ): array|string {
+	public static function getCustomPostContent( ?string $post_type, bool $encode = false ): array|string {
 		if ( empty( $post_type ) ) {
 			return '';
 		}
 
 		$post = self::getCustomPostOption( $post_type );
 		if ( isset( $post->post_content ) ) {
-			$post_content = wp_unslash( $post->post_content );
-			if ( $encode ) {
-				$post_content = wp_unslash( base64_decode( $post->post_content ) );
-			}
-
-			return $post_content;
+			return $encode ? wp_unslash( base64_decode( $post->post_content ) ) : wp_unslash( $post->post_content );
 		}
 
 		return '';
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @param string $post_type
-	 *
-	 * @return array|\WP_Post|null
-	 */
-	public static function getCustomPostOption( string $post_type ): array|\WP_Post|null {
-		if ( empty( $post_type ) ) {
-			return null;
-		}
-
-		$post    = null;
-		$post_id = self::getThemeMod( $post_type . '_option_id' );
-
-		if ( $post_id > 0 && get_post( $post_id ) ) {
-			$post = get_post( $post_id );
-		}
-
-		// `-1` indicates no post exists; no query necessary.
-		if ( ! $post && - 1 !== $post_id ) {
-
-			$custom_query_vars = [
-				'post_type'              => $post_type,
-				'post_status'            => get_post_stati(),
-				'posts_per_page'         => 1,
-				'no_found_rows'          => true,
-				'cache_results'          => true,
-				'update_post_meta_cache' => false,
-				'update_post_term_cache' => false,
-				'lazy_load_term_meta'    => false,
-			];
-
-			$post = ( new \WP_Query( $custom_query_vars ) )->post;
-			self::setThemeMod( $post_type . '_option_id', $post->ID ?? - 1 );
-		}
-
-		return $post;
 	}
 
 	// -------------------------------------------------------------
@@ -642,149 +794,6 @@ final class Helper {
 	// --------------------------------------------------
 
 	/**
-	 * @param string $option
-	 *
-	 * @return bool
-	 */
-	public static function removeOption( string $option ): bool {
-		$option = strtolower( trim( $option ) );
-		if ( empty( $option ) ) {
-			return false;
-		}
-
-		$site_id   = is_multisite() ? get_current_blog_id() : null;
-		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
-
-		// Remove the option from the appropriate context (multisite or not)
-		$removed = is_multisite()
-			? delete_site_option( $option )
-			: delete_option( $option );
-
-		if ( $removed ) {
-			wp_cache_delete( $cache_key, 'hd_options' );
-		}
-
-		return $removed;
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string $option
-	 * @param mixed $new_value
-	 * @param int $expire_cache
-	 * @param bool|null $autoload
-	 *
-	 * @return bool
-	 */
-	public static function updateOption( string $option, mixed $new_value, int $expire_cache = 21600, ?bool $autoload = null ): bool {
-		$option = strtolower( trim( $option ) );
-		if ( empty( $option ) ) {
-			return false;
-		}
-
-		$site_id   = is_multisite() ? get_current_blog_id() : null;
-		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
-
-		// Update the option in the appropriate context (multisite or not)
-		$updated = is_multisite()
-			? update_site_option( $option, $new_value )
-			: update_option( $option, $new_value, $autoload );
-
-		if ( $updated ) {
-			wp_cache_delete( $cache_key, 'hd_options' );
-			wp_cache_set( $cache_key, $new_value, 'hd_options', $expire_cache );
-		}
-
-		return $updated;
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string $option
-	 * @param mixed $default
-	 * @param int $expire_cache
-	 *
-	 * @return mixed
-	 */
-	public static function getOption( string $option, mixed $default = false, int $expire_cache = 21600 ): mixed {
-		// Validate the option key
-		$option = strtolower( trim( $option ) );
-		if ( empty( $option ) ) {
-			return $default;
-		}
-
-		$site_id      = is_multisite() ? get_current_blog_id() : null;
-		$cache_key    = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
-		$cached_value = wp_cache_get( $cache_key, 'hd_options' );
-		if ( $cached_value !== false ) {
-			return $cached_value;
-		}
-
-		$option_value = is_multisite() ? get_site_option( $option, $default ) : get_option( $option, $default );
-		wp_cache_set( $cache_key, $option_value, 'hd_options', $expire_cache );
-
-		// Retrieve the option value
-		return $option_value;
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string $mod_name
-	 * @param mixed $value
-	 * @param int $expire_cache
-	 *
-	 * @return bool
-	 */
-	public static function setThemeMod( string $mod_name, mixed $value, int $expire_cache = 21600 ): bool {
-		if ( empty( $mod_name ) ) {
-			return false;
-		}
-
-		$mod_name_lower = strtolower( $mod_name );
-
-		set_theme_mod( $mod_name, $value );
-		$cache_key = "hd_theme_mod_{$mod_name_lower}";
-		wp_cache_set( $cache_key, $value, 'hd_theme_mods', $expire_cache );
-
-		return true;
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string|null $mod_name
-	 * @param mixed $default
-	 * @param int $expire_cache
-	 *
-	 * @return mixed
-	 */
-	public static function getThemeMod( ?string $mod_name, mixed $default = false, int $expire_cache = 21600 ): mixed {
-		if ( empty( $mod_name ) ) {
-			return $default;
-		}
-
-		$mod_name_lower = strtolower( $mod_name );
-
-		$cache_key    = "hd_theme_mod_{$mod_name_lower}";
-		$cached_value = wp_cache_get( $cache_key, 'hd_theme_mods' );
-		if ( $cached_value !== false ) {
-			return $cached_value;
-		}
-
-		$_mod      = get_theme_mod( $mod_name, $default );
-		$mod_value = is_ssl() ? str_replace( 'http://', 'https://', $_mod ) : $_mod;
-
-		wp_cache_set( $cache_key, $mod_value, 'hd_theme_mods', $expire_cache );
-
-		return $mod_value;
-	}
-
-	// --------------------------------------------------
-
-	/**
 	 * @param $slug
 	 * @param bool $remove_symbols
 	 *
@@ -910,11 +919,7 @@ final class Helper {
 	 */
 	public static function isMobile(): bool {
 		if ( class_exists( MobileDetect::class ) ) {
-			try {
-				return ( new MobileDetect() )->isMobile();
-			} catch ( \Exception $e ) {
-				throw new MobileDetectException( 'Error detecting mobile device', 0, $e );
-			}
+			return ( new MobileDetect() )->isMobile();
 		}
 
 		// Fallback to WordPress function
@@ -955,6 +960,9 @@ final class Helper {
 
 	// -------------------------------------------------------------
 
+	/**
+	 * @return bool
+	 */
 	public static function isAcfActive(): bool {
 		return self::checkPluginActive( 'secure-custom-fields/secure-custom-fields.php' ) ||
 		       self::checkPluginActive( 'advanced-custom-fields/acf.php' ) ||
@@ -963,6 +971,9 @@ final class Helper {
 
 	// -------------------------------------------------------------
 
+	/**
+	 * @return bool
+	 */
 	public static function isAcfProActive(): bool {
 		return self::checkPluginActive( 'advanced-custom-fields-pro/acf.php' );
 	}
