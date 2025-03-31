@@ -624,9 +624,7 @@ trait Wp {
 		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
 
 		// Update the option in the appropriate context (multisite or not)
-		$updated = is_multisite()
-			? update_site_option( $option, $new_value )
-			: update_option( $option, $new_value, $autoload );
+		$updated = is_multisite() ? update_site_option( $option, $new_value ) : update_option( $option, $new_value, $autoload );
 
 		if ( $updated ) {
 			wp_cache_delete( $cache_key, 'hd_options' );
@@ -687,6 +685,7 @@ trait Wp {
 
 		set_theme_mod( $mod_name, $value );
 		$cache_key = "hd_theme_mod_{$mod_name_lower}";
+		wp_cache_delete( $cache_key, 'hd_theme_mods' );
 		wp_cache_set( $cache_key, $value, 'hd_theme_mods', $cache_time );
 
 		return true;
@@ -737,7 +736,6 @@ trait Wp {
 			$term_id = (int) $term_id;
 			$term    = get_term( $term_id, $taxonomy );
 		} else {
-
 			// If term_id is not numeric, attempt to retrieve the term by slug or name
 			$term = get_term_by( 'slug', $term_id, $taxonomy ) ?: get_term_by( 'name', $term_id, $taxonomy );
 		}
@@ -1094,7 +1092,6 @@ trait Wp {
 				);
 			}
 		} elseif ( is_customize_preview() ) {
-
 			// If no logo is set, but we're in the Customizer, leave a placeholder (needed for the live preview).
 			$html = sprintf(
 				'<a href="%1$s" class="custom-logo-link" style="display:none;">' . esc_html( get_bloginfo( 'name' ) ) . '</a>',
@@ -1147,7 +1144,6 @@ trait Wp {
 		$logo_class = ! empty( $class ) ? ' class="' . $class . '"' : '';
 
 		if ( function_exists( 'the_custom_logo' ) && has_custom_logo() ) {
-
 			// replace \get_custom_logo() with self::customSiteLogo()
 			$logo = self::customSiteLogo();
 			$html = '<a' . $logo_class . ' title="' . esc_attr( get_bloginfo( 'name' ) ) . '" href="' . self::home( '/' ) . '" rel="home">' . $logo . $logo_title . '</a>';
@@ -1365,7 +1361,6 @@ trait Wp {
 
 		// Determine the taxonomy if not explicitly provided
 		if ( empty( $taxonomy ) ) {
-
 			// Additional check: try "{$post_type}_cat" format
 			$taxonomy = self::getTaxonomyByPostType( $post_type ) ?: "{$post_type}_cat";
 		}
