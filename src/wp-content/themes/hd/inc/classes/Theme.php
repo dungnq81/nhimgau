@@ -175,6 +175,9 @@ final class Theme {
 		wp_enqueue_style( 'vendor-css', ASSETS_URL . 'css/_vendor.css', [], $version );
 		wp_enqueue_style( 'index-css', ASSETS_URL . 'css/index-css.css', [ 'vendor-css' ], $version );
 
+		/** JS runs early in the loading process. */
+		wp_enqueue_script( 'lighthouse-js', ASSETS_URL . 'js/lighthouse.js', [ 'jquery-core' ], $version, false );
+
 		/** Global Scripts */
 		wp_enqueue_script( 'modulepreload-js', ASSETS_URL . 'js/modulepreload-polyfill.js', [], $version, true );
 		wp_script_add_data( 'modulepreload-js', 'extra', [ 'module', 'async' ] );

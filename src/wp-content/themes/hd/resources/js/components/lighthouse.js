@@ -1,19 +1,17 @@
-import { hdConfig } from './config.js';
-
 (async function detectLighthouse() {
     let lighthouseDetected = false;
     if (navigator.userAgent.includes('Lighthouse') || navigator.webdriver) {
         lighthouseDetected = true;
     }
 
-    if (!lighthouseDetected && typeof hdConfig !== 'undefined') {
+    if (!lighthouseDetected && typeof window.hdConfig !== 'undefined') {
         try {
-            let response = await fetch(hdConfig._ajaxUrl, {
+            let response = await fetch(window.hdConfig._ajaxUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams({
                     action: 'check_lighthouse',
-                    _wpnonce: hdConfig._csrfToken
+                    _wpnonce: window.hdConfig._csrfToken
                 }),
             });
 
