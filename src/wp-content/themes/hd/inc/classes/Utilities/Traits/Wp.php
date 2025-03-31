@@ -167,7 +167,7 @@ trait Wp {
 		}
 
 		$chunk_size = 4096;
-		$max_checks = 5;
+		$max_checks = 2;
 		$counter    = 0;
 
 		$patterns = [
@@ -179,7 +179,7 @@ trait Wp {
 			'/\$\w+\s*=\s*\$\w+\s*\.\s*".*?"/i',
 		];
 
-		while ( ( $content_part = fread( $handle, $chunk_size ) ) !== false && ! feof( $handle ) ) {
+		while ( $counter < $max_checks && ( $content_part = fread( $handle, $chunk_size ) ) !== false ) {
 			foreach ( $patterns as $pattern ) {
 				if ( preg_match( $pattern, $content_part ) ) {
 					fclose( $handle );
@@ -189,7 +189,8 @@ trait Wp {
 			}
 
 			$counter ++;
-			if ( $counter >= $max_checks ) {
+
+			if ( feof( $handle ) ) {
 				break;
 			}
 		}
@@ -198,7 +199,6 @@ trait Wp {
 
 		return false;
 	}
-
 
 	// -------------------------------------------------------------
 
