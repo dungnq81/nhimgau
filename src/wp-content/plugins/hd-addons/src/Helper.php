@@ -303,6 +303,7 @@ final class Helper {
 			self::errorLog( 'Warning: Detected `<script>` tag in CSS.' );
 		}
 
+		//$css = (string) $css;
 		$css = preg_replace( [
 			'/<script\b[^>]*>.*?(?:<\/script>|$)/is', // Remove <script> tags entirely
 			'/<style\b[^>]*>(.*?)<\/style>/is', // Remove <style> tags but keep the CSS content inside
@@ -766,11 +767,6 @@ final class Helper {
 	public static function clearAllCache(): void {
 		global $wpdb;
 
-		// Clear object cache (e.g., Redis or Memcached)
-		if ( function_exists( 'wp_cache_flush' ) ) {
-			wp_cache_flush();
-		}
-
 		// LiteSpeed cache
 		if ( class_exists( \LiteSpeed\Purge::class ) ) {
 			\LiteSpeed\Purge::purge_all();
@@ -813,6 +809,11 @@ final class Helper {
 		// Clear all WordPress transients
 		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_%'" );
 		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_%'" );
+
+		// Clear object cache (e.g., Redis or Memcached)
+		if ( function_exists( 'wp_cache_flush' ) ) {
+			wp_cache_flush();
+		}
 	}
 
 	// --------------------------------------------------

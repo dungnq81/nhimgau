@@ -214,11 +214,6 @@ final class Helper {
 	public static function clearAllCache(): void {
 		global $wpdb;
 
-		// Clear object cache (e.g., Redis or Memcached)
-		if ( function_exists( 'wp_cache_flush' ) ) {
-			wp_cache_flush();
-		}
-
 		// LiteSpeed cache
 		if ( class_exists( \LiteSpeed\Purge::class ) ) {
 			\LiteSpeed\Purge::purge_all();
@@ -265,6 +260,11 @@ final class Helper {
 		// Clear all WordPress transients
 		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_%'" );
 		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_%'" );
+
+		// Clear object cache (e.g., Redis or Memcached)
+		if ( function_exists( 'wp_cache_flush' ) ) {
+			wp_cache_flush();
+		}
 	}
 
 	// --------------------------------------------------
