@@ -381,9 +381,8 @@ final class Helper {
 
 		// Remove the option from the appropriate context (multisite or not)
 		$removed = is_multisite() ? delete_site_option( $option ) : delete_option( $option );
-
 		if ( $removed ) {
-			wp_cache_delete( $cache_key, 'hd_options' );
+			delete_transient( $cache_key );
 		}
 
 		return $removed;
@@ -394,16 +393,18 @@ final class Helper {
 	/**
 	 * @param string $option
 	 * @param mixed $new_value
-	 * @param int $expire_cache
+	 * @param int $cache_in_hours
 	 * @param bool|null $autoload
 	 *
 	 * @return bool
 	 */
-	public static function updateOption( string $option, mixed $new_value, int $expire_cache = 21600, ?bool $autoload = null ): bool {
+	public static function updateOption( string $option, mixed $new_value, int $cache_in_hours = 12, ?bool $autoload = null ): bool {
 		$option = strtolower( trim( $option ) );
 		if ( empty( $option ) ) {
 			return false;
 		}
+
+		$cache_time = $cache_in_hours * HOUR_IN_SECONDS;
 
 		$site_id   = is_multisite() ? get_current_blog_id() : null;
 		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
@@ -412,8 +413,7 @@ final class Helper {
 		$updated = is_multisite() ? update_site_option( $option, $new_value ) : update_option( $option, $new_value, $autoload );
 
 		if ( $updated ) {
-			wp_cache_delete( $cache_key, 'hd_options' );
-			wp_cache_set( $cache_key, $new_value, 'hd_options', $expire_cache );
+			set_transient( $cache_key, $new_value, $cache_time );
 		}
 
 		return $updated;
@@ -424,26 +424,28 @@ final class Helper {
 	/**
 	 * @param string $option
 	 * @param mixed $default
-	 * @param int $expire_cache
+	 * @param int $cache_in_hours
 	 *
 	 * @return mixed
 	 */
-	public static function getOption( string $option, mixed $default = false, int $expire_cache = 21600 ): mixed {
-		// Validate the option key
+	public static function getOption( string $option, mixed $default = false, int $cache_in_hours = 12 ): mixed {
 		$option = strtolower( trim( $option ) );
 		if ( empty( $option ) ) {
 			return $default;
 		}
 
-		$site_id      = is_multisite() ? get_current_blog_id() : null;
-		$cache_key    = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
-		$cached_value = wp_cache_get( $cache_key, 'hd_options' );
+		$cache_time = $cache_in_hours * HOUR_IN_SECONDS;
+
+		$site_id   = is_multisite() ? get_current_blog_id() : null;
+		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
+
+		$cached_value = get_transient( $cache_key );
 		if ( $cached_value !== false ) {
 			return $cached_value;
 		}
 
 		$option_value = is_multisite() ? get_site_option( $option, $default ) : get_option( $option, $default );
-		wp_cache_set( $cache_key, $option_value, 'hd_options', $expire_cache );
+		set_transient( $cache_key, $option_value, $cache_time );
 
 		// Retrieve the option value
 		return $option_value;
@@ -454,21 +456,21 @@ final class Helper {
 	/**
 	 * @param string $mod_name
 	 * @param mixed $value
-	 * @param int $expire_cache
+	 * @param int $cache_in_hours
 	 *
 	 * @return bool
 	 */
-	public static function setThemeMod( string $mod_name, mixed $value, int $expire_cache = 21600 ): bool {
+	public static function setThemeMod( string $mod_name, mixed $value, int $cache_in_hours = 12 ): bool {
 		if ( empty( $mod_name ) ) {
 			return false;
 		}
 
+		$cache_time     = $cache_in_hours * HOUR_IN_SECONDS;
 		$mod_name_lower = strtolower( $mod_name );
+		$cache_key      = "hd_theme_mod_{$mod_name_lower}";
 
 		set_theme_mod( $mod_name, $value );
-		$cache_key = "hd_theme_mod_{$mod_name_lower}";
-		wp_cache_delete( $cache_key, 'hd_theme_mods' );
-		wp_cache_set( $cache_key, $value, 'hd_theme_mods', $expire_cache );
+		set_transient( $cache_key, $value, $cache_time );
 
 		return true;
 	}
@@ -478,19 +480,20 @@ final class Helper {
 	/**
 	 * @param string|null $mod_name
 	 * @param mixed $default
-	 * @param int $expire_cache
+	 * @param int $cache_in_hours
 	 *
 	 * @return mixed
 	 */
-	public static function getThemeMod( ?string $mod_name, mixed $default = false, int $expire_cache = 21600 ): mixed {
+	public static function getThemeMod( ?string $mod_name, mixed $default = false, int $cache_in_hours = 12 ): mixed {
 		if ( empty( $mod_name ) ) {
 			return $default;
 		}
 
+		$cache_time     = $cache_in_hours * HOUR_IN_SECONDS;
 		$mod_name_lower = strtolower( $mod_name );
+		$cache_key      = "hd_theme_mod_{$mod_name_lower}";
 
-		$cache_key    = "hd_theme_mod_{$mod_name_lower}";
-		$cached_value = wp_cache_get( $cache_key, 'hd_theme_mods' );
+		$cached_value = get_transient( $cache_key );
 		if ( $cached_value !== false ) {
 			return $cached_value;
 		}
@@ -498,7 +501,7 @@ final class Helper {
 		$_mod      = get_theme_mod( $mod_name, $default );
 		$mod_value = is_ssl() ? str_replace( 'http://', 'https://', $_mod ) : $_mod;
 
-		wp_cache_set( $cache_key, $mod_value, 'hd_theme_mods', $expire_cache );
+		set_transient( $cache_key, $mod_value, $cache_time );
 
 		return $mod_value;
 	}
@@ -507,20 +510,21 @@ final class Helper {
 
 	/**
 	 * @param string $post_type
-	 * @param int $expire_cache
+	 * @param int $cache_in_hours
 	 *
-	 * @return array|\WP_Post|null
+	 * @return array|null
 	 */
-	public static function getCustomPostOption( string $post_type, int $expire_cache = 21600 ): array|\WP_Post|null {
+	public static function getCustomPostOption( string $post_type, int $cache_in_hours = 12 ): ?array {
 		if ( empty( $post_type ) ) {
 			return null;
 		}
 
-		$cache_key = "hd_custom_post_{$post_type}";
-		$post      = wp_cache_get( $cache_key, 'hd_custom_post_options' );
+		$cache_time  = $cache_in_hours * HOUR_IN_SECONDS;
+		$cache_key   = "hd_custom_post_{$post_type}";
+		$cached_data = get_transient( $cache_key );
 
-		if ( false !== $post ) {
-			return $post;
+		if ( $cached_data !== false ) {
+			return $cached_data;
 		}
 
 		$post    = null;
@@ -531,7 +535,7 @@ final class Helper {
 		}
 
 		// `-1` indicates no post exists; no query necessary.
-		if ( ! $post && - 1 !== $post_id ) {
+		if ( ! $post && $post_id !== - 1 ) {
 			$custom_query_vars = [
 				'post_type'              => $post_type,
 				'post_status'            => get_post_stati(),
@@ -548,10 +552,16 @@ final class Helper {
 		}
 
 		if ( $post ) {
-			wp_cache_set( $cache_key, $post, 'hd_custom_post_options', $expire_cache ); // 6h
+			$cached_data = [
+				'ID'           => $post->ID,
+				'post_title'   => $post->post_title,
+				'post_content' => $post->post_content,
+				'post_excerpt' => $post->post_excerpt,
+			];
+			set_transient( $cache_key, $cached_data, $cache_time );
 		}
 
-		return $post;
+		return $cached_data ?? null;
 	}
 
 	// -------------------------------------------------------------
@@ -561,11 +571,18 @@ final class Helper {
 	 * @param string $post_type
 	 * @param string $code_type
 	 * @param bool $encode
-	 * @param int $expire_cache
+	 * @param int $cache_in_hours
 	 *
-	 * @return \WP_Error|int|array|\WP_Post|null
+	 * @return array|false|\WP_Error
 	 */
-	public static function updateCustomPostOption( string $mixed, string $post_type, string $code_type, bool $encode = false, int $expire_cache = 21600 ): \WP_Error|int|array|\WP_Post|null {
+	public static function updateCustomPostOption(
+		string $mixed,
+		string $post_type,
+		string $code_type,
+		bool $encode = false,
+		int $cache_in_hours = 12
+	): \WP_Error|false|array {
+
 		if ( empty( $post_type ) || empty( $code_type ) ) {
 			return false;
 		}
@@ -591,7 +608,7 @@ final class Helper {
 		// Update `post` if it already exists, otherwise create a new one.
 		$post = self::getCustomPostOption( $post_type );
 		if ( $post ) {
-			$post_data['ID'] = $post->ID;
+			$post_data['ID'] = $post['ID'];
 			$r               = wp_update_post( wp_slash( $post_data ), true );
 		} else {
 			$post_data['post_title'] = $post_type . '_post_title';
@@ -609,10 +626,17 @@ final class Helper {
 
 		$updated_post = get_post( $r );
 		$cache_key    = "hd_custom_post_{$post_type}";
-		wp_cache_delete( $cache_key, 'hd_custom_post_options' );
-		wp_cache_set( $cache_key, $updated_post, 'hd_custom_post_options', $expire_cache );
+		$cache_time   = $cache_in_hours * HOUR_IN_SECONDS;
 
-		return get_post( $r );
+		$cached_data = [
+			'ID'           => $updated_post->ID,
+			'post_title'   => $updated_post->post_title,
+			'post_content' => $updated_post->post_content,
+			'post_excerpt' => $updated_post->post_excerpt,
+		];
+		set_transient( $cache_key, $cached_data, $cache_time );
+
+		return $cached_data;
 	}
 
 	// -------------------------------------------------------------

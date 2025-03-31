@@ -29,13 +29,12 @@ trait Wp {
 	 *
 	 * @return void
 	 */
-	public static function blockTemplate( $slug, array $args = [], int $cache_in_hours = 2 ): void {
-		$cache_key   = 'hd_block_cache_' . md5( $slug . serialize( $args ) );
-		$cache_group = 'hd_blocks_cache';
-		$cache_time  = $cache_in_hours * HOUR_IN_SECONDS;
+	public static function blockTemplate( $slug, array $args = [], int $cache_in_hours = 12 ): void {
+		$cache_key  = 'hd_block_cache_' . md5( $slug . serialize( $args ) );
+		$cache_time = $cache_in_hours * HOUR_IN_SECONDS;
 
 		// Check if cache available
-		$cached_output = wp_cache_get( $cache_key, $cache_group );
+		$cached_output = get_transient( $cache_key );
 		if ( $cached_output !== false ) {
 			echo $cached_output;
 
@@ -48,7 +47,7 @@ trait Wp {
 		$output = ob_get_clean();
 
 		if ( ! empty( $output ) ) {
-			wp_cache_set( $cache_key, $output, $cache_group, $cache_time );
+			set_transient( $cache_key, $output, $cache_time );
 		}
 
 		echo $output;
@@ -594,13 +593,45 @@ trait Wp {
 
 	/**
 	 * @param string $option
+	 * @param mixed $default
+	 * @param int $cache_in_hours
+	 *
+	 * @return mixed
+	 */
+	public static function getOption( string $option, mixed $default = false, int $cache_in_hours = 12 ): mixed {
+		$option = strtolower( trim( $option ) );
+		if ( empty( $option ) ) {
+			return $default;
+		}
+
+		$cache_time = $cache_in_hours * HOUR_IN_SECONDS;
+
+		$site_id   = is_multisite() ? get_current_blog_id() : null;
+		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
+
+		$cached_value = get_transient( $cache_key );
+		if ( $cached_value !== false ) {
+			return $cached_value;
+		}
+
+		$option_value = is_multisite() ? get_site_option( $option, $default ) : get_option( $option, $default );
+		set_transient( $cache_key, $option_value, $cache_time );
+
+		// Retrieve the option value
+		return $option_value;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string $option
 	 * @param mixed $new_value
 	 * @param int $cache_in_hours
 	 * @param bool|null $autoload
 	 *
 	 * @return bool
 	 */
-	public static function updateOption( string $option, mixed $new_value, int $cache_in_hours = 2, ?bool $autoload = null ): bool {
+	public static function updateOption( string $option, mixed $new_value, int $cache_in_hours = 12, ?bool $autoload = null ): bool {
 		$option = strtolower( trim( $option ) );
 		if ( empty( $option ) ) {
 			return false;
@@ -615,68 +646,35 @@ trait Wp {
 		$updated = is_multisite() ? update_site_option( $option, $new_value ) : update_option( $option, $new_value, $autoload );
 
 		if ( $updated ) {
-			wp_cache_delete( $cache_key, 'hd_options' );
-			wp_cache_set( $cache_key, $new_value, 'hd_options', $cache_time );
+			set_transient( $cache_key, $new_value, $cache_time );
 		}
 
 		return $updated;
 	}
 
-	// -------------------------------------------------------------
+	// --------------------------------------------------
 
 	/**
 	 * @param string $option
-	 * @param mixed $default
-	 * @param int $cache_in_hours
-	 *
-	 * @return mixed
-	 */
-	public static function getOption( string $option, mixed $default = false, int $cache_in_hours = 2 ): mixed {
-		// Validate the option key
-		$option = strtolower( trim( $option ) );
-		if ( empty( $option ) ) {
-			return $default;
-		}
-
-		$cache_time = $cache_in_hours * HOUR_IN_SECONDS;
-
-		$site_id      = is_multisite() ? get_current_blog_id() : null;
-		$cache_key    = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
-		$cached_value = wp_cache_get( $cache_key, 'hd_options' );
-		if ( $cached_value !== false ) {
-			return $cached_value;
-		}
-
-		$option_value = is_multisite() ? get_site_option( $option, $default ) : get_option( $option, $default );
-		wp_cache_set( $cache_key, $option_value, 'hd_options', $cache_time );
-
-		// Retrieve the option value
-		return $option_value;
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @param string $mod_name
-	 * @param mixed $value
-	 * @param int $cache_in_hours
 	 *
 	 * @return bool
 	 */
-	public static function setThemeMod( string $mod_name, mixed $value, int $cache_in_hours = 2 ): bool {
-		if ( empty( $mod_name ) ) {
+	public static function removeOption( string $option ): bool {
+		$option = strtolower( trim( $option ) );
+		if ( empty( $option ) ) {
 			return false;
 		}
 
-		$cache_time     = $cache_in_hours * HOUR_IN_SECONDS;
-		$mod_name_lower = strtolower( $mod_name );
+		$site_id   = is_multisite() ? get_current_blog_id() : null;
+		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
 
-		set_theme_mod( $mod_name, $value );
-		$cache_key = "hd_theme_mod_{$mod_name_lower}";
-		wp_cache_delete( $cache_key, 'hd_theme_mods' );
-		wp_cache_set( $cache_key, $value, 'hd_theme_mods', $cache_time );
+		// Remove the option from the appropriate context (multisite or not)
+		$removed = is_multisite() ? delete_site_option( $option ) : delete_option( $option );
+		if ( $removed ) {
+			delete_transient( $cache_key );
+		}
 
-		return true;
+		return $removed;
 	}
 
 	// -------------------------------------------------------------
@@ -688,16 +686,16 @@ trait Wp {
 	 *
 	 * @return mixed
 	 */
-	public static function getThemeMod( ?string $mod_name, mixed $default = false, int $cache_in_hours = 2 ): mixed {
+	public static function getThemeMod( ?string $mod_name, mixed $default = false, int $cache_in_hours = 12 ): mixed {
 		if ( empty( $mod_name ) ) {
 			return $default;
 		}
 
 		$cache_time     = $cache_in_hours * HOUR_IN_SECONDS;
 		$mod_name_lower = strtolower( $mod_name );
+		$cache_key      = "hd_theme_mod_{$mod_name_lower}";
 
-		$cache_key    = "hd_theme_mod_{$mod_name_lower}";
-		$cached_value = wp_cache_get( $cache_key, 'hd_theme_mods' );
+		$cached_value = get_transient( $cache_key );
 		if ( $cached_value !== false ) {
 			return $cached_value;
 		}
@@ -705,9 +703,33 @@ trait Wp {
 		$_mod      = get_theme_mod( $mod_name, $default );
 		$mod_value = is_ssl() ? str_replace( 'http://', 'https://', $_mod ) : $_mod;
 
-		wp_cache_set( $cache_key, $mod_value, 'hd_theme_mods', $cache_time );
+		set_transient( $cache_key, $mod_value, $cache_time );
 
 		return $mod_value;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string $mod_name
+	 * @param mixed $value
+	 * @param int $cache_in_hours
+	 *
+	 * @return bool
+	 */
+	public static function setThemeMod( string $mod_name, mixed $value, int $cache_in_hours = 12 ): bool {
+		if ( empty( $mod_name ) ) {
+			return false;
+		}
+
+		$cache_time     = $cache_in_hours * HOUR_IN_SECONDS;
+		$mod_name_lower = strtolower( $mod_name );
+		$cache_key      = "hd_theme_mod_{$mod_name_lower}";
+
+		set_theme_mod( $mod_name, $value );
+		set_transient( $cache_key, $value, $cache_time );
+
+		return true;
 	}
 
 	// -------------------------------------------------------------
@@ -754,7 +776,7 @@ trait Wp {
 			return;
 		}
 
-		// Store limit and target post types
+		// Store limit and target post-types
 		self::$post_limit        = $post_limit;
 		self::$target_post_types = $target_post_types;
 
