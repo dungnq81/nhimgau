@@ -166,38 +166,26 @@ trait Wp {
 			return false;
 		}
 
-		$chunk_size = 4096;
-		$max_checks = 2;
-		$counter    = 0;
-
-		$patterns = [
-			'/base64_decode\s*\(/i',
-			'/eval\s*\(/i',
-			'/gzinflate\s*\(/i',
-			'/str_rot13\s*\(/i',
-			'/hex2bin\s*\(/i',
-			'/\$\w+\s*=\s*\$\w+\s*\.\s*".*?"/i',
-		];
-
-		while ( $counter < $max_checks && ( $content_part = fread( $handle, $chunk_size ) ) !== false ) {
-			foreach ( $patterns as $pattern ) {
-				if ( preg_match( $pattern, $content_part ) ) {
-					fclose( $handle );
-
-					return true;
-				}
-			}
-
-			$counter ++;
-
-			if ( feof( $handle ) ) {
-				break;
-			}
-		}
-
+		$chunk_size = 8192; // 8kb
+		$content    = fread( $handle, $chunk_size );
 		fclose( $handle );
 
-		return false;
+		if ( ! $content ) {
+			return false;
+		}
+
+		$pattern = '/
+	        (b\s*a\s*s\s*e\s*6\s*4\s*_decode|
+	        e\s*v\s*a\s*l|
+	        g\s*z\s*i\s*nflate|
+	        s\s*t\s*r\s*_rot13|
+	        h\s*e\s*x\s*2\s*b\s*i\s*n)
+	        \s*\( |
+	        \$\{?"?(eval|base64_decode|gzinflate|str_rot13|hex2bin)"?\}?\s*\( |
+	        \$\w+\s*\(
+	    /ix';
+
+		return preg_match( $pattern, $content ) === 1;
 	}
 
 	// -------------------------------------------------------------
