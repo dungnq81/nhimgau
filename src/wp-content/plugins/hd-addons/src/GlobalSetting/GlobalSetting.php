@@ -101,7 +101,6 @@ final class GlobalSetting {
 
 	/**
 	 * @return false|void
-	 * @throws \JsonException
 	 */
 	public function ajax_submit_settings() {
 		if ( ! wp_doing_ajax() ) {

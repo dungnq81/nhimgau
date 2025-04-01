@@ -126,7 +126,7 @@ final class Optimizer {
 				$wp_admin_bar->remove_menu( 'updates' );
 
 				// Clear Cache
-				$current_url = add_query_arg( 'clear_cache', 'yes', $_SERVER['REQUEST_URI'] );
+				$current_url = add_query_arg( 'clear_cache', 1, $_SERVER['REQUEST_URI'] );
 				$wp_admin_bar->add_menu( [
 					'id'    => 'clear_cache_button',
 					'title' => '<div class="custom-admin-button"><span class="custom-icon">⚡</span><span class="custom-text">Clear cache</span></div>',
@@ -139,19 +139,17 @@ final class Optimizer {
 		add_action( 'init', static function () {
 			if ( isset( $_GET['clear_cache'] ) ) {
 				Helper::clearAllCache();
-				set_transient( '_clear_cache_message', __( 'Cache has been successfully cleared.', TEXT_DOMAIN ), 5 );
+				set_transient( '_clear_cache_message', __( 'Cache has been successfully cleared.', TEXT_DOMAIN ), 30 );
 				?>
-				<script>
-                    let currentUrl = window.location.href;
-                    if (currentUrl.includes('clear_cache=yes')) {
-                        let newUrl = currentUrl.replace(/([?&])clear_cache=yes/, '$1').replace(/&$/, '').replace(/\?$/, '');
-                        if (window.location.href.includes('wp-admin')) {
-                            window.location.replace(newUrl);
-                        } else {
-                            window.history.replaceState({}, document.title, newUrl);
-                        }
+                <script>
+                    const currentUrl = window.location.href;
+                    if (currentUrl.includes('clear_cache=1')) {
+                        let newUrl = currentUrl.replace(/([?&])clear_cache=1/, '$1').replace(/&$/, '').replace(/\?$/, '');
+                        currentUrl.includes('wp-admin')
+                            ? window.location.replace(newUrl)
+                            : window.history.replaceState({}, document.title, newUrl);
                     }
-				</script>
+                </script>
 				<?php
 			}
 		} );

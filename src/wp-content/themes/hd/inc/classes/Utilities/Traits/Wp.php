@@ -35,7 +35,7 @@ trait Wp {
 
 		// Check if cache available
 		$cached_output = get_transient( $cache_key );
-		if ( $cached_output !== false && defined( 'WP_DEBUG' ) && ! WP_DEBUG ) {
+		if ( $cached_output !== false ) {
 			echo $cached_output;
 
 			return;
@@ -610,7 +610,7 @@ trait Wp {
 		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
 
 		$cached_value = get_transient( $cache_key );
-		if ( $cached_value !== false && defined( 'WP_DEBUG' ) && ! WP_DEBUG ) {
+		if ( $cached_value !== false ) {
 			return $cached_value;
 		}
 
@@ -696,7 +696,7 @@ trait Wp {
 		$cache_key      = "hd_theme_mod_{$mod_name_lower}";
 
 		$cached_value = get_transient( $cache_key );
-		if ( $cached_value !== false && defined( 'WP_DEBUG' ) && ! WP_DEBUG ) {
+		if ( $cached_value !== false ) {
 			return $cached_value;
 		}
 

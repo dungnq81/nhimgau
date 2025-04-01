@@ -402,7 +402,7 @@ final class Helper {
 			return $str;
 		}
 
-		// Add quote (for filtering purposes).
+		// Add a quote (for filtering purposes).
 		$attr .= '=' . $quote;
 
 		$content_extra = trim( $content_extra );

@@ -28,7 +28,11 @@ final class Admin {
 		/** Show a clear cache message */
 		add_action( 'admin_notices', static function () {
 			if ( $message = get_transient( '_clear_cache_message' ) ) {
-				Helper::messageSuccess( $message, true );
+				Helper::messageSuccess( $message, false );
+
+				if ( ! isset( $_GET['clear_cache'] ) ) {
+					delete_transient( '_clear_cache_message' );
+				}
 			}
 		} );
 	}

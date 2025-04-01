@@ -68,10 +68,6 @@ jQuery(function($) {
         return obj;
     };
 
-    $(document).on('click', '.notice-dismiss', function(e) {
-        $(this).closest('.notice.is-dismissible')?.fadeOutAndRemove(500);
-    });
-
     //---------------------------------------------------------------
     // ajax submit settings
     //---------------------------------------------------------------

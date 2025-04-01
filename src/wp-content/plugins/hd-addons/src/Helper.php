@@ -441,7 +441,7 @@ final class Helper {
 		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
 
 		$cached_value = get_transient( $cache_key );
-		if ( $cached_value !== false && defined( 'WP_DEBUG' ) && ! WP_DEBUG ) {
+		if ( $cached_value !== false ) {
 			return $cached_value;
 		}
 
@@ -495,7 +495,7 @@ final class Helper {
 		$cache_key      = "hd_theme_mod_{$mod_name_lower}";
 
 		$cached_value = get_transient( $cache_key );
-		if ( $cached_value !== false && defined( 'WP_DEBUG' ) && ! WP_DEBUG ) {
+		if ( $cached_value !== false ) {
 			return $cached_value;
 		}
 
@@ -524,7 +524,7 @@ final class Helper {
 		$cache_key   = "hd_custom_post_{$post_type}";
 		$cached_data = get_transient( $cache_key );
 
-		if ( $cached_data !== false && defined( 'WP_DEBUG' ) && ! WP_DEBUG ) {
+		if ( $cached_data !== false ) {
 			return $cached_data;
 		}
 
