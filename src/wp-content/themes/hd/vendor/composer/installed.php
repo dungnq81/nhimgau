@@ -3,7 +3,7 @@
         'name' => 'themes/hd2025',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '3062fbba480f6ec0b56e63d5d472455b07e6b90b',
+        'reference' => '4b1e97303a0754ea33c1aebd97dfca0b1affadd5',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -43,7 +43,7 @@
         'themes/hd2025' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '3062fbba480f6ec0b56e63d5d472455b07e6b90b',
+            'reference' => '4b1e97303a0754ea33c1aebd97dfca0b1affadd5',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

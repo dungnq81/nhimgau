@@ -3,7 +3,7 @@
         'name' => 'plugins/hd-addons',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'f475105ff21c43529160d9c2354e90c562b864db',
+        'reference' => '4b1e97303a0754ea33c1aebd97dfca0b1affadd5',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -43,7 +43,7 @@
         'plugins/hd-addons' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'f475105ff21c43529160d9c2354e90c562b864db',
+            'reference' => '4b1e97303a0754ea33c1aebd97dfca0b1affadd5',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

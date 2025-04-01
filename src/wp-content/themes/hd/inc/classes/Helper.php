@@ -209,53 +209,9 @@ final class Helper {
 
 	/**
 	 * @return void
-	 * @throws \JsonException
 	 */
 	public static function clearAllCache(): void {
 		global $wpdb;
-
-		// LiteSpeed cache
-		if ( class_exists( \LiteSpeed\Purge::class ) ) {
-			\LiteSpeed\Purge::purge_all();
-		}
-
-		// WP-Rocket cache
-		if ( \defined( 'WP_ROCKET_PATH' ) && \function_exists( 'rocket_clean_domain' ) ) {
-			\rocket_clean_domain();
-		}
-
-		// Clearly minified CSS and JavaScript files (WP-Rocket)
-		if ( function_exists( 'rocket_clean_minify' ) ) {
-			\rocket_clean_minify();
-		}
-
-		// Jetpack transient cache
-		if ( self::checkPluginActive( 'jetpack/jetpack.php' ) ) {
-			$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_jetpack_%'" );
-			$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_jetpack_%'" );
-
-			// Clear Jetpack Photon cache locally
-			if ( class_exists( \Jetpack_Photon::class ) ) {
-				\Jetpack_Photon::instance()->purge_cache();
-			}
-		}
-
-		// Clear FlyingPress cache
-		if ( self::checkPluginActive( 'flying-press/flying-press.php' ) ) {
-			$url      = esc_url_raw( rest_url( 'flying-press/purge-everything-and-preload' ) );
-			$response = wp_remote_post( $url, [
-				'method'  => 'POST',
-				'headers' => [
-					'Content-Type' => 'application/json',
-				],
-				'body'    => json_encode( [], JSON_THROW_ON_ERROR ),
-				'timeout' => 10,
-			] );
-
-			if ( is_wp_error( $response ) ) {
-				self::errorLog( 'Failed to clear FlyingPress cache: ' . $response->get_error_message() );
-			}
-		}
 
 		// Clear all WordPress transients
 		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_%'" );
@@ -264,6 +220,35 @@ final class Helper {
 		// Clear object cache (e.g., Redis or Memcached)
 		if ( function_exists( 'wp_cache_flush' ) ) {
 			wp_cache_flush();
+		}
+
+		// WP-Rocket cache
+		if ( self::checkPluginActive( 'wp-rocket/wp-rocket.php' ) ) {
+			$actions = [
+				'save_post',            // Save a post
+				'deleted_post',         // Delete a post
+				'trashed_post',         // Empty Trashed post
+				'edit_post',            // Edit a post - includes leaving comments
+				'delete_attachment',    // Delete an attachment - includes re-uploading
+				'switch_theme',         // Change theme
+			];
+
+			// Add the action for each event
+			foreach ( $actions as $event ) {
+				add_action( $event, static function () {
+					\function_exists( 'rocket_clean_domain' ) && \rocket_clean_domain();
+				} );
+			}
+		}
+
+		// Clear FlyingPress cache
+		if ( self::checkPluginActive( 'flying-press/flying-press.php' ) ) {
+			class_exists( \FlyingPress\Purge::class ) && \FlyingPress\Purge::purge_everything();
+		}
+
+		// LiteSpeed cache
+		if ( self::checkPluginActive( 'litespeed-cache/litespeed-cache.php' ) ) {
+			class_exists( \LiteSpeed\Purge::class ) && \LiteSpeed\Purge::purge_all();
 		}
 	}
 
