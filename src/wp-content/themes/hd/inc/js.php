@@ -20,7 +20,7 @@ function custom_js_action(): void {
 	ob_start();
 
 	//-------------------------------------------------
-	// single page
+	// Single page
 	//-------------------------------------------------
 
 	if ( is_single() && $ID = get_the_ID() ) :
