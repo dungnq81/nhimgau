@@ -24,6 +24,13 @@ final class Admin {
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 		add_action( 'admin_init', [ $this, 'admin_init' ], 11 );
 		add_action( 'admin_footer', [ $this, 'admin_footer_script' ] );
+
+		/** Show a clear cache message */
+		add_action( 'admin_notices', static function () {
+			if ( $message = get_transient( '_clear_cache_message' ) ) {
+				Helper::messageSuccess( $message, true );
+			}
+		} );
 	}
 
 	// --------------------------------------------------
@@ -37,33 +44,6 @@ final class Admin {
                 let postTitleInput = document.querySelector('input[name="post_title"]');
                 if (postTitleInput) {
                     postTitleInput.setAttribute('required', 'required');
-                }
-
-                let postForm = document.querySelector('#post');
-                let submitButton = document.querySelector('#publish');
-                if (postForm && submitButton) {
-
-                    submitButton.addEventListener('click', function(event) {
-                        let currentUrl = window.location.href;
-                        if (currentUrl.includes('wp-post-new-reload=true')) {
-                            let newUrl = currentUrl.replace(/&?wp-post-new-reload=true/g, '');
-                            window.history.replaceState({}, document.title, newUrl);
-                        }
-                    });
-
-                    postForm.addEventListener('submit', function(event) {
-                        let postTitleInput = document.querySelector('input[name="post_title"]');
-                        let postTitleEntered = false;
-
-                        if (postTitleInput && postTitleInput.value.trim() !== '') {
-                            postTitleEntered = true;
-                        }
-
-                        if (postTitleInput && !postTitleEntered) {
-                            alert('Please enter a Post Title.');
-                            event.preventDefault();
-                        }
-                    });
                 }
 
                 // popup confirmation for trash action
@@ -173,7 +153,7 @@ final class Admin {
 	 * @return void
 	 */
 	public function admin_init(): void {
-        // editor-style for Classic Editor
+		// editor-style for Classic Editor
 		add_editor_style( ASSETS_URL . 'css/editor-style-css.css' );
 
 		$admin_list_table = Helper::filterSettingOptions( 'admin_list_table', [] );

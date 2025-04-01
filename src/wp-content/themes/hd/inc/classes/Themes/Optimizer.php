@@ -17,6 +17,9 @@ final class Optimizer {
 
 	// ------------------------------------------------------
 
+	/**
+	 * @throws \JsonException
+	 */
 	private function init(): void {
 		$this->_cleanup();
 		$this->_optimizer();
@@ -29,6 +32,7 @@ final class Optimizer {
 
 	/**
 	 * @return void
+	 * @throws \JsonException
 	 */
 	private function _custom_hooks(): void {
 
@@ -102,7 +106,7 @@ final class Optimizer {
 		}, 10, 1 );
 
 		// -------------------------------------------------------------
-		// Custom
+		// Custom hooks
 		// -------------------------------------------------------------
 
 		// https://html.spec.whatwg.org/multipage/rendering.html#img-contain-size
@@ -113,7 +117,7 @@ final class Optimizer {
 			return ' ' . '&hellip;';
 		} );
 
-		// Remove logo admin bar
+		// admin bar
 		add_action( 'wp_before_admin_bar_render', static function () {
 			if ( is_admin_bar_showing() ) {
 				global $wp_admin_bar;
@@ -121,7 +125,34 @@ final class Optimizer {
 				$wp_admin_bar->remove_menu( 'wp-logo' );
 				$wp_admin_bar->remove_menu( 'updates' );
 
-				//dump($wp_admin_bar);
+				// Clear Cache
+				$current_url = add_query_arg( 'clear_cache', 'yes', $_SERVER['REQUEST_URI'] );
+				$wp_admin_bar->add_menu( [
+					'id'    => 'clear_cache_button',
+					'title' => '<div class="custom-admin-button"><span class="custom-icon">⚡</span><span class="custom-text">Clear cache</span></div>',
+					'href'  => $current_url,
+				] );
+			}
+		} );
+
+		/** Clear Cache */
+		add_action( 'init', static function () {
+			if ( isset( $_GET['clear_cache'] ) ) {
+				Helper::clearAllCache();
+				set_transient( '_clear_cache_message', __( 'Cache has been successfully cleared.', TEXT_DOMAIN ), 5 );
+				?>
+				<script>
+                    let currentUrl = window.location.href;
+                    if (currentUrl.includes('clear_cache=yes')) {
+                        let newUrl = currentUrl.replace(/([?&])clear_cache=yes/, '$1').replace(/&$/, '').replace(/\?$/, '');
+                        if (window.location.href.includes('wp-admin')) {
+                            window.location.replace(newUrl);
+                        } else {
+                            window.history.replaceState({}, document.title, newUrl);
+                        }
+                    }
+				</script>
+				<?php
 			}
 		} );
 
@@ -201,7 +232,7 @@ final class Optimizer {
 		remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
 
 		/**
-		 * Remove wp-json header from WordPress
+		 * Remove the wp-json header from WordPress
 		 * Note that the REST API functionality will still be working as it used to;
 		 * this only removes the header code that is being inserted.
 		 */
@@ -479,6 +510,6 @@ final class Optimizer {
 	 * @return void
 	 */
 	public function print_footer_scripts(): void {
-        echo '<script>document.documentElement.classList.remove(\'no-js\');</script>';
+		echo '<script>document.documentElement.classList.remove(\'no-js\');</script>';
 	}
 }
