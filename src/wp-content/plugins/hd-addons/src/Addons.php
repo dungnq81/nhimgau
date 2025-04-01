@@ -121,7 +121,7 @@ final class Addons {
 	 */
 	public function admin_enqueue_scripts( $hook ): void {
 		$version = ADDONS_VERSION;
-		if ( WP_DEBUG ) {
+		if ( defined( WP_DEBUG ) && WP_DEBUG ) {
 			$version = date( 'YmdHis', current_time( 'U', 0 ) );
 		}
 

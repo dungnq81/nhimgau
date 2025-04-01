@@ -28,7 +28,7 @@ final class Helper {
 	 * @return void
 	 */
 	public static function errorLog( string $message, int $message_type = 0, ?string $destination = null, ?string $additional_headers = null ): void {
-		if ( WP_DEBUG ) {
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			error_log( $message, $message_type, $destination, $additional_headers );
 		}
 	}

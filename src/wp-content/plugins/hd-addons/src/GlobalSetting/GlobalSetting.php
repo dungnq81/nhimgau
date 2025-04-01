@@ -49,7 +49,7 @@ final class GlobalSetting {
 		);
 
 		// Server Info submenu
-		if ( WP_DEBUG ) {
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			add_submenu_page(
 				'addon-settings',
 				__( 'Server Info', ADDONS_TEXT_DOMAIN ),

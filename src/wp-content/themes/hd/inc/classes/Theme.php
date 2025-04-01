@@ -167,7 +167,7 @@ final class Theme {
 	 */
 	public function wp_enqueue_scripts(): void {
 		$version = THEME_VERSION;
-		if ( WP_DEBUG ) {
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			$version = date( 'YmdHis', current_time( 'U', 0 ) );
 		}
 
