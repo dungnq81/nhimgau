@@ -28,7 +28,7 @@ do_action( 'hd_archive_before_action' );
     <div class="container flex flex-x">
         <div class="content">
             <h1 class="heading-title" <?= \HD\Helper::microdata( 'headline' ) ?>><?= get_the_archive_title() ?></h1>
-	        <?= \HD\Helper::termExcerpt( $object, 'excerpt', 'div' ) ?>
+	        <?= \HD\Helper::termExcerpt( $object?->term_id, 'excerpt', 'div' ) ?>
 	        <?php if ( have_posts() ) : ?>
             <div class="posts-list archive-list items-list flex flex-x">
                 <?php
