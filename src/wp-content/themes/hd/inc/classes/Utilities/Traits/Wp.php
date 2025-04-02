@@ -33,9 +33,13 @@ trait Wp {
 		$cache_key     = 'hd_block_cache_' . md5( $slug . serialize( $args ) );
 		$cached_output = get_transient( $cache_key );
 		if ( $cached_output !== false ) {
-			echo $cached_output;
+			if ( mb_strlen( $cached_output, 'UTF-8' ) <= 10240 ) {
+				echo $cached_output;
 
-			return;
+				return;
+			}
+
+			delete_transient( $cache_key );
 		}
 
 		// buffer
@@ -43,7 +47,7 @@ trait Wp {
 		get_template_part( $slug, null, $args );
 		$output = ob_get_clean();
 
-		if ( ! empty( $output ) ) {
+		if ( ! empty( $output ) && mb_strlen( $output, 'UTF-8' ) <= 10240 ) {
 			set_transient( $cache_key, $output, $cache_in_hours * HOUR_IN_SECONDS );
 		}
 
@@ -1055,11 +1059,9 @@ trait Wp {
 			$image = wp_get_attachment_image( $custom_logo_id, 'full', false, $custom_logo_attr );
 
 			if ( $unlink_homepage_logo && self::isHomeOrFrontPage() && ! is_paged() ) {
-
 				// If on the home page, don't link the logo to home.
 				$html = sprintf( '<span class="custom-logo-link">%1$s</span>', $image );
 			} elseif ( $unlink_logo ) {
-
 				// Remove logo link
 				$html = sprintf( '<span class="custom-logo-link">%1$s</span>', $image );
 			} else {
@@ -1176,7 +1178,7 @@ trait Wp {
 	 * @return string
 	 */
 	public static function siteLogo( string $theme = 'default', ?string $class = '', int $cache_in_hours = 12 ): string {
-		$cache_key  = 'hd_site_logo_' . $theme;
+		$cache_key   = 'hd_site_logo_' . $theme;
 		$cached_html = get_transient( $cache_key );
 
 		if ( $cached_html !== false ) {
@@ -1536,7 +1538,7 @@ trait Wp {
 		if ( $hashtag_list ) {
 			echo '<div class="hashtags">';
 			printf(
-			/* translators: 1: SVG icon. 2: posted in label, only visible to screen readers. 3: list of tags. */
+			/* translators: 1: SVG icon. 2: posted in a label, only visible to screen readers. 3: list of tags. */
 				'<div class="hashtag-links links">%1$s<span class="sr-only">%2$s</span>%3$s</div>',
 				'<i data-fa="#"></i>',
 				__( 'Tags', TEXT_DOMAIN ),
