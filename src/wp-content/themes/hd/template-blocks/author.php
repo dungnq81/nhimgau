@@ -4,10 +4,10 @@
 
 $current_user = wp_get_current_user();
 
-$ACF = \HD\Helper::getFields( 'user_' . $current_user->ID );
+$ACF = \HD\Helper::getFields( 'user_' . $current_user?->ID );
 
-$display_name = ! empty( $ACF['author_alt_name'] ) ? $ACF['author_alt_name'] : $current_user->display_name;
-$bio_info     = ! empty( $ACF['author_alt_biographical_info'] ) ? $ACF['author_alt_biographical_info'] : get_user_meta( $current_user->ID, 'description', true );
+$display_name = ! empty( $ACF['author_alt_name'] ) ? $ACF['author_alt_name'] : $current_user?->display_name;
+$bio_info     = ! empty( $ACF['author_alt_biographical_info'] ) ? $ACF['author_alt_biographical_info'] : get_user_meta( $current_user?->ID, 'description', true );
 $avatar_url   = ! empty( $ACF['author_alt_profile_picture'] ) ? \HD\Helper::attachmentImageSrc( $ACF['author_alt_profile_picture'], 'thumbnail' ) : get_avatar_url( $current_user->ID, [ 'size' => 300 ] );
 
 ?>
@@ -20,7 +20,7 @@ $avatar_url   = ! empty( $ACF['author_alt_profile_picture'] ) ? \HD\Helper::atta
     <div class="author-info">
         <h2 class="author-name" <?= \HD\Helper::microdata( 'name' ) ?>><?= esc_html( $display_name ) ?></h2>
         <div class="author-bio"><?= $bio_info ?></div>
-        <a class="author-link" href="<?php echo \HD\Helper::getUserLink( $current_user->ID );?>" title="<?= esc_attr( $display_name ) ?>" <?= \HD\Helper::microdata( 'url' ) ?>>
+        <a class="author-link" href="<?php echo \HD\Helper::getUserLink( $current_user?->ID );?>" title="<?= esc_attr( $display_name ) ?>" <?= \HD\Helper::microdata( 'url' ) ?>>
             <?= sprintf( __( 'View all posts by %s', TEXT_DOMAIN ), esc_html( $display_name ) ) ?>
         </a>
     </div>

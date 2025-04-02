@@ -33,7 +33,7 @@ trait Wp {
 		$cache_key     = 'hd_block_cache_' . md5( $slug . serialize( $args ) );
 		$cached_output = get_transient( $cache_key );
 		if ( $cached_output !== false ) {
-			if ( mb_strlen( $cached_output, 'UTF-8' ) <= 10240 ) {
+			if ( mb_strlen( $cached_output, 'UTF-8' ) <= 10240 ) { // 100kb
 				echo $cached_output;
 
 				return;
