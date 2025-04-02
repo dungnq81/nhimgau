@@ -71,13 +71,48 @@ $table_prefix = 'w_';
  *
  * @link https://wordpress.org/support/article/debugging-in-wordpress/
  */
-const WP_DEBUG         = true;
-const WP_DEBUG_LOG     = true;
-const WP_DEBUG_DISPLAY = false;
+const WP_DEBUG = true;
 
-ini_set( 'log_errors', 1 );
+if ( WP_DEBUG ) {
+	define( "WP_DEBUG_LOG", true );
+	define( "WP_DEBUG_DISPLAY", false );
+
+	ini_set( 'log_errors', 1 );
+}
 
 /* Add any custom values between this line and the "stop editing" line. */
+
+const ENVIRONMENT = 'development'; // development, production, staging v.v...
+
+if ( ! defined( "DISALLOW_INDEXING" ) ) {
+	define( "DISALLOW_INDEXING", ENVIRONMENT !== 'production' ); // Disable indexing
+}
+
+if ( ! defined( "DISALLOW_FILE_EDIT" ) ) {
+	define( "DISALLOW_FILE_EDIT", ENVIRONMENT === 'production' ); // Disable edit file editor
+}
+
+if ( ! defined( "FORCE_SSL_ADMIN" ) ) {
+	define( "FORCE_SSL_ADMIN", ENVIRONMENT === 'production' ); // Force SSL for admin
+}
+
+if ( ! defined( "DISALLOW_FILE_MODS" ) && ENVIRONMENT === 'production' ) {
+	define( "DISALLOW_FILE_MODS", false ); // Disable file modding capabilities
+}
+
+/** Disable plugins */
+const DISABLED_PLUGINS = [
+	//'wp-rocket/wp-rocket.php',
+	//'flying-press/flying-press.php',
+];
+
+/** FluentSMTP */
+const FLUENTMAIL_SMTP_USERNAME = 'official.webhd@gmail.com';
+const FLUENTMAIL_SMTP_PASSWORD = 'obvyigyczmcbxgji';
+
+/** Base URL */
+const WP_SITEURL = 'http://localhost:8080'; // WordPress site URL
+const WP_HOME    = 'http://localhost:8080';
 
 /**
  * Allow WordPress to detect HTTPS when used behind a reverse proxy or a load balancer
@@ -95,37 +130,14 @@ if ( ! defined( 'FS_METHOD' ) ) {
 const WP_MEMORY_LIMIT     = '512M';
 const WP_MAX_MEMORY_LIMIT = '512M';
 
-/** Disable file editor */
-const DISALLOW_FILE_EDIT = false;
-const DISALLOW_FILE_MODS = false;
-
-/** SSL */
-const FORCE_SSL_ADMIN = false;
-
 /** Increase post-revisions */
 const WP_POST_REVISIONS = 2;
 const EMPTY_TRASH_DAYS  = 15;
 const AUTOSAVE_INTERVAL = 120;
 
-/** Disable indexing */
-const DISALLOW_INDEXING = true;
-
-/** Disable plugins */
-const DISABLED_PLUGINS = [
-	//'wp-rocket/wp-rocket.php',
-	//'flying-press/flying-press.php',
-];
-
-const WP_SITEURL = 'http://localhost:8080';
-const WP_HOME    = 'http://localhost:8080';
-
 /** WordPress core auto-update, */
 const AUTOMATIC_UPDATER_DISABLED = true;
 const WP_AUTO_UPDATE_CORE        = false;
-
-/** FluentSMTP */
-const FLUENTMAIL_SMTP_USERNAME = 'official.webhd@gmail.com';
-const FLUENTMAIL_SMTP_PASSWORD = 'obvyigyczmcbxgji';
 
 /* That's all, stop editing! Happy publishing. */
 

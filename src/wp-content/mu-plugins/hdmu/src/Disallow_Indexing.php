@@ -9,7 +9,7 @@ namespace MU;
  */
 final class Disallow_Indexing {
 	public function __construct() {
-		if ( ! defined( 'DISALLOW_INDEXING' ) || \DISALLOW_INDEXING !== true ) {
+		if ( ! defined( 'DISALLOW_INDEXING' ) || ! \DISALLOW_INDEXING ) {
 			return;
 		}
 
