@@ -405,8 +405,6 @@ final class Helper {
 			return false;
 		}
 
-		$cache_time = $cache_in_hours * HOUR_IN_SECONDS;
-
 		$site_id   = is_multisite() ? get_current_blog_id() : null;
 		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
 
@@ -414,7 +412,7 @@ final class Helper {
 		$updated = is_multisite() ? update_site_option( $option, $new_value ) : update_option( $option, $new_value, $autoload );
 
 		if ( $updated ) {
-			set_transient( $cache_key, $new_value, $cache_time );
+			set_transient( $cache_key, $new_value, $cache_in_hours * HOUR_IN_SECONDS );
 		}
 
 		return $updated;
@@ -435,8 +433,6 @@ final class Helper {
 			return $default;
 		}
 
-		$cache_time = $cache_in_hours * HOUR_IN_SECONDS;
-
 		$site_id   = is_multisite() ? get_current_blog_id() : null;
 		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
 
@@ -446,7 +442,7 @@ final class Helper {
 		}
 
 		$option_value = is_multisite() ? get_site_option( $option, $default ) : get_option( $option, $default );
-		set_transient( $cache_key, $option_value, $cache_time );
+		set_transient( $cache_key, $option_value, $cache_in_hours * HOUR_IN_SECONDS );
 
 		// Retrieve the option value
 		return $option_value;
@@ -466,12 +462,11 @@ final class Helper {
 			return false;
 		}
 
-		$cache_time     = $cache_in_hours * HOUR_IN_SECONDS;
 		$mod_name_lower = strtolower( $mod_name );
 		$cache_key      = "hd_theme_mod_{$mod_name_lower}";
 
 		set_theme_mod( $mod_name, $value );
-		set_transient( $cache_key, $value, $cache_time );
+		set_transient( $cache_key, $value, $cache_in_hours * HOUR_IN_SECONDS );
 
 		return true;
 	}
@@ -490,7 +485,6 @@ final class Helper {
 			return $default;
 		}
 
-		$cache_time     = $cache_in_hours * HOUR_IN_SECONDS;
 		$mod_name_lower = strtolower( $mod_name );
 		$cache_key      = "hd_theme_mod_{$mod_name_lower}";
 
@@ -502,7 +496,7 @@ final class Helper {
 		$_mod      = get_theme_mod( $mod_name, $default );
 		$mod_value = is_ssl() ? str_replace( 'http://', 'https://', $_mod ) : $_mod;
 
-		set_transient( $cache_key, $mod_value, $cache_time );
+		set_transient( $cache_key, $mod_value, $cache_in_hours * HOUR_IN_SECONDS );
 
 		return $mod_value;
 	}
@@ -520,7 +514,6 @@ final class Helper {
 			return null;
 		}
 
-		$cache_time  = $cache_in_hours * HOUR_IN_SECONDS;
 		$cache_key   = "hd_custom_post_{$post_type}";
 		$cached_data = get_transient( $cache_key );
 
@@ -559,7 +552,7 @@ final class Helper {
 				'post_content' => $post->post_content,
 				'post_excerpt' => $post->post_excerpt,
 			];
-			set_transient( $cache_key, $cached_data, $cache_time );
+			set_transient( $cache_key, $cached_data, $cache_in_hours * HOUR_IN_SECONDS );
 		}
 
 		return $cached_data ?? null;
@@ -627,7 +620,6 @@ final class Helper {
 
 		$updated_post = get_post( $r );
 		$cache_key    = "hd_custom_post_{$post_type}";
-		$cache_time   = $cache_in_hours * HOUR_IN_SECONDS;
 
 		$cached_data = [
 			'ID'           => $updated_post->ID,
@@ -635,7 +627,7 @@ final class Helper {
 			'post_content' => $updated_post->post_content,
 			'post_excerpt' => $updated_post->post_excerpt,
 		];
-		set_transient( $cache_key, $cached_data, $cache_time );
+		set_transient( $cache_key, $cached_data, $cache_in_hours * HOUR_IN_SECONDS );
 
 		return $cached_data;
 	}

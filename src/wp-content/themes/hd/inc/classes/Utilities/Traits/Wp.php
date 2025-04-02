@@ -30,10 +30,7 @@ trait Wp {
 	 * @return void
 	 */
 	public static function blockTemplate( $slug, array $args = [], int $cache_in_hours = 12 ): void {
-		$cache_key  = 'hd_block_cache_' . md5( $slug . serialize( $args ) );
-		$cache_time = $cache_in_hours * HOUR_IN_SECONDS;
-
-		// Check if cache available
+		$cache_key     = 'hd_block_cache_' . md5( $slug . serialize( $args ) );
 		$cached_output = get_transient( $cache_key );
 		if ( $cached_output !== false ) {
 			echo $cached_output;
@@ -47,7 +44,7 @@ trait Wp {
 		$output = ob_get_clean();
 
 		if ( ! empty( $output ) ) {
-			set_transient( $cache_key, $output, $cache_time );
+			set_transient( $cache_key, $output, $cache_in_hours * HOUR_IN_SECONDS );
 		}
 
 		echo $output;
@@ -450,25 +447,6 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * Using `rawurlencode` on any variable used as part of the query string, either by using
-	 * `add_query_arg()` or directly by string concatenation will prevent parameter hijacking.
-	 *
-	 * @param array $args An associative array of query parameters to add.
-	 * @param string $url The base URL to which query parameters will be added.
-	 *
-	 * @return string The URL with the encoded query parameters added.
-	 */
-	public static function addQueryArg( array $args, string $url ): string {
-		// Encode each argument to prevent parameter hijacking
-		$encodedArgs = array_map( 'rawurlencode', $args );
-
-		// Use WordPress's add_query_arg function to construct the URL
-		return add_query_arg( $encodedArgs, $url );
-	}
-
-	// -------------------------------------------------------------
-
-	/**
 	 * Retrieves attachment details by its ID.
 	 *
 	 * @param mixed $attachment_id
@@ -604,8 +582,6 @@ trait Wp {
 			return $default;
 		}
 
-		$cache_time = $cache_in_hours * HOUR_IN_SECONDS;
-
 		$site_id   = is_multisite() ? get_current_blog_id() : null;
 		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
 
@@ -615,7 +591,7 @@ trait Wp {
 		}
 
 		$option_value = is_multisite() ? get_site_option( $option, $default ) : get_option( $option, $default );
-		set_transient( $cache_key, $option_value, $cache_time );
+		set_transient( $cache_key, $option_value, $cache_in_hours * HOUR_IN_SECONDS );
 
 		// Retrieve the option value
 		return $option_value;
@@ -637,8 +613,6 @@ trait Wp {
 			return false;
 		}
 
-		$cache_time = $cache_in_hours * HOUR_IN_SECONDS;
-
 		$site_id   = is_multisite() ? get_current_blog_id() : null;
 		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
 
@@ -646,7 +620,7 @@ trait Wp {
 		$updated = is_multisite() ? update_site_option( $option, $new_value ) : update_option( $option, $new_value, $autoload );
 
 		if ( $updated ) {
-			set_transient( $cache_key, $new_value, $cache_time );
+			set_transient( $cache_key, $new_value, $cache_in_hours * HOUR_IN_SECONDS );
 		}
 
 		return $updated;
@@ -691,11 +665,9 @@ trait Wp {
 			return $default;
 		}
 
-		$cache_time     = $cache_in_hours * HOUR_IN_SECONDS;
 		$mod_name_lower = strtolower( $mod_name );
 		$cache_key      = "hd_theme_mod_{$mod_name_lower}";
-
-		$cached_value = get_transient( $cache_key );
+		$cached_value   = get_transient( $cache_key );
 		if ( $cached_value !== false ) {
 			return $cached_value;
 		}
@@ -703,7 +675,7 @@ trait Wp {
 		$_mod      = get_theme_mod( $mod_name, $default );
 		$mod_value = is_ssl() ? str_replace( 'http://', 'https://', $_mod ) : $_mod;
 
-		set_transient( $cache_key, $mod_value, $cache_time );
+		set_transient( $cache_key, $mod_value, $cache_in_hours * HOUR_IN_SECONDS );
 
 		return $mod_value;
 	}
@@ -722,12 +694,11 @@ trait Wp {
 			return false;
 		}
 
-		$cache_time     = $cache_in_hours * HOUR_IN_SECONDS;
 		$mod_name_lower = strtolower( $mod_name );
 		$cache_key      = "hd_theme_mod_{$mod_name_lower}";
 
 		set_theme_mod( $mod_name, $value );
-		set_transient( $cache_key, $value, $cache_time );
+		set_transient( $cache_key, $value, $cache_in_hours * HOUR_IN_SECONDS );
 
 		return true;
 	}
@@ -1145,10 +1116,23 @@ trait Wp {
 	 * @param bool $echo
 	 * @param string|null $home_heading
 	 * @param string|null $class
+	 * @param int $cache_in_hours
 	 *
 	 * @return string|void
 	 */
-	public static function siteTitleOrLogo( bool $echo = true, ?string $home_heading = 'h1', ?string $class = 'logo' ) {
+	public static function siteTitleOrLogo( bool $echo = true, ?string $home_heading = 'h1', ?string $class = 'logo', int $cache_in_hours = 12 ) {
+		$cache_key   = 'hd_site_title_or_logo';
+		$cached_html = get_transient( $cache_key );
+
+		if ( $cached_html !== false ) {
+			if ( ! $echo ) {
+				return $cached_html;
+			}
+			echo $cached_html;
+
+			return;
+		}
+
 		$logo_title = self::getThemeMod( 'logo_title_setting' );
 		$logo_title = $logo_title ? '<span class="logo-txt">' . $logo_title . '</span>' : '';
 		$logo_class = ! empty( $class ) ? ' class="' . $class . '"' : '';
@@ -1174,6 +1158,7 @@ trait Wp {
 			}
 		}
 
+		set_transient( $cache_key, $html, $cache_in_hours * HOUR_IN_SECONDS );
 		if ( ! $echo ) {
 			return $html;
 		}
@@ -1186,10 +1171,18 @@ trait Wp {
 	/**
 	 * @param string $theme - default|light|dark
 	 * @param string|null $class
+	 * @param int $cache_in_hours
 	 *
 	 * @return string
 	 */
-	public static function siteLogo( string $theme = 'default', ?string $class = '' ): string {
+	public static function siteLogo( string $theme = 'default', ?string $class = '', int $cache_in_hours = 12 ): string {
+		$cache_key  = 'hd_site_logo_' . $theme;
+		$cached_html = get_transient( $cache_key );
+
+		if ( $cached_html !== false ) {
+			return $cached_html;
+		}
+
 		$html           = '';
 		$custom_logo_id = null;
 
@@ -1231,6 +1224,8 @@ trait Wp {
 				$html = '<a title="' . $image_alt . '" href="' . self::home() . '">' . $logo . $logo_title . '</a>';
 			}
 		}
+
+		set_transient( $cache_key, $html, $cache_in_hours * HOUR_IN_SECONDS );
 
 		return $html;
 	}
