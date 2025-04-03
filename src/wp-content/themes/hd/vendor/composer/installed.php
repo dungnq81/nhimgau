@@ -3,7 +3,7 @@
         'name' => 'themes/hd',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '7c3f3aeb103df08761d84d4447be633c62a4b449',
+        'reference' => '857515bfa495199102fc732431bcf682e01e5fbb',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => '0b51a6c830ba6dd6c63715ceded239a62bf2274f',
+            'reference' => '7d7e09f5c5ae97767252450bdae6bc4ec6b8f53a',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(
@@ -24,7 +24,7 @@
         'themes/hd' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '7c3f3aeb103df08761d84d4447be633c62a4b449',
+            'reference' => '857515bfa495199102fc732431bcf682e01e5fbb',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

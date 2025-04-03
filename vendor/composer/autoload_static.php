@@ -98,6 +98,7 @@ class ComposerStaticInit1cd253908ea6fd72a5565cf56a3a68d5
             'Mustangostang\\' => 14,
             'MatthiasMullie\\PathConverter\\' => 29,
             'MatthiasMullie\\Minify\\' => 22,
+            'MabeEnum\\' => 9,
         ),
         'J' => 
         array (
@@ -250,6 +251,10 @@ class ComposerStaticInit1cd253908ea6fd72a5565cf56a3a68d5
         'MatthiasMullie\\Minify\\' => 
         array (
             0 => __DIR__ . '/..' . '/matthiasmullie/minify/src',
+        ),
+        'MabeEnum\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/marc-mabe/php-enum/src',
         ),
         'JsonSchema\\' => 
         array (
