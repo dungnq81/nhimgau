@@ -4,8 +4,8 @@ import postcssPurgecss from '@fullhuman/postcss-purgecss';
 import { sharedConfig } from '../../../../vite.config.shared';
 
 // THEME
-const directory = path.basename(path.resolve(__dirname));
-const dir = `./wp-content/themes/${directory}`;
+//const directory = path.basename(path.resolve(__dirname));
+const dir = path.resolve(__dirname).replace(/\\/g, '/');
 const resources = `${dir}/resources`;
 const assets = `${dir}/assets`;
 
@@ -84,6 +84,7 @@ export default {
     build: {
         ...sharedConfig.build,
         outDir: `${assets}`,
+        assetsDir: '',
         rollupOptions: {
             input: [
                 ...sassFiles.map((file) => `${resources}/sass/${file}.scss`),

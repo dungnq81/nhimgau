@@ -3,8 +3,7 @@ import { viteStaticCopy } from 'vite-plugin-static-copy';
 //import postcssPurgecss from '@fullhuman/postcss-purgecss';
 import { sharedConfig } from '../../../../vite.config.shared';
 
-const directory = path.basename(path.resolve(__dirname));
-const dir = `./wp-content/plugins/${directory}`;
+const dir = path.resolve(__dirname).replace(/\\/g, '/');
 const resources = `${dir}/resources`;
 const assets = `${dir}/assets`;
 const node_modules = './node_modules';
@@ -63,6 +62,7 @@ export default {
     build: {
         ...sharedConfig.build,
         outDir: `${assets}`,
+        assetsDir: '',
         rollupOptions: {
             input: [
                 ...sassFiles.map((file) => `${resources}/sass/${file}.scss`),
