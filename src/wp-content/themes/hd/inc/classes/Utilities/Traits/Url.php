@@ -139,34 +139,35 @@ trait Url {
 	// --------------------------------------------------
 
 	/**
-	 * @return string
+	 * @return mixed|string|null
 	 */
-	public static function serverIpAddress(): string {
-		// Check for SERVER_ADDR first
+	public static function serverIpAddress(): mixed {
+		// Check SERVER_ADDR first
 		if ( ! empty( $_SERVER['SERVER_ADDR'] ) ) {
 			return $_SERVER['SERVER_ADDR'];
 		}
 
+		// Get the hostname and resolve to IPv4
 		$hostname = gethostname();
-		$ipv4     = gethostbyname( $hostname );
-
-		// Validate and return the IPv4 address
-		if ( filter_var( $ipv4, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) ) {
-			return $ipv4;
+		if ( $hostname ) {
+			$ipv4 = gethostbyname( $hostname );
+			if ( $ipv4 !== $hostname && filter_var( $ipv4, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) ) {
+				return $ipv4;
+			}
 		}
 
 		// Get the IPv6 address using dns_get_record
 		$dnsRecords = dns_get_record( $hostname, DNS_AAAA );
 		if ( ! empty( $dnsRecords ) ) {
 			foreach ( $dnsRecords as $record ) {
-				if ( isset( $record['ipv6'] ) && filter_var( $record['ipv6'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 ) ) {
+				if ( ! empty( $record['ipv6'] ) && filter_var( $record['ipv6'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 ) ) {
 					return $record['ipv6'];
 				}
 			}
 		}
 
-		// Return a default IP address if none found
-		return '127.0.0.1';
+		// No valid IP found, return null
+		return null;
 	}
 
 	// --------------------------------------------------
