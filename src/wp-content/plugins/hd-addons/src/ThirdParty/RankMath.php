@@ -15,7 +15,6 @@ final class RankMath {
 	public function __construct() {
 		add_filter( 'rank_math/frontend/breadcrumb/args', [ $this, 'breadcrumb_args' ] );
 		add_filter( 'rank_math/frontend/show_keywords', '__return_true' );
-		//add_filter( 'rank_math/sitemap/enable_caching', '__return_false' );
 
 		// Remove admin bar
 		add_action( 'wp_before_admin_bar_render', static function () {

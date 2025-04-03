@@ -29,6 +29,22 @@ final class Faker {
 			return $preempt;
 		}
 
+		// Check update request
+		$acf_update_check_disabled = \Addons\Helper::getOption( '_acf_update_check_disabled', true );
+		if (
+			$acf_update_check_disabled
+			&& str_contains( $url, 'https://connect.advancedcustomfields.com/v2/plugins/update-check' )
+		) {
+			return [
+				'headers'  => [],
+				'body'     => json_encode( [ 'checked' => [] ], JSON_INVALID_UTF8_IGNORE | JSON_THROW_ON_ERROR ),
+				'response' => [
+					'code'    => 200,
+					'message' => 'OK',
+				],
+			];
+		}
+
 		// Intercept ACF activation request
 		if ( str_contains( $url, 'https://connect.advancedcustomfields.com/v2/plugins/activate?p=pro' ) ) {
 			return [
