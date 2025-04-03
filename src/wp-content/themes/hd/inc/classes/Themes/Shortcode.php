@@ -348,11 +348,7 @@ final class Shortcode {
             <label for="<?= $id ?>" class="screen-reader-text"><?= $title_for ?></label>
             <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" autocomplete="off" name="s" value="<?= get_search_query() ?>" placeholder="<?= $placeholder_title; ?>">
             <button type="submit" data-fa="" aria-label="Search"><span><?= $title ?></span></button>
-			<?php
-			if ( Helper::isWoocommerceActive() ) : ?>
-            <input type="hidden" name="post_type" value="product">
-			<?php
-			endif; ?>
+			<?php echo Helper::isWoocommerceActive() ? '<input type="hidden" name="post_type" value="product">' : ''; ?>
         </form>
 		<?php
 
@@ -396,11 +392,7 @@ final class Shortcode {
                     <button class="btn-s" type="submit" data-fa="" aria-label="Search"><span><?= $title ?></span></button>
                     <button class="trigger-s-close" type="button" data-fa="" aria-label="Close"><span><?= $close_title ?></span></button>
                 </div>
-				<?php
-				if ( Helper::isWoocommerceActive() ) : ?>
-                    <input type="hidden" name="post_type" value="product">
-				<?php
-				endif; ?>
+				<?php echo Helper::isWoocommerceActive() ? '<input type="hidden" name="post_type" value="product">' : ''; ?>
             </form>
         </div>
 		<?php

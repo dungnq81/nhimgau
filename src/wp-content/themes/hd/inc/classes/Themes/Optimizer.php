@@ -17,9 +17,6 @@ final class Optimizer {
 
 	// ------------------------------------------------------
 
-	/**
-	 * @throws \JsonException
-	 */
 	private function init(): void {
 		$this->_cleanup();
 		$this->_optimizer();
@@ -32,7 +29,6 @@ final class Optimizer {
 
 	/**
 	 * @return void
-	 * @throws \JsonException
 	 */
 	private function _custom_hooks(): void {
 
