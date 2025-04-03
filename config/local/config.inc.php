@@ -32,9 +32,6 @@ $cfg['Servers'][ $i ]['compress']        = false;
 $cfg['Servers'][ $i ]['AllowNoPassword'] = true;
 $cfg['Servers'][ $i ]['port']            = 3306;
 
-/*
- * Laragon: set phpmyadmin to not timeout so quickly 
- */
 $cfg['LoginCookieValidity'] = 86400;
 
 /**
@@ -44,21 +41,21 @@ $cfg['LoginCookieValidity'] = 86400;
 /* User used to manipulate with storage */
 // $cfg['Servers'][$i]['controlhost'] = '';
 // $cfg['Servers'][$i]['controlport'] = '';
-// $cfg['Servers'][$i]['controluser'] = 'pma';
-// $cfg['Servers'][$i]['controlpass'] = 'pmapass';
+$cfg['Servers'][$i]['controluser'] = 'pma';
+$cfg['Servers'][$i]['controlpass'] = 'pmapass';
 
 /* Storage database and tables */
-// $cfg['Servers'][$i]['pmadb'] = 'phpmyadmin';
-// $cfg['Servers'][$i]['bookmarktable'] = 'pma__bookmark';
-// $cfg['Servers'][$i]['relation'] = 'pma__relation';
+$cfg['Servers'][$i]['pmadb'] = 'phpmyadmin';
+$cfg['Servers'][$i]['bookmarktable'] = 'pma__bookmark';
+$cfg['Servers'][$i]['relation'] = 'pma__relation';
 // $cfg['Servers'][$i]['table_info'] = 'pma__table_info';
 // $cfg['Servers'][$i]['table_coords'] = 'pma__table_coords';
 // $cfg['Servers'][$i]['pdf_pages'] = 'pma__pdf_pages';
 // $cfg['Servers'][$i]['column_info'] = 'pma__column_info';
 // $cfg['Servers'][$i]['history'] = 'pma__history';
 // $cfg['Servers'][$i]['table_uiprefs'] = 'pma__table_uiprefs';
-// $cfg['Servers'][$i]['tracking'] = 'pma__tracking';
-// $cfg['Servers'][$i]['userconfig'] = 'pma__userconfig';
+$cfg['Servers'][$i]['tracking'] = 'pma__tracking';
+$cfg['Servers'][$i]['userconfig'] = 'pma__userconfig';
 // $cfg['Servers'][$i]['recent'] = 'pma__recent';
 // $cfg['Servers'][$i]['favorite'] = 'pma__favorite';
 // $cfg['Servers'][$i]['users'] = 'pma__users';
