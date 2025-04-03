@@ -1056,7 +1056,7 @@ trait Wp {
              * If the alt attribute is not empty, there's no need to explicitly pass it
              * because wp_get_attachment_image() already adds the alt attribute.
              */
-			$image = wp_get_attachment_image( $custom_logo_id, 'full', false, $custom_logo_attr );
+			$image = self::attachmentImageHTML( $custom_logo_id, 'full', $custom_logo_attr );
 
 			if ( $unlink_homepage_logo && self::isHomeOrFrontPage() && ! is_paged() ) {
 				// If on the home page, don't link the logo to home.
@@ -1219,7 +1219,7 @@ trait Wp {
 			 * If the alt attribute is not empty, there's no need to explicitly pass it
 			 * because wp_get_attachment_image() already adds the alt attribute.
 			 */
-			$logo = wp_get_attachment_image( $custom_logo_id, 'full', false, $custom_logo_attr );
+			$logo = self::attachmentImageHTML( $custom_logo_id, 'full', $custom_logo_attr );
 			if ( $class ) {
 				$html = '<div class="' . $class . '"><a title="' . $image_alt . '" href="' . self::home() . '">' . $logo . $logo_title . '</a></div>';
 			} else {

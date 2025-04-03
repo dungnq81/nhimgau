@@ -148,7 +148,7 @@ class Recent_Posts_Widget extends Abstract_Widget {
 						$post_title     = ( ! empty( $post_title ) ) ? $post_title : __( '(no title)', TEXT_DOMAIN );
 
                         $attr_post_title = \HD\Helper::escAttr( $post_title );
-                        $post_thumbnail = get_the_post_thumbnail( $recent_post, 'medium', [ 'alt' => $attr_post_title ] );
+						$post_thumbnail = \HD\Helper::postImageHTML( $recent_post, 'medium', [ 'alt' => $attr_post_title ], true );
 
 						$aria_current = '';
 						if ( get_queried_object_id() === $recent_post->ID ) {

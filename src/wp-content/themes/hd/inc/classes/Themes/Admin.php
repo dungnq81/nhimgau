@@ -256,14 +256,16 @@ final class Admin {
 		switch ( $column_name ) {
 			case 'post_thumb':
 				$post_type = get_post_type( $post_id );
+                $thumbnail = Helper::postImageHTML( $post_id, 'thumbnail' );
+
 				if ( ! in_array( $post_type, [ 'video', 'product' ] ) ) {
-					if ( ! $thumbnail = get_the_post_thumbnail( $post_id, 'thumbnail' ) ) {
+					if ( ! $thumbnail ) {
 						$thumbnail = Helper::placeholderSrc();
 					}
 					echo $thumbnail;
 				} elseif ( 'video' === $post_type ) {
-					if ( has_post_thumbnail( $post_id ) ) {
-						echo get_the_post_thumbnail( $post_id, 'thumbnail' );
+					if ( $thumbnail ) {
+						echo $thumbnail;
 					} elseif ( $url = Helper::getField( 'url', $post_id ) ) {
 						$img_src = Helper::youtubeImage( esc_url( $url ), 3 );
 						echo '<img loading="lazy" alt="video" src="' . $img_src . '" />';

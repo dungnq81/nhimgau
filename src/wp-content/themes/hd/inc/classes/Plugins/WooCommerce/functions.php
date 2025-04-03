@@ -55,10 +55,9 @@ if ( ! function_exists( '_wc_get_gallery_image_html' ) ) {
 		$full_src      = wp_get_attachment_image_src( $attachment_id, $full_size );
 		$alt_text      = \HD\Helper::escAttr( get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ) );
 
-		$image = wp_get_attachment_image(
+		$image = \HD\Helper::attachmentImageHTML(
 			$attachment_id,
 			$image_size,
-			false,
 			apply_filters(
 				'woocommerce_gallery_image_html_attachment_image_params',
 				[
@@ -73,7 +72,8 @@ if ( ! function_exists( '_wc_get_gallery_image_html' ) ) {
 				$attachment_id,
 				$image_size,
 				$main_image
-			)
+			),
+			true
 		);
 
 		$ratio_class = \HD\Helper::aspectRatioClass( 'product' );
