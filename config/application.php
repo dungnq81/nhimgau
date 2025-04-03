@@ -57,13 +57,13 @@ if ( ! env( 'WP_ENVIRONMENT_TYPE' ) && in_array( WP_ENV, [ 'production', 'stagin
 }
 
 /**
- * URLs
+ * WP_HOME & WP_SITEURL
  */
 Config::define( 'WP_HOME', env( 'WP_HOME' ) );
 Config::define( 'WP_SITEURL', env( 'WP_SITEURL' ) );
 
 /**
- * DB settings
+ * DB SSL settings
  */
 if ( env( 'DB_SSL' ) ) {
 	Config::define( 'MYSQL_CLIENT_FLAGS', MYSQLI_CLIENT_SSL );

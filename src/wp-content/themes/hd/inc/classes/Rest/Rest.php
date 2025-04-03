@@ -89,13 +89,7 @@ final class Rest extends Abstract_Rest {
 	 * @return mixed
 	 */
 	public function rest_endpoints( $endpoints ): mixed {
-		$unset_endpoints = [
-			'/',
-			'/wp/v2',
-			'/' . self::REST_NAMESPACE,
-		];
-
-		foreach ( $unset_endpoints as $ue ) {
+		foreach ( [ '/', '/wp/v2', '/' . self::REST_NAMESPACE ] as $ue ) {
 			if ( isset( $endpoints[ $ue ] ) ) {
 				unset( $endpoints[ $ue ] );
 			}
