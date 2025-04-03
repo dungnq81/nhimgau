@@ -11,6 +11,7 @@ add-apt-repository ppa:ondrej/php -y
 sudo apt-get update -y
 
 # Install Apache
+echo "Installing Apache..."
 apt-get install -y apache2
 systemctl enable --now apache2
 
@@ -38,8 +39,9 @@ echo "mysql-server mysql-server/root_password password root" | debconf-set-selec
 echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
 
 # Install MySQL
+echo "Installing MySQL..."
 apt-get install -y mysql-server
-systemctl enable --now mysql
+sudo systemctl enable --now mysql
 sleep 5
 
 # Ensure MySQL service is running before applying changes
@@ -86,20 +88,59 @@ mysql -uroot -proot -e "
 #echo "Database 'nhimgau' has been created (or already exists) with utf8mb4 charset and utf8mb4_unicode_520_ci collation."
 
 # Adjust permissions for the web directory
-chown -R www-data:www-data /var/www/html
-chmod -R 755 /var/www/html
+sudo chown -R www-data:www-data /var/www/html
+sudo chmod -R 755 /var/www/html
 
-# Copy custom configuration if exists
-if [ -f /home/vagrant/config/php.ini ]; then
-    cp /home/vagrant/config/php.ini /etc/php/8.2/apache2/conf.d/99-custom.ini
-    chmod 644 /etc/php/8.2/apache2/conf.d/99-custom.ini
+if [ -f /home/vagrant/config/default.conf ]; then
+    cp /home/vagrant/config/default.conf /etc/apache2/sites-available/999-default.conf
 fi
 
+# Enable the default site configuration
+sudo a2ensite 999-default.conf
+
+# configuration if exists
+if [ -f /home/vagrant/config/php.ini ]; then
+    cp /home/vagrant/config/php.ini /etc/php/8.2/apache2/conf.d/99-php.ini
+    sudo chmod 644 /etc/php/8.2/apache2/conf.d/99-php.ini
+fi
+
+# Download the latest version of phpMyAdmin (tar.gz format)
+echo "Downloading phpMyAdmin..."
+wget -q https://files.phpmyadmin.net/phpMyAdmin/5.2.2/phpMyAdmin-5.2.2-all-languages.tar.gz -O /tmp/phpmyadmin.tar.gz
+
+# Extract phpMyAdmin to /var/www/
+tar -xzf /tmp/phpmyadmin.tar.gz -C /var/www/
+mv /var/www/phpMyAdmin-5.2.2-all-languages /var/www/phpmyadmin
+
+# Set proper permissions for phpmyadmin
+sudo chown -R www-data:www-data /var/www/phpmyadmin
+sudo chmod -R 755 /var/www/phpmyadmin
+
+# Copy the phpMyAdmin configuration file if it exists
+if [ -f /home/vagrant/config/config.inc.php ]; then
+    cp /home/vagrant/config/config.inc.php /var/www/phpmyadmin/config.inc.php
+    sudo chmod 644 /var/www/phpmyadmin/config.inc.php
+fi
+
+# Copy the Apache VirtualHost configuration if it exists
+if [ -f /home/vagrant/config/phpmyadmin.conf ]; then
+    cp /home/vagrant/config/phpmyadmin.conf /etc/apache2/sites-available/phpmyadmin.conf
+fi
+
+# Enable the phpmyadmin site configuration
+sudo a2ensite phpmyadmin.conf
+
+# Listen 8081
+grep -q "Listen 8081" /etc/apache2/ports.conf || echo "Listen 8081" | sudo tee -a /etc/apache2/ports.conf
+
 # Restart Apache to apply changes
+sudo a2enmod php8.2
 sudo a2enmod rewrite
 sudo systemctl restart apache2
 
 # Clean up package lists
 sudo apt-get clean
 
-echo "Provisioning complete! Visit: http://localhost:8080"
+echo "Provisioning complete!"
+echo "Homepage: http://localhost:8080"
+echo "Phpmyadmin: http://localhost:8081"
