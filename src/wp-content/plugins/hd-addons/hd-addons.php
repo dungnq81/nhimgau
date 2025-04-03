@@ -8,7 +8,7 @@
  * Author URI: https://webhd.vn
  * Text Domain: hd-addons
  * Description: Addons plugin for HD Theme
- * License: MIT License
+ * License: MIT
  *
  * ###Requires ### Plugins: advanced-custom-fields-pro
  */

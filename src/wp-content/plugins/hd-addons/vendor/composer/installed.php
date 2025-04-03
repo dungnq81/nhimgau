@@ -3,7 +3,7 @@
         'name' => 'plugins/hd-addons',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '4b1e97303a0754ea33c1aebd97dfca0b1affadd5',
+        'reference' => '7c3f3aeb103df08761d84d4447be633c62a4b449',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -19,59 +19,52 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'matthiasmullie/minify' => array(
-            'dev_requirement' => false,
-            'replaced' => array(
-                0 => '*',
-            ),
-        ),
-        'mobiledetect/mobiledetectlib' => array(
-            'dev_requirement' => false,
-            'replaced' => array(
-                0 => '*',
-            ),
-        ),
-        'openspout/openspout' => array(
-            'pretty_version' => 'v4.28.5',
-            'version' => '4.28.5.0',
-            'reference' => 'ab05a09fe6fce57c90338f83280648a9786ce36b',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../openspout/openspout',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'plugins/hd-addons' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '4b1e97303a0754ea33c1aebd97dfca0b1affadd5',
+            'reference' => '7c3f3aeb103df08761d84d4447be633c62a4b449',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
         'roave/security-advisories' => array(
-            'dev_requirement' => false,
-            'replaced' => array(
-                0 => '*',
+            'pretty_version' => 'dev-latest',
+            'version' => 'dev-latest',
+            'reference' => '0b51a6c830ba6dd6c63715ceded239a62bf2274f',
+            'type' => 'metapackage',
+            'install_path' => null,
+            'aliases' => array(
+                0 => '9999999-dev',
             ),
+            'dev_requirement' => true,
         ),
-        'symfony/var-dumper' => array(
+        'symfony/deprecation-contracts' => array(
+            'pretty_version' => 'v3.5.1',
+            'version' => '3.5.1.0',
+            'reference' => '74c71c939a79f7d5bf3c1ce9f5ea37ba0114c6f6',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/deprecation-contracts',
+            'aliases' => array(),
             'dev_requirement' => false,
-            'replaced' => array(
-                0 => '*',
-            ),
+        ),
+        'symfony/polyfill-ctype' => array(
+            'pretty_version' => 'v1.31.0',
+            'version' => '1.31.0.0',
+            'reference' => 'a3cc8b044a6ea513310cbd48ef7333b384945638',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/polyfill-ctype',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'symfony/yaml' => array(
+            'pretty_version' => 'v7.2.5',
+            'version' => '7.2.5.0',
+            'reference' => '4c4b6f4cfcd7e52053f0c8bfad0f7f30fb924912',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/yaml',
+            'aliases' => array(),
             'dev_requirement' => false,
-            'replaced' => array(
-                0 => '*',
-            ),
-        ),
-        'vectorface/whip' => array(
-            'dev_requirement' => false,
-            'replaced' => array(
-                0 => '*',
-            ),
         ),
     ),
 );

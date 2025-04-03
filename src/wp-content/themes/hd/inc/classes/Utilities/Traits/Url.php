@@ -2,8 +2,6 @@
 
 namespace HD\Utilities\Traits;
 
-use Vectorface\Whip\Whip;
-
 \defined( 'ABSPATH' ) || die;
 
 trait Url {
@@ -177,40 +175,29 @@ trait Url {
 	 * @return string
 	 */
 	public static function ipAddress(): string {
-		if ( class_exists( Whip::class ) ) {
+		// Check for CloudFlare's connecting IP
+		if ( isset( $_SERVER['HTTP_CF_CONNECTING_IP'] ) ) {
+			return $_SERVER['HTTP_CF_CONNECTING_IP'];
+		}
 
-			// Use a Whip library to get the valid IP address
-			$clientAddress = ( new Whip( Whip::ALL_METHODS ) )->getValidIpAddress();
-			if ( false !== $clientAddress ) {
-				return $clientAddress;
-				//return preg_replace( '/^::1$/', '127.0.0.1', $clientAddress );
-			}
-		} else {
-
-			// Check for CloudFlare's connecting IP
-			if ( isset( $_SERVER['HTTP_CF_CONNECTING_IP'] ) ) {
-				return $_SERVER['HTTP_CF_CONNECTING_IP'];
-			}
-
-			// Check for forwarded IP (proxy) and get the first valid IP
-			if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-				foreach ( explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] ) as $ip ) {
-					$ip = trim( $ip );
-					if ( filter_var( $ip, FILTER_VALIDATE_IP ) ) {
-						return $ip;
-					}
+		// Check for forwarded IP (proxy) and get the first valid IP
+		if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+			foreach ( explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] ) as $ip ) {
+				$ip = trim( $ip );
+				if ( filter_var( $ip, FILTER_VALIDATE_IP ) ) {
+					return $ip;
 				}
 			}
+		}
 
-			// Check for client IP
-			if ( isset( $_SERVER['HTTP_CLIENT_IP'] ) && filter_var( $_SERVER['HTTP_CLIENT_IP'], FILTER_VALIDATE_IP ) ) {
-				return $_SERVER['HTTP_CLIENT_IP'];
-			}
+		// Check for client IP
+		if ( isset( $_SERVER['HTTP_CLIENT_IP'] ) && filter_var( $_SERVER['HTTP_CLIENT_IP'], FILTER_VALIDATE_IP ) ) {
+			return $_SERVER['HTTP_CLIENT_IP'];
+		}
 
-			// Fallback to remote address
-			if ( isset( $_SERVER['REMOTE_ADDR'] ) && filter_var( $_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP ) ) {
-				return $_SERVER['REMOTE_ADDR'];
-			}
+		// Fallback to a remote address
+		if ( isset( $_SERVER['REMOTE_ADDR'] ) && filter_var( $_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP ) ) {
+			return $_SERVER['REMOTE_ADDR'];
 		}
 
 		// Fallback to localhost IP

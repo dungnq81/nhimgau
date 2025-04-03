@@ -78,12 +78,12 @@ mysql -uroot -proot -e "
 "
 
 # Create the 'nhimgau' database with utf8mb4 charset and utf8mb4_unicode_520_ci collation
-mysql -uroot -proot -e "
-    CREATE DATABASE IF NOT EXISTS nhimgau
-    CHARACTER SET utf8mb4
-    COLLATE utf8mb4_unicode_520_ci;
-"
-echo "Database 'nhimgau' has been created (or already exists) with utf8mb4 charset and utf8mb4_unicode_520_ci collation."
+#mysql -uroot -proot -e "
+#    CREATE DATABASE IF NOT EXISTS nhimgau
+#    CHARACTER SET utf8mb4
+#    COLLATE utf8mb4_unicode_520_ci;
+#"
+#echo "Database 'nhimgau' has been created (or already exists) with utf8mb4 charset and utf8mb4_unicode_520_ci collation."
 
 # Adjust permissions for the web directory
 chown -R www-data:www-data /var/www/html
@@ -96,6 +96,7 @@ if [ -f /home/vagrant/config/php.ini ]; then
 fi
 
 # Restart Apache to apply changes
+sudo a2enmod rewrite
 sudo systemctl restart apache2
 
 # Clean up package lists

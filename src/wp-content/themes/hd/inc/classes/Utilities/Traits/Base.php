@@ -2,9 +2,6 @@
 
 namespace HD\Utilities\Traits;
 
-use Detection\Exception\MobileDetectException;
-use Detection\MobileDetect;
-
 \defined( 'ABSPATH' ) || die;
 
 trait Base {
@@ -180,13 +177,8 @@ trait Base {
 
 	/**
 	 * @return bool
-	 * @throws MobileDetectException
 	 */
 	public static function isMobile(): bool {
-		if ( class_exists( MobileDetect::class ) ) {
-			return ( new MobileDetect() )->isMobile();
-		}
-
 		// Fallback to WordPress function
 		return wp_is_mobile();
 	}

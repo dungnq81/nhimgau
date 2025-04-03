@@ -1,59 +1,34 @@
 <?php return array(
     'root' => array(
-        'name' => 'themes/hd2025',
+        'name' => 'themes/hd',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '4b1e97303a0754ea33c1aebd97dfca0b1affadd5',
+        'reference' => '7c3f3aeb103df08761d84d4447be633c62a4b449',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        'matthiasmullie/minify' => array(
-            'dev_requirement' => false,
-            'replaced' => array(
-                0 => '*',
-            ),
-        ),
-        'mobiledetect/mobiledetectlib' => array(
-            'dev_requirement' => false,
-            'replaced' => array(
-                0 => '*',
-            ),
-        ),
         'roave/security-advisories' => array(
-            'dev_requirement' => false,
-            'replaced' => array(
-                0 => '*',
+            'pretty_version' => 'dev-latest',
+            'version' => 'dev-latest',
+            'reference' => '0b51a6c830ba6dd6c63715ceded239a62bf2274f',
+            'type' => 'metapackage',
+            'install_path' => null,
+            'aliases' => array(
+                0 => '9999999-dev',
             ),
+            'dev_requirement' => true,
         ),
-        'symfony/var-dumper' => array(
-            'dev_requirement' => false,
-            'replaced' => array(
-                0 => '*',
-            ),
-        ),
-        'symfony/yaml' => array(
-            'dev_requirement' => false,
-            'replaced' => array(
-                0 => '*',
-            ),
-        ),
-        'themes/hd2025' => array(
+        'themes/hd' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '4b1e97303a0754ea33c1aebd97dfca0b1affadd5',
+            'reference' => '7c3f3aeb103df08761d84d4447be633c62a4b449',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
-        ),
-        'vectorface/whip' => array(
-            'dev_requirement' => false,
-            'replaced' => array(
-                0 => '*',
-            ),
         ),
     ),
 );

@@ -1,7 +1,7 @@
 import * as path from 'path';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import postcssPurgecss from '@fullhuman/postcss-purgecss';
-import { sharedConfig } from '../../../vite.config.shared';
+import { sharedConfig } from '../../../../vite.config.shared';
 
 // THEME
 const directory = path.basename(path.resolve(__dirname));

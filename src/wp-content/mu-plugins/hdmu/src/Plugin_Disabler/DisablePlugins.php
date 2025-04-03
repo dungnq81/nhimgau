@@ -14,7 +14,7 @@ class DisablePlugins {
 	// ------------------------------------------------------
 
 	/**
-	 * Sets up the option filter, and optionally handles an array of plugins to disable
+	 * Sets up the option filter and optionally handles an array of plugins to disable
 	 *
 	 * @param array|null $disables Optional array of plugin filenames to disable
 	 */

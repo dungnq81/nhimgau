@@ -2,11 +2,8 @@
 
 namespace Addons;
 
-use Detection\Exception\MobileDetectException;
-use Detection\MobileDetect;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
-use Vectorface\Whip\Whip;
 use MatthiasMullie\Minify;
 
 \defined( 'ABSPATH' ) || exit;
@@ -878,39 +875,29 @@ final class Helper {
 	// --------------------------------------------------
 
 	public static function ipAddress(): string {
-		if ( class_exists( Whip::class ) ) {
+		// Check for CloudFlare's connecting IP
+		if ( isset( $_SERVER['HTTP_CF_CONNECTING_IP'] ) ) {
+			return $_SERVER['HTTP_CF_CONNECTING_IP'];
+		}
 
-			// Use a Whip library to get the valid IP address
-			$clientAddress = ( new Whip( Whip::ALL_METHODS ) )->getValidIpAddress();
-			if ( false !== $clientAddress ) {
-				return $clientAddress;
-			}
-		} else {
-
-			// Check for CloudFlare's connecting IP
-			if ( isset( $_SERVER['HTTP_CF_CONNECTING_IP'] ) ) {
-				return $_SERVER['HTTP_CF_CONNECTING_IP'];
-			}
-
-			// Check for forwarded IP (proxy) and get the first valid IP
-			if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-				foreach ( explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] ) as $ip ) {
-					$ip = trim( $ip );
-					if ( filter_var( $ip, FILTER_VALIDATE_IP ) ) {
-						return $ip;
-					}
+		// Check for forwarded IP (proxy) and get the first valid IP
+		if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+			foreach ( explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] ) as $ip ) {
+				$ip = trim( $ip );
+				if ( filter_var( $ip, FILTER_VALIDATE_IP ) ) {
+					return $ip;
 				}
 			}
+		}
 
-			// Check for client IP
-			if ( isset( $_SERVER['HTTP_CLIENT_IP'] ) && filter_var( $_SERVER['HTTP_CLIENT_IP'], FILTER_VALIDATE_IP ) ) {
-				return $_SERVER['HTTP_CLIENT_IP'];
-			}
+		// Check for client IP
+		if ( isset( $_SERVER['HTTP_CLIENT_IP'] ) && filter_var( $_SERVER['HTTP_CLIENT_IP'], FILTER_VALIDATE_IP ) ) {
+			return $_SERVER['HTTP_CLIENT_IP'];
+		}
 
-			// Fallback to a remote address
-			if ( isset( $_SERVER['REMOTE_ADDR'] ) && filter_var( $_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP ) ) {
-				return $_SERVER['REMOTE_ADDR'];
-			}
+		// Fallback to a remote address
+		if ( isset( $_SERVER['REMOTE_ADDR'] ) && filter_var( $_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP ) ) {
+			return $_SERVER['REMOTE_ADDR'];
 		}
 
 		// Fallback to localhost IP
@@ -921,13 +908,8 @@ final class Helper {
 
 	/**
 	 * @return bool
-	 * @throws MobileDetectException
 	 */
 	public static function isMobile(): bool {
-		if ( class_exists( MobileDetect::class ) ) {
-			return ( new MobileDetect() )->isMobile();
-		}
-
 		// Fallback to WordPress function
 		return wp_is_mobile();
 	}
@@ -951,7 +933,6 @@ final class Helper {
 	 * @return bool
 	 */
 	public static function checkPluginInstalled( string $plugin_slug ): bool {
-
 		// Ensure required functions are available
 		if ( ! function_exists( 'get_plugins' ) || ! function_exists( 'is_plugin_active' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';

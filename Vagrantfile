@@ -9,13 +9,15 @@ Vagrant.configure("2") do |config|
     # Forward ports:
     # - Apache (Guest 80 → Host 8080)
     # - MySQL (Guest 3306 → Host 3307)
+    # - Phpmyadmin (Guest 8081 → Host 8081)
     config.vm.network "forwarded_port", guest: 80, host: 8080, auto_correct: true
     config.vm.network "forwarded_port", guest: 3306, host: 3307, auto_correct: true
     config.vm.network "forwarded_port", guest: 8081, host: 8081, auto_correct: true
 
     # Sync folders between host and guest
-    config.vm.synced_folder "./src", "/var/www/html", type: "virtualbox", create: true
-    config.vm.synced_folder "./config", "/home/vagrant/config", type: "virtualbox"
+    config.vm.synced_folder ".", "/vagrant", disabled: true
+    config.vm.synced_folder ".", "/var/www/html", type: "virtualbox", create: true, owner: "www-data", group: "www-data", mount_options: ["dmode=775,fmode=664"]
+    config.vm.synced_folder "./config/local", "/home/vagrant/config", type: "virtualbox"
 
     # Configure VM resources
     config.vm.provider "virtualbox" do |vb|
