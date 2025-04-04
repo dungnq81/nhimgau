@@ -171,12 +171,12 @@ final class Helper {
 	public static function currentLanguage(): mixed {
 		// Polylang
 		if ( function_exists( "pll_current_language" ) ) {
-			return pll_current_language( "slug" );
+			return \pll_current_language( "slug" );
 		}
 
 		// Weglot
 		if ( function_exists( "weglot_get_current_language" ) ) {
-			return weglot_get_current_language();
+			return \weglot_get_current_language();
 		}
 
 		// WMPL
