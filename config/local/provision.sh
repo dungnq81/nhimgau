@@ -1,9 +1,5 @@
 #!/bin/bash
-
-# Update system
 sudo apt-get update -y && sudo apt-get upgrade -y
-
-# Install required dependencies
 sudo apt-get install -y software-properties-common tzdata debconf-utils
 
 # Add Ondrej's PPA repository for PHP 8.2
@@ -45,7 +41,6 @@ sudo systemctl enable --now mysql
 sleep 5
 
 # Ensure MySQL service is running before applying changes
-echo "Waiting for MySQL to start..."
 until systemctl is-active --quiet mysql; do
     sleep 2
 done
@@ -80,12 +75,12 @@ mysql -uroot -proot -e "
 "
 
 # Create the 'nhimgau' database with utf8mb4 charset and utf8mb4_unicode_520_ci collation
-#mysql -uroot -proot -e "
-#    CREATE DATABASE IF NOT EXISTS nhimgau
-#    CHARACTER SET utf8mb4
-#    COLLATE utf8mb4_unicode_520_ci;
-#"
-#echo "Database 'nhimgau' has been created (or already exists) with utf8mb4 charset and utf8mb4_unicode_520_ci collation."
+mysql -uroot -proot -e "
+    CREATE DATABASE IF NOT EXISTS nhimgau
+    CHARACTER SET utf8mb4
+    COLLATE utf8mb4_unicode_520_ci;
+"
+echo "Database 'nhimgau' has been created (or already exists) with utf8mb4 charset and utf8mb4_unicode_520_ci collation."
 
 # Adjust permissions for the web directory
 sudo chown -R www-data:www-data /var/www/html
@@ -131,7 +126,9 @@ fi
 sudo a2ensite phpmyadmin.conf
 
 # Listen 8081
+echo "Ensuring Apache is listening on port 8081 for phpMyAdmin..."
 grep -q "Listen 8081" /etc/apache2/ports.conf || echo "Listen 8081" | sudo tee -a /etc/apache2/ports.conf
+echo "Port 8081 has been configured successfully!"
 
 # Restart Apache to apply changes
 sudo a2enmod php8.2
