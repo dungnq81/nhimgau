@@ -25,20 +25,29 @@ trait Wp {
 	/**
 	 * @param $slug
 	 * @param array $args
+	 * @param bool $use_cache
 	 * @param int $cache_in_hours
 	 *
 	 * @return void
 	 */
-	public static function blockTemplate( $slug, array $args = [], int $cache_in_hours = 12 ): void {
+	public static function blockTemplate( $slug, array $args = [], bool $use_cache = false, int $cache_in_hours = 12 ): void {
+		if ( ! $use_cache ) {
+			ob_start();
+			get_template_part( $slug, null, $args );
+			$output = ob_get_clean();
+			echo $output;
+
+			return;
+		}
+
 		$cache_key     = 'hd_block_cache_' . md5( $slug . serialize( $args ) );
 		$cached_output = get_transient( $cache_key );
 		if ( $cached_output !== false ) {
-			if ( mb_strlen( $cached_output, 'UTF-8' ) <= 10240 ) { // 100kb
+			if ( mb_strlen( $cached_output, 'UTF-8' ) <= 10240 ) { // 10kb
 				echo $cached_output;
 
 				return;
 			}
-
 			delete_transient( $cache_key );
 		}
 

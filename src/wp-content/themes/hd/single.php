@@ -39,7 +39,7 @@ $featured_banner   = \HD\Helper::getField( 'featured_banner', $post->ID );
 ?>
 <section class="section section-page section-single singular">
     <div class="container flex flex-x">
-        <?php \HD\Helper::blockTemplate( 'template-blocks/social-share' ); ?>
+        <?php \HD\Helper::blockTemplate( 'template-blocks/social-share', [], true ); ?>
         <div class="content">
             <h1 class="heading-title" <?= \HD\Helper::microdata( 'headline' ) ?>><?= $alternative_title ?: get_the_title() ?></h1>
             <div class="meta">
