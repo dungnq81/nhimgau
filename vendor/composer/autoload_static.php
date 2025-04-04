@@ -96,8 +96,6 @@ class ComposerStaticInit1cd253908ea6fd72a5565cf56a3a68d5
         'M' => 
         array (
             'Mustangostang\\' => 14,
-            'MatthiasMullie\\PathConverter\\' => 29,
-            'MatthiasMullie\\Minify\\' => 22,
             'MabeEnum\\' => 9,
         ),
         'J' => 
@@ -243,14 +241,6 @@ class ComposerStaticInit1cd253908ea6fd72a5565cf56a3a68d5
         'Mustangostang\\' => 
         array (
             0 => __DIR__ . '/..' . '/wp-cli/mustangostang-spyc/src',
-        ),
-        'MatthiasMullie\\PathConverter\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/matthiasmullie/path-converter/src',
-        ),
-        'MatthiasMullie\\Minify\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/matthiasmullie/minify/src',
         ),
         'MabeEnum\\' => 
         array (

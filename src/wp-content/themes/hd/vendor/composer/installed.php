@@ -3,7 +3,7 @@
         'name' => 'themes/hd',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '9381225efe20ed51e5194aaccd036501a4d87527',
+        'reference' => 'a04921f9310f80e9597e62b7dec4f223e341be45',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,10 +11,22 @@
     ),
     'versions' => array(
         'matthiasmullie/minify' => array(
+            'pretty_version' => '1.3.73',
+            'version' => '1.3.73.0',
+            'reference' => 'cb7a9297b4ab070909cefade30ee95054d4ae87a',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../matthiasmullie/minify',
+            'aliases' => array(),
             'dev_requirement' => false,
-            'replaced' => array(
-                0 => '*',
-            ),
+        ),
+        'matthiasmullie/path-converter' => array(
+            'pretty_version' => '1.1.3',
+            'version' => '1.1.3.0',
+            'reference' => 'e7d13b2c7e2f2268e1424aaed02085518afa02d9',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../matthiasmullie/path-converter',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
@@ -27,16 +39,10 @@
             ),
             'dev_requirement' => true,
         ),
-        'symfony/var-dumper' => array(
-            'dev_requirement' => false,
-            'replaced' => array(
-                0 => '*',
-            ),
-        ),
         'themes/hd' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '9381225efe20ed51e5194aaccd036501a4d87527',
+            'reference' => 'a04921f9310f80e9597e62b7dec4f223e341be45',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

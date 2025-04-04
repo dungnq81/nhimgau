@@ -131,7 +131,7 @@ final class Theme {
 		( Optimizer::get_instance() );
 		( Shortcode::get_instance() );
 
-		// autoload
+		// autoload file
 		$dirs = [
 			'template_structures' => THEME_PATH . 'inc/structures',
 			'template_ajax'       => THEME_PATH . 'inc/ajax',
