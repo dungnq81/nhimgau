@@ -11,4 +11,5 @@ Thumbs.db
 wp-content/uploads/*
 !wp-content/uploads/.gitkeep
 wp-content/wflogs/
-wp-content/cache/
+wp-content/cache/*
+!wp-content/cache/.gitkeep
