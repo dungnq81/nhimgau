@@ -95,4 +95,4 @@ Frontend assets used to enhance the theme.
 ---
 
 **Author**: Gaudev  
-**License**: GPLv2 or later  
+**License**: MIT 

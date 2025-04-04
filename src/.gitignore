@@ -9,5 +9,6 @@ Thumbs.db
 
 # WordPress
 wp-content/uploads/*
+!wp-content/uploads/.gitkeep
 wp-content/wflogs/
 wp-content/cache/

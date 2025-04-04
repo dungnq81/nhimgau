@@ -129,7 +129,6 @@ trait Wp {
 			}
 
 			// Extra check for PHP files
-
 			// Check if the file is a malicious PHP script
 			if ( self::_isMaliciousFile( $file_path ) ) {
 				self::errorLog( "Skipped potentially malicious file: $file_path" );
@@ -175,7 +174,7 @@ trait Wp {
 			return false;
 		}
 
-		$chunk_size = 8192; // 8kb
+		$chunk_size = 10240; // 10kb
 		$content    = fread( $handle, $chunk_size );
 		fclose( $handle );
 

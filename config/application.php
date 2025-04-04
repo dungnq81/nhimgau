@@ -107,7 +107,7 @@ Config::define( 'WP_CACHE_KEY_SALT', env( 'WP_CACHE_KEY_SALT' ) );
  */
 
 Config::define( 'DISALLOW_FILE_EDIT', true ); // Disable the plugin and theme file editor in the admin and
-Config::define( 'DISALLOW_FILE_MODS', false ); // disable plugin and theme updates and installation from the admin
+Config::define( 'DISALLOW_FILE_MODS', true ); // disable plugin and theme updates and installation from the admin
 Config::define( 'WP_DEBUG', false ); // Debugging Settings
 
 ini_set( 'display_errors', '0' );
