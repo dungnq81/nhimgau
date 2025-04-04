@@ -502,11 +502,12 @@ final class Helper {
 
 	/**
 	 * @param string $post_type
+	 * @param bool $output_object
 	 * @param int $cache_in_hours
 	 *
-	 * @return array|null
+	 * @return array|false|mixed|null
 	 */
-	public static function getCustomPostOption( string $post_type, int $cache_in_hours = 12 ): ?array {
+	public static function getCustomPostOption( string $post_type, bool $output_object = false, int $cache_in_hours = 12 ): mixed {
 		if ( empty( $post_type ) ) {
 			return null;
 		}
@@ -549,6 +550,11 @@ final class Helper {
 				'post_content' => $post->post_content,
 				'post_excerpt' => $post->post_excerpt,
 			];
+
+			if ( $output_object ) {
+				$cached_data = (object) $cached_data;
+			}
+
 			set_transient( $cache_key, $cached_data, $cache_in_hours * HOUR_IN_SECONDS );
 		}
 
@@ -564,16 +570,9 @@ final class Helper {
 	 * @param bool $encode
 	 * @param int $cache_in_hours
 	 *
-	 * @return array|false|\WP_Error
+	 * @return array|false|int|\WP_Error
 	 */
-	public static function updateCustomPostOption(
-		string $mixed,
-		string $post_type,
-		string $code_type,
-		bool $encode = false,
-		int $cache_in_hours = 12
-	): \WP_Error|false|array {
-
+	public static function updateCustomPostOption( string $mixed, string $post_type, string $code_type, bool $encode = false, int $cache_in_hours = 12 ): \WP_Error|false|int|array {
 		if ( empty( $post_type ) || empty( $code_type ) ) {
 			return false;
 		}
@@ -598,7 +597,7 @@ final class Helper {
 
 		// Update `post` if it already exists, otherwise create a new one.
 		$post = self::getCustomPostOption( $post_type );
-		if ( $post ) {
+		if ( $post && isset( $post['ID'] ) ) {
 			$post_data['ID'] = $post['ID'];
 			$r               = wp_update_post( wp_slash( $post_data ), true );
 		} else {
@@ -643,8 +642,8 @@ final class Helper {
 		}
 
 		$post = self::getCustomPostOption( $post_type );
-		if ( isset( $post->post_content ) ) {
-			return $encode ? wp_unslash( base64_decode( $post->post_content ) ) : wp_unslash( $post->post_content );
+		if ( $post && isset( $post['post_content'] ) ) {
+			return $encode ? wp_unslash( base64_decode( $post['post_content'] ) ) : wp_unslash( $post['post_content'] );
 		}
 
 		return '';

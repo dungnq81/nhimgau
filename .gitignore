@@ -1,14 +1,11 @@
 # Node artifact files
 node_modules/
 
-# JetBrains IDE
+# IDEs and Environments
 .idea/
-
-# VsCode
 .vscode/
-
-# Vagrant
 .vagrant/
+.docker/
 
 # Unit test reports
 TEST*.xml

@@ -15,9 +15,8 @@ Vagrant.configure("2") do |config|
     config.vm.network "forwarded_port", guest: 8081, host: 8081, auto_correct: true
 
     # Sync folders between host and guest
-    # Exclude: [".vagrant/", "node_modules/"]
     config.vm.synced_folder ".", "/vagrant", disabled: true
-    config.vm.synced_folder ".", "/var/www/html", type: "rsync", create: true, owner: "www-data", group: "www-data", rsync__exclude: ["node_modules/"]
+    config.vm.synced_folder ".", "/var/www/html", type: "virtualbox", create: true, owner: "www-data", group: "www-data", mount_options: ["dmode=755", "fmode=755"]
     config.vm.synced_folder "./config/local", "/home/vagrant/config", type: "virtualbox"
 
     # Configure VM resources

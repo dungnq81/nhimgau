@@ -1,12 +1,11 @@
 # node_modules
 node_modules
 
-# docker
-.docker
-
-# vagrant
+# IDEs and Environments
+.idea
+.vscode
 .vagrant
-Vagrantfile
+.docker
 
 # Git
 .git
@@ -20,10 +19,6 @@ yarn-error.log
 
 composer.lock
 pnpm-lock.yaml
-
-# IDE
-.idea
-.vscode
 
 # other
 database
