@@ -133,6 +133,12 @@ Config::define( 'DISABLED_PLUGINS', [
 	//'wp-rocket/wp-rocket.php'
 ] );
 
+/** FluentSMTP */
+if ( env( 'FLUENTMAIL_SMTP_USERNAME' ) && env( 'FLUENTMAIL_SMTP_PASSWORD' ) ) {
+	Config::define( 'FLUENTMAIL_SMTP_USERNAME', env( 'FLUENTMAIL_SMTP_USERNAME' ) );
+	Config::define( 'FLUENTMAIL_SMTP_PASSWORD', env( 'FLUENTMAIL_SMTP_PASSWORD' ) );
+}
+
 $env_config = __DIR__ . '/environments/' . WP_ENV . '.php';
 if ( file_exists( $env_config ) ) {
 	require_once $env_config;
@@ -162,7 +168,3 @@ if ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ) {
 //if ( ! defined( 'FS_METHOD' ) ) {
 //	define( 'FS_METHOD', 'direct' );
 //}
-
-/** FluentSMTP */
-const FLUENTMAIL_SMTP_USERNAME = 'official.webhd@gmail.com';
-const FLUENTMAIL_SMTP_PASSWORD = 'obvyigyczmcbxgji';
