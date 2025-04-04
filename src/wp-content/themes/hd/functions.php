@@ -24,13 +24,7 @@ define( 'THEME_URL', untrailingslashit( esc_url( get_template_directory_uri() ) 
 const INC_PATH   = THEME_PATH . 'inc' . DIRECTORY_SEPARATOR;
 const ASSETS_URL = THEME_URL . 'assets/';
 
-if ( ! file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-	error_log( 'Autoloader not found: ' . __DIR__ . '/vendor/autoload.php' );
-	wp_die( __( 'Error locating autoloader. Please run <code>composer install</code>.', TEXT_DOMAIN ) );
-}
-
 require_once __DIR__ . '/vendor/autoload.php';
-
 require_once __DIR__ . '/inc/settings.php';
 require_once __DIR__ . '/inc/helpers.php';
 require_once __DIR__ . '/inc/css.php';

@@ -1,0 +1,29 @@
+# node_modules
+node_modules
+
+# docker
+.docker
+
+# vagrant
+.vagrant
+Vagrantfile
+
+# Git
+.git
+.gitignore
+
+# log và temp
+npm-debug.log
+yarn-error.log
+*.log
+/tmp
+
+composer.lock
+pnpm-lock.yaml
+
+# IDE
+.idea
+.vscode
+
+# other
+database
