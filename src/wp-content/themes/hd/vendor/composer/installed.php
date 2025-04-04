@@ -3,7 +3,7 @@
         'name' => 'themes/hd',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '2ea07faea0979b3e17d65dde8d7bdd5d7cf8961a',
+        'reference' => '9381225efe20ed51e5194aaccd036501a4d87527',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -17,10 +17,15 @@
             ),
         ),
         'roave/security-advisories' => array(
-            'dev_requirement' => false,
-            'replaced' => array(
-                0 => '*',
+            'pretty_version' => 'dev-latest',
+            'version' => 'dev-latest',
+            'reference' => '7d7e09f5c5ae97767252450bdae6bc4ec6b8f53a',
+            'type' => 'metapackage',
+            'install_path' => null,
+            'aliases' => array(
+                0 => '9999999-dev',
             ),
+            'dev_requirement' => true,
         ),
         'symfony/var-dumper' => array(
             'dev_requirement' => false,
@@ -31,7 +36,7 @@
         'themes/hd' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '2ea07faea0979b3e17d65dde8d7bdd5d7cf8961a',
+            'reference' => '9381225efe20ed51e5194aaccd036501a4d87527',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
