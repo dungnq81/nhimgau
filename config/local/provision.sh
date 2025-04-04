@@ -6,6 +6,14 @@ sudo apt-get install -y software-properties-common tzdata debconf-utils
 add-apt-repository ppa:ondrej/php -y
 sudo apt-get update -y
 
+# alias .bashrc
+if [ ! -f /home/vagrant/.bashrc ]; then
+  touch /home/vagrant/.bashrc
+fi
+
+echo "alias wp='/var/www/html/vendor/bin/wp'" >> /home/vagrant/.bashrc
+source /home/vagrant/.bashrc
+
 # Install Apache
 echo "Installing Apache..."
 apt-get install -y apache2
