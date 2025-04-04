@@ -17,7 +17,9 @@
     "require": {
         "php": ">=8.2"
     },
-    "require-dev": {
-        "roave/security-advisories": "dev-latest"
+    "replace": {
+        "matthiasmullie/minify": "*",
+        "symfony/var-dumper": "*",
+        "roave/security-advisories": "*"
     }
 }

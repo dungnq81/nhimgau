@@ -1,6 +1,6 @@
 {
     "name": "plugins/hd-addons",
-    "type": "wordpress-plugin",
+    "type": "project",
     "license": "MIT",
     "authors": [
         {
@@ -20,5 +20,9 @@
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest"
+    },
+    "replace": {
+        "matthiasmullie/minify": "*",
+        "symfony/var-dumper": "*"
     }
 }

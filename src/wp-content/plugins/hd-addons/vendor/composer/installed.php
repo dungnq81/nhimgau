@@ -3,8 +3,8 @@
         'name' => 'plugins/hd-addons',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '857515bfa495199102fc732431bcf682e01e5fbb',
-        'type' => 'wordpress-plugin',
+        'reference' => '2ea07faea0979b3e17d65dde8d7bdd5d7cf8961a',
+        'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
@@ -19,11 +19,17 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'matthiasmullie/minify' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
+        ),
         'plugins/hd-addons' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '857515bfa495199102fc732431bcf682e01e5fbb',
-            'type' => 'wordpress-plugin',
+            'reference' => '2ea07faea0979b3e17d65dde8d7bdd5d7cf8961a',
+            'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
@@ -56,6 +62,12 @@
             'install_path' => __DIR__ . '/../symfony/polyfill-ctype',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'symfony/var-dumper' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
         ),
         'symfony/yaml' => array(
             'pretty_version' => 'v7.2.5',
