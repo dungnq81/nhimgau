@@ -51,14 +51,12 @@ final class Shortcode {
 				'title' => '',
 				'email' => '',
 				'class' => '',
-				'id'    => Helper::escAttr( uniqid( 'mail-', false ) ),
 			],
 			$atts,
 			'safe_mail'
 		);
 
 		$attributes['title'] = $atts['title'] ? Helper::escAttr( $atts['title'] ) : Helper::escAttr( $atts['email'] );
-		$attributes['id']    = $atts['id'] ? Helper::escAttr( $atts['id'] ) : Helper::escAttr( uniqid( 'mail-', false ) );
 
 		if ( $atts['class'] ) {
 			$attributes['class'] = Helper::escAttr( $atts['class'] );
@@ -154,11 +152,15 @@ final class Shortcode {
 	 * @return string
 	 */
 	public function vertical_menu( array $atts = [] ): string {
+		static $vertical_menu_counter = 0;
+		$id = 'menu-' . substr( md5( __METHOD__ . ++ $vertical_menu_counter ), 0, 10 );
+
 		$atts = shortcode_atts(
 			[
 				'location'         => 'mobile-nav',
 				'class'            => 'menu vertical vertical-menu mobile-menu',
-				'id'               => Helper::escAttr( uniqid( 'menu-', false ) ),
+				'extra_class'      => 'mobile-nav',
+				'id'               => Helper::escAttr( $id ),
 				'depth'            => 4,
 				'li_class'         => '',
 				'li_depth_class'   => '',
@@ -169,10 +171,11 @@ final class Shortcode {
 			'vertical_menu'
 		);
 
-		$location = $atts['location'] ?: 'mobile-nav';
-		$class    = $atts['class'] ? Helper::escAttr( $atts['class'] ) : '';
-		$depth    = $atts['depth'] ? absint( $atts['depth'] ) : 1;
-		$id       = $atts['id'] ?: Helper::escAttr( uniqid( 'menu-', false ) );
+		$location    = $atts['location'] ? Helper::escAttr( $atts['location'] ) : 'mobile-nav';
+		$class       = $atts['class'] ? Helper::escAttr( $atts['class'] ) : '';
+		$extra_class = $atts['extra_class'] ? Helper::escAttr( $atts['extra_class'] ) : '';
+		$depth       = $atts['depth'] ? absint( $atts['depth'] ) : 1;
+		$id          = $atts['id'] ?: Helper::escAttr( $id );
 
 		$li_class         = ! empty( $atts['li_class'] ) ? Helper::escAttr( $atts['li_class'] ) : '';
 		$li_depth_class   = ! empty( $atts['li_depth_class'] ) ? Helper::escAttr( $atts['li_depth_class'] ) : '';
@@ -181,7 +184,7 @@ final class Shortcode {
 
 		return Helper::verticalNav( [
 			'menu_id'          => $id,
-			'menu_class'       => $class,
+			'menu_class'       => ! empty( $extra_class ) ? $class . ' ' . $extra_class : $class,
 			'theme_location'   => $location,
 			'depth'            => $depth,
 			'li_class'         => $li_class,
@@ -200,11 +203,15 @@ final class Shortcode {
 	 * @return string
 	 */
 	public function horizontal_menu( array $atts = [] ): string {
+		static $horizontal_menu_counter = 0;
+		$id = 'menu-' . substr( md5( __METHOD__ . ++ $horizontal_menu_counter ), 0, 10 );
+
 		$atts = shortcode_atts(
 			[
 				'location'         => 'main-nav',
 				'class'            => 'dropdown menu horizontal horizontal-menu desktop-menu',
-				'id'               => Helper::escAttr( uniqid( 'menu-', false ) ),
+				'extra_class'      => 'main-nav',
+				'id'               => Helper::escAttr( $id ),
 				'depth'            => 4,
 				'li_class'         => '',
 				'li_depth_class'   => '',
@@ -215,10 +222,11 @@ final class Shortcode {
 			'horizontal_menu'
 		);
 
-		$location = $atts['location'] ?: 'main-nav';
-		$class    = $atts['class'] ? Helper::escAttr( $atts['class'] ) : '';
-		$depth    = $atts['depth'] ? absint( $atts['depth'] ) : 1;
-		$id       = $atts['id'] ?: Helper::escAttr( uniqid( 'menu-', false ) );
+		$location    = $atts['location'] ? Helper::escAttr( $atts['location'] ) : 'main-nav';
+		$class       = $atts['class'] ? Helper::escAttr( $atts['class'] ) : '';
+		$extra_class = $atts['extra_class'] ? Helper::escAttr( $atts['extra_class'] ) : '';
+		$depth       = $atts['depth'] ? absint( $atts['depth'] ) : 1;
+		$id          = $atts['id'] ?: Helper::escAttr( $id );
 
 		$li_class         = ! empty( $atts['li_class'] ) ? Helper::escAttr( $atts['li_class'] ) : '';
 		$li_depth_class   = ! empty( $atts['li_depth_class'] ) ? Helper::escAttr( $atts['li_depth_class'] ) : '';
@@ -227,7 +235,7 @@ final class Shortcode {
 
 		return Helper::horizontalNav( [
 			'menu_id'          => $id,
-			'menu_class'       => $class,
+			'menu_class'       => ! empty( $extra_class ) ? $class . ' ' . $extra_class : $class,
 			'theme_location'   => $location,
 			'depth'            => $depth,
 			'li_class'         => $li_class,
@@ -253,7 +261,7 @@ final class Shortcode {
 				'class'           => '',
 			],
 			$atts,
-			'off_canvas_button'
+			'offcanvas_button'
 		);
 
 		$title = $atts['title'] ?: __( 'Menu', TEXT_DOMAIN );
@@ -286,14 +294,15 @@ final class Shortcode {
 	public function menu_logo( array $atts = [] ): string {
 		$atts = shortcode_atts(
 			[
-				'heading' => 'h1',
+				'heading' => false,
+				'title'   => false,
 				'class'   => 'logo',
 			],
 			$atts,
 			'menu_logo'
 		);
 
-		return Helper::siteTitleOrLogo( false, $atts['heading'], $atts['class'] );
+		return Helper::siteTitleOrLogo( false, $atts['heading'], $atts['title'], $atts['class'] );
 	}
 
 	// ------------------------------------------------------
@@ -324,12 +333,15 @@ final class Shortcode {
 	 * @return string
 	 */
 	public function inline_search( array $atts = [] ): string {
+		static $inline_search_counter = 0;
+		$id = 'search-' . substr( md5( __METHOD__ . ++ $inline_search_counter ), 0, 10 );
+
 		$atts = shortcode_atts(
 			[
 				'title'       => '',
 				'placeholder' => '',
 				'class'       => '',
-				'id'          => Helper::escAttr( uniqid( 'search-', false ) ),
+				'id'          => Helper::escAttr( $id ),
 			],
 			$atts,
 			'inline_search'
@@ -338,7 +350,7 @@ final class Shortcode {
 		$title             = $atts['title'] ?: '';
 		$title_for         = __( 'Search', TEXT_DOMAIN );
 		$placeholder_title = $atts['placeholder'] ?: __( 'Search...', TEXT_DOMAIN );
-		$id                = $atts['id'] ? Helper::escAttr( $atts['id'] ) : Helper::escAttr( uniqid( 'search-', false ) );
+		$id                = $atts['id'] ? Helper::escAttr( $atts['id'] ) : Helper::escAttr( $id );
 		$class             = $atts['class'] ? ' ' . Helper::escAttr( $atts['class'] ) : '';
 
 		ob_start();
@@ -347,8 +359,8 @@ final class Shortcode {
         <form action="<?= Helper::home() ?>" class="frm-search" method="get" accept-charset="UTF-8" data-abide novalidate>
             <label for="<?= $id ?>" class="screen-reader-text"><?= $title_for ?></label>
             <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" autocomplete="off" name="s" value="<?= get_search_query() ?>" placeholder="<?= $placeholder_title; ?>">
-            <button type="submit" data-fa="" aria-label="Search"><span><?= $title ?></span></button>
-			<?php echo Helper::isWoocommerceActive() ? '<input type="hidden" name="post_type" value="product">' : ''; ?>
+            <button type="submit" data-fa="" aria-label="Search"><?= $title ? '<span>' . $title . '</span>' : '' ?></button>
+	        <?php echo Helper::isWoocommerceActive() ? '<input type="hidden" name="post_type" value="product">' : ''; ?>
         </form>
 		<?php
 
@@ -363,22 +375,25 @@ final class Shortcode {
 	 * @return string
 	 */
 	public function dropdown_search( array $atts = [] ): string {
+		static $dropdown_search_counter = 0;
+		$id = 'search-' . substr( md5( __METHOD__ . ++ $dropdown_search_counter ), 0, 10 );
+
 		$atts = shortcode_atts(
 			[
 				'title' => '',
 				'class' => '',
-				'id'    => Helper::escAttr( uniqid( 'search-', false ) ),
+				'id'    => Helper::escAttr( $id ),
 			],
 			$atts,
 			'dropdown_search'
 		);
 
-		$title             = $atts['title'] ?: __( 'Search', TEXT_DOMAIN );
+		$title             = $atts['title'] ?: __( 'Tìm kiếm', TEXT_DOMAIN );
 		$title_for         = __( 'Search for', TEXT_DOMAIN );
-		$placeholder_title = Helper::escAttr( __( 'Search ...', TEXT_DOMAIN ) );
+		$placeholder_title = Helper::escAttr( __( 'Tìm kiếm ...', TEXT_DOMAIN ) );
 		$close_title       = __( 'Close', TEXT_DOMAIN );
-		$id                = $atts['id'] ? Helper::escAttr( $atts['id'] ) : Helper::escAttr( uniqid( 'search-', false ) );
 		$class             = $atts['class'] ? ' ' . Helper::escAttr( $atts['class'] ) : '';
+		$id                = $atts['id'] ? Helper::escAttr( $atts['id'] ) : Helper::escAttr( $id );
 
 		ob_start();
 
@@ -392,7 +407,7 @@ final class Shortcode {
                     <button class="btn-s" type="submit" data-fa="" aria-label="Search"><span><?= $title ?></span></button>
                     <button class="trigger-s-close" type="button" data-fa="" aria-label="Close"><span><?= $close_title ?></span></button>
                 </div>
-				<?php echo Helper::isWoocommerceActive() ? '<input type="hidden" name="post_type" value="product">' : ''; ?>
+	            <?php echo Helper::isWoocommerceActive() ? '<input type="hidden" name="post_type" value="product">' : ''; ?>
             </form>
         </div>
 		<?php
