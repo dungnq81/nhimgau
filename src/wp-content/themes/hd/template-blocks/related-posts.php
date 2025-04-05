@@ -2,10 +2,11 @@
 
 \defined( 'ABSPATH' ) || die;
 
-$post_id  = $args['post_id'] ?? 0;
-$taxonomy = $args['taxonomy'] ?? 'category';
-$title    = $args['title'] ?? '';
-$max      = $args['max'] ?? 6;
+$title     = $args['title'] ?? '';
+$title_tag = $args['title_tag'] ?? 'p';
+$post_id   = $args['id'] ?? 0;
+$taxonomy  = $args['taxonomy'] ?? 'category';
+$max       = $args['max'] ?? 6;
 
 $posts = \HD\Helper::getRelatedPosts( $post_id, $taxonomy, $max );
 if ( ! $post_id || ! $posts ) {
@@ -15,7 +16,7 @@ if ( ! $post_id || ! $posts ) {
 ?>
 <section class="section section-related section-related-post archive">
     <div class="container">
-        <?php echo $title ? '<p class="related-title">' . $title . '</p>' : ''; ?>
+        <?php echo $title ? '<' . $title_tag . ' class="related-title">' . $title . '</' . $title_tag . '>' : ''; ?>
         <div class="posts-list archive-list items-list">
             <?php
             $_data = [
@@ -25,11 +26,10 @@ if ( ! $post_id || ! $posts ) {
                 'autoplay'   => true,
                 '_gap'       => true,
             ];
-            try {
-                $swiper_data = json_encode( $_data, JSON_THROW_ON_ERROR | JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE );
-            } catch ( \JsonException $e ) {}
 
+            $swiper_data = json_encode( $_data, JSON_THROW_ON_ERROR | JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE );
             if ( $swiper_data ) :
+
             ?>
             <div class="swiper-container">
                 <div class="w-swiper swiper" data-options='<?= $swiper_data ?>'>

@@ -87,6 +87,7 @@ EOF
 echo "Database 'nhimgau' has been created (or already exists) with utf8mb4 charset and utf8mb4_unicode_520_ci collation."
 
 # Adjust web directory permissions
+echo "Adjusting web directory permissions..."
 sudo chown -R www-data:www-data /var/www/html
 sudo chmod -R 755 /var/www/html
 
@@ -102,7 +103,16 @@ if [ -f /home/vagrant/config/php.ini ]; then
     sudo chmod 644 /etc/php/8.2/apache2/conf.d/99-php.ini
 fi
 
+# Install Composer if not already installed
+if ! [ -x "$(command -v composer)" ]; then
+    echo "Installing Composer..."
+    curl -sS https://getcomposer.org/installer | php
+    sudo mv composer.phar /usr/local/bin/composer
+    sudo chmod +x /usr/local/bin/composer
+fi
+
 # Install WP CLI dependencies if needed
+echo "Installing WP CLI dependencies..."
 if [ -f /var/www/html/composer.json ]; then
     cd /var/www/html && composer install
 fi
