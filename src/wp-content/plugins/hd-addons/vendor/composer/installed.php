@@ -1,15 +1,24 @@
 <?php return array(
     'root' => array(
-        'name' => 'plugins/hd-addons',
+        'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'a04921f9310f80e9597e62b7dec4f223e341be45',
+        'reference' => '3d956cd44e865c732901ba0518679adec4e339e3',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
+        '__root__' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '3d956cd44e865c732901ba0518679adec4e339e3',
+            'type' => 'project',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'enshrined/svg-sanitize' => array(
             'pretty_version' => '0.20.0',
             'version' => '0.20.0.0',
@@ -37,19 +46,10 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'plugins/hd-addons' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => 'a04921f9310f80e9597e62b7dec4f223e341be45',
-            'type' => 'project',
-            'install_path' => __DIR__ . '/../../',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => '7d7e09f5c5ae97767252450bdae6bc4ec6b8f53a',
+            'reference' => '975c081c7e430d0316a94047e5d8ab26e0a8f49e',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(

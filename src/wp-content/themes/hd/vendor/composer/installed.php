@@ -1,15 +1,24 @@
 <?php return array(
     'root' => array(
-        'name' => 'themes/hd',
+        'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'a04921f9310f80e9597e62b7dec4f223e341be45',
-        'type' => 'project',
+        'reference' => '3d956cd44e865c732901ba0518679adec4e339e3',
+        'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
+        '__root__' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '3d956cd44e865c732901ba0518679adec4e339e3',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'matthiasmullie/minify' => array(
             'pretty_version' => '1.3.73',
             'version' => '1.3.73.0',
@@ -31,22 +40,13 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => '7d7e09f5c5ae97767252450bdae6bc4ec6b8f53a',
+            'reference' => '975c081c7e430d0316a94047e5d8ab26e0a8f49e',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(
                 0 => '9999999-dev',
             ),
             'dev_requirement' => true,
-        ),
-        'themes/hd' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => 'a04921f9310f80e9597e62b7dec4f223e341be45',
-            'type' => 'project',
-            'install_path' => __DIR__ . '/../../',
-            'aliases' => array(),
-            'dev_requirement' => false,
         ),
     ),
 );

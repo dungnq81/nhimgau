@@ -256,7 +256,7 @@ final class Admin {
 		switch ( $column_name ) {
 			case 'post_thumb':
 				$post_type = get_post_type( $post_id );
-                $thumbnail = Helper::postImageHTML( $post_id, 'thumbnail' );
+				$thumbnail = Helper::postImageHTML( $post_id, 'thumbnail' );
 
 				if ( ! in_array( $post_type, [ 'video', 'product' ] ) ) {
 					if ( ! $thumbnail ) {

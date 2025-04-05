@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.4.1] - 2025-04-04
+### Fixed
+- Fix support for 32bits PHP ([#817](https://github.com/jsonrainbow/json-schema/pull/817))
+
 ## [6.4.0] - 2025-04-01
 ### Added
 - Run PHPStan using the lowest and highest php version ([#811](https://github.com/jsonrainbow/json-schema/pull/811))

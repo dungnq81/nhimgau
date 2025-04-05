@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'a04921f9310f80e9597e62b7dec4f223e341be45',
+        'reference' => '3d956cd44e865c732901ba0518679adec4e339e3',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'a04921f9310f80e9597e62b7dec4f223e341be45',
+            'reference' => '3d956cd44e865c732901ba0518679adec4e339e3',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -38,9 +38,9 @@
             'dev_requirement' => true,
         ),
         'composer/composer' => array(
-            'pretty_version' => '2.8.7',
-            'version' => '2.8.7.0',
-            'reference' => 'fc06c099955929ac67270d169e8b5fb83ad53807',
+            'pretty_version' => '2.8.8',
+            'version' => '2.8.8.0',
+            'reference' => '85ff84d6c5260ba21740a7c5c9a111890805d6e7',
             'type' => 'library',
             'install_path' => __DIR__ . '/./composer',
             'aliases' => array(),
@@ -128,9 +128,9 @@
             'dev_requirement' => false,
         ),
         'justinrainbow/json-schema' => array(
-            'pretty_version' => '6.4.0',
-            'version' => '6.4.0.0',
-            'reference' => '16b274cb469bc8165c59b76c283724a035d27f4c',
+            'pretty_version' => '6.4.1',
+            'version' => '6.4.1.0',
+            'reference' => '35d262c94959571e8736db1e5c9bc36ab94ae900',
             'type' => 'library',
             'install_path' => __DIR__ . '/../justinrainbow/json-schema',
             'aliases' => array(),
@@ -226,7 +226,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => '7d7e09f5c5ae97767252450bdae6bc4ec6b8f53a',
+            'reference' => '975c081c7e430d0316a94047e5d8ab26e0a8f49e',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(
