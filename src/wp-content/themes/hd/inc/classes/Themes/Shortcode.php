@@ -134,7 +134,7 @@ final class Shortcode {
 			$r->the_post();
 
 			echo $wrapper_open;
-			get_template_part( 'template-parts/posts/loop', null, $atts['show'] );
+			get_template_part( 'template-parts/post/loop', null, $atts['show'] );
 			echo $wrapper_close;
 
 			++ $i;

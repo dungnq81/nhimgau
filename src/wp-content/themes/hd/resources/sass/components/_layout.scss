@@ -75,6 +75,7 @@ body.ajax-loader {
             display: flex;
             list-style: none;
             margin: 0;
+            padding: 0;
             @include mixin.gap(15);
 
             & > li.share-action {

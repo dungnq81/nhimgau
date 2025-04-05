@@ -54,7 +54,7 @@ if ( ! $post_id || ! $posts ) {
                             ];
                         ?>
                         <div class="swiper-slide">
-                            <?php get_template_part( 'template-parts/posts/loop', null, $_args ); ?>
+                            <?php get_template_part( 'template-parts/post/loop', null, $_args ); ?>
                         </div>
                         <?php
                         endforeach;

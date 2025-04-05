@@ -37,7 +37,7 @@ do_action( 'hd_archive_before_action' );
                 while ( have_posts() ) : the_post();
 
                     echo "<div class=\"cell\">";
-                    get_template_part( 'template-parts/posts/loop', null, [ 'title_tag' => 'h2' ] );
+                    get_template_part( 'template-parts/post/loop', null, [ 'title_tag' => 'h2' ] );
                     echo "</div>";
 
                     // End the loop.
@@ -48,7 +48,7 @@ do_action( 'hd_archive_before_action' );
 		        // Previous/next page navigation.
 		        \HD\Helper::paginateLinks();
 	        else :
-		        \HD\Helper::blockTemplate( 'template-blocks/no-results' );
+		        \HD\Helper::blockTemplate( 'template-blocks/no-results', [], true );
 	        endif;
 	        ?>
         </div>
