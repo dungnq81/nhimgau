@@ -55,10 +55,7 @@ add_action( 'construct_footer', '_construct_footer_columns', 11 );
 function _construct_footer_columns(): void {
 	?>
     <div id="footer-columns" class="footer-columns">
-		<?php
-		echo \_toggle_container_open( true, 'container' );
-		echo \_toggle_container_close( true );
-		?>
+        <div class="container"></div>
     </div>
 	<?php
 }
@@ -70,18 +67,14 @@ add_action( 'construct_footer', '_construct_footer_credit', 12 );
 function _construct_footer_credit(): void {
 	?>
     <div id="footer-credit" class="footer-credit">
+        <div class="container">
 		<?php
-		echo \_toggle_container_open( true, 'container' );
-
 		$footer_credit = \HD\Helper::getThemeMod( 'footer_credit_setting' );
 		$footer_credit = ! empty( $footer_credit ) ? esc_html( $footer_credit ) : '&copy; ' . date( 'Y' ) . ' ' . get_bloginfo( 'name' ) . '. ' . esc_html__( 'All rights reserved.', TEXT_DOMAIN );
 
 		echo '<p class="copyright">' . apply_filters( 'footer_credit_filter', $footer_credit ) . '</p>';
-
-        //...
-
-		echo \_toggle_container_close( true );
 		?>
+        </div>
     </div>
 	<?php
 }

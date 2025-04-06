@@ -14,4 +14,6 @@ $atts = ( object ) [
 ];
 
 ?>
-<div class=""></div>
+<div class="category-tabs">
+
+</div>
