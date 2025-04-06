@@ -1115,7 +1115,7 @@ trait Wp {
 	 * @return bool
 	 */
 	public static function isHomeOrFrontPage( string $home_template = '' ): bool {
-		$home_template = $home_template ?: 'templates/page-home.php';
+		$home_template = $home_template ?: 'templates/template-page-home.php';
 
 		return is_home() || is_front_page() || self::isPageTemplate( $home_template );
 	}

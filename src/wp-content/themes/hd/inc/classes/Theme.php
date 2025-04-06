@@ -165,9 +165,7 @@ final class Theme {
 	 * @return void
 	 */
 	public function wp_enqueue_scripts(): void {
-		$version = defined( 'WP_DEBUG' ) && WP_DEBUG ?
-			date( 'YmdHis', current_time( 'U', 0 ) ) :
-			THEME_VERSION;
+		$version = defined( 'WP_DEBUG' ) && WP_DEBUG ? date( 'YmdHis', current_time( 'U', 0 ) ) : THEME_VERSION;
 
 		/** Global Stylesheet */
 		wp_enqueue_style( 'vendor-css', ASSETS_URL . 'css/_vendor.css', [], $version );
@@ -184,26 +182,17 @@ final class Theme {
 
 		wp_add_inline_script( 'jquery-core', 'Object.assign(window, { $: jQuery, jQuery });', 'after' );
 
-		/** Homepage */
-		if ( Helper::isHomeOrFrontPage() ) {
-			wp_enqueue_style( 'home-css', ASSETS_URL . 'css/home-css.css', [], $version );
-			wp_enqueue_script( 'home-js', ASSETS_URL . 'js/home.js', [ 'jquery-core' ], $version, true );
-			wp_script_add_data( 'home-js', 'extra', [ 'module', 'defer' ] );
-
-			//...
-		}
-
 		/** Inline Js */
 		$recaptcha_options = Helper::getOption( 'recaptcha__options' );
-		$l10n = [
-			'_ajaxUrl'               => admin_url( 'admin-ajax.php', 'relative' ),
-			'_baseUrl'               => Helper::siteURL( '/' ),
-			'_themeUrl'              => THEME_URL,
-			'_csrfToken'             => wp_create_nonce( 'wp_csrf_token' ),
-			'_restToken'             => wp_create_nonce( 'wp_rest' ),
-			'_recaptcha_v2_site_key' => $recaptcha_options['recaptcha_v2_site_key'] ?? '',
-			'_recaptcha_v3_site_key' => $recaptcha_options['recaptcha_v3_site_key'] ?? '',
-			'_lang'                  => Helper::currentLanguage(),
+		$l10n              = [
+			'_ajaxUrl'      => admin_url( 'admin-ajax.php', 'relative' ),
+			'_baseUrl'      => Helper::siteURL( '/' ),
+			'_themeUrl'     => THEME_URL,
+			'_csrfToken'    => wp_create_nonce( 'wp_csrf_token' ),
+			'_restToken'    => wp_create_nonce( 'wp_rest' ),
+			'_recaptcha_v2' => $recaptcha_options['recaptcha_v2_site_key'] ?? '',
+			'_recaptcha_v3' => $recaptcha_options['recaptcha_v3_site_key'] ?? '',
+			'_lang'         => Helper::currentLanguage(),
 		];
 		wp_localize_script( 'jquery-core', 'hdConfig', $l10n );
 
