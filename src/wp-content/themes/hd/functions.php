@@ -27,8 +27,6 @@ const ASSETS_URL = THEME_URL . 'assets/';
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/inc/settings.php';
 require_once __DIR__ . '/inc/helpers.php';
-require_once __DIR__ . '/inc/css.php';
-require_once __DIR__ . '/inc/js.php';
 
 // Initialize theme.
 ( \HD\Theme::get_instance() );

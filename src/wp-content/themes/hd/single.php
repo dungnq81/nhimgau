@@ -91,9 +91,10 @@ $featured_banner   = \HD\Helper::getField( 'featured_banner', $post->ID );
 \HD\Helper::blockTemplate( 'template-blocks/related-posts', [
 		'title'     => __( 'Recommended Articles', TEXT_DOMAIN ),
 		'title_tag' => 'p',
-		'taxonomy'  => 'category',
-		'id'   => $post->ID,
+		'id'        => $post->ID,
 		'max'       => 12,
+		//'rows'      => 1,
+		//'taxonomy'  => 'category',
 	]
 );
 

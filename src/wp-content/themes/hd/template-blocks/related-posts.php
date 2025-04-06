@@ -7,6 +7,7 @@ $title_tag = $args['title_tag'] ?? 'p';
 $post_id   = $args['id'] ?? 0;
 $taxonomy  = $args['taxonomy'] ?? 'category';
 $max       = $args['max'] ?? 6;
+$rows      = $args['rows'] ?? 1;
 
 $posts = \HD\Helper::getRelatedPosts( $post_id, $taxonomy, $max );
 if ( ! $post_id || ! $posts ) {
@@ -26,6 +27,10 @@ if ( ! $post_id || ! $posts ) {
                 'autoplay'   => true,
                 '_gap'       => true,
             ];
+
+            if ( $rows > 1 ) {
+                $_data['grid'] = [ 'rows' => $rows ];
+            }
 
             $swiper_data = json_encode( $_data, JSON_THROW_ON_ERROR | JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE );
             if ( $swiper_data ) :
@@ -47,8 +52,8 @@ if ( ! $post_id || ! $posts ) {
                             $post_title     = ! empty( $post_title ) ? $post_title : __( '(no title)', TEXT_DOMAIN );
 
                             $_args = [
+	                            'title'     => $post_title,
                                 'title_tag' => 'p',
-                                'title'     => $post_title,
                                 'ratio'     => \HD\Helper::aspectRatioClass( get_post_type( $post->ID ) ),
                                 'thumbnail' => \HD\Helper::postImageHTML( $post->ID, 'medium', [ 'alt' => \HD\Helper::escAttr( $post_title ) ] ),
                             ];

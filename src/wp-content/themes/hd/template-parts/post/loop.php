@@ -17,12 +17,12 @@ $title_tag = $args['title_tag'] ?? 'p';
 
 ?>
 <div class="item">
-    <span class="cover">
+    <div class="cover">
         <span class="scale res <?= $ratio ?>">
             <?php echo $thumbnail; ?>
             <a class="link-cover" href="<?= get_permalink( $post->ID ) ?>" aria-label="<?= \HD\Helper::escAttr( $title ) ?>"></a>
         </span>
-    </span>
+    </div>
     <div class="content">
         <div class="meta">
 	        <?php echo \HD\Helper::getPrimaryTerm( $post ); ?>

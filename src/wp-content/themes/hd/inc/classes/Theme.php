@@ -28,7 +28,9 @@ final class Theme {
 	// --------------------------------------------------
 
 	private function init(): void {
-		// plugins_loaded -> after_setup_theme -> init -> rest_api_init -> widgets_init -> wp_loaded -> admin_menu -> admin_init ...
+		// wp-config.php -> muplugins_loaded -> plugins_loaded -> after_setup_theme -> init (rest_api_init, widgets_init, v.v...)
+		// FE: init -> wp_loaded -> wp -> template_redirect -> template_include
+		// BE: init -> wp_loaded -> admin_menu -> admin_init
 
 		add_action( 'after_setup_theme', [ $this, 'i18n' ], 10 );
 		add_action( 'after_setup_theme', [ $this, 'after_setup_theme' ], 11 );
@@ -41,6 +43,9 @@ final class Theme {
 		/** Widgets */
 		add_action( 'widgets_init', [ $this, 'unregister_widgets' ], 16 );
 		add_action( 'widgets_init', [ $this, 'register_widgets' ], 17 );
+
+		/** Dynamic Template Hook */
+		add_filter( 'template_include', [ $this, 'dynamic_template_include' ], 20 );
 	}
 
 	// --------------------------------------------------
@@ -51,10 +56,6 @@ final class Theme {
 	 * @return void
 	 */
 	public function i18n(): void {
-		/**
-		 * Make the theme available for translation.
-		 * Translations can be filed at WordPress.org.
-		 */
 		load_theme_textdomain( TEXT_DOMAIN, trailingslashit( WP_LANG_DIR ) . 'themes/' );
 		load_theme_textdomain( TEXT_DOMAIN, get_template_directory() . '/languages' );
 		load_theme_textdomain( TEXT_DOMAIN, get_stylesheet_directory() . '/languages' );
@@ -139,8 +140,6 @@ final class Theme {
 
 		foreach ( $dirs as $dir => $path ) {
 			Helper::createDirectory( $path );
-
-			// structures & ajax
 			if ( in_array( $dir, [ 'template_structures', 'template_ajax' ], true ) ) {
 				Helper::FQNLoad( $path, true );
 			}
@@ -166,17 +165,16 @@ final class Theme {
 	 * @return void
 	 */
 	public function wp_enqueue_scripts(): void {
-		$version = THEME_VERSION;
-		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			$version = date( 'YmdHis', current_time( 'U', 0 ) );
-		}
+		$version = defined( 'WP_DEBUG' ) && WP_DEBUG ?
+			date( 'YmdHis', current_time( 'U', 0 ) ) :
+			THEME_VERSION;
 
 		/** Global Stylesheet */
 		wp_enqueue_style( 'vendor-css', ASSETS_URL . 'css/_vendor.css', [], $version );
 		wp_enqueue_style( 'index-css', ASSETS_URL . 'css/index-css.css', [ 'vendor-css' ], $version );
 
 		/** JS runs early in the loading process. */
-		wp_enqueue_script( 'lighthouse-js', ASSETS_URL . 'js/lighthouse.js', [ 'jquery-core' ], $version, false );
+		wp_enqueue_script( 'lighthouse-js', ASSETS_URL . 'js/lighthouse.js', [], $version, false );
 
 		/** Global Scripts */
 		wp_enqueue_script( 'modulepreload-js', ASSETS_URL . 'js/modulepreload-polyfill.js', [], $version, true );
@@ -196,22 +194,17 @@ final class Theme {
 		}
 
 		/** Inline Js */
-		$recaptcha_options     = Helper::getOption( 'recaptcha__options' );
-		$recaptcha_v2_site_key = $recaptcha_options['recaptcha_v2_site_key'] ?? '';
-		$recaptcha_v3_site_key = $recaptcha_options['recaptcha_v3_site_key'] ?? '';
-
+		$recaptcha_options = Helper::getOption( 'recaptcha__options' );
 		$l10n = [
-			'_ajaxUrl'   => admin_url( 'admin-ajax.php', 'relative' ),
-			'_baseUrl'   => Helper::siteURL( '/' ),
-			'_themeUrl'  => THEME_URL,
-			'_csrfToken' => wp_create_nonce( 'wp_csrf_token' ),
-			'_restToken' => wp_create_nonce( 'wp_rest' ),
-			'_lang'      => Helper::currentLanguage(),
+			'_ajaxUrl'               => admin_url( 'admin-ajax.php', 'relative' ),
+			'_baseUrl'               => Helper::siteURL( '/' ),
+			'_themeUrl'              => THEME_URL,
+			'_csrfToken'             => wp_create_nonce( 'wp_csrf_token' ),
+			'_restToken'             => wp_create_nonce( 'wp_rest' ),
+			'_recaptcha_v2_site_key' => $recaptcha_options['recaptcha_v2_site_key'] ?? '',
+			'_recaptcha_v3_site_key' => $recaptcha_options['recaptcha_v3_site_key'] ?? '',
+			'_lang'                  => Helper::currentLanguage(),
 		];
-
-		$recaptcha_v2_site_key && $l10n['recaptcha_v2_site_key'] = $recaptcha_v2_site_key;
-		$recaptcha_v3_site_key && $l10n['recaptcha_v3_site_key'] = $recaptcha_v3_site_key;
-
 		wp_localize_script( 'jquery-core', 'hdConfig', $l10n );
 
 		/** Comments */
@@ -220,6 +213,28 @@ final class Theme {
 		} else {
 			wp_dequeue_script( 'comment-reply' );
 		}
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param $template
+	 *
+	 * @return mixed
+	 */
+	public function dynamic_template_include( $template ): mixed {
+		$template_slug = basename( $template, '.php' );
+		$hook_name     = 'enqueue_assets_' . str_replace( '-', '_', $template_slug );
+
+		// dynamic hook - enqueue style/script
+		add_action( 'wp_enqueue_scripts', static function () use ( $hook_name ) {
+			do_action( $hook_name );
+		}, 20 );
+
+		// dynamic hook extra
+		do_action( 'enqueue_assets_extra' );
+
+		return $template;
 	}
 
 	// --------------------------------------------------
