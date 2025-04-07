@@ -128,11 +128,6 @@ Config::define( 'DISABLE_WP_CRON', env( 'DISABLE_WP_CRON' ) ?? false );
 /** Force SSL for admin */
 Config::define( 'FORCE_SSL_ADMIN', env( 'FORCE_SSL_ADMIN' ) ?? false );
 
-/** DISABLED_PLUGINS */
-Config::define( 'DISABLED_PLUGINS', [
-	//'wp-rocket/wp-rocket.php'
-] );
-
 /** FluentSMTP */
 if ( env( 'FLUENTMAIL_SMTP_USERNAME' ) && env( 'FLUENTMAIL_SMTP_PASSWORD' ) ) {
 	Config::define( 'FLUENTMAIL_SMTP_USERNAME', env( 'FLUENTMAIL_SMTP_USERNAME' ) );
