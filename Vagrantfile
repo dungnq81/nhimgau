@@ -17,7 +17,7 @@ Vagrant.configure("2") do |config|
     # Sync folders between host and guest
     config.vm.synced_folder ".", "/vagrant", disabled: true
     config.vm.synced_folder ".", "/var/www/html", type: "virtualbox", create: true, owner: "www-data", group: "www-data", mount_options: ["dmode=755", "fmode=755"]
-    config.vm.synced_folder "./config/local", "/home/vagrant/config", type: "virtualbox"
+    config.vm.synced_folder "./config/vagrant", "/home/vagrant/config", type: "virtualbox"
 
     # Configure VM resources
     config.vm.provider "virtualbox" do |vb|
@@ -27,5 +27,5 @@ Vagrant.configure("2") do |config|
     end
 
   # Run shell provisioning script
-  config.vm.provision "shell", path: "config/local/provision.sh"
+  config.vm.provision "shell", path: "config/vagrant/provision.sh"
 end

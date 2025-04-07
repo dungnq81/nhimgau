@@ -36,7 +36,7 @@ RUN apt-get install -y \
     && apt-get clean
 
 # Kích hoạt các mô-đun cần thiết của Apache
-RUN a2enmod rewrite proxy proxy_http
+RUN a2enmod rewrite
 
 # Nếu bạn đã tạo file cấu hình virtual host, kích hoạt nó (nếu cần)
 # RUN a2ensite 000-default.conf
