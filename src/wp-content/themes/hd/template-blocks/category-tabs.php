@@ -15,5 +15,5 @@ $atts = ( object ) [
 
 ?>
 <div class="category-tabs">
-
+    <?php ?>
 </div>

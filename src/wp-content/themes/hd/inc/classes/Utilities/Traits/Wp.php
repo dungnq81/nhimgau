@@ -31,6 +31,10 @@ trait Wp {
 	 * @return void
 	 */
 	public static function blockTemplate( $slug, array $args = [], bool $use_cache = false, int $cache_in_hours = 12 ): void {
+		$block_slug = basename( $slug, '.php' );
+		$hook_name  = 'enqueue_assets_blocks_' . str_replace( '-', '_', $block_slug );
+		do_action( $hook_name );
+
 		if ( ! $use_cache ) {
 			ob_start();
 			get_template_part( $slug, null, $args );

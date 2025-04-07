@@ -8,7 +8,11 @@
 \defined( 'ABSPATH' ) || die;
 
 // --------------------------------------------------
-// `template-page-home.php` Template
+// `template-blocks` folder
+// --------------------------------------------------
+
+// --------------------------------------------------
+// `template-page-home.php` file
 // --------------------------------------------------
 
 add_action( 'enqueue_assets_template_page_home', static function () {

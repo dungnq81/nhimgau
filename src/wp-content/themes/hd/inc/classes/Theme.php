@@ -198,13 +198,15 @@ final class Theme {
 		$template_slug = basename( $template, '.php' );
 		$hook_name     = 'enqueue_assets_' . str_replace( '-', '_', $template_slug );
 
-		// dynamic hook - enqueue style/script
-		add_action( 'wp_enqueue_scripts', static function () use ( $hook_name ) {
-			do_action( $hook_name );
-		}, 20 );
+		if ( ! has_action( 'wp_enqueue_scripts', '__dynamic_enqueue_assets_flag' ) ) {
+			// dynamic hook - enqueue style/script
+			add_action( 'wp_enqueue_scripts', static function () use ( $hook_name ) {
+				do_action( $hook_name );
+				do_action( 'enqueue_assets_extra' ); // dynamic hook extra
+			}, 20 );
 
-		// dynamic hook extra
-		do_action( 'enqueue_assets_extra' );
+			add_action( 'wp_enqueue_scripts', '__dynamic_enqueue_assets_flag', 999 );
+		}
 
 		return $template;
 	}
