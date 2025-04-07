@@ -1,3 +1,6 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
 // base icon class definition
 // -------------------------
 
@@ -68,7 +71,7 @@
 .#{$fa-css-prefix}-duotone::before,
 .#{$fa-css-prefix}-sharp::before,
 .#{$fa-css-prefix}-sharp-duotone::before,
-.#{$fa-css-prefix}::before {
+.fa::before {
   content: var(#{$fa-icon-property});
 }.fad::after,
 .#{$fa-css-prefix}-duotone.#{$fa-css-prefix}-solid::after,
