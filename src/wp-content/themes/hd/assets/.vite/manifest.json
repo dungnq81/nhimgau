@@ -28,34 +28,10 @@
     "src": "src/wp-content/themes/hd/resources/js/components/config.js",
     "isEntry": true
   },
-  "src/wp-content/themes/hd/resources/js/components/global.js": {
-    "file": "js/global.js",
-    "name": "global",
-    "src": "src/wp-content/themes/hd/resources/js/components/global.js",
-    "isEntry": true
-  },
-  "src/wp-content/themes/hd/resources/js/components/lighthouse.js": {
-    "file": "js/lighthouse.js",
-    "name": "lighthouse",
-    "src": "src/wp-content/themes/hd/resources/js/components/lighthouse.js",
-    "isEntry": true
-  },
-  "src/wp-content/themes/hd/resources/js/components/menu.js": {
-    "file": "js/menu.js",
-    "name": "menu",
-    "src": "src/wp-content/themes/hd/resources/js/components/menu.js",
-    "isEntry": true
-  },
-  "src/wp-content/themes/hd/resources/js/components/modulepreload-polyfill.js": {
-    "file": "js/modulepreload-polyfill.js",
-    "name": "modulepreload-polyfill",
-    "src": "src/wp-content/themes/hd/resources/js/components/modulepreload-polyfill.js",
-    "isEntry": true
-  },
-  "src/wp-content/themes/hd/resources/js/components/script-loader.js": {
-    "file": "js/script-loader.js",
-    "name": "script-loader",
-    "src": "src/wp-content/themes/hd/resources/js/components/script-loader.js",
+  "src/wp-content/themes/hd/resources/js/components/preload-polyfills.js": {
+    "file": "js/preload-polyfills.js",
+    "name": "preload-polyfills",
+    "src": "src/wp-content/themes/hd/resources/js/components/preload-polyfills.js",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/js/components/social-share.js": {
@@ -89,10 +65,7 @@
     "isEntry": true,
     "imports": [
       "__vendor.js",
-      "src/wp-content/themes/hd/resources/js/components/global.js",
       "src/wp-content/themes/hd/resources/js/components/back-to-top.js",
-      "src/wp-content/themes/hd/resources/js/components/script-loader.js",
-      "src/wp-content/themes/hd/resources/js/components/menu.js",
       "src/wp-content/themes/hd/resources/js/components/social-share.js"
     ]
   },
