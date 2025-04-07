@@ -22,12 +22,6 @@
     "src": "src/wp-content/themes/hd/resources/js/components/back-to-top.js",
     "isEntry": true
   },
-  "src/wp-content/themes/hd/resources/js/components/config.js": {
-    "file": "js/config.js",
-    "name": "config",
-    "src": "src/wp-content/themes/hd/resources/js/components/config.js",
-    "isEntry": true
-  },
   "src/wp-content/themes/hd/resources/js/components/preload-polyfills.js": {
     "file": "js/preload-polyfills.js",
     "name": "preload-polyfills",

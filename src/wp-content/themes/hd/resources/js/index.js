@@ -1,6 +1,5 @@
 import $ from 'jquery';
 import Foundation from './3rd/_zf.js';
-//import { hdConfig } from './components/config.js';
 
 import './components/global.js';
 import './components/back-to-top.js';
