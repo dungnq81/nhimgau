@@ -18,6 +18,15 @@ final class Helper {
 	// -------------------------------------------------------------
 
 	/**
+	 * @return array|false|string
+	 */
+	public static function version(): false|array|string {
+		return defined( 'WP_DEBUG' ) && WP_DEBUG ? date( 'YmdHis', current_time( 'U', 0 ) ) : THEME_VERSION;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
 	 * @param string $content
 	 *
 	 * @return string

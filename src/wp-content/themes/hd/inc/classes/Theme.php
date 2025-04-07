@@ -150,7 +150,7 @@ final class Theme {
 	 * @return void
 	 */
 	public function wp_enqueue_scripts(): void {
-		$version = defined( 'WP_DEBUG' ) && WP_DEBUG ? date( 'YmdHis', current_time( 'U', 0 ) ) : THEME_VERSION;
+		$version = Helper::version();
 
 		/** Inline Js */
 		$recaptcha_options = Helper::getOption( 'recaptcha__options' );

@@ -87,10 +87,7 @@ final class Admin {
 	 * @return void
 	 */
 	public function admin_enqueue_scripts(): void {
-		$version = THEME_VERSION;
-		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			$version = date( 'YmdHis', current_time( 'U', 0 ) );
-		}
+		$version = Helper::version();
 
 		wp_enqueue_style( 'admin-css', ASSETS_URL . 'css/admin-css.css', [], $version );
 		wp_enqueue_script( 'admin-js', ASSETS_URL . 'js/admin.js', [ 'jquery' ], $version, true );
