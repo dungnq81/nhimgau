@@ -36,6 +36,9 @@ sudo apt-get install -y \
     php8.2-mbstring \
     php8.2-xml \
     php8.2-bcmath \
+    php8.2-opcache \
+    php8.2-intl \
+    php8.2-soap \
     -o Dpkg::Options::="--force-confdef" \
     -o Dpkg::Options::="--force-confold"
 
@@ -111,8 +114,8 @@ if ! [ -x "$(command -v composer)" ]; then
     sudo chmod +x /usr/local/bin/composer
 fi
 
-# Install WP CLI dependencies if needed
-echo "Installing WP CLI dependencies..."
+# Install WP-CLI dependencies if needed
+echo "Installing WP-CLI dependencies..."
 if [ -f /var/www/html/composer.json ]; then
     cd /var/www/html && composer install
 fi
