@@ -176,7 +176,7 @@ final class Theme {
 		wp_enqueue_script( 'index-js', ASSETS_URL . 'js/index.js', [ 'jquery-core' ], $version, true );
 
 		/** Add data to scripts */
-		wp_script_add_data( 'preload-js', 'async', true );
+		wp_script_add_data( 'preload-js', 'extra', [ 'module', 'async' ] );
 		wp_script_add_data( 'index-js', 'extra', [ 'module', 'defer' ] );
 
 		/** Comments */
