@@ -35,7 +35,7 @@ const jsFiles = [
 
     // (components)
     'components/back-to-top',
-    'components/preload-polyfills',
+    'components/preload-polyfill',
     'components/social-share',
     'components/swiper',
 

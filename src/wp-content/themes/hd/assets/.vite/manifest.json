@@ -22,10 +22,10 @@
     "src": "src/wp-content/themes/hd/resources/js/components/back-to-top.js",
     "isEntry": true
   },
-  "src/wp-content/themes/hd/resources/js/components/preload-polyfills.js": {
-    "file": "js/preload-polyfills.js",
-    "name": "preload-polyfills",
-    "src": "src/wp-content/themes/hd/resources/js/components/preload-polyfills.js",
+  "src/wp-content/themes/hd/resources/js/components/preload-polyfill.js": {
+    "file": "js/preload-polyfill.js",
+    "name": "preload-polyfill",
+    "src": "src/wp-content/themes/hd/resources/js/components/preload-polyfill.js",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/js/components/social-share.js": {
