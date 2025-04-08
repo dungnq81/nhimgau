@@ -23,10 +23,7 @@ if ( post_password_required() ) {
 }
 
 // breadcrumbs
-\HD\Helper::blockTemplate( 'template-blocks/breadcrumbs', [
-		'title' => \HD\Helper::primaryTerm( $post )?->name
-	]
-);
+\HD\Helper::blockTemplate( 'template-blocks/breadcrumbs', [ 'title' => \HD\Helper::primaryTerm( $post )?->name ] );
 
 /**
  * HOOK: hd_single_before_action
@@ -58,11 +55,9 @@ $featured_banner   = \HD\Helper::getField( 'featured_banner', $post->ID );
             <article <?= \HD\Helper::microdata( 'article' ) ?>>
                 <?php
                 the_content();
-
                 \HD\Helper::hashTags();
                 \HD\Helper::blockTemplate( 'template-blocks/suggestion-posts' );
                 \HD\Helper::blockTemplate( 'template-blocks/author' );
-
                 ?>
             </article>
             <?php

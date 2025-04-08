@@ -23,10 +23,7 @@ if ( post_password_required() ) {
 }
 
 // breadcrumbs
-\HD\Helper::blockTemplate( 'template-blocks/breadcrumbs', [
-		'title' => get_the_title( $post->ID )
-	]
-);
+\HD\Helper::blockTemplate( 'template-blocks/breadcrumbs', [ 'title' => get_the_title( $post->ID ) ] );
 
 /**
  * HOOK: hd_page_before_action
@@ -43,11 +40,8 @@ $alternative_title = \HD\Helper::getField( 'alternative_title', $post->ID );
 	        <?php echo \HD\Helper::postExcerpt( $post, 'excerpt', false ); ?>
             <article <?= \HD\Helper::microdata( 'article' ) ?>>
 	            <?php
-
                 the_content();
-
 	            \HD\Helper::blockTemplate( 'template-blocks/suggestion-posts' );
-
                 ?>
             </article>
         </div>

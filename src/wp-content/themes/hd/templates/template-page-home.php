@@ -38,6 +38,9 @@ if ( $home_flexible_content ) {
 	\HD\Helper::blockTemplate( 'template-blocks/static-page' );
 }
 
+
+\HD\Helper::blockTemplate( 'template-blocks/category-tabs' );
+
 ?>
     <div class="container">
         <h1>Gấu Lỳ</h1>

@@ -13,10 +13,7 @@ get_header( 'archive' );
 $object = get_queried_object();
 
 // breadcrumbs
-\HD\Helper::blockTemplate( 'template-blocks/breadcrumbs', [
-		'title' => get_the_archive_title()
-	]
-);
+\HD\Helper::blockTemplate( 'template-blocks/breadcrumbs', [ 'title' => get_the_archive_title() ] );
 
 /**
  * HOOK: hd_archive_before_action
@@ -37,7 +34,7 @@ do_action( 'hd_archive_before_action' );
                 while ( have_posts() ) : the_post();
 
                     echo "<div class=\"cell\">";
-                    get_template_part( 'template-parts/post/loop', null, [ 'title_tag' => 'h2' ] );
+	                \HD\Helper::blockTemplate( 'template-parts/post/loop', [ 'title_tag' => 'h2' ] );
                     echo "</div>";
 
                     // End the loop.

@@ -2220,9 +2220,9 @@ trait Wp {
 	 * @param $taxonomy
 	 * @param int $post_count
 	 *
-	 * @return int[]|\WP_Post[]|null
+	 * @return \WP_Query|null
 	 */
-	public static function getRelatedPosts( $post_id, $taxonomy, int $post_count = 6 ): ?array {
+	public static function queryByRelated( $post_id, $taxonomy, int $post_count = 6 ): ?\WP_Query {
 		$post_terms = get_the_terms( $post_id, $taxonomy );
 		if ( ! is_array( $post_terms ) || empty( $post_terms ) ) {
 			return null;
@@ -2246,9 +2246,10 @@ trait Wp {
 			],
 		];
 
+		self::setPostsPerPage( $post_count );
 		$query = new \WP_Query( $args );
 
-		return $query->have_posts() ? $query->posts : null;
+		return $query->have_posts() ? $query : null;
 	}
 
 	// -------------------------------------------------------------

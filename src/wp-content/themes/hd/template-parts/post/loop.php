@@ -11,9 +11,10 @@
 global $post;
 
 $title     = $args['title'] ?? get_the_title( $post->ID );
+$title     = ! empty( $title ) ? $title : __( '(no title)', TEXT_DOMAIN );
+$title_tag = $args['title_tag'] ?? 'p';
 $ratio     = $args['ratio'] ?? \HD\Helper::aspectRatioClass( get_post_type( $post->ID ) );
 $thumbnail = $args['thumbnail'] ?? \HD\Helper::postImageHTML( $post->ID, 'medium', [ 'alt' => \HD\Helper::escAttr( $title ) ] );
-$title_tag = $args['title_tag'] ?? 'p';
 
 ?>
 <div class="item">
