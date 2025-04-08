@@ -1,24 +1,15 @@
 <?php return array(
     'root' => array(
-        'name' => '__root__',
+        'name' => 'plugins/hd-addons',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '3d956cd44e865c732901ba0518679adec4e339e3',
+        'reference' => 'f4cface049cee12049037511764c0e58431efc8e',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        '__root__' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => '3d956cd44e865c732901ba0518679adec4e339e3',
-            'type' => 'project',
-            'install_path' => __DIR__ . '/../../',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'enshrined/svg-sanitize' => array(
             'pretty_version' => '0.20.0',
             'version' => '0.20.0.0',
@@ -43,6 +34,15 @@
             'reference' => 'e7d13b2c7e2f2268e1424aaed02085518afa02d9',
             'type' => 'library',
             'install_path' => __DIR__ . '/../matthiasmullie/path-converter',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'plugins/hd-addons' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'f4cface049cee12049037511764c0e58431efc8e',
+            'type' => 'project',
+            'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
