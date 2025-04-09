@@ -39,7 +39,7 @@ if ( $home_flexible_content ) {
 }
 
 
-\HD\Helper::blockTemplate( 'template-blocks/category-tabs' );
+\HD\Helper::blockTemplate( 'template-blocks/tabs/category-tabs' );
 
 ?>
     <div class="container">

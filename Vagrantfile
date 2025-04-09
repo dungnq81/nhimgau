@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
     config.vm.provider "virtualbox" do |vb|
         vb.name = "Ubuntu_WAMP"
         vb.memory = "4096"
-        vb.cpus = 4
+        vb.cpus = 6
     end
 
   # Run shell provisioning script

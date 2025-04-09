@@ -13,10 +13,10 @@ importers:
         version: 5.0.36
       '@loltgt/ensemble':
         specifier: github:loltgt/ensemble
-        version: ensemble@https://codeload.github.com/loltgt/ensemble/tar.gz/f195224cc7a281ee8a141dfa751656e721e9498d
+        version: ensemble@https://codeload.github.com/loltgt/ensemble/tar.gz/fbedfabe6359df2f4e71b8e0d2ed1dd2f00c7c08
       '@loltgt/ensemble-social-share':
         specifier: github:loltgt/ensemble-social-share
-        version: ensemble-social-share@https://codeload.github.com/loltgt/ensemble-social-share/tar.gz/7e0b442b4d7209de2493b6e68430a82b9eff7cb2
+        version: ensemble-social-share@https://codeload.github.com/loltgt/ensemble-social-share/tar.gz/d0739039396ad75c8cdaa71f3d8d86c657186ded
       current-device:
         specifier: ^0.10.2
         version: 0.10.2
@@ -829,8 +829,8 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  electron-to-chromium@1.5.132:
-    resolution: {integrity: sha512-QgX9EBvWGmvSRa74zqfnG7+Eno0Ak0vftBll0Pt2/z5b3bEGYL6OUXLgKPtvx73dn3dvwrlyVkjPKRRlhLYTEg==}
+  electron-to-chromium@1.5.134:
+    resolution: {integrity: sha512-zSwzrLg3jNP3bwsLqWHmS5z2nIOQ5ngMnfMZOWWtXnqqQkPVyOipxK98w+1beLw1TB+EImPNcG8wVP/cLVs2Og==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -841,12 +841,12 @@ packages:
   end-of-stream@1.4.4:
     resolution: {integrity: sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==}
 
-  ensemble-social-share@https://codeload.github.com/loltgt/ensemble-social-share/tar.gz/7e0b442b4d7209de2493b6e68430a82b9eff7cb2:
-    resolution: {tarball: https://codeload.github.com/loltgt/ensemble-social-share/tar.gz/7e0b442b4d7209de2493b6e68430a82b9eff7cb2}
+  ensemble-social-share@https://codeload.github.com/loltgt/ensemble-social-share/tar.gz/d0739039396ad75c8cdaa71f3d8d86c657186ded:
+    resolution: {tarball: https://codeload.github.com/loltgt/ensemble-social-share/tar.gz/d0739039396ad75c8cdaa71f3d8d86c657186ded}
     version: 0.0.4
 
-  ensemble@https://codeload.github.com/loltgt/ensemble/tar.gz/f195224cc7a281ee8a141dfa751656e721e9498d:
-    resolution: {tarball: https://codeload.github.com/loltgt/ensemble/tar.gz/f195224cc7a281ee8a141dfa751656e721e9498d}
+  ensemble@https://codeload.github.com/loltgt/ensemble/tar.gz/fbedfabe6359df2f4e71b8e0d2ed1dd2f00c7c08:
+    resolution: {tarball: https://codeload.github.com/loltgt/ensemble/tar.gz/fbedfabe6359df2f4e71b8e0d2ed1dd2f00c7c08}
     version: 0.0.4
 
   entities@4.5.0:
@@ -2470,7 +2470,7 @@ snapshots:
   browserslist@4.24.4:
     dependencies:
       caniuse-lite: 1.0.30001712
-      electron-to-chromium: 1.5.132
+      electron-to-chromium: 1.5.134
       node-releases: 2.0.19
       update-browserslist-db: 1.1.3(browserslist@4.24.4)
 
@@ -2748,7 +2748,7 @@ snapshots:
 
   eastasianwidth@0.2.0: {}
 
-  electron-to-chromium@1.5.132: {}
+  electron-to-chromium@1.5.134: {}
 
   emoji-regex@8.0.0: {}
 
@@ -2758,9 +2758,9 @@ snapshots:
     dependencies:
       once: 1.4.0
 
-  ensemble-social-share@https://codeload.github.com/loltgt/ensemble-social-share/tar.gz/7e0b442b4d7209de2493b6e68430a82b9eff7cb2: {}
+  ensemble-social-share@https://codeload.github.com/loltgt/ensemble-social-share/tar.gz/d0739039396ad75c8cdaa71f3d8d86c657186ded: {}
 
-  ensemble@https://codeload.github.com/loltgt/ensemble/tar.gz/f195224cc7a281ee8a141dfa751656e721e9498d: {}
+  ensemble@https://codeload.github.com/loltgt/ensemble/tar.gz/fbedfabe6359df2f4e71b8e0d2ed1dd2f00c7c08: {}
 
   entities@4.5.0: {}
 

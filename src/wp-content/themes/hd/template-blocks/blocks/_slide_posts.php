@@ -15,25 +15,26 @@ if ( ! $query ) {
 <div class="swiper-container">
     <div class="w-swiper swiper" data-options='<?= $slide_data ?>'>
         <div class="swiper-wrapper">
-		    <?php
-		    $i = 0;
+			<?php
+			$i = 0;
 
-		    while ( $query?->have_posts() ) : $query->the_post();
-			    $post = get_post();
+			while ( $query?->have_posts() ) : $query->the_post();
+				$post = get_post();
 
-			    $i ++;
-			    if ( $max && $i > $max ) {
-				    break;
-			    }
+				$i ++;
+				if ( $max && $i > $max ) {
+					break;
+				}
 
-			    $post_type  = get_post_type( $post->ID ) ?: 'post';
-            ?>
-            <div class="swiper-slide">
-                <?php \HD\Helper::blockTemplate( 'template-parts/' . $post_type . '/loop', [ 'title_tag' => $title_tag ] ); ?>
-            </div>
-		    <?php endwhile;
-		    wp_reset_postdata();
-		    ?>
+				$post_type = get_post_type( $post->ID ) ?: 'post';
+
+				echo "<div class=\"swiper-slide\">";
+				\HD\Helper::blockTemplate( 'template-parts/' . $post_type . '/loop', [ 'title_tag' => $title_tag ] );
+				echo "</div>";
+
+			endwhile;
+			wp_reset_postdata();
+			?>
         </div>
     </div>
 </div>

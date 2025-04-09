@@ -87,42 +87,8 @@ class Recent_Posts_Widget extends Abstract_Widget {
 		$css_class  = ! empty( $instance['css_class'] ) ? \HD\Helper::escAttr( $instance['css_class'] ) : '';
 		$uniqid     = esc_attr( uniqid( $this->widget_classname . '-', false ) );
 
-		$query_args = [
-			'update_post_meta_cache' => false,
-			'update_post_term_cache' => false,
-			'post_type'              => 'post',
-			'post_status'            => 'publish',
-			'posts_per_page'         => $number,
-			'no_found_rows'          => true,
-			'ignore_sticky_posts'    => true,
-		];
-
-		if ( $limit_time ) {
-			// constrain to just posts in $limit_time
-			$recent = strtotime( $limit_time );
-
-			if ( \HD\Helper::isInteger( $recent ) ) {
-				$query_args['date_query'] = [
-					'after' => [
-						'year'  => date( 'Y', $recent ),
-						'month' => date( 'n', $recent ),
-						'day'   => date( 'j', $recent ),
-					],
-				];
-			}
-		}
-
-        \HD\Helper::setPostsPerPage( $number );
-
-		$r = new \WP_Query(
-			apply_filters(
-				'widget_recent_posts_args',
-				$query_args,
-				$instance
-			)
-		);
-
-		if ( ! $r->have_posts() ) {
+        $r = \HD\Helper::queryByLatestPosts( 'post', $number, $limit_time );
+		if ( ! $r ) {
 			return;
 		}
 
@@ -165,19 +131,16 @@ class Recent_Posts_Widget extends Abstract_Widget {
                             <a href="<?php the_permalink( $recent_post->ID ); ?>" title="<?php echo $attr_post_title; ?>"<?php echo $aria_current; ?>><?php echo $post_title; ?></a>
                             <?php if ( $show_date || $show_cat ) : ?>
                             <div class="meta">
-
                                 <?php if ( $show_date ) : ?>
                                 <span class="post-date"><?php echo \HD\Helper::humanizeTime( $recent_post ); ?></span>
                                 <?php endif;
-
-                                if ( $show_cat ) { echo \HD\Helper::getPrimaryTerm( $recent_post ); }
-
+                                echo $show_cat ? \HD\Helper::getPrimaryTerm( $recent_post ) : '';
                                 ?>
                             </div>
-                            <?php endif; ?>
-
-                            <?php if ( $show_desc ) { echo \HD\Helper::loopExcerpt( $recent_post ); } ?>
-
+                            <?php
+                            endif;
+                            echo $show_desc ? \HD\Helper::loopExcerpt( $recent_post ) : '';
+                            ?>
                         </div>
                     </li>
 					<?php endforeach; ?>

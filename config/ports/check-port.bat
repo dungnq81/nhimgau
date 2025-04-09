@@ -8,8 +8,6 @@ set PORT=%1
 if "%PORT%"=="" set PORT=8080
 
 echo Checking port %PORT%...
-
-:: Tìm PID đang dùng cổng
 for /f "tokens=5" %%a in ('netstat -aon ^| findstr :%PORT% ^| findstr LISTENING') do (
     set PID=%%a
 )

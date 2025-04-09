@@ -725,13 +725,12 @@ trait Wp {
 	 * @param mixed $term_id
 	 * @param string $taxonomy
 	 *
-	 * @return \WP_Term|\WP_Error|bool|null
+	 * @return array|false|\WP_Error|\WP_Term|null
 	 */
-	public static function getTerm( mixed $term_id, string $taxonomy = 'category' ): \WP_Term|\WP_Error|bool|null {
+	public static function getTerm( mixed $term_id, string $taxonomy = 'category' ): \WP_Term|\WP_Error|false|array|null {
 		// Check if the term ID is numeric and retrieve the term by ID
 		if ( is_numeric( $term_id ) ) {
-			$term_id = (int) $term_id;
-			$term    = get_term( $term_id, $taxonomy );
+			$term = get_term( (int) $term_id, $taxonomy );
 		} else {
 			// If term_id is not numeric, attempt to retrieve the term by slug or name
 			$term = get_term_by( 'slug', $term_id, $taxonomy ) ?: get_term_by( 'name', $term_id, $taxonomy );
@@ -1000,6 +999,86 @@ trait Wp {
 		$query_result = new \WP_Query( $_args );
 
 		return $query_result->have_posts() ? $query_result : false;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string $post_type
+	 * @param int $posts_per_page
+	 * @param bool|string $strtotime_str
+	 *
+	 * @return false|\WP_Query
+	 */
+	public static function queryByLatestPosts( string $post_type = 'post', int $posts_per_page = - 1, bool|string $strtotime_str = false ): \WP_Query|false {
+		$posts_per_page = max( $posts_per_page, - 1 );
+		$_args = [
+			'update_post_meta_cache' => false,
+			'update_post_term_cache' => false,
+			'post_type'              => $post_type,
+			'post_status'            => 'publish',
+			'posts_per_page'         => $posts_per_page,
+			'no_found_rows'          => true,
+			'ignore_sticky_posts'    => true,
+		];
+
+		// Handle date_query for recent posts
+		if ( $strtotime_str ) {
+			$recent = strtotime( $strtotime_str );
+			if ( $recent ) {
+				$_args['date_query'] = [
+					'after' => [
+						'year'  => date( 'Y', $recent ),
+						'month' => date( 'n', $recent ),
+						'day'   => date( 'j', $recent ),
+					],
+				];
+			}
+		}
+
+		self::setPostsPerPage( $posts_per_page );
+		$query_result = new \WP_Query( $_args );
+
+		return $query_result->have_posts() ? $query_result : false;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param $post_id
+	 * @param $taxonomy
+	 * @param int $post_count
+	 *
+	 * @return \WP_Query|null
+	 */
+	public static function queryByRelated( $post_id, $taxonomy, int $post_count = 6 ): ?\WP_Query {
+		$post_terms = get_the_terms( $post_id, $taxonomy );
+		if ( ! is_array( $post_terms ) || empty( $post_terms ) ) {
+			return null;
+		}
+
+		// Extract term IDs for further processing
+		$term_ids = wp_list_pluck( $post_terms, 'term_id' );
+
+		$args = [
+			'post_type'      => get_post_type( $post_id ),
+			'posts_per_page' => $post_count,
+			'post__not_in'   => [ $post_id ],
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+			'tax_query'      => [
+				[
+					'taxonomy' => $taxonomy,
+					'field'    => 'term_id',
+					'terms'    => $term_ids,
+				],
+			],
+		];
+
+		self::setPostsPerPage( $post_count );
+		$query = new \WP_Query( $args );
+
+		return $query->have_posts() ? $query : null;
 	}
 
 	// -------------------------------------------------------------
@@ -2211,45 +2290,6 @@ trait Wp {
 		}
 
 		return $child_terms;
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @param $post_id
-	 * @param $taxonomy
-	 * @param int $post_count
-	 *
-	 * @return \WP_Query|null
-	 */
-	public static function queryByRelated( $post_id, $taxonomy, int $post_count = 6 ): ?\WP_Query {
-		$post_terms = get_the_terms( $post_id, $taxonomy );
-		if ( ! is_array( $post_terms ) || empty( $post_terms ) ) {
-			return null;
-		}
-
-		// Extract term IDs for further processing
-		$term_ids = wp_list_pluck( $post_terms, 'term_id' );
-
-		$args = [
-			'post_type'      => get_post_type( $post_id ),
-			'posts_per_page' => $post_count,
-			'post__not_in'   => [ $post_id ],
-			'orderby'        => 'date',
-			'order'          => 'DESC',
-			'tax_query'      => [
-				[
-					'taxonomy' => $taxonomy,
-					'field'    => 'term_id',
-					'terms'    => $term_ids,
-				],
-			],
-		];
-
-		self::setPostsPerPage( $post_count );
-		$query = new \WP_Query( $args );
-
-		return $query->have_posts() ? $query : null;
 	}
 
 	// -------------------------------------------------------------
