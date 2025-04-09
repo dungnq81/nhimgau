@@ -45,6 +45,7 @@ sudo apt-get install -y \
     php8.2-opcache \
     php8.2-intl \
     php8.2-soap \
+    php8.2-xdebug \
     -o Dpkg::Options::="--force-confdef" \
     -o Dpkg::Options::="--force-confold"
 
@@ -55,6 +56,34 @@ sudo systemctl enable --now php8.2-fpm
 
 # Set PHP 8.2 as default
 sudo update-alternatives --set php /usr/bin/php8.2
+
+# Configure PHP-FPM pool settings and enable OPcache
+echo "Configuring PHP-FPM pool and OPcache..."
+PHP_FPM_CONF="/etc/php/8.2/fpm/pool.d/www.conf"
+
+# Backup first
+sudo cp "$PHP_FPM_CONF" "${PHP_FPM_CONF}.bak"
+
+# Set OPcache settings if not already present
+sudo grep -q "opcache.enable" "$PHP_FPM_CONF" || sudo tee -a "$PHP_FPM_CONF" > /dev/null <<EOL
+
+; Custom OPCache settings
+php_admin_value[opcache.enable] = 1
+php_admin_value[opcache.memory_consumption] = 128
+php_admin_value[opcache.interned_strings_buffer] = 16
+php_admin_value[opcache.max_accelerated_files] = 10000
+php_admin_value[opcache.validate_timestamps] = 1
+EOL
+
+# Replace pool management settings
+sudo sed -i 's/^pm = .*/pm = dynamic/' "$PHP_FPM_CONF"
+sudo sed -i 's/^pm.max_children = .*/pm.max_children = 10/' "$PHP_FPM_CONF"
+sudo sed -i 's/^pm.start_servers = .*/pm.start_servers = 2/' "$PHP_FPM_CONF"
+sudo sed -i 's/^pm.min_spare_servers = .*/pm.min_spare_servers = 2/' "$PHP_FPM_CONF"
+sudo sed -i 's/^pm.max_spare_servers = .*/pm.max_spare_servers = 4/' "$PHP_FPM_CONF"
+
+# Restart PHP-FPM to apply changes
+sudo systemctl restart php8.2-fpm
 
 # Preconfigure MySQL root password
 echo "mysql-server mysql-server/root_password password root" | sudo debconf-set-selections
@@ -157,7 +186,6 @@ fi
 grep -q "Listen 8081" /etc/apache2/ports.conf || echo "Listen 8081" | sudo tee -a /etc/apache2/ports.conf
 
 # Restart Apache
-sudo systemctl restart php8.2-fpm
 sudo systemctl restart apache2
 
 # Clean up
