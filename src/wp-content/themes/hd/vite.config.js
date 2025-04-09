@@ -17,15 +17,15 @@ const directoriesToCopy = [
 
 // SASS
 const sassFiles = [
-    // (admin)
+    // (components)
+    'components/home-css',
+    'components/swiper-css',
+    'components/woocommerce-css',
+
+    // (entries)
     'admin-css',
     'editor-style-css',
-
-    // (site)
-    'swiper-css',
-    'woocommerce-css',
     'index-css',
-    'home-css',
 ];
 
 // JS
