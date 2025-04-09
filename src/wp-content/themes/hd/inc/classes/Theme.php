@@ -138,7 +138,6 @@ final class Theme {
 
 		// Plugin
 		Helper::isAcfActive() && ACF::get_instance();
-		Helper::isPolylangActive() && PLL::get_instance();
 		Helper::isWoocommerceActive() && WooCommerce::get_instance();
 	}
 
