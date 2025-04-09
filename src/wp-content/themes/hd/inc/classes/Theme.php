@@ -2,10 +2,7 @@
 
 namespace HD;
 
-use HD\Rest\Rest;
-
 use HD\Plugins\ACF\ACF;
-use HD\Plugins\PLL;
 use HD\Plugins\WooCommerce\WooCommerce;
 
 use HD\Themes\Admin;
@@ -118,7 +115,6 @@ final class Theme {
 		}
 
 		// Theme
-		( Rest::get_instance() );
 		( Customizer::get_instance() );
 		( Optimizer::get_instance() );
 		( Shortcode::get_instance() );
