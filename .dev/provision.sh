@@ -24,6 +24,11 @@ sudo apt-get install -y apache2
 sudo systemctl enable --now apache2
 sudo a2enmod rewrite
 
+# Set ServerName to suppress AH00558 warning
+if ! grep -q "^ServerName" /etc/apache2/apache2.conf; then
+    echo "ServerName ubuntu-wamp.local" | sudo tee -a /etc/apache2/apache2.conf
+fi
+
 # Install PHP 8.2 and required extensions
 sudo apt-get install -y \
     php8.2 \
