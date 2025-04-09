@@ -119,12 +119,12 @@ ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 
-CREATE DATABASE IF NOT EXISTS ssparadigm
+CREATE DATABASE IF NOT EXISTS nhimgau
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_520_ci;
 EOF
 
-echo "Database 'ssparadigm' has been created (or already exists) with utf8mb4 charset and utf8mb4_unicode_520_ci collation."
+echo "Database 'nhimgau' has been created (or already exists) with utf8mb4 charset and utf8mb4_unicode_520_ci collation."
 
 # Adjust web directory permissions
 echo "Adjusting web directory permissions..."
@@ -151,14 +151,6 @@ if [ -f /home/vagrant/config/xdebug.ini ]; then
     sudo cp /home/vagrant/config/xdebug.ini /etc/php/8.2/cli/conf.d/99-xdebug.ini
     sudo chmod 644 /etc/php/8.2/fpm/conf.d/99-xdebug.ini
     sudo chmod 644 /etc/php/8.2/cli/conf.d/99-xdebug.ini
-fi
-
-# Install Composer if not already installed
-if ! [ -x "$(command -v composer)" ]; then
-    echo "Installing Composer..."
-    curl -sS https://getcomposer.org/installer | php
-    sudo mv composer.phar /usr/local/bin/composer
-    sudo chmod +x /usr/local/bin/composer
 fi
 
 # Download and extract phpMyAdmin
