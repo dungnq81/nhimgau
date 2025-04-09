@@ -8,8 +8,8 @@ services:
             - "8080:80"
         volumes:
             - .:/var/www/html
-            - ./config/docker/apache2:/etc/apache2/sites-available
-            - ./config/docker/php/php.ini:/etc/php/8.2/apache2/conf.d/php.ini
+            - ./.dev/docker/apache2:/etc/apache2/sites-available
+            - ./.dev/docker/php/php.ini:/etc/php/8.2/apache2/conf.d/php.ini
         environment:
             - APACHE_LOG_DIR=/var/log/apache2
         restart: always
@@ -27,7 +27,7 @@ services:
             MYSQL_USER: dbuser
             MYSQL_PASSWORD: dbuser
         volumes:
-            - ./config/docker/data/mysql:/var/lib/mysql
+            - ./.dev/docker/data/mysql:/var/lib/mysql
         ports:
             - "3307:3306"
         networks:

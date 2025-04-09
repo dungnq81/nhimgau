@@ -16,15 +16,15 @@ Vagrant.configure("2") do |config|
     # Sync folders between host and guest
     config.vm.synced_folder ".", "/vagrant", disabled: true
     config.vm.synced_folder ".", "/var/www/html", type: "virtualbox", create: true, owner: "www-data", group: "www-data", mount_options: ["dmode=755", "fmode=755"]
-    config.vm.synced_folder "./config/vagrant", "/home/vagrant/config", type: "virtualbox"
+    config.vm.synced_folder "./.dev/vagrant", "/home/vagrant/config", type: "virtualbox"
 
     # Configure VM resources
     config.vm.provider "virtualbox" do |vb|
-        vb.name = "Ubuntu_WAMP"
+        vb.name = "Ubuntu-#{File.basename(Dir.pwd)}"
         vb.memory = "4096"
-        vb.cpus = 6
+        vb.cpus = 4
     end
 
   # Run shell provisioning script
-  config.vm.provision "shell", path: "config/vagrant/provision.sh"
+  config.vm.provision "shell", path: ".dev/provision.sh"
 end

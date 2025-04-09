@@ -22,13 +22,14 @@ grep -qxF "export PATH=\$PATH:/var/www/html/vendor/bin" /home/vagrant/.bashrc ||
 echo "Installing Apache..."
 sudo apt-get install -y apache2
 sudo systemctl enable --now apache2
+sudo a2enmod rewrite
 
 # Install PHP 8.2 and required extensions
 sudo apt-get install -y \
     php8.2 \
+    php8.2-fpm \
     php8.2-mysql \
     php8.2-curl \
-    libapache2-mod-php8.2 \
     php8.2-cli \
     php8.2-common \
     php8.2-zip \
@@ -41,6 +42,11 @@ sudo apt-get install -y \
     php8.2-soap \
     -o Dpkg::Options::="--force-confdef" \
     -o Dpkg::Options::="--force-confold"
+
+sudo a2dismod php8.2
+sudo a2enmod proxy_fcgi setenvif
+sudo a2enconf php8.2-fpm
+sudo systemctl enable --now php8.2-fpm
 
 # Set PHP 8.2 as default
 sudo update-alternatives --set php /usr/bin/php8.2
@@ -82,12 +88,12 @@ ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 
-CREATE DATABASE IF NOT EXISTS nhimgau
+CREATE DATABASE IF NOT EXISTS ssparadigm
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_520_ci;
 EOF
 
-echo "Database 'nhimgau' has been created (or already exists) with utf8mb4 charset and utf8mb4_unicode_520_ci collation."
+echo "Database 'ssparadigm' has been created (or already exists) with utf8mb4 charset and utf8mb4_unicode_520_ci collation."
 
 # Adjust web directory permissions
 echo "Adjusting web directory permissions..."
@@ -145,10 +151,9 @@ fi
 # Ensure Apache listens on port 8081
 grep -q "Listen 8081" /etc/apache2/ports.conf || echo "Listen 8081" | sudo tee -a /etc/apache2/ports.conf
 
-# Enable modules and reload Apache
-sudo a2enmod php8.2
-sudo a2enmod rewrite
-sudo systemctl reload apache2
+# Restart Apache
+sudo systemctl restart php8.2-fpm
+sudo systemctl restart apache2
 
 # Clean up
 sudo apt-get clean
