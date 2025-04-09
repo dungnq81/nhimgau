@@ -61,13 +61,10 @@ sudo update-alternatives --set php /usr/bin/php8.2
 echo "Configuring PHP-FPM pool and OPcache..."
 PHP_FPM_CONF="/etc/php/8.2/fpm/pool.d/www.conf"
 
-# Backup first
-sudo cp "$PHP_FPM_CONF" "${PHP_FPM_CONF}.bak"
-
 # Set OPcache settings if not already present
 sudo grep -q "opcache.enable" "$PHP_FPM_CONF" || sudo tee -a "$PHP_FPM_CONF" > /dev/null <<EOL
 
-; Custom OPCache settings
+; OPcache settings for PHP-FPM
 php_admin_value[opcache.enable] = 1
 php_admin_value[opcache.memory_consumption] = 128
 php_admin_value[opcache.interned_strings_buffer] = 16
@@ -140,10 +137,20 @@ if [ -f /home/vagrant/config/default.conf ]; then
     sudo a2ensite 999-default.conf
 fi
 
-# Copy php.ini config if exists
+# Copy php.ini to CLI and FPM only
 if [ -f /home/vagrant/config/php.ini ]; then
-    sudo cp /home/vagrant/config/php.ini /etc/php/8.2/apache2/conf.d/99-php.ini
-    sudo chmod 644 /etc/php/8.2/apache2/conf.d/99-php.ini
+    sudo cp /home/vagrant/config/php.ini /etc/php/8.2/fpm/conf.d/99-custom.ini
+    sudo cp /home/vagrant/config/php.ini /etc/php/8.2/cli/conf.d/99-custom.ini
+    sudo chmod 644 /etc/php/8.2/fpm/conf.d/99-custom.ini
+    sudo chmod 644 /etc/php/8.2/cli/conf.d/99-custom.ini
+fi
+
+# Copy xdebug.ini config if exists
+if [ -f /home/vagrant/config/xdebug.ini ]; then
+    sudo cp /home/vagrant/config/xdebug.ini /etc/php/8.2/fpm/conf.d/99-xdebug.ini
+    sudo cp /home/vagrant/config/xdebug.ini /etc/php/8.2/cli/conf.d/99-xdebug.ini
+    sudo chmod 644 /etc/php/8.2/fpm/conf.d/99-xdebug.ini
+    sudo chmod 644 /etc/php/8.2/cli/conf.d/99-xdebug.ini
 fi
 
 # Install Composer if not already installed
@@ -152,12 +159,6 @@ if ! [ -x "$(command -v composer)" ]; then
     curl -sS https://getcomposer.org/installer | php
     sudo mv composer.phar /usr/local/bin/composer
     sudo chmod +x /usr/local/bin/composer
-fi
-
-# Install WP-CLI dependencies if needed
-echo "Installing WP-CLI dependencies..."
-if [ -f /var/www/html/composer.json ]; then
-    cd /var/www/html && composer install
 fi
 
 # Download and extract phpMyAdmin
