@@ -16,10 +16,10 @@
     "src": "src/wp-content/themes/hd/resources/js/admin.js",
     "isEntry": true
   },
-  "src/wp-content/themes/hd/resources/js/components/back-to-top.js": {
-    "file": "js/back-to-top.js",
-    "name": "back-to-top",
-    "src": "src/wp-content/themes/hd/resources/js/components/back-to-top.js",
+  "src/wp-content/themes/hd/resources/js/components/home.js": {
+    "file": "js/home.js",
+    "name": "home",
+    "src": "src/wp-content/themes/hd/resources/js/components/home.js",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/js/components/preload-polyfill.js": {
@@ -46,10 +46,16 @@
       "__vendor.js"
     ]
   },
-  "src/wp-content/themes/hd/resources/js/home.js": {
-    "file": "js/home.js",
-    "name": "home",
-    "src": "src/wp-content/themes/hd/resources/js/home.js",
+  "src/wp-content/themes/hd/resources/js/components/tabs.js": {
+    "file": "js/tabs.js",
+    "name": "tabs",
+    "src": "src/wp-content/themes/hd/resources/js/components/tabs.js",
+    "isEntry": true
+  },
+  "src/wp-content/themes/hd/resources/js/components/woocommerce.js": {
+    "file": "js/woocommerce.js",
+    "name": "woocommerce",
+    "src": "src/wp-content/themes/hd/resources/js/components/woocommerce.js",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/js/index.js": {
@@ -59,15 +65,8 @@
     "isEntry": true,
     "imports": [
       "__vendor.js",
-      "src/wp-content/themes/hd/resources/js/components/back-to-top.js",
       "src/wp-content/themes/hd/resources/js/components/social-share.js"
     ]
-  },
-  "src/wp-content/themes/hd/resources/js/woocommerce.js": {
-    "file": "js/woocommerce.js",
-    "name": "woocommerce",
-    "src": "src/wp-content/themes/hd/resources/js/woocommerce.js",
-    "isEntry": true
   },
   "src/wp-content/themes/hd/resources/sass/admin-css.scss": {
     "file": "css/admin-css.css",

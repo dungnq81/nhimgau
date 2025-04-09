@@ -1,10 +1,11 @@
 import $ from 'jquery';
 import Foundation from './3rd/_zf.js';
 
-import './components/global.js';
-import './components/back-to-top.js';
-import './components/script-loader.js';
-import { initMenu } from './components/menu.js';
+import './utils/global.js';
+import './utils/back-to-top.js';
+import './utils/script-loader.js';
+import { initMenu } from './utils/menu.js';
+
 import { initSocialShare } from './components/social-share.js';
 //import SimpleBar from 'simplebar';
 //import ResizeObserver from 'resize-observer-polyfill';

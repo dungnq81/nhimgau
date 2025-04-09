@@ -1,1 +1,1 @@
-import './lighthouse.js';
+import '../utils/lighthouse.js';

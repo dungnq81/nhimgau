@@ -30,19 +30,17 @@ const sassFiles = [
 
 // JS
 const jsFiles = [
-    // (admin)
-    'admin',
-
     // (components)
-    'components/back-to-top',
+    'components/home',
+    'components/woocommerce',
     'components/preload-polyfill',
     'components/social-share',
     'components/swiper',
+    'components/tabs',
 
-    // (site)
-    'home',
+    // (entries)
+    'admin',
     'index',
-    'woocommerce',
 ];
 
 const isProduction = process.env.NODE_ENV === 'production';
