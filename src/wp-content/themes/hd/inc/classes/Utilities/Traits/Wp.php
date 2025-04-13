@@ -1016,7 +1016,7 @@ trait Wp {
 	 */
 	public static function queryByLatestPosts( string $post_type = 'post', int $posts_per_page = - 1, bool|string $strtotime_str = false ): \WP_Query|false {
 		$posts_per_page = max( $posts_per_page, - 1 );
-		$_args = [
+		$_args          = [
 			'update_post_meta_cache' => false,
 			'update_post_term_cache' => false,
 			'post_type'              => $post_type,
@@ -1600,7 +1600,7 @@ trait Wp {
 	 */
 	public static function getPrimaryTerm( mixed $post = null, string $taxonomy = '', ?string $wrapper_open = '<div class="terms">', ?string $wrapper_close = '</div>' ): ?string {
 		$term = self::primaryTerm( $post, $taxonomy );
-		if ( ! $term ) {
+		if ( ! $term || is_wp_error( $term ) ) {
 			return null;
 		}
 
@@ -2421,84 +2421,77 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param null $query
+	 * @param $query
 	 * @param bool $get
 	 *
 	 * @return void
 	 */
 	public static function paginateLinks( $query = null, bool $get = false ): void {
-		if ( ! $query ) {
-			global $wp_query;
-		} else {
-			$wp_query = $query;
+		global $wp_query;
+
+		$query = $query ?: $wp_query;
+
+		// Ensure the query is valid and has multiple pages
+		if ( ! $query || $query->max_num_pages <= 1 ) {
+			return;
 		}
 
-		if ( $wp_query->max_num_pages > 1 ) {
+		// Setting up default values based on the current URL
+		$pagenum_link = html_entity_decode( get_pagenum_link() );
+		$url_parts    = explode( '?', $pagenum_link, 2 );
 
-			// Setting up default values based on the current URL.
-			$pagenum_link = html_entity_decode( get_pagenum_link() );
-			$url_parts    = explode( '?', $pagenum_link, 2 );
+		// Append the format placeholder to the base URL
+		$pagenum_link = trailingslashit( $url_parts[0] ) . '%_%';
 
-			// Append the format placeholder to the base URL.
-			$pagenum_link = trailingslashit( $url_parts[0] ) . '%_%';
+		$current = max( 1, get_query_var( 'paged' ) );
+		$base    = $pagenum_link;
 
-			$current = max( 1, get_query_var( 'paged' ) );
-			$base    = $pagenum_link;
-
-			if ( $get ) {
-				$base = add_query_arg( 'page', '%#%' );
-			}
-
-			if ( ! empty( $_GET['page'] ) && $get ) {
-				$current = (int) $_GET['page'];
-			}
-
-			// For more options and info view the docs for paginate_links()
-			// http://codex.wordpress.org/Function_Reference/paginate_links
-			$paginate_links = paginate_links(
-				apply_filters(
-					'wp_pagination_args',
-					[
-						'base'      => $base,
-						'current'   => $current,
-						'total'     => $wp_query->max_num_pages,
-						'end_size'  => 1,
-						'mid_size'  => 2,
-						'prev_next' => true,
-						'prev_text' => '<i data-fa=""></i>',
-						'next_text' => '<i data-fa=""></i>',
-						'type'      => 'list',
-					]
-				)
-			);
-
-			$paginate_links = str_replace(
-				[
-					"<ul class='page-numbers'>",
-					'<li><span class="page-numbers dots">&hellip;</span></li>',
-					'<li><span aria-current="page" class="page-numbers current">',
-					'</span></li>',
-				],
-				[
-					'<ul class="pagination page-numbers">',
-					'<li class="ellipsis"></li>',
-					'<li class="current"><span aria-current="page" class="sr-only">You\'re on page </span>',
-					'</li>',
-				],
-				$paginate_links
-			);
-
-			$paginate_links = preg_replace( [ '/page-numbers\s*/', '/\s*class=""/' ], '', $paginate_links );
-
-			// Display the pagination if more than one page is found.
-			if ( $paginate_links ) {
-				$paginate_links = '<nav class="nav-pagination" aria-label="Pagination">' . $paginate_links . '</nav>';
-
-				echo $paginate_links;
-			}
+		if ( $get ) {
+			$base = add_query_arg( 'page', '%#%' );
 		}
 
-		echo null;
+		if ( ! empty( $_GET['page'] ) && $get ) {
+			$current = (int) $_GET['page'];
+		}
+
+		// For more options and info views the docs for paginate_links()
+		// http://codex.wordpress.org/Function_Reference/paginate_links
+		$paginate_links = paginate_links( [
+			'base'      => $base,
+			'current'   => $current,
+			'total'     => $query->max_num_pages,
+			'end_size'  => 1,
+			'mid_size'  => 2,
+			'prev_next' => true,
+			'prev_text' => '<i data-fa=""></i>',
+			'next_text' => '<i data-fa=""></i>',
+			'type'      => 'list',
+		] );
+
+		$paginate_links = str_replace(
+			[
+				"<ul class='page-numbers'>",
+				'<li><span class="page-numbers dots">&hellip;</span></li>',
+				'<li><span aria-current="page" class="page-numbers current">',
+				'</span></li>',
+			],
+			[
+				'<ul class="pagination page-numbers">',
+				'<li class="ellipsis"></li>',
+				'<li class="current"><span aria-current="page" class="sr-only">You\'re on page </span>',
+				'</li>',
+			],
+			$paginate_links
+		);
+
+		$paginate_links = preg_replace( [ '/page-numbers\s*/', '/\s*class=""/' ], '', $paginate_links );
+
+		// Display the pagination if more than one page is found.
+		if ( $paginate_links ) {
+			$paginate_links = '<nav class="nav-pagination" aria-label="Pagination">' . $paginate_links . '</nav>';
+
+			echo $paginate_links;
+		}
 	}
 
 	// -------------------------------------------------------------

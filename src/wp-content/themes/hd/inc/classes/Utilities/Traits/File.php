@@ -47,11 +47,17 @@ trait File {
 	// --------------------------------------------------
 
 	/**
-	 * @param string $path
+	 * @param string|null $path
 	 *
 	 * @return bool
 	 */
-	public static function fileCreate( string $path ): bool {
+	public static function fileCreate( ?string $path ): bool {
+		if ( empty( $path ) || ! is_string( $path ) ) {
+			self::errorLog( 'Invalid file path provided for fileCreate.' );
+
+			return false;
+		}
+
 		$wp_filesystem = self::wpFileSystem();
 
 		if ( empty( $wp_filesystem ) ) {
@@ -70,21 +76,20 @@ trait File {
 	// --------------------------------------------------
 
 	/**
-	 * Reads an entire file into a string
+	 * @param string|null $file
 	 *
-	 * @param string $file Name of the file to read.
-	 *
-	 * @return null|string Read data on success, null on failure.
+	 * @return string|null
 	 */
-	public static function fileRead( string $file ): ?string {
-		$wp_filesystem = self::wpFileSystem();
+	public static function fileRead( ?string $file ): ?string {
+		if ( empty( $file ) || ! is_file( $file ) ) {
+			self::errorLog( 'Invalid file path provided for fileRead.' );
 
-		if ( empty( $wp_filesystem ) ) {
 			return null;
 		}
 
-		// Bail if we are unable to create the file.
-		if ( ! self::fileCreate( $file ) ) {
+		$wp_filesystem = self::wpFileSystem();
+
+		if ( empty( $wp_filesystem ) ) {
 			return null;
 		}
 
@@ -95,20 +100,27 @@ trait File {
 	// --------------------------------------------------
 
 	/**
-	 * Update a file
+	 * @param string|null $path
+	 * @param string $content
 	 *
-	 * @param string $path Full path to the file
-	 * @param string $content File content
+	 * @return void
 	 */
-	public static function fileUpdate( string $path, string $content = '' ): void {
-		$wp_filesystem = self::wpFileSystem();
+	public static function fileUpdate( ?string $path, string $content = '' ): void {
+		if ( empty( $path ) || ! is_string( $path ) ) {
+			self::errorLog( 'Invalid file path provided for fileUpdate.' );
 
-		if ( empty( $wp_filesystem ) ) {
 			return;
 		}
 
-		// Bail if we are unable to create the file.
-		if ( ! self::fileCreate( $path ) ) {
+		if ( ! is_string( $content ) ) {
+			self::errorLog( 'Invalid content provided for fileUpdate.' );
+
+			return;
+		}
+
+		$wp_filesystem = self::wpFileSystem();
+
+		if ( empty( $wp_filesystem ) ) {
 			return;
 		}
 
@@ -119,14 +131,24 @@ trait File {
 	// --------------------------------------------------
 
 	/**
-	 * Lock a file and write something in it.
+	 * @param string|null $path
+	 * @param string $content
 	 *
-	 * @param string $path Path to the file.
-	 * @param string $content Content to add.
-	 *
-	 * @return bool True on success, false otherwise.
+	 * @return bool
 	 */
-	public static function doLockWrite( string $path, string $content = '' ): bool {
+	public static function doLockWrite( ?string $path, string $content = '' ): bool {
+		if ( empty( $path ) || ! is_string( $path ) ) {
+			self::errorLog( 'Invalid file path provided for doLockWrite.' );
+
+			return false;
+		}
+
+		if ( ! is_string( $content ) ) {
+			self::errorLog( 'Invalid content provided for doLockWrite.' );
+
+			return false;
+		}
+
 		$fp = fopen( $path, 'wb+' );
 		if ( $fp === false ) {
 			return false;
@@ -193,7 +215,14 @@ trait File {
 			return false;
 		}
 
-		foreach ( scandir( $dirname, SCANDIR_SORT_NONE ) as $file ) {
+		$files = scandir( $dirname, SCANDIR_SORT_NONE );
+		if ( $files === false ) {
+			self::errorLog( 'Failed to scan directory: ' . $dirname );
+
+			return false;
+		}
+
+		foreach ( $files as $file ) {
 			if ( ! in_array( $file, [ '.', '..', '.svn', '.git' ], false ) ) {
 				return false;
 			}
@@ -205,11 +234,17 @@ trait File {
 	// --------------------------------------------------
 
 	/**
-	 * @param string $directory
+	 * @param string|null $directory
 	 *
 	 * @return bool
 	 */
-	public static function createDirectory( string $directory ): bool {
+	public static function createDirectory( ?string $directory ): bool {
+		if ( empty( $directory ) || ! is_string( $directory ) ) {
+			self::errorLog( 'Invalid directory path provided for createDirectory.' );
+
+			return false;
+		}
+
 		if ( ! is_writable( dirname( $directory ) ) ) {
 			self::errorLog( sprintf( 'Cannot write to the parent directory: %s.', dirname( $directory ) ) );
 
@@ -228,58 +263,70 @@ trait File {
 	// --------------------------------------------------
 
 	/**
-	 * @param string $fileUrl
+	 * @param string|null $fileUrl
 	 * @param array|null $allowedTypes
 	 * @param int|null $maxFileSize
 	 * @param string|null $specificDir
 	 *
 	 * @return array|null
 	 */
-	public static function uploadFileFromUrl( string $fileUrl, ?array $allowedTypes = null, ?int $maxFileSize = null, ?string $specificDir = null ): ?array {
-		// Retrieve the file from the URL
+	public static function uploadFileFromUrl( ?string $fileUrl, ?array $allowedTypes = null, ?int $maxFileSize = null, ?string $specificDir = null ): ?array {
+		if ( empty( $fileUrl ) || ! self::isUrl( $fileUrl ) ) {
+			self::errorLog( 'Invalid file URL provided for uploadFileFromUrl.' );
+
+			return null;
+		}
+
 		$response = wp_remote_get( $fileUrl, [ 'timeout' => 10 ] );
 
 		if ( is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) !== 200 ) {
+			self::errorLog( 'Failed to retrieve file from URL: ' . $fileUrl );
+
 			return null;
 		}
 
 		$fileContent = wp_remote_retrieve_body( $response );
 
 		if ( empty( $fileContent ) ) {
+			self::errorLog( 'Empty file content retrieved from URL: ' . $fileUrl );
+
 			return null;
 		}
 
-		// Determine file name and directory
 		$filename  = basename( parse_url( $fileUrl, PHP_URL_PATH ) );
 		$uploadDir = wp_upload_dir();
 
 		if ( $specificDir ) {
 			$directory = trailingslashit( $uploadDir['basedir'] ) . trim( $specificDir, '/' );
-			self::createDirectory( $directory );
+			if ( ! self::createDirectory( $directory ) ) {
+				return null;
+			}
 		} else {
 			$directory = $uploadDir['path'];
 		}
 
 		$filePath = trailingslashit( $directory ) . $filename;
 
-		// Check file size if applicable
 		if ( $maxFileSize !== null && mb_strlen( $fileContent ) > $maxFileSize ) {
+			self::errorLog( 'File exceeds maximum allowed size: ' . $filename );
+
 			return null;
 		}
 
-		// Write the file to the filesystem
 		if ( ! self::doLockWrite( $filePath, $fileContent ) ) {
+			self::errorLog( 'Failed to write file: ' . $filePath );
+
 			return null;
 		}
 
-		// Get a file type
 		$filetype = wp_check_filetype( $filePath );
 
 		if ( $allowedTypes !== null && ( ! $filetype['type'] || ! in_array( $filetype['type'], $allowedTypes, false ) ) ) {
+			self::errorLog( 'File type not allowed: ' . $filetype['type'] );
+
 			return null;
 		}
 
-		// Prepare attachment data
 		$attachment = [
 			'guid'           => $uploadDir['url'] . '/' . $filename,
 			'post_mime_type' => $filetype['type'],
@@ -288,7 +335,6 @@ trait File {
 			'post_status'    => 'inherit',
 		];
 
-		// Insert the attachment into the Media Library
 		$attachId = wp_insert_attachment( $attachment, $filePath );
 
 		if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) {

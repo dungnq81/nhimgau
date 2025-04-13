@@ -19,7 +19,7 @@
 <body>
 <div class="php-version-error">
     <h1>Error</h1>
-    <p><?php echo $args['error_message'] ?? 'An error occurred.'; ?></p>
+    <p><?php echo isset( $args['error_message'] ) ? esc_html( $args['error_message'] ) : 'An error occurred.'; ?></p>
 </div>
 </body>
 </html>

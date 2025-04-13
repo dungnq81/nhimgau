@@ -388,9 +388,9 @@ final class Shortcode {
 			'dropdown_search'
 		);
 
-		$title             = $atts['title'] ?: __( 'Tìm kiếm', TEXT_DOMAIN );
+		$title             = $atts['title'] ?: __( 'Search', TEXT_DOMAIN );
 		$title_for         = __( 'Search for', TEXT_DOMAIN );
-		$placeholder_title = Helper::escAttr( __( 'Tìm kiếm ...', TEXT_DOMAIN ) );
+		$placeholder_title = Helper::escAttr( __( 'Search...', TEXT_DOMAIN ) );
 		$close_title       = __( 'Close', TEXT_DOMAIN );
 		$class             = $atts['class'] ? ' ' . Helper::escAttr( $atts['class'] ) : '';
 		$id                = $atts['id'] ? Helper::escAttr( $atts['id'] ) : Helper::escAttr( $id );

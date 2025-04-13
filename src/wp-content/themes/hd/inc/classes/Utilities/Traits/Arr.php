@@ -61,7 +61,7 @@ trait Arr {
 			$value = array_map( 'trim', explode( ',', (string) $value ) );
 		}
 
-		return self::reIndex( array_filter( (array) $value, $callback ) );
+		return self::reIndex( array_filter( (array) $value, is_callable( $callback ) ? $callback : null ) );
 	}
 
 	// --------------------------------------------------
@@ -87,7 +87,11 @@ trait Arr {
 			return false;
 		}
 
-		return wp_is_numeric_array( $array );
+		if ( function_exists( 'wp_is_numeric_array' ) ) {
+			return wp_is_numeric_array( $array );
+		}
+
+		return array_keys( $array ) === range( 0, count( $array ) - 1 );
 	}
 
 	// --------------------------------------------------
@@ -127,6 +131,10 @@ trait Arr {
 	 * @return array
 	 */
 	public static function insert( array $array, array $insert_array, ?string $key, string $position = 'before' ): array {
+		if ( $key === null ) {
+			return array_merge( $array, $insert_array );
+		}
+
 		$keyPosition = array_search( $key, array_keys( $array ), true );
 		if ( $keyPosition === false ) {
 			return array_merge( $array, $insert_array );
@@ -152,7 +160,7 @@ trait Arr {
 	 *
 	 * @return array
 	 */
-	public static function prepend( array &$array, $value, $key = null ): array {
+	public static function prepend( array $array, $value, $key = null ): array {
 		if ( isset( $key ) ) {
 			$array = [ $key => $value ] + $array;
 		} else {

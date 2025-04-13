@@ -321,15 +321,16 @@ final class Optimizer {
 	public function restrict_admin_plugin_install( $allcaps, $caps, $args ): mixed {
 		$allowed_users_ids_install_plugins = Helper::filterSettingOptions( 'allowed_users_ids_install_plugins', [] );
 
-		// Get the current user ID
+		if ( ! is_array( $allowed_users_ids_install_plugins ) ) {
+			$allowed_users_ids_install_plugins = [];
+		}
+
 		$user_id = get_current_user_id();
 
-		// Check if the current user is in the allowed users list
 		if ( $user_id && in_array( $user_id, $allowed_users_ids_install_plugins, false ) ) {
 			return $allcaps;
 		}
 
-		// If a user is not allowed, remove the ability to install plugins
 		if ( isset( $allcaps['activate_plugins'] ) ) {
 			unset( $allcaps['install_plugins'], $allcaps['delete_plugins'] );
 		}
@@ -352,6 +353,11 @@ final class Optimizer {
 	 */
 	public function prevent_deletion_admin_accounts( $allcaps, $cap, $args ): mixed {
 		$disallowed_users_ids_delete_account = Helper::filterSettingOptions( 'disallowed_users_ids_delete_account', [] );
+
+		if ( ! is_array( $disallowed_users_ids_delete_account ) ) {
+			$disallowed_users_ids_delete_account = [];
+		}
+
 		if ( isset( $cap[0] ) && $cap[0] === 'delete_users' ) {
 			$user_id_to_delete = $args[2] ?? 0;
 
@@ -372,6 +378,11 @@ final class Optimizer {
 	 */
 	public function prevent_deletion_user( $user_id ): void {
 		$disallowed_users_ids_delete_account = Helper::filterSettingOptions( 'disallowed_users_ids_delete_account', [] );
+
+		if ( ! is_array( $disallowed_users_ids_delete_account ) ) {
+			$disallowed_users_ids_delete_account = [];
+		}
+
 		if ( in_array( $user_id, $disallowed_users_ids_delete_account, false ) ) {
 			Helper::wpDie(
 				__( 'You cannot delete this admin account.', TEXT_DOMAIN ),
@@ -392,6 +403,10 @@ final class Optimizer {
 	 */
 	public function script_loader_tag( string $tag, string $handle, string $src ): string {
 		$attributes = wp_scripts()->registered[ $handle ]->extra ?? [];
+
+		if ( ! isset( wp_scripts()->registered[ $handle ] ) ) {
+			return $tag;
+		}
 
 		// Add `type="module"` attributes if the script is marked as a module
 		if ( ! empty( $attributes['module'] ) ) {
@@ -472,6 +487,10 @@ final class Optimizer {
 		global $wpdb;
 
 		if ( empty( $search ) ) {
+			return $search;
+		}
+
+		if ( ! extension_loaded( 'mbstring' ) ) {
 			return $search;
 		}
 

@@ -24,8 +24,8 @@ trait Url {
 			exit;
 		}
 
-		echo '<script>window.location.href="' . $uri . '";</script>';
-		echo '<noscript><meta http-equiv="refresh" content="0;url=' . $uri . '" /></noscript>';
+		echo '<script>window.location.href="' . esc_js( $uri ) . '";</script>';
+		echo '<noscript><meta http-equiv="refresh" content="0;url=' . esc_attr( $uri ) . '" /></noscript>';
 
 		return true;
 	}
@@ -147,12 +147,10 @@ trait Url {
 	 * @return mixed|string|null
 	 */
 	public static function serverIpAddress(): mixed {
-		// Check SERVER_ADDR first
-		if ( ! empty( $_SERVER['SERVER_ADDR'] ) ) {
+		if ( ! empty( $_SERVER['SERVER_ADDR'] ) && filter_var( $_SERVER['SERVER_ADDR'], FILTER_VALIDATE_IP ) ) {
 			return $_SERVER['SERVER_ADDR'];
 		}
 
-		// Get the hostname and resolve to IPv4
 		$hostname = gethostname();
 		if ( $hostname ) {
 			$ipv4 = gethostbyname( $hostname );
@@ -161,7 +159,6 @@ trait Url {
 			}
 		}
 
-		// Get the IPv6 address using dns_get_record
 		$dnsRecords = dns_get_record( $hostname, DNS_AAAA );
 		if ( ! empty( $dnsRecords ) ) {
 			foreach ( $dnsRecords as $record ) {
@@ -171,7 +168,6 @@ trait Url {
 			}
 		}
 
-		// No valid IP found, return null
 		return null;
 	}
 
@@ -345,26 +341,23 @@ trait Url {
 	 * @return string
 	 */
 	public static function normalizePath( string $path ): string {
+		$path  = str_replace( '\\', '/', $path );
 		$parts = explode( '/', $path );
 		$stack = [];
 
 		foreach ( $parts as $part ) {
 			if ( $part === '' || $part === '.' ) {
-				// Ignore empty parts and current directory parts (.)
 				continue;
 			}
 			if ( $part === '..' ) {
-				// Pop from the stack if part is '.' and the stack is not empty
 				if ( ! empty( $stack ) ) {
 					array_pop( $stack );
 				}
 			} else {
-				// Add the part to the stack
 				$stack[] = $part;
 			}
 		}
 
-		// Rebuild the path
 		return '/' . implode( '/', $stack );
 	}
 
@@ -407,19 +400,15 @@ trait Url {
 	 * @return int|false The HTTP response code on success, false on error.
 	 */
 	public static function remoteStatusCheck( string $url ): int|false {
-
-		// Make a HEAD request to the remote URL
 		$response = wp_safe_remote_head( $url, [
 			'timeout'   => 5,
 			'sslverify' => false,
 		] );
 
-		// Check for errors in the response
-		if ( is_wp_error( $response ) ) {
+		if ( is_wp_error( $response ) || ! isset( $response['response']['code'] ) ) {
 			return false;
 		}
 
-		// Return the HTTP response code
 		return (int) $response['response']['code'];
 	}
 }

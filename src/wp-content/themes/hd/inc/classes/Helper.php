@@ -386,12 +386,9 @@ final class Helper {
 	 */
 	public static function appendToAttribute( string $str, string $attr, string $content_extra, bool $unique = false ): string {
 		// Check if the attribute has single or double quotes.
-		// @codingStandardsIgnoreLine
-		if ( $start = stripos( $str, $attr . '="' ) ) {
+		if ( ( $start = stripos( $str, $attr . '="' ) ) !== false ) {
 			$quote = '"';
-
-			// @codingStandardsIgnoreLine
-		} elseif ( $start = stripos( $str, $attr . "='" ) ) {
+		} elseif ( ( $start = stripos( $str, $attr . "='" ) ) !== false ) {
 			$quote = "'";
 		} else {
 			// Not found
@@ -399,8 +396,7 @@ final class Helper {
 		}
 
 		// Add a quote (for filtering purposes).
-		$attr .= '=' . $quote;
-
+		$attr          .= '=' . $quote;
 		$content_extra = trim( $content_extra );
 
 		if ( $unique ) {
@@ -410,7 +406,7 @@ final class Helper {
 			// Get the current content.
 			$content = explode( ' ', substr( $str, $start, $end - $start ) );
 
-			// Get our extra content.
+			// Append extra content uniquely.
 			foreach ( explode( ' ', $content_extra ) as $class ) {
 				if ( ! empty( $class ) && ! in_array( $class, $content, false ) ) {
 					$content[] = $class;
@@ -418,13 +414,11 @@ final class Helper {
 			}
 
 			// Remove duplicates and empty values.
-			$content = array_unique( array_filter( $content ) );
-			$content = implode( ' ', $content );
-
+			$content        = array_unique( array_filter( $content ) );
+			$content        = implode( ' ', $content );
 			$before_content = substr( $str, 0, $start );
 			$after_content  = substr( $str, $end );
-
-			$str = $before_content . $content . $after_content;
+			$str            = $before_content . $content . $after_content;
 		} else {
 			$str = preg_replace(
 				'/' . preg_quote( $attr, '/' ) . '/',

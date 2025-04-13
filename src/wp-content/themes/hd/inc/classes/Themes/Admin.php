@@ -44,7 +44,7 @@ final class Admin {
 	 */
 	public function admin_footer_script(): void { ?>
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function () {
                 let postTitleInput = document.querySelector('input[name="post_title"]');
                 if (postTitleInput) {
                     postTitleInput.setAttribute('required', 'required');
@@ -53,11 +53,11 @@ final class Admin {
                 // popup confirmation for trash action
                 const links = document.querySelectorAll('a');
 
-                links.forEach(function(link) {
+                links.forEach(function (link) {
                     const href = link.getAttribute('href');
 
                     if (href && href.includes('action=trash')) {
-                        link.addEventListener('click', function(e) {
+                        link.addEventListener('click', function (e) {
                             const confirmAction = confirm('Are you sure you want to move this post to the trash?');
                             if (!confirmAction) {
                                 e.preventDefault();
@@ -265,7 +265,9 @@ final class Admin {
 						echo $thumbnail;
 					} elseif ( $url = Helper::getField( 'url', $post_id ) ) {
 						$img_src = Helper::youtubeImage( esc_url( $url ), 3 );
-						echo '<img loading="lazy" alt="video" src="' . $img_src . '" />';
+						if ( $img_src ) {
+							echo '<img loading="lazy" alt="video" src="' . $img_src . '" />';
+						}
 					}
 				}
 

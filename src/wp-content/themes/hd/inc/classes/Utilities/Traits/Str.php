@@ -37,10 +37,10 @@ trait Str {
 	 *
 	 * @param string $content The input content with <p> tags.
 	 *
-	 * @return string|null The content with empty <p> tags removed, or null if input is not a string.
+	 * @return string|null The content with empty <p> tags removed, or null if the input is not a string.
 	 */
 	public static function removeEmptyP( string $content ): ?string {
-		return preg_replace( '/<p>(\s|&nbsp;)*<\/p>/', '', $content );
+		return preg_replace( '/<p>(\s|&nbsp;)*<\/p>/', '', $content ) ?? $content;
 	}
 
 	// --------------------------------------------------
@@ -98,24 +98,21 @@ trait Str {
 	 * @return string The cleaned HTML content without inline JavaScript and CSS.
 	 */
 	public static function removeInlineJsCss( string $content ): string {
-		// Ensure content is not empty
 		if ( empty( $content ) ) {
 			return '';
 		}
 
-		// Remove <script> tags and their content
-		// Remove JavaScript event handlers (on* attributes) and inline style attributes
 		return preg_replace(
-			[
-				'/<script\b[^>]*>(.*?)<\/script>/is',
-				'/\s*on\w+="[^"]*"/i',
-				"/\s*on\w+='[^']*'/i",
-				'/<style\b[^>]*>(.*?)<\/style>/is',
-				'/\s*style=["\'][^"\']*["\']/i',
-			],
-			'',
-			$content
-		);
+			       [
+				       '/<script\b[^>]*>(.*?)<\/script>/is',
+				       '/\s*on\w+="[^"]*"/i',
+				       "/\s*on\w+='[^']*'/i",
+				       '/<style\b[^>]*>(.*?)<\/style>/is',
+				       '/\s*style=["\'][^"\']*["\']/i',
+			       ],
+			       '',
+			       $content
+		       ) ?? $content;
 	}
 
 	// --------------------------------------------------
@@ -274,7 +271,7 @@ trait Str {
 		}
 		$position = mb_strpos( $subject, $search );
 		if ( $position !== false ) {
-			return substr_replace( $subject, $replace, $position, mb_strlen( $search ) );
+			return mb_substr( $subject, 0, $position ) . $replace . mb_substr( $subject, $position + mb_strlen( $search ) );
 		}
 
 		return $subject;
@@ -292,7 +289,7 @@ trait Str {
 	public static function replaceLast( string $search, string $replace, string $subject ): string {
 		$position = mb_strrpos( $subject, $search );
 		if ( '' !== $search && false !== $position ) {
-			return substr_replace( $subject, $replace, $position, mb_strlen( $search ) );
+			return mb_substr( $subject, 0, $position ) . $replace . mb_substr( $subject, $position + mb_strlen( $search ) );
 		}
 
 		return $subject;
@@ -397,13 +394,13 @@ trait Str {
 		}
 
 		if ( $remove_js ) {
-			$string = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', ' ', $string );
+			$string = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', ' ', $string ) ?? '';
 		}
 
 		$string = strip_tags( $string, $allowed_tags );
 
 		if ( $flatten ) {
-			$string = preg_replace( '/[\r\n\t ]+/', ' ', $string );
+			$string = preg_replace( '/[\r\n\t ]+/', ' ', $string ) ?? '';
 		}
 
 		return trim( $string );
@@ -427,8 +424,7 @@ trait Str {
 			$string = strip_tags( $string );
 		}
 
-		// Replace all whitespace characters (including vertical control characters and non-breaking spaces)
-		return preg_replace( '/[\v\s\x{00a0}]+/u', $replace, $string );
+		return preg_replace( '/[\v\s\x{00a0}]+/u', $replace, $string ) ?? $string;
 	}
 
 	// --------------------------------------------------
@@ -472,6 +468,10 @@ trait Str {
 	 * @return int
 	 */
 	public static function excerptIntlSplit( string $text, int $limit ): int {
+		if ( ! extension_loaded( 'intl' ) ) {
+			return mb_strlen( $text );
+		}
+
 		$words = \IntlRuleBasedBreakIterator::createWordInstance( '' );
 		$words->setText( $text );
 		$count = 0;
@@ -536,7 +536,6 @@ trait Str {
 
 		$text = wptexturize( nl2br( $text ) );
 
-		// replace all multiple-space and carriage return characters with a space
-		return preg_replace( '/[\v\s]+/u', ' ', $text );
+		return preg_replace( '/[\v\s]+/u', ' ', $text ) ?? $text;
 	}
 }

@@ -94,132 +94,96 @@ trait DateTime {
 	// -------------------------------------------------------------
 
 	/**
-	 * Converts a date in the site's timezone to UTC with an optional format.
+	 * @param int|string $date_string
+	 * @param string $format
 	 *
-	 * @param int|string $date_string Date string or timestamp in the site's timezone.
-	 * @param string $format Output format: 'timestamp', 'U', DateTime::ATOM, 'Y-m-d H:i:s', etc.
-	 *
-	 * @return false|int|string Formatted date string in UTC, timestamp, or false on failure.
+	 * @return false|int|string
 	 */
 	public static function convertToUTC( int|string $date_string, string $format = 'Y-m-d H:i:s' ): false|int|string {
-		// Handle timestamp input
 		if ( self::isInteger( $date_string ) ) {
 			$date_string = '@' . $date_string;
 		}
-
-		// Create `DateTime object` in the site's timezone
-		$datetime = date_create( $date_string, wp_timezone() );
-
+		$timezone = wp_timezone();
+		$datetime = date_create( $date_string, $timezone );
 		if ( false === $datetime ) {
 			return false;
 		}
-
-		// Return `timestamp` if a format is `timestamp` or `U`
 		if ( 'timestamp' === $format || 'U' === $format ) {
 			return $datetime->getTimestamp();
 		}
-
-		// Standardize `mysql` format option
 		if ( 'mysql' === $format ) {
 			$format = 'Y-m-d H:i:s';
 		}
 
-		// Convert to UTC and return in `specified format`
 		return $datetime->setTimezone( new \DateTimeZone( 'UTC' ) )->format( $format );
 	}
 
 	// -------------------------------------------------------------
 
 	/**
-	 * Converts a date in UTC to the site's timezone, with an optional format.
+	 * @param int|string $date_string
+	 * @param string $format
 	 *
-	 * @param int|string $date_string Date string or timestamp in UTC.
-	 * @param string $format Output format: 'timestamp', 'U', DateTime::ATOM, 'Y-m-d H:i:s', etc.
-	 *
-	 * @return false|int|string Formatted date string in the site's timezone, timestamp, or false on failure.
+	 * @return false|int|string
 	 */
 	public static function convertFromUTC( int|string $date_string, string $format = 'Y-m-d H:i:s' ): false|int|string {
-		// Handle timestamp input
 		if ( self::isInteger( $date_string ) ) {
 			$date_string = '@' . $date_string;
 		}
-
-		// Create DateTime object in UTC timezone
 		$datetime = date_create( $date_string, new \DateTimeZone( 'UTC' ) );
-
 		if ( false === $datetime ) {
 			return false;
 		}
-
-		// Convert to site's timezone
-		$datetime->setTimezone( wp_timezone() );
-
-		// If a format is 'timestamp' or 'U', adjust for the site's timezone offset
+		$timezone = wp_timezone();
+		$datetime->setTimezone( $timezone );
 		if ( 'timestamp' === $format || 'U' === $format ) {
 			return $datetime->getTimestamp() + $datetime->getOffset();
 		}
-
-		// Standardize 'mysql' format option
 		if ( 'mysql' === $format ) {
 			$format = 'Y-m-d H:i:s';
 		}
 
-		// Return formatted date string in the site's timezone
 		return $datetime->format( $format );
 	}
 
 	// -------------------------------------------------------------
 
 	/**
-	 * Converts a date string or timestamp to a specified format in the site's timezone.
+	 * @param int|string $date_string
+	 * @param string $format
 	 *
-	 * @param int|string $date_string Date string or timestamp.
-	 * @param string $format Desired output format: 'timestamp', 'U', 'mysql', 'Y-m-d H:i:s', DateTimeInterface constants, etc.
-	 *
-	 * @return false|int|string Formatted date string, timestamp, or false on failure.
+	 * @return false|int|string
 	 */
 	public static function convertDatetimeFormat( int|string $date_string, string $format = 'Y-m-d H:i:s' ): false|int|string {
-		// Convert timestamp to DateTime-friendly format
 		if ( self::isInteger( $date_string ) ) {
 			$date_string = '@' . $date_string;
 		}
-
-		// Create a DateTime object in the site's timezone
-		$datetime = date_create( $date_string, wp_timezone() );
-
+		$timezone = wp_timezone();
+		$datetime = date_create( $date_string, $timezone );
 		if ( false === $datetime ) {
 			return false;
 		}
-
-		// For 'timestamp' or 'U', adjust the timestamp for the site's timezone offset
 		if ( 'timestamp' === $format || 'U' === $format ) {
 			return $datetime->getTimestamp() + $datetime->getOffset();
 		}
-
-		// Map 'mysql' to standard SQL datetime format
 		if ( 'mysql' === $format ) {
 			$format = 'Y-m-d H:i:s';
 		}
 
-		// Return the formatted date string
 		return $datetime->format( $format );
 	}
 
 	// -------------------------------------------------------------
 
 	/**
-	 * Calculates the time difference between the current time and a target date.
+	 * @param string $date_string
 	 *
-	 * @param string $date_string Date string in 'Y-m-d\TH:i:s' format.
-	 *
-	 * @return array Array with time difference in days, hours, minutes, and seconds.
+	 * @return array|string[]
 	 * @throws \DateMalformedStringException
 	 */
 	public static function timeDifference( string $date_string ): array {
-		// Parse target time in the site's timezone
-		$targetTime = \DateTime::createFromFormat( 'Y-m-d\TH:i:s', $date_string, wp_timezone() );
-
-		// Return default zeroed values if the date format is invalid
+		$timezone   = wp_timezone();
+		$targetTime = \DateTime::createFromFormat( 'Y-m-d\TH:i:s', $date_string, $timezone );
 		if ( $targetTime === false ) {
 			return [
 				'days'    => '00',
@@ -228,10 +192,9 @@ trait DateTime {
 				'seconds' => '00',
 			];
 		}
+		$now      = new \DateTime( 'now', $timezone );
+		$interval = $now->diff( $targetTime );
 
-		$interval = ( new \DateTime( 'now', wp_timezone() ) )->diff( $targetTime );
-
-		// Format and return each time unit as a two-digit string
 		return [
 			'days'    => str_pad( $interval->format( '%a' ), 2, '0', STR_PAD_LEFT ),
 			'hours'   => str_pad( $interval->format( '%h' ), 2, '0', STR_PAD_LEFT ),

@@ -53,7 +53,6 @@ final class Theme {
 	 */
 	public function setup_theme(): void {
 		/** Load localization file */
-		load_theme_textdomain( TEXT_DOMAIN, trailingslashit( WP_LANG_DIR ) . 'themes/' );
 		load_theme_textdomain( TEXT_DOMAIN, get_template_directory() . '/languages' );
 
 		/** Add theme support for various features. */

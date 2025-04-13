@@ -16,7 +16,11 @@ trait Base {
 	public static function messageSuccess( string $msg = 'Values saved', bool $autoHide = false ): void {
 		$text  = esc_html__( $msg, TEXT_DOMAIN );
 		$class = 'notice notice-success is-dismissible' . ( $autoHide ? ' dismissible-auto' : '' );
-		printf( '<div class="%1$s"><p><strong>%2$s</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>', self::escAttr( $class ), $text );
+		printf(
+			'<div class="%1$s"><p><strong>%2$s</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>',
+			self::escAttr( $class ),
+			$text
+		);
 	}
 
 	// -------------------------------------------------------------
@@ -30,8 +34,11 @@ trait Base {
 	public static function messageError( string $msg = 'Values error', bool $autoHide = false ): void {
 		$text  = esc_html__( $msg, TEXT_DOMAIN );
 		$class = 'notice notice-error is-dismissible' . ( $autoHide ? ' dismissible-auto' : '' );
-		printf( '<div class="%1$s"><p><strong>%2$s</strong></p></div>', esc_attr( $class ), $text );
-		printf( '<div class="%1$s"><p><strong>%2$s</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>', self::escAttr( $class ), $text );
+		printf(
+			'<div class="%1$s"><p><strong>%2$s</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>',
+			self::escAttr( $class ),
+			$text
+		);
 	}
 
 	// -------------------------------------------------------------
@@ -44,16 +51,17 @@ trait Base {
 	 * @return void
 	 */
 	public static function wpDie( string|\WP_Error $message = '', string|int $title = '', string|array|int $args = [] ): void {
+		// Intentionally calling wp_die as a final error handler.
 		wp_die( $message, $title, $args );
 	}
 
 	// -------------------------------------------------------------
 
 	/**
-	 * Lightweight error logger with 1‑minute throttle per unique message.
+	 * Throttled error logging with a 1‑minute throttle per unique message.
 	 *
-	 * @param string $message
-	 * @param int $type
+	 * @param string      $message
+	 * @param int         $type
 	 * @param string|null $dest
 	 * @param string|null $headers
 	 *
@@ -63,6 +71,7 @@ trait Base {
 		$key = 'hd_err_' . md5( $message );
 		if ( false === get_transient( $key ) ) {
 			set_transient( $key, 1, MINUTE_IN_SECONDS );
+			// Intentionally calling error_log for throttled logging.
 			error_log( $message, $type, $dest, $headers );
 		}
 	}
@@ -117,8 +126,8 @@ trait Base {
 	 * @return false|int
 	 */
 	public static function isXml( $content ): false|int {
-		// Get the first 200 chars of the file to make the preg_match check faster.
-		$xml_part = substr( $content, 0, 20 );
+		// Get the first 30 chars of the file to make the preg_match check faster.
+		$xml_part = substr( $content, 0, 30 );
 
 		return preg_match( '/<\?xml version="/', $xml_part );
 	}

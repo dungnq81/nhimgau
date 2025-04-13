@@ -109,9 +109,9 @@ trait Cast {
 	public static function toArrayDeep( mixed $value, bool $explode = true ): array {
 		$values = static::toArray( $value, $explode );
 
-		foreach ( $values as $key => $value ) {
-			if ( is_object( $value ) ) {
-				$values[ $key ] = static::toArrayDeep( $value, $explode );
+		foreach ( $values as $key => $item ) {
+			if ( is_object( $item ) ) {
+				$values[ $key ] = static::toArrayDeep( $item, $explode );
 			}
 		}
 
@@ -125,7 +125,6 @@ trait Cast {
 			return [];
 		}
 	}
-
 
 	// --------------------------------------------------
 
