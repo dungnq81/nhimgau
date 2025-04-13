@@ -118,7 +118,7 @@ final class Editor {
 	 */
 	public static function replace_post_js( mixed $src, mixed $handle ): mixed {
 		if ( $handle === 'post' && is_string( $src ) && ! str_contains( $src, 'ver=62504-20241121' ) ) {
-			$src = ADDONS_SRC_URL . 'Editor/js/post.min.js';
+			$src = ADDONS_URL . 'src/Editor/js/post.min.js';
 			$src = add_query_arg( 'ver', '62504-20241121', $src );
 		}
 

@@ -55,7 +55,6 @@ final class Theme {
 		/** Load localization file */
 		load_theme_textdomain( TEXT_DOMAIN, trailingslashit( WP_LANG_DIR ) . 'themes/' );
 		load_theme_textdomain( TEXT_DOMAIN, get_template_directory() . '/languages' );
-		load_theme_textdomain( TEXT_DOMAIN, get_stylesheet_directory() . '/languages' );
 
 		/** Add theme support for various features. */
 		add_theme_support( 'automatic-feed-links' );

@@ -10,7 +10,7 @@ $base_slug_taxonomy  = $base_slug_options['base_slug_taxonomy'] ?? [];
 <div class="container flex flex-x flex-gap sm-up-1 lg-up-2">
     <input type="hidden" name="base-slug-hidden" value="1">
     <div class="cell section section-checkbox">
-        <span class="heading !fw-700"><?php _e( 'Taxonomies', ADDONS_TEXT_DOMAIN ); ?></span>
+        <span class="heading !fw-700"><?php _e( 'Taxonomies', ADDONS_TEXTDOMAIN ); ?></span>
         <div class="desc">Remove category base from category URLs. E.g. <b>/category/my-category/</b> becomes <b>/my-category/</b></div>
 		<?php
 		$taxonomies = get_taxonomies(
@@ -37,7 +37,7 @@ $base_slug_taxonomy  = $base_slug_options['base_slug_taxonomy'] ?? [];
     </div>
 
     <div class="cell section section-checkbox">
-        <span class="heading !fw-700"><?php _e( 'Post Types', ADDONS_TEXT_DOMAIN ); ?></span>
+        <span class="heading !fw-700"><?php _e( 'Post Types', ADDONS_TEXTDOMAIN ); ?></span>
         <div class="desc">Remove post-type base like <b>/product/*</b>, <b>/project/*</b> from post-type URLs. Example: default: <b>/product/sample-product/</b> - becomes: <b>/sample-product/</b></div>
 		<?php
 		$post_types = get_post_types(
@@ -67,12 +67,12 @@ $base_slug_taxonomy  = $base_slug_options['base_slug_taxonomy'] ?? [];
     </div>
 
 	<div class="cell section section-checkbox !sm-12">
-		<span class="heading !fw-700"><?php _e( 'Reset', ADDONS_TEXT_DOMAIN ); ?></span>
+		<span class="heading !fw-700"><?php _e( 'Reset', ADDONS_TEXTDOMAIN ); ?></span>
 		<div class="option mb-20">
 			<label class="controls">
 				<input type="checkbox" class="checkbox" name="base_slug_reset" id="base_slug_reset" value="1">
 			</label>
-			<div class="explain"><?php _e( 'Reset all', ADDONS_TEXT_DOMAIN ); ?></div>
+			<div class="explain"><?php _e( 'Reset all', ADDONS_TEXTDOMAIN ); ?></div>
 		</div>
 	</div>
 </div>

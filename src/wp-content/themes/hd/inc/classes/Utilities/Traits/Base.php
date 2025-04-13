@@ -8,41 +8,30 @@ trait Base {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $message
-	 * @param bool $auto_hide
+	 * @param string $msg
+	 * @param bool $autoHide
 	 *
 	 * @return void
 	 */
-	public static function messageSuccess( $message, bool $auto_hide = false ): void {
-		$message = $message ?: 'Values saved';
-		$message = __( $message, TEXT_DOMAIN );
-
-		$class = 'notice notice-success is-dismissible';
-		if ( $auto_hide ) {
-			$class .= ' dismissible-auto';
-		}
-
-		printf( '<div class="%1$s"><p><strong>%2$s</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>', self::escAttr( $class ), $message );
+	public static function messageSuccess( string $msg = 'Values saved', bool $autoHide = false ): void {
+		$text  = esc_html__( $msg, TEXT_DOMAIN );
+		$class = 'notice notice-success is-dismissible' . ( $autoHide ? ' dismissible-auto' : '' );
+		printf( '<div class="%1$s"><p><strong>%2$s</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>', self::escAttr( $class ), $text );
 	}
 
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $message
-	 * @param bool $auto_hide
+	 * @param string $msg
+	 * @param bool $autoHide
 	 *
 	 * @return void
 	 */
-	public static function messageError( $message, bool $auto_hide = false ): void {
-		$message = $message ?: 'Values error';
-		$message = __( $message, TEXT_DOMAIN );
-
-		$class = 'notice notice-error is-dismissible';
-		if ( $auto_hide ) {
-			$class .= ' dismissible-auto';
-		}
-
-		printf( '<div class="%1$s"><p><strong>%2$s</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>', self::escAttr( $class ), $message );
+	public static function messageError( string $msg = 'Values error', bool $autoHide = false ): void {
+		$text  = esc_html__( $msg, TEXT_DOMAIN );
+		$class = 'notice notice-error is-dismissible' . ( $autoHide ? ' dismissible-auto' : '' );
+		printf( '<div class="%1$s"><p><strong>%2$s</strong></p></div>', esc_attr( $class ), $text );
+		printf( '<div class="%1$s"><p><strong>%2$s</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>', self::escAttr( $class ), $text );
 	}
 
 	// -------------------------------------------------------------
@@ -61,16 +50,20 @@ trait Base {
 	// -------------------------------------------------------------
 
 	/**
+	 * Lightweight error logger with 1‑minute throttle per unique message.
+	 *
 	 * @param string $message
-	 * @param int $message_type
-	 * @param string|null $destination
-	 * @param string|null $additional_headers
+	 * @param int $type
+	 * @param string|null $dest
+	 * @param string|null $headers
 	 *
 	 * @return void
 	 */
-	public static function errorLog( string $message, int $message_type = 0, ?string $destination = null, ?string $additional_headers = null ): void {
-		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			error_log( $message, $message_type, $destination, $additional_headers );
+	public static function errorLog( string $message, int $type = 0, ?string $dest = null, ?string $headers = null ): void {
+		$key = 'hd_err_' . md5( $message );
+		if ( false === get_transient( $key ) ) {
+			set_transient( $key, 1, MINUTE_IN_SECONDS );
+			error_log( $message, $type, $dest, $headers );
 		}
 	}
 
@@ -119,32 +112,15 @@ trait Base {
 	// --------------------------------------------------
 
 	/**
-	 * Check if the passed content is XML.
+	 * @param $content
 	 *
-	 * @param string $content The page content.
-	 *
-	 * @return bool
+	 * @return false|int
 	 */
-	public static function isXml( string $content ): bool {
-		// Check for empty content
-		if ( trim( $content ) === '' ) {
-			return false;
-		}
+	public static function isXml( $content ): false|int {
+		// Get the first 200 chars of the file to make the preg_match check faster.
+		$xml_part = substr( $content, 0, 20 );
 
-		// Get the first 50 chars of the content to check for XML declaration
-		$xml_part = mb_substr( $content, 0, 50 );
-
-		// Check if the content starts with an XML declaration
-		if ( preg_match( '/<\?xml version="/', $xml_part ) ) {
-			return true;
-		}
-
-		// Attempt to load the content as XML to ensure it is well-formed
-		libxml_use_internal_errors( true );
-		$xml = simplexml_load_string( $content );
-		libxml_clear_errors();
-
-		return $xml !== false;
+		return preg_match( '/<\?xml version="/', $xml_part );
 	}
 
 	// --------------------------------------------------
@@ -160,17 +136,15 @@ trait Base {
 			return false;
 		}
 
-		// Ensure URL has a valid scheme (http or https)
-		$valid_schemes = [ 'http', 'https' ];
-		$scheme        = parse_url( $url, PHP_URL_SCHEME );
-		if ( ! in_array( $scheme, $valid_schemes, true ) ) {
+		// Ensure the URL has a valid scheme (http or https)
+		$scheme = parse_url( $url, PHP_URL_SCHEME );
+		if ( ! in_array( $scheme, [ 'http', 'https' ], true ) ) {
 			return false;
 		}
 
-		// Ensure URL has a valid host
 		$host = parse_url( $url, PHP_URL_HOST );
 
-		return filter_var( $host, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME ) !== false;
+		return (bool) filter_var( $host, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME );
 	}
 
 	// --------------------------------------------------

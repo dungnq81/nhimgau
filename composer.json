@@ -21,5 +21,18 @@
         "roave/security-advisories": "dev-latest"
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "config": {
+        "optimize-autoloader": true,
+        "classmap-authoritative": true,
+        "preferred-install": "auto"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "composer dump-autoload -o"
+        ],
+        "post-update-cmd": [
+            "composer dump-autoload -o"
+        ]
+    }
 }

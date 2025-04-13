@@ -30,8 +30,8 @@ final class GlobalSetting {
 	public function admin_menu(): void {
 		// Addons menu
 		add_menu_page(
-			__( 'Addons Settings', ADDONS_TEXT_DOMAIN ),
-			__( 'Addons', ADDONS_TEXT_DOMAIN ),
+			__( 'Addons Settings', ADDONS_TEXTDOMAIN ),
+			__( 'Addons', ADDONS_TEXTDOMAIN ),
 			'addon_manage_options',
 			'addon-settings',
 			[ $this, '_addon_menu_callback' ],
@@ -42,8 +42,8 @@ final class GlobalSetting {
 		// Advanced submenu
 		add_submenu_page(
 			'addon-settings',
-			__( 'Advanced', ADDONS_TEXT_DOMAIN ),
-			__( 'Advanced', ADDONS_TEXT_DOMAIN ),
+			__( 'Advanced', ADDONS_TEXTDOMAIN ),
+			__( 'Advanced', ADDONS_TEXTDOMAIN ),
 			'addon_manage_options',
 			'customize.php'
 		);
@@ -52,8 +52,8 @@ final class GlobalSetting {
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			add_submenu_page(
 				'addon-settings',
-				__( 'Server Info', ADDONS_TEXT_DOMAIN ),
-				__( 'Server Info', ADDONS_TEXT_DOMAIN ),
+				__( 'Server Info', ADDONS_TEXTDOMAIN ),
+				__( 'Server Info', ADDONS_TEXTDOMAIN ),
 				'addon_manage_options',
 				'server-info',
 				[ $this, '_addon_server_info_callback' ]
@@ -76,7 +76,7 @@ final class GlobalSetting {
 		}
 
 		// Change menu title
-		$submenu['addon-settings'][0][0] = __( 'Settings', ADDONS_TEXT_DOMAIN );
+		$submenu['addon-settings'][0][0] = __( 'Settings', ADDONS_TEXTDOMAIN );
 
 		return $menu_order;
 	}
@@ -499,7 +499,7 @@ final class GlobalSetting {
 		/** ---------------------------------------- */
 
 		Helper::clearAllCache();
-		Helper::messageSuccess( __( 'Your settings have been saved.', ADDONS_TEXT_DOMAIN ), true );
+		Helper::messageSuccess( __( 'Your settings have been saved.', ADDONS_TEXTDOMAIN ), true );
 
 		exit();
 	}
@@ -540,8 +540,8 @@ final class GlobalSetting {
             <div id="main">
                 <h2 class="hide-text"></h2>
                 <div class="server-info-body">
-                    <h2><?php echo __( 'Server info', ADDONS_TEXT_DOMAIN ) ?></h2>
-                    <p class="desc"><?php echo __( 'System configuration information', ADDONS_TEXT_DOMAIN ) ?></p>
+                    <h2><?php echo __( 'Server info', ADDONS_TEXTDOMAIN ) ?></h2>
+                    <p class="desc"><?php echo __( 'System configuration information', ADDONS_TEXTDOMAIN ) ?></p>
                     <div class="server-info-inner code">
                         <ul>
                             <li><?php echo sprintf( '<span>Platform:</span> %s', php_uname() ); ?></li>
@@ -565,33 +565,33 @@ final class GlobalSetting {
                             <li><?php echo sprintf( '<span>WordPress multisite:</span> %s', ( is_multisite() ? 'Yes' : 'No' ) ); ?></li>
 							<?php
 
-							$openssl_status = __( 'Available', ADDONS_TEXT_DOMAIN );
+							$openssl_status = __( 'Available', ADDONS_TEXTDOMAIN );
 							$openssl_text   = '';
 							if ( ! defined( 'OPENSSL_ALGO_SHA1' ) && ! extension_loaded( 'openssl' ) ) {
-								$openssl_status = __( 'Not available', ADDONS_TEXT_DOMAIN );
-								$openssl_text   = __( ' (openssl extension is required in order to use any kind of encryption like TLS or SSL)', ADDONS_TEXT_DOMAIN );
+								$openssl_status = __( 'Not available', ADDONS_TEXTDOMAIN );
+								$openssl_text   = __( ' (openssl extension is required in order to use any kind of encryption like TLS or SSL)', ADDONS_TEXTDOMAIN );
 							}
 							?>
                             <li><?php echo sprintf( '<span>openssl:</span> %s%s', $openssl_status, $openssl_text ); ?></li>
-                            <li><?php echo sprintf( '<span>allow_url_fopen:</span> %s', ( ini_get( 'allow_url_fopen' ) ? __( 'Enabled', ADDONS_TEXT_DOMAIN ) : __( 'Disabled', ADDONS_TEXT_DOMAIN ) ) ); ?></li>
+                            <li><?php echo sprintf( '<span>allow_url_fopen:</span> %s', ( ini_get( 'allow_url_fopen' ) ? __( 'Enabled', ADDONS_TEXTDOMAIN ) : __( 'Disabled', ADDONS_TEXTDOMAIN ) ) ); ?></li>
 							<?php
 
-							$stream_socket_client_status = __( 'Not Available', ADDONS_TEXT_DOMAIN );
-							$fsockopen_status            = __( 'Not Available', ADDONS_TEXT_DOMAIN );
+							$stream_socket_client_status = __( 'Not Available', ADDONS_TEXTDOMAIN );
+							$fsockopen_status            = __( 'Not Available', ADDONS_TEXTDOMAIN );
 							$socket_enabled              = false;
 
 							if ( function_exists( 'stream_socket_client' ) ) {
-								$stream_socket_client_status = __( 'Available', ADDONS_TEXT_DOMAIN );
+								$stream_socket_client_status = __( 'Available', ADDONS_TEXTDOMAIN );
 								$socket_enabled              = true;
 							}
 							if ( function_exists( 'fsockopen' ) ) {
-								$fsockopen_status = __( 'Available', ADDONS_TEXT_DOMAIN );
+								$fsockopen_status = __( 'Available', ADDONS_TEXTDOMAIN );
 								$socket_enabled   = true;
 							}
 
 							$socket_text = '';
 							if ( ! $socket_enabled ) {
-								$socket_text = __( ' (In order to make a SMTP connection your server needs to have either stream_socket_client or fsockopen)', ADDONS_TEXT_DOMAIN );
+								$socket_text = __( ' (In order to make a SMTP connection your server needs to have either stream_socket_client or fsockopen)', ADDONS_TEXTDOMAIN );
 							}
 
 							?>

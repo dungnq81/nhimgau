@@ -84,7 +84,7 @@ final class CustomSorting {
 			wp_enqueue_script( 'sorting-js', ADDONS_URL . 'assets/js/sorting.js', [
 				'jquery-core',
 				'jquery-ui-sortable'
-			], ADDONS_VERSION, true );
+			], \Addons\Helper::version(), true );
 
 			wp_script_add_data( 'sorting-js', 'addon', [ 'module', 'defer' ] );
 		}

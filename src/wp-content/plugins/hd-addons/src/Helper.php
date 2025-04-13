@@ -1,4 +1,9 @@
 <?php
+/**
+ * All utility helpers used across the plugin.
+ *
+ * @author Gaudev
+ */
 
 namespace Addons;
 
@@ -8,25 +13,33 @@ use MatthiasMullie\Minify;
 
 \defined( 'ABSPATH' ) || exit;
 
-/**
- * Addon Helper Class
- *
- * @author Gaudev
- */
 final class Helper {
 	// --------------------------------------------------
 
 	/**
+	 * @return false|int
+	 */
+	public static function version(): false|int {
+		return wp_get_environment_type() === 'development' ? time() : false;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * Lightweight error logger with 1‑minute throttle per unique message.
+	 *
 	 * @param string $message
-	 * @param int $message_type
-	 * @param string|null $destination
-	 * @param string|null $additional_headers
+	 * @param int $type
+	 * @param string|null $dest
+	 * @param string|null $headers
 	 *
 	 * @return void
 	 */
-	public static function errorLog( string $message, int $message_type = 0, ?string $destination = null, ?string $additional_headers = null ): void {
-		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			error_log( $message, $message_type, $destination, $additional_headers );
+	public static function errorLog( string $message, int $type = 0, ?string $dest = null, ?string $headers = null ): void {
+		$key = 'hd_err_' . md5( $message );
+		if ( false === get_transient( $key ) ) {
+			set_transient( $key, 1, MINUTE_IN_SECONDS );
+			error_log( $message, $type, $dest, $headers );
 		}
 	}
 
@@ -48,7 +61,13 @@ final class Helper {
 		}
 
 		// Call the shortcode function and return its output
-		return call_user_func( $shortcode_tags[ $tag ], $atts, $content, $tag );
+		try {
+			return \call_user_func( $shortcode_tags[ $tag ], $atts, $content, $tag );
+		} catch ( \Throwable $e ) {
+			self::errorLog( '[Shortcode error] ' . $e->getMessage() );
+
+			return false;
+		}
 	}
 
 	// --------------------------------------------------
@@ -61,6 +80,7 @@ final class Helper {
 	 * @return null[]|string[]
 	 */
 	public static function explodeMulti( mixed $delimiters, ?string $string, bool $remove_empty = true ): array {
+		$string = (string) $string;
 		if ( is_string( $delimiters ) ) {
 			return explode( $delimiters, $string );
 		}
@@ -69,11 +89,7 @@ final class Helper {
 			$ready  = str_replace( $delimiters, $delimiters[0], $string );
 			$launch = explode( $delimiters[0], $ready );
 
-			if ( $remove_empty ) {
-				$launch = array_filter( $launch );
-			}
-
-			return array_values( $launch );
+			return $remove_empty ? array_values( array_filter( $launch ) ) : array_values( $launch );
 		}
 
 		return [ $string ];
@@ -82,37 +98,47 @@ final class Helper {
 	// --------------------------------------------------
 
 	/**
-	 * @param $content
+	 * @param string|null $string
+	 * @param bool $remove_js
+	 * @param bool $flatten
+	 * @param $allowed_tags
 	 *
-	 * @return false|int
+	 * @return string
 	 */
-	public static function isXml( $content ): false|int {
-		// Get the first 200 chars of the file to make the preg_match check faster.
-		$xml_part = substr( $content, 0, 20 );
+	public static function stripAllTags( ?string $string, bool $remove_js = true, bool $flatten = true, $allowed_tags = null ): string {
+		if ( ! is_scalar( $string ) ) {
+			return '';
+		}
 
-		return preg_match( '/<\?xml version="/', $xml_part );
+		if ( $remove_js ) {
+			$string = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', ' ', $string );
+		}
+
+		$string = strip_tags( $string, $allowed_tags );
+
+		if ( $flatten ) {
+			$string = preg_replace( '/[\r\n\t ]+/', ' ', $string );
+		}
+
+		return trim( $string );
 	}
 
 	// --------------------------------------------------
 
 	/**
-	 * @param $html
+	 * @param string $uri
+	 * @param int $status
 	 *
-	 * @return false|int
+	 * @return bool|void
 	 */
-	public static function isAmpEnabled( $html ): false|int {
-		// Get the first 200 chars of the file to make the preg_match check faster.
-		$is_amp = substr( $html, 0, 200 );
-
-		// Checks if the document contains the amp tag.
-		return preg_match( '/<html[^>]+(amp|⚡)[^>]*>/u', $is_amp );
-	}
-
-	// --------------------------------------------------
-
 	public static function redirect( string $uri = '', int $status = 301 ) {
+		$uri = esc_url_raw( $uri );
+		if ( ! $uri ) {
+			return false;
+		}
+
 		if ( ! headers_sent() ) {
-			wp_redirect( $uri, $status );
+			wp_safe_redirect( $uri, $status );
 			exit;
 		}
 
@@ -130,15 +156,11 @@ final class Helper {
 	 * @return string The current url.
 	 */
 	public static function getCurrentUrl(): string {
-		// Return an empty string if it is not an HTTP request.
-		if ( ! isset( $_SERVER['HTTP_HOST'] ) ) {
+		if ( ! function_exists( 'home_url' ) ) {
 			return '';
 		}
 
-		$protocol = isset( $_SERVER['HTTPS'] ) ? 'https' : 'http';
-
-		// Build the current url.
-		return $protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		return home_url( add_query_arg( null, null ) );
 	}
 
 	// --------------------------------------------------
@@ -172,7 +194,7 @@ final class Helper {
 	 */
 	public static function convertToMB( string $size ): int {
 		// Define the multipliers for each unit
-		$unitMultipliers = [
+		$multipliers = [
 			'M' => 1,              // Megabyte
 			'G' => 1024,           // Gigabyte
 			'T' => 1024 * 1024,     // Terabyte
@@ -180,12 +202,11 @@ final class Helper {
 
 		// Extract the numeric part and the unit from the input string
 		$size = strtoupper( trim( $size ) );
-		if ( preg_match( '/^(\d+)(M|MB|G|GB|T|TB)?$/', $size, $matches ) ) {
-			$value = (int) $matches[1];
-			$unit  = rtrim( $matches[2] ?? 'M', 'B' ); // Remove 'B' if it exists
+		if ( preg_match( '/^(\d+(?:\.\d+)?)(M|MB|G|GB|T|TB)?$/', $size, $m ) ) {
+			$value = (float) $m[1];
+			$unit  = rtrim( $m[2] ?? 'M', 'B' );
 
-			// Calculate the size in MB
-			return $value * ( $unitMultipliers[ $unit ] ?? 1 );
+			return (int) round( $value * ( $multipliers[ $unit ] ?? 1 ) );
 		}
 
 		// Return 0 if the input is not valid
@@ -206,28 +227,52 @@ final class Helper {
 		}
 
 		// Ensure the URL has a valid scheme (http or https)
-		$valid_schemes = [ 'http', 'https' ];
-		$scheme        = parse_url( $url, PHP_URL_SCHEME );
-		if ( ! in_array( $scheme, $valid_schemes, true ) ) {
+		$scheme = parse_url( $url, PHP_URL_SCHEME );
+		if ( ! in_array( $scheme, [ 'http', 'https' ], true ) ) {
 			return false;
 		}
 
-		// Ensure URL has a valid host
 		$host = parse_url( $url, PHP_URL_HOST );
 
-		return filter_var( $host, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME ) !== false;
+		return (bool) filter_var( $host, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME );
 	}
 
 	// --------------------------------------------------
 
+	/**
+	 * @return bool
+	 */
 	public static function lightHouse(): bool {
-		if ( empty( $_SERVER['HTTP_USER_AGENT'] ) ) {
-			return false;
-		}
+		return isset( $_SERVER['HTTP_USER_AGENT'] ) && str_contains( strtolower( $_SERVER['HTTP_USER_AGENT'] ), 'lighthouse' );
+	}
 
-		$userAgent = strtolower( trim( $_SERVER['HTTP_USER_AGENT'] ) );
+	// --------------------------------------------------
 
-		return str_contains( $userAgent, 'lighthouse' );
+	/**
+	 * @param $content
+	 *
+	 * @return false|int
+	 */
+	public static function isXml( $content ): false|int {
+		// Get the first 200 chars of the file to make the preg_match check faster.
+		$xml_part = substr( $content, 0, 20 );
+
+		return preg_match( '/<\?xml version="/', $xml_part );
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param $html
+	 *
+	 * @return false|int
+	 */
+	public static function isAmpEnabled( $html ): false|int {
+		// Get the first 200 chars of the file to make the preg_match check faster.
+		$is_amp = substr( $html, 0, 200 );
+
+		// Checks if the document contains the amp tag.
+		return preg_match( '/<html[^>]+(amp|⚡)[^>]*>/u', $is_amp );
 	}
 
 	// --------------------------------------------------
@@ -297,17 +342,17 @@ final class Helper {
 
 		// Log if dangerous content is detected
 		if ( preg_match( '/<script\b[^>]*>/i', $css ) ) {
-			self::errorLog( 'Warning: Detected `<script>` tag in CSS.' );
+			self::errorLog( 'Warning: `<script>` inside CSS' );
 		}
 
 		//$css = (string) $css;
 		$css = preg_replace( [
-			'/<script\b[^>]*>.*?(?:<\/script>|$)/is', // Remove <script> tags entirely
-			'/<style\b[^>]*>(.*?)<\/style>/is', // Remove <style> tags but keep the CSS content inside
-			'/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', // // Remove unwanted control characters but keep line breaks and tabs
+			'/<script\b[^>]*>.*?(?:<\/script>|$)/is',
+			'/<style\b[^>]*>(.*?)<\/style>/is',
+			'/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u',
 			'/\bexpression\s*\([^)]*\)/i',
 			'/url\s*\(\s*[\'"]?\s*javascript:[^)]*\)/i',
-			'/[^\S\r\n\t]+/', // Normalize whitespace
+			'/[^\S\r\n\t]+/',
 		], [ '', '$1', '', '', '', ' ' ], $css );
 
 		return trim( $css );
@@ -317,48 +362,64 @@ final class Helper {
 
 	/**
 	 * @param string|null $js
-	 * @param bool $debug_check
+	 * @param bool $respectDebug
 	 *
 	 * @return string|null
 	 */
-	public static function JSMinify( ?string $js, bool $debug_check = true ): ?string {
-		if ( empty( $js ) ) {
+	public static function JSMinify( ?string $js, bool $respectDebug = true ): ?string {
+		if ( $js === null || $js === '' ) {
 			return null;
 		}
-
-		if ( $debug_check && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		if ( $respectDebug && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			return $js;
 		}
 
-		if ( class_exists( Minify\JS::class ) ) {
-			return ( new Minify\JS() )->add( $js )->minify();
-		}
-
-		return $js;
+		return class_exists( Minify\JS::class ) ? ( new Minify\JS() )->add( $js )->minify() : $js;
 	}
 
 	// -------------------------------------------------------------
 
 	/**
 	 * @param string|null $css
-	 * @param bool $debug_check
+	 * @param bool $respectDebug
 	 *
 	 * @return string|null
 	 */
-	public static function CSSMinify( ?string $css, bool $debug_check = true ): ?string {
-		if ( empty( $css ) ) {
+	public static function CSSMinify( ?string $css, bool $respectDebug = true ): ?string {
+		if ( $css === null || $css === '' ) {
 			return null;
 		}
-
-		if ( $debug_check && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		if ( $respectDebug && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			return $css;
 		}
 
-		if ( class_exists( Minify\CSS::class ) ) {
-			return ( new Minify\CSS() )->add( $css )->minify();
-		}
+		return class_exists( Minify\CSS::class ) ? ( new Minify\CSS() )->add( $css )->minify() : $css;
+	}
 
-		return $css;
+	// --------------------------------------------------
+
+	/**
+	 * @param string $file
+	 *
+	 * @return array
+	 */
+	public static function loadYaml( string $file ): array {
+		static $pool = [];
+		if ( isset( $pool[ $file ] ) ) {
+			return $pool[ $file ];
+		}
+		if ( ! class_exists( Yaml::class ) ) {
+			self::errorLog( 'Symfony YAML missing' );
+
+			return $pool[ $file ] = [];
+		}
+		try {
+			return $pool[ $file ] = Yaml::parseFile( $file );
+		} catch ( ParseException $e ) {
+			self::errorLog( 'YAML parse error: ' . $e->getMessage() );
+
+			return $pool[ $file ] = [];
+		}
 	}
 
 	// --------------------------------------------------
@@ -671,34 +732,6 @@ final class Helper {
 
 	/**
 	 * @param string|null $string
-	 * @param bool $remove_js
-	 * @param bool $flatten
-	 * @param $allowed_tags
-	 *
-	 * @return string
-	 */
-	public static function stripAllTags( ?string $string, bool $remove_js = true, bool $flatten = true, $allowed_tags = null ): string {
-		if ( ! is_scalar( $string ) ) {
-			return '';
-		}
-
-		if ( $remove_js ) {
-			$string = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', ' ', $string );
-		}
-
-		$string = strip_tags( $string, $allowed_tags );
-
-		if ( $flatten ) {
-			$string = preg_replace( '/[\r\n\t ]+/', ' ', $string );
-		}
-
-		return trim( $string );
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string|null $string
 	 *
 	 * @return string|null
 	 */
@@ -709,41 +742,30 @@ final class Helper {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $message
-	 * @param bool $auto_hide
+	 * @param string $msg
+	 * @param bool $autoHide
 	 *
 	 * @return void
 	 */
-	public static function messageSuccess( $message, bool $auto_hide = false ): void {
-		$message = $message ?: 'Values saved';
-		$message = __( $message, ADDONS_TEXT_DOMAIN );
-
-		$class = 'notice notice-success is-dismissible';
-		if ( $auto_hide ) {
-			$class .= ' dismissible-auto';
-		}
-
-		printf( '<div class="%1$s"><p><strong>%2$s</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>', self::escAttr( $class ), $message );
+	public static function messageSuccess( string $msg = 'Values saved', bool $autoHide = false ): void {
+		$text  = esc_html__( $msg, ADDONS_TEXTDOMAIN );
+		$class = 'notice notice-success is-dismissible' . ( $autoHide ? ' dismissible-auto' : '' );
+		printf( '<div class="%1$s"><p><strong>%2$s</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>', self::escAttr( $class ), $text );
 	}
 
 	// -------------------------------------------------------------
 
 	/**
-	 * @param $message
-	 * @param bool $auto_hide
+	 * @param string $msg
+	 * @param bool $autoHide
 	 *
 	 * @return void
 	 */
-	public static function messageError( $message, bool $auto_hide = false ): void {
-		$message = $message ?: 'Values error';
-		$message = __( $message, ADDONS_TEXT_DOMAIN );
-
-		$class = 'notice notice-error is-dismissible';
-		if ( $auto_hide ) {
-			$class .= ' dismissible-auto';
-		}
-
-		printf( '<div class="%1$s"><p><strong>%2$s</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>', self::escAttr( $class ), $message );
+	public static function messageError( string $msg = 'Values error', bool $autoHide = false ): void {
+		$text  = esc_html__( $msg, ADDONS_TEXTDOMAIN );
+		$class = 'notice notice-error is-dismissible' . ( $autoHide ? ' dismissible-auto' : '' );
+		printf( '<div class="%1$s"><p><strong>%2$s</strong></p></div>', esc_attr( $class ), $text );
+		printf( '<div class="%1$s"><p><strong>%2$s</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>', self::escAttr( $class ), $text );
 	}
 
 	// --------------------------------------------------
@@ -797,48 +819,18 @@ final class Helper {
 
 	/**
 	 * @param $slug
-	 * @param bool $remove_symbols
+	 * @param bool $removeSymbols
 	 *
 	 * @return string
 	 */
-	public static function capitalizedSlug( $slug, bool $remove_symbols = true ): string {
-		$words            = preg_split( '/[_-]/', $slug );
-		$capitalizedWords = array_map( 'ucfirst', $words );
-
-		if ( $remove_symbols ) {
-			return implode( '', $capitalizedWords );
+	public static function capitalizedSlug( $slug, bool $removeSymbols = true ): string {
+		$words = preg_split( '/[_-]/', (string) $slug );
+		$words = array_map( 'ucfirst', $words );
+		if ( $removeSymbols ) {
+			return implode( '', $words );
 		}
 
-		if ( str_contains( $slug, '_' ) ) {
-			return implode( '_', $capitalizedWords );
-		}
-
-		return implode( '-', $capitalizedWords );
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param $configFile
-	 *
-	 * @return array
-	 */
-	public static function loadYaml( $configFile ): array {
-		// Check if the YAML class exists
-		if ( ! class_exists( Yaml::class ) ) {
-			self::errorLog( 'Symfony Yaml class does not exist' );
-
-			return [];
-		}
-
-		try {
-			// Return the translated configuration array
-			return Yaml::parseFile( $configFile );
-		} catch ( ParseException $e ) {
-			self::errorLog( 'YAML Parse error in file ' . $configFile . ': ' . $e->getMessage() );
-
-			return [];
-		}
+		return str_contains( $slug, '_' ) ? implode( '_', $words ) : implode( '-', $words );
 	}
 
 	// --------------------------------------------------

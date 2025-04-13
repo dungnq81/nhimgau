@@ -2,65 +2,101 @@
 /**
  * Plugin Name: HD Addons
  * Plugin URI: https://webhd.vn
- * Version: 0.25.3
+ * Version: 1.0.4
  * Requires PHP: 8.2
  * Author: Gaudev
  * Author URI: https://webhd.vn
- * Text Domain: hd-addons
- * Description: Addons plugin for HD Theme
+ * Description: Extra blocks and helpers for HD Theme.
  * License: MIT
  *
  * ###Requires ### Plugins: advanced-custom-fields-pro
  */
 
-\defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit;
 
-$default_headers = [
-	'Name'       => 'Plugin Name',
-	'Version'    => 'Version',
-	'TextDomain' => 'Text Domain',
-	'Author'     => 'Author',
-];
+const ADDONS_VERSION    = '1.0.4';
+const ADDONS_TEXTDOMAIN = 'hd-addon';
 
-$plugin_data = get_file_data( __FILE__, $default_headers, 'plugin' );
+define( 'ADDONS_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) . DIRECTORY_SEPARATOR );
+define( 'ADDONS_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) . '/' );
 
-define( 'ADDONS_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) . DIRECTORY_SEPARATOR ); // **/wp-content/plugins/**/
-define( 'ADDONS_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) . '/' );                   // http(s)://**/wp-content/plugins/**/
-define( 'ADDONS_BASENAME', plugin_basename( __FILE__ ) );                                        // **/**.php
+add_action( 'plugins_loaded', '_addons_init', 10 );
+function _addons_init(): void {
+	load_plugin_textdomain( ADDONS_TEXTDOMAIN, false, dirname( plugin_basename( __FILE__ ) ) . '/languages' ); // i18n
 
-define( 'ADDONS_VERSION', $plugin_data['Version'] );
-define( 'ADDONS_TEXT_DOMAIN', $plugin_data['TextDomain'] );
-define( 'ADDONS_AUTHOR', $plugin_data['Author'] );
+	// PHP version guard (8.2 or newer)
+	if ( PHP_VERSION_ID < 80200 ) {
+		add_action( 'admin_notices', static function () {
+			echo '<div class="notice notice-error"><p>';
+			esc_html_e( 'HD‑Addons needs PHP 8.2 or newer. Please upgrade.', ADDONS_TEXTDOMAIN );
+			echo '</p></div>';
+		} );
 
-const ADDONS_SRC_PATH = ADDONS_PATH . 'src' . DIRECTORY_SEPARATOR;
-const ADDONS_SRC_URL  = ADDONS_URL . 'src/';
+		return;
+	}
 
-if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-	require_once __DIR__ . '/vendor/autoload.php';
+	// Composer autoload
+	$autoload = ADDONS_PATH . 'vendor/autoload.php';
+	if ( ! file_exists( $autoload ) ) {
+		add_action( 'admin_notices', static function () {
+			echo '<div class="notice notice-error"><p>';
+			esc_html_e( 'HD‑Addons: missing vendor. Run <code>composer install</code>.', ADDONS_TEXTDOMAIN );
+			echo '</p></div>';
+		} );
 
-	register_activation_hook( __FILE__, [ \Addons\Activator::class, 'activation' ] );
-	register_deactivation_hook( __FILE__, [ \Addons\Activator::class, 'deactivation' ] );
-	register_uninstall_hook( __FILE__, [ \Addons\Activator::class, 'uninstall' ] );
+		return;
+	}
 
-	add_action( 'admin_notices', 'acf_requirement_notice' );
+	require_once $autoload;
+	// composer dump-autoload -o --classmap-authoritative
 
-	function acf_requirement_notice(): void {
-		if ( ! \Addons\Helper::isAcfActive() ) {
-			printf(
-				'<div class="notice notice-error"><p>%1$s <a target="_blank" href="%2$s"><strong>%3$s</strong></a> or <a target="_blank" href="%4$s"><strong>%5$s</strong></a></p></div>',
-				wp_kses( __( '<strong>Addons</strong> plugin requires', ADDONS_TEXT_DOMAIN ), [ 'strong' => [] ] ),
-				'https://www.advancedcustomfields.com/pro/',
-				esc_html__( 'Advanced Custom Fields PRO', ADDONS_TEXT_DOMAIN ),
-				'https://wordpress.org/plugins/secure-custom-fields/',
-				esc_html__( 'Secure Custom Fields', ADDONS_TEXT_DOMAIN )
-			);
+	// Bootstrap
+	_addons_bootstrap();
+}
+
+// Activation / Deactivation / Uninstall
+register_activation_hook( __FILE__, [ \Addons\Activator::class, 'activation' ] );
+register_deactivation_hook( __FILE__, [ \Addons\Activator::class, 'deactivation' ] );
+register_uninstall_hook( __FILE__, [ \Addons\Activator::class, 'uninstall' ] );
+
+/**
+ * @return void
+ */
+function _addons_bootstrap(): void {
+	// print notice
+	if ( ! \Addons\Helper::isAcfActive() ) {
+		acf_requirement_notice();
+
+		return;
+	}
+
+	try {
+		( new \Addons\Addons() );
+	} catch ( \Throwable $e ) {
+		\Addons\Helper::errorLog( '[HD‑Addons] ' . $e->getMessage() );
+		if ( WP_DEBUG ) {
+			add_action( 'admin_notices', static function () use ( $e ) {
+				printf(
+					'<div class="notice notice-error"><p>%s</p></div>',
+					esc_html( $e->getMessage() )
+				);
+			} );
 		}
 	}
+}
 
-	// Global function holder.
-	function plugins_loaded_addons(): void {
-		( new \Addons\Addons() );
+// ACF requirement notice
+if ( ! function_exists( 'acf_requirement_notice' ) ) {
+	function acf_requirement_notice(): void {
+		if ( ! is_admin() ) {
+			return;
+		}
+
+		add_action( 'admin_notices', static function () {
+			printf(
+				'<div class="notice notice-error"><p>%s</p></div>',
+				esc_html__( 'HD‑Addons needs Advanced Custom Fields PRO. Please install/activate it.', ADDONS_TEXTDOMAIN )
+			);
+		} );
 	}
-
-	\plugins_loaded_addons();
 }

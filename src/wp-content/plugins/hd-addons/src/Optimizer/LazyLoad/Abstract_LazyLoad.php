@@ -20,7 +20,7 @@ abstract class Abstract_LazyLoad {
 
 	// ------------------------------------------------------
 
-	// Add class-name to the HTML element.
+	// Add a class-name to the HTML element.
 	abstract public function add_lazyload_class( $element );
 
 	// ------------------------------------------------------
@@ -32,7 +32,6 @@ abstract class Abstract_LazyLoad {
 	 */
 	public function should_process( $content ): bool {
 		return empty( $content ) ||
-		       is_feed() ||
 		       is_admin() ||
 		       wp_doing_ajax() ||
 		       \Addons\Helper::isAmpEnabled( $content );

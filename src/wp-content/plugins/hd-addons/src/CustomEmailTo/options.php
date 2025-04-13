@@ -10,7 +10,7 @@ $filter_custom_emails = \Addons\Helper::filterSettingOptions( 'custom_emails', [
     <input type="hidden" name="custom-email-to-hidden" value="1"
     <?php
     if ( empty( $filter_custom_emails ) ) {
-	    echo '<h3 class="cell">' . __( 'Not initialized yet', ADDONS_TEXT_DOMAIN ) . '</h3>';
+	    echo '<h3 class="cell">' . __( 'Not initialized yet', ADDONS_TEXTDOMAIN ) . '</h3>';
 	    echo '</div>';
 	    return;
     }
@@ -23,7 +23,7 @@ $filter_custom_emails = \Addons\Helper::filterSettingOptions( 'custom_emails', [
 	    }
     ?>
     <div class="section section-text">
-        <label class="heading" for="<?= esc_attr( $key ) ?>"><?php _e( $ar, ADDONS_TEXT_DOMAIN ); ?></label>
+        <label class="heading" for="<?= esc_attr( $key ) ?>"><?php _e( $ar, ADDONS_TEXTDOMAIN ); ?></label>
         <div class="desc">The email addresses are separated by commas "comma".</div>
         <div class="option">
             <div class="controls">

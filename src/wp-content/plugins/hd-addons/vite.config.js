@@ -10,7 +10,6 @@ const node_modules = './node_modules';
 
 // COPY
 const directoriesToCopy = [
-    { src: `${resources}/fonts/fontawesome/webfonts`, dest: '' },
     { src: `${resources}/img`, dest: '' },
     { src: `${node_modules}/select2/dist/js/select2.full.min.js`, dest: 'js' },
 ];
@@ -74,6 +73,9 @@ export default {
                 assetFileNames: (assetInfo) => {
                     if (assetInfo.name.endsWith('.css')) {
                         return `css/[name].[ext]`;
+                    }
+                    if (assetInfo.name && /\.(woff2?|ttf|otf|eot)$/i.test(assetInfo.name)) {
+                        return 'fonts/[name].[ext]';
                     }
                     return `img/[name].[ext]`;
                 },

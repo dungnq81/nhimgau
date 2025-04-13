@@ -1,3 +1,5 @@
+// config.js
+
 export const hdConfig = window.hdConfig ?? {
     _ajaxUrl: '/wp-admin/admin-ajax.php',
     _baseUrl: window.location.origin + '/',

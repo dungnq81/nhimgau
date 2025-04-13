@@ -64,7 +64,7 @@ function skip_to_content_link_action(): void {
 
 // -----------------------------------------------
 
-add_action( 'hd_header_before_action', 'off_canvas_menu_action', 11 );
+//add_action( 'hd_header_before_action', 'off_canvas_menu_action', 11 );
 
 function off_canvas_menu_action(): void {
     \HD\Helper::blockTemplate( 'template-blocks/off-canvas', [], true );

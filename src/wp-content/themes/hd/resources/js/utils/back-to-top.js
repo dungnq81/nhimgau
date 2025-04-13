@@ -1,3 +1,5 @@
+// back-to-top.js
+
 class BackToTop {
     constructor(selector = '.back-to-top', smoothScrollEnabled = true, defaultScrollSpeed = 400) {
         this.buttonSelector = selector;

@@ -3,17 +3,17 @@
         'name' => 'plugins/hd-addons',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'f4cface049cee12049037511764c0e58431efc8e',
-        'type' => 'project',
+        'reference' => '84389ed6eb3218f25b5678702698869ad07ccd8c',
+        'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
         'enshrined/svg-sanitize' => array(
-            'pretty_version' => '0.20.0',
-            'version' => '0.20.0.0',
-            'reference' => '068d9fcf912c88a0471d101d95a2caa87c50aee7',
+            'pretty_version' => '0.21.0',
+            'version' => '0.21.0.0',
+            'reference' => '5e477468fac5c5ce933dce53af3e8e4e58dcccc9',
             'type' => 'library',
             'install_path' => __DIR__ . '/../enshrined/svg-sanitize',
             'aliases' => array(),
@@ -40,8 +40,8 @@
         'plugins/hd-addons' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'f4cface049cee12049037511764c0e58431efc8e',
-            'type' => 'project',
+            'reference' => '84389ed6eb3218f25b5678702698869ad07ccd8c',
+            'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
@@ -49,7 +49,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => '975c081c7e430d0316a94047e5d8ab26e0a8f49e',
+            'reference' => '9a519dd30df3313d2ee076579ea69a289b0a26a3',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(

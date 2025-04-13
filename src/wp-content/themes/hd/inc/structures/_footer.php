@@ -50,7 +50,7 @@ function construct_footer_action(): void {
 
 // -----------------------------------------------
 
-add_action( 'construct_footer', '_construct_footer_columns', 11 );
+//add_action( 'construct_footer', '_construct_footer_columns', 11 );
 
 function _construct_footer_columns(): void {
 	?>
@@ -62,7 +62,7 @@ function _construct_footer_columns(): void {
 
 // -----------------------------------------------
 
-add_action( 'construct_footer', '_construct_footer_credit', 12 );
+//add_action( 'construct_footer', '_construct_footer_credit', 12 );
 
 function _construct_footer_credit(): void {
 	?>

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit983d3c46796f77cf9f5dba1911eb7116
+class ComposerStaticInit9b89879d0ffdac5f0eb892fc5d415441
 {
     public static $prefixLengthsPsr4 = array (
         'M' => 
@@ -35,14 +35,50 @@ class ComposerStaticInit983d3c46796f77cf9f5dba1911eb7116
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'HD\\Helper' => __DIR__ . '/../..' . '/inc/classes/Helper.php',
+        'HD\\Plugins\\ACF\\ACF' => __DIR__ . '/../..' . '/inc/classes/Plugins/ACF/ACF.php',
+        'HD\\Plugins\\WooCommerce\\Hook' => __DIR__ . '/../..' . '/inc/classes/Plugins/WooCommerce/Hook.php',
+        'HD\\Plugins\\WooCommerce\\WooCommerce' => __DIR__ . '/../..' . '/inc/classes/Plugins/WooCommerce/WooCommerce.php',
+        'HD\\Theme' => __DIR__ . '/../..' . '/inc/classes/Theme.php',
+        'HD\\Themes\\Admin' => __DIR__ . '/../..' . '/inc/classes/Themes/Admin.php',
+        'HD\\Themes\\Customizer' => __DIR__ . '/../..' . '/inc/classes/Themes/Customizer.php',
+        'HD\\Themes\\Optimizer' => __DIR__ . '/../..' . '/inc/classes/Themes/Optimizer.php',
+        'HD\\Themes\\Shortcode' => __DIR__ . '/../..' . '/inc/classes/Themes/Shortcode.php',
+        'HD\\Utilities\\Abstract_Widget' => __DIR__ . '/../..' . '/inc/classes/Utilities/Abstract_Widget.php',
+        'HD\\Utilities\\CSS' => __DIR__ . '/../..' . '/inc/classes/Utilities/CSS.php',
+        'HD\\Utilities\\Horizontal_Nav_Walker' => __DIR__ . '/../..' . '/inc/classes/Utilities/Horizontal_Nav_Walker.php',
+        'HD\\Utilities\\Traits\\Arr' => __DIR__ . '/../..' . '/inc/classes/Utilities/Traits/Arr.php',
+        'HD\\Utilities\\Traits\\Base' => __DIR__ . '/../..' . '/inc/classes/Utilities/Traits/Base.php',
+        'HD\\Utilities\\Traits\\Cast' => __DIR__ . '/../..' . '/inc/classes/Utilities/Traits/Cast.php',
+        'HD\\Utilities\\Traits\\DateTime' => __DIR__ . '/../..' . '/inc/classes/Utilities/Traits/DateTime.php',
+        'HD\\Utilities\\Traits\\Db' => __DIR__ . '/../..' . '/inc/classes/Utilities/Traits/Db.php',
+        'HD\\Utilities\\Traits\\Encryption' => __DIR__ . '/../..' . '/inc/classes/Utilities/Traits/Encryption.php',
+        'HD\\Utilities\\Traits\\File' => __DIR__ . '/../..' . '/inc/classes/Utilities/Traits/File.php',
+        'HD\\Utilities\\Traits\\Singleton' => __DIR__ . '/../..' . '/inc/classes/Utilities/Traits/Singleton.php',
+        'HD\\Utilities\\Traits\\Str' => __DIR__ . '/../..' . '/inc/classes/Utilities/Traits/Str.php',
+        'HD\\Utilities\\Traits\\Url' => __DIR__ . '/../..' . '/inc/classes/Utilities/Traits/Url.php',
+        'HD\\Utilities\\Traits\\Wp' => __DIR__ . '/../..' . '/inc/classes/Utilities/Traits/Wp.php',
+        'HD\\Utilities\\Vertical_Nav_Walker' => __DIR__ . '/../..' . '/inc/classes/Utilities/Vertical_Nav_Walker.php',
+        'HD\\Widgets\\Recent_Posts_Widget' => __DIR__ . '/../..' . '/inc/classes/Widgets/Recent_Posts_Widget.php',
+        'HD\\Widgets\\Search_Widget' => __DIR__ . '/../..' . '/inc/classes/Widgets/Search_Widget.php',
+        'MatthiasMullie\\Minify\\CSS' => __DIR__ . '/..' . '/matthiasmullie/minify/src/CSS.php',
+        'MatthiasMullie\\Minify\\Exception' => __DIR__ . '/..' . '/matthiasmullie/minify/src/Exception.php',
+        'MatthiasMullie\\Minify\\Exceptions\\BasicException' => __DIR__ . '/..' . '/matthiasmullie/minify/src/Exceptions/BasicException.php',
+        'MatthiasMullie\\Minify\\Exceptions\\FileImportException' => __DIR__ . '/..' . '/matthiasmullie/minify/src/Exceptions/FileImportException.php',
+        'MatthiasMullie\\Minify\\Exceptions\\IOException' => __DIR__ . '/..' . '/matthiasmullie/minify/src/Exceptions/IOException.php',
+        'MatthiasMullie\\Minify\\JS' => __DIR__ . '/..' . '/matthiasmullie/minify/src/JS.php',
+        'MatthiasMullie\\Minify\\Minify' => __DIR__ . '/..' . '/matthiasmullie/minify/src/Minify.php',
+        'MatthiasMullie\\PathConverter\\Converter' => __DIR__ . '/..' . '/matthiasmullie/path-converter/src/Converter.php',
+        'MatthiasMullie\\PathConverter\\ConverterInterface' => __DIR__ . '/..' . '/matthiasmullie/path-converter/src/ConverterInterface.php',
+        'MatthiasMullie\\PathConverter\\NoConverter' => __DIR__ . '/..' . '/matthiasmullie/path-converter/src/NoConverter.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit983d3c46796f77cf9f5dba1911eb7116::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit983d3c46796f77cf9f5dba1911eb7116::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit983d3c46796f77cf9f5dba1911eb7116::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit9b89879d0ffdac5f0eb892fc5d415441::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit9b89879d0ffdac5f0eb892fc5d415441::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit9b89879d0ffdac5f0eb892fc5d415441::$classMap;
 
         }, null, ClassLoader::class);
     }

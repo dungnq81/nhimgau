@@ -18,22 +18,16 @@ trait Cast {
 	 * @return null[]|string[]
 	 */
 	public static function explodeMulti( mixed $delimiters, ?string $string, bool $remove_empty = true ): array {
+		$string = (string) $string;
 		if ( is_string( $delimiters ) ) {
 			return explode( $delimiters, $string );
 		}
 
 		if ( is_array( $delimiters ) ) {
-
-			// Use the first delimiter as the common delimiter
 			$ready  = str_replace( $delimiters, $delimiters[0], $string );
 			$launch = explode( $delimiters[0], $ready );
 
-			if ( $remove_empty ) {
-				$launch = array_filter( $launch );
-			}
-
-			// Re-index array if removing empty values
-			return array_values( $launch );
+			return $remove_empty ? array_values( array_filter( $launch ) ) : array_values( $launch );
 		}
 
 		return [ $string ];

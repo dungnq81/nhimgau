@@ -72,12 +72,9 @@ final class AspectRatio {
 			! in_array( $ratio_x . '-' . $ratio_y, $ar_aspect_ratio_default, false )
 		) {
 			$css = new \Addons\Css();
-			$css->set_selector( '.' . $ratio_class );
-			//$css->add_property( 'height', 0 );
+			$css->set_selector( '.' . $ratio_class )
+			    ->add_property( 'aspect-ratio', $ratio_x . '/' . $ratio_y );
 
-			//$pb = ( $ratio_y / $ratio_x ) * 100;
-			//$css->add_property( 'padding-bottom', $pb . '%' );
-			$css->add_property( 'aspect-ratio', $ratio_x . '/' . $ratio_y );
 			$ratio_style = $css->css_output();
 		}
 

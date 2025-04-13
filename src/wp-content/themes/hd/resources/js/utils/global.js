@@ -1,3 +1,5 @@
+// global.js
+
 (function () {
     // update rel
     document.querySelectorAll('a._blank, a.blank, a[target="_blank"]').forEach((el) => {

@@ -1,4 +1,11 @@
 <?php
+/**
+ * Helper Class
+ *
+ * @author Gaudev
+ */
+
+declare( strict_types=1 );
 
 namespace HD;
 
@@ -7,21 +14,16 @@ use MatthiasMullie\Minify;
 
 \defined( 'ABSPATH' ) || die;
 
-/**
- * Helper Class
- *
- * @author Gaudev
- */
 final class Helper {
 	use Wp;
 
 	// -------------------------------------------------------------
 
 	/**
-	 * @return array|false|string
+	 * @return false|int
 	 */
-	public static function version(): false|array|string {
-		return defined( 'WP_DEBUG' ) && WP_DEBUG ? date( 'YmdHis', current_time( 'U', 0 ) ) : THEME_VERSION;
+	public static function version(): false|int {
+		return wp_get_environment_type() === 'development' ? time() : false;
 	}
 
 	// -------------------------------------------------------------
@@ -91,16 +93,17 @@ final class Helper {
 
 		// Log if dangerous content is detected
 		if ( preg_match( '/<script\b[^>]*>/i', $css ) ) {
-			self::errorLog( 'Warning: Detected `<script>` tag in CSS.' );
+			self::errorLog( 'Warning: `<script>` inside CSS' );
 		}
 
+		//$css = (string) $css;
 		$css = preg_replace( [
-			'/<script\b[^>]*>.*?(?:<\/script>|$)/is', // Remove <script> tags entirely
-			'/<style\b[^>]*>(.*?)<\/style>/is', // Remove <style> tags but keep the CSS content inside
-			'/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', // // Remove unwanted control characters but keep line breaks and tabs
+			'/<script\b[^>]*>.*?(?:<\/script>|$)/is',
+			'/<style\b[^>]*>(.*?)<\/style>/is',
+			'/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u',
 			'/\bexpression\s*\([^)]*\)/i',
 			'/url\s*\(\s*[\'"]?\s*javascript:[^)]*\)/i',
-			'/[^\S\r\n\t]+/', // Normalize whitespace
+			'/[^\S\r\n\t]+/',
 		], [ '', '$1', '', '', '', ' ' ], $css );
 
 		return trim( $css );
@@ -110,48 +113,38 @@ final class Helper {
 
 	/**
 	 * @param string|null $js
-	 * @param bool $debug_check
+	 * @param bool $respectDebug
 	 *
 	 * @return string|null
 	 */
-	public static function JSMinify( ?string $js, bool $debug_check = true ): ?string {
-		if ( empty( $js ) ) {
+	public static function JSMinify( ?string $js, bool $respectDebug = true ): ?string {
+		if ( $js === null || $js === '' ) {
 			return null;
 		}
-
-		if ( $debug_check && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		if ( $respectDebug && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			return $js;
 		}
 
-		if ( class_exists( Minify\JS::class ) ) {
-			return ( new Minify\JS() )->add( $js )->minify();
-		}
-
-		return $js;
+		return class_exists( Minify\JS::class ) ? ( new Minify\JS() )->add( $js )->minify() : $js;
 	}
 
 	// -------------------------------------------------------------
 
 	/**
 	 * @param string|null $css
-	 * @param bool $debug_check
+	 * @param bool $respectDebug
 	 *
 	 * @return string|null
 	 */
-	public static function CSSMinify( ?string $css, bool $debug_check = true ): ?string {
-		if ( empty( $css ) ) {
+	public static function CSSMinify( ?string $css, bool $respectDebug = true ): ?string {
+		if ( $css === null || $css === '' ) {
 			return null;
 		}
-
-		if ( $debug_check && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		if ( $respectDebug && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			return $css;
 		}
 
-		if ( class_exists( Minify\CSS::class ) ) {
-			return ( new Minify\CSS() )->add( $css )->minify();
-		}
-
-		return $css;
+		return class_exists( Minify\CSS::class ) ? ( new Minify\CSS() )->add( $css )->minify() : $css;
 	}
 
 	// -------------------------------------------------------------
@@ -205,13 +198,7 @@ final class Helper {
 	 * @return bool
 	 */
 	public static function lightHouse(): bool {
-		if ( empty( $_SERVER['HTTP_USER_AGENT'] ) ) {
-			return false;
-		}
-
-		$userAgent = strtolower( trim( $_SERVER['HTTP_USER_AGENT'] ) );
-
-		return str_contains( $userAgent, 'lighthouse' );
+		return isset( $_SERVER['HTTP_USER_AGENT'] ) && str_contains( strtolower( $_SERVER['HTTP_USER_AGENT'] ), 'lighthouse' );
 	}
 
 	// --------------------------------------------------

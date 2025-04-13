@@ -11,11 +11,16 @@ trait Url {
 	 * @param string $uri
 	 * @param int $status
 	 *
-	 * @return true|void
+	 * @return bool|void
 	 */
 	public static function redirect( string $uri = '', int $status = 301 ) {
+		$uri = esc_url_raw( $uri );
+		if ( ! $uri ) {
+			return false;
+		}
+
 		if ( ! headers_sent() ) {
-			wp_redirect( $uri, $status );
+			wp_safe_redirect( $uri, $status );
 			exit;
 		}
 

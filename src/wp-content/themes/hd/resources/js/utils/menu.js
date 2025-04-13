@@ -1,3 +1,5 @@
+// menu.js
+
 export function initMenu(containerSelector, menuSelector) {
     const container = document.querySelector(containerSelector);
     const menu = document.querySelector(menuSelector);

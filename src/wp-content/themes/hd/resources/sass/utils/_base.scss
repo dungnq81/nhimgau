@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use 'sass:color';
+@use 'sass:string';
 
 @use '../variables' as vars;
 @use '../functions' as func;
@@ -21,10 +22,29 @@
     --Primary-02: #{vars.$Primary-02};
     --Primary-03: #{vars.$Primary-03};
     --Primary-04: #{vars.$Primary-04};
-
-    --img-path: '#{vars.$img-path}';
-    --font-path: '#{vars.$font-path}';
 }
+
+@mixin font-face-ss($font-family, $font-style: normal, $font-weight: 400, $file_name, $base: '../fonts') {
+    $base: string.unquote($base);
+    //$version: string.unique_id();
+
+    @font-face {
+        font-family: string.quote($font-family);
+        font-style: $font-style;
+        font-weight: $font-weight;
+        font-display: swap;
+        src: url('#{$base}/#{$file_name}.woff2?') format('woff2'),
+        url('#{$base}/#{$file_name}.woff') format('woff');
+    }
+}
+
+/** Samsung font */
+$font_base: '../fonts/samsung';
+
+//@include font-face-ss(SamsungSharpSans, normal, 400, SamsungSharpSansBd, $font_base);
+@include font-face-ss(SamsungSharpSans, normal, 700, SamsungSharpSansBd, $font_base);
+@include font-face-ss(SamsungOne, normal, 400, SamsungOne-400, $font_base);
+@include font-face-ss(SamsungOne, normal, 700, SamsungOne-700, $font_base);
 
 //
 // resets.
@@ -55,6 +75,7 @@ body {
     background: vars.$body-bg;
     font-family: vars.$body-font;
     font-optical-sizing: auto;
+    letter-spacing: 0.2px;
     @include mixin.clamp-fs(body, vars.$base-line-height-global);
 }
 
@@ -381,6 +402,10 @@ figure {
 
 .w-100 {
     width: 100%;
+}
+
+.dvh-100 {
+    @include mixin.responsive-height(100);
 }
 
 .gap-10 {
@@ -799,3 +824,6 @@ $step: 100;
         }
     }
 }
+
+//
+// other

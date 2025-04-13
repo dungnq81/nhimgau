@@ -10,16 +10,16 @@ $upload_size_limit = $file_options['upload_size_limit'] ?? '';
 $svgs              = $file_options['svgs'] ?? 'disable';
 
 $svg_options = [
-	'disable'      => esc_html__( 'Disable SVG images', ADDONS_TEXT_DOMAIN ),
-	'sanitized'    => esc_html__( 'Sanitized SVG images', ADDONS_TEXT_DOMAIN ),
-	'unrestricted' => esc_html__( 'Unrestricted SVG images', ADDONS_TEXT_DOMAIN ),
+	'disable'      => esc_html__( 'Disable SVG images', ADDONS_TEXTDOMAIN ),
+	'sanitized'    => esc_html__( 'Sanitized SVG images', ADDONS_TEXTDOMAIN ),
+	'unrestricted' => esc_html__( 'Unrestricted SVG images', ADDONS_TEXTDOMAIN ),
 ];
 
 ?>
 <div class="container flex flex-x flex-gap sm-up-1">
     <input type="hidden" name="file-hidden" value="1">
     <div class="cell section section-text">
-        <label class="heading" for="upload_size_limit"><?php _e( 'Maximum upload file size', ADDONS_TEXT_DOMAIN ); ?></label>
+        <label class="heading" for="upload_size_limit"><?php _e( 'Maximum upload file size', ADDONS_TEXTDOMAIN ); ?></label>
         <div class="desc">
             The "Maximum Upload File Size" setting allows administrators to set a limit on the size of uploaded files, measured in MB.
             <cite><strong>Maximum <?= $upload_max_filesize_MB . ' MB' ?></strong></cite>
@@ -31,7 +31,7 @@ $svg_options = [
         </div>
     </div>
     <div class="cell section section-radio">
-        <span class="heading !block"><?php _e( 'SVG Images', ADDONS_TEXT_DOMAIN ); ?></span>
+        <span class="heading !block"><?php _e( 'SVG Images', ADDONS_TEXTDOMAIN ); ?></span>
         <div class="option inline-option">
             <div class="controls">
                 <div class="inline-group">

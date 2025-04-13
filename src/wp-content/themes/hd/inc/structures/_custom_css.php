@@ -36,8 +36,8 @@ function custom_css_action(): void {
 	$breadcrumb_title_color = \HD\Helper::getField( 'breadcrumb_title_color', $object ) ?: \HD\Helper::getThemeMod( 'breadcrumb_color_setting' );
 
 	if ( $breadcrumb_title_color ) {
-		$css->set_selector( '.section.section-breadcrumb .breadcrumb-title' );
-		$css->add_property( 'color', $breadcrumb_title_color . ' !important' );
+		$css->set_selector( '.section.section-breadcrumb .breadcrumb-title' )
+		    ->add_property( 'color', $breadcrumb_title_color . ' !important' );
 	}
 
 	$css_output = $css->css_output();

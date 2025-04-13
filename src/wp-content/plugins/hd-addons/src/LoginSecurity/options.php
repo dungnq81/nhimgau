@@ -18,7 +18,7 @@ $enable_custom_login    = $login_security_default['enable_custom_login_url'] ?? 
 
     <?php if ( $enable_custom_login ) : ?>
     <div class="cell !lg-1 section section-text !sm-12">
-        <label class="heading" for="custom_login_uri"><?php _e( 'Custom Login URL', ADDONS_TEXT_DOMAIN ); ?></label>
+        <label class="heading" for="custom_login_uri"><?php _e( 'Custom Login URL', ADDONS_TEXTDOMAIN ); ?></label>
         <div class="desc">Attackers frequently target <b>/wp-admin</b> or <b>/wp-login.php</b> as the default login URL for WordPress. Changing it can help prevent these attacks and provide a more memorable login URL.</div>
         <div class="option">
             <div class="controls control-prefix" style="height: unset;">
@@ -37,7 +37,7 @@ $enable_custom_login    = $login_security_default['enable_custom_login_url'] ?? 
     <?php endif; ?>
 
     <div class="cell section section-select">
-        <label class="heading" for="login_ips_access"><?php _e( 'Allowlist IPs Login Access', ADDONS_TEXT_DOMAIN ); ?></label>
+        <label class="heading" for="login_ips_access"><?php _e( 'Allowlist IPs Login Access', ADDONS_TEXTDOMAIN ); ?></label>
         <div class="option">
             <div class="controls">
                 <div class="select_wrapper">
@@ -60,7 +60,7 @@ $enable_custom_login    = $login_security_default['enable_custom_login_url'] ?? 
     </div>
 
     <div class="cell section section-select">
-        <label class="heading" for="disable_ips_access"><?php _e( 'Blocked IPs Access', ADDONS_TEXT_DOMAIN ); ?></label>
+        <label class="heading" for="disable_ips_access"><?php _e( 'Blocked IPs Access', ADDONS_TEXTDOMAIN ); ?></label>
         <div class="option">
             <div class="controls">
                 <div class="select_wrapper">
@@ -83,18 +83,18 @@ $enable_custom_login    = $login_security_default['enable_custom_login_url'] ?? 
     </div>
 
     <div class="cell section section-checkbox">
-        <label class="heading" for="illegal_users"><?php _e( 'Disable Common Usernames', ADDONS_TEXT_DOMAIN ); ?></label>
+        <label class="heading" for="illegal_users"><?php _e( 'Disable Common Usernames', ADDONS_TEXTDOMAIN ); ?></label>
         <div class="option">
             <div class="controls">
                 <input type="checkbox" class="checkbox" name="illegal_users" id="illegal_users" <?php checked( $illegal_users, 1 ); ?> value="1">
             </div>
-            <div class="explain"><?php _e( 'Check to activate', ADDONS_TEXT_DOMAIN ); ?></div>
+            <div class="explain"><?php _e( 'Check to activate', ADDONS_TEXTDOMAIN ); ?></div>
         </div>
         <div class="desc">Using common usernames like <b>'admin'</b> is a security threat that often results in unauthorized access. By enabling this option we will disable the creation of common usernames and if you already have one or more users with a weak username, we'll ask you to provide new one(s).</div>
     </div>
 
     <div class="cell section section-select">
-        <label class="heading" for="limit_login_attempts"><?php _e( 'Limit Login Attempts', ADDONS_TEXT_DOMAIN ); ?></label>
+        <label class="heading" for="limit_login_attempts"><?php _e( 'Limit Login Attempts', ADDONS_TEXTDOMAIN ); ?></label>
         <div class="option">
             <div class="controls">
                 <div class="select_wrapper">

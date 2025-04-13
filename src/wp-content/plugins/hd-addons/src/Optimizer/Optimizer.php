@@ -5,15 +5,19 @@ namespace Addons\Optimizer;
 \defined( 'ABSPATH' ) || exit;
 
 final class Optimizer {
-	public mixed $optimizer_options = [];
+	private mixed $options;
+
+	/** Maximum HTML size (bytes) we attempt to minify. */
+	private const MAX_SIZE = 1_000_000; // 1MB
 
 	// ------------------------------------------------------
 
 	public function __construct() {
+		// Initialize lazy‑load module regardless of options
 		( new \Addons\Optimizer\LazyLoad\LazyLoad() );
 
-		$this->optimizer_options = \Addons\Helper::getOption( 'optimizer__options' );
-		$this->_output_parser();
+		$this->options = \Addons\Helper::getOption( 'optimizer__options', [] );
+		$this->_maybeHookBuffer();
 	}
 
 	// ------------------------------------------------------
@@ -21,36 +25,43 @@ final class Optimizer {
 	/**
 	 * @return void
 	 */
-	private function _output_parser(): void {
-		if ( defined( 'WP_CLI' ) || is_admin() ) {
+	private function _maybeHookBuffer(): void {
+		// Skip CLI, admin, REST
+		if ( defined( 'WP_CLI' ) || is_admin() || doing_action( 'rest_api_init' ) ) {
 			return;
 		}
 
-		$minify_html   = $this->optimizer_options['minify_html'] ?? 0;
-		$font_optimize = $this->optimizer_options['font_optimize'] ?? 0;
-		$font_preload  = isset( $this->optimizer_options['font_preload'] ) ? implode( PHP_EOL, $this->optimizer_options['font_preload'] ) : '';
-		$dns_prefetch  = isset( $this->optimizer_options['dns_prefetch'] ) ? implode( PHP_EOL, $this->optimizer_options['dns_prefetch'] ) : '';
+		// Determine if any optimisation enabled
+		$need = ! empty( $this->options['minify_html'] ) ||
+		        ! empty( $this->options['font_optimize'] ) ||
+		        ! empty( $this->options['font_preload'] ) ||
+		        ! empty( $this->options['dns_prefetch'] );
 
-		if ( ! empty( $minify_html ) ||
-		     ! empty( $font_optimize ) ||
-		     ! empty( $font_preload ) ||
-		     ! empty( $dns_prefetch )
-		) {
-			add_action( 'wp_loaded', [ $this, 'start_bufffer' ] );
-			add_action( 'shutdown', [ $this, 'end_buffer' ] );
+		if ( $need ) {
+			add_action( 'wp_loaded', [ $this, 'startBuffer' ], 0 );
+			add_action( 'shutdown', [ $this, 'endBuffer' ], 0 );
 		}
 	}
 
 	// ------------------------------------------------------
 
-	public function start_bufffer(): void {
-		ob_start( [ $this, 'run' ] );
+	/**
+	 * @return void
+	 */
+	public function startBuffer(): void {
+		if ( ob_get_level() === 0 && ! headers_sent() ) {
+			ob_start( [ $this, 'processOutput' ] );
+		}
 	}
 
 	// ------------------------------------------------------
 
-	public function end_buffer(): void {
-		if ( ob_get_length() ) {
+	/**
+	 * @return void
+	 */
+	public function endBuffer(): void {
+		// Flush all buffers we opened (keep nesting order)
+		while ( ob_get_level() > 0 ) {
 			ob_end_flush();
 		}
 	}
@@ -62,20 +73,18 @@ final class Optimizer {
 	 *
 	 * @return string
 	 */
-	public function run( string $html ): string {
+	public function processOutput( string $html ): string {
+		// Basic sanity – must be an HTML document
 		if ( ! preg_match( '/<\/html>/i', $html ) ) {
 			return $html;
 		}
 
-		// Do not run optimization if amp is active, the page is XML or feed.
-		if ( \Addons\Helper::isAmpEnabled( $html ) ||
-		     \Addons\Helper::isXml( $html ) ||
-		     is_feed()
-		) {
+		// Skip AMP / XML pages detected by Helper
+		if ( \Addons\Helper::isAmpEnabled( $html ) || \Addons\Helper::isXml( $html ) ) {
 			return $html;
 		}
 
-		return $this->_optimize_for_visitors( $html );
+		return $this->_optimise( $html );
 	}
 
 	// ------------------------------------------------------'
@@ -85,23 +94,21 @@ final class Optimizer {
 	 *
 	 * @return string
 	 */
-	private function _optimize_for_visitors( $html ): string {
+	private function _optimise( $html ): string {
+		// Font helper (preload / sub‑set etc.)
 		$html = ( new Font() )->run( $html );
-		$html = $this->_dns_prefetch( $html );
 
-		$minify_html = $this->optimizer_options['minify_html'] ?? 0;
-		if ( ! empty( $minify_html ) ) {
-			$_options = [
-				'cssMinifier'     => function ( $css ) {
-					return \Addons\Helper::CSSMinify( $css, false );
-				},
-				'jsMinifier'      => function ( $js ) {
-					return \Addons\Helper::JSMinify( $js, false );
-				},
-				'jsCleanComments' => true,
-			];
+		// DNS prefetch insertion
+		$html = $this->_injectDnsPrefetch( $html );
 
-			$html = Minify_Html::minify( $html, $_options );
+		// Minify full HTML if option enabled and size acceptable
+		if ( ! empty( $this->options['minify_html'] ) && strlen( $html ) <= self::MAX_SIZE ) {
+			$html = Minify_Html::minify( $html, [
+				'cssMinifier'        => static fn( string $css ) => \Addons\Helper::CSSMinify( $css, false ),
+				'jsMinifier'         => static fn( string $js ) => \Addons\Helper::JSMinify( $js, false ),
+				'jsCleanComments'    => true,
+				'preserveLineBreaks' => false,
+			] );
 		}
 
 		return $html;
@@ -110,27 +117,32 @@ final class Optimizer {
 	// ------------------------------------------------------
 
 	/**
-	 * @param $html
+	 * @param string $html
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	private function _dns_prefetch( $html ): mixed {
-		$urls = $this->optimizer_options['dns_prefetch'] ?? [];
-
-		// Return if no url's are set by the user.
-		if ( empty( $urls ) ) {
+	private function _injectDnsPrefetch( string $html ): string {
+		$urls = $this->options['dns_prefetch'] ?? [];
+		if ( ! $urls ) {
 			return $html;
 		}
 
-		$new_html = '';
+		$links = '';
 		foreach ( $urls as $url ) {
-			// Replace the protocol with //.
-			$url_without_protocol = preg_replace( '~(?:(?:https?:)?(?:\/\/)(?:www\.|(?!www)))?((?:.*?)\.(?:.*))~', '//$1', $url );
-			$new_html             .= '<link rel="dns-prefetch" href="' . $url_without_protocol . '" />';
+			$host = wp_parse_url( esc_url_raw( $url ), PHP_URL_HOST );
+			if ( ! $host ) {
+				continue;
+			}
+			$links .= '<link rel="dns-prefetch" href="//' . esc_attr( $host ) . '" />';
+		}
+		if ( $links === '' ) {
+			return $html;
 		}
 
-		return str_replace( '</head>', $new_html . '</head>', $html );
-		//return preg_replace( '~<\/title>~', '</title>' . $new_html, $html );
+		// Insert before closing </head> (case‑insensitive, first occurrence)
+		$newHtml = preg_replace( '/<\/head>/i', $links . '</head>', $html, 1 );
+
+		return $newHtml ?: $html;
 	}
 
 	// ------------------------------------------------------

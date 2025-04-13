@@ -13,7 +13,7 @@ namespace Addons\ThirdParty\AcfField;
 class NavMenu extends \acf_field {
 	public function __construct() {
 		$this->name     = 'nav_menu';
-		$this->label    = esc_html__( 'Nav Menu', ADDONS_TEXT_DOMAIN );
+		$this->label    = esc_html__( 'Nav Menu', ADDONS_TEXTDOMAIN );
 		$this->category = 'choice';
 		$this->defaults = [
 			'save_format' => 'menu',
@@ -34,22 +34,22 @@ class NavMenu extends \acf_field {
 	public function render_field_settings( $field ): void {
 		// Register the Return Value format setting
 		acf_render_field_setting( $field, [
-			'label'        => esc_html__( 'Return Value', ADDONS_TEXT_DOMAIN ),
-			'instructions' => esc_html__( 'Specify the returned value on front end', ADDONS_TEXT_DOMAIN ),
+			'label'        => esc_html__( 'Return Value', ADDONS_TEXTDOMAIN ),
+			'instructions' => esc_html__( 'Specify the returned value on front end', ADDONS_TEXTDOMAIN ),
 			'type'         => 'radio',
 			'name'         => 'save_format',
 			'layout'       => 'horizontal',
 			'choices'      => [
-				'menu'   => esc_html__( 'Nav Menu HTML', ADDONS_TEXT_DOMAIN ),
-				'object' => esc_html__( 'Nav Menu Object', ADDONS_TEXT_DOMAIN ),
-				'id'     => esc_html__( 'Nav Menu ID', ADDONS_TEXT_DOMAIN ),
+				'menu'   => esc_html__( 'Nav Menu HTML', ADDONS_TEXTDOMAIN ),
+				'object' => esc_html__( 'Nav Menu Object', ADDONS_TEXTDOMAIN ),
+				'id'     => esc_html__( 'Nav Menu ID', ADDONS_TEXTDOMAIN ),
 			],
 		] );
 
 		// Register the Menu Container setting
 		acf_render_field_setting( $field, [
-			'label'        => esc_html__( 'Menu Container', ADDONS_TEXT_DOMAIN ),
-			'instructions' => esc_html__( "What to wrap the Menu's ul with (when returning HTML only)", ADDONS_TEXT_DOMAIN ),
+			'label'        => esc_html__( 'Menu Container', ADDONS_TEXTDOMAIN ),
+			'instructions' => esc_html__( "What to wrap the Menu's ul with (when returning HTML only)", ADDONS_TEXTDOMAIN ),
 			'type'         => 'select',
 			'name'         => 'container',
 			'choices'      => $this->_get_allowed_nav_container_tags(),
@@ -57,13 +57,13 @@ class NavMenu extends \acf_field {
 
 		// Register the Allow Null setting
 		acf_render_field_setting( $field, [
-			'label'   => esc_html__( 'Allow Null?', ADDONS_TEXT_DOMAIN ),
+			'label'   => esc_html__( 'Allow Null?', ADDONS_TEXTDOMAIN ),
 			'type'    => 'radio',
 			'name'    => 'allow_null',
 			'layout'  => 'horizontal',
 			'choices' => [
-				1 => esc_html__( 'Yes', ADDONS_TEXT_DOMAIN ),
-				0 => esc_html__( 'No', ADDONS_TEXT_DOMAIN ),
+				1 => esc_html__( 'Yes', ADDONS_TEXTDOMAIN ),
+				0 => esc_html__( 'No', ADDONS_TEXTDOMAIN ),
 			],
 		] );
 	}
@@ -103,11 +103,13 @@ class NavMenu extends \acf_field {
 
 		?>
         <div class="custom-acf-nav-menu">
-            <select id="<?= \Addons\Helper::escAttr( $field['id'] ) ?>" class="<?= \Addons\Helper::escAttr( $field['class'] ) ?>" name="<?= \Addons\Helper::escAttr( $field['name'] ) ?>" title>
+            <select id="<?= \Addons\Helper::escAttr( $field['id'] ) ?>"
+                    class="<?= \Addons\Helper::escAttr( $field['class'] ) ?>"
+                    name="<?= \Addons\Helper::escAttr( $field['name'] ) ?>" title>
 				<?php foreach ( $nav_menus as $nav_menu_id => $nav_menu_name ) : ?>
-                <option value="<?= \Addons\Helper::escAttr( $nav_menu_id ) ?>" <?php selected( $field['value'], $nav_menu_id ); ?>>
-                    <?= esc_html( $nav_menu_name ) ?>
-                </option>
+                    <option value="<?= \Addons\Helper::escAttr( $nav_menu_id ) ?>" <?php selected( $field['value'], $nav_menu_id ); ?>>
+						<?= esc_html( $nav_menu_name ) ?>
+                    </option>
 				<?php endforeach; ?>
             </select>
         </div>
@@ -126,7 +128,7 @@ class NavMenu extends \acf_field {
 		$nav_menus = [];
 
 		if ( $allow_null ) {
-			$nav_menus[''] = esc_html__( '- Select -', ADDONS_TEXT_DOMAIN );
+			$nav_menus[''] = esc_html__( '- Select -', ADDONS_TEXTDOMAIN );
 		}
 
 		foreach ( $navs as $nav ) {
@@ -190,7 +192,7 @@ class NavMenu extends \acf_field {
 	 *
 	 * @return mixed
 	 */
-    public function load_value( $value, $post_id, $field ): mixed {
+	public function load_value( $value, $post_id, $field ): mixed {
 		return $value;
 	}
 

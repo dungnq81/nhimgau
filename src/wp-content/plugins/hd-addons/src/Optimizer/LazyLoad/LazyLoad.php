@@ -95,7 +95,7 @@ final class LazyLoad {
 	 * @return void
 	 */
 	public function load_scripts(): void {
-		wp_enqueue_script( 'lazyload-js', ADDONS_URL . 'assets/js/lazyload.js', [], ADDONS_VERSION, true );
+		wp_enqueue_script( 'lazyload-js', ADDONS_URL . 'assets/js/lazyload.js', [], \Addons\Helper::version(), true );
 		wp_script_add_data( 'lazyload-js', 'addon', [ 'module', 'async' ] );
 	}
 }

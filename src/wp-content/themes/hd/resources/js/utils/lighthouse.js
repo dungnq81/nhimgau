@@ -1,3 +1,5 @@
+// lighthouse.js
+
 (async function detectLighthouse() {
     let lighthouseDetected = false;
     if (navigator.userAgent.includes('Lighthouse') || navigator.webdriver) {

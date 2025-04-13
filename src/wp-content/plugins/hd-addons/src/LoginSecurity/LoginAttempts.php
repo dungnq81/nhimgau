@@ -54,8 +54,8 @@ final class LoginAttempts {
 
 			error_log( 'Too many incorrect login attempts. - ' . \ip_address() );
 			wp_die(
-				esc_html__( 'Access to login page is currently restricted because of too many incorrect login attempts.', ADDONS_TEXT_DOMAIN ),
-				esc_html__( 'Restricted access', ADDONS_TEXT_DOMAIN ),
+				esc_html__( 'Access to login page is currently restricted because of too many incorrect login attempts.', ADDONS_TEXTDOMAIN ),
+				esc_html__( 'Restricted access', ADDONS_TEXTDOMAIN ),
 				[
 					'addon_error'   => true,
 					'response'      => 403,
@@ -117,7 +117,7 @@ final class LoginAttempts {
 		// Increase the attempt count.
 		$login_attempts[ $user_ip ]['attempts'] ++;
 		if ( $login_attempts[ $user_ip ]['attempts'] > 0 ) {
-			$errors->add( 'login_attempts', __( sprintf( '<strong>Alert:</strong> You have entered the wrong credentials <strong>%s</strong> times.', $login_attempts[ $user_ip ]['attempts'] ), ADDONS_TEXT_DOMAIN ) );
+			$errors->add( 'login_attempts', __( sprintf( '<strong>Alert:</strong> You have entered the wrong credentials <strong>%s</strong> times.', $login_attempts[ $user_ip ]['attempts'] ), ADDONS_TEXTDOMAIN ) );
 
 			if (
 				in_array( 'incorrect_password', $errors->get_error_codes(), false ) &&

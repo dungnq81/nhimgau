@@ -1,1 +1,5 @@
-document.addEventListener('DOMContentLoaded', () => {});
+import { nanoid } from 'nanoid';
+
+document.addEventListener('DOMContentLoaded', () => {
+
+});

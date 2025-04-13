@@ -10,7 +10,7 @@ $order_taxonomy         = $custom_sorting_options['order_taxonomy'] ?? [];
 <div class="container flex flex-x flex-gap sm-up-1 lg-up-2">
     <input type="hidden" name="custom-sorting-hidden" value="1">
     <div class="cell section section-checkbox">
-        <span class="heading !fw-700"><?php _e( 'Check to Sort Post Types', ADDONS_TEXT_DOMAIN ); ?></span>
+        <span class="heading !fw-700"><?php _e( 'Check to Sort Post Types', ADDONS_TEXTDOMAIN ); ?></span>
         <div class="desc">Sort by dragging and dropping post-types.</div>
 		<?php
 		$post_types        = get_post_types( [ 'show_ui' => true ], 'objects' );
@@ -47,7 +47,7 @@ $order_taxonomy         = $custom_sorting_options['order_taxonomy'] ?? [];
     </div>
 
     <div class="cell section section-checkbox">
-        <span class="heading !fw-700"><?php _e( 'Check to Sort Taxonomies', ADDONS_TEXT_DOMAIN ); ?></span>
+        <span class="heading !fw-700"><?php _e( 'Check to Sort Taxonomies', ADDONS_TEXTDOMAIN ); ?></span>
         <div class="desc">Sort by dragging and dropping categories.</div>
 		<?php
 		$taxonomies = get_taxonomies( [ 'show_ui' => true ], 'objects' );
@@ -76,12 +76,12 @@ $order_taxonomy         = $custom_sorting_options['order_taxonomy'] ?? [];
     </div>
 
     <div class="cell section section-checkbox !sm-12">
-        <span class="heading !fw-700"><?php _e( 'Check to reset order', ADDONS_TEXT_DOMAIN ); ?></span>
+        <span class="heading !fw-700"><?php _e( 'Check to reset order', ADDONS_TEXTDOMAIN ); ?></span>
         <div class="option mb-20">
             <label class="controls">
                 <input type="checkbox" class="checkbox" name="order_reset" id="order_reset" value="1">
             </label>
-            <div class="explain"><?php _e( 'Reset all', ADDONS_TEXT_DOMAIN ); ?></div>
+            <div class="explain"><?php _e( 'Reset all', ADDONS_TEXTDOMAIN ); ?></div>
         </div>
     </div>
 </div>

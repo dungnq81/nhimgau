@@ -11,12 +11,12 @@ sudo apt-get install -y software-properties-common tzdata debconf-utils wget cur
 sudo add-apt-repository ppa:ondrej/php -y
 sudo apt-get update -y
 
-# Ensure .bashrc exists
-[ ! -f /home/vagrant/.bashrc ] && touch /home/vagrant/.bashrc
+# Ensure .bashrc exists and add alias if not already present
+BASHRC="/home/vagrant/.bashrc"
+[ ! -f "$BASHRC" ] && touch "$BASHRC"
 
-# Set alias for wp-cli if not already set
-grep -qxF "alias wp='/var/www/html/vendor/bin/wp'" /home/vagrant/.bashrc || echo "alias wp='/var/www/html/vendor/bin/wp'" >> /home/vagrant/.bashrc
-grep -qxF "export PATH=\$PATH:/var/www/html/vendor/bin" /home/vagrant/.bashrc || echo "export PATH=\$PATH:/var/www/html/vendor/bin" >> /home/vagrant/.bashrc
+grep -qxF "alias wp='/var/www/html/vendor/bin/wp'" "$BASHRC" || echo "alias wp='/var/www/html/vendor/bin/wp'" >> "$BASHRC"
+grep -qxF "export PATH=\$PATH:/var/www/html/vendor/bin" "$BASHRC" || echo "export PATH=\$PATH:/var/www/html/vendor/bin" >> "$BASHRC"
 
 # Install Apache
 echo "Installing Apache..."
@@ -24,10 +24,11 @@ sudo apt-get install -y apache2
 sudo systemctl enable --now apache2
 sudo a2enmod rewrite
 
+sudo apt-get purge -y libapache2-mod-php8.2 || true
+
 # Set ServerName to suppress AH00558 warning
-if ! grep -q "^ServerName" /etc/apache2/apache2.conf; then
-    echo "ServerName ubuntu-wamp.local" | sudo tee -a /etc/apache2/apache2.conf
-fi
+APACHE_CONF="/etc/apache2/apache2.conf"
+grep -q "^ServerName" "$APACHE_CONF" || echo "ServerName ubuntu-wamp.local" | sudo tee -a "$APACHE_CONF" > /dev/null
 
 # Install PHP 8.2 and required extensions
 sudo apt-get install -y \
@@ -49,7 +50,6 @@ sudo apt-get install -y \
     -o Dpkg::Options::="--force-confdef" \
     -o Dpkg::Options::="--force-confold"
 
-sudo a2dismod php8.2
 sudo a2enmod proxy_fcgi setenvif
 sudo a2enconf php8.2-fpm
 sudo systemctl enable --now php8.2-fpm
@@ -62,7 +62,8 @@ echo "Configuring PHP-FPM pool and OPcache..."
 PHP_FPM_CONF="/etc/php/8.2/fpm/pool.d/www.conf"
 
 # Set OPcache settings if not already present
-sudo grep -q "opcache.enable" "$PHP_FPM_CONF" || sudo tee -a "$PHP_FPM_CONF" > /dev/null <<EOL
+if ! grep -q "opcache.enable" "$PHP_FPM_CONF"; then
+    sudo tee -a "$PHP_FPM_CONF" > /dev/null <<'EOL'
 
 ; OPcache settings for PHP-FPM
 php_admin_value[opcache.enable] = 1
@@ -71,6 +72,7 @@ php_admin_value[opcache.interned_strings_buffer] = 16
 php_admin_value[opcache.max_accelerated_files] = 10000
 php_admin_value[opcache.validate_timestamps] = 1
 EOL
+fi
 
 # Replace pool management settings
 sudo sed -i 's/^pm = .*/pm = dynamic/' "$PHP_FPM_CONF"
@@ -90,23 +92,25 @@ echo "mysql-server mysql-server/root_password_again password root" | sudo debcon
 echo "Installing MySQL..."
 sudo apt-get install -y mysql-server
 sudo systemctl enable --now mysql
-sleep 5
 
 # Wait until MySQL is active
+sleep 5
 until systemctl is-active --quiet mysql; do
     sleep 2
 done
 
 # Modify MySQL bind-address
-if [ -f /etc/mysql/mysql.conf.d/mysqld.cnf ]; then
+MYSQL_CNF="/etc/mysql/mysql.conf.d/mysqld.cnf"
+if [ -f "$MYSQL_CNF" ]; then
     echo "Modifying MySQL bind-address..."
-    sudo sed -i 's/^bind-address\s*=.*/bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
+    if grep -q "^bind-address" "$MYSQL_CNF"; then
+        sudo sed -i 's/^bind-address\s*=.*/bind-address = 0.0.0.0/' "$MYSQL_CNF"
+    else
+        echo "bind-address = 0.0.0.0" | sudo tee -a "$MYSQL_CNF" > /dev/null
+    fi
     sleep 2
-
-    grep -q "^bind-address = 0.0.0.0" /etc/mysql/mysql.conf.d/mysqld.cnf || echo "bind-address = 0.0.0.0" | sudo tee -a /etc/mysql/mysql.conf.d/mysqld.cnf > /dev/null
-
     sudo systemctl restart mysql
-    sudo mysqladmin ping --silent || (echo "MySQL not running!" && exit 1)
+    sudo mysqladmin ping --silent || { echo "MySQL not running!" ; exit 1; }
 else
     echo "Error: MySQL configuration file not found!"
 fi
@@ -127,9 +131,9 @@ EOF
 echo "Database 'nhimgau' has been created (or already exists) with utf8mb4 charset and utf8mb4_unicode_520_ci collation."
 
 # Adjust web directory permissions
-echo "Adjusting web directory permissions..."
-sudo chown -R www-data:www-data /var/www/html
-sudo chmod -R 755 /var/www/html
+echo "Adjusting web directory permissions (excluding node_modules)..."
+sudo find /var/www/html \( -path "*/node_modules" -o -path "*/node_modules/*" \) -prune -o -exec chown www-data:www-data {} +
+sudo find /var/www/html \( -path "*/node_modules" -o -path "*/node_modules/*" \) -prune -o -exec chmod 755 {} +
 
 # Copy Apache site config if exists
 if [ -f /home/vagrant/config/default.conf ]; then
@@ -141,23 +145,14 @@ fi
 if [ -f /home/vagrant/config/php.ini ]; then
     sudo cp /home/vagrant/config/php.ini /etc/php/8.2/fpm/conf.d/99-custom.ini
     sudo cp /home/vagrant/config/php.ini /etc/php/8.2/cli/conf.d/99-custom.ini
-    sudo chmod 644 /etc/php/8.2/fpm/conf.d/99-custom.ini
-    sudo chmod 644 /etc/php/8.2/cli/conf.d/99-custom.ini
-fi
-
-# Copy xdebug.ini config if exists
-if [ -f /home/vagrant/config/xdebug.ini ]; then
-    sudo cp /home/vagrant/config/xdebug.ini /etc/php/8.2/fpm/conf.d/99-xdebug.ini
-    sudo cp /home/vagrant/config/xdebug.ini /etc/php/8.2/cli/conf.d/99-xdebug.ini
-    sudo chmod 644 /etc/php/8.2/fpm/conf.d/99-xdebug.ini
-    sudo chmod 644 /etc/php/8.2/cli/conf.d/99-xdebug.ini
+    sudo chmod 644 /etc/php/8.2/fpm/conf.d/99-custom.ini /etc/php/8.2/cli/conf.d/99-custom.ini
 fi
 
 # Download and extract phpMyAdmin
 echo "Downloading phpMyAdmin..."
 wget -q https://files.phpmyadmin.net/phpMyAdmin/5.2.2/phpMyAdmin-5.2.2-all-languages.tar.gz -O /tmp/phpmyadmin.tar.gz
-tar -xzf /tmp/phpmyadmin.tar.gz -C /var/www/
-mv /var/www/phpMyAdmin-5.2.2-all-languages /var/www/phpmyadmin
+sudo tar -xzf /tmp/phpmyadmin.tar.gz -C /var/www/
+sudo mv /var/www/phpMyAdmin-5.2.2-all-languages /var/www/phpmyadmin
 
 # Set permissions
 sudo chown -R www-data:www-data /var/www/phpmyadmin
@@ -176,7 +171,8 @@ if [ -f /home/vagrant/config/phpmyadmin.conf ]; then
 fi
 
 # Ensure Apache listens on port 8081
-grep -q "Listen 8081" /etc/apache2/ports.conf || echo "Listen 8081" | sudo tee -a /etc/apache2/ports.conf
+APACHE_PORTS="/etc/apache2/ports.conf"
+grep -q "Listen 8081" "$APACHE_PORTS" || echo "Listen 8081" | sudo tee -a "$APACHE_PORTS" > /dev/null
 
 # Restart Apache
 sudo systemctl restart apache2

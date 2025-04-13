@@ -547,7 +547,7 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 			'contact_link' => [
 				'name'        => __( 'Contact link', TEXT_DOMAIN ),
 				'icon'        => \HD\Helper::svg( 'contact' ),
-				'value'       => '#',
+				'value'       => '',
 				'placeholder' => __( 'Contact link', TEXT_DOMAIN ),
 				'target'      => '_blank',
 				'class'       => 'contact-link',

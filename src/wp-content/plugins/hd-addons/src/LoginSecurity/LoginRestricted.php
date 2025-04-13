@@ -49,8 +49,8 @@ final class LoginRestricted {
 
 			error_log( 'Restricted login page: access currently not permitted - ' . Helper::ipAddress() );
 			wp_die(
-				esc_html__( 'You don’t have access to this page. Please contact the administrator of this website for further assistance.', ADDONS_TEXT_DOMAIN ),
-				esc_html__( 'Restricted access', ADDONS_TEXT_DOMAIN ),
+				esc_html__( 'You don’t have access to this page. Please contact the administrator of this website for further assistance.', ADDONS_TEXTDOMAIN ),
+				esc_html__( 'Restricted access', ADDONS_TEXTDOMAIN ),
 				[
 					'addon_error'   => true,
 					'response'      => 403,
@@ -68,8 +68,8 @@ final class LoginRestricted {
 
 					error_log( 'Restricted login page: access currently not permitted - ' . Helper::ipAddress() );
 					wp_die(
-						esc_html__( 'You don’t have access to this page. Please contact the administrator of this website for further assistance.', ADDONS_TEXT_DOMAIN ),
-						esc_html__( 'Restricted access', ADDONS_TEXT_DOMAIN ),
+						esc_html__( 'You don’t have access to this page. Please contact the administrator of this website for further assistance.', ADDONS_TEXTDOMAIN ),
+						esc_html__( 'Restricted access', ADDONS_TEXTDOMAIN ),
 						[
 							'addon_error'   => true,
 							'response'      => 403,

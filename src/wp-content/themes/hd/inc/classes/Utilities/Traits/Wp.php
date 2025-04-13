@@ -440,13 +440,11 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * Call a shortcode function by its tag name.
+	 * @param string $tag
+	 * @param array $atts
+	 * @param string|null $content
 	 *
-	 * @param string $tag The shortcode tag to call.
-	 * @param array $atts Optional. An array of attributes to pass to the shortcode function.
-	 * @param string|null $content Optional. The content is enclosed by the shortcode. Default is null (no content).
-	 *
-	 * @return mixed Returns the result of the shortcode on success, or false if the shortcode does not exist.
+	 * @return mixed
 	 */
 	public static function doShortcode( string $tag, array $atts = [], ?string $content = null ): mixed {
 		global $shortcode_tags;
@@ -457,7 +455,13 @@ trait Wp {
 		}
 
 		// Call the shortcode function and return its output
-		return call_user_func( $shortcode_tags[ $tag ], $atts, $content, $tag );
+		try {
+			return \call_user_func( $shortcode_tags[ $tag ], $atts, $content, $tag );
+		} catch ( \Throwable $e ) {
+			self::errorLog( '[Shortcode error] ' . $e->getMessage() );
+
+			return false;
+		}
 	}
 
 	// -------------------------------------------------------------

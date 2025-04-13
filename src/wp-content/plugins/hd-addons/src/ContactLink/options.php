@@ -10,7 +10,7 @@ $contact_links        = \Addons\Helper::filterSettingOptions( 'contact_links', [
     <input type="hidden" name="contact-link-hidden" value="1">
 	<?php
 	if ( empty( $contact_links ) ) {
-		echo '<h3 class="cell">' . __( 'Not initialized yet', ADDONS_TEXT_DOMAIN ) . '</h3>';
+		echo '<h3 class="cell">' . __( 'Not initialized yet', ADDONS_TEXTDOMAIN ) . '</h3>';
 		echo '</div>';
 		return;
 	}
@@ -27,7 +27,7 @@ $contact_links        = \Addons\Helper::filterSettingOptions( 'contact_links', [
 	    $placeholder = $link['placeholder'] ?? '';
 	?>
     <div class="cell section section-text">
-        <span class="heading"><?php _e( $name, ADDONS_TEXT_DOMAIN ); ?></span>
+        <span class="heading"><?php _e( $name, ADDONS_TEXTDOMAIN ); ?></span>
         <div class="option">
             <div class="controls control-img">
                 <label for="<?= esc_attr( $key ) ?>">

@@ -10,7 +10,7 @@ $social_follows_links = \Addons\Helper::filterSettingOptions( 'social_follows_li
     <input type="hidden" name="social-link-hidden" value="1">
 	<?php
 	if ( empty( $social_follows_links ) ) {
-		echo '<h3 class="cell">' . __( 'Not initialized yet', ADDONS_TEXT_DOMAIN ) . '</h3>';
+		echo '<h3 class="cell">' . __( 'Not initialized yet', ADDONS_TEXTDOMAIN ) . '</h3>';
 		echo '</div>';
 		return;
 	}
@@ -25,7 +25,7 @@ $social_follows_links = \Addons\Helper::filterSettingOptions( 'social_follows_li
         $url   = $social_options[ $key ]['url'] ?? $social['url'];
     ?>
     <div class="cell section section-text">
-        <span class="heading"><?php _e( $name, ADDONS_TEXT_DOMAIN ); ?></span>
+        <span class="heading"><?php _e( $name, ADDONS_TEXTDOMAIN ); ?></span>
         <div class="option">
             <div class="controls control-img">
                 <label for="<?= esc_attr( $key ) ?>">

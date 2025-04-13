@@ -6,13 +6,13 @@
 <div id="_nav" class="tabs-nav">
     <div class="logo-title">
         <h3>
-			<?php _e( 'Addons Settings', ADDONS_TEXT_DOMAIN ); ?>
+			<?php _e( 'Addons Settings', ADDONS_TEXTDOMAIN ); ?>
             <span>Version: <?php echo ADDONS_VERSION; ?></span>
         </h3>
     </div>
 
     <div class="save-bar">
-        <button type="submit" name="_submit_settings" class="button button-primary"><?php _e( 'Save Changes', ADDONS_TEXT_DOMAIN ); ?></button>
+        <button type="submit" name="_submit_settings" class="button button-primary"><?php _e( 'Save Changes', ADDONS_TEXTDOMAIN ); ?></button>
     </div>
 
     <ul class="ul-menu-list">
@@ -26,7 +26,7 @@
 		foreach ( $menu_options as $slug => $value ) {
 			//$current = ( $i === 0 ) ? ' class="current"' : '';
 			$current = '';
-			$title   = ! empty( $value['title'] ) ? __( $value['title'], ADDONS_TEXT_DOMAIN ) : '';
+			$title   = ! empty( $value['title'] ) ? __( $value['title'], ADDONS_TEXTDOMAIN ) : '';
 
 			// WooCommerce
 			if ( (string) $slug === 'woocommerce' && ! \Addons\Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {

@@ -7,4 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'MU\\Disallow_Indexing' => $baseDir . '/src/Disallow_Indexing.php',
+    'MU\\Plugin_Disabler\\DisablePlugins' => $baseDir . '/src/Plugin_Disabler/DisablePlugins.php',
+    'MU\\Plugin_Disabler\\Plugin_Disabler' => $baseDir . '/src/Plugin_Disabler/Plugin_Disabler.php',
 );

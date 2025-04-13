@@ -11,7 +11,7 @@ $html_body_bottom = \Addons\Helper::getCustomPostContent( 'html_body_bottom', tr
 <div class="container flex flex-x flex-gap sm-up-1 lg-up-2">
     <input type="hidden" name="custom-js-hidden" value="1">
 	<div class="cell section section-textarea">
-		<label class="heading" for="html_header"><?php _e( 'Header scripts', ADDONS_TEXT_DOMAIN ) ?></label>
+		<label class="heading" for="html_header"><?php _e( 'Header scripts', ADDONS_TEXTDOMAIN ) ?></label>
 		<div class="desc">Add custom scripts inside HEAD tag. You need to have a SCRIPT tag around scripts.</div>
 		<div class="option">
 			<div class="controls">
@@ -20,7 +20,7 @@ $html_body_bottom = \Addons\Helper::getCustomPostContent( 'html_body_bottom', tr
 		</div>
 	</div>
 	<div class="cell section section-textarea">
-		<label class="heading" for="html_footer"><?php _e( 'Footer scripts', ADDONS_TEXT_DOMAIN ) ?></label>
+		<label class="heading" for="html_footer"><?php _e( 'Footer scripts', ADDONS_TEXTDOMAIN ) ?></label>
 		<div class="desc">Add custom scripts you might want to be loaded in the footer of your website. You need to have a SCRIPT tag around scripts.
 		</div>
 		<div class="option">
@@ -30,7 +30,7 @@ $html_body_bottom = \Addons\Helper::getCustomPostContent( 'html_body_bottom', tr
 		</div>
 	</div>
 	<div class="cell section section-textarea">
-		<label class="heading" for="html_body_top"><?php _e( 'Body scripts - TOP', ADDONS_TEXT_DOMAIN ) ?></label>
+		<label class="heading" for="html_body_top"><?php _e( 'Body scripts - TOP', ADDONS_TEXTDOMAIN ) ?></label>
 		<div class="desc">Add custom scripts just after the BODY tag opened. You need to have a SCRIPT tag around scripts.</div>
 		<div class="option">
 			<div class="controls">
@@ -39,7 +39,7 @@ $html_body_bottom = \Addons\Helper::getCustomPostContent( 'html_body_bottom', tr
 		</div>
 	</div>
 	<div class="cell section section-textarea">
-		<label class="heading" for="html_body_bottom"><?php _e( 'Body scripts - BOTTOM', ADDONS_TEXT_DOMAIN ) ?></label>
+		<label class="heading" for="html_body_bottom"><?php _e( 'Body scripts - BOTTOM', ADDONS_TEXTDOMAIN ) ?></label>
 		<div class="desc">Add custom scripts just before the BODY tag closed. You need to have a SCRIPT tag around scripts.</div>
 		<div class="option">
 			<div class="controls">

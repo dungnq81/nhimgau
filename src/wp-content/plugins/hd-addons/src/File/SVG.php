@@ -285,7 +285,7 @@ final class SVG {
 		     current_user_can( 'upload_files' ) &&
 		     ! $this->sanitize( $file['tmp_name'] )
 		) {
-			$file['error'] = __( 'This SVG can not be sanitized.', ADDONS_TEXT_DOMAIN );
+			$file['error'] = __( 'This SVG can not be sanitized.', ADDONS_TEXTDOMAIN );
 		}
 
 		return $file;
