@@ -5,8 +5,7 @@
     "authors": [
         {
             "name": "Gaudev",
-            "email": "dungnq81@gmail.com",
-            "homepage": "https://github.com/dungnq81"
+            "email": "dungnq81@gmail.com"
         }
     ],
     "autoload": {
@@ -25,8 +24,7 @@
     },
     "config": {
         "optimize-autoloader": true,
-        "classmap-authoritative": true,
-        "preferred-install": "auto"
+        "classmap-authoritative": true
     },
     "scripts": {
         "post-install-cmd": [
