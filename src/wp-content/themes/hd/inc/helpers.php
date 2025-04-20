@@ -8,13 +8,6 @@
 \defined( 'ABSPATH' ) || die;
 
 // --------------------------------------------------
-// Fake dynamic function
-// --------------------------------------------------
-
-function __dynamic_enqueue_assets_flag() {}
-function __dynamic_block_enqueue_assets_flag() {}
-
-// --------------------------------------------------
 // Custom functions
 // --------------------------------------------------
 

@@ -20,7 +20,9 @@ final class Helper {
 	 * @return false|int
 	 */
 	public static function version(): false|int {
-		return wp_get_environment_type() === 'development' ? time() : false;
+		return ( wp_get_environment_type() === 'development' ||
+		         ( defined( 'WP_DEBUG' ) && WP_DEBUG === true )
+		) ? time() : false;
 	}
 
 	// --------------------------------------------------
@@ -370,7 +372,7 @@ final class Helper {
 		if ( $js === null || $js === '' ) {
 			return null;
 		}
-		if ( $respectDebug && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		if ( $respectDebug && self::version() ) {
 			return $js;
 		}
 
@@ -389,7 +391,7 @@ final class Helper {
 		if ( $css === null || $css === '' ) {
 			return null;
 		}
-		if ( $respectDebug && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		if ( $respectDebug && self::version() ) {
 			return $css;
 		}
 

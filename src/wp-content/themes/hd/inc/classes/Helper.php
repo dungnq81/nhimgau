@@ -23,7 +23,9 @@ final class Helper {
 	 * @return false|int
 	 */
 	public static function version(): false|int {
-		return wp_get_environment_type() === 'development' ? time() : false;
+		return ( wp_get_environment_type() === 'development' ||
+		         ( defined( 'WP_DEBUG' ) && WP_DEBUG === true )
+		) ? time() : false;
 	}
 
 	// -------------------------------------------------------------
@@ -121,7 +123,7 @@ final class Helper {
 		if ( $js === null || $js === '' ) {
 			return null;
 		}
-		if ( $respectDebug && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		if ( $respectDebug && self::version() ) {
 			return $js;
 		}
 
@@ -140,7 +142,7 @@ final class Helper {
 		if ( $css === null || $css === '' ) {
 			return null;
 		}
-		if ( $respectDebug && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		if ( $respectDebug && self::version() ) {
 			return $css;
 		}
 
@@ -210,8 +212,8 @@ final class Helper {
 		global $wpdb;
 
 		// Clear all WordPress transients
-		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_%'" );
-		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_%'" );
+		$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s", '_transient_%' ) );
+		$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s", '_transient_timeout_%' ) );
 
 		// Clear object cache (e.g., Redis or Memcached)
 		if ( function_exists( 'wp_cache_flush' ) ) {

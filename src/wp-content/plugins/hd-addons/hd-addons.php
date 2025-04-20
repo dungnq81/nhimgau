@@ -74,7 +74,7 @@ function _addons_bootstrap(): void {
 		( new \Addons\Addons() );
 	} catch ( \Throwable $e ) {
 		\Addons\Helper::errorLog( '[HD‑Addons] ' . $e->getMessage() );
-		if ( WP_DEBUG ) {
+		if ( \Addons\Helper::version() ) {
 			add_action( 'admin_notices', static function () use ( $e ) {
 				printf(
 					'<div class="notice notice-error"><p>%s</p></div>',
