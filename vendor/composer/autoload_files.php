@@ -45,6 +45,5 @@ return array(
     '8519779bbb65eeb842af2f629ce7b6f8' => $vendorDir . '/wp-cli/super-admin-command/super-admin-command.php',
     '1f05372afcc7d0c51a305cef1d56dd01' => $vendorDir . '/wp-cli/widget-command/widget-command.php',
     'd24932181e8483081b47b64b5b06065a' => $vendorDir . '/oscarotero/env/src/env_function.php',
-    '841f98c5d948ce534a6f87abe5b50614' => $vendorDir . '/roots/wp-password-bcrypt/wp-password-bcrypt.php',
     '667aeda72477189d0494fecd327c3641' => $vendorDir . '/symfony/var-dumper/Resources/functions/dump.php',
 );

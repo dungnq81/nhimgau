@@ -525,11 +525,11 @@
 
 @mixin clamp-font($min: 15px, $max: 16px, $min-width: vars.$sm, $max-width: vars.$xxl, $base: 1.618) {
     @if func.strip-unit($min-width) < 1 {
-        $min-width: 1px;
+        $min-width: 375px;
     }
 
     @if func.strip-unit($max-width) < 1 {
-        $max-width: 1px;
+        $max-width: 375px;
     }
 
     $min-width-rem: func.fs($min-width);

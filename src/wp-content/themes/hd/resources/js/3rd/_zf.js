@@ -55,7 +55,7 @@ import { SmoothScroll } from 'foundation-sites/js/foundation.smoothScroll';
 //import { Magellan } from 'foundation-sites/js/foundation.magellan';
 import { Sticky } from 'foundation-sites/js/foundation.sticky';
 import { Toggler } from 'foundation-sites/js/foundation.toggler';
-import { Equalizer } from 'foundation-sites/js/foundation.equalizer';
+//import { Equalizer } from 'foundation-sites/js/foundation.equalizer';
 //import { Interchange } from 'foundation-sites/js/foundation.interchange';
 import { Abide } from 'foundation-sites/js/foundation.abide';
 
@@ -73,7 +73,7 @@ const plugins = [
     //{ plugin: Magellan, name: 'Magellan' },
     { plugin: Sticky, name: 'Sticky' },
     { plugin: Toggler, name: 'Toggler' },
-    { plugin: Equalizer, name: 'Equalizer' },
+    //{ plugin: Equalizer, name: 'Equalizer' },
     //{ plugin: Interchange, name: 'Interchange' },
     { plugin: Abide, name: 'Abide' },
 ];

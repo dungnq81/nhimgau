@@ -6,8 +6,7 @@
     },
     "config": {
         "optimize-autoloader": true,
-        "classmap-authoritative": true,
-        "preferred-install": "auto"
+        "classmap-authoritative": true
     },
     "scripts": {
         "post-install-cmd": [

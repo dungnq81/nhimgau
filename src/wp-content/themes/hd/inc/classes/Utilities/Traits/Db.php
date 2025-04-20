@@ -217,13 +217,13 @@ trait Db {
 	 * @param string|null $order_by
 	 * @param string|null $order
 	 *
-	 * @return array|object|null
+	 * @return array|false|object|null
 	 */
-	public static function getRowsBy( ?string $table_name, ?string $column, string|int|null $key, bool $return_object = false, bool $sanitize = true, int $offset = 0, int $limit = - 1, ?string $order_by = '', ?string $order = 'ASC' ): array|object|null {
+	public static function getRowsBy( ?string $table_name, ?string $column, string|int|null $key, bool $return_object = false, bool $sanitize = true, int $offset = 0, int $limit = - 1, ?string $order_by = '', ?string $order = 'ASC' ): array|false|object|null {
 		global $wpdb;
 
 		if ( empty( $table_name ) || empty( $column ) || $key === null ) {
-			return new \WP_Error( 'invalid_input', 'Table name, column, or key is invalid.' );
+			return false;
 		}
 
 		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
@@ -257,13 +257,13 @@ trait Db {
 	 * @param bool $return_object
 	 * @param bool $sanitize
 	 *
-	 * @return array|object|null
+	 * @return array|false|object|null
 	 */
-	public static function getOneRowBy( ?string $table_name, ?string $column, string|int|null $key, bool $return_object = false, bool $sanitize = true ): array|object|null {
+	public static function getOneRowBy( ?string $table_name, ?string $column, string|int|null $key, bool $return_object = false, bool $sanitize = true ): array|false|object|null {
 		global $wpdb;
 
 		if ( empty( $table_name ) || empty( $column ) || $key === null ) {
-			return new \WP_Error( 'invalid_input', 'Table name, column, or key is invalid.' );
+			return false;
 		}
 
 		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
@@ -282,13 +282,13 @@ trait Db {
 	 * @param bool $return_object
 	 * @param bool $sanitize
 	 *
-	 * @return array|object|null
+	 * @return array|false|object|null
 	 */
-	public static function getOneRow( ?string $table_name, ?int $id, bool $return_object = false, bool $sanitize = true ): array|object|null {
+	public static function getOneRow( ?string $table_name, ?int $id, bool $return_object = false, bool $sanitize = true ): array|false|object|null {
 		global $wpdb;
 
 		if ( empty( $table_name ) || $id === null ) {
-			return new \WP_Error( 'invalid_input', 'Table name or ID is invalid.' );
+			return false;
 		}
 
 		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
@@ -308,13 +308,13 @@ trait Db {
 	 * @param string|null $order_by
 	 * @param string|null $order
 	 *
-	 * @return array|object|null
+	 * @return array|false|object|null
 	 */
-	public static function getRows( ?string $table_name, int $offset = 0, int $limit = - 1, bool $return_object = false, bool $sanitize = true, ?string $order_by = '', ?string $order = 'ASC' ): array|object|null {
+	public static function getRows( ?string $table_name, int $offset = 0, int $limit = - 1, bool $return_object = false, bool $sanitize = true, ?string $order_by = '', ?string $order = 'ASC' ): array|false|object|null {
 		global $wpdb;
 
 		if ( empty( $table_name ) ) {
-			return new \WP_Error( 'invalid_input', 'Table name is invalid.' );
+			return false;
 		}
 
 		$table_name = $sanitize ? sanitize_text_field( $wpdb->prefix . $table_name ) : $wpdb->prefix . $table_name;
