@@ -14,7 +14,7 @@ export const sharedConfig = {
         viteImagemin({
             plugins: {
                 jpg: imageminMozjpeg({ quality: 80 }),
-                png: imageminPngquant({ strip: true, quality: [ 0.7, 0.9 ], dithering: 0.1 }),
+                png: imageminPngquant({ strip: true, quality: [ 0.8, 0.9 ], dithering: 0.1 }),
                 svg: imageminSVGO(),
                 gif: imageminGifsicle({ optimizationLevel: 3, interlaced: true }),
             },

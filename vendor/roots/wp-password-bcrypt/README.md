@@ -1,44 +1,14 @@
-<p align="center">
-  <img alt="wp-password-bcrypt" src="https://cdn.roots.io/app/uploads/logo-roots.svg" width="100">
-</p>
+# wp-password-bcrypt
 
-<p align="center">
-  <img alt="MIT License" src="https://img.shields.io/github/license/roots/wp-password-bcrypt?color=%23525ddc&style=flat-square" />
+Drop-in bcrypt password hashing for WordPress
 
-  <a href="https://packagist.org/packages/roots/wp-password-bcrypt">
-    <img alt="Packagist" src="https://img.shields.io/packagist/v/roots/wp-password-bcrypt.svg?style=flat-square" />
-  </a>
+<a href="https://packagist.org/packages/roots/wp-password-bcrypt"><img alt="Packagist" src="https://img.shields.io/packagist/v/roots/wp-password-bcrypt.svg?style=flat-square" /></a>
 
-  <a href="https://packagist.org/packages/roots/wp-password-bcrypt">
-    <img alt="Packagist Downloads" src="https://img.shields.io/packagist/dt/roots/wp-password-bcrypt.svg?style=flat-square)" />
-  </a>
-
-  <img alt="Build Status" src="https://github.com/roots/wp-password-bcrypt/workflows/Main/badge.svg" />
-
-  <a href="https://twitter.com/rootswp">
-    <img alt="Follow Roots" src="https://img.shields.io/twitter/follow/rootswp.svg?style=flat-square&color=1da1f2" />
-  </a>
-</p>
-
-<p align="center">
-  <strong>Drop-in bcrypt password hashing for WordPress</strong>
-  <br />
-  Built with ❤️
-</p>
-
-## Supporting
-
-**wp-password-bcrypt** is an open source project and completely free to use.
-
-However, the amount of effort needed to maintain and develop new features and products within the Roots ecosystem is not sustainable without proper financial backing. If you have the capability, please consider donating using the links below:
-
-<div align="center">
-
-[![Sponsor on GitHub](https://img.shields.io/static/v1?label=sponsor&message=%E2%9D%A4&logo=GitHub)](https://github.com/sponsors/roots)
-[![Donate via Patreon](https://img.shields.io/badge/donate-patreon-orange.svg?style=flat-square&logo=patreon")](https://www.patreon.com/rootsdev)
-[![Donate via PayPal](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square&logo=paypal)](https://www.paypal.me/rootsdev)
-
-</div>
+> [!WARNING]
+> This package will become redundant with WordPress 6.8+ as bcrypt becomes the default password hashing method.
+> See [**WordPress 6.8 will use bcrypt for password hashing**](https://make.wordpress.org/core/2025/02/17/wordpress-6-8-will-use-bcrypt-for-password-hashing/) for more details.
+>
+> **Migration**: When upgrading to WordPress 6.8+, you can safely remove this package. All existing passwords will continue to work without any additional steps required.
 
 ## Overview
 
@@ -125,10 +95,6 @@ Magically, everything still works. See this [comment](https://github.com/roots/w
 
 Any existing bcrypt hashed passwords will remain that way. Any new users or users resetting a password will get a new MD5 hashed password.
 
-**Why aren't you using the password_compat library so this works back to PHP 5.3.7?**
-
-The [password_compact](https://github.com/ircmaxell/password_compat) library is great if you really need it. But the Roots team advocates using supported versions of PHP which of now (March 2016) is 5.5 and above. Part of security is using a version of PHP that still gets security patches so we won't actively do something to support old unsupported versions of PHP.
-
 **Why doesn't this plugin show up in the admin?**
 
 If you're using Composer, then the `wp-password-bcrypt.php` file is automatically autoloaded. It's not treated as a true WordPress plugin since the package type is not set to `wordpress-muplugin` so it won't show up in the plugin list.
@@ -156,17 +122,3 @@ Better hashing functions like bcrypt serve a different purpose than Two-factor a
 This plugin is based on a [Gist](https://gist.github.com/Einkoro/11078301) by [@Einkoro](https://github.com/Einkoro).
 
 It has been modified and packaged by the Roots team. Jan Pingel (@Einkoro) has granted his permission for us to redistribute his original BSD-licensed code to an MIT license.
-
-## Contributing
-
-Contributions are welcome from everyone. We have [contributing guidelines](https://github.com/roots/guidelines/blob/master/CONTRIBUTING.md) to help you get started.
-
-## Community
-
-Keep track of development and community news.
-
-- Participate on the [Roots Discourse](https://discourse.roots.io/)
-- Follow [@rootswp on Twitter](https://twitter.com/rootswp)
-- Read and subscribe to the [Roots Blog](https://roots.io/blog/)
-- Subscribe to the [Roots Newsletter](https://roots.io/subscribe/)
-- Listen to the [Roots Radio podcast](https://roots.io/podcast/)

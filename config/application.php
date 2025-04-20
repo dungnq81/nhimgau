@@ -59,8 +59,8 @@ if ( ! env( 'WP_ENVIRONMENT_TYPE' ) && in_array( WP_ENV, [ 'production', 'stagin
 /**
  * WP_HOME & WP_SITEURL
  */
-Config::define( 'WP_HOME', env( 'WP_HOME' ) );
 Config::define( 'WP_SITEURL', env( 'WP_SITEURL' ) );
+Config::define( 'WP_HOME', env( 'WP_HOME' ) );
 
 /**
  * DB SSL settings

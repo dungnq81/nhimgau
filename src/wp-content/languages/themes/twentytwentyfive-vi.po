@@ -62,11 +62,6 @@ msgstr "Đầu trang với tiêu đề lớn"
 
 #: theme.json
 msgctxt "Template part name"
-msgid "Vertical Header"
-msgstr "Đầu trang dọc"
-
-#: theme.json
-msgctxt "Template part name"
 msgid "Header"
 msgstr "Đầu trang"
 
@@ -427,16 +422,6 @@ msgctxt "Style variation name"
 msgid "Evening"
 msgstr "Buổi tối"
 
-#: patterns/vertical-header.php
-msgctxt "Pattern description"
-msgid "Vertical Header with site title and navigation"
-msgstr "Đầu trang dọc với tiêu đề trang web và điều hướng"
-
-#: patterns/vertical-header.php
-msgctxt "Pattern title"
-msgid "Vertical header"
-msgstr "Đầu trang dọc"
-
 #: patterns/text-faqs.php:83
 msgctxt "Question in the FAQs pattern."
 msgid "Are signed copies available?"
@@ -553,11 +538,6 @@ msgctxt "Pattern title"
 msgid "Right-aligned single post"
 msgstr "Bài đăng đơn căn phải"
 
-#: patterns/template-single-text-blog.php
-msgctxt "Pattern title"
-msgid "Text-only blog, single post"
-msgstr "Blog chỉ văn bản, bài đăng đơn"
-
 #: patterns/template-single-photo-blog.php:79
 msgid "Next Photo"
 msgstr "Ảnh tiếp theo"
@@ -624,11 +604,6 @@ msgctxt "Pattern title"
 msgid "Right-aligned blog, search"
 msgstr "Blog căn phải, tìm kiếm"
 
-#: patterns/template-search-text-blog.php
-msgctxt "Pattern title"
-msgid "Text-only blog, search"
-msgstr "Blog chỉ văn bản, tìm kiếm"
-
 #: patterns/template-search-photo-blog.php
 msgctxt "Pattern title"
 msgid "Photo blog search results"
@@ -648,16 +623,6 @@ msgstr "Danh sách bài đăng, 1 cột, với ảnh nổi bật và ngày đăn
 msgctxt "Pattern title"
 msgid "List of posts, 1 column"
 msgstr "Danh sách bài viết, 1 cột"
-
-#: patterns/template-query-loop-vertical-header-blog.php
-msgctxt "Pattern title"
-msgid "Right-aligned posts"
-msgstr "Bài đăng căn phải"
-
-#: patterns/template-query-loop-text-blog.php
-msgctxt "Pattern title"
-msgid "Text-only blog, posts"
-msgstr "Blog chỉ văn bản, bài đăng"
 
 #: patterns/template-query-loop-photo-blog.php
 msgctxt "Pattern description"
@@ -687,11 +652,6 @@ msgctxt "Pattern title"
 msgid "News blog query loop"
 msgstr "Vòng lặp truy vấn blog tin tức"
 
-#: patterns/template-page-vertical-header-blog.php
-msgctxt "Pattern title"
-msgid "Page template for the right-aligned blog"
-msgstr "Mẫu trang cho blog căn phải"
-
 #: patterns/template-page-photo-blog.php
 msgctxt "Pattern title"
 msgid "Photo blog page"
@@ -705,16 +665,6 @@ msgstr "Mới nhất"
 msgctxt "Pattern title"
 msgid "News blog with sidebar"
 msgstr "Blog tin tức với thanh bên"
-
-#: patterns/template-home-vertical-header-blog.php
-msgctxt "Pattern title"
-msgid "Homepage for right-aligned blog"
-msgstr "Trang chủ cho blog căn phải"
-
-#: patterns/template-home-text-blog.php
-msgctxt "Pattern title"
-msgid "Text-only blog, home"
-msgstr "Blog chỉ văn bản, trang chủ"
 
 #: patterns/template-home-posts-grid-news-blog.php:114
 msgid "Architecture"
@@ -735,16 +685,6 @@ msgctxt "Pattern title"
 msgid "News blog home"
 msgstr "Trang chủ blog tin tức"
 
-#: patterns/template-archive-vertical-header-blog.php
-msgctxt "Pattern title"
-msgid "Archive for the right-aligned blog"
-msgstr "Lưu trữ cho blog căn phải"
-
-#: patterns/template-archive-text-blog.php
-msgctxt "Pattern title"
-msgid "Text-only blog, archive"
-msgstr "Blog chỉ văn bản, lưu trữ"
-
 #: patterns/template-archive-photo-blog.php
 msgctxt "Pattern title"
 msgid "Photo blog archive"
@@ -754,11 +694,6 @@ msgstr "Lưu trữ blog ảnh"
 msgctxt "Pattern title"
 msgid "News blog archive"
 msgstr "Lưu trữ blog tin tức"
-
-#: patterns/template-404-vertical-header-blog.php
-msgctxt "Pattern title"
-msgid "Right-aligned blog, 404"
-msgstr "Blog căn phải, 404"
 
 #: patterns/services-team-photos.php:50
 msgid "Man in hat, standing in front of a building."
@@ -1393,11 +1328,6 @@ msgctxt "Pattern title"
 msgid "Hero, overlapped book cover with links"
 msgstr "Hero, bìa sách chồng chéo với liên kết"
 
-#: patterns/hero-full-width-image.php:33
-msgctxt "Sample hero button"
-msgid "Learn More"
-msgstr "Tìm hiểu thêm"
-
 #: patterns/hero-full-width-image.php:27
 msgctxt "Sample hero paragraph"
 msgid "Like flowers that bloom in unexpected places, every story unfolds with beauty and resilience, revealing hidden wonders."
@@ -1477,19 +1407,9 @@ msgid "Heading and paragraph with image on the right"
 msgstr "Tiêu đề và đoạn văn với hình ảnh bên phải"
 
 #: patterns/header.php
-msgctxt "Pattern description"
-msgid "Header with site title and navigation."
-msgstr "Đầu trang với tiêu đề trang web và điều hướng."
-
-#: patterns/header.php
 msgctxt "Pattern title"
 msgid "Header"
 msgstr "Đầu trang"
-
-#: patterns/header-large-title.php
-msgctxt "Pattern description"
-msgid "Header with large site title and right-aligned navigation."
-msgstr "Đầu trang với tiêu đề trang web lớn và điều hướng căn phải."
 
 #: patterns/header-large-title.php
 msgctxt "Pattern title"
@@ -1497,24 +1417,9 @@ msgid "Header with large title"
 msgstr "Đầu trang với tiêu đề lớn"
 
 #: patterns/header-columns.php
-msgctxt "Pattern description"
-msgid "Header with site title and navigation in columns."
-msgstr "Đầu trang với tiêu đề trang web và điều hướng theo cột."
-
-#: patterns/header-columns.php
 msgctxt "Pattern title"
 msgid "Header with columns"
 msgstr "Đầu trang với cột"
-
-#: patterns/header-centered.php
-msgctxt "Pattern description"
-msgid "Header with centered site title and navigation."
-msgstr "Đầu trang với tiêu đề trang web và điều hướng ở giữa."
-
-#: patterns/header-centered.php
-msgctxt "Pattern title"
-msgid "Centered header"
-msgstr "Đầu trang ở giữa"
 
 #: patterns/grid-with-categories.php:64
 msgid "Sunflowers"
@@ -1956,7 +1861,8 @@ msgctxt "Pattern title"
 msgid "Events list"
 msgstr "Danh sách sự kiện"
 
-#: patterns/cta-centered-heading.php:28
+#: patterns/banner-intro-image.php:42 patterns/cta-centered-heading.php:28
+#: patterns/hero-full-width-image.php:33
 msgid "Learn more"
 msgstr "Tìm hiểu thêm"
 
@@ -2329,11 +2235,6 @@ msgstr "Tiêu đề căn trái lớn với tên thương hiệu được in đ�
 msgctxt "Pattern title"
 msgid "Intro with left-aligned description"
 msgstr "Giới thiệu với mô tả căn trái"
-
-#: patterns/banner-intro-image.php:42
-msgctxt "Button text of intro section."
-msgid "Learn More"
-msgstr "Tìm hiểu thêm"
 
 #: patterns/banner-intro-image.php:35
 msgctxt "Sample description for banner with flower."

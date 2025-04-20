@@ -1,1 +1,35 @@
-!async function(){let e=!1;if((navigator.userAgent.includes("Lighthouse")||navigator.webdriver)&&(e=!0),!e&&void 0!==window.hdConfig)try{let n=await fetch(window.hdConfig._ajaxUrl,{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams({action:"check_lighthouse",_wpnonce:window.hdConfig._csrfToken})}),t=await n.json();t.success&&t.data.detected&&(e=!0)}catch(n){}e&&document.documentElement.classList.add("is-lighthouse")}();
+(async function detectLighthouse() {
+  let lighthouseDetected = false;
+  if (navigator.userAgent.includes("Lighthouse") || navigator.webdriver) {
+    lighthouseDetected = true;
+  }
+  if (!lighthouseDetected && typeof window.hdConfig !== "undefined") {
+    try {
+      let response = await fetch(window.hdConfig._ajaxUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          action: "check_lighthouse",
+          _wpnonce: window.hdConfig._csrfToken
+        })
+      });
+      let data = await response.json();
+      if (data.success && data.data.detected) {
+        lighthouseDetected = true;
+      }
+    } catch (error) {
+    }
+  }
+  if (lighthouseDetected) {
+    document.documentElement.classList.add("is-lighthouse");
+  }
+})();
+(() => {
+  function setViewportProperty() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }
+  window.addEventListener("resize", setViewportProperty);
+  setViewportProperty();
+})();
+//# sourceMappingURL=preload-polyfill.js.map

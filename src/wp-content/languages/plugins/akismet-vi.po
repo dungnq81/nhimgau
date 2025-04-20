@@ -208,7 +208,7 @@ msgstr "Akismet không thể kiểm tra bình luận này nhưng sẽ tự độ
 msgid "Comment was caught by %s."
 msgstr "Bình luận đã bị bắt bởi %s."
 
-#: class.akismet.php:807
+#: class.akismet.php:804
 msgid "Akismet is not configured. Please enter an API key."
 msgstr "Akismet chưa được cấu hình. Vui lòng nhập khóa API."
 
@@ -260,7 +260,7 @@ msgstr "Riêng tư"
 msgid "We collect information about visitors who comment on Sites that use our Akismet Anti-spam service. The information we collect depends on how the User sets up Akismet for the Site, but typically includes the commenter's IP address, user agent, referrer, and Site URL (along with other information directly provided by the commenter such as their name, username, email address, and the comment itself)."
 msgstr "Chúng tôi thu thập thông tin về những người truy cập bình luận trên các trang web sử dụng dịch vụ chống bình luận rác Akismet của chúng tôi. Thông tin mà chúng tôi thu thập phụ thuộc vào cách mà người dùng thiết lập Akismet cho trang web, nhưng thường bao gồm địa chỉ IP của người bình luận, tác nhân người dùng, người giới thiệu và URL của trang web (cùng với các thông tin khác do người bình luận cung cấp trực tiếp như tên, tên người dùng, địa chỉ email và chính bình luận đó)."
 
-#: class.akismet.php:409
+#: class.akismet.php:430
 msgid "Comment discarded."
 msgstr "Bình luận bị loại bỏ."
 
@@ -382,7 +382,7 @@ msgstr[0] "Akismet đã kiểm tra %s bình luận."
 msgid "There were no comments to check. Akismet will only check comments awaiting moderation."
 msgstr "Không còn bình luận nào để kiểm tra. Akismet sẽ chỉ kiểm tra các bình luận đang chờ kiểm duyệt."
 
-#: class.akismet.php:813
+#: class.akismet.php:810
 msgid "Comment not found."
 msgstr "Không tìm thấy bình luận."
 
@@ -668,7 +668,7 @@ msgid "Past six months"
 msgstr "6 tháng trước"
 
 #. translators: 1: WordPress documentation URL, 2: Akismet download URL.
-#: class.akismet.php:1741
+#: class.akismet.php:1740
 msgid "Please <a href=\"%1$s\">upgrade WordPress</a> to a current version, or <a href=\"%2$s\">downgrade to version 2.4 of the Akismet plugin</a>."
 msgstr "Hãy <a href=\"%1$s\">nâng cấp Wordpress</a> tới phiên bản hiện tại, hoặc <a href=\"%2$s\">hạ cấp plugin Akismet xuống 2.4</a>."
 

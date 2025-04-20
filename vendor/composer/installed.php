@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '84389ed6eb3218f25b5678702698869ad07ccd8c',
+        'reference' => '9a6ab61128109cecedcdc0ce71369db30f5ba254',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '84389ed6eb3218f25b5678702698869ad07ccd8c',
+            'reference' => '9a6ab61128109cecedcdc0ce71369db30f5ba254',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -226,7 +226,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => '9a519dd30df3313d2ee076579ea69a289b0a26a3',
+            'reference' => '6c54d20ae795b83ecf3f826311d7f488cd1ef005',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(
@@ -244,9 +244,9 @@
             'dev_requirement' => false,
         ),
         'roots/wp-password-bcrypt' => array(
-            'pretty_version' => '1.2.0',
-            'version' => '1.2.0.0',
-            'reference' => 'bd26ab98aa646d88ce98c76e365d16259c5227a2',
+            'pretty_version' => '1.3.0',
+            'version' => '1.3.0.0',
+            'reference' => 'e84fb85329c54b99a9176751cfb885497bcdc110',
             'type' => 'library',
             'install_path' => __DIR__ . '/../roots/wp-password-bcrypt',
             'aliases' => array(),
@@ -669,7 +669,7 @@
         'wp-cli/wp-cli' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'a9fabc07adf274274ba6bcc0f0e081f1fab1220b',
+            'reference' => '8717a02af98b58f2821622d46339fdd8473bd974',
             'type' => 'library',
             'install_path' => __DIR__ . '/../wp-cli/wp-cli',
             'aliases' => array(
