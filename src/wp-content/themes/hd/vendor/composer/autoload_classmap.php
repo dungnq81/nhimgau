@@ -16,6 +16,8 @@ return array(
     'HD\\Themes\\Customizer' => $baseDir . '/inc/classes/Themes/Customizer.php',
     'HD\\Themes\\Optimizer' => $baseDir . '/inc/classes/Themes/Optimizer.php',
     'HD\\Themes\\Shortcode' => $baseDir . '/inc/classes/Themes/Shortcode.php',
+    'HD\\Utilities\\API' => $baseDir . '/inc/classes/Utilities/API.php',
+    'HD\\Utilities\\Abstract_API' => $baseDir . '/inc/classes/Utilities/Abstract_API.php',
     'HD\\Utilities\\Abstract_Widget' => $baseDir . '/inc/classes/Utilities/Abstract_Widget.php',
     'HD\\Utilities\\CSS' => $baseDir . '/inc/classes/Utilities/CSS.php',
     'HD\\Utilities\\Horizontal_Nav_Walker' => $baseDir . '/inc/classes/Utilities/Horizontal_Nav_Walker.php',

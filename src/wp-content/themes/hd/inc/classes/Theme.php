@@ -10,6 +10,7 @@ use HD\Themes\Customizer;
 use HD\Themes\Optimizer;
 use HD\Themes\Shortcode;
 
+use HD\Utilities\API;
 use HD\Utilities\Traits\Singleton;
 
 \defined( 'ABSPATH' ) || die;
@@ -112,7 +113,7 @@ final class Theme {
 			( Admin::get_instance() );
 		}
 
-		// Theme
+		( API::get_instance() );
 		( Customizer::get_instance() );
 		( Optimizer::get_instance() );
 		( Shortcode::get_instance() );
@@ -151,10 +152,11 @@ final class Theme {
 			'_ajaxUrl'      => admin_url( 'admin-ajax.php', 'relative' ),
 			'_baseUrl'      => Helper::siteURL( '/' ),
 			'_themeUrl'     => THEME_URL,
+			'_restApiUrl'   => API::get_instance()->restApiUrl(),
 			'_csrfToken'    => wp_create_nonce( 'wp_csrf_token' ),
 			'_restToken'    => wp_create_nonce( 'wp_rest' ),
-			'_recaptcha_v2' => $recaptcha_options['recaptcha_v2_site_key'] ?? '',
-			'_recaptcha_v3' => $recaptcha_options['recaptcha_v3_site_key'] ?? '',
+			'_reCaptcha_v2' => $recaptcha_options['recaptcha_v2_site_key'] ?? '',
+			'_reCaptcha_v3' => $recaptcha_options['recaptcha_v3_site_key'] ?? '',
 			'_lang'         => Helper::currentLanguage(),
 		];
 		wp_localize_script( 'jquery-core', 'hdConfig', $l10n );
@@ -206,7 +208,8 @@ final class Theme {
 
 	// --------------------------------------------------
 
-	public function _dynamic_enqueue_assets_flag(): void {}
+	public function _dynamic_enqueue_assets_flag(): void {
+	}
 
 	// --------------------------------------------------
 
@@ -221,7 +224,10 @@ final class Theme {
 
 		// Removes the styling added to the header for recent comments
 		global $wp_widget_factory;
-		remove_action( 'wp_head', [ $wp_widget_factory->widgets['WP_Widget_Recent_Comments'], 'recent_comments_style' ] );
+		remove_action( 'wp_head', [
+			$wp_widget_factory->widgets['WP_Widget_Recent_Comments'],
+			'recent_comments_style'
+		] );
 	}
 
 	// --------------------------------------------------

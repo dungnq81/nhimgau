@@ -1,4 +1,4 @@
-# BEGIN Theme (custom)
+# BEGIN Theme
 SetEnv HTACCESS on
 Options -Indexes
 

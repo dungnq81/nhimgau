@@ -44,6 +44,8 @@ class ComposerStaticInit9b89879d0ffdac5f0eb892fc5d415441
         'HD\\Themes\\Customizer' => __DIR__ . '/../..' . '/inc/classes/Themes/Customizer.php',
         'HD\\Themes\\Optimizer' => __DIR__ . '/../..' . '/inc/classes/Themes/Optimizer.php',
         'HD\\Themes\\Shortcode' => __DIR__ . '/../..' . '/inc/classes/Themes/Shortcode.php',
+        'HD\\Utilities\\API' => __DIR__ . '/../..' . '/inc/classes/Utilities/API.php',
+        'HD\\Utilities\\Abstract_API' => __DIR__ . '/../..' . '/inc/classes/Utilities/Abstract_API.php',
         'HD\\Utilities\\Abstract_Widget' => __DIR__ . '/../..' . '/inc/classes/Utilities/Abstract_Widget.php',
         'HD\\Utilities\\CSS' => __DIR__ . '/../..' . '/inc/classes/Utilities/CSS.php',
         'HD\\Utilities\\Horizontal_Nav_Walker' => __DIR__ . '/../..' . '/inc/classes/Utilities/Horizontal_Nav_Walker.php',
