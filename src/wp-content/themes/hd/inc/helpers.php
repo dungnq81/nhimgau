@@ -151,3 +151,54 @@ if ( ! function_exists( '_in_array_toggle_class' ) ) {
 		return $class;
 	}
 }
+
+// --------------------------------------------------
+
+if ( ! function_exists( '_recaptcha_verify' ) ) {
+	/**
+	 * @param string $version
+	 * @param string $recaptcha_response
+	 *
+	 * @return false|mixed
+	 * @throws \JsonException
+	 */
+	function _recaptcha_verify( string $version, string $recaptcha_response ): mixed {
+		$recaptcha_options = \HD\Helper::getOption( 'recaptcha__options' );
+		if ( ! $recaptcha_options ) {
+			return false;
+		}
+
+		// reCaptcha v2
+		if ( 'v2' === $version ) {
+			$recaptchaResponse = $recaptcha_response;
+			$secretKey         = $recaptcha_options['recaptcha_v2_secret_key'] ?? '';
+			$verifyUrl         = 'https://www.google.com/recaptcha/api/siteverify';
+
+			$options = [
+				'http' => [
+					'method'  => 'POST',
+					'header'  => 'Content-Type: application/x-www-form-urlencoded',
+					'content' => http_build_query( [
+						'secret'   => $secretKey,
+						'response' => $recaptchaResponse,
+					] ),
+				],
+			];
+
+			// Send the verification request
+			$result = file_get_contents( $verifyUrl, false, stream_context_create( $options ) );
+
+			return json_decode( $result, false, 512, JSON_THROW_ON_ERROR );
+		}
+
+		// reCaptcha v3
+		if ( 'v3' === $version ) {
+			$secretKey = $recaptcha_options['recaptcha_v3_secret_key'] ?? '';
+			$score     = $recaptcha_options['recaptcha_v3_score'] ?? 0.5;
+
+			return false;
+		}
+
+		return false;
+	}
+}

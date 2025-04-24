@@ -11,9 +11,17 @@ final class API extends Abstract_API {
 
 	/** ---------------------------------------- */
 
-	/**
-	 * @return void
-	 */
+	private function init(): void {
+		add_action( 'init', [ $this, 'initRestClasses' ] );
+		add_action( 'init', [ $this, 'handleCors' ] );
+
+		add_action( 'rest_api_init', [ $this, 'registerRestRoutes' ] );
+		add_filter( 'rest_pre_dispatch', [ $this, 'restPreDispatch' ], 10, 3 );
+		add_filter( 'rest_endpoints', [ $this, 'restEndpoints' ] );
+	}
+
+	/** ---------------------------------------- */
+
 	public function registerRestRoutes(): void {
 		foreach ( $this->endpointClasses as $api ) {
 			if ( method_exists( $api, 'registerRestRoutes' ) ) {
@@ -25,22 +33,7 @@ final class API extends Abstract_API {
 	/** ---------------------------------------- */
 
 	/**
-	 * @return void
-	 */
-	private function init(): void {
-		add_action( 'init', [ $this, 'initRestUrl' ] );
-		add_action( 'init', [ $this, 'initRestClasses' ] );
-		add_action( 'init', [ $this, 'handleCors' ] );
-
-		add_action( 'rest_api_init', [ $this, 'registerRestRoutes' ] );
-		add_filter( 'rest_authentication_errors', [ $this, 'restAuthenticationErrors' ] );
-		add_filter( 'rest_endpoints', [ $this, 'restEndpoints' ] );
-	}
-
-	/** ---------------------------------------- */
-
-	/**
-	 * Automatically initialize classes in the Career/Rest/Actions directory.
+	 * Automatically initialize classes in the Utilities/API directory.
 	 *
 	 * @return void
 	 */
@@ -53,15 +46,6 @@ final class API extends Abstract_API {
 				$this->endpointClasses[] = new $class_name();
 			}
 		}
-	}
-
-	/** ---------------------------------------- */
-
-	/**
-	 * @return void
-	 */
-	public function initRestUrl(): void {
-		add_filter( 'hd_rest_api_url', [ $this, 'restApiUrl' ], 10, 3 );
 	}
 
 	/** ---------------------------------------- */
@@ -86,48 +70,39 @@ final class API extends Abstract_API {
 	/** ---------------------------------------- */
 
 	/**
-	 * Handle REST authentication errors.
+	 * @param $pre
+	 * @param \WP_REST_Server $server
+	 * @param \WP_REST_Request $request
 	 *
-	 * @param $result
-	 *
-	 * @return null|\WP_Error|true
+	 * @return \WP_Error|null
 	 */
-	public function restAuthenticationErrors( $result ): true|\WP_Error|null {
-		if ( ! empty( $result ) ) {
-			return $result;
+	public function restPreDispatch( $pre, \WP_REST_Server $server, \WP_REST_Request $request ): ?\WP_Error {
+		$route  = $request->get_route();
+		$routes = $server->get_routes();
+
+		$allowed = [
+			self::REST_NAMESPACE . '/single/track_views',
+		];
+
+		if ( ! in_array( trim( $route, '/' ), $allowed, true ) ) {
+			return $pre;
 		}
 
-		$url_rest_request = ltrim( wp_make_link_relative( $this->restApiUrl() ), '/' );
-		$request_uri      = $_SERVER['REDIRECT_URL'] ?? $_SERVER['REQUEST_URI'];
-
-		// Check if the request is a REST API request
-		if ( str_contains( $request_uri, $url_rest_request ) ) {
-			$reqMethod      = $_SERVER["REQUEST_METHOD"];
-			$method         = strtolower( $reqMethod );
-			$allowed_routes = $this->_allowedRoutes();
-
-			// Check if the requested URI is allowed and matches the HTTP method
-			if ( isset( $allowed_routes[ $request_uri ] ) && empty( $allowed_routes[ $request_uri ][ $method ] ) ) {
-				return new \WP_Error( 'rest_forbidden', 'Access denied for this route.', [ 'status' => 403 ] );
+		foreach ( (array) $routes[ $route ] as $args ) {
+			foreach ( (array) $args['methods'] as $method => $enabled ) {
+				if ( $enabled && strtoupper( $method ) === strtoupper( $request->get_method() ) ) {
+					return $pre;
+				}
 			}
 		}
 
-		return self::BYPASS_NONCE ? true : null;
+		return new \WP_Error(
+			'rest_forbidden',
+			'Access denied for this route.',
+			[ 'status' => 403 ]
+		);
 	}
 
-	/** ---------------------------------------- */
-
-	/**
-	 * Get allowed routes.
-	 *
-	 * @return array
-	 */
-	private function _allowedRoutes(): array {
-		$allowed_routes = [];
-
-		// Populate allowed routes via filter
-		return apply_filters( 'hd_rest_allowed_routes', $allowed_routes );
-	}
 
 	/** ---------------------------------------- */
 

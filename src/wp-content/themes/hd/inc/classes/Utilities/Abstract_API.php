@@ -5,15 +5,12 @@ namespace HD\Utilities;
 \defined( 'ABSPATH' ) || die;
 
 abstract class Abstract_API {
-
-	/** bypass wpnonce, recaptcha .v.v...*/
-	public const BYPASS_NONCE = false;
-
+	public const BYPASS_NONCE = false; // bypass wpnonce, recaptcha .v.v...
 	public const REST_NAMESPACE = 'wp/v2';
-	public const REST_MAX_FILE_SIZE_UPLOAD = 10 * 1024 * 1024; // 10M
-	public const REST_ALLOW_TYPES_UPLOAD = [
-		'application/pdf'
-	];
+//	public const REST_MAX_FILE_SIZE_UPLOAD = 10 * 1024 * 1024; // 10M
+//	public const REST_ALLOW_TYPES_UPLOAD = [
+//		'application/pdf'
+//	];
 
 	/** ---------------------------------------- */
 
@@ -33,26 +30,15 @@ abstract class Abstract_API {
 	/** ---------------------------------------- */
 
 	/**
-	 * @param string $route
-	 *
-	 * @return string
-	 */
-//	public function restApiUri( string $route = '' ): string {
-//		return wp_make_link_relative( $this->restApiUrl( $route ) );
-//	}
-
-	/** ---------------------------------------- */
-
-	/**
 	 * @param array $result
 	 * @param int $status
 	 * @param array $data
 	 *
 	 * @return \WP_Error|\WP_REST_Response
 	 */
-	public static function send_response( array $result = [], int $status = 1, array $data = [] ): \WP_Error|\WP_REST_Response {
+	public static function sendResponse( array $result = [], int $status = 1, array $data = [] ): \WP_Error|\WP_REST_Response {
 		// Prepare the status code, based on the optimization result.
-		$status_code      = ( 1 === $status ) ? 200 : 400;
+		$status_code      = ( 1 === $status ) ? 200 : $status;
 		$result['status'] = $status_code;
 
 		if ( ! empty( $data ) ) {

@@ -21,32 +21,35 @@ function custom_js_action(): void {
 
 	if ( is_single() && $ID = get_the_ID() ) :
 		?>
-		<script>
-            document.addEventListener('DOMContentLoaded', async function() {
+        <script>
+            document.addEventListener('DOMContentLoaded', async () => {
                 let postID = <?= $ID ?>;
-                let dateElement = document.querySelector('section.singular .meta > .date');
-                let viewsElement = document.querySelector('section.singular .meta > .views');
+                const dateEl = document.querySelector('section.singular .meta > .date');
+                const viewsEl = document.querySelector('section.singular .meta > .views');
 
                 if (typeof window.hdConfig !== 'undefined') {
+                    const endpointURL = window.hdConfig._restApiUrl + 'single/track_views';
                     try {
-                        let response = await fetch(window.hdConfig._ajaxUrl, {
+                        const resp = await fetch(endpointURL, {
                             method: 'POST',
-                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                            body: new URLSearchParams({
-                                action: 'track_post_views',
-                                id: postID,
-                                _wpnonce: window.hdConfig._csrfToken,
-                            }),
+                            credentials: 'same-origin',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-WP-Nonce': window.hdConfig._restToken,
+                            },
+                            body: JSON.stringify({id: postID})
                         });
-                        let data = await response.json();
-                        if (data.success) {
-                            if (dateElement) dateElement.textContent = data.data.date;
-                            if (viewsElement) viewsElement.textContent = data.data.views;
+                        const json = await resp.json();
+                        if (json.success) {
+                            if (dateEl) dateEl.textContent = json.date;
+                            if (viewsEl) viewsEl.textContent = json.views;
                         }
-                    } catch (error) {}
+                    } catch (err) {
+                        console.error('Track views error:', err);
+                    }
                 }
             });
-		</script>
+        </script>
 	<?php endif;
 
 	$content = ob_get_clean();

@@ -48,8 +48,8 @@ trait DateTime {
 			return '';
 		}
 
-		return human_time_diff( $from, $to );
-		//return sprintf( __( '%s ago', TEXT_DOMAIN ), human_time_diff( $from, $to ) );
+		//return human_time_diff( $from, $to );
+		return sprintf( __( '%s ago', TEXT_DOMAIN ), human_time_diff( $from, $to ) );
 	}
 
 	// --------------------------------------------------

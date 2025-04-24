@@ -50,14 +50,14 @@ function _addons_init(): void {
 	require_once $autoload;
 	// composer dump-autoload -o --classmap-authoritative
 
+	// Activation / Deactivation / Uninstall
+	register_activation_hook( __FILE__, [ \Addons\Activator::class, 'activation' ] );
+	register_deactivation_hook( __FILE__, [ \Addons\Activator::class, 'deactivation' ] );
+	register_uninstall_hook( __FILE__, [ \Addons\Activator::class, 'uninstall' ] );
+
 	// Bootstrap
 	_addons_bootstrap();
 }
-
-// Activation / Deactivation / Uninstall
-register_activation_hook( __FILE__, [ \Addons\Activator::class, 'activation' ] );
-register_deactivation_hook( __FILE__, [ \Addons\Activator::class, 'deactivation' ] );
-register_uninstall_hook( __FILE__, [ \Addons\Activator::class, 'uninstall' ] );
 
 /**
  * @return void
