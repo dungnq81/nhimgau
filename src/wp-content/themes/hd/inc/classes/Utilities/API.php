@@ -80,11 +80,16 @@ final class API extends Abstract_API {
 		$route  = $request->get_route();
 		$routes = $server->get_routes();
 
+		if ( empty( $routes[ $route ] ) ) {
+			return $pre;
+		}
+
 		$allowed = [
 			self::REST_NAMESPACE . '/single/track_views',
+			self::REST_NAMESPACE . '/global/lighthouse',
 		];
 
-		if ( ! in_array( trim( $route, '/' ), $allowed, true ) ) {
+		if ( ! in_array( ltrim( $route, '/' ), $allowed, true ) ) {
 			return $pre;
 		}
 
