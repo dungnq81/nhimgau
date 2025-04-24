@@ -24,28 +24,6 @@
     --Primary-04: #{vars.$Primary-04};
 }
 
-@mixin font-face-ss($font-family, $font-style: normal, $font-weight: 400, $file_name, $base: '../fonts') {
-    $base: string.unquote($base);
-    //$version: string.unique_id();
-
-    @font-face {
-        font-family: string.quote($font-family);
-        font-style: $font-style;
-        font-weight: $font-weight;
-        font-display: swap;
-        src: url('#{$base}/#{$file_name}.woff2?') format('woff2'),
-        url('#{$base}/#{$file_name}.woff') format('woff');
-    }
-}
-
-/** Samsung font */
-$font_base: '../fonts/samsung';
-
-//@include font-face-ss(SamsungSharpSans, normal, 400, SamsungSharpSansBd, $font_base);
-@include font-face-ss(SamsungSharpSans, normal, 700, SamsungSharpSansBd, $font_base);
-@include font-face-ss(SamsungOne, normal, 400, SamsungOne-400, $font_base);
-@include font-face-ss(SamsungOne, normal, 700, SamsungOne-700, $font_base);
-
 //
 // resets.
 

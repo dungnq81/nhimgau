@@ -8,7 +8,79 @@
     "name": "_vendor",
     "css": [
       "css/_vendor.css"
+    ],
+    "assets": [
+      "fonts/fa-light-300.woff2",
+      "fonts/fa-light-300.ttf",
+      "fonts/fa-sharp-light-300.woff2",
+      "fonts/fa-sharp-light-300.ttf",
+      "fonts/fa-regular-400.woff2",
+      "fonts/fa-regular-400.ttf",
+      "fonts/fa-sharp-regular-400.woff2",
+      "fonts/fa-sharp-regular-400.ttf",
+      "fonts/fa-solid-900.woff2",
+      "fonts/fa-solid-900.ttf",
+      "fonts/fa-sharp-solid-900.woff2",
+      "fonts/fa-sharp-solid-900.ttf",
+      "fonts/fa-brands-400.woff2",
+      "fonts/fa-brands-400.ttf"
     ]
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-brands-400.ttf": {
+    "file": "fonts/fa-brands-400.ttf",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-brands-400.ttf"
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-brands-400.woff2": {
+    "file": "fonts/fa-brands-400.woff2",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-brands-400.woff2"
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-light-300.ttf": {
+    "file": "fonts/fa-light-300.ttf",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-light-300.ttf"
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-light-300.woff2": {
+    "file": "fonts/fa-light-300.woff2",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-light-300.woff2"
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-regular-400.ttf": {
+    "file": "fonts/fa-regular-400.ttf",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-regular-400.ttf"
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-regular-400.woff2": {
+    "file": "fonts/fa-regular-400.woff2",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-regular-400.woff2"
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-sharp-light-300.ttf": {
+    "file": "fonts/fa-sharp-light-300.ttf",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-sharp-light-300.ttf"
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-sharp-light-300.woff2": {
+    "file": "fonts/fa-sharp-light-300.woff2",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-sharp-light-300.woff2"
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-sharp-regular-400.ttf": {
+    "file": "fonts/fa-sharp-regular-400.ttf",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-sharp-regular-400.ttf"
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-sharp-regular-400.woff2": {
+    "file": "fonts/fa-sharp-regular-400.woff2",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-sharp-regular-400.woff2"
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-sharp-solid-900.ttf": {
+    "file": "fonts/fa-sharp-solid-900.ttf",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-sharp-solid-900.ttf"
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-sharp-solid-900.woff2": {
+    "file": "fonts/fa-sharp-solid-900.woff2",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-sharp-solid-900.woff2"
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-solid-900.ttf": {
+    "file": "fonts/fa-solid-900.ttf",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-solid-900.ttf"
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-solid-900.woff2": {
+    "file": "fonts/fa-solid-900.woff2",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-solid-900.woff2"
   },
   "src/wp-content/themes/hd/resources/js/admin.js": {
     "file": "js/admin.js",

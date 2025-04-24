@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
-import postcssPurgecss from '@fullhuman/postcss-purgecss';
+//import postcssPurgecss from '@fullhuman/postcss-purgecss';
 import { sharedConfig } from '../../../../vite.config.shared';
 
 // THEME
@@ -11,7 +11,6 @@ const assets = `${dir}/assets`;
 
 // COPY
 const directoriesToCopy = [
-    { src: `${resources}/fonts/fontawesome/webfonts`, dest: '' },
     { src: `${resources}/img`, dest: '' },
 ];
 
@@ -89,6 +88,9 @@ export default {
                 assetFileNames: (assetInfo) => {
                     if (assetInfo.name.endsWith('.css')) {
                         return `css/[name].[ext]`;
+                    }
+                    if (assetInfo.name && /\.(woff2?|ttf|otf|eot)$/i.test(assetInfo.name)) {
+                        return 'fonts/[name].[ext]';
                     }
                     return `img/[name].[ext]`;
                 },
