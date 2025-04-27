@@ -59,7 +59,7 @@ class SingleEndpoints extends Abstract_API {
 		if ( ! $id ) {
 			$result = [
 				'success' => false,
-				'message' => 'Invalid post ID.'
+				'message' => 'Invalid post-ID.'
 			];
 
 			return self::sendResponse( $result, 0 );

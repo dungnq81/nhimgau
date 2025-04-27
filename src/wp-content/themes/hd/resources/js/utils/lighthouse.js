@@ -7,21 +7,22 @@
     }
 
     if (!lighthouseDetected && typeof window.hdConfig !== 'undefined') {
+        const endpointURL = window.hdConfig._restApiUrl + 'global/lighthouse';
         try {
-            let response = await fetch(window.hdConfig._ajaxUrl, {
+            let resp = await fetch(endpointURL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({
-                    action: 'check_lighthouse',
-                    _wpnonce: window.hdConfig._csrfToken
-                }),
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-WP-Nonce': window.hdConfig._restToken,
+                },
+                body: JSON.stringify({})
             });
-
-            let data = await response.json();
-            if (data.success && data.data.detected) {
+            const json = await resp.json();
+            if (json.success && json.detected) {
                 lighthouseDetected = true;
             }
-        } catch (error) {}
+        } catch (err) {}
     }
 
     if (lighthouseDetected) {
