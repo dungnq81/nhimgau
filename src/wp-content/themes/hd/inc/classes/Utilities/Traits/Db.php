@@ -219,7 +219,17 @@ trait Db {
 	 *
 	 * @return array|false|object|null
 	 */
-	public static function getRowsBy( ?string $table_name, ?string $column, string|int|null $key, bool $return_object = false, bool $sanitize = true, int $offset = 0, int $limit = - 1, ?string $order_by = '', ?string $order = 'ASC' ): array|false|object|null {
+	public static function getRowsBy(
+		?string $table_name,
+		?string $column,
+		string|int|null $key,
+		bool $return_object = false,
+		bool $sanitize = true,
+		int $offset = 0,
+		int $limit = - 1,
+		?string $order_by = '',
+		?string $order = 'ASC'
+	): array|false|object|null {
 		global $wpdb;
 
 		if ( empty( $table_name ) || empty( $column ) || $key === null ) {
@@ -310,7 +320,15 @@ trait Db {
 	 *
 	 * @return array|false|object|null
 	 */
-	public static function getRows( ?string $table_name, int $offset = 0, int $limit = - 1, bool $return_object = false, bool $sanitize = true, ?string $order_by = '', ?string $order = 'ASC' ): array|false|object|null {
+	public static function getRows(
+		?string $table_name,
+		int $offset = 0,
+		int $limit = - 1,
+		bool $return_object = false,
+		bool $sanitize = true,
+		?string $order_by = '',
+		?string $order = 'ASC'
+	): array|false|object|null {
 		global $wpdb;
 
 		if ( empty( $table_name ) ) {

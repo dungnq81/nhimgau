@@ -19,7 +19,7 @@ final class ACF {
 
 	private function init(): void {
 		// Hide the ACF Admin UI
-		if ( ! Helper::version() ) {
+		if ( ! Helper::development() ) {
 			add_filter( 'acf/settings/show_admin', '__return_false' );
 		}
 

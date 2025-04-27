@@ -45,6 +45,7 @@ class ComposerStaticInit9b89879d0ffdac5f0eb892fc5d415441
         'HD\\Themes\\Optimizer' => __DIR__ . '/../..' . '/inc/classes/Themes/Optimizer.php',
         'HD\\Themes\\Shortcode' => __DIR__ . '/../..' . '/inc/classes/Themes/Shortcode.php',
         'HD\\Utilities\\API' => __DIR__ . '/../..' . '/inc/classes/Utilities/API.php',
+        'HD\\Utilities\\API\\GlobalEndpoints' => __DIR__ . '/../..' . '/inc/classes/Utilities/API/GlobalEndpoints.php',
         'HD\\Utilities\\API\\SingleEndpoints' => __DIR__ . '/../..' . '/inc/classes/Utilities/API/SingleEndpoints.php',
         'HD\\Utilities\\Abstract_API' => __DIR__ . '/../..' . '/inc/classes/Utilities/Abstract_API.php',
         'HD\\Utilities\\Abstract_Widget' => __DIR__ . '/../..' . '/inc/classes/Utilities/Abstract_Widget.php',

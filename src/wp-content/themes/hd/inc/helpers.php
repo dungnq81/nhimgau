@@ -22,7 +22,8 @@ if ( ! function_exists( '_is_valid_phone' ) ) {
 			return false;
 		}
 
-		$pattern = '/^\(?\+?(0|84?)\)?[\s.-]?(3[2-9]|5[689]|7[06-9]|8[0-689]|9[0-4|6-9])(\d{7}|\d[\s.-]?\d{3}[\s.-]?\d{3})$/';
+		//$pattern = '/^\(?\+?(0|84?)\)?[\s.-]?(3[2-9]|5[689]|7[06-9]|8[0-689]|9[0-4|6-9])(\d{7}|\d[\s.-]?\d{3}[\s.-]?\d{3})$/';
+		$pattern = '/^\(?\+?(0|84)\)?[\s.\-]?(3[2-9]|5[689]|7[06-9]|(?:8[0-689]|87)|9[0-4|6-9])(\d{7}|\d[\s.\-]?\d{3}[\s.\-]?\d{3})$/';
 
 		return preg_match( $pattern, $phone ) === 1;
 	}
@@ -52,7 +53,7 @@ if ( ! function_exists( '_sanitize_image' ) ) {
 		$file_ext = wp_check_filetype( $file, $mimes );
 
 		// if a file has a valid mime type, return it, otherwise return default
-		return ( $file_ext['ext'] ? $file : '' );
+		return $file_ext['ext'] ? $file : '';
 	}
 }
 
@@ -61,11 +62,12 @@ if ( ! function_exists( '_sanitize_image' ) ) {
 if ( ! function_exists( '_remove_cookie' ) ) {
 	/**
 	 * @param string $name
+	 * @param bool $httponly
 	 *
 	 * @return void
 	 */
-	function _remove_cookie( string $name ): void {
-		setcookie( $name, '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), false );
+	function _remove_cookie( string $name, bool $httponly = false ): void {
+		setcookie( $name, '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), $httponly );
 	}
 }
 
@@ -76,12 +78,13 @@ if ( ! function_exists( '_add_cookie' ) ) {
 	 * @param string $name
 	 * @param $value
 	 * @param int $minute
+	 * @param bool $httponly
 	 *
 	 * @return void
 	 */
-	function _add_cookie( string $name, $value, int $minute = 1440 ): void {
+	function _add_cookie( string $name, $value, int $minute = 1440, bool $httponly = false ): void {
 		if ( is_scalar( $value ) ) {
-			setcookie( $name, $value, time() + $minute * MINUTE_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), false );
+			setcookie( $name, $value, time() + $minute * MINUTE_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), $httponly );
 		}
 	}
 }

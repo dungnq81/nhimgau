@@ -47,7 +47,7 @@ if ( file_exists( $root_dir . '/.env' ) ) {
  * Set up our global environment constant and load its config first
  * Default: production
  */
-define( 'WP_ENV', env( 'WP_ENV' ) ?: 'production' );
+define( 'WP_ENV', env( 'WP_ENV' ) ?? 'production' );
 
 /**
  * Infer WP_ENVIRONMENT_TYPE based on WP_ENV
@@ -72,11 +72,11 @@ if ( env( 'DB_SSL' ) ) {
 Config::define( 'DB_NAME', env( 'DB_NAME' ) );
 Config::define( 'DB_USER', env( 'DB_USER' ) );
 Config::define( 'DB_PASSWORD', env( 'DB_PASSWORD' ) );
-Config::define( 'DB_HOST', env( 'DB_HOST' ) ?: 'localhost' );
-Config::define( 'DB_CHARSET', env( 'DB_CHARSET' ) ?: 'utf8mb4' );
-Config::define( 'DB_COLLATE', env( 'DB_COLLATE' ) ?: 'utf8mb4_unicode_520_ci' );
+Config::define( 'DB_HOST', env( 'DB_HOST' ) ?? 'localhost' );
+Config::define( 'DB_CHARSET', env( 'DB_CHARSET' ) ?? 'utf8mb4' );
+Config::define( 'DB_COLLATE', env( 'DB_COLLATE' ) ?? 'utf8mb4_unicode_520_ci' );
 
-$table_prefix = env( 'DB_PREFIX' ) ?: 'wp_';
+$table_prefix = env( 'DB_PREFIX' ) ?? 'wp_';
 
 if ( env( 'DATABASE_URL' ) ) {
 	$dsn = (object) parse_url( env( 'DATABASE_URL' ) );
@@ -112,14 +112,16 @@ Config::define( 'WP_DEBUG', false ); // Debugging Settings
 
 ini_set( 'display_errors', '0' );
 
+Config::define( 'FORCE_VERSION', env( 'FORCE_VERSION' ) ?? false );
+
 /** PHP Memory */
 Config::define( 'WP_MEMORY_LIMIT', env( 'WP_MEMORY_LIMIT' ) ?? '512M' );
 Config::define( 'WP_MAX_MEMORY_LIMIT', env( 'WP_MAX_MEMORY_LIMIT' ) ?? '512M' );
 
 /** Set the maximum number of post-revisions to keep */
-Config::define( 'WP_POST_REVISIONS', env( 'WP_POST_REVISIONS' ) ?: true );
-Config::define( 'EMPTY_TRASH_DAYS', env( 'EMPTY_TRASH_DAYS' ) ?: 30 );
-Config::define( 'AUTOSAVE_INTERVAL', env( 'AUTOSAVE_INTERVAL' ) ?: 180 );
+Config::define( 'WP_POST_REVISIONS', env( 'WP_POST_REVISIONS' ) ?? true );
+Config::define( 'EMPTY_TRASH_DAYS', env( 'EMPTY_TRASH_DAYS' ) ?? 30 );
+Config::define( 'AUTOSAVE_INTERVAL', env( 'AUTOSAVE_INTERVAL' ) ?? 180 );
 
 Config::define( 'AUTOMATIC_UPDATER_DISABLED', env( 'AUTOMATIC_UPDATER_DISABLED' ) ?? false );
 Config::define( 'WP_AUTO_UPDATE_CORE', env( 'WP_AUTO_UPDATE_CORE' ) ?? true );

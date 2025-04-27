@@ -11,6 +11,8 @@ use HD\Utilities\Abstract_API;
  *
  * Registers and handles all REST API endpoints for single resources in WordPress
  * (e.g., posts, pages, attachments).
+ *
+ * @package HD\Utilities\API
  */
 class SingleEndpoints extends Abstract_API {
 	/** ---------------------------------------- */

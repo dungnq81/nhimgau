@@ -17,11 +17,21 @@ final class Helper {
 	// --------------------------------------------------
 
 	/**
+	 * @return bool
+	 */
+	public static function development(): bool {
+		return wp_get_environment_type() === 'development' || ( defined( 'WP_DEBUG' ) && \WP_DEBUG === true );
+	}
+
+	// --------------------------------------------------
+
+	/**
 	 * @return false|int
 	 */
 	public static function version(): false|int {
 		return ( wp_get_environment_type() === 'development' ||
-		         ( defined( 'WP_DEBUG' ) && WP_DEBUG === true )
+		         ( defined( 'WP_DEBUG' ) && \WP_DEBUG === true ) ||
+		         ( defined( 'FORCE_VERSION' ) && \FORCE_VERSION === true )
 		) ? time() : false;
 	}
 
@@ -372,7 +382,7 @@ final class Helper {
 		if ( $js === null || $js === '' ) {
 			return null;
 		}
-		if ( $respectDebug && self::version() ) {
+		if ( $respectDebug && self::development() ) {
 			return $js;
 		}
 
@@ -391,7 +401,7 @@ final class Helper {
 		if ( $css === null || $css === '' ) {
 			return null;
 		}
-		if ( $respectDebug && self::version() ) {
+		if ( $respectDebug && self::development() ) {
 			return $css;
 		}
 

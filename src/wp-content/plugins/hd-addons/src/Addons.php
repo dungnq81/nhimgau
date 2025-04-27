@@ -160,11 +160,11 @@ final class Addons {
 		wp_enqueue_script( 'login-js', ADDONS_URL . 'assets/js/login.js', [ 'jquery' ], $version, true );
 		wp_script_add_data( 'login-js', 'addon', [ 'module', 'async' ] );
 
-		// $default_logo    = '';
-		// $default_bg = '';
+		$default_logo    = '';
+		$default_bg = '';
 
-		$default_logo = ADDONS_URL . 'assets/img/logo.png';
-		$default_bg   = ADDONS_URL . 'assets/img/login-bg.jpg';
+		//$default_logo = ADDONS_URL . 'assets/img/logo.png';
+		//$default_bg   = ADDONS_URL . 'assets/img/login-bg.jpg';
 
 		// scripts / styles
 		$logo     = esc_url_raw( Helper::getThemeMod( 'login_page_logo_setting' ) ?: $default_logo );
