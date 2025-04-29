@@ -13,7 +13,9 @@ global $post;
 $title     = $args['title'] ?? get_the_title( $post->ID );
 $title_tag = $args['title_tag'] ?? 'p';
 $ratio     = $args['ratio'] ?? \HD_Helper::aspectRatioClass( get_post_type( $post->ID ) );
-$thumbnail = $args['thumbnail'] ?? \HD_Helper::postImageHTML( $post->ID, 'medium', [ 'alt' => \HD_Helper::escAttr( $title ) ] );
+$thumbnail = ! empty( $args['thumbnail'] ) ?
+    \HD_Helper::postImageHTML( $post->ID, 'medium', [ 'alt' => \HD_Helper::escAttr( $title ) ] ) :
+    \HD_Helper::placeholderSrc();
 
 $title = ! empty( $title ) ? $title : __( '(no title)', TEXT_DOMAIN );
 

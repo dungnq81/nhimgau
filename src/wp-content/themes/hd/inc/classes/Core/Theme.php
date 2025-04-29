@@ -111,7 +111,7 @@ final class Theme {
 		( Optimizer::get_instance() );
 		( Shortcode::get_instance() );
 
-		// autoload file
+		// Autoload file
 		$dirs = [
 			THEME_PATH . 'inc/structures',
 			THEME_PATH . 'inc/ajax',
@@ -157,8 +157,14 @@ final class Theme {
 		\HD_Asset::queueStyle( 'index-css', ASSETS_URL . 'css/index-css.css', [ 'vendor-css' ], $version );
 
 		/** JS */
-		\HD_Asset::queueScript( 'preload-js', ASSETS_URL . 'js/preload-polyfill.js', [], $version, false, [ 'module', 'async' ] );
-		\HD_Asset::queueScript( 'index-js', ASSETS_URL . 'js/index.js', [ 'jquery-core' ], $version, true, [ 'module', 'defer' ] );
+		\HD_Asset::queueScript( 'preload-js', ASSETS_URL . 'js/preload-polyfill.js', [], $version, false, [
+			'module',
+			'async'
+		] );
+		\HD_Asset::queueScript( 'index-js', ASSETS_URL . 'js/index.js', [ 'jquery-core' ], $version, true, [
+			'module',
+			'defer'
+		] );
 
 		/** Comments */
 		if ( is_singular() && comments_open() && \HD_Helper::getOption( 'thread_comments' ) ) {
@@ -194,8 +200,7 @@ final class Theme {
 
 	// --------------------------------------------------
 
-	public function _dynamic_enqueue_assets_flag(): void {
-	}
+	public function _dynamic_enqueue_assets_flag(): void {}
 
 	// --------------------------------------------------
 

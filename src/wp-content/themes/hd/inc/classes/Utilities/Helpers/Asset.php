@@ -9,9 +9,9 @@ namespace HD\Utilities\Helpers;
  * @author Gaudev
  */
 final class Asset {
-	private static array $styles = []; // Style handles queued for the current request
-	private static array $scripts = []; // Script handles queued for the current request
-	private static array $localize = []; // [handle => $data] for wp_localize_script
+	private static array $styles = [];         // Style handles queued for the current request
+	private static array $scripts = [];        // Script handles queued for the current request
+	private static array $localize = [];       // [handle => $data] for wp_localize_script
 	private static array $inline_scripts = []; // for wp_add_inline_script
 
 	// ----------------------------------------
@@ -30,7 +30,12 @@ final class Asset {
 			return;
 		}
 
-		self::$styles[ $handle ] = compact( 'src', 'deps', 'ver', 'media' );
+		self::$styles[ $handle ] = [
+			'src'   => $src,
+			'deps'  => $deps,
+			'ver'   => $ver,
+			'media' => $media,
+		];
 	}
 
 	// ----------------------------------------
@@ -50,7 +55,13 @@ final class Asset {
 			return;
 		}
 
-		self::$scripts[ $handle ] = compact( 'src', 'deps', 'ver', 'in_footer', 'extra' );
+		self::$scripts[ $handle ] = [
+			'src'       => $src,
+			'deps'      => $deps,
+			'ver'       => $ver,
+			'in_footer' => $in_footer,
+			'extra'     => $extra,
+		];
 	}
 
 	// ----------------------------------------
@@ -62,7 +73,11 @@ final class Asset {
 	// ----------------------------------------
 
 	public static function inline( string $handle, string $code, string $position = 'after' ): void {
-		self::$inline_scripts[ $handle ] = [ $code, $position ];
+		if ( ! isset( self::$inline_scripts[ $handle ] ) ) {
+			self::$inline_scripts[ $handle ] = [];
+		}
+
+		self::$inline_scripts[ $handle ][] = [ $code, $position ];
 	}
 
 	// ----------------------------------------
@@ -74,34 +89,31 @@ final class Asset {
 	 */
 	public static function enqueueAll(): void {
 		// Styles
-
 		foreach ( self::$styles as $handle => $args ) {
-			extract( $args );
-			wp_register_style( $handle, $src, $deps, $ver, $media );
+			wp_register_style( $handle, $args['src'], $args['deps'], $args['ver'], $args['media'] );
 			wp_enqueue_style( $handle );
 		}
 
 		// Scripts
 		foreach ( self::$scripts as $handle => $args ) {
-			extract( $args );
-			wp_register_script( $handle, $src, $deps, $ver, $in_footer );
+			wp_register_script( $handle, $args['src'], $args['deps'], $args['ver'], $args['in_footer'] );
 			wp_enqueue_script( $handle );
 
-			if ( ! empty( $extra ) ) {
-				wp_script_add_data( $handle, 'extra', $extra );
+			if ( ! empty( $args['extra'] ) ) {
+				wp_script_add_data( $handle, 'extra', $args['extra'] );
 			}
 		}
 
 		// Attach localize
-		foreach ( self::$localize as $handle => $args ) {
-			[ $obj, $l10n ] = $args;
-			wp_localize_script( $handle, $obj, $l10n );
+		foreach ( self::$localize as $handle => [$object_name, $l10n] ) {
+			wp_localize_script( $handle, $object_name, $l10n );
 		}
 
 		// inline if queued
-		foreach ( self::$inline_scripts as $handle => $args ) {
-			[ $code, $pos ] = $args;
-			wp_add_inline_script( $handle, $code, $pos );
+		foreach ( self::$inline_scripts as $handle => $blocks ) {
+			foreach ( $blocks as [$code, $position] ) {
+				wp_add_inline_script( $handle, $code, $position );
+			}
 		}
 	}
 
