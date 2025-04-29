@@ -9,7 +9,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "HD\\": "inc/classes"
+            "HD\\": "inc/classes/"
         }
     },
     "require": {

@@ -1,4 +1,4 @@
-// global.js
+// global.js (IIFE)
 
 (function () {
     // update rel
@@ -27,3 +27,7 @@
 
     observer.observe(document.body, { childList: true, subtree: true });
 })();
+
+//---------------------------------------------
+
+

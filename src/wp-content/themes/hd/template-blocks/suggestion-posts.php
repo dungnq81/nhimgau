@@ -5,7 +5,7 @@
 global $post;
 
 $post_id         = $args['id'] ?? $post->ID;
-$suggestion_list = \HD\Helper::getField( 'suggestion', $post_id );
+$suggestion_list = \HD_Helper::getField( 'suggestion', $post_id );
 if ( ! $suggestion_list ) {
 	return;
 }
@@ -18,8 +18,8 @@ if ( ! $suggestion_list ) {
 		$post_title = ! empty( $post_title ) ? $post_title : __( '(no title)', TEXT_DOMAIN );
     ?>
     <li>
-        <a title="<?= \HD\Helper::escAttr( $post_title ) ?>" class="title" href="<?php the_permalink( $suggestion_id ); ?>"><?php echo $post_title; ?></a>
-        <span class="date"><?php echo \HD\Helper::humanizeTime( $suggestion_id ); ?></span>
+        <a title="<?= \HD_Helper::escAttr( $post_title ) ?>" class="title" href="<?php the_permalink( $suggestion_id ); ?>"><?php echo $post_title; ?></a>
+        <span class="date"><?php echo \HD_Helper::humanizeTime( $suggestion_id ); ?></span>
     </li>
 	<?php endforeach; ?>
 </ul>

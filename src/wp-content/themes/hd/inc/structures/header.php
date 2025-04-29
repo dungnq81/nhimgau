@@ -34,9 +34,9 @@ function other_head_action(): void {
 	}
 
 	// Theme color
-	$theme_color = \HD\Helper::getThemeMod( 'theme_color_setting' );
+	$theme_color = \HD_Helper::getThemeMod( 'theme_color_setting' );
 	if ( $theme_color ) {
-		printf( '<meta name="theme-color" content="%s" />', \HD\Helper::escAttr( $theme_color ) );
+		printf( '<meta name="theme-color" content="%s" />', \HD_Helper::escAttr( $theme_color ) );
 	}
 }
 
@@ -67,7 +67,7 @@ function skip_to_content_link_action(): void {
 //add_action( 'hd_header_before_action', 'off_canvas_menu_action', 11 );
 
 function off_canvas_menu_action(): void {
-    \HD\Helper::blockTemplate( 'template-blocks/off-canvas', [], true );
+    \HD_Helper::blockTemplate( 'template-blocks/off-canvas', [], true );
 }
 
 // -----------------------------------------------
@@ -93,7 +93,7 @@ function construct_header_action(): void {
 add_action( 'masthead', '_masthead_home_seo_header', 10 );
 
 function _masthead_home_seo_header(): void {
-	$home_heading = \HD\Helper::getThemeMod( 'home_heading_setting' );
+	$home_heading = \HD_Helper::getThemeMod( 'home_heading_setting' );
 	$home_heading = ! empty( $home_heading ) ? esc_html( $home_heading ) : get_bloginfo( 'name' );
 
 	echo apply_filters( 'home_seo_header_filter', '<h1 class="sr-only">' . $home_heading . '</h1>' );

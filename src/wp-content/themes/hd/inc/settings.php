@@ -140,7 +140,7 @@ function body_class_callback( array $classes ): array {
 		}
 	}
 
-	if ( \HD\Helper::isWoocommerceActive() ) {
+	if ( \HD_Helper::isWoocommerceActive() ) {
 		$classes[] = 'woocommerce';
 	}
 
@@ -451,52 +451,52 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 		'social_follows_links'                => [
 			'facebook'  => [
 				'name' => __( 'Facebook', TEXT_DOMAIN ),
-				'icon' => \HD\Helper::svg( 'facebook' ),
+				'icon' => \HD_Helper::svg( 'facebook' ),
 				'url'  => '',
 			],
 			'instagram' => [
 				'name' => __( 'Instagram', TEXT_DOMAIN ),
-				'icon' => \HD\Helper::svg( 'instagram' ),
+				'icon' => \HD_Helper::svg( 'instagram' ),
 				'url'  => '',
 			],
 			'youtube'   => [
 				'name' => __( 'Youtube', TEXT_DOMAIN ),
-				'icon' => \HD\Helper::svg( 'youtube' ),
+				'icon' => \HD_Helper::svg( 'youtube' ),
 				'url'  => '',
 			],
 			'x'   => [
 				'name' => __( 'X (Twitter)', TEXT_DOMAIN ),
-				'icon' => \HD\Helper::svg( 'x' ),
+				'icon' => \HD_Helper::svg( 'x' ),
 				'url'  => '',
 			],
 			'tiktok'    => [
 				'name' => __( 'Tiktok', TEXT_DOMAIN ),
-				'icon' => \HD\Helper::svg( 'tiktok' ),
+				'icon' => \HD_Helper::svg( 'tiktok' ),
 				'url'  => '',
 			],
 			'telegram'  => [
 				'name' => __( 'Telegram', TEXT_DOMAIN ),
-				'icon' => \HD\Helper::svg( 'telegram' ),
+				'icon' => \HD_Helper::svg( 'telegram' ),
 				'url'  => '',
 			],
 			'linkedin'  => [
 				'name' => __( 'Linkedin', TEXT_DOMAIN ),
-				'icon' => \HD\Helper::svg( 'linkedin' ),
+				'icon' => \HD_Helper::svg( 'linkedin' ),
 				'url'  => '',
 			],
 			'zalo'      => [
 				'name' => __( 'Zalo', TEXT_DOMAIN ),
-				'icon' => \HD\Helper::svg( 'zalo' ),
+				'icon' => \HD_Helper::svg( 'zalo' ),
 				'url'  => '',
 			],
 			'hotline'   => [
 				'name' => __( 'Hotline', TEXT_DOMAIN ),
-				'icon' => \HD\Helper::svg( 'phone' ),
+				'icon' => \HD_Helper::svg( 'phone' ),
 				'url'  => '',
 			],
 			'email'     => [
 				'name' => __( 'Email', TEXT_DOMAIN ),
-				'icon' => \HD\Helper::svg( 'envelope' ),
+				'icon' => \HD_Helper::svg( 'envelope' ),
 				'url'  => '',
 			],
 		],
@@ -507,7 +507,7 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 		'contact_links'                       => [
 			'tiktok'       => [
 				'name'        => __( 'Tiktok', TEXT_DOMAIN ),
-				'icon'        => \HD\Helper::svg( 'tiktok' ),
+				'icon'        => \HD_Helper::svg( 'tiktok' ),
 				'value'       => '',
 				'placeholder' => __( 'Link tiktok', TEXT_DOMAIN ),
 				'target'      => '_blank',
@@ -515,7 +515,7 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 			],
 			'messenger'    => [
 				'name'        => __( 'Messenger', TEXT_DOMAIN ),
-				'icon'        => \HD\Helper::svg( 'messenger' ),
+				'icon'        => \HD_Helper::svg( 'messenger' ),
 				'value'       => '',
 				'placeholder' => __( 'Link messenger', TEXT_DOMAIN ),
 				'target'      => '_blank',
@@ -523,7 +523,7 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 			],
 			'zalo'         => [
 				'name'        => __( 'Zalo', TEXT_DOMAIN ),
-				'icon'        => \HD\Helper::svg( 'zalo' ),
+				'icon'        => \HD_Helper::svg( 'zalo' ),
 				'value'       => '',
 				'placeholder' => '0123 456 789',
 				'target'      => '_blank',
@@ -531,14 +531,14 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 			],
 			'hotline'      => [
 				'name'        => __( 'Hotline', TEXT_DOMAIN ),
-				'icon'        => \HD\Helper::svg( 'phone' ),
+				'icon'        => \HD_Helper::svg( 'phone' ),
 				'value'       => '',
 				'placeholder' => '0123 456 789',
 				'class'       => 'hotline',
 			],
 			'contact_map'  => [
 				'name'        => __( 'Contact map', TEXT_DOMAIN ),
-				'icon'        => \HD\Helper::svg( 'location' ),
+				'icon'        => \HD_Helper::svg( 'location' ),
 				'value'       => '',
 				'placeholder' => __( 'Link google map', TEXT_DOMAIN ),
 				'target'      => '_blank',
@@ -546,7 +546,7 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 			],
 			'contact_link' => [
 				'name'        => __( 'Contact link', TEXT_DOMAIN ),
-				'icon'        => \HD\Helper::svg( 'contact' ),
+				'icon'        => \HD_Helper::svg( 'contact' ),
 				'value'       => '',
 				'placeholder' => __( 'Contact link', TEXT_DOMAIN ),
 				'target'      => '_blank',
@@ -557,7 +557,7 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 
 	// --------------------------------------------------
 
-	if ( \HD\Helper::isWoocommerceActive() ) {
+	if ( \HD_Helper::isWoocommerceActive() ) {
 		$arr_new['aspect_ratio']['post_type_term'][]                      = 'product';
 		$arr_new['aspect_ratio']['post_type_term'][]                      = 'product_cat';
 		$arr_new['admin_list_table']['term_row_actions'][]                = 'product_cat';
@@ -565,7 +565,7 @@ function hd_theme_settings_filter_callback( array $arr ): array {
 		$arr_new['post_type_terms']['product']                            = 'product_cat';
 	}
 
-	if ( \HD\Helper::isCf7Active() ) {
+	if ( \HD_Helper::isCf7Active() ) {
 		$arr_new['admin_list_table']['post_type_exclude_thumb_columns'][] = 'wpcf7_contact_form';
 	}
 

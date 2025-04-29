@@ -23,7 +23,7 @@ do_action( 'hd_site_content_after_action' );
 do_action( 'hd_footer_before_action' );
 
 ?>
-<footer id="footer" class="<?= apply_filters( 'hd_footer_class_filter', 'site-footer' ) ?>" <?= \HD\Helper::microdata( 'footer' ) ?>>
+<footer id="footer" class="<?= apply_filters( 'hd_footer_class_filter', 'site-footer' ) ?>" <?= \HD_Helper::microdata( 'footer' ) ?>>
 	<?php
 
 	/**

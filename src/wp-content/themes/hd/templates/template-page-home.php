@@ -23,7 +23,7 @@ if ( post_password_required() ) {
 	return;
 }
 
-$ACF = \HD\Helper::getFields( get_the_ID() );
+$ACF = \HD_Helper::getFields( get_the_ID() );
 $home_flexible_content = ! empty( $ACF['home_flexible_content'] ) ? (array) $ACF['home_flexible_content'] : false;
 if ( $home_flexible_content ) {
 
@@ -31,15 +31,15 @@ if ( $home_flexible_content ) {
 		$acf_fc_layout = $section['acf_fc_layout'] ?? '';
 
 		if ( $acf_fc_layout ) {
-			\HD\Helper::blockTemplate( 'template-parts/home/' . $acf_fc_layout, $section );
+			\HD_Helper::blockTemplate( 'template-parts/home/' . $acf_fc_layout, $section );
 		}
 	}
 } else {
-	\HD\Helper::blockTemplate( 'template-blocks/static-page' );
+	\HD_Helper::blockTemplate( 'template-blocks/static-page' );
 }
 
 
-\HD\Helper::blockTemplate( 'template-blocks/tabs/category-tabs' );
+\HD_Helper::blockTemplate( 'template-blocks/tabs/category-tabs' );
 
 ?>
     <div class="container">

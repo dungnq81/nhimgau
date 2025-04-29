@@ -2,9 +2,9 @@
 
 namespace HD\Utilities\Traits;
 
-use HD\Utilities\CSS;
-use HD\Utilities\Horizontal_Nav_Walker;
-use HD\Utilities\Vertical_Nav_Walker;
+use HD\Utilities\Helpers\CSS;
+use HD\Utilities\Navigation\HorizontalNavWalker;
+use HD\Utilities\Navigation\VerticalNavWalker;
 
 \defined( 'ABSPATH' ) || die;
 
@@ -392,7 +392,7 @@ trait Wp {
 				'theme_location' => '',
 				'depth'          => 4,
 				'fallback_cb'    => false,
-				'walker'         => new Vertical_Nav_Walker(),
+				'walker'         => new VerticalNavWalker(),
 				'items_wrap'     => '<ul id="%1$s" class="%2$s" data-accordion-menu data-submenu-toggle="true">%3$s</ul>',
 				'echo'           => false,
 			]
@@ -424,7 +424,7 @@ trait Wp {
 				'theme_location' => '',
 				'depth'          => 4,
 				'fallback_cb'    => false,
-				'walker'         => new Horizontal_Nav_Walker(),
+				'walker'         => new HorizontalNavWalker(),
 				'items_wrap'     => '<ul id="%1$s" class="%2$s" data-dropdown-menu>%3$s</ul>',
 				'echo'           => false,
 			]
@@ -2134,8 +2134,7 @@ trait Wp {
 			$ar_aspect_ratio_default = self::filterSettingOptions( 'aspect_ratio_default', [] );
 
 			if ( is_array( $ar_aspect_ratio_default ) && ! in_array( $ratio_x . '-' . $ratio_y, $ar_aspect_ratio_default, false ) ) {
-				$css = CSS::get_instance();
-
+				$css = new \HD_CSS();
 				$css->set_selector( '.' . $ratio_class );
 				//$css->add_property( 'height', 0 );
 

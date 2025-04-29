@@ -74,9 +74,12 @@ final class Editor {
 		/** Remove block CSS */
 		if ( $this->editor_options['block_style_off'] ?? '' ) {
 			wp_dequeue_style( 'global-styles' );
-
 			wp_dequeue_style( 'wp-block-library' );
 			wp_dequeue_style( 'wp-block-library-theme' );
+
+			add_action( 'wp_footer', static function () {
+				wp_dequeue_style( 'core-block-supports' );
+			}, 10 );
 		}
 	}
 
@@ -174,7 +177,7 @@ final class Editor {
 		remove_filter( 'filter_gutenberg_meta_boxes', 'gutenberg_filter_meta_boxes' );
 
 		remove_filter( 'body_class', 'gutenberg_add_responsive_body_class' );
-		remove_filter( 'admin_url', 'gutenberg_modify_add_new_button_url' ); // old
+		remove_filter( 'admin_url', 'gutenberg_modify_add_new_button_url' );
 		remove_action( 'admin_enqueue_scripts', 'gutenberg_check_if_classic_needs_warning_about_blocks' );
 		remove_filter( 'register_post_type_args', 'gutenberg_filter_post_type_labels' );
 	}

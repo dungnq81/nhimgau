@@ -26,7 +26,7 @@
 
     ?>
 </head>
-<body <?php body_class(); ?> <?= \HD\Helper::microdata( 'body' ) ?>>
+<body <?php body_class(); ?> <?= \HD_Helper::microdata( 'body' ) ?>>
     <?php
 
     /**
@@ -45,7 +45,7 @@
     do_action( 'hd_header_before_action' );
 
     ?>
-    <header id="header" class="<?= apply_filters( 'hd_header_class_filter', 'site-header' ) ?>" <?= \HD\Helper::microdata( 'header' ) ?>>
+    <header id="header" class="<?= apply_filters( 'hd_header_class_filter', 'site-header' ) ?>" <?= \HD_Helper::microdata( 'header' ) ?>>
 		<?php
 
 		/**

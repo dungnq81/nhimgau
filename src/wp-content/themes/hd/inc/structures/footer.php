@@ -69,7 +69,7 @@ function _construct_footer_credit(): void {
     <div id="footer-credit" class="footer-credit">
         <div class="container">
 		<?php
-		$footer_credit = \HD\Helper::getThemeMod( 'footer_credit_setting' );
+		$footer_credit = \HD_Helper::getThemeMod( 'footer_credit_setting' );
 		$footer_credit = ! empty( $footer_credit ) ? esc_html( $footer_credit ) : '&copy; ' . date( 'Y' ) . ' ' . get_bloginfo( 'name' ) . '. ' . esc_html__( 'All rights reserved.', TEXT_DOMAIN );
 
 		echo '<p class="copyright">' . apply_filters( 'footer_credit_filter', $footer_credit ) . '</p>';

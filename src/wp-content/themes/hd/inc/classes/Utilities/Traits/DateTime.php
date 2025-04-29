@@ -179,7 +179,7 @@ trait DateTime {
 	 * @param string $date_string
 	 *
 	 * @return array|string[]
-	 * @throws \DateMalformedStringException
+	 * @throws \Exception
 	 */
 	public static function timeDifference( string $date_string ): array {
 		$timezone   = wp_timezone();

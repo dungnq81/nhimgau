@@ -10,13 +10,11 @@ class BackToTop {
 
     init() {
         if (!('querySelector' in document && 'addEventListener' in window)) {
-            console.warn('BackToTop: Browser does not support required features.');
             return;
         }
 
         this.goTopBtn = document.querySelector(this.buttonSelector);
         if (!this.goTopBtn) {
-            console.warn(`BackToTop: Button with selector "${this.buttonSelector}" not found.`);
             return;
         }
 

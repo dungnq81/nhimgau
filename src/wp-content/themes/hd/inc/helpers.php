@@ -133,7 +133,6 @@ if ( ! function_exists( '_in_array_toggle_class' ) ) {
 	function _in_array_toggle_class( array $arr, $key, string $html_class = '!hidden', true $display = true ): ?string {
 		$html_class = trim( $html_class );
 		if ( empty( $html_class ) || preg_match( '/[^a-zA-Z0-9\-_ ]/', $html_class ) ) {
-
 			// Invalid HTML class; return or echo an empty string
 			if ( $display ) {
 				echo '';
@@ -166,7 +165,7 @@ if ( ! function_exists( '_recaptcha_verify' ) ) {
 	 * @throws \JsonException
 	 */
 	function _recaptcha_verify( string $version, string $recaptcha_response ): mixed {
-		$recaptcha_options = \HD\Helper::getOption( 'recaptcha__options' );
+		$recaptcha_options = \HD_Helper::getOption( 'recaptcha__options' );
 		if ( ! $recaptcha_options ) {
 			return false;
 		}

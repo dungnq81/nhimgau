@@ -47,8 +47,7 @@ function _addons_init(): void {
 		return;
 	}
 
-	require_once $autoload;
-	// composer dump-autoload -o --classmap-authoritative
+	require_once $autoload; // composer dump-autoload -o --classmap-authoritative
 
 	// Activation / Deactivation / Uninstall
 	register_activation_hook( __FILE__, [ \Addons\Activator::class, 'activation' ] );

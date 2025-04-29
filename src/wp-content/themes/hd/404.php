@@ -12,7 +12,7 @@
 get_header( '404' );
 
 // breadcrumbs
-\HD\Helper::blockTemplate( 'template-blocks/breadcrumbs' );
+\HD_Helper::blockTemplate( 'template-blocks/breadcrumbs' );
 
 ?>
 <section class="section section-page section-404 singular">

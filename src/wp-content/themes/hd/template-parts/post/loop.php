@@ -12,8 +12,8 @@ global $post;
 
 $title     = $args['title'] ?? get_the_title( $post->ID );
 $title_tag = $args['title_tag'] ?? 'p';
-$ratio     = $args['ratio'] ?? \HD\Helper::aspectRatioClass( get_post_type( $post->ID ) );
-$thumbnail = $args['thumbnail'] ?? \HD\Helper::postImageHTML( $post->ID, 'medium', [ 'alt' => \HD\Helper::escAttr( $title ) ] );
+$ratio     = $args['ratio'] ?? \HD_Helper::aspectRatioClass( get_post_type( $post->ID ) );
+$thumbnail = $args['thumbnail'] ?? \HD_Helper::postImageHTML( $post->ID, 'medium', [ 'alt' => \HD_Helper::escAttr( $title ) ] );
 
 $title = ! empty( $title ) ? $title : __( '(no title)', TEXT_DOMAIN );
 
@@ -22,15 +22,15 @@ $title = ! empty( $title ) ? $title : __( '(no title)', TEXT_DOMAIN );
     <div class="cover">
         <span class="scale res <?= $ratio ?>">
             <?php echo $thumbnail; ?>
-            <a class="link-cover" href="<?= get_permalink( $post->ID ) ?>" aria-label="<?= \HD\Helper::escAttr( $title ) ?>"></a>
+            <a class="link-cover" href="<?= get_permalink( $post->ID ) ?>" aria-label="<?= \HD_Helper::escAttr( $title ) ?>"></a>
         </span>
     </div>
     <div class="content">
         <div class="meta">
-	        <?php echo \HD\Helper::getPrimaryTerm( $post ); ?>
-            <span class="date"><?= \HD\Helper::humanizeTime( $post->ID ) ?></span>
+	        <?php echo \HD_Helper::getPrimaryTerm( $post ); ?>
+            <span class="date"><?= \HD_Helper::humanizeTime( $post->ID ) ?></span>
         </div>
-        <?php echo '<' . $title_tag . ' class="title"><a href="' . get_permalink( $post->ID ) . '" title="' . \HD\Helper::escAttr( $title ) . '">' . $title . '</a></' . $title_tag . '>'; ?>
-	    <?php echo \HD\Helper::loopExcerpt( $post ); ?>
+        <?php echo '<' . $title_tag . ' class="title"><a href="' . get_permalink( $post->ID ) . '" title="' . \HD_Helper::escAttr( $title ) . '">' . $title . '</a></' . $title_tag . '>'; ?>
+	    <?php echo \HD_Helper::loopExcerpt( $post ); ?>
     </div>
 </div>

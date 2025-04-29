@@ -29,7 +29,7 @@ if ( ! $query ) {
 				$post_type = get_post_type( $post->ID ) ?: 'post';
 
 				echo "<div class=\"swiper-slide\">";
-				\HD\Helper::blockTemplate( 'template-parts/' . $post_type . '/loop', [ 'title_tag' => $title_tag ] );
+				\HD_Helper::blockTemplate( 'template-parts/' . $post_type . '/loop', [ 'title_tag' => $title_tag ] );
 				echo "</div>";
 
 			endwhile;

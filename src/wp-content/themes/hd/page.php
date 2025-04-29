@@ -23,30 +23,30 @@ if ( post_password_required() ) {
 }
 
 // breadcrumbs
-\HD\Helper::blockTemplate( 'template-blocks/breadcrumbs', [ 'title' => get_the_title( $post->ID ) ] );
+\HD_Helper::blockTemplate( 'template-blocks/breadcrumbs', [ 'title' => get_the_title( $post->ID ) ] );
 
 /**
  * HOOK: hd_page_before_action
  */
 do_action( 'hd_page_before_action' );
 
-$alternative_title = \HD\Helper::getField( 'alternative_title', $post->ID );
+$alternative_title = \HD_Helper::getField( 'alternative_title', $post->ID );
 
 ?>
 <section class="section section-page singular">
     <div class="container flex flex-x">
         <div class="content">
-            <h1 class="heading-title" <?= \HD\Helper::microdata( 'headline' ) ?>><?= $alternative_title ?: get_the_title() ?></h1>
-	        <?php echo \HD\Helper::postExcerpt( $post, 'excerpt', false ); ?>
-            <article <?= \HD\Helper::microdata( 'article' ) ?>>
+            <h1 class="heading-title" <?= \HD_Helper::microdata( 'headline' ) ?>><?= $alternative_title ?: get_the_title() ?></h1>
+	        <?php echo \HD_Helper::postExcerpt( $post, 'excerpt', false ); ?>
+            <article <?= \HD_Helper::microdata( 'article' ) ?>>
 	            <?php
                 the_content();
-	            \HD\Helper::blockTemplate( 'template-blocks/suggestion-posts' );
+	            \HD_Helper::blockTemplate( 'template-blocks/suggestion-posts' );
                 ?>
             </article>
         </div>
 	    <?php if ( is_active_sidebar( 'page-sidebar' ) ) : ?>
-        <aside class="sidebar" <?= \HD\Helper::microdata( 'sidebar' ) ?>>
+        <aside class="sidebar" <?= \HD_Helper::microdata( 'sidebar' ) ?>>
             <?php dynamic_sidebar( 'page-sidebar' ); ?>
         </aside>
 	    <?php endif;

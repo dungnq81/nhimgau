@@ -8,20 +8,20 @@
 $object = get_queried_object();
 
 $breadcrumb_class = '';
-$breadcrumb_bg    = \HD\Helper::getThemeMod( 'breadcrumb_bg_setting' );
+$breadcrumb_bg    = \HD_Helper::getThemeMod( 'breadcrumb_bg_setting' );
 if ( $breadcrumb_bg ) {
 	$breadcrumb_class = ' has-background';
 	$breadcrumb_bg    = attachment_url_to_postid( $breadcrumb_bg );
 }
 
-$image_for_breadcrumb = \HD\Helper::getField( 'image_for_breadcrumb', $object );
+$image_for_breadcrumb = \HD_Helper::getField( 'image_for_breadcrumb', $object );
 if ( $image_for_breadcrumb ) {
 	$breadcrumb_class = ' has-background';
 	$breadcrumb_bg    = $image_for_breadcrumb;
 }
 
-$breadcrumb_max = \HD\Helper::getThemeMod( 'breadcrumb_max_height_setting', 0 );
-$breadcrumb_min = \HD\Helper::getThemeMod( 'breadcrumb_min_height_setting', 0 );
+$breadcrumb_max = \HD_Helper::getThemeMod( 'breadcrumb_max_height_setting', 0 );
+$breadcrumb_min = \HD_Helper::getThemeMod( 'breadcrumb_min_height_setting', 0 );
 if ( $breadcrumb_max > 0 || $breadcrumb_min > 0 ) {
 	$breadcrumb_class .= ' has-sizes';
 }
@@ -40,11 +40,11 @@ if ( ! empty( $args['title'] ) ) {
 
 ?>
 <section class="section section-breadcrumb<?= $breadcrumb_class ?>">
-	<?php echo $breadcrumb_bg ? \HD\Helper::pictureHTML( 'breadcrumb-bg', $breadcrumb_bg ) : ''; ?>
+	<?php echo $breadcrumb_bg ? \HD_Helper::pictureHTML( 'breadcrumb-bg', $breadcrumb_bg ) : ''; ?>
     <div class="container">
 		<?php echo $title ? '<p class="breadcrumb-title">' . $title . '</p>' : ''; ?>
         <nav>
-			<?php \HD\Helper::breadCrumbs(); ?>
+			<?php \HD_Helper::breadCrumbs(); ?>
         </nav>
     </div>
 </section>

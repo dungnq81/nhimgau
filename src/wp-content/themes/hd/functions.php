@@ -47,8 +47,16 @@ if ( ! file_exists( $autoload ) ) {
 }
 
 require_once $autoload; // composer dump-autoload -o --classmap-authoritative
+
+class_alias( \HD\Utilities\Helpers\Helper::class, 'HD_Helper' );
+class_alias( \HD\Utilities\Helpers\Asset::class, 'HD_Asset' );
+class_alias( \HD\Utilities\Helpers\CSS::class, 'HD_CSS' );
+
 require_once __DIR__ . '/inc/settings.php';
 require_once __DIR__ . '/inc/helpers.php';
 
 // Initialize theme.
-( \HD\Theme::get_instance() );
+( \HD\Core\Theme::get_instance() );
+
+$rest_instance = ( \HD\API\API::get_instance() );
+define( 'RESTAPI_URL', untrailingslashit( $rest_instance->restApiUrl() ) . '/' );

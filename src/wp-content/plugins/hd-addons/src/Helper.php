@@ -1,9 +1,4 @@
 <?php
-/**
- * All utility helpers used across the plugin.
- *
- * @author Gaudev
- */
 
 namespace Addons;
 
@@ -13,6 +8,11 @@ use MatthiasMullie\Minify;
 
 \defined( 'ABSPATH' ) || exit;
 
+/**
+ * All utility helpers used across the plugin.
+ *
+ * @author Gaudev
+ */
 final class Helper {
 	// --------------------------------------------------
 
@@ -26,13 +26,15 @@ final class Helper {
 	// --------------------------------------------------
 
 	/**
-	 * @return false|int
+	 * @return bool|string|null
 	 */
-	public static function version(): false|int {
+	public static function version(): bool|string|null {
+		$timestamp = time();
+
 		return ( wp_get_environment_type() === 'development' ||
 		         ( defined( 'WP_DEBUG' ) && \WP_DEBUG === true ) ||
 		         ( defined( 'FORCE_VERSION' ) && \FORCE_VERSION === true )
-		) ? time() : false;
+		) ? (string) $timestamp : false;
 	}
 
 	// --------------------------------------------------

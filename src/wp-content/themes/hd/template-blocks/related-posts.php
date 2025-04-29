@@ -9,7 +9,7 @@ $taxonomy  = $args['taxonomy'] ?? 'category';
 $max       = $args['max'] ?? 6;
 $rows      = $args['rows'] ?? 1;
 
-$query = \HD\Helper::queryByRelated( $post_id, $taxonomy, $max );
+$query = \HD_Helper::queryByRelated( $post_id, $taxonomy, $max );
 if ( ! $post_id && ! $query ) {
 	return;
 }
@@ -34,7 +34,7 @@ if ( ! $post_id && ! $query ) {
 
 			try {
 				$swiper_data = json_encode( $_data, JSON_THROW_ON_ERROR | JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE );
-				\HD\Helper::blockTemplate( 'template-blocks/blocks/_slide_posts', [
+				\HD_Helper::blockTemplate( 'template-blocks/blocks/_slide_posts', [
 						'query'      => $query,
 						'slide_data' => $swiper_data,
 					]

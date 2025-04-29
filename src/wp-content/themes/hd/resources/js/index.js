@@ -1,7 +1,8 @@
 import $ from 'jquery';
 import Foundation from './3rd/_zf.js';
 
-import './utils/global.js';
+//import './utils/global.js';
+import * as utils from './utils/global.js';
 import './utils/back-to-top.js';
 import './utils/script-loader.js';
 import { initMenu } from './utils/menu.js';

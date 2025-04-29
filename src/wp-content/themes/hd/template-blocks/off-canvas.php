@@ -7,26 +7,26 @@
 
 \defined( 'ABSPATH' ) || die;
 
-$txt_logo = \HD\Helper::getOption( 'blogname' );
-$img_logo = \HD\Helper::getThemeMod( 'custom_logo' );
+$txt_logo = \HD_Helper::getOption( 'blogname' );
+$img_logo = \HD_Helper::getThemeMod( 'custom_logo' );
 
 if ( ! $img_logo ) :
 	$html = sprintf(
 		'<a href="%1$s" class="mobile-logo-link" rel="home" aria-label="%2$s">%3$s</a>',
-		\HD\Helper::home(),
-		\HD\Helper::escAttr( $txt_logo ),
+		\HD_Helper::home(),
+		\HD_Helper::escAttr( $txt_logo ),
 		$txt_logo
 	);
 else :
-	$image = \HD\Helper::iconImageHTML( $img_logo, 'medium' );
+	$image = \HD_Helper::iconImageHTML( $img_logo, 'medium' );
 	$html  = sprintf(
 		'<a href="%1$s" class="mobile-logo-link" rel="home">%2$s</a>',
-		\HD\Helper::home(),
+		\HD_Helper::home(),
 		$image
 	);
 endif;
 
-$position = \HD\Helper::getThemeMod( 'offcanvas_menu_setting' );
+$position = \HD_Helper::getThemeMod( 'offcanvas_menu_setting' );
 if ( ! in_array( $position, [ 'left', 'right', 'top', 'bottom' ], false ) ) {
 	$position = 'left';
 }
@@ -43,8 +43,8 @@ if ( ! in_array( $position, [ 'left', 'right', 'top', 'bottom' ], false ) ) {
     <div class="menu-outer">
 		<?php
 
-		echo \HD\Helper::doShortcode( 'inline_search' );
-		echo \HD\Helper::doShortcode( 'vertical_menu' );
+		echo \HD_Helper::doShortcode( 'inline_search' );
+		echo \HD_Helper::doShortcode( 'vertical_menu' );
 		?>
     </div>
 </div>

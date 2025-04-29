@@ -54,6 +54,6 @@ function custom_js_action(): void {
 
 	$content = ob_get_clean();
 	if ( $content ) {
-		echo \HD\Helper::JSMinify( $content, true );
+		echo \HD_Helper::JSMinify( $content, true );
 	}
 }

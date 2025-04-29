@@ -13,7 +13,7 @@ get_header( 'archive' );
 $object = get_queried_object();
 
 // breadcrumbs
-\HD\Helper::blockTemplate( 'template-blocks/breadcrumbs', [ 'title' => get_the_archive_title() ] );
+\HD_Helper::blockTemplate( 'template-blocks/breadcrumbs', [ 'title' => get_the_archive_title() ] );
 
 /**
  * HOOK: hd_archive_before_action
@@ -24,8 +24,8 @@ do_action( 'hd_archive_before_action' );
 <section class="section section-page archive">
     <div class="container flex flex-x">
         <div class="content">
-            <h1 class="heading-title" <?= \HD\Helper::microdata( 'headline' ) ?>><?= get_the_archive_title() ?></h1>
-	        <?= \HD\Helper::termExcerpt( $object?->term_id, 'excerpt', 'div' ) ?>
+            <h1 class="heading-title" <?= \HD_Helper::microdata( 'headline' ) ?>><?= get_the_archive_title() ?></h1>
+	        <?= \HD_Helper::termExcerpt( $object?->term_id, 'excerpt', 'div' ) ?>
 	        <?php if ( have_posts() ) : ?>
             <div class="posts-list archive-list items-list flex flex-x">
                 <?php
@@ -34,7 +34,7 @@ do_action( 'hd_archive_before_action' );
                 while ( have_posts() ) : the_post();
 
                     echo "<div class=\"cell\">";
-	                \HD\Helper::blockTemplate( 'template-parts/post/loop', [ 'title_tag' => 'h2' ] );
+	                \HD_Helper::blockTemplate( 'template-parts/post/loop', [ 'title_tag' => 'h2' ] );
                     echo "</div>";
 
                     // End the loop.
@@ -43,14 +43,14 @@ do_action( 'hd_archive_before_action' );
             </div>
             <?php
 		        // Previous/next page navigation.
-		        \HD\Helper::paginateLinks();
+		        \HD_Helper::paginateLinks();
 	        else :
-		        \HD\Helper::blockTemplate( 'template-blocks/no-results', [], true );
+		        \HD_Helper::blockTemplate( 'template-blocks/no-results', [], true );
 	        endif;
 	        ?>
         </div>
 	    <?php if ( is_active_sidebar( 'archive-sidebar' ) ) : ?>
-        <aside class="sidebar" <?= \HD\Helper::microdata( 'sidebar' ) ?>>
+        <aside class="sidebar" <?= \HD_Helper::microdata( 'sidebar' ) ?>>
             <?php dynamic_sidebar( 'archive-sidebar' ); ?>
         </aside>
 	    <?php endif;

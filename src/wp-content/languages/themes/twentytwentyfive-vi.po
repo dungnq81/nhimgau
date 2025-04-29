@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Themes - Twenty Twenty-Five package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-02-09 08:59:27+0000\n"
+"PO-Revision-Date: 2025-04-24 03:26:14+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,6 +23,21 @@ msgstr "Twenty Twenty-Five nhấn mạnh sự đơn giản và khả năng thíc
 #, gp-priority: high
 msgid "Twenty Twenty-Five"
 msgstr "Twenty Twenty-Five"
+
+#: patterns/template-search-text-blog.php
+msgctxt "Pattern title"
+msgid "Text blog search results"
+msgstr "Kết quả tìm kiếm blog văn bản"
+
+#: patterns/template-query-loop-vertical-header-blog.php
+msgctxt "Pattern title"
+msgid "Right-aligned query loop"
+msgstr "Vòng lặp truy vấn căn phải"
+
+#: patterns/template-query-loop-text-blog.php
+msgctxt "Pattern title"
+msgid "Text blog query loop"
+msgstr "Vòng lặp truy vấn blog văn bản"
 
 #: patterns/text-faqs.php:35 patterns/text-faqs.php:51
 #: patterns/text-faqs.php:71 patterns/text-faqs.php:87
@@ -59,6 +74,11 @@ msgstr "Chân trang"
 msgctxt "Template part name"
 msgid "Header with large title"
 msgstr "Đầu trang với tiêu đề lớn"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Vertical site header"
+msgstr "Đầu trang dọc"
 
 #: theme.json
 msgctxt "Template part name"
@@ -422,6 +442,16 @@ msgctxt "Style variation name"
 msgid "Evening"
 msgstr "Buổi tối"
 
+#: patterns/vertical-header.php
+msgctxt "Pattern description"
+msgid "Vertical site header with site title and navigation."
+msgstr "Đầu trang dọc với tiêu đề trang web và điều hướng."
+
+#: patterns/vertical-header.php
+msgctxt "Pattern title"
+msgid "Vertical site header"
+msgstr "Đầu trang dọc"
+
 #: patterns/text-faqs.php:83
 msgctxt "Question in the FAQs pattern."
 msgid "Are signed copies available?"
@@ -538,6 +568,11 @@ msgctxt "Pattern title"
 msgid "Right-aligned single post"
 msgstr "Bài đăng đơn căn phải"
 
+#: patterns/template-single-text-blog.php
+msgctxt "Pattern title"
+msgid "Text blog single post"
+msgstr "Bài viết đơn blog văn bản"
+
 #: patterns/template-single-photo-blog.php:79
 msgid "Next Photo"
 msgstr "Ảnh tiếp theo"
@@ -624,6 +659,11 @@ msgctxt "Pattern title"
 msgid "List of posts, 1 column"
 msgstr "Danh sách bài viết, 1 cột"
 
+#: patterns/template-page-vertical-header-blog.php
+msgctxt "Pattern title"
+msgid "Right-aligned page"
+msgstr "Trang căn phải"
+
 #: patterns/template-query-loop-photo-blog.php
 msgctxt "Pattern description"
 msgid "A list of posts, 3 columns, with only featured images."
@@ -666,6 +706,11 @@ msgctxt "Pattern title"
 msgid "News blog with sidebar"
 msgstr "Blog tin tức với thanh bên"
 
+#: patterns/template-home-text-blog.php
+msgctxt "Pattern title"
+msgid "Text blog home"
+msgstr "Trang chủ blog văn bản"
+
 #: patterns/template-home-posts-grid-news-blog.php:114
 msgid "Architecture"
 msgstr "Kiến trúc"
@@ -684,6 +729,11 @@ msgstr "Trang chủ blog ảnh"
 msgctxt "Pattern title"
 msgid "News blog home"
 msgstr "Trang chủ blog tin tức"
+
+#: patterns/template-archive-text-blog.php
+msgctxt "Pattern title"
+msgid "Text blog archive"
+msgstr "Lưu trữ blog văn bản"
 
 #: patterns/template-archive-photo-blog.php
 msgctxt "Pattern title"
@@ -1407,9 +1457,19 @@ msgid "Heading and paragraph with image on the right"
 msgstr "Tiêu đề và đoạn văn với hình ảnh bên phải"
 
 #: patterns/header.php
+msgctxt "Pattern description"
+msgid "Site header with site title and navigation."
+msgstr "Đầu trang với tiêu đề trang web và điều hướng."
+
+#: patterns/header.php
 msgctxt "Pattern title"
 msgid "Header"
 msgstr "Đầu trang"
+
+#: patterns/header-large-title.php
+msgctxt "Pattern description"
+msgid "Site header with large site title and right-aligned navigation."
+msgstr "Đầu trang với tiêu đề trang web lớn và điều hướng căn phải."
 
 #: patterns/header-large-title.php
 msgctxt "Pattern title"
@@ -1417,9 +1477,24 @@ msgid "Header with large title"
 msgstr "Đầu trang với tiêu đề lớn"
 
 #: patterns/header-columns.php
+msgctxt "Pattern description"
+msgid "Site header with site title and navigation in columns."
+msgstr "Đầu trang với tiêu đề trang web và điều hướng trong các cột."
+
+#: patterns/header-columns.php
 msgctxt "Pattern title"
 msgid "Header with columns"
 msgstr "Đầu trang với cột"
+
+#: patterns/header-centered.php
+msgctxt "Pattern description"
+msgid "Site header with centered site title and navigation."
+msgstr "Đầu trang với tiêu đề trang web và điều hướng được căn giữa."
+
+#: patterns/header-centered.php
+msgctxt "Pattern title"
+msgid "Centered site header"
+msgstr "Đầu trang căn giữa"
 
 #: patterns/grid-with-categories.php:64
 msgid "Sunflowers"

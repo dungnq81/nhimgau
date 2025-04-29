@@ -23,25 +23,25 @@ if ( post_password_required() ) {
 }
 
 // breadcrumbs
-\HD\Helper::blockTemplate( 'template-blocks/breadcrumbs', [ 'title' => \HD\Helper::primaryTerm( $post )?->name ] );
+\HD_Helper::blockTemplate( 'template-blocks/breadcrumbs', [ 'title' => \HD_Helper::primaryTerm( $post )?->name ] );
 
 /**
  * HOOK: hd_single_before_action
  */
 do_action( 'hd_single_before_action' );
 
-$alternative_title = \HD\Helper::getField( 'alternative_title', $post->ID );
-$featured_banner   = \HD\Helper::getField( 'featured_banner', $post->ID );
+$alternative_title = \HD_Helper::getField( 'alternative_title', $post->ID );
+$featured_banner   = \HD_Helper::getField( 'featured_banner', $post->ID );
 
 ?>
 <section class="section section-page section-single singular">
     <div class="container flex flex-x">
-        <?php \HD\Helper::blockTemplate( 'template-blocks/social-share', [], true ); ?>
+        <?php \HD_Helper::blockTemplate( 'template-blocks/social-share', [], true ); ?>
         <div class="content">
-            <h1 class="heading-title" <?= \HD\Helper::microdata( 'headline' ) ?>><?= $alternative_title ?: get_the_title() ?></h1>
+            <h1 class="heading-title" <?= \HD_Helper::microdata( 'headline' ) ?>><?= $alternative_title ?: get_the_title() ?></h1>
             <div class="meta">
-	            <?php echo \HD\Helper::getPrimaryTerm( $post ); ?>
-                <span class="date" <?= \HD\Helper::microdata( 'date-published' ) ?> data-fa=""><?= \HD\Helper::humanizeTime( $post->ID ) ?></span>
+	            <?php echo \HD_Helper::getPrimaryTerm( $post ); ?>
+                <span class="date" <?= \HD_Helper::microdata( 'date-published' ) ?> data-fa=""><?= \HD_Helper::humanizeTime( $post->ID ) ?></span>
                 <?php
                 $views = get_post_meta( $post->ID, '_post_views', true );
                 $views = $views ? (int) $views : 1;
@@ -49,15 +49,15 @@ $featured_banner   = \HD\Helper::getField( 'featured_banner', $post->ID );
                 <span class="views" data-fa=""><?= number_format_i18n( $views ) ?></span>
             </div>
 
-            <?php echo $featured_banner ? \HD\Helper::pictureHTML( 'featured-img img', $featured_banner ) : ''; ?>
-            <?php echo \HD\Helper::postExcerpt( $post, 'excerpt', false ); ?>
+            <?php echo $featured_banner ? \HD_Helper::pictureHTML( 'featured-img img', $featured_banner ) : ''; ?>
+            <?php echo \HD_Helper::postExcerpt( $post, 'excerpt', false ); ?>
 
-            <article <?= \HD\Helper::microdata( 'article' ) ?>>
+            <article <?= \HD_Helper::microdata( 'article' ) ?>>
                 <?php
                 the_content();
-                \HD\Helper::hashTags();
-                \HD\Helper::blockTemplate( 'template-blocks/suggestion-posts' );
-                \HD\Helper::blockTemplate( 'template-blocks/author' );
+                \HD_Helper::hashTags();
+                \HD_Helper::blockTemplate( 'template-blocks/suggestion-posts' );
+                \HD_Helper::blockTemplate( 'template-blocks/author' );
                 ?>
             </article>
             <?php
@@ -68,7 +68,7 @@ $featured_banner   = \HD\Helper::getField( 'featured_banner', $post->ID );
             ?>
         </div>
         <?php if ( is_active_sidebar( 'news-sidebar' ) ) : ?>
-        <aside class="sidebar" <?= \HD\Helper::microdata( 'sidebar' ) ?>>
+        <aside class="sidebar" <?= \HD_Helper::microdata( 'sidebar' ) ?>>
             <?php dynamic_sidebar( 'news-sidebar' ); ?>
         </aside>
         <?php endif;
@@ -83,7 +83,7 @@ $featured_banner   = \HD\Helper::getField( 'featured_banner', $post->ID );
 </section>
 <?php
 
-\HD\Helper::blockTemplate( 'template-blocks/related-posts', [
+\HD_Helper::blockTemplate( 'template-blocks/related-posts', [
 		'title'     => __( 'Recommended Articles', TEXT_DOMAIN ),
 		'title_tag' => 'p',
 		'id'        => $post->ID,

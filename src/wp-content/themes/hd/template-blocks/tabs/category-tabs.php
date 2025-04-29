@@ -32,11 +32,11 @@ $id = substr( md5( $atts->post_type . '-' . serialize( $atts ) ), 0, 10 );
 
 				if ( $atts->term_ids ) :
 					foreach ( $atts->term_ids as $i => $term_id ) :
-						$term  = \HD\Helper::getTerm( $term_id, $atts->taxonomy );
+						$term  = \HD_Helper::getTerm( $term_id, $atts->taxonomy );
 						$class = ! $atts->all && $i === 0 ? ' class="current"' : '';
 						$i ++;
                 ?>
-                <li><a<?= $class ?> href="#<?= $term_id . '-' . $id ?>" title="<?= \HD\Helper::escAttr( $term->name ) ?>"><?= $term->name ?></a></li>
+                <li><a<?= $class ?> href="#<?= $term_id . '-' . $id ?>" title="<?= \HD_Helper::escAttr( $term->name ) ?>"><?= $term->name ?></a></li>
                 <?php endforeach; endif; ?>
             </ul>
         </div>
@@ -45,7 +45,7 @@ $id = substr( md5( $atts->post_type . '-' . serialize( $atts ) ), 0, 10 );
             <div id="all-<?= $id ?>" class="tabs-panel">
                 <div class="posts-list archive-list items-list">
                     <?php
-                    $query = \HD\Helper::queryByLatestPosts( $atts->post_type, $atts->max );
+                    $query = \HD_Helper::queryByLatestPosts( $atts->post_type, $atts->max );
                     try {
                         _category_tabs_content( $query, $atts->max, $atts->is_slide );
                     } catch ( \JsonException $e ) {}
@@ -61,7 +61,7 @@ $id = substr( md5( $atts->post_type . '-' . serialize( $atts ) ), 0, 10 );
             <div id="<?= $term_id . '-' . $id ?>" class="tabs-panel">
                 <div class="posts-list archive-list items-list">
                     <?php
-                    $query = \HD\Helper::queryByTerms( [ $term_id ], $atts->post_type, $atts->taxonomy, false, $atts->max );
+                    $query = \HD_Helper::queryByTerms( [ $term_id ], $atts->post_type, $atts->taxonomy, false, $atts->max );
                     try {
 	                    _category_tabs_content( $query, $atts->max, $atts->is_slide );
                     } catch ( \JsonException $e ) {}
@@ -99,7 +99,7 @@ function _category_tabs_content( mixed $query, int $max, bool $is_slide, int $sl
 		];
 
 		$swiper_data = json_encode( $_data, JSON_THROW_ON_ERROR | JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE );
-		\HD\Helper::blockTemplate( 'template-blocks/blocks/_slide_posts', [
+		\HD_Helper::blockTemplate( 'template-blocks/blocks/_slide_posts', [
 				'title_tag'  => 'p',
 				'query'      => $query,
 				'slide_data' => $swiper_data,
@@ -107,7 +107,7 @@ function _category_tabs_content( mixed $query, int $max, bool $is_slide, int $sl
 			]
 		);
 	} else {
-		\HD\Helper::blockTemplate( 'template-blocks/blocks/_posts', [
+		\HD_Helper::blockTemplate( 'template-blocks/blocks/_posts', [
 				'title_tag' => 'p',
 				'query'     => $query,
 				'max'       => $max,

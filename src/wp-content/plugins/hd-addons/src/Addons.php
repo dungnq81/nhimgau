@@ -1,9 +1,4 @@
 <?php
-/**
- * Addons Class
- *
- * @author Gaudev
- */
 
 namespace Addons;
 
@@ -14,6 +9,11 @@ use Addons\ThirdParty\RankMath;
 
 \defined( 'ABSPATH' ) || exit;
 
+/**
+ * Addons Class
+ *
+ * @author Gaudev
+ */
 final class Addons {
 	// -------------------------------------------------------------
 
