@@ -21,9 +21,9 @@ final class Admin {
 	private function init(): void {
 		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueue_block_editor_assets' ] );
 
-		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ], 99999 );
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 		add_action( 'admin_init', [ $this, 'admin_init' ], 11 );
+		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ], 30 );
 		add_action( 'admin_footer', [ $this, 'admin_footer_script' ] );
 
 		/** Show a clear cache message */
@@ -53,7 +53,6 @@ final class Admin {
 
                 // popup confirmation for trash action
                 const links = document.querySelectorAll('a');
-
                 links.forEach(function (link) {
                     const href = link.getAttribute('href');
 
