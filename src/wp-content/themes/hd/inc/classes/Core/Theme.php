@@ -157,14 +157,8 @@ final class Theme {
 		\HD_Asset::queueStyle( 'index-css', ASSETS_URL . 'css/index-css.css', [ 'vendor-css' ], $version );
 
 		/** JS */
-		\HD_Asset::queueScript( 'preload-js', ASSETS_URL . 'js/preload-polyfill.js', [], $version, false, [
-			'module',
-			'async'
-		] );
-		\HD_Asset::queueScript( 'index-js', ASSETS_URL . 'js/index.js', [ 'jquery-core' ], $version, true, [
-			'module',
-			'defer'
-		] );
+		\HD_Asset::queueScript( 'preload-js', ASSETS_URL . 'js/preload-polyfill.js', [], $version, false, [ 'module', 'async' ] );
+		\HD_Asset::queueScript( 'index-js', ASSETS_URL . 'js/index.js', [ 'jquery-core' ], $version, true, [ 'module', 'defer' ] );
 
 		/** Comments */
 		if ( is_singular() && comments_open() && \HD_Helper::getOption( 'thread_comments' ) ) {

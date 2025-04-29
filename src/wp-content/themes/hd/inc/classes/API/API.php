@@ -45,9 +45,9 @@ final class API extends AbstractAPI {
 	 * @return void
 	 */
 	public function initRestClasses(): void {
-		$directory = __DIR__ . '/API/*.php';
+		$directory = __DIR__ . '/Endpoints/*.php';
 		foreach ( glob( $directory, GLOB_NOSORT ) as $file ) {
-			$class_name = '\\HD\\Utilities\\API\\' . basename( $file, '.php' );
+			$class_name = '\\HD\\API\\Endpoints\\' . basename( $file, '.php' );
 
 			if ( class_exists( $class_name ) ) {
 				$this->endpointClasses[] = new $class_name();
