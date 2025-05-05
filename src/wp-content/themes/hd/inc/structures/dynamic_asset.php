@@ -22,7 +22,6 @@ add_action( 'enqueue_assets_extra', static function () {
 add_action( 'enqueue_assets_template_page_home', static function () {
 	$version = \HD_Helper::version();
 
-	wp_enqueue_style( 'home-css', ASSETS_URL . 'css/home-css.css', [], $version );
-	wp_enqueue_script( 'home-js', ASSETS_URL . 'js/home.js', [ 'jquery-core' ], $version, true );
-	wp_script_add_data( 'home-js', 'extra', [ 'module', 'defer' ] );
+	\HD_Asset::enqueueStyle( 'home-css', ASSETS_URL . 'css/home-css.css', [], $version );
+	\HD_Asset::enqueueScript( 'home-js', ASSETS_URL . 'js/home.js', [ 'jquery-core' ], $version, true, [ 'module', 'defer' ] );
 } );

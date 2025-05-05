@@ -181,7 +181,7 @@ abstract class AbstractWidget extends \WP_Widget {
 		$this->registered = true;
 
 		if ( is_active_widget( false, false, $this->id_base, true ) ) {
-			add_action( 'wp_enqueue_scripts', [ $this, 'styles_and_scripts' ], 99 );
+			add_action( 'wp_enqueue_scripts', [ $this, 'styles_and_scripts' ], 29 );
 		}
 	}
 
@@ -190,8 +190,7 @@ abstract class AbstractWidget extends \WP_Widget {
 	/**
 	 * @return void
 	 */
-	public function styles_and_scripts(): void {
-	}
+	public function styles_and_scripts(): void {}
 
 	// --------------------------------------------------
 

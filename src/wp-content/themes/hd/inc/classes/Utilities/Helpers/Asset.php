@@ -1,19 +1,17 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace HD\Utilities\Helpers;
+
+\defined( 'ABSPATH' ) || die;
 
 /**
  * Collect & enqueue CSS/JS.
- * Universal asset manager for the whole theme (global and block level).
  *
  * @author Gaudev
  */
 final class Asset {
-	private static array $styles = [];         // Style handles queued for the current request
-	private static array $scripts = [];        // Script handles queued for the current request
-	private static array $localize = [];       // [handle => $data] for wp_localize_script
-	private static array $inline_scripts = []; // for wp_add_inline_script
-
 	// ----------------------------------------
 
 	/**
@@ -25,17 +23,20 @@ final class Asset {
 	 *
 	 * @return void
 	 */
-	public static function queueStyle( string $handle, string $src, array $deps = [], string|bool|null $ver = null, string $media = 'all' ): void {
-		if ( isset( self::$styles[ $handle ] ) ) {
+	public static function enqueueStyle( string $handle, string $src, array $deps = [], string|bool|null $ver = null, string $media = 'all' ): void {
+		if ( empty( $src ) ) {
 			return;
 		}
 
-		self::$styles[ $handle ] = [
+		$args = [
 			'src'   => $src,
 			'deps'  => $deps,
 			'ver'   => $ver,
 			'media' => $media,
 		];
+
+		wp_register_style( $handle, $args['src'], $args['deps'], $args['ver'], $args['media'] );
+		wp_enqueue_style( $handle );
 	}
 
 	// ----------------------------------------
@@ -50,95 +51,74 @@ final class Asset {
 	 *
 	 * @return void
 	 */
-	public static function queueScript( string $handle, string $src, array $deps = [], string|bool|null $ver = null, bool $in_footer = true, array $extra = [] ): void {
-		if ( isset( self::$scripts[ $handle ] ) ) {
+	public static function enqueueScript( string $handle, string $src, array $deps = [], string|bool|null $ver = null, bool $in_footer = true, array $extra = [] ): void {
+		if ( empty( $src ) ) {
 			return;
 		}
 
-		self::$scripts[ $handle ] = [
+		$args = [
 			'src'       => $src,
 			'deps'      => $deps,
 			'ver'       => $ver,
 			'in_footer' => $in_footer,
 			'extra'     => $extra,
 		];
-	}
 
-	// ----------------------------------------
+		wp_register_script( $handle, $args['src'], $args['deps'], $args['ver'], $args['in_footer'] );
+		wp_enqueue_script( $handle );
 
-	public static function localize( string $handle, string $object_name, array $l10n ): void {
-		self::$localize[ $handle ] = [ $object_name, $l10n ];
-	}
-
-	// ----------------------------------------
-
-	public static function inline( string $handle, string $code, string $position = 'after' ): void {
-		if ( ! isset( self::$inline_scripts[ $handle ] ) ) {
-			self::$inline_scripts[ $handle ] = [];
-		}
-
-		self::$inline_scripts[ $handle ][] = [ $code, $position ];
-	}
-
-	// ----------------------------------------
-
-	/**
-	 * Enqueue everything that was queued before wp_enqueue_scripts ends.
-	 *
-	 * @return void
-	 */
-	public static function enqueueAll(): void {
-		// Styles
-		foreach ( self::$styles as $handle => $args ) {
-			wp_register_style( $handle, $args['src'], $args['deps'], $args['ver'], $args['media'] );
-			wp_enqueue_style( $handle );
-		}
-
-		// Scripts
-		foreach ( self::$scripts as $handle => $args ) {
-			wp_register_script( $handle, $args['src'], $args['deps'], $args['ver'], $args['in_footer'] );
-			wp_enqueue_script( $handle );
-
-			if ( ! empty( $args['extra'] ) ) {
-				wp_script_add_data( $handle, 'extra', $args['extra'] );
-			}
-		}
-
-		// Attach localize
-		foreach ( self::$localize as $handle => [$object_name, $l10n] ) {
-			wp_localize_script( $handle, $object_name, $l10n );
-		}
-
-		// inline if queued
-		foreach ( self::$inline_scripts as $handle => $blocks ) {
-			foreach ( $blocks as [$code, $position] ) {
-				wp_add_inline_script( $handle, $code, $position );
-			}
+		if ( ! empty( $args['extra'] ) ) {
+			wp_script_add_data( $handle, 'extra', $args['extra'] );
 		}
 	}
 
 	// ----------------------------------------
 
 	/**
-	 * Print styles that were enqueued after wp_head (prevents FOUC).
+	 * @param string $handle
+	 * @param string $object_name
+	 * @param array|null $l10n
 	 *
 	 * @return void
 	 */
-	public static function printLateStyles(): void {
-		wp_print_styles();
+	public static function localize( string $handle, string $object_name, ?array $l10n ): void {
+		if ( empty( $object_name ) || empty( $l10n ) ) {
+			return;
+		}
+
+		wp_localize_script( $handle, $object_name, $l10n );
 	}
 
 	// ----------------------------------------
 
 	/**
-	 * Initialise the collector once per request.
+	 * @param string $handle
+	 * @param string $css
 	 *
 	 * @return void
 	 */
-	public static function bootstrap(): void {
-		add_action( 'wp_enqueue_scripts', [ __CLASS__, 'enqueueAll' ], 30 );
+	public static function inlineStyle( string $handle, string $css ): void {
+		if ( empty( $css ) ) {
+			return;
+		}
 
-		// Run early so styles appear before footer scripts
-		add_action( 'wp_print_footer_scripts', [ __CLASS__, 'printLateStyles' ], 5 );
+		wp_add_inline_style( $handle, $css );
+	}
+
+	// ----------------------------------------
+
+	/**
+	 * @param string $handle
+	 * @param string $code
+	 * @param string $position
+	 *
+	 * @return void
+	 */
+	public static function inlineScript( string $handle, string $code, string $position = 'after' ): void {
+		if ( empty( $code ) ) {
+			return;
+		}
+
+		wp_add_inline_script( $handle, $code, $position );
 	}
 }

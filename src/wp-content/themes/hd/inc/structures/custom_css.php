@@ -7,11 +7,7 @@
 
 \defined( 'ABSPATH' ) || die;
 
-// --------------------------------------------------
-// Custom CSS
-// --------------------------------------------------
-
-add_action( 'wp_enqueue_scripts', 'custom_css_action', 99 );
+add_action( 'wp_enqueue_scripts', 'custom_css_action', 11 );
 function custom_css_action(): void {
 	$css = new \HD_CSS();
 
@@ -42,7 +38,7 @@ function custom_css_action(): void {
 
 	$css_output = $css->css_output();
 	if ( $css_output ) {
-		wp_add_inline_style( 'index-css', $css_output );
+		\HD_Asset::inlineStyle( 'index-css', $css_output );
 	}
 
 	//ob_start();
@@ -52,6 +48,6 @@ function custom_css_action(): void {
 	//$inline_css = ob_get_clean();
 	//if ( $inline_css ) {
 	//$inline_css = \HD_Helper::CSSMinify( $inline_css, true );
-	//wp_add_inline_style( 'index-css', $inline_css );
+	//\HD_Asset::inlineStyle( 'index-css', $inline_css );
 	//}
 }

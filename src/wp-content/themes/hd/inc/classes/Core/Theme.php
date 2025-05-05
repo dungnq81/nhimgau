@@ -25,10 +25,10 @@ final class Theme {
 		// FE: init -> wp_loaded -> wp -> template_redirect -> template_include -> v.v...
 		// BE: init -> wp_loaded -> admin_menu -> admin_init -> v.v...
 
-		add_action( 'after_setup_theme', [ \HD_Asset::class, 'bootstrap' ], 0 );
 		add_action( 'after_setup_theme', [ $this, 'setup_theme' ], 10 );
 		add_action( 'after_setup_theme', [ $this, 'setup' ], 11 );
-		add_action( 'after_setup_theme', [ $this, 'wp_enqueue_scripts' ], 12 );
+
+		add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ], 12 );
 
 		/** Widgets */
 		add_action( 'widgets_init', [ $this, 'unregister_widgets' ], 16 );
@@ -150,15 +150,15 @@ final class Theme {
 			'_lang'         => \HD_Helper::currentLanguage(),
 		];
 		\HD_Asset::localize( 'jquery-core', 'hdConfig', $l10n );
-		\HD_Asset::inline( 'jquery-core', 'Object.assign(window,{ $:jQuery,jQuery });', 'after' );
+		\HD_Asset::inlineScript( 'jquery-core', 'Object.assign(window,{ $:jQuery,jQuery });', 'after' );
 
 		/** CSS */
-		\HD_Asset::queueStyle( 'vendor-css', ASSETS_URL . 'css/_vendor.css', [], $version );
-		\HD_Asset::queueStyle( 'index-css', ASSETS_URL . 'css/index-css.css', [ 'vendor-css' ], $version );
+		\HD_Asset::enqueueStyle( 'vendor-css', ASSETS_URL . 'css/_vendor.css', [], $version );
+		\HD_Asset::enqueueStyle( 'index-css', ASSETS_URL . 'css/index-css.css', [ 'vendor-css' ], $version );
 
 		/** JS */
-		\HD_Asset::queueScript( 'preload-js', ASSETS_URL . 'js/preload-polyfill.js', [], $version, false, [ 'module', 'async' ] );
-		\HD_Asset::queueScript( 'index-js', ASSETS_URL . 'js/index.js', [ 'jquery-core' ], $version, true, [ 'module', 'defer' ] );
+		\HD_Asset::enqueueScript( 'preload-js', ASSETS_URL . 'js/preload-polyfill.js', [], $version, false, [ 'module', 'async' ] );
+		\HD_Asset::enqueueScript( 'index-js', ASSETS_URL . 'js/index.js', [ 'jquery-core' ], $version, true, [ 'module', 'defer' ] );
 
 		/** Comments */
 		if ( is_singular() && comments_open() && \HD_Helper::getOption( 'thread_comments' ) ) {
@@ -176,25 +176,23 @@ final class Theme {
 	 * @return mixed
 	 */
 	public function dynamic_template_include( $template ): mixed {
+		static $enqueued_hooks = [];
+
 		$template_slug = basename( $template, '.php' );
 		$hook_name     = 'enqueue_assets_' . str_replace( '-', '_', $template_slug );
 
-		if ( ! has_action( 'wp_enqueue_scripts', [ $this, '_dynamic_enqueue_assets_flag' ] ) ) {
+		if ( ! in_array( $hook_name, $enqueued_hooks, true ) ) {
 			// dynamic hook - enqueue style/script
 			add_action( 'wp_enqueue_scripts', static function () use ( $hook_name ) {
 				do_action( $hook_name );
 				do_action( 'enqueue_assets_extra' ); // dynamic hook extra
 			}, 20 );
 
-			add_action( 'wp_enqueue_scripts', [ $this, '_dynamic_enqueue_assets_flag' ], 29 );
+			$enqueued_hooks[] = $hook_name;
 		}
 
 		return $template;
 	}
-
-	// --------------------------------------------------
-
-	public function _dynamic_enqueue_assets_flag(): void {}
 
 	// --------------------------------------------------
 

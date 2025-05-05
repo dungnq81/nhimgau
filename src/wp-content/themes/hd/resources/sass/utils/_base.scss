@@ -111,12 +111,17 @@ sup {
     font-style: normal;
 }
 
+blockquote, caption, figcaption, p {
+	text-wrap: pretty;
+}
+
 :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6) {
     font-family: vars.$header-font;
     font-optical-sizing: auto;
     margin-bottom: vars.$header-margin-bottom;
     margin-top: 0;
     font-weight: 700;
+	text-wrap: pretty;
 
     a {
         text-decoration: none;
@@ -152,6 +157,8 @@ sup {
 }
 
 a {
+	//text-decoration-thickness: 1px;
+	//text-underline-offset: .1em;
     text-decoration: none;
     display: inline-block;
     color: vars.$link-color;

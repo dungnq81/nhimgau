@@ -78,7 +78,7 @@ final class Admin {
 	 * @return void
 	 */
 	public function enqueue_block_editor_assets(): void {
-		wp_enqueue_style( 'editor-style', ASSETS_URL . 'css/editor-style-css.css' );
+		\HD_Asset::enqueueStyle( 'editor-style', ASSETS_URL . 'css/editor-style-css.css' );
 	}
 
 	// --------------------------------------------------
@@ -89,9 +89,8 @@ final class Admin {
 	public function admin_enqueue_scripts(): void {
 		$version = \HD_Helper::version();
 
-		wp_enqueue_style( 'admin-css', ASSETS_URL . 'css/admin-css.css', [], $version );
-		wp_enqueue_script( 'admin-js', ASSETS_URL . 'js/admin.js', [ 'jquery' ], $version, true );
-		wp_script_add_data( 'admin-js', 'extra', [ 'module', 'defer' ] );
+		\HD_Asset::enqueueStyle( 'admin-css', ASSETS_URL . 'css/admin-css.css', [], $version );
+		\HD_Asset::enqueueScript( 'admin-js', ASSETS_URL . 'js/admin.js', [ 'jquery' ], $version, true, [ 'module', 'defer' ] );
 	}
 
 	// --------------------------------------------------

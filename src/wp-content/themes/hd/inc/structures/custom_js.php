@@ -11,7 +11,7 @@
 // Custom JS
 // --------------------------------------------------
 
-add_action( 'wp_footer', 'custom_js_action', 999 );
+add_action( 'wp_footer', 'custom_js_action', 11 );
 function custom_js_action(): void {
 	ob_start();
 
@@ -44,9 +44,7 @@ function custom_js_action(): void {
                         if (dateEl) dateEl.textContent = json.date;
                         if (viewsEl) viewsEl.textContent = json.views;
                     }
-                } catch (err) {
-                    console.error('Track views error:', err);
-                }
+                } catch (err) {}
             }
         });
     </script>

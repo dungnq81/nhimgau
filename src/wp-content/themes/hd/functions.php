@@ -52,8 +52,8 @@ class_alias( \HD\Utilities\Helpers\Helper::class, 'HD_Helper' );
 class_alias( \HD\Utilities\Helpers\Asset::class, 'HD_Asset' );
 class_alias( \HD\Utilities\Helpers\CSS::class, 'HD_CSS' );
 
-require_once __DIR__ . '/inc/settings.php';
-require_once __DIR__ . '/inc/helpers.php';
+require_once __DIR__ . '/inc/setting.php';
+require_once __DIR__ . '/inc/helper.php';
 
 // Initialize theme.
 ( \HD\Core\Theme::get_instance() );
