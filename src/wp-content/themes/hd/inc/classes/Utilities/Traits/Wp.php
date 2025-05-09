@@ -2,7 +2,6 @@
 
 namespace HD\Utilities\Traits;
 
-use HD\Utilities\Helpers\CSS;
 use HD\Utilities\Navigation\HorizontalNavWalker;
 use HD\Utilities\Navigation\VerticalNavWalker;
 

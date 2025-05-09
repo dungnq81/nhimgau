@@ -523,41 +523,63 @@
     }
 }
 
-@mixin clamp-font($min: 15px, $max: 16px, $min-width: vars.$sm, $max-width: vars.$xxl, $base: 1.618) {
-    @if func.strip-unit($min-width) < 1 {
-        $min-width: 375px;
-    }
-
-    @if func.strip-unit($max-width) < 1 {
-        $max-width: 375px;
-    }
-
-    $min-width-rem: func.fs($min-width);
-    $max-width-rem: func.fs($max-width);
+@mixin clamp-font($min: 15px, $max: 30px, $min-width: vars.$sm, $max-width: vars.$xxl, $base: 1.618) {
     $min-rem: func.fs($min);
     $max-rem: func.fs($max);
+    $min-width-rem: func.fs($min-width);
+    $max-width-rem: func.fs($max-width);
 
-    & {
-        @if func.strip-unit($min-width) > 200 or func.strip-unit($min-rem) == func.strip-unit($max-rem) {
+    $min-val: func.strip-unit($min-rem);
+    $max-val: func.strip-unit($max-rem);
+    $min-width-val: func.strip-unit($min-width-rem);
+    $max-width-val: func.strip-unit($max-width-rem);
+
+    @if $min-val > $max-val {
+        $tmp: $min;
+        $min: $max;
+        $max: $tmp;
+
+        $min-rem: func.fs($min);
+        $max-rem: func.fs($max);
+        $min-val: func.strip-unit($min-rem);
+        $max-val: func.strip-unit($max-rem);
+    }
+
+    // min = max
+    @if $min-val == $max-val {
+        & {
             font-size: $min-rem;
             line-height: $min-rem * $base;
         }
+    }
 
-        @if $max-rem > $min-rem {
-            @media screen and (min-width: $min-width-rem) {
-                $val: func.divide(
-                                func.strip-unit(func.subtract($max-rem, $min-rem)),
-                                func.strip-unit(func.subtract($max-width-rem, $min-width-rem))
-                );
+    // min < max
+    @if $min-val < $max-val {
+        $slope: func.divide(
+                                ($max-val - $min-val),
+                                ($max-width-val - $min-width-val)
+        );
+        $intercept: $min-val - $slope * $min-width-val;
+        $font-clamp: clamp(
+                #{$min-rem},
+                #{$intercept}rem + #{$slope * 100}vw,
+                #{$max-rem}
+        );
 
-                font-size: calc($min-rem + $val * (100vw - $min-width-rem));
-                line-height: calc($min-rem * $base + $val * $base * (100vw - $min-width-rem));
-            }
+        $lh-intercept: $min-val * $base - $slope * $base * $min-width-val;
+        $line-height-clamp: clamp(
+                #{$min-rem * $base},
+                #{$lh-intercept}rem + #{$slope * $base * 100}vw,
+                #{$max-rem * $base}
+        );
 
-            @media screen and (min-width: $max-width-rem) {
-                font-size: $max-rem;
-                line-height: $max-rem * $base;
-            }
+        @if $base == 0 {
+            $line-height-clamp: inherit;
+        }
+
+        & {
+            font-size: $font-clamp;
+            line-height: $line-height-clamp;
         }
     }
 }
